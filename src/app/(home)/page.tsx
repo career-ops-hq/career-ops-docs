@@ -141,8 +141,15 @@ export default async function HomePage() {
             Runs in your CLI. Your data, your machine.
           </h1>
           <div className="flex flex-row items-center gap-4 flex-wrap w-fit">
-            <Link href="/docs" className={cn(buttonVariants(), 'max-sm:text-sm')}>
-              Get Started
+            <Link
+              href="/docs"
+              className={cn(buttonVariants(), 'inline-flex items-center gap-2 max-sm:text-sm')}
+            >
+              Run it now
+              <span
+                aria-hidden="true"
+                className="cli-cursor inline-block h-[1em] w-[0.35em] bg-current align-middle"
+              />
             </Link>
             <a
               href="https://github.com/santifer/career-ops"
@@ -535,11 +542,12 @@ export default async function HomePage() {
         >
           Ready to filter offers, not get filtered?
         </p>
-        <Link href="/docs" className={cn(buttonVariants(), 'text-base px-8 py-3.5')}>
-          Your turn{' '}
-          <span aria-hidden="true" className="animate-cursor-blink font-mono">
-            _
-          </span>
+        <Link href="/docs" className={cn(buttonVariants(), 'text-base px-8 py-3.5 inline-flex items-center gap-2')}>
+          Your turn
+          <span
+            aria-hidden="true"
+            className="cli-cursor inline-block h-[1em] w-[0.35em] bg-current align-middle"
+          />
         </Link>
 
         {/* Subordinate alternative for visitors not ready to install today.

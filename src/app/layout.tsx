@@ -5,7 +5,6 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
-import { FooterSubscribeBlock } from '@/components/footer-subscribe-block';
 import { instrumentSerifRegular } from '@/lib/fonts';
 
 const inter = Inter({
@@ -24,7 +23,6 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
         <RootProvider>{children}</RootProvider>
         <footer className={`${instrumentSerifRegular.className} border-t text-lg text-fd-muted-foreground`}>
           <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12">
-            <FooterSubscribeBlock />
             <div className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-2.5">
                 <CoMark size={28} />

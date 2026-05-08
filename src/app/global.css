@@ -72,20 +72,21 @@
 }
 
 /* CLI prompt cursor — hard-step blink (CRT-style), 1s cycle.
-   Used on the closing CTA "Your turn _" to evoke a terminal awaiting
-   the visitor's input. Hairline opacity pivot at 50% simulates a step
-   transition without losing sub-pixel rendering. */
-@keyframes cursor-blink {
+   Used on the closing CTA to evoke a terminal awaiting the visitor's
+   input. Class lives outside Tailwind's `animate-*` namespace so the
+   v4 tree-shaker doesn't drop it. The block itself is a span sized in
+   ems (bg-current via Tailwind utilities). */
+@keyframes cli-cursor-pulse {
   0%, 50% { opacity: 1; }
   50.01%, 100% { opacity: 0; }
 }
 
-.animate-cursor-blink {
-  animation: cursor-blink 1s infinite;
+.cli-cursor {
+  animation: cli-cursor-pulse 1s infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-cursor-blink {
+  .cli-cursor {
     animation: none;
   }
 }
