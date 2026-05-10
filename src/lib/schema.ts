@@ -42,14 +42,14 @@ const PERSON_SUBJECT_OF = [
     url: 'https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4',
     headline:
       'How I built a tool to filter job listings — and landed Head of AI',
-    datePublished: '2026-04-28',
+    datePublished: '2026-04-28T00:00:00Z',
     publisher: { '@type': 'Organization', name: 'Business Insider' },
   },
   {
     '@type': 'NewsArticle',
     url: 'https://www.businessinsider.de/karriere/bewerbung/mein-ki-tool-scannt-700-job-anzeigen-so-half-es-mir-karriere-zu-machen/',
     headline: 'Mein KI-Tool scannt 700 Job-Anzeigen — so half es mir, Karriere zu machen',
-    datePublished: '2026-04-28',
+    datePublished: '2026-04-28T00:00:00Z',
     publisher: { '@type': 'Organization', name: 'Business Insider Deutschland' },
   },
   {
@@ -57,7 +57,7 @@ const PERSON_SUBJECT_OF = [
     url: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
     headline:
       'Το AI εργαλείο που φέρνει επανάσταση στον τρόπο που ψάχνουμε δουλειά',
-    datePublished: '2026-04-17',
+    datePublished: '2026-04-17T00:00:00Z',
     author: { '@type': 'Person', name: 'Niko Efstathiou' },
     publisher: { '@type': 'Organization', name: 'WIRED Greece' },
   },
@@ -65,14 +65,19 @@ const PERSON_SUBJECT_OF = [
     '@type': 'VideoObject',
     url: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
     name: 'Create OS Lounge — Santiago Fernández de Valderrama',
-    uploadDate: '2026-04-15',
+    description:
+      'Conversation with Eric on career-ops origins, multi-agent orchestration, and the asymmetry between candidate-side AI and recruiter-side ATS.',
+    thumbnailUrl: 'https://img.youtube.com/vi/pDkAe5JbREk/maxresdefault.jpg',
+    embedUrl: 'https://www.youtube.com/embed/pDkAe5JbREk',
+    contentUrl: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
+    uploadDate: '2026-04-15T00:00:00Z',
     creator: { '@type': 'Person', name: 'Eric (Narrative Pilot)' },
   },
   {
     '@type': 'NewsArticle',
     url: 'https://www.diariodesevilla.es/vivirensevilla/Salir-compras-solucion-expres-telefono_0_817718799.html',
     headline: 'Salir de compras en busca de la solución exprés del teléfono',
-    datePublished: '2014-06-19',
+    datePublished: '2014-06-19T00:00:00Z',
     publisher: { '@type': 'Organization', name: 'Diario de Sevilla' },
   },
 ];
@@ -199,8 +204,8 @@ export function methodologySchema() {
         headline: 'How career-ops scores job listings',
         description:
           'The 4.0/5.0 threshold, the six dimensions, the canonical evaluation prompt, edge cases, and what we explicitly do not do.',
-        datePublished: '2026-05-07',
-        dateModified: '2026-05-07',
+        datePublished: '2026-05-07T00:00:00Z',
+        dateModified: '2026-05-07T00:00:00Z',
         author: { '@id': PERSON_ID },
         publisher: { '@id': PERSON_ID },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
@@ -344,7 +349,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-05-07',
+        dateModified: '2026-05-07T00:00:00Z',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
