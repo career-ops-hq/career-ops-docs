@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { instrumentSerifRegular } from '@/lib/fonts';
+import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { aboutSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
@@ -114,6 +114,17 @@ export default function AboutPage() {
             </a>
             .
           </p>
+          <blockquote
+            cite="https://career-ops.org/methodology"
+            className="not-italic border-l-2 border-fd-foreground/20 pl-5 my-2"
+          >
+            <p
+              className={`${instrumentSerif.className} text-xl md:text-2xl leading-snug text-fd-foreground`}
+            >
+              &ldquo;Companies use AI to filter candidates. I just gave candidates AI to choose
+              companies.&rdquo;
+            </p>
+          </blockquote>
           <p>
             Featured in{' '}
             <a

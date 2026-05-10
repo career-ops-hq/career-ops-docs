@@ -1,0 +1,4 @@
+Contact: mailto:privacy@career-ops.org
+Expires: 2027-05-10T00:00:00Z
+Preferred-Languages: en, es
+Canonical: https://career-ops.org/.well-known/security.txt

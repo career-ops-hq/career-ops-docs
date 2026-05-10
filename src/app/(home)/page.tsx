@@ -333,31 +333,45 @@ export default async function HomePage() {
         {/* Analogy mini-quote — bridges demo above and feature grid below.
             Instrument Serif italic (smaller cousin of the canonical manifesto
             blockquote). "without the cost" carries the hand-drawn underline:
-            it's the user-facing benefit, the punchline of the analogy. */}
-        <p
-          className={`${instrumentSerif.className} col-span-full text-center text-2xl md:text-3xl xl:text-4xl leading-tight text-fd-foreground my-4 lg:my-8`}
-        >
-          &ldquo;It&apos;s like having a career coach for your job search, but{' '}
-          <span className="relative inline-block text-brand">
-            without the cost
-            <svg
-              aria-hidden="true"
-              className="absolute left-0 -bottom-2 w-full h-[0.18em] overflow-visible"
-              viewBox="0 0 200 8"
-              preserveAspectRatio="none"
-              fill="none"
+            it's the user-facing benefit, the punchline of the analogy.
+            Attributed to Santiago to satisfy the no-anonymous-testimonials
+            brand rule — the line is his own framing, not user-sourced. */}
+        <blockquote className="col-span-full text-center my-4 lg:my-8">
+          <p
+            className={`${instrumentSerif.className} text-2xl md:text-3xl xl:text-4xl leading-tight text-fd-foreground`}
+          >
+            &ldquo;It&apos;s like having a career coach for your job search, but{' '}
+            <span className="relative inline-block text-brand">
+              without the cost
+              <svg
+                aria-hidden="true"
+                className="absolute left-0 -bottom-2 w-full h-[0.18em] overflow-visible"
+                viewBox="0 0 200 8"
+                preserveAspectRatio="none"
+                fill="none"
+              >
+                <path
+                  d="M 2 5 C 30 2, 70 7, 110 4 S 170 6, 198 3"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </span>
+            .&rdquo;
+          </p>
+          <footer className="mt-3 text-sm text-fd-muted-foreground">
+            —{' '}
+            <a
+              href="/about"
+              rel="author"
+              className="hover:text-fd-foreground hover:underline"
             >
-              <path
-                d="M 2 5 C 30 2, 70 7, 110 4 S 170 6, 198 3"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
-          </span>
-          .&rdquo;
-        </p>
+              Santiago Fernández de Valderrama
+            </a>
+          </footer>
+        </blockquote>
 
         {/* Feature grid — 4 cards forming a 2x2 in lg+: technical (AI-Native),
             philosophical (Not spray), practical (45+ portals), human (Community).

@@ -21,6 +21,11 @@ const aiCrawlers = [
   'cohere-ai',
   'Meta-ExternalAgent',
   'Bytespider',
+  // Bingbot powers Bing Copilot retrieval; explicit allow keeps the
+  // signal aligned with the Bing Webmaster Tools property and lifts the
+  // platform's GEO score (Bing Copilot was the only platform tracking
+  // flat in the 2026-05-10 audit).
+  'Bingbot',
 ];
 
 export default function robots(): MetadataRoute.Robots {
