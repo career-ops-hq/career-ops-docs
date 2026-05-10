@@ -72,6 +72,7 @@ const PERSON_SUBJECT_OF = [
     contentUrl: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
     uploadDate: '2026-04-15T00:00:00Z',
     creator: { '@type': 'Person', name: 'Eric (Narrative Pilot)' },
+    publisher: { '@type': 'Organization', name: 'Create OS' },
   },
   {
     '@type': 'NewsArticle',
@@ -139,6 +140,43 @@ export async function siteSchema() {
           },
         ],
       },
+      // SoftwareApplication coexists with SoftwareSourceCode — different
+      // Google rich result families. SoftwareApplication describes the
+      // installable PRODUCT, SoftwareSourceCode the CODE. Both link to
+      // the same Person via @id.
+      {
+        '@type': 'SoftwareApplication',
+        '@id': 'https://career-ops.org/#application',
+        name: 'career-ops',
+        url: 'https://career-ops.org',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Linux, macOS, Windows',
+        creator: { '@id': PERSON_ID },
+        author: { '@id': PERSON_ID },
+        license: 'https://opensource.org/licenses/MIT',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+      },
+      // Full Person definition lives in the site-level schema so every
+      // page (including /docs/**) emits the canonical entity hub. The
+      // @id matches santifer.io/#person — Google merges duplicates by
+      // @id, so re-stating the node on each page is canonical, not
+      // redundant. This unblocks per-page byline-level entity resolution
+      // (Dec 2025 EEAT signal).
+      {
+        '@type': 'Person',
+        '@id': PERSON_ID,
+        name: 'Santiago Fernández de Valderrama',
+        url: 'https://santifer.io/about',
+        image: 'https://santifer.io/foto-avatar.png',
+        jobTitle: 'Applied AI Operator',
+        worksFor: { '@type': 'Organization', name: 'Zinkee' },
+        sameAs: PERSON_SAMEAS,
+        subjectOf: PERSON_SUBJECT_OF,
+      },
     ],
   };
 }
@@ -186,6 +224,16 @@ const DEFINED_TERMS = [
     name: 'multi-LLM routing for evals',
     description:
       'Running the same evaluation prompt across multiple LLMs (Claude, Codex, OpenCode, Gemini, Qwen, Copilot) so the user can pick the model that fits their cost / quality / privacy profile. Career-ops is CLI-agnostic by design.',
+  },
+  {
+    name: 'career-ops',
+    description:
+      'An open-source AI-powered job search command center. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
+  },
+  {
+    name: 'Block A-G evaluation',
+    description:
+      'The canonical career-ops evaluation prompt structure: a seven-section output (Block A through G) covering Role Summary, CV Match, Level Strategy, Comp & Demand, Personalisation Plan, Interview Prep, and Posting Legitimacy. Defined verbatim in modes/oferta.md (canonical Spanish; English translation in flight per issue #363).',
   },
 ];
 
@@ -291,6 +339,19 @@ export function methodologySchema() {
         description: t.description,
         inDefinedTermSet: 'https://career-ops.org/methodology',
       })),
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://career-ops.org/methodology/#breadcrumbs',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Methodology',
+            item: 'https://career-ops.org/methodology',
+          },
+        ],
+      },
     ],
   };
 }
@@ -332,10 +393,9 @@ export function homeFaqSchema() {
   };
 }
 
-// /about — adds ProfilePage + the full Person entity (sameAs + subjectOf
-// extended). Person @id is the same as santifer.io's canonical hub; we
-// don't fork the entity, we re-state the same node here so career-ops.org
-// pages have direct knowledge of Santiago's verified surface area.
+// /about — adds ProfilePage + BreadcrumbList. The full Person entity
+// now lives in siteSchema (root layout) so every page emits it; here we
+// only reference Person via @id and surface the page-specific nodes.
 export function aboutSchema() {
   return {
     '@context': 'https://schema.org',
@@ -353,15 +413,12 @@ export function aboutSchema() {
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
-        '@type': 'Person',
-        '@id': PERSON_ID,
-        name: 'Santiago Fernández de Valderrama',
-        url: 'https://santifer.io/about',
-        image: 'https://santifer.io/foto-avatar.png',
-        jobTitle: 'Applied AI Operator',
-        worksFor: { '@type': 'Organization', name: 'Zinkee' },
-        sameAs: PERSON_SAMEAS,
-        subjectOf: PERSON_SUBJECT_OF,
+        '@type': 'BreadcrumbList',
+        '@id': 'https://career-ops.org/about/#breadcrumbs',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+          { '@type': 'ListItem', position: 2, name: 'About', item: 'https://career-ops.org/about' },
+        ],
       },
     ],
   };
