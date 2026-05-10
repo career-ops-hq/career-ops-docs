@@ -19,6 +19,7 @@ const securityHeaders = [
 const config = {
   reactStrictMode: true,
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { hostname: 'avatars.githubusercontent.com' },
     ],

@@ -110,7 +110,7 @@ export default async function HomePage() {
       <div className="relative flex min-h-[600px] h-[70vh] max-h-[900px] border rounded-2xl overflow-hidden mx-auto w-full max-w-[1400px] bg-origin-border mt-4">
         <Hero />
         <Image
-          src="/hero_image.png"
+          src="/hero_image.avif"
           alt="career-ops terminal interface showing the job pipeline tracker"
           width={1628}
           height={1044}

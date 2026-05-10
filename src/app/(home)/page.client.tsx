@@ -29,6 +29,10 @@ export function Hero() {
   const [showShaders, setShowShaders] = useState(false);
 
   useEffect(() => {
+    // Skip the WebGL shader render loop for visitors who opted into
+    // reduced motion at the OS level. Saves ~140KB JS execution +
+    // continuous GPU work on low-end mobile.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const t = setTimeout(() => setShowShaders(true), 400);
     return () => clearTimeout(t);
   }, []);
