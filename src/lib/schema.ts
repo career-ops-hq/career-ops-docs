@@ -34,6 +34,65 @@ const PERSON_SAMEAS = [
   'https://app.daily.dev/santifer',
 ];
 
+// Reddit DiscussionForumPosting references — viral launch posts about
+// career-ops authored by Santiago on his verified Reddit account
+// (Beach-Independent — 5y old account, history matches santifer.io bio
+// including the phone-repair business exit). Brand-mention signals
+// correlate ~3× more strongly with AI search citation than backlinks
+// (Ahrefs December 2025 study). Both posts encoded with upvote +
+// comment InteractionCounters so AI engines can read social proof.
+// Headlines preserved verbatim from the actual Reddit titles, even
+// where "offers" is technically the wrong noun (the Reddit title
+// cannot be edited post-publish; the post body carries the correction).
+const SOFTWARE_SUBJECT_OF = [
+  {
+    '@type': 'DiscussionForumPosting',
+    url: 'https://www.reddit.com/r/ClaudeAI/comments/1sd2f37/i_built_an_ai_job_search_system_with_claude_code/',
+    headline:
+      'I built an AI job search system with Claude Code that scored 740+ offers and landed me a job. Just open sourced it.',
+    datePublished: '2026-04-05T12:30:50Z',
+    author: { '@id': PERSON_ID },
+    publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
+    interactionStatistic: [
+      {
+        '@type': 'InteractionCounter',
+        interactionType: 'https://schema.org/LikeAction',
+        userInteractionCount: 2815,
+        name: 'Reddit upvotes',
+      },
+      {
+        '@type': 'InteractionCounter',
+        interactionType: 'https://schema.org/CommentAction',
+        userInteractionCount: 249,
+        name: 'Reddit comments',
+      },
+    ],
+  },
+  {
+    '@type': 'DiscussionForumPosting',
+    url: 'https://www.reddit.com/r/SideProject/comments/1rw1lg4/i_automated_my_job_search_with_ai_agents_516/',
+    headline:
+      'I automated my job search with AI agents — 516 evaluations, 66 applications, zero manual screening',
+    datePublished: '2026-03-17T09:17:59Z',
+    author: { '@id': PERSON_ID },
+    publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
+    interactionStatistic: [
+      {
+        '@type': 'InteractionCounter',
+        interactionType: 'https://schema.org/LikeAction',
+        userInteractionCount: 575,
+        name: 'Reddit upvotes',
+      },
+      {
+        '@type': 'InteractionCounter',
+        interactionType: 'https://schema.org/CommentAction',
+        userInteractionCount: 359,
+        name: 'Reddit comments',
+      },
+    ],
+  },
+];
+
 // Press / NewsArticle references — published pieces about Santiago.
 // Mirrors santifer.io/about subjectOf array (5 entries).
 const PERSON_SUBJECT_OF = [
@@ -113,6 +172,7 @@ export async function siteSchema() {
           'https://github.com/santifer/career-ops',
           'https://www.wikidata.org/wiki/Q139007988',
         ],
+        subjectOf: SOFTWARE_SUBJECT_OF,
         offers: {
           '@type': 'Offer',
           price: '0',
