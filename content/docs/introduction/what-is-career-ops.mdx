@@ -4,17 +4,13 @@ description: Introducing career-ops, the open source career management tool.
 icon: CircleQuestionMark
 ---
 
-career-ops is an open source job search system that runs inside your AI coding assistant. You give it a job posting — a URL or raw text — and it reads the description, scores the role against your background, generates a tailored PDF resume, and logs everything to a local tracker. All of it happens in one command, without you touching a spreadsheet.
-
-It was built by [Santiago Fernández de Valderrama](https://santifer.io/about) to manage a real job search — 740+ listings evaluated, one Head of Applied AI role landed. He open sourced it so anyone could use the same system for free.
+career-ops is an open-source job-search system that runs inside your AI coding assistant. You give it a job posting URL or raw text and it reads the description, scores the role against your background across six dimensions, generates a tailored PDF resume citing specific lines of your CV, and logs everything to a local application tracker — all in one command, without spreadsheets, without an account, and without your data leaving your machine. career-ops was built by [Santiago Fernández de Valderrama](https://santifer.io/about) to manage a real AI-era job search in early 2026: 740 listings evaluated against an explicit rubric, one Head of Applied AI role landed at Zinkee. He open-sourced it under MIT once he no longer needed it, so anyone running a structured job search can use the same system for free, on their own machine, with the AI model they already pay for.
 
 ## Philosophy
 
 ### Open source, seriously
 
-career-ops has no paid tier, no waitlist, and no account. You clone a repo, fill in a config file, and run it locally. Your CV, your profile, and your application history never leave your machine unless you push them somewhere yourself.
-
-The project grows through contributions. If you add a company portal scraper, improve the scoring logic, or fix a bug — that improvement ships to everyone. That is the whole model.
+career-ops has no paid tier, no waitlist, no account, and no telemetry. You clone the repo, fill in a YAML config, drop your CV in markdown, and run the system locally with whichever AI coding CLI you already use. Your CV, your profile, and your application history never leave your machine unless you push them somewhere yourself. The project grows through community contributions reviewed in the open: when someone adds a company portal scraper, improves the scoring rubric, or fixes a bug, that improvement ships to everyone in the next release. That is the whole business model — there is no upsell, no enterprise tier, no data sale planned. The system is MIT-licensed forever; even if the maintainer stops shipping, the rubric, the prompts, and the scrapers stay yours to fork, audit, and run.
 
 <Callout title="Want to contribute?">
   Read the [contributing guide](https://github.com/santifer/career-ops/blob/main/CONTRIBUTING.md) before opening a pull request. The short version: open an issue first to discuss the change, then submit your PR. The maintainers review quickly.
@@ -22,25 +18,12 @@ The project grows through contributions. If you add a company portal scraper, im
 
 ### AI-native and agnostic
 
-career-ops does not ship its own AI. It runs as a set of slash commands and prompt files inside whichever AI coding CLI you already use — Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI. The AI does the reasoning; career-ops gives it the structure, the context, and the tools.
-
-This means you are not locked in. If a better model ships next month, you switch your CLI and career-ops runs on top of it unchanged.
+career-ops does not ship its own AI model. It runs as a set of slash commands and prompt files inside whichever AI coding CLI you already trust: Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI, or GitHub Copilot. The AI does the reasoning; career-ops supplies the structure, the scoring rubric, the company-portal scrapers, and the data contract that keeps your files yours. This architecture means you are not locked into one provider's roadmap or pricing — when a better model ships, you switch your CLI and career-ops runs on top of it unchanged. The same six-dimension rubric produces comparable reasoning whether you point it at a Claude, OpenAI, Gemini, or Qwen model — pick the engine that fits your cost, quality, and privacy profile, and swap freely as the landscape evolves.
 
 ## When to use career-ops
 
-career-ops is the right tool when you are running an active, structured job search — not casually browsing.
-
-It works best when you:
-
-- Have a CV you are happy with and want to tailor it per application without rewriting it manually every time
-- Are tracking multiple applications and want a single source of truth instead of a spreadsheet
-- Want to apply only to roles that actually fit, not everything that looks vaguely relevant
-- Are open to running commands in a terminal (you do not need to write code)
-
-It is probably not what you need if you are sending one or two applications and are done. The setup — cloning the repo, configuring your profile, adding your CV — takes about fifteen minutes. That investment pays off once you are evaluating more than a handful of roles.
+career-ops is the right tool when you are running an active, structured job search — not casually browsing. It works best for candidates who have a CV they are happy with and want to tailor per application without rewriting it manually each time, who are tracking multiple applications and want a single source of truth instead of a sprawling spreadsheet, who want to apply only to roles that actually fit rather than everything vaguely relevant, and who are comfortable running commands in a terminal even if they do not write code professionally. career-ops is probably not what you need if you are sending one or two applications and are done. The setup — cloning the repo, configuring your profile, adding your CV — takes about fifteen minutes, an investment that only pays off once you are evaluating more than a handful of roles.
 
 ## What it is not
 
-career-ops does not apply to jobs for you. It evaluates, scores, generates, and tracks — but every application is your decision. Nothing gets submitted without your approval.
-
-It is also not a resume builder or a LinkedIn optimizer. It is a pipeline. You bring the resume; career-ops makes sure each version of it is tuned to the job in front of you.
+career-ops does not apply to jobs for you. The system evaluates, scores, generates, and tracks — but every submission is your decision, and nothing goes anywhere without your explicit approval. career-ops is also not a resume builder or a LinkedIn optimizer; you bring the resume you already have, and the system makes sure each version of it is tuned to the job in front of you. It is a pipeline, not a content factory. The boundary between system code (which updates with each release) and user data (which never gets overwritten) is enforced by the DATA_CONTRACT.md in the repository: your CV, your profile, and your application history are sovereign — career-ops will read them, but it will never silently rewrite or delete what you put there.
