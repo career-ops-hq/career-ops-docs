@@ -145,6 +145,14 @@ const PERSON_SUBJECT_OF = [
   },
   {
     '@type': 'NewsArticle',
+    url: 'https://www.simplenews.ai/news/career-ops-laid-off-engineers-ai-job-search-system-goes-viral-with-27k-stars-bxcp',
+    headline:
+      "Career-Ops: Laid-Off Engineer's AI Job Search System Goes Viral With 27K Stars",
+    datePublished: '2026-04-09T00:00:00Z',
+    publisher: { '@type': 'Organization', name: 'SimpleNews.ai', url: 'https://www.simplenews.ai' },
+  },
+  {
+    '@type': 'NewsArticle',
     url: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
     headline:
       'Το AI εργαλείο που φέρνει επανάσταση στον τρόπο που ψάχνουμε δουλειά',
