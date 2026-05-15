@@ -113,6 +113,15 @@ const PERSON_SUBJECT_OF = [
   },
   {
     '@type': 'NewsArticle',
+    url: 'https://sqbconsulting.uz/biznes/kak-moj-instrument-otbora-700-vakansij-pomog-stat-glavoj-ai/',
+    headline: 'Как мой инструмент отбора 700 вакансий помог стать главой AI',
+    datePublished: '2026-04-28T00:00:00Z',
+    inLanguage: 'ru',
+    publisher: { '@type': 'Organization', name: 'SQB Consulting', url: 'https://sqbconsulting.uz' },
+    isBasedOn: 'https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4',
+  },
+  {
+    '@type': 'NewsArticle',
     url: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
     headline:
       'Το AI εργαλείο που φέρνει επανάσταση στον τρόπο που ψάχνουμε δουλειά',
