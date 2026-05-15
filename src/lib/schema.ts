@@ -91,6 +91,20 @@ const SOFTWARE_SUBJECT_OF = [
       },
     ],
   },
+  {
+    '@type': 'Article',
+    url: 'https://www.producthunt.com/products/santifer-io',
+    headline: 'Career-Ops on Claude — Product Hunt launch (#7 Product of the Day)',
+    datePublished: '2026-04-08T00:00:00Z',
+    author: { '@id': PERSON_ID },
+    publisher: { '@type': 'Organization', name: 'Product Hunt', url: 'https://www.producthunt.com' },
+    interactionStatistic: {
+      '@type': 'InteractionCounter',
+      interactionType: 'https://schema.org/LikeAction',
+      userInteractionCount: 147,
+      name: 'Product Hunt upvotes',
+    },
+  },
 ];
 
 // Press / NewsArticle references — published pieces about Santiago.
