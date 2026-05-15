@@ -105,6 +105,15 @@ const SOFTWARE_SUBJECT_OF = [
       name: 'Product Hunt upvotes',
     },
   },
+  {
+    '@type': 'Article',
+    url: 'https://www.webreactiva.com/blog/buscar-trabajo-agentes-ia',
+    headline: 'Buscar trabajo con IA en 2026: guía para developers',
+    datePublished: '2026-05-10T00:00:00Z',
+    inLanguage: 'es',
+    author: { '@type': 'Person', name: 'Daniel Primo' },
+    publisher: { '@type': 'Organization', name: 'Web Reactiva', url: 'https://www.webreactiva.com' },
+  },
 ];
 
 // Press / NewsArticle references — published pieces about Santiago.
