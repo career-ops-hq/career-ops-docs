@@ -33,6 +33,28 @@ export function Hero() {
     // reduced motion at the OS level. Saves ~140KB JS execution +
     // continuous GPU work on low-end mobile.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Defer mount to browser idle so the shader work doesn't compete with
+    // LCP / hydration. Safari lacks requestIdleCallback — fall back to a
+    // short setTimeout. The 2s timeout guarantees the shaders eventually
+    // render even on a busy main thread.
+    const ric = (window as Window & {
+      requestIdleCallback?: (
+        cb: () => void,
+        opts?: { timeout?: number },
+      ) => number;
+      cancelIdleCallback?: (id: number) => void;
+    }).requestIdleCallback;
+
+    if (typeof ric === 'function') {
+      const id = ric(() => setShowShaders(true), { timeout: 2000 });
+      return () => {
+        const cic = (window as Window & {
+          cancelIdleCallback?: (id: number) => void;
+        }).cancelIdleCallback;
+        if (typeof cic === 'function') cic(id);
+      };
+    }
     const t = setTimeout(() => setShowShaders(true), 400);
     return () => clearTimeout(t);
   }, []);

@@ -114,6 +114,7 @@ export default async function HomePage() {
           alt="career-ops terminal interface showing the job pipeline tracker"
           width={1628}
           height={1044}
+          sizes="(min-width: 1400px) 1050px, (min-width: 1024px) 75vw, 100vw"
           className="absolute top-[58%] left-[25%] max-w-[1400px] rounded-xl block [animation:fade-in-delayed_700ms_ease_400ms_both] [mask-image:linear-gradient(to_right,transparent_0%,black_8%)]"
           priority
         />
@@ -295,6 +296,8 @@ export default async function HomePage() {
             alt=""
             width={1628}
             height={1044}
+            quality={60}
+            sizes="(min-width: 1400px) 1376px, (min-width: 768px) 92vw, 100vw"
             className="absolute inset-0 size-full object-cover object-center -z-1"
           />
 
@@ -542,6 +545,78 @@ export default async function HomePage() {
         </div>
 
       </div>
+
+      {/* Frequently asked — visible counterpart to homeFaqSchema(). Adds
+          ~600 words of extractable text (citation sweet spot for
+          ChatGPT/Perplexity/AIO) and closes the Quality Rater
+          schema-without-visible-content flag. Text matches the schema
+          answers verbatim — Schema.org expects strict parity. */}
+      <section className="mx-auto w-full max-w-[1100px] px-6 md:px-12 mt-16 lg:mt-24">
+        <h2
+          className={`${instrumentSerifRegular.className} text-center tracking-tight text-3xl md:text-4xl lg:text-5xl mb-10 lg:mb-14`}
+        >
+          Frequently asked
+        </h2>
+        <dl className="space-y-8 lg:space-y-10">
+          <div>
+            <dt className="text-fd-foreground font-medium text-lg lg:text-xl mb-2">
+              How does career-ops score job listings?
+            </dt>
+            <dd className="text-fd-foreground/80 leading-relaxed">
+              career-ops uses a rubric-guided LLM evaluation across six
+              dimensions — match, north-star alignment, comp, cultural
+              signals, red flags, and global fit — producing a 1.0–5.0
+              score with citations to specific CV lines and JD
+              requirements. Anything below 4.0 the agent recommends
+              against applying. No closed-form formula, no
+              spray-and-pray. The full rubric is published at{' '}
+              <Link
+                href="/methodology"
+                className="text-fd-foreground hover:underline underline-offset-2"
+              >
+                career-ops.org/methodology
+              </Link>
+              .
+            </dd>
+          </div>
+          <div>
+            <dt className="text-fd-foreground font-medium text-lg lg:text-xl mb-2">
+              Is career-ops free? What is the business model?
+            </dt>
+            <dd className="text-fd-foreground/80 leading-relaxed">
+              career-ops is MIT-licensed open source with no paid tier,
+              no waitlist, no account, and no telemetry. You clone the
+              repo, configure your profile, and run it locally on your
+              own machine. The only cost is whichever AI CLI you point
+              it at — Claude Code, Codex, OpenCode, Gemini CLI, Qwen,
+              or Copilot. There is no other revenue model: no upsell,
+              no enterprise tier, no data sale.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-fd-foreground font-medium text-lg lg:text-xl mb-2">
+              Who built career-ops?
+            </dt>
+            <dd className="text-fd-foreground/80 leading-relaxed">
+              career-ops was built by{' '}
+              <Link
+                href="/about"
+                rel="author"
+                className="text-fd-foreground hover:underline underline-offset-2"
+              >
+                Santiago Fernández de Valderrama
+              </Link>{' '}
+              — an Applied AI Operator with 16+ years building
+              products, founder and operator of a Spanish phone-repair
+              business (2009–2025) before exiting, and currently Head
+              of Applied AI at Zinkee. He created career-ops in early
+              2026 to manage his own AI-era job search — 740 listings
+              evaluated, one Head of AI role landed — and open-sourced
+              it under MIT once he no longer needed it.
+            </dd>
+          </div>
+        </dl>
+      </section>
 
       {/* Final CTA — full-bleed brand gradient. No card, no border, no
           rounded corners — the gradient (transparent top → brand/10 bottom)

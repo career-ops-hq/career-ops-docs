@@ -60,6 +60,9 @@ jobs:
               "keyLocation": "https://career-ops.org/1befaf1616dd4dc08b51ecb5ec601059.txt",
               "urlList": [
                 "https://career-ops.org/",
+                "https://career-ops.org/about",
+                "https://career-ops.org/methodology",
+                "https://career-ops.org/privacy",
                 "https://career-ops.org/docs",
                 "https://career-ops.org/docs/introduction/what-is-career-ops",
                 "https://career-ops.org/docs/introduction/guides/scan-job-portals",

@@ -2,6 +2,8 @@
 title: What is career-ops
 description: Introducing career-ops, the open source career management tool.
 icon: CircleQuestionMark
+date: 2026-04-20
+lastModified: 2026-05-12
 ---
 
 career-ops is an open-source job-search system that runs inside your AI coding assistant. You give it a job posting URL or raw text and it reads the description, scores the role against your background across six dimensions, generates a tailored PDF resume citing specific lines of your CV, and logs everything to a local application tracker — all in one command, without spreadsheets, without an account, and without your data leaving your machine. career-ops was built by [Santiago Fernández de Valderrama](https://santifer.io/about) to manage a real AI-era job search in early 2026: 740 listings evaluated against an explicit rubric, one Head of Applied AI role landed at Zinkee. He open-sourced it under MIT once he no longer needed it, so anyone running a structured job search can use the same system for free, on their own machine, with the AI model they already pay for.
@@ -26,4 +28,4 @@ career-ops is the right tool when you are running an active, structured job sear
 
 ## What it is not
 
-career-ops does not apply to jobs for you. The system evaluates, scores, generates, and tracks — but every submission is your decision, and nothing goes anywhere without your explicit approval. career-ops is also not a resume builder or a LinkedIn optimizer; you bring the resume you already have, and the system makes sure each version of it is tuned to the job in front of you. It is a pipeline, not a content factory. The boundary between system code (which updates with each release) and user data (which never gets overwritten) is enforced by the DATA_CONTRACT.md in the repository: your CV, your profile, and your application history are sovereign — career-ops will read them, but it will never silently rewrite or delete what you put there.
+career-ops does not apply to jobs for you. The system evaluates, scores, generates, and tracks — but every submission is your decision, made with the agent's reasoning visible at each step, and nothing goes anywhere without your explicit approval. career-ops is also not a resume builder or a LinkedIn optimizer; you bring the resume you already have, and the system makes sure each version of it is tuned to the job in front of you. It is a pipeline, not a content factory. The boundary between system code (which updates with each release) and user data (which never gets overwritten) is enforced by the DATA_CONTRACT.md in the repository: your CV, your profile, and your application history are sovereign — career-ops will read them, but it will never silently rewrite or delete what you put there, across any release.

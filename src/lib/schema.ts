@@ -122,6 +122,7 @@ const PERSON_SUBJECT_OF = [
   },
   {
     '@type': 'VideoObject',
+    '@id': 'https://career-ops.org/#video-create-os-lounge',
     url: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
     name: 'Create OS Lounge — Santiago Fernández de Valderrama',
     description:
@@ -413,6 +414,41 @@ export function methodologySchema() {
         ],
       },
     ],
+  };
+}
+
+// /docs/** — three-level BreadcrumbList: Home → Docs → page. Intermediate
+// path segments (e.g. "introduction", "guides") are flattened to keep the
+// breadcrumb readable in SERP; deeper hierarchy would require a slug→title
+// lookup against the source tree, and Google only displays the last 2-3
+// items in breadcrumb rich results anyway.
+export function docsBreadcrumbSchema(opts: {
+  url: string;
+  title?: string;
+}) {
+  const isDocsLanding = opts.url === '/docs' || opts.url === '/docs/';
+  const items: Array<{
+    '@type': 'ListItem';
+    position: number;
+    name: string;
+    item: string;
+  }> = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+    { '@type': 'ListItem', position: 2, name: 'Docs', item: 'https://career-ops.org/docs' },
+  ];
+  if (!isDocsLanding && opts.title) {
+    items.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: opts.title,
+      item: `https://career-ops.org${opts.url}`,
+    });
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `https://career-ops.org${opts.url}#breadcrumbs`,
+    itemListElement: items,
   };
 }
 

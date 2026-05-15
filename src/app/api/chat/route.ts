@@ -72,6 +72,20 @@ const systemPrompt = [
   'If you cannot find the answer in search results, say you do not know and suggest a better search query.',
 ].join('\n');
 
+// Explicit non-POST handlers — return 405 with an `Allow: POST` header per
+// RFC 9110 §15.5.6 so probes (and tooling like Postman / curl) can discover
+// the supported method instead of getting a header-less 405.
+function methodNotAllowed() {
+  return new Response(null, {
+    status: 405,
+    headers: { Allow: 'POST' },
+  });
+}
+export const GET = methodNotAllowed;
+export const PUT = methodNotAllowed;
+export const PATCH = methodNotAllowed;
+export const DELETE = methodNotAllowed;
+
 export async function POST(req: Request, ctx: RouteContext<"/api/chat">) {
   const reqJson = await req.json();
 
