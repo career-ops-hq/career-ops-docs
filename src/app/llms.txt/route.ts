@@ -19,9 +19,9 @@ Companies use AI to filter candidates. I just gave candidates AI to choose compa
 
 ## Business model & sustainability
 
-career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot).
+career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot).
 
-Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer) — not premium tiers, paid features, or data. The maintainer has other paid work for income; sponsorship enables deeper focus on the project as public infrastructure. Path 3 Sovereign Maintainer model.
+Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Nine tiers exist: seven individual tiers ($1–$250) are identical statements of support; two corporate tiers ($500 Corporate Supporter, $1,000 Ecosystem Partner) add logo placement on the README and the /sustain page as public acknowledgment — nothing else changes. No premium product features, no roadmap influence, no priority support, no early access. The maintainer has other paid work for income; sponsorship enables deeper focus on the project as public infrastructure. Path 3 Sovereign Maintainer model.
 
 Details: https://career-ops.org/sustain
 
