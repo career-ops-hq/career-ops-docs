@@ -388,7 +388,7 @@ export function methodologySchema() {
             name: 'Is career-ops free? What is the business model?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops is MIT-licensed open source. There is no paid tier, no waitlist, no account, no telemetry. You clone the repo, configure your profile, and run it locally. The only cost is whichever AI CLI you point it at (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot).',
+              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. The maintainer has other paid work for income; sponsorship enables deeper focus on the project as public infrastructure. See career-ops.org/sustain for details.',
             },
           },
           {
@@ -457,6 +457,46 @@ export function methodologySchema() {
   };
 }
 
+// /sustain — Path 3 Sovereign Maintainer page. Emits WebPage with
+// significantLink to GitHub Sponsors + BreadcrumbList. We deliberately
+// do NOT use DonateAction (Schema.org's donate-action semantics map to
+// 501(c)(3) charities, and Google's parser can flag misuse). career-ops
+// is individual maintainer + OSS, not a registered charity — neutral
+// `significantLink` + mainContentOfPage carry the funding signal
+// without the legal-tier mismatch.
+export function sustainSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': 'https://career-ops.org/sustain#webpage',
+        url: 'https://career-ops.org/sustain',
+        name: 'Sustain career-ops',
+        description:
+          'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
+        inLanguage: 'en',
+        dateModified: '2026-05-16T00:00:00Z',
+        about: { '@id': 'https://career-ops.org/#software' },
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        significantLink: 'https://github.com/sponsors/santifer',
+        mainContentOfPage: {
+          '@type': 'WebPageElement',
+          text: 'career-ops is permanently free, MIT-licensed, and community-funded. The maintainer has other paid work; sponsorship is not a livelihood but a way to dedicate time to the project. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://career-ops.org/sustain#breadcrumbs',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+          { '@type': 'ListItem', position: 2, name: 'Sustain', item: 'https://career-ops.org/sustain' },
+        ],
+      },
+    ],
+  };
+}
+
 // /docs/** — three-level BreadcrumbList: Home → Docs → page. Intermediate
 // path segments (e.g. "introduction", "guides") are flattened to keep the
 // breadcrumb readable in SERP; deeper hierarchy would require a slug→title
@@ -514,7 +554,7 @@ export function homeFaqSchema() {
         name: 'Is career-ops free? What is the business model?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'career-ops is MIT-licensed open source with no paid tier, no waitlist, no account, and no telemetry. You clone the repo, configure your profile, and run it locally on your own machine. The only cost is whichever AI CLI you point it at — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or Copilot. There is no other revenue model: no upsell, no enterprise tier, no data sale.',
+          text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. The maintainer has other paid work for income; sponsorship enables deeper focus on the project as public infrastructure. See career-ops.org/sustain for details.',
         },
       },
       {

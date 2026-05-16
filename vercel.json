@@ -24,6 +24,11 @@
       "source": "/twitter",
       "destination": "https://x.com/santifer",
       "permanent": true
+    },
+    {
+      "source": "/sponsors",
+      "destination": "/sustain",
+      "permanent": true
     }
   ]
 }

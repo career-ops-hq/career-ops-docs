@@ -200,6 +200,23 @@ export default function AboutPage() {
           </ul>
         </section>
 
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+            Sustaining the work
+          </h2>
+          <p className="mt-3 text-fd-foreground/90 leading-relaxed">
+            career-ops is permanently free, MIT-licensed, and community-funded. If the
+            project has been useful to you and you have spare income,{' '}
+            <Link
+              href="/sustain"
+              className="text-fd-foreground underline underline-offset-2"
+            >
+              sustaining the maintainer
+            </Link>{' '}
+            keeps the work moving.
+          </p>
+        </section>
+
         <hr className="my-12 w-32 mx-auto border-t-2 border-fd-foreground/20 lg:w-40" />
 
         <div className="text-center">

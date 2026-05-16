@@ -584,13 +584,23 @@ export default async function HomePage() {
               Is career-ops free? What is the business model?
             </dt>
             <dd className="text-fd-foreground/80 leading-relaxed">
-              career-ops is MIT-licensed open source with no paid tier,
-              no waitlist, no account, and no telemetry. You clone the
-              repo, configure your profile, and run it locally on your
-              own machine. The only cost is whichever AI CLI you point
-              it at — Claude Code, Codex, OpenCode, Gemini CLI, Qwen,
-              or Copilot. There is no other revenue model: no upsell,
-              no enterprise tier, no data sale.
+              career-ops is permanently free, MIT-licensed, and
+              community-funded. There is no paid tier, no waitlist, no
+              account, no telemetry, and no premium features. You clone
+              the repo, configure your profile, and run the system
+              locally with whichever AI coding CLI you already use.
+              Sustainability comes from voluntary community patronage
+              via GitHub Sponsors — not from premium tiers, paid
+              features, or data. The maintainer has other paid work for
+              income; sponsorship enables deeper focus on the project as
+              public infrastructure. See{' '}
+              <Link
+                href="/sustain"
+                className="text-fd-foreground hover:underline underline-offset-2"
+              >
+                career-ops.org/sustain
+              </Link>{' '}
+              for details.
             </dd>
           </div>
           <div>

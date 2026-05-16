@@ -48,6 +48,9 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <a href="/about" className="hover:text-fd-foreground hover:underline">
                   About
                 </a>
+                <a href="/sustain" className="hover:text-fd-foreground hover:underline">
+                  Sustain
+                </a>
                 <a
                   href="https://github.com/santifer/career-ops"
                   rel="noreferrer noopener"
