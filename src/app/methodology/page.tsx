@@ -491,7 +491,7 @@ export default function MethodologyPage() {
               whichever AI coding CLI you already use. Sustainability comes from voluntary
               community patronage via GitHub Sponsors &mdash; not from premium tiers, paid
               features, or data. The maintainer has other paid work for income; sponsorship
-              enables deeper focus on the project as public infrastructure. See{' '}
+              enables deeper focus on the project. See{' '}
               <a
                 href="/sustain"
                 className="text-fd-foreground underline underline-offset-2"

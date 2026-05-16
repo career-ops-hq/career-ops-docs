@@ -592,8 +592,8 @@ export default async function HomePage() {
               Sustainability comes from voluntary community patronage
               via GitHub Sponsors — not from premium tiers, paid
               features, or data. The maintainer has other paid work for
-              income; sponsorship enables deeper focus on the project as
-              public infrastructure. See{' '}
+              income; sponsorship enables deeper focus on the project.
+              See{' '}
               <Link
                 href="/sustain"
                 className="text-fd-foreground hover:underline underline-offset-2"
