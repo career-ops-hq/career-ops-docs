@@ -115,14 +115,15 @@ export default function SustainPage() {
             </h2>
             <ul className="mt-3 list-disc space-y-2 pl-6">
               <li>
-                <strong>$500 Corporate Supporter.</strong> Logo placement on the README and
-                this page. Acknowledgment in major release notes.
+                <strong>$500 Corporate Supporter.</strong>{' '}
+                Logo placement on the README and this page. Acknowledgment in major
+                release notes.
               </li>
               <li>
-                <strong>$1,000 Ecosystem Partner.</strong> Prominent logo placement on the
-                README and this page. Acknowledgment in major releases. Invitation to
-                private architectural discussions on protocol design &mdash; input welcome,
-                no roadmap influence.
+                <strong>$1,000 Ecosystem Partner.</strong>{' '}
+                Prominent logo placement on the README and this page. Acknowledgment in
+                major releases. Invitation to private architectural discussions on
+                protocol design &mdash; input welcome, no roadmap influence.
               </li>
             </ul>
             <p className="mt-4 text-fd-foreground/90">
@@ -156,8 +157,8 @@ export default function SustainPage() {
               .
             </p>
             <p className="mt-3 text-fd-muted-foreground text-sm italic">
-              Logos appear here only when real sponsors land. We don&rsquo;t render
-              placeholders to look bigger than we are.
+              Logos appear here only when real sponsors back the project. We don&rsquo;t
+              render placeholders to look bigger than we are.
             </p>
           </section>
         </div>
