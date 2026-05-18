@@ -1,0 +1,74 @@
+---
+title: What 740 listings taught me about the AI-era job market
+description: Real data from running career-ops through my own job search in early 2026. The threshold ratio, the tailoring delta, the archetype mismatch patterns, and what the numbers actually say about applying in a post-LLM market.
+date: "2026-05-18"
+lastModified: "2026-05-18"
+tags: [research, data, ai-job-search, career-ops]
+summary: I evaluated 740 listings, applied to 68, and accepted one offer (Head of Applied AI at Zinkee). Here is what the numbers say about archetype fit, comp band realities, the tailoring response delta, and the patterns that bite candidates without an explicit rubric.
+---
+
+In early 2026 I exited Santifer iRepair, the phone-repair business I founded and operated for sixteen years, and ran my own AI-era job search. I used career-ops — the system I was building in parallel — to evaluate every listing against an explicit rubric. By the end of the search I had 740 evaluations on file, 68 applications submitted, several first-round conversations, and one accepted offer.
+
+The numbers from that search are public and verifiable in the project's README. This post is the longer story behind the headline data — what the rubric surfaced, which patterns repeated, and where my intuition was wrong before I had a structured view of the funnel.
+
+I am not publishing per-company evaluations. The rubric is open source; the company-specific scoring is private out of basic courtesy. The patterns below aggregate across the 740-listing corpus.
+
+## The headline numbers
+
+- **740 listings evaluated** across Greenhouse, Ashby, Lever, and a handful of company-specific portals between January and April 2026
+- **68 applications submitted** — 9.2% of evaluated listings crossed the 4.0/5.0 threshold and made it through tailoring
+- **One offer accepted** — Head of Applied AI at Zinkee, where I work now
+
+These ratios are not intended as benchmarks. The exact percentages depend heavily on archetype specificity, market timing, and seniority. What matters is the *shape* of the funnel: the 9% threshold pass rate is what disciplined filtering looks like at the top, and the response-rate inversion happens through the tailoring delta further down.
+
+## What the 91% reject pile contained
+
+The instructive part of the data is the 91% that did not clear the threshold. Five patterns repeated.
+
+**Off-archetype roles.** Roughly 35% of scanned listings were close enough to my keyword filters that the scan caught them, but distant enough from my actual target that the evaluation correctly rejected them. Senior Software Engineer roles when I was targeting staff-level. Product Manager roles where the actual responsibilities were closer to project management. The keyword-archetype gap is the largest contributor to the reject pile, and tighter archetype definitions cut this category most.
+
+**Under-leveled or over-leveled.** About 18% were the right shape but the wrong level. A Senior Engineer role at a thirty-person Series A company is structurally a Staff or Principal role at most companies; the title underflows. Inversely, "Head of AI" at a five-person seed-stage startup is structurally an IC role with a title inflation. Title alone is insufficient signal; the evaluation looks at scope, team size, and reporting structure to derive actual level.
+
+**Comp band below market.** Approximately 16% were the right role and right level but listed comp ranges that materially undershot the market for that level. The evaluation flagged these because the threshold also factors comp realism. A Staff Engineering role with a $140K–$180K band in San Francisco is either intentionally below market (signal: company is not serious about this hire), or the band is misleading and the actual offer will be different (signal: company is not transparent). Either way, the rubric rejects.
+
+**Red flags in the JD.** About 12% had specific patterns the rubric explicitly downscores. "Comfortable wearing many hats" plus "5+ years of experience" plus a Series A company with no clear PM or designer mentioned. "Founder-mode" language combined with vague responsibilities. Sometimes a job description telegraphs its dysfunction in the first three paragraphs, and the rubric catches that consistently.
+
+**Soft mismatches.** The remaining ~10% were borderline. Real roles with real merit that did not quite fit my specific North Star. Different candidates with different archetypes would score these higher. They are the noise floor of any structured search.
+
+## The tailoring delta
+
+The most surprising number from the search was not in the threshold ratio. It was in the response rate from tailored applications.
+
+I cannot publish raw response rates without identifying the companies. What I can say is that the response rate on tailored applications was several multiples of the response rate I had historically seen on partially-tailored or untailored applications in prior searches. The shift was large enough to feel like a different market, not just a tactical improvement.
+
+Three mechanisms drive the delta. First, ATS keyword density alignment improves materially when the tailoring step integrates the JD's priority keywords (when they accurately describe my background). Second, the cover letter and open-ended portal questions go from generic to specific, which moves the recruiter screen meaningfully. Third, the reordering of CV sections to surface the most relevant experience first changes what the recruiter sees in the first ten seconds — which is most of the recruiter's actual evaluation time.
+
+The economic point is that the tailoring step used to cost thirty minutes per application, which capped how many tailored applications I could realistically send. LLMs collapsed that cost to about five minutes (LLM does the draft, I review and edit). The cost per tailored application dropped sixfold; the response rate per tailored application stayed high. Net effect: more interviews, less time burnt.
+
+## What did not work
+
+Three approaches I tried that the data did not support.
+
+**Broad scans across companies I did not vet.** Early in the search I configured career-ops to scan every Greenhouse and Ashby company I could plausibly target. The scan returned hundreds of listings; the evaluations took meaningful tokens; the threshold-clearing rate from these scans was lower than from scans of pre-vetted target companies. The lesson: archetype is necessary but not sufficient. Company-fit screening saves significant evaluation cost.
+
+**Auto-generated cover letters with minimal review.** I tried, for about fifteen applications, sending the LLM-drafted cover letter with only a quick scan. Response rates on those applications were noticeably lower than on cover letters where I spent five minutes editing the LLM draft. The lift from human review of the draft was real and worth the time.
+
+**Applying to anything below 4.0.** I tested, deliberately, applying to a small batch of listings that scored 3.5–3.9 to see whether the rubric was over-rejecting. The response rate on those applications was substantially lower than the threshold-passing group. The 4.0 threshold is not arbitrary; it correlates with where the response curve drops.
+
+## What I would do differently
+
+If I were starting the search over with the benefit of the data, three changes.
+
+**Spend two hours on archetype definition before the first scan.** I spent thirty minutes; the under-defined archetypes cost me weeks of noise in the scan results. The archetype investment compounds.
+
+**Configure the comp band filter aggressively.** The rubric will flag below-market comp, but I let too many borderline-comp listings through to evaluation for the first month. Cutting them at the scan filter would have saved tokens and attention.
+
+**Run patterns mode weekly.** The patterns mode in career-ops surfaces what is repeating in the reject pile, which catches blind spots in your targeting. I ran it twice over the whole search; running it weekly would have caught the over-leveled-startup pattern faster.
+
+## Why this data is public
+
+The career-ops repo is MIT-licensed and the rubric is published in full at [/methodology](/methodology). Publishing the data behind a real run was the natural extension of that openness. The point of the project is to help other people run more structured searches, and the data from one real search does more to communicate the actual shape of an AI-augmented job hunt than any abstract description of the tool.
+
+If you are running a search now and want to use a structured approach, [the repo](https://github.com/santifer/career-ops) is the place to start. If you want the comparison against the polished SaaS alternatives, [the comparisons are here](/compare). If you want to read the underlying thesis, [the founder's-thesis post is here](/blog/why-career-ops).
+
+The 740-listing run was not a controlled experiment. It is a single search by a single person in a specific market window. The patterns above are descriptive of that run, not prescriptive for every search. What they do show is that disciplined filtering, real tailoring, and explicit tracking move the funnel substantially — enough that the difference is visible in the response rates, not just the workflow.

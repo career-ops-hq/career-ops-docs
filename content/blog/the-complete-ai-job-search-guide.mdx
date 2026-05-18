@@ -1,0 +1,106 @@
+---
+title: The complete guide to AI-powered job search in 2026
+description: An honest, current guide to using AI for job search in 2026 — what works, what is wasted effort, and which tools fit which audiences. Written by someone who used the approach to land a Head of AI role.
+date: "2026-05-18"
+lastModified: "2026-05-18"
+tags: [ai-job-search, guide, claude-code, methodology]
+summary: A practical 2026 guide to AI-powered job search. Covers the asymmetry between recruiter-side and candidate-side AI, the four phases of a structured search, which tools fit which user profile, and where to spend time vs where not to.
+---
+
+Most "AI job search guides" online are either marketing copy for a single tool or a list of generic tips that ignore how the field has actually shifted in the last twelve months. This is the honest version, written by someone who used the approach to evaluate 740 listings, apply to 68 roles, and land one Head of AI offer — then open-sourced the system.
+
+The guide is opinionated. Three foundational claims drive everything that follows.
+
+**One.** The hiring market in 2026 is asymmetric. Companies have used AI to filter candidates for nearly a decade — applicant tracking systems, automated screening, AI-assisted interviewer notes. Candidates, until very recently, had nothing equivalent. Large language models inverted that asymmetry in the last eighteen months. The candidate side now has access to better reasoning than the ATS doing the filtering.
+
+**Two.** Volume is the wrong objective. Spray-and-pray was always a bad strategy, but in a post-LLM world where everyone can spray faster, it is actively self-destructive. Recruiters drowning in AI-generated mass applications now filter more aggressively, which means the cost of a low-quality application is higher than it was in 2023. Fewer applications, more tailored, beat the inverse.
+
+**Three.** The tool you choose matters less than the workflow you adopt. Jobscan, Teal, Huntr, career-ops, your own GPT prompts — all of these can produce a competent tailored application. What separates effective searches from ineffective ones is the structure: scanning systematically, filtering against an explicit rubric, tailoring per listing, and tracking with discipline. The tool is a force multiplier on the workflow, not a substitute for it.
+
+## The four phases of a structured AI job search
+
+Every AI-powered job search worth running has the same four phases. Different tools handle each phase with different polish, but the phases themselves are non-negotiable.
+
+### Phase 1 — Scan
+
+Define your target archetypes before you start scanning. An archetype is a specific shape of role you would take: "Staff Software Engineer at a Series B–D AI company, full remote or hybrid in EU, comp band $250K–$400K." If you cannot write the archetype in one sentence, you do not have one yet — and scanning without an archetype just produces noise.
+
+With archetypes defined, scanning means hitting the public APIs of the major applicant tracking systems used by your target companies. Greenhouse, Ashby, and Lever each publish public job-board APIs that anyone can query without authentication. Workday and SmartRecruiters require more careful handling. LinkedIn is the largest source but the ToS explicitly forbids scraping and the workarounds expose you to account suspension; most serious AI job search tools (including career-ops) deliberately stay off LinkedIn for that reason.
+
+The output of Phase 1 is a flat list of listings — title, company, location, JD text — that matched your archetype keywords. Realistically you will end the day with a hundred listings if you ran a broad scan, or twenty if you scanned only your top-tier companies.
+
+### Phase 2 — Evaluate
+
+This is where the wheat-from-chaff happens. Every listing gets scored against an explicit rubric. The rubric matters because without one, you fall back on gut response, and gut response in a job search trends toward applying to everything because rejection is uncomfortable and applying feels productive.
+
+A useful rubric covers at minimum six dimensions: match (does your background actually fit the role), north-star alignment (does the role move you toward your stated career direction), comp (is the comp band realistic and in your acceptable range), cultural signals (red flags in the JD itself — vague responsibilities, founder-mode language, missing comp transparency), red flags (legal, ethical, or operational), and global fit (everything else combined).
+
+Score on 1.0–5.0. Set a threshold — career-ops uses 4.0 — and reject everything below it. In practice, on a scan of 100 listings, roughly 8–12 will clear a 4.0 threshold against a well-defined archetype. The rest are off-archetype, under-leveled, mispriced, or carry flags severe enough that applying is wasted time.
+
+The cost of this step before LLMs was thirty minutes of careful reading per listing, which meant most people skipped the step. With LLMs, the cost per evaluation is under a minute and a few cents of tokens. The economics shifted; the discipline did not.
+
+### Phase 3 — Tailor
+
+Every listing that clears the threshold gets a tailored CV and a tailored application. Tailoring used to be the bottleneck: thirty minutes per listing to rewrite bullets, surface relevant experience, integrate JD keywords, and format for ATS parsers. Most people tailored a third of their applications because that was the cost ceiling they could pay.
+
+LLMs collapsed this. An LLM with your CV and the JD can produce a tailored variant in under a minute, integrating the JD's priority keywords naturally (when they accurately describe what you have done) and reordering sections to surface the most relevant experience first.
+
+The work shifted from "writing the tailored variant" to "reviewing the tailored variant." Five minutes of human review per listing is sustainable. Thirty minutes of human writing is not. The math inverted.
+
+Tailoring well is also the highest-ROI moment in the entire search. Tailored applications correlate strongly with response rate. The exact multiplier varies, but every candidate I have talked to who used a disciplined tailoring approach saw their response rate move into a different regime. Untailored mass applications hover in the 1–3% response range in 2026; tailored applications routinely hit 15–30%.
+
+### Phase 4 — Track
+
+Every application you send becomes a future thing you need to manage: when did you apply, what stage is it in, who responded, what is the next action, when is the followup due. A search with even thirty active applications becomes psychologically rough without explicit tracking.
+
+The minimum useful tracker has: company, role, date applied, score, stage, last contact date, next action, next action due date. That is enough structure to surface what to do next on any given morning. Beyond the minimum, the marginal value of more fields drops quickly.
+
+The tool that handles this varies wildly by preference. A Notion database works. A Google Sheet works. Huntr's Kanban board works. Teal's web dashboard works. career-ops's Go TUI dashboard works. The shape of the tool matters less than the discipline of keeping it current.
+
+## Which tool fits which user
+
+Five archetypes cover most active job searchers in 2026. Each maps to a different tool choice.
+
+**The polished SaaS user.** You want a web app with a Chrome extension, a polished UI, and a one-click "save this job" workflow. You will pay $30–60 a month for the convenience. Your data lives on a vendor's servers; that is a trade-off you accept.
+
+→ **Teal** (full-pipeline ATS-friendly resume builder + Kanban tracker + Chrome extension) or **Huntr** (Kanban-first with a popular Chrome extension).
+
+**The ATS-anxious applicant.** You believe — correctly — that ATS keyword alignment matters for your applications. You want a tool that scans your resume against a JD and tells you what is missing. You will iterate manually on the edits.
+
+→ **Jobscan** is the polished answer here. It costs $50/month for the full toolset, and it does one thing well: keyword gap analysis.
+
+**The technical user who wants ownership.** You write code, you live in a terminal, and the SaaS pattern annoys you because your career data ends up on someone else's servers and the matching algorithm is a black box.
+
+→ **career-ops** (MIT-licensed, runs locally through your AI CLI, full pipeline from scan to evaluation to tailoring to tracking). Setup takes fifteen minutes if you have Node 20+; if you do not have Node 20+, the other tools are friendlier.
+
+**The senior operator with one shot at a role.** You are not in active search. You have one specific role you want, possibly through a warm intro. You do not need an entire pipeline; you need to nail this single application.
+
+→ Run ChatGPT or Claude manually with the JD and your CV. The single-shot quality of a focused conversation beats any structured pipeline for a single application. Tools become valuable when applications multiply.
+
+**The recruiter or hiring manager curious about the candidate side.** You want to understand what is happening on the other end of the funnel.
+
+→ Read [career-ops's published methodology](/methodology). It is the most transparent rubric and pipeline anyone has published in this space. You will see exactly what a structured candidate process looks like.
+
+## Where to spend time and where not to
+
+**Spend time on:**
+
+- **Archetype definition.** One hour writing your archetypes saves a hundred hours of scanning the wrong listings.
+- **Reviewing tailored variants.** The LLM does the first draft; you do the final pass. Five minutes per application makes the difference between a generic tailored response and a credible one.
+- **Followups.** A one-line followup at the right cadence moves the response rate more than any algorithm tweak. Most candidates skip this.
+
+**Do not spend time on:**
+
+- **Tweaking your master CV constantly.** Master once thoroughly, then let the tailoring step produce variants. Most CV rewriting energy is wasted at the source level.
+- **Cover letter templates.** Per-listing cover letters generated against the JD outperform any reusable template by a wide margin. Skip the template-building.
+- **LinkedIn optimization theater.** A clean headline, a current role, and a working "open to" signal cover 95% of LinkedIn's value to most candidates. The remaining 5% rarely justifies the hours.
+
+## A final note on ethics
+
+The mass auto-application pattern — point an AI agent at a job board, click "auto-apply" on everything — is a defection from the equilibrium that benefited everyone, candidates included. Recruiters' pipelines are visibly degraded by it. Response rates dropped industry-wide. Quality candidates lose because the noise floor rose.
+
+Structured AI-augmented search is the cooperative move. Filter against a real rubric, apply only to listings you actually fit, draft each application well, retain the submit decision. That is the pattern career-ops and similar tools were built around. It produces better outcomes for the candidate using the tool, and it does not poison the well for everyone else.
+
+If you want to see what a complete implementation of this pattern looks like, [the repo is here](https://github.com/santifer/career-ops). If you want comparisons against the polished SaaS alternatives, [those are here](/compare). If you want to read the rubric and the canonical evaluation prompt, [the methodology is published in full](/methodology).
+
+Pick a tool, define your archetypes, run the four phases with discipline. The candidate side of the table is finally on level footing with the recruiter side. The question is what you do with it.

@@ -31,6 +31,14 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/methodology — scoring rubric, six dimensions, canonical evaluation prompt (Block A–G), edge cases, and explicit anti-features
 - https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to sponsor the maintainer
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
+- https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr and other AI job search tools
+- https://career-ops.org/use-cases — every career-ops mode, portal, and CLI runtime documented (sourced from v1.8.0 canonical manifest)
+
+## Long-form (blog)
+
+- https://career-ops.org/blog/why-career-ops — the thesis behind the project, what it deliberately is not, and the asymmetry it addresses
+- https://career-ops.org/blog/the-complete-ai-job-search-guide — opinionated guide to AI-powered job search in 2026, four-phase pipeline, tool selection by user archetype
+- https://career-ops.org/blog/job-search-data-from-740-listings — real data from one real search: threshold ratios, tailoring delta, reject-pile patterns
 
 ## Source of truth (core repo)
 
