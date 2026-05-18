@@ -54,6 +54,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
       <body className="framework relative flex min-h-screen flex-col">
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
         <RootProvider>{children}</RootProvider>

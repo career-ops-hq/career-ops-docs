@@ -56,6 +56,63 @@
   to { opacity: 1; }
 }
 
+/* Compare-rotator "picker wheel" — iOS-style 3D cylinder roll: the
+   outgoing wordmark exits upward off the cylinder face while the
+   incoming wordmark enters from below the cylinder's bottom edge.
+   Combined with cubic-bezier overshoot for the elastic settle. The
+   container provides perspective; the children rotate around the
+   X axis as if printed on a horizontal cylinder. Outside the
+   animate-* namespace so Tailwind v4 keeps it. */
+@keyframes compare-picker-in {
+  0% {
+    transform: rotateX(85deg) translateY(28px);
+    opacity: 0;
+  }
+  55% {
+    transform: rotateX(-12deg) translateY(-4px);
+    opacity: 1;
+  }
+  78% {
+    transform: rotateX(5deg) translateY(2px);
+  }
+  100% {
+    transform: rotateX(0deg) translateY(0);
+    opacity: 1;
+  }
+}
+
+.compare-picker-stage {
+  perspective: 600px;
+  transform-style: preserve-3d;
+}
+
+.compare-picker-in {
+  animation: compare-picker-in 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+}
+
+/* Compare-rotator slideshow — paired with the picker wheel above.
+   Calmer crossfade (the OG images are visually dense, so heavy
+   motion would compete). 600ms gives the eye time to register the
+   image; the slight scale-in adds depth without rotation. Re-runs
+   on every key change in the competitor index. */
+@keyframes compare-image-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.compare-image-in {
+  animation: compare-image-in 600ms ease-out both;
+}
+
 @keyframes terminal-popup-in {
   from {
     opacity: 0;

@@ -8,6 +8,7 @@ import { Hero, CreateAppAnimation, AgnosticBackground } from './page.client';
 import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { SubscribeForm } from '@/components/subscribe-form';
 import { CopyableCommand } from '@/components/copyable-command';
+import { CompareRotator } from '@/components/compare-rotator';
 import { getProjectStats } from '@/lib/stats';
 import { homeFaqSchema } from '@/lib/schema';
 
@@ -545,6 +546,12 @@ export default async function HomePage() {
         </div>
 
       </div>
+
+      {/* Compare rotator — surface /compare as a body section. Eight
+          competitor wordmarks rotate every 3s with a fade, each one
+          clickable to its specific comparison page. Respects
+          prefers-reduced-motion. */}
+      <CompareRotator />
 
       {/* Frequently asked — visible counterpart to homeFaqSchema(). Adds
           ~600 words of extractable text (citation sweet spot for
