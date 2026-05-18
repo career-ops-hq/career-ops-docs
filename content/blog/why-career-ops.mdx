@@ -1,0 +1,78 @@
+---
+title: Why career-ops
+description: The thesis behind the project — why I built it, what it explicitly is not, and what 740 listings taught me about AI-era job search.
+date: "2026-05-18"
+lastModified: "2026-05-18"
+tags: [thesis, career-ops, ai-job-search, open-source]
+summary: I built career-ops to manage my own job search after exiting a 16-year operator role. 740 listings evaluated, one Head of AI offer landed. Then I open-sourced it. Here is what the project is, what it deliberately is not, and why this asymmetry needed a tool on the candidate side.
+---
+
+Companies use AI to filter candidates. I just gave candidates AI to choose companies.
+
+That sentence is the whole project. Everything else — the fourteen modes, the six-dimension rubric, the Go TUI, the MIT license — follows from it. The asymmetry between recruiter-side AI tooling and candidate-side AI tooling is the largest unaddressed gap in the 2026 hiring market, and career-ops exists to close it from the candidate's side.
+
+## The asymmetry
+
+Every company over fifty employees runs an applicant tracking system. Greenhouse, Ashby, Lever, Workday, SmartRecruiters — these tools read résumés at scale, score them against requisitions, and surface what looks like a match to a human recruiter. Fortune 500 companies hit 99% ATS adoption. The recruiter side of the table is heavily AI-augmented and has been for nearly a decade.
+
+The candidate side, until recently, had nothing. You wrote a résumé in Word, customized it manually per application if you had time, and submitted into systems whose ranking logic you could not see. Most candidates did not customize. Most candidates lost.
+
+Then large language models showed up, and a strange thing happened. Suddenly the candidate had access to better reasoning than the ATS doing the filtering. A six-dollar Claude API call could read a job description, compare it against a CV, surface gaps, suggest framings, and draft a tailored cover letter — all in under a minute, all in language that survived ATS parsing because it was written for ATS parsing. The asymmetry inverted.
+
+For about eighteen months, the only people who knew this were a small subset of engineers who happened to also be on the job market. They wrote one-off scripts, glued together OpenAI calls and résumé templates, and quietly out-applied everyone else. Their hit rate on senior roles jumped. They did not write about it because writing about it would erode the edge.
+
+career-ops is what happens when one of those engineers loses the edge anyway — by landing the job — and decides to ship the system into the open.
+
+## What career-ops actually is
+
+career-ops is a job-search command center that runs locally on your machine through whichever AI coding CLI you already pay for. Claude Code, Codex, OpenCode, Gemini CLI, Qwen, GitHub Copilot — pick whichever you have a subscription to. The system itself is a collection of fourteen markdown skill files, a Go TUI dashboard, and a Playwright bridge for portals without clean APIs. Everything else is configuration.
+
+The flow is simple enough to summarize in five verbs:
+
+**Scan.** career-ops hits the public APIs of Greenhouse, Ashby, and Lever — zero scraping, zero tokens, free. For portals without API access, the scan mode invokes Playwright through your AI CLI to navigate listings. The output is a flat file of every posting that matches your target archetypes.
+
+**Evaluate.** Every scanned listing gets scored against a six-dimension rubric: match, north-star alignment, comp, cultural signals, red flags, and global fit. The score is a number between 1.0 and 5.0, cited against specific lines in your CV and specific phrases in the JD. The rubric is published in full at [/methodology](/methodology). Anything below 4.0 the agent recommends against applying. The default threshold is deliberately high because the goal is fewer applications, not more.
+
+**Tailor.** For each listing that crosses the threshold, the tailor mode rewrites your master `cv.md` into a focused, ATS-aligned variant. It reorders bullets, surfaces relevant experience, drops the unrelated work, and integrates the JD's priority keywords where they accurately describe what you have done. The output is a clean markdown file ready for PDF export via Playwright.
+
+**Apply.** The apply mode drafts the application content — the cover letter, the answers to the open-ended questions some portals ask, the LinkedIn message to the recruiter if you have one. It does not click submit. The reason it does not click submit is in the next section.
+
+**Track.** Every artifact lands in `reports/` as a markdown file. The Go TUI dashboard reads those files and groups them by pipeline stage — scanned, evaluated, applied, interview, rejected, discarded. Navigation is keyboard-driven. Status changes are explicit keystrokes. If you want to back the data up, `git init` the directory and commit; if you want to migrate machines, `rsync` it. There is no career-ops cloud and no account.
+
+## What career-ops deliberately is not
+
+Three explicit non-features. Each was a deliberate rejection of a pull request, an issue, or a Discord proposal.
+
+**Not an auto-apply tool.** career-ops drafts every application; you submit it. The reason is not technical — closing the loop with a `submit()` call is two days of work — it is ethical and practical. Recruiters complain that AI-generated mass applications have made their pipelines unusable. They are right. A tool that filters down to four or five high-fit listings and helps the candidate craft each application well is the candidate-side response to an over-saturated system. Auto-apply at scale makes the over-saturation worse. The project explicitly rejected this in [Discussion #274](https://github.com/santifer/career-ops/discussions/274) and the position has not changed.
+
+**Not a hosted service.** There is no career-ops.com that you sign up for. There is no career-ops cloud where your data lives. The maintainer has explicitly rejected the SaaS pattern for this product, and there are no plans to reverse that. If you want hosted job search tooling, [Jobscan](/compare/career-ops-vs-jobscan), [Teal](/compare/career-ops-vs-teal), and [Huntr](/compare/career-ops-vs-huntr) cover that segment well. career-ops occupies the local-first quadrant deliberately.
+
+**Not a LinkedIn scraper.** [Issue #238](https://github.com/santifer/career-ops/issues/238) and [PR #235](https://github.com/santifer/career-ops/pull/235) document the rejection in detail. LinkedIn's terms of service prohibit scraping; the technical workarounds (fingerprint masking, residential proxies) exist but expose users to account suspension and create an arms race the project does not want to fight. Public APIs from Greenhouse, Ashby, and Lever cover the majority of high-quality engineering roles. The fraction of listings that only exist on LinkedIn is not worth the legal and ethical cost.
+
+## What the data taught me
+
+I used career-ops on my own job search in early 2026 after exiting Santifer iRepair, the phone-repair business I founded and operated for sixteen years. The numbers from that search are public and verifiable in the project README:
+
+- **740 listings** evaluated across Greenhouse, Ashby, Lever, and a handful of company-specific portals
+- **68 applications** sent — roughly 9% of scanned listings made it past the 4.0 threshold and through tailoring
+- **One offer accepted** — Head of Applied AI at Zinkee, which is where I work now
+
+Three things stand out from the data that I did not expect going in.
+
+First, the ratio. Nine percent of scanned listings cleared the threshold. The rest were either off-archetype (most of them), under-leveled (too junior or too senior), priced wrong (comp band below market), or showed red flags in the JD itself (vague responsibilities, founder-mode language, no comp transparency). Most candidates I have talked to apply to roles in the bottom 91% routinely because they have no way to filter at scale. Filtering at scale changes the math.
+
+Second, the tailoring delta. Every application went out tailored. Every. Single. One. Before career-ops I might have tailored a third of my applications because tailoring well takes thirty minutes per listing. With career-ops the cost per tailoring fell to under a minute of LLM time and about five minutes of human review. The economics inverted. Tailored applications correlate strongly with response rate — I cannot publish raw numbers without naming specific companies, but the response rate on tailored applications was several multiples of the historical norm.
+
+Third, the dashboard's emotional value. Job search is psychologically rough. A queue of sixty open applications with no clear status creates anxiety. A keyboard-navigable TUI that groups applications by stage and surfaces the next action gives the search a structure that reduces that anxiety substantially. I did not know this would matter until I was three weeks into using the tool.
+
+## Open source as default
+
+The decision to open-source career-ops under MIT was not strategic. I did not need the tool anymore, the rubric and prompts had value to other people in similar searches, and proprietary career-search tooling that charges $20–80 a month felt like the wrong shape for what I had built. The repo went public in April 2026, hit 27,000 stars in three weeks, was featured in WIRED Greece and Business Insider, and at the time of writing sits at 44K+ stars with 2,900+ Discord members.
+
+The business model is the model in the open. There is no paid tier and there will not be one. There is no career-ops cloud and there will not be one. Sustainability comes from voluntary patronage via [GitHub Sponsors](https://github.com/sponsors/santifer) — nine tiers from $1 to $1,000 per month, none of which gate features or unlock content. The full reasoning is at [/sustain](/sustain). I have other paid work; sponsorship is not a livelihood, it is a way to dedicate focused time to the project.
+
+If career-ops saved you hours of spreadsheet work, surfaced a job interview, or just clarified what AI-augmented work looks like — and you have spare income — sustaining the maintainer is how you keep that work moving. Same six-dimension rubric. Same anti-spray-and-pray philosophy. Same MIT license. Just more depth.
+
+If you want to start using it, [the repo](https://github.com/santifer/career-ops) has a fifteen-minute setup. If you want to read the methodology first, [it is here](/methodology). If you want to compare it against the SaaS alternatives, [those comparisons are here](/compare).
+
+The asymmetry was there. Someone was going to build the candidate-side response. I happened to need it for my own job search, so I built it, used it, landed the role, and shipped it into the open. The thesis is unchanged: candidates deserve at least the same caliber of AI tooling that recruiters have had for a decade. career-ops is one shape that can take.

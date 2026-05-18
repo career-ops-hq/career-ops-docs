@@ -3,8 +3,10 @@ import { statSync } from 'node:fs';
 import path from 'node:path';
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
+import { blogSource } from '@/lib/blog-source';
 import comparisonsData from '@/lib/data/comparisons.json';
 import landingsData from '@/lib/data/intent-landings.json';
+import useCasesData from '@/lib/data/use-cases.json';
 
 export const revalidate = 3600;
 
@@ -73,6 +75,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
+  // /blog index + /blog/[slug] — auto-discovered from blogSource.
+  entries.push({
+    url: `${SITE_URL}/blog`,
+    lastModified: lastModFor('src/app/blog/page.tsx'),
+  });
+  for (const post of blogSource.getPages()) {
+    const data = post.data as { date?: string; lastModified?: string };
+    const lastMod = data.lastModified || data.date;
+    const mdxRel = `content/blog/${post.slugs.join('/')}.mdx`;
+    entries.push({
+      url: `${SITE_URL}${post.url}`,
+      lastModified: lastMod
+        ? new Date(`${lastMod}T00:00:00Z`)
+        : lastModFor(mdxRel),
+    });
+  }
+
   // /<slug> — one entry per intent landing in intent-landings.json.
   // Each landing is a flat top-level route (not nested under a prefix)
   // for maximum keyword-aligned URL value.
@@ -82,6 +101,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: l.lastModified
         ? new Date(`${l.lastModified}T00:00:00Z`)
         : lastModFor('src/lib/data/intent-landings.json'),
+    });
+  }
+
+  // /use-cases index + /use-cases/[slug] — programmatic per mode/portal/CLI.
+  entries.push({
+    url: `${SITE_URL}/use-cases`,
+    lastModified: lastModFor('src/app/use-cases/page.tsx'),
+  });
+  for (const u of useCasesData.useCases) {
+    entries.push({
+      url: `${SITE_URL}/use-cases/${u.slug}`,
+      lastModified: lastModFor('src/lib/data/use-cases.json'),
     });
   }
 

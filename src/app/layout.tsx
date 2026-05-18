@@ -54,6 +54,9 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <a href="/compare" className="hover:text-fd-foreground hover:underline">
                   Compare
                 </a>
+                <a href="/blog" className="hover:text-fd-foreground hover:underline">
+                  Blog
+                </a>
                 <a
                   href="https://github.com/santifer/career-ops"
                   rel="noreferrer noopener"

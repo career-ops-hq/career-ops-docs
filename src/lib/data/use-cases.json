@@ -1,0 +1,377 @@
+{
+  "$schema-comment": "Programmatic use-case landing data — sourced from /consulta career-ops-maintainer 2026-05-18 against v1.8.0 (canonical: .agents/skills/career-ops/SKILL.md). Each entry must have UNIQUE content (anti-thin-content guard) — code snippets, gotchas, related links specific to that mode/portal/cli. Do NOT name-swap.",
+  "useCases": [
+    {
+      "slug": "mode-auto-pipeline",
+      "category": "mode",
+      "slugName": "auto-pipeline",
+      "displayName": "auto-pipeline",
+      "h1": "The auto-pipeline mode — JD to report to PDF to tracker in one command",
+      "summary": "Default flow when you paste a job description URL or raw text. Runs A–F evaluation, generates the report, exports a tailored PDF, and writes a tracker entry — without manual intervention between steps.",
+      "whatItDoes": "career-ops invokes auto-pipeline whenever you drop a JD URL or pasted text into the prompt. The mode reads the listing, scores it against the six-dimension rubric (A through F), writes the evaluation to reports/, generates the tailored PDF via Playwright, and updates the tracker entry — all in a single agent turn.",
+      "whenToUse": "Use auto-pipeline when you want the full pipeline executed automatically. It is the default mode for new listings entering your search.",
+      "example": "Paste in chat: `https://job-boards.greenhouse.io/notion/jobs/4523451008` — auto-pipeline runs end-to-end. No flags, no follow-up commands.",
+      "gotchas": "If you only want the evaluation without the PDF (faster, cheaper), invoke `/career-ops oferta` instead. auto-pipeline costs more tokens because it runs the full chain.",
+      "related": [
+        "mode-pipeline",
+        "mode-oferta",
+        "mode-pdf",
+        "mode-tracker"
+      ]
+    },
+    {
+      "slug": "mode-pipeline",
+      "category": "mode",
+      "slugName": "pipeline",
+      "displayName": "pipeline",
+      "h1": "The pipeline mode — process every queued URL in one batch",
+      "summary": "Reads URLs queued in data/pipeline.md and runs the full auto-pipeline against each one. Use it when you collected ten or twenty listings during the day and want to crunch them in a single session.",
+      "whatItDoes": "pipeline mode iterates over the URLs in data/pipeline.md (one per line) and invokes auto-pipeline against each. Reports, PDFs, and tracker entries are written for every listing that produces a valid evaluation. Failed scrapes are logged and skipped.",
+      "whenToUse": "Use pipeline when you have a backlog of URLs to process. Drop them in data/pipeline.md, invoke /career-ops pipeline, and step away.",
+      "example": "Edit data/pipeline.md, add five Greenhouse URLs one per line, then run `/career-ops pipeline`. Each URL is processed sequentially; failures are reported at the end.",
+      "gotchas": "pipeline can run for several minutes against a long queue. Token usage scales linearly with the number of URLs. Use `/career-ops batch` if you want parallel processing.",
+      "related": [
+        "mode-auto-pipeline"
+      ]
+    },
+    {
+      "slug": "mode-oferta",
+      "category": "mode",
+      "slugName": "oferta",
+      "displayName": "oferta",
+      "h1": "The oferta mode — single offer evaluation without the PDF overhead",
+      "summary": "Runs the A–F evaluation against one listing. Skips PDF generation and tracker write-back. Use it when you only need the scoring decision and not the full pipeline.",
+      "whatItDoes": "oferta mode reads a single JD (URL or pasted text), scores it against the six-dimension rubric with cited evidence, and writes the evaluation report. No PDF, no tracker entry. Fast and cheap.",
+      "whenToUse": "Use oferta to triage a borderline listing quickly. If the score clears 4.0 and you decide to apply, escalate to auto-pipeline or apply mode.",
+      "example": "Paste JD text + `/career-ops oferta` — output is the structured A–F evaluation in reports/ with the score and the dimension-by-dimension reasoning.",
+      "gotchas": "oferta does not write the tracker entry; the listing will not appear in the dashboard until you escalate. If you want the listing tracked even when below threshold, use auto-pipeline.",
+      "related": [
+        "mode-auto-pipeline",
+        "mode-ofertas",
+        "mode-pdf"
+      ]
+    },
+    {
+      "slug": "mode-ofertas",
+      "category": "mode",
+      "slugName": "ofertas",
+      "displayName": "ofertas",
+      "h1": "The ofertas mode — compare and rank multiple offers side by side",
+      "summary": "Used when you have two or more competing offers in hand and need a normalized comparison across comp, role fit, growth trajectory, and red flags. Outputs a ranked recommendation.",
+      "whatItDoes": "ofertas reads multiple JD evaluations (already produced by oferta or auto-pipeline) and ranks them against each other on the six dimensions plus a normalized decision matrix. The output is a side-by-side comparison report and a ranked recommendation.",
+      "whenToUse": "Use ofertas when you reach late-stage interviews for multiple roles and need a structured way to decide between them. Particularly useful for staff-level offers where comp packages and growth paths differ substantially.",
+      "example": "After running oferta against three different offers, invoke `/career-ops ofertas` and reference the three evaluation files. The mode produces a ranked decision matrix.",
+      "gotchas": "ofertas does not re-evaluate the offers; it ranks the existing reports. Make sure each offer has been scored individually first.",
+      "related": [
+        "mode-oferta",
+        "mode-auto-pipeline"
+      ]
+    },
+    {
+      "slug": "mode-contacto",
+      "category": "mode",
+      "slugName": "contacto",
+      "displayName": "contacto",
+      "h1": "The contacto mode — find LinkedIn contacts at the company and draft outreach",
+      "summary": "The LinkedIn power move. Given a company name and your network context, contacto surfaces likely-warm contacts (mutuals, second-degree) and drafts a short outreach message tailored to the role you are applying to.",
+      "whatItDoes": "contacto mode reads the company name and the JD context, then suggests outreach targets based on patterns the agent finds (alumni networks, prior employers, mutual contacts mentioned in your profile). It drafts a short message — five to seven sentences — tailored to the role.",
+      "whenToUse": "Use contacto when you have applied to a role and want to surface a referral path. Or use it before applying when a warm intro could move you past the recruiter pile.",
+      "example": "Invoke `/career-ops contacto` with the company and JD context. Output: 2-3 suggested LinkedIn contacts + a draft message per contact.",
+      "gotchas": "contacto does not scrape LinkedIn (rejected per issue #238). It works from the context you supply: your CV, your prior employers, mutual connections you mention. The agent does not have access to your LinkedIn graph.",
+      "related": [
+        "mode-deep",
+        "mode-interview-prep"
+      ]
+    },
+    {
+      "slug": "mode-deep",
+      "category": "mode",
+      "slugName": "deep",
+      "displayName": "deep",
+      "h1": "The deep mode — research-grade company brief before you apply",
+      "summary": "Generates a deep company research document — funding history, leadership, recent press, product trajectory, comp band signals, red flags. Use it before you apply to a Series B+ company you do not already know well.",
+      "whatItDoes": "deep mode runs a research prompt against the company name, pulling together funding history (Crunchbase, Pitchbook signals), recent news, leadership backgrounds, product/business model summary, comp signals from public sources, and a flagged-risks section. The output is a structured brief you can read in fifteen minutes.",
+      "whenToUse": "Use deep when applying to a company at Series B or later where the decision to apply (or not) requires knowing more than the JD tells you.",
+      "example": "`/career-ops deep` + company name — output is a markdown brief covering funding, leadership, product, and risk signals.",
+      "gotchas": "deep depends on the quality of public information about the company. Stealth-mode startups will produce sparse briefs. Verify everything against primary sources before high-stakes decisions.",
+      "related": [
+        "mode-oferta",
+        "mode-contacto",
+        "mode-interview-prep"
+      ]
+    },
+    {
+      "slug": "mode-interview-prep",
+      "category": "mode",
+      "slugName": "interview-prep",
+      "displayName": "interview-prep",
+      "h1": "The interview-prep mode — company- and round-specific prep document",
+      "summary": "Post-#489 the interview-prep mode splits by interview round type: recruiter screen, hiring manager, peer technical, and panel. Each variant produces a focused prep doc with likely questions, talking points, and STAR-format stories from your profile.",
+      "whatItDoes": "interview-prep reads the company context (ideally already enriched via deep mode), the JD, and your profile, then produces a prep document scoped to a specific round type. The doc covers expected question patterns, talking points specific to your background, and pre-written STAR stories you can adapt live.",
+      "whenToUse": "Use interview-prep the night before each round. The recruiter-screen variant covers comp negotiation prep. The hiring-manager variant focuses on role fit. The peer-technical variant focuses on architecture/coding questions. The panel variant covers leadership signals.",
+      "example": "`/career-ops interview-prep` + select round type — output is a prep document of 1,500–2,500 words organized by question pattern.",
+      "gotchas": "Each variant assumes you have already run oferta against the company. The prep depth scales with how much context the agent has — fold in deep-mode output and contacto-mode notes for richer prep.",
+      "related": [
+        "mode-deep",
+        "mode-contacto",
+        "mode-oferta"
+      ]
+    },
+    {
+      "slug": "mode-pdf",
+      "category": "mode",
+      "slugName": "pdf",
+      "displayName": "pdf",
+      "h1": "The pdf mode — tailored ATS-optimized PDF from your master CV",
+      "summary": "Generates a tailored PDF resume against a specific JD using Playwright to render markdown through a clean typographic template. The output is structurally simple — no tables, no columns, no graphics — exactly what ATS parsers handle reliably.",
+      "whatItDoes": "pdf mode reads your master cv.md, the JD context, and runs the tailor step (rewriting bullets, reordering sections, integrating priority keywords) before exporting to PDF via Playwright with a CSS template that respects ATS parser conventions. The result is upload-ready.",
+      "whenToUse": "Use pdf when you have already evaluated the listing and decided to apply, and want only the tailored PDF without re-running the evaluation step.",
+      "example": "`/career-ops pdf` referencing an evaluated listing — output is `cv-<company>.pdf` in reports/.",
+      "gotchas": "Requires Playwright installed locally. The build script may fail on minimal Linux installs missing system fonts. Run `npm run doctor` to diagnose.",
+      "related": [
+        "mode-auto-pipeline"
+      ]
+    },
+    {
+      "slug": "mode-training",
+      "category": "mode",
+      "slugName": "training",
+      "displayName": "training",
+      "h1": "The training mode — evaluate a course or certification against your North Star",
+      "summary": "Should you take that $4,000 ML systems course? The Coursera specialization? The expensive AWS certification? training mode scores a learning investment against your stated career direction and surfaces the actual return on time and money.",
+      "whatItDoes": "training mode reads the course or certification details (syllabus, time commitment, cost), reads your North Star section from config/profile.yml, and scores the investment against three dimensions: skill gap closure, signal value for target roles, and opportunity cost.",
+      "whenToUse": "Use training when you are tempted by a learning offering but unsure if it actually moves you toward your stated direction. Particularly useful for expensive certifications and bootcamps.",
+      "example": "`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.",
+      "gotchas": "The mode is biased toward your stated North Star. If you have not filled in config/profile.yml's North Star section thoughtfully, the evaluation will be shallow.",
+      "related": [
+        "mode-project"
+      ]
+    },
+    {
+      "slug": "mode-project",
+      "category": "mode",
+      "slugName": "project",
+      "displayName": "project",
+      "h1": "The project mode — evaluate a portfolio project idea before you build it",
+      "summary": "Builders accumulate ideas faster than they can ship. project mode scores a portfolio project idea against your target roles, your existing portfolio, and the time investment, surfacing whether it is worth building.",
+      "whatItDoes": "project mode reads the project idea description, your target archetypes from config/profile.yml, and your existing portfolio context, then scores the project on three dimensions: signal value for target roles, differentiation from your existing portfolio, and estimated time-to-shippable.",
+      "whenToUse": "Use project when you have three or four side-project ideas and want to pick the one that actually moves your job search forward. It is the side-project equivalent of the oferta mode.",
+      "example": "`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.",
+      "gotchas": "The mode does not validate technical feasibility, only career signal value. Run a separate technical scoping pass.",
+      "related": [
+        "mode-training"
+      ]
+    },
+    {
+      "slug": "mode-tracker",
+      "category": "mode",
+      "slugName": "tracker",
+      "displayName": "tracker",
+      "h1": "The tracker mode — application status overview without leaving the agent",
+      "summary": "Quick read of where every application stands. Useful as a daily check-in or when preparing the weekly review. The full keyboard-driven UI lives in the Go TUI dashboard; this mode is the chat-side summary.",
+      "whatItDoes": "tracker reads every file in reports/ and produces a structured summary grouped by stage: applied, evaluated, interview, rejected, discarded. Counts per stage, recent activity, and overdue followups are surfaced in a single response.",
+      "whenToUse": "Use tracker for a daily fifteen-second status check. Use the Go TUI dashboard when you need to dig in.",
+      "example": "`/career-ops tracker` — output is a structured status summary in the chat.",
+      "gotchas": "tracker is read-only. Status changes are explicit keystrokes in the Go TUI dashboard or manual edits to the report frontmatter.",
+      "related": [
+        "mode-followup",
+        "mode-patterns"
+      ]
+    },
+    {
+      "slug": "mode-patterns",
+      "category": "mode",
+      "slugName": "patterns",
+      "displayName": "patterns",
+      "h1": "The patterns mode — analyze rejection patterns and improve targeting",
+      "summary": "Reads your rejected and discarded applications and surfaces patterns — JD shapes that score high but never convert, archetype mismatches, comp-band issues. The output is a calibration signal for your targeting filter.",
+      "whatItDoes": "patterns reads every report in the rejected and discarded stages, looks for common features (industry, company size, seniority level, specific keywords), and produces a structured analysis of what is and is not working in your targeting.",
+      "whenToUse": "Run patterns after every 20–30 rejections to recalibrate. The mode surfaces blind spots in your profile and helps you avoid sending applications into the same dead patterns.",
+      "example": "`/career-ops patterns` after a month of search — output is a structured pattern analysis with recommendations to adjust config/profile.yml or your scan filters.",
+      "gotchas": "patterns needs a meaningful sample size (15+ rejections) to surface real signal. With fewer rejections, the analysis is noise.",
+      "related": [
+        "mode-tracker",
+        "mode-followup"
+      ]
+    },
+    {
+      "slug": "mode-followup",
+      "category": "mode",
+      "slugName": "followup",
+      "displayName": "followup",
+      "h1": "The followup mode — cadence tracker for applications and interviews",
+      "summary": "Flags applications and interviews that are overdue for followup based on the cadence rules you configure. Drafts the followup messages so you can review and send.",
+      "whatItDoes": "followup mode reads every report in the applied and interview stages, checks the date of last contact against your configured cadence (default: 7 days after apply, 5 days after interview), and flags overdue entries. For each flagged entry, it drafts a contextual followup message.",
+      "whenToUse": "Run followup on Monday mornings as a weekly ritual. Each Monday it surfaces the followups due that week with drafts ready to send.",
+      "example": "`/career-ops followup` — output is a list of overdue contacts with a draft message per entry.",
+      "gotchas": "followup is conservative by default — it does not flag entries until the cadence threshold has clearly passed. Tighten the cadence in config if you want more aggressive nudges.",
+      "related": [
+        "mode-tracker",
+        "mode-patterns"
+      ]
+    },
+    {
+      "slug": "portal-greenhouse",
+      "category": "portal",
+      "slugName": "greenhouse",
+      "displayName": "Greenhouse",
+      "h1": "Scanning Greenhouse with career-ops — zero-token, no scraping",
+      "summary": "career-ops hits Greenhouse's public boards API directly. No HTML scraping, no rate-limit risk, no AI tokens consumed during the scan itself.",
+      "whatItDoes": "The greenhouse provider in providers/greenhouse.mjs makes HTTP requests to boards-api.greenhouse.io/v1/boards/{slug}/jobs and parses the JSON response into the career-ops listing format. The slug is the company's Greenhouse board identifier (e.g. 'notion' for Notion).",
+      "whenToUse": "Use Greenhouse scanning when your target companies use Greenhouse as their ATS. Most US tech companies in the 50–10,000-employee range do. templates/portals.example.yml ships with 70+ pre-configured Greenhouse slugs you can enable.",
+      "example": "In your portals.yml: `- provider: greenhouse\\n  slug: notion\\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.",
+      "gotchas": "Greenhouse-API listings only include the title, location, and department in the boards endpoint. Full JD text requires a follow-up request per listing, which career-ops handles automatically during the evaluate step.",
+      "related": [
+        "portal-ashby",
+        "portal-lever"
+      ]
+    },
+    {
+      "slug": "portal-ashby",
+      "category": "portal",
+      "slugName": "ashby",
+      "displayName": "Ashby",
+      "h1": "Scanning Ashby with career-ops — zero-token, modern ATS coverage",
+      "summary": "Ashby is the modern ATS choice for Series A–C startups in the AI and dev-tools space. career-ops hits the public job-board API directly.",
+      "whatItDoes": "The ashby provider in providers/ashby.mjs makes HTTP requests to api.ashbyhq.com/posting-api/job-board/{slug} and parses the resulting JSON. The slug is the company's Ashby job board identifier (e.g. 'anthropic' for Anthropic).",
+      "whenToUse": "Use Ashby scanning when targeting AI labs, infrastructure companies, and modern startups. Anthropic, Vercel, Replicate, and many YC companies use Ashby. About 40+ pre-configured slugs ship in templates/portals.example.yml.",
+      "example": "In your portals.yml: `- provider: ashby\\n  slug: anthropic\\n  careers_url: https://jobs.ashbyhq.com/anthropic` — then scan picks up active Anthropic roles.",
+      "gotchas": "Ashby's job board API returns full JD text directly, no follow-up request needed. Evaluation is slightly faster than for Greenhouse listings.",
+      "related": [
+        "portal-greenhouse",
+        "portal-lever"
+      ]
+    },
+    {
+      "slug": "portal-lever",
+      "category": "portal",
+      "slugName": "lever",
+      "displayName": "Lever",
+      "h1": "Scanning Lever with career-ops — zero-token, legacy + mid-market coverage",
+      "summary": "Lever is the established ATS for mid-market and growth-stage companies. career-ops hits Lever's public postings API directly.",
+      "whatItDoes": "The lever provider in providers/lever.mjs makes HTTP requests to api.lever.co/v0/postings/{slug} and parses the JSON response. The slug is the company's Lever postings identifier (e.g. 'figma' for Figma).",
+      "whenToUse": "Use Lever scanning for companies in the Series C+ to pre-IPO range that have not migrated to Greenhouse or Ashby. Figma, Brex, and many fintech companies still use Lever.",
+      "example": "In your portals.yml: `- provider: lever\\n  slug: figma\\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.",
+      "gotchas": "Lever's API exposes the full JD in the postings response. Some Lever boards include role internal metadata that career-ops surfaces as additional signal during scoring.",
+      "related": [
+        "portal-greenhouse",
+        "portal-ashby"
+      ]
+    },
+    {
+      "slug": "cli-claude-code",
+      "category": "cli",
+      "slugName": "claude-code",
+      "displayName": "Claude Code",
+      "h1": "Running career-ops on Claude Code — the canonical runtime",
+      "summary": "Claude Code is the most common career-ops runtime. The .claude/skills/career-ops/ wrapper auto-discovers modes; CLAUDE.md routes commands. Setup is fifteen minutes from a fresh clone.",
+      "whatItDoes": "Claude Code reads the .claude/skills/career-ops/ directory at startup and exposes every mode (auto-pipeline, oferta, scan, batch, etc.) as a slash command. CLAUDE.md at the repo root configures Claude Code's behavior — model selection, MCP servers, default instructions.",
+      "whenToUse": "Use Claude Code when you already pay for Claude Pro (or have Anthropic API credit). It is the most polished career-ops experience because the skill loader handles mode discovery natively.",
+      "example": "From a fresh clone: `claude` in the career-ops directory — Claude Code picks up the skills automatically. Type `/career-ops auto-pipeline` and paste a JD URL.",
+      "gotchas": "Claude Code on the free tier hits context limits faster than Pro. For batch mode over long pipelines, Pro is effectively required.",
+      "related": [
+        "cli-codex",
+        "cli-gemini",
+        "cli-opencode",
+        "mode-auto-pipeline"
+      ]
+    },
+    {
+      "slug": "cli-codex",
+      "category": "cli",
+      "slugName": "codex",
+      "displayName": "Codex (OpenAI)",
+      "h1": "Running career-ops on Codex — first-class via agentskills.io standard",
+      "summary": "Codex reads AGENTS.md natively per the agentskills.io specification (#572). The same career-ops modes run on Codex without any Claude-specific dependency.",
+      "whatItDoes": "When invoked in the career-ops directory, Codex reads AGENTS.md as its instruction file. AGENTS.md routes mode invocations to the markdown files in .agents/skills/career-ops/. The mode prompts are identical to those used in Claude Code — same rubric, same evaluation logic, same outputs.",
+      "whenToUse": "Use Codex when you have an OpenAI subscription and prefer GPT-4-class models or the o1/o3 reasoning series for evaluation.",
+      "example": "From the career-ops directory, `codex` — invoke `/career-ops oferta` against a JD URL. Output is structurally identical to the Claude Code variant.",
+      "gotchas": "The README hero may still show 'Codex (soon)' from the pre-#572 era. That badge is stale — Codex is first-class today. Worth checking the current release for the corrected badge.",
+      "related": [
+        "cli-claude-code",
+        "cli-opencode"
+      ]
+    },
+    {
+      "slug": "cli-gemini",
+      "category": "cli",
+      "slugName": "gemini",
+      "displayName": "Gemini CLI",
+      "h1": "Running career-ops on Gemini CLI — Google's first-class runtime + standalone fallback",
+      "summary": "Gemini CLI reads GEMINI.md which imports AGENTS.md (#580). For users without Gemini CLI, a standalone scripts/gemini-eval.mjs provides a fallback path.",
+      "whatItDoes": "Gemini CLI auto-loads GEMINI.md at startup; that file imports AGENTS.md, which routes mode invocations to .agents/skills/career-ops/. As a backup for environments where Gemini CLI is not available, scripts/gemini-eval.mjs offers a standalone evaluation path against the Gemini API directly.",
+      "whenToUse": "Use Gemini CLI when you already have Google AI Pro or Workspace AI access. Gemini 1.5 Pro and 2.0 Flash both work well for evaluation; Gemini 2.0 Pro is the recommended default for tailoring.",
+      "example": "From the career-ops directory, `gemini` — invoke `/career-ops oferta` exactly as on Claude Code. The standalone fallback: `node scripts/gemini-eval.mjs --url=<job-url>`.",
+      "gotchas": "Gemini's response style is more verbose than Claude's by default. Token usage per evaluation can be 20–30% higher unless you tune the model in config.",
+      "related": [
+        "cli-claude-code",
+        "cli-codex"
+      ]
+    },
+    {
+      "slug": "cli-opencode",
+      "category": "cli",
+      "slugName": "opencode",
+      "displayName": "OpenCode",
+      "h1": "Running career-ops on OpenCode — open-source agent runtime, AGENTS.md native",
+      "summary": "OpenCode reads AGENTS.md natively and provides an open-source alternative to vendor CLIs. career-ops runs unchanged through OpenCode.",
+      "whatItDoes": "OpenCode loads AGENTS.md at startup and routes mode invocations to the markdown skill files. Because OpenCode is provider-agnostic, you can point it at Claude, GPT, Gemini, or local models behind a compatible API.",
+      "whenToUse": "Use OpenCode when you want a fully open-source agent runtime, or when you want to swap models per session without changing the career-ops invocation surface.",
+      "example": "Install OpenCode, point it at your preferred model API in opencode.json, then `opencode` in the career-ops directory and invoke any mode as usual.",
+      "gotchas": "OpenCode's MCP support is younger than Claude Code's. If a career-ops mode depends on a specific MCP (rare), verify OpenCode's MCP wiring before relying on it.",
+      "related": [
+        "cli-claude-code",
+        "cli-codex"
+      ]
+    },
+    {
+      "slug": "cli-qwen",
+      "category": "cli",
+      "slugName": "qwen",
+      "displayName": "Qwen Code",
+      "h1": "Running career-ops on Qwen Code — Alibaba's coding agent, AGENTS.md native",
+      "summary": "Qwen Code reads AGENTS.md per the standard. career-ops works without modification, including the more aggressive batch modes that benefit from Qwen's lower per-token cost.",
+      "whatItDoes": "Qwen Code follows the agentskills.io standard and discovers career-ops modes via AGENTS.md. The Qwen models (Qwen 2.5 Coder, Qwen 3 series) handle the evaluation rubric well and excel at the tailoring step due to strong instruction-following.",
+      "whenToUse": "Use Qwen Code when token cost is a constraint — large batch pipelines, long pattern analyses. Qwen pricing per token undercuts the major providers for comparable quality.",
+      "example": "Configure Qwen Code with your DashScope or Together AI API key, then `qwen` in the career-ops directory and invoke modes as usual.",
+      "gotchas": "Qwen-eval quality on borderline listings (scores 3.5–4.0) can be slightly different from Claude. Worth spot-checking a few evaluations against your judgment before trusting the score gate.",
+      "related": [
+        "cli-claude-code",
+        "cli-gemini"
+      ]
+    },
+    {
+      "slug": "cli-copilot",
+      "category": "cli",
+      "slugName": "copilot",
+      "displayName": "GitHub Copilot",
+      "h1": "Running career-ops on GitHub Copilot — instruction file routing via .github/copilot-instructions.md",
+      "summary": "GitHub Copilot reads .github/copilot-instructions.md which imports AGENTS.md. career-ops modes run through Copilot Chat as slash commands.",
+      "whatItDoes": "The career-ops repo ships .github/copilot-instructions.md that imports the AGENTS.md routing. Copilot Chat picks up the skill mappings and exposes the same /career-ops slash command surface that Claude Code does.",
+      "whenToUse": "Use Copilot when you already have a GitHub Copilot subscription and prefer to work directly in VS Code rather than terminal-first.",
+      "example": "Open the career-ops repo in VS Code with Copilot enabled, then in Copilot Chat invoke `@workspace /career-ops oferta` with a JD URL.",
+      "gotchas": "Copilot's context window is smaller than Claude Code's by default. For long batch pipelines, run the pipeline mode through Claude Code or Gemini CLI and use Copilot for single-listing evaluations.",
+      "related": [
+        "cli-claude-code",
+        "cli-codex"
+      ]
+    },
+    {
+      "slug": "cli-kimi",
+      "category": "cli",
+      "slugName": "kimi",
+      "displayName": "Kimi",
+      "h1": "Running career-ops on Kimi — Moonshot's coding agent with AGENTS.md support",
+      "summary": "Kimi reads AGENTS.md per the documented standard. Reasonable choice for users in regions where Kimi pricing is competitive with major providers.",
+      "whatItDoes": "Kimi follows the agentskills.io routing convention and discovers career-ops modes through AGENTS.md. The Kimi K2 series models handle evaluation and tailoring with quality comparable to mid-tier Claude or GPT for this workload.",
+      "whenToUse": "Use Kimi when you have a Moonshot subscription or are operating in a region where Kimi's pricing is structurally favorable. Particularly relevant for Asia-Pacific users.",
+      "example": "Configure Kimi with your API key, then `kimi` in the career-ops directory and invoke modes as usual.",
+      "gotchas": "Kimi support is documented rather than first-class — meaning the routing is in place but the maintainer does not actively test against it on every release. Worth spot-checking output quality before relying on it for production search.",
+      "related": [
+        "cli-claude-code",
+        "cli-qwen",
+        "cli-gemini"
+      ]
+    }
+  ]
+}
