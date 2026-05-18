@@ -51,6 +51,11 @@
           "competitor": "Sign up, paste resume. Two minutes."
         },
         {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode reads the portal form fields, drafts contextual answers for every open-ended question from your profile + JD, hands them back for you to review and paste. Saves 15-20 minutes per application without ever auto-submitting.",
+          "competitor": "None. Jobscan stops at the resume scan; you fill the application portal manually."
+        },
+        {
           "name": "Recurring cost",
           "careerOps": "$0 for the tool. AI CLI subscription you already pay for (Claude Pro $20/mo typical).",
           "competitor": "$49.95/mo monthly or $39.95/mo annual."
@@ -72,11 +77,11 @@
         }
       ],
       "verdict": {
-        "headline": "Pick career-ops if you write code and want the full pipeline. Pick Jobscan if you want a one-click ATS scan and zero setup.",
+        "headline": "Pick career-ops if you write code and want the full pipeline plus pre-apply form drafting. Pick Jobscan if you want a one-click ATS scan and zero setup.",
         "body": [
           "Jobscan does one thing well: tells you which keywords your resume is missing for a specific job description. Their UX is polished, their match score is easy to read, and you are productive in two minutes. The trade-offs are real: $50 a month, your data lives on their servers, and the algorithm is a black box.",
-          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent six-dimension rubric, tailor your CV per job, draft applications, track everything in a Go TUI. The trade-offs are also real: you need Node 20+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
-          "Different audiences, different price points, different philosophies. Neither is wrong."
+          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent six-dimension rubric, tailor your CV per job, and — the part nobody else does — pre-apply: the apply mode reads the portal's form, drafts answers for every open-ended question from your profile and the JD, and hands them back for you to review and submit. That single feature saves 15-20 minutes per application, the slowest step in any serious search. The trade-offs are also real: you need Node 20+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
+          "Different audiences, different price points, different philosophies. The pre-apply step is where career-ops materially leaves the rest behind."
         ]
       },
       "faq": [
@@ -148,6 +153,11 @@
           "competitor": "Stored on Teal servers. Subject to Teal's privacy policy and terms."
         },
         {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode drafts contextual answers for every open-ended question on the portal form using your profile + JD. You review, paste, submit. Saves 15-20 minutes per application.",
+          "competitor": "Partial — Chrome extension autofills standard fields (name, email, links) but does not draft answers for open-ended questions (\"why this role\", \"tell us about a project\"). You write those manually."
+        },
+        {
           "name": "Recurring cost",
           "careerOps": "$0 for the software. Only the AI CLI subscription you already pay for ($20/mo typical).",
           "competitor": "Free tier exists but is heavily gated. Teal+ at $29/mo or $79/year for the full feature set."
@@ -169,11 +179,11 @@
         }
       ],
       "verdict": {
-        "headline": "Pick career-ops if you live in a terminal and want to own the stack. Pick Teal if you want a polished web app with a Chrome extension and zero CLI.",
+        "headline": "Pick career-ops if you want the pipeline plus pre-apply form drafting on your own machine. Pick Teal if the Chrome extension and the polished web app are the workflow that fits.",
         "body": [
           "Teal is the friendliest UI in this space. The Chrome extension is genuinely useful — you find a job on LinkedIn, hit a button, and it lands in your tracker with metadata extracted. The resume builder is well-designed for people who do not want to fight Word templates. The trade-offs are familiar: $29 a month for the full toolset, your career data lives on their servers, and the match algorithm is a black box.",
-          "career-ops is the inverse. No Chrome extension. No drag-and-drop. You edit cv.md in your editor, configure a YAML, and invoke modes from a terminal. In exchange you get an MIT-licensed pipeline, a rubric you can read, and a tracker that never asks for an account.",
-          "If you have never used a terminal, Teal will be friction-free in a way career-ops never will. If you already live in one, the calculus inverts."
+          "career-ops is the inverse. No Chrome extension. No drag-and-drop. You edit cv.md in your editor, configure a YAML, and invoke modes from a terminal. In exchange you get an MIT-licensed pipeline, a rubric you can read, a tracker that never asks for an account, and one feature Teal does not have — pre-apply. The apply mode reads each portal's form and drafts contextual answers for every open-ended question (\"why this role\", \"tell us about a relevant project\") using your profile and the JD. You review, paste, submit. That saves 15-20 minutes per application, every time.",
+          "If you have never used a terminal, Teal will be friction-free in a way career-ops never will. If you already live in one, the calculus inverts — and the pre-apply drafting is the part that compounds."
         ]
       },
       "faq": [
@@ -255,6 +265,11 @@
           "competitor": "Stored on Huntr servers. Standard SaaS data-processing terms."
         },
         {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode drafts answers for every open-ended portal question using your profile + JD context. You review, paste, submit. Saves 15-20 minutes per application.",
+          "competitor": "Partial — autofill Chrome extension handles standard fields. Open-ended questions are still on you."
+        },
+        {
           "name": "Recurring cost",
           "careerOps": "$0 for the tool. Only your AI CLI ($20/mo typical with Claude Pro).",
           "competitor": "Free tier capped. Paid plans $9–39/month."
@@ -271,11 +286,11 @@
         }
       ],
       "verdict": {
-        "headline": "Pick career-ops if you want the full pipeline on your machine. Pick Huntr if the Kanban board and the mobile app are the features that change your workflow.",
+        "headline": "Pick career-ops if the full pipeline plus pre-apply form drafting fits your workflow. Pick Huntr if the Kanban board and mobile app are the features that change your search.",
         "body": [
           "Huntr nailed two things: the Kanban metaphor for a job search and a Chrome extension that turns any job posting into a card with one click. The mobile apps mean you can move cards between columns from a bus. For someone who treats job search as an Asana-style project, Huntr is the right shape.",
-          "career-ops covers the same tracker plus the work upstream of it — scanning portals, evaluating listings against a rubric, tailoring CVs per job, drafting applications. It does this in a terminal, with everything as local files you can grep and version-control. No mobile, no GUI, no card view.",
-          "Different audiences. Huntr is for people whose primary surface is a browser tab; career-ops is for people whose primary surface is an editor."
+          "career-ops covers the same tracker plus the work upstream of it — scanning portals, evaluating listings against a rubric, tailoring CVs per job, drafting applications. It does this in a terminal, with everything as local files you can grep and version-control. The one feature that materially leaves Huntr behind is pre-apply: career-ops's apply mode reads each portal form and drafts answers for every open-ended question (the 15-minute time-sink) from your profile and the JD. You review, paste, submit. Huntr's autofill handles standard fields but not the open-ended questions, which is where applications actually slow down.",
+          "Different audiences. Huntr is for people whose primary surface is a browser tab; career-ops is for people whose primary surface is an editor — and who want their portal answers drafted before they sit down to apply."
         ]
       },
       "faq": [
@@ -294,6 +309,506 @@
         {
           "q": "Is career-ops really free?",
           "a": "The software is MIT-licensed and costs zero. The only recurring cost is your AI CLI subscription, typically Claude Pro at $20/month for a full job search."
+        }
+      ]
+    },
+    {
+      "slug": "career-ops-vs-simplify",
+      "competitor": {
+        "name": "Simplify",
+        "url": "https://simplify.jobs/",
+        "tagline": "Browser autofill extension and job tracker. The king of tech-side job search in 2026.",
+        "pricing": "Free tier (Copilot autofill + tracking). Simplify+ at $39.99/mo (or $89.99 for 3 months).",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Cloud SaaS. Profile, resume, and tracking data on Simplify servers."
+      },
+      "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-simplify.jpg",
+      "intro": "Simplify is the polished autofill extension that owns the tech-side job search in 2026 — over 1.5 million users, generous free tier, human-in-the-loop submission. career-ops is the local-first pipeline that runs through your AI CLI. Both reject mass auto-submission. The differences are everything else.",
+      "features": [
+        {
+          "name": "Chrome autofill extension",
+          "careerOps": "None. Application drafting happens through the apply mode in your terminal, then you paste into the portal.",
+          "competitor": "Yes — the flagship feature. One click fills name, email, education, work history on most ATS portals."
+        },
+        {
+          "name": "Job scanning",
+          "careerOps": "Scan mode hits public Greenhouse, Ashby, Lever APIs for zero-token portal scanning.",
+          "competitor": "Curated job feed inside the app, sourced from public listings."
+        },
+        {
+          "name": "AI resume tailoring",
+          "careerOps": "Tailor mode rewrites cv.md per JD automatically through your AI CLI.",
+          "competitor": "Available in Simplify+ ($39.99/mo) — AI-tailored resumes and cover letters."
+        },
+        {
+          "name": "Application tracker",
+          "careerOps": "Go TUI dashboard reading local markdown files. Pipeline stages, keyboard navigation.",
+          "competitor": "Web dashboard with status pipeline. Auto-syncs from the Chrome extension."
+        },
+        {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode reads each portal's form fields and drafts contextual answers for every open-ended question ('why this role', 'tell us about a project') from your profile + the JD. You review, paste, submit. The slowest 15-20 minutes of any application, collapsed.",
+          "competitor": "Partial — Simplify's autofill handles standard fields like name and education. It does NOT draft contextual answers for open-ended questions. Those are still on you."
+        },
+        {
+          "name": "Submission model",
+          "careerOps": "You submit, every time. The apply mode hands you the drafted content; clicking submit is your call.",
+          "competitor": "You submit, every time. Simplify deliberately leaves the final click to the user — same human-in-the-loop posture career-ops takes."
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local-first. CV, evaluations, application history live on your machine.",
+          "competitor": "Stored on Simplify's servers. Standard SaaS data-processing terms."
+        },
+        {
+          "name": "Setup time",
+          "careerOps": "10-15 minutes (git clone + npm install + config) if you have Node 20+.",
+          "competitor": "Two minutes — install extension, fill profile, done."
+        },
+        {
+          "name": "Recurring cost",
+          "careerOps": "$0 for the tool. Your AI CLI subscription only (Claude Pro $20/mo typical).",
+          "competitor": "Free tier covers autofill + tracking. Full AI features require Simplify+ at $39.99/mo."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed. github.com/santifer/career-ops.",
+          "competitor": "Closed."
+        },
+        {
+          "name": "Methodology transparency",
+          "careerOps": "Published six-dimension rubric + canonical Block A-G evaluation prompt.",
+          "competitor": "Match-score algorithm proprietary."
+        },
+        {
+          "name": "Press / media coverage",
+          "careerOps": "Featured in WIRED Greece and Business Insider (US & DE), April 2026. 44K+ GitHub stars.",
+          "competitor": "Founded 2021. Y Combinator backed. Coverage in TechCrunch and Forbes for the 1.5M+ user milestone."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you want the full pipeline plus pre-apply form drafting on your own machine. Pick Simplify if the Chrome extension and the polished free tier are the workflow that fits.",
+        "body": [
+          "Simplify earned its position. The Chrome extension does one thing exceptionally well — turning a fifteen-minute ATS form into a thirty-second autofill, on most major portals. The free tier is generous, and the human-in-the-loop posture (you still click submit) is the right ethical answer to mass auto-apply. Most tech candidates in 2026 use Simplify and they are right to.",
+          "career-ops takes the same workflow further. The pre-apply step in the apply mode goes past Simplify's standard-field autofill: it reads the JD and your profile, then drafts answers for the open-ended portal questions — the 'why this role', 'tell us about a project that demonstrates X', 'what excites you about this team' fields that Simplify leaves blank. Those questions are where applications actually slow down, and where most candidates fall back on copy-paste templates that read like copy-paste templates.",
+          "The trade-off is setup. Simplify is two minutes; career-ops is fifteen. Simplify lives in your browser; career-ops lives in your terminal. For technical users who want the deeper drafting step plus data ownership, career-ops wins on substance. For everyone else, Simplify is hard to beat for the convenience it ships."
+        ]
+      },
+      "faq": [
+        {
+          "q": "What does career-ops do that Simplify does not?",
+          "a": "Pre-apply form drafting for open-ended questions. Simplify autofills standard fields (name, email, education, work history) — career-ops drafts the actual answers to the long-form questions every serious application has ('why this role', 'tell us about a project', 'what is your salary expectation given the JD context'). Simplify saves you minutes on the easy parts; career-ops saves you fifteen minutes on the hard parts."
+        },
+        {
+          "q": "Does career-ops have a Chrome extension like Simplify?",
+          "a": "No, and one is not planned. career-ops works through your AI CLI in the terminal; you copy drafted answers to the portal manually. The trade-off is intentional: no Chrome permissions, no browser extension supply chain, no data flowing to a third party."
+        },
+        {
+          "q": "Can career-ops and Simplify be used together?",
+          "a": "Yes. Many users run Simplify's autofill for the standard fields (saving minutes per application) and use career-ops to draft the open-ended answers (saving 15-20 minutes per application). The two are complementary because Simplify covers the easy parts and career-ops covers the hard parts."
+        },
+        {
+          "q": "Is the human-in-the-loop posture the same in both tools?",
+          "a": "Yes. Both Simplify and career-ops deliberately keep the user as the one who clicks submit. Neither auto-submits. That posture is the right answer to the recruiter pipeline degradation caused by mass auto-apply tools, and both tools share it."
+        }
+      ]
+    },
+    {
+      "slug": "career-ops-vs-finalroundai",
+      "competitor": {
+        "name": "Final Round AI",
+        "url": "https://www.finalroundai.com/",
+        "tagline": "Live AI interview copilot — real-time answer suggestions during virtual interviews.",
+        "pricing": "Free trial limited. AI Job Hunter $24.99–$49.99/mo. Interview Copilot ~$148–$149/mo monthly or ~$25/mo annual ($300 upfront).",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Cloud SaaS plus desktop app. Resume, JD, and live interview audio processed on Final Round servers."
+      },
+      "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-finalroundai.jpg",
+      "intro": "Final Round AI sits with you during a live interview, transcribing the interviewer and flashing suggested answers on your screen in real time. career-ops sits with you before the interview — drafting the application, the cover letter, the open-ended portal answers, and the company research brief. Adjacent tools, different time slices.",
+      "features": [
+        {
+          "name": "Primary purpose",
+          "careerOps": "End-to-end job search pipeline — scan, evaluate, tailor, apply, track.",
+          "competitor": "Live interview assistance — real-time answer suggestions during the call."
+        },
+        {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode drafts answers for every open-ended portal question from your profile + JD. You review, paste, submit.",
+          "competitor": "None. Final Round AI does not engage with the application step at all."
+        },
+        {
+          "name": "Interview prep document",
+          "careerOps": "interview-prep mode produces a company- and round-specific prep doc (recruiter / hiring manager / peer technical / panel variants).",
+          "competitor": "AI Mock Interviews feature simulates rounds with feedback."
+        },
+        {
+          "name": "Live interview support",
+          "careerOps": "None by design. The agent does not run during your actual interview.",
+          "competitor": "Yes — the flagship feature. Transcribes the interviewer in real-time, surfaces suggested answers from your resume and the JD."
+        },
+        {
+          "name": "Detection risk during interview",
+          "careerOps": "N/A — no live assistance.",
+          "competitor": "Real. Candidates have to manage eye-tracking and natural-cadence delivery to avoid sounding like they are reading. The 'undetectable' marketing claim is contested in user reports."
+        },
+        {
+          "name": "Job scanning across portals",
+          "careerOps": "Yes — Greenhouse, Ashby, Lever via public APIs (zero-token).",
+          "competitor": "AI Job Hunter feature in the $24.99–$49.99/mo tier offers job listings, but it is not the core product."
+        },
+        {
+          "name": "Resume / CV tailoring",
+          "careerOps": "Tailor mode generates a tailored CV per listing.",
+          "competitor": "AI Resume Builder included in the AI Job Hunter tier."
+        },
+        {
+          "name": "Pricing transparency",
+          "careerOps": "Free. The AI CLI you already pay for is the only recurring cost.",
+          "competitor": "Notoriously opaque. Monthly Interview Copilot at $148–$149/mo with a no-refund policy. Annual aggressively pushed at ~$300 upfront. Reddit threads document refund disputes."
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local-first. Nothing leaves your machine unless your AI CLI sends it.",
+          "competitor": "Cloud-hosted, plus desktop app that processes live audio. Interview transcripts and resumes on Final Round servers."
+        },
+        {
+          "name": "Ethical posture",
+          "careerOps": "The agent assists you before the conversation. During the conversation, you are on your own.",
+          "competitor": "Real-time assist during a live interview. This is controversial — interviewers do not know you are using it, which puts the candidate in a gray-zone re: honesty and which most companies' interview policies do not explicitly cover."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed.",
+          "competitor": "Closed."
+        },
+        {
+          "name": "Press / media coverage",
+          "careerOps": "WIRED Greece, Business Insider (US & DE), April 2026. 44K+ GitHub stars.",
+          "competitor": "10M+ users claimed. Coverage in Forbes, Business Insider, TechCrunch. Heavily discussed (positive and negative) in r/cscareerquestions and r/learnprogramming."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you want the application work done well before the interview. Pick Final Round AI if you want a real-time copilot during the interview — with the trade-offs that entails.",
+        "body": [
+          "Final Round AI solves a real problem. Interviews are stressful, candidates blank under pressure, and a real-time prompt with relevant resume-grounded answers genuinely helps people get past rounds they would otherwise fail. For users who have practiced and just need a safety net for nerves, it works.",
+          "The trade-offs are real and worth naming. The pricing is opaque — $148/mo monthly Interview Copilot is hard to justify outside of an active senior search. The detection risk is non-zero; interviewers increasingly notice the cadence pattern and the eye-tracking. The ethical posture is gray — candidates use it without disclosing it to the interviewer, which some company policies explicitly prohibit and most do not address.",
+          "career-ops takes the opposite stance — invest in the application, the tailoring, the prep doc, and the pre-apply drafting so the interview itself is one you can handle on your own. The pre-apply step in particular saves 15-20 minutes per application, and a well-tailored application + a focused prep doc is usually what gets the interview to happen in the first place. Different time slice, different ethical posture, different cost. They could complement each other — career-ops handles the pre-interview workflow, Final Round handles the live moment — but most candidates I have seen would get more leverage from doubling down on pre-interview work than on live support."
+        ]
+      },
+      "faq": [
+        {
+          "q": "Does career-ops help during the live interview?",
+          "a": "No, by design. The agent does not run during your actual interview, does not transcribe the conversation, and does not surface real-time prompts. career-ops invests in the prep doc and the pre-apply work so the interview itself is yours to handle. If you want a live copilot, Final Round AI is the tool for that — with the caveats around detection and ethical posture."
+        },
+        {
+          "q": "What does career-ops do that Final Round AI does not?",
+          "a": "The work before the interview. career-ops scans portals, evaluates listings against a published rubric, tailors your CV per listing, drafts the open-ended portal answers (pre-apply mode), and produces company- and round-specific prep documents. Final Round AI focuses on the interview moment itself; career-ops focuses on everything leading up to it."
+        },
+        {
+          "q": "Is using Final Round AI during interviews considered cheating?",
+          "a": "It depends on the company and the interview format. Most companies' interview policies do not explicitly address real-time AI assistance because the technology is new. Some companies (including some that publish their interviewer-facing guidance publicly) have started flagging cadence patterns as a red flag. The honest answer is that the ethical posture is gray and individual candidates have to decide. career-ops took the explicit stance not to operate during the live interview for this reason."
+        },
+        {
+          "q": "Can I use both tools together?",
+          "a": "Yes. career-ops handles the application + prep work, Final Round handles the live moment. The combined cost is meaningful ($20/mo Claude Pro + $25–$149/mo Final Round) but for an active high-stakes search the workflows do not overlap."
+        }
+      ]
+    },
+    {
+      "slug": "career-ops-vs-lazyapply",
+      "competitor": {
+        "name": "LazyApply",
+        "url": "https://lazyapply.com/",
+        "tagline": "Mass auto-apply bot. Spams Easy Apply buttons on LinkedIn and Indeed at scale.",
+        "pricing": "Lifetime plans only — Basic $99 (150 apps/day), Premium $129–$149 (300 apps/day), Ultimate $249 (unlimited).",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Browser extension that hijacks your active session. Resume and profile stored cloud-side."
+      },
+      "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-lazyapply.jpg",
+      "intro": "LazyApply is the explicit auto-apply tool — it physically clicks Easy Apply buttons on LinkedIn and Indeed for you, hundreds of times per day. career-ops is the opposite posture: filter aggressively, tailor every application, draft each portal form, and the candidate clicks submit. Two philosophies, very different outcomes.",
+      "features": [
+        {
+          "name": "Application model",
+          "careerOps": "Score-gated apply. Listings scored 1.0–5.0 against a six-dimension rubric; only those above 4.0 are recommended. Tailored per listing. You submit.",
+          "competitor": "Spray-and-pray. The bot clicks Easy Apply on every listing matching a keyword filter, hundreds per day. Generic submissions, no tailoring depth."
+        },
+        {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode reads each portal form and drafts contextual answers for every open-ended question from your profile + JD. You review, paste, submit. Saves 15-20 minutes per application without auto-submission.",
+          "competitor": "Auto-submits without drafting open-ended answers. Common failure modes: bot submits to senior roles for entry-level candidates, applies to roles in wrong locations, misses required custom fields."
+        },
+        {
+          "name": "ATS detection risk",
+          "careerOps": "None. Applications go through your browser, manually, like any other candidate.",
+          "competitor": "High. LinkedIn and Indeed have cracked down on Easy Apply automation in 2025-2026. Reports of profile shadowbans and account suspensions are common in user forums."
+        },
+        {
+          "name": "Recruiter pipeline impact",
+          "careerOps": "Filters down to high-fit listings, sends tailored applications. Recruiters get fewer, better-matched applications.",
+          "competitor": "Submits volume regardless of fit. Cited industry-wide as a driver of recruiter pipeline degradation since 2023."
+        },
+        {
+          "name": "Submission volume per day",
+          "careerOps": "Typically 3-8 high-fit applications per day during an active search. Bounded by tailored quality.",
+          "competitor": "150-300+ per day depending on tier. Volume is the explicit product."
+        },
+        {
+          "name": "Application tracking",
+          "careerOps": "Go TUI dashboard with explicit pipeline stages and per-application reports.",
+          "competitor": "Dashboard of bot activity. Less useful for tracking actual conversations because most applications go nowhere."
+        },
+        {
+          "name": "User-reported reliability",
+          "careerOps": "Stable. The system runs locally; failures are visible and debuggable.",
+          "competitor": "Trustpilot rating around 2.1 in 2026. Common complaints: applying to wrong roles, refund disputes, bot detection by LinkedIn."
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local-first. CV, evaluations, tracking on your machine.",
+          "competitor": "Cloud-hosted plus active browser session control via the extension."
+        },
+        {
+          "name": "Recurring cost",
+          "careerOps": "$0 for the tool. Claude Pro $20/mo typical for the AI side.",
+          "competitor": "Lifetime $99–$249 one-time. No monthly plans."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed.",
+          "competitor": "Closed."
+        },
+        {
+          "name": "Ethical stance",
+          "careerOps": "Explicitly cooperative — filter, tailor, retain commit decision. Reject auto-submission (Discussion #274). The candidate's response to the recruiter pipeline arms race should not make the arms race worse.",
+          "competitor": "Explicitly volume-driven. The bot is the product."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you want fewer, better applications that recruiters take seriously. Pick LazyApply if you treat applications as a numbers game and accept the trade-offs.",
+        "body": [
+          "LazyApply is honest about what it is. The marketing says spray-and-pray, the product delivers spray-and-pray, and the price ($99–$249 one-time) is reasonable for what it does. For candidates who have already given up on tailoring and just want to maximize the surface area of their search, it works as advertised.",
+          "The trade-offs are severe and increasingly priced in. LinkedIn and Indeed have caught up — Trustpilot ratings around 2.1 reflect the bot detection wave that landed in 2025-2026. Profile shadowbans and account suspensions are common in user forums. Worse, the response rate on mass auto-applied roles is dramatically lower than on tailored applications, because recruiters reading 300 applications per day rejected the LazyApply pattern long ago. You can technically apply to 5,000 jobs in a month with the Ultimate tier; the count of those 5,000 that turn into interviews is rounding-error low.",
+          "career-ops is the structural inverse. The six-dimension rubric rejects roughly 90% of scanned listings before tailoring, so applications go out to the 8-12% that fit. Every application is tailored, including the pre-apply drafting of open-ended portal answers — the part that takes 15-20 minutes that most candidates skip. The result: fewer applications, dramatically higher response rate, and zero risk of being shadowbanned by a platform you depend on. If your goal is to land the role, not to hit the application count, the math is one-sided."
+        ]
+      },
+      "faq": [
+        {
+          "q": "Why does career-ops refuse to auto-submit when LazyApply does?",
+          "a": "Auto-submission at scale degrades the recruiter pipeline for everyone, including career-ops users. Recruiters drowning in mass auto-applications filter more aggressively, response rates drop industry-wide, and the candidates who actually fit get lost in the noise. The career-ops maintainer rejected the auto-submit pattern in Discussion #274 for exactly this reason. The career-ops apply mode drafts everything — including the open-ended portal questions LazyApply ignores — but leaves the submit button to you."
+        },
+        {
+          "q": "Is mass auto-apply actually effective in 2026?",
+          "a": "The data says no. LinkedIn and Indeed have rolled out bot-detection that shadowbans extension users; reports are common in r/cscareerquestions. Response rates on auto-submitted Easy Apply applications are dramatically below tailored applications. Trustpilot rating for LazyApply around 2.1 in 2026 reflects the reality. The model worked in 2022 when platforms were not enforcing aggressively and recruiters were less saturated. It does not work now."
+        },
+        {
+          "q": "Can career-ops apply to 100+ jobs in a day like LazyApply?",
+          "a": "Technically possible with batch mode and parallel workers, but the design pushes against it. The six-dimension rubric is designed to reject most listings before tailoring; an honest daily output is closer to 5-15 high-fit applications. The candidate's leverage in 2026 is filter quality, not volume."
+        },
+        {
+          "q": "What is the actual difference in outcome?",
+          "a": "Real numbers from the maintainer's own search in early 2026 using career-ops: 740 listings evaluated, 68 applications submitted (all tailored, all with pre-apply drafting), one offer accepted (Head of Applied AI at Zinkee). LazyApply at the Ultimate tier could have submitted 4,500+ applications in the same period with comparable outcomes for senior roles. The funnel shape is opposite."
+        }
+      ]
+    },
+    {
+      "slug": "career-ops-vs-loopcv",
+      "competitor": {
+        "name": "Loopcv",
+        "url": "https://www.loopcv.pro/",
+        "tagline": "Job board aggregator that auto-applies on your behalf across 20+ portals.",
+        "pricing": "Free tier (10 apps/month). Standard $19.99/mo (100 apps), Premium $59.99/mo (300 apps), Done-For-You $89.99/mo (adds human advisory).",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Cloud SaaS. Profile, CV, and tracking data on Loopcv servers."
+      },
+      "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-loopcv.jpg",
+      "intro": "Loopcv is the cleaner auto-apply player — fewer hallucinated wrong-role submissions than LazyApply, transparent volume caps, a real free tier. career-ops is the opposite philosophy: filter hard, tailor every application, draft each form, and the candidate submits. Both have audiences; the trade-offs are sharp.",
+      "features": [
+        {
+          "name": "Application model",
+          "careerOps": "Score-gated apply against a six-dimension rubric. ~9% threshold pass rate in real searches.",
+          "competitor": "Auto-apply against configurable loops (location, keywords, salary). 100-300 applications/month depending on tier."
+        },
+        {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode drafts contextual answers for every open-ended portal question from your profile + JD. You review, paste, submit. The 15-20 minute time-sink, collapsed.",
+          "competitor": "Auto-submits with generic content for open-ended questions, or skips listings where the form is too custom. No human-in-the-loop review."
+        },
+        {
+          "name": "Submission posture",
+          "careerOps": "You submit, every time. Drafted content waits for your review.",
+          "competitor": "Auto-submits by default. The Done-For-You tier adds human advisory but still automates submission."
+        },
+        {
+          "name": "Job board coverage",
+          "careerOps": "Greenhouse, Ashby, Lever via public APIs (zero-token). 100+ pre-configured company portals shipping in the repo templates.",
+          "competitor": "20+ job boards aggregated centrally. Broader surface area but mostly LinkedIn/Indeed-style listings."
+        },
+        {
+          "name": "Email outreach automation",
+          "careerOps": "contacto mode drafts outreach messages for review; the candidate sends them manually.",
+          "competitor": "Yes — cold emails recruiters on your behalf, automated."
+        },
+        {
+          "name": "Application volume per month",
+          "careerOps": "Typically 60-100 high-fit, tailored applications across an active 90-day search.",
+          "competitor": "Capped per tier — 10 free, 100 Standard, 300 Premium."
+        },
+        {
+          "name": "Response-rate philosophy",
+          "careerOps": "Higher per-application response rate via tailoring + pre-apply drafting.",
+          "competitor": "Lower per-application response rate, offset by volume. Effective applications/interview ratio is the relevant metric, and it favors the tailored approach in 2026 data."
+        },
+        {
+          "name": "Setup time",
+          "careerOps": "10-15 minutes if you have Node 20+.",
+          "competitor": "Five minutes — upload CV, configure loops, done."
+        },
+        {
+          "name": "Recurring cost",
+          "careerOps": "$0 for the tool. Claude Pro $20/mo typical.",
+          "competitor": "Free 10 apps/month, then $19.99–$89.99/mo for meaningful volume."
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local-first. Profile and history on your machine.",
+          "competitor": "Cloud-hosted. Profile, CV, and applications on Loopcv servers."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed.",
+          "competitor": "Closed."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you want depth — fewer applications, each tailored, each pre-drafted. Pick Loopcv if you want breadth and accept the response-rate trade-off.",
+        "body": [
+          "Loopcv is the most reasonable tool in the auto-apply category. The free tier (10 applications/month) is genuinely useful for testing, the volume caps are transparent, and the matching is meaningfully better than LazyApply's bot-clicking model. For job seekers who want surface-area coverage and accept the lower per-application response rate, it works.",
+          "career-ops takes the opposite posture by design. The six-dimension rubric is built to reject ~90% of scanned listings before tailoring even begins, so applications go out only to the 8-12% that fit the candidate's archetype. Every application is tailored. The pre-apply step drafts the open-ended portal answers — the part Loopcv's auto-submission either skips or fills with generic content. That 15-20 minutes per application is where applications stop looking generic, and where response rates start to differ.",
+          "Concretely: in a 90-day active search, Loopcv at Premium ($59.99/mo) submits ~900 applications. career-ops at the equivalent intensity submits ~60-80 applications, all tailored, all pre-drafted. The interview-conversion ratio on the second pattern is multiples of the first. If your goal is the role, not the count, the math favors career-ops. If you genuinely want to maximize coverage and respond to interest in bulk, Loopcv is the right tool."
+        ]
+      },
+      "faq": [
+        {
+          "q": "Does career-ops have an auto-apply mode like Loopcv?",
+          "a": "No, and one is not planned. The apply mode drafts the application content and surfaces it for your review, but the candidate submits manually. The maintainer rejected auto-submission in Discussion #274 because mass auto-apply at scale degrades the recruiter pipeline for everyone, including career-ops users."
+        },
+        {
+          "q": "Can I integrate Loopcv with career-ops?",
+          "a": "Not directly, and the philosophies clash. Loopcv assumes high-volume auto-submission; career-ops assumes low-volume tailored submission with human review. You could use both in parallel — career-ops for top-tier applications you take seriously, Loopcv for breadth coverage of less-targeted roles — but the workflows do not share data."
+        },
+        {
+          "q": "What is career-ops's response-rate evidence?",
+          "a": "The maintainer's own search in early 2026 used career-ops end-to-end: 740 listings evaluated, 68 applications submitted (~9% threshold pass), one offer accepted (Head of Applied AI). The per-application response rate on tailored + pre-drafted applications was multiples of the historical baseline for untailored mass applications in the same job market."
+        },
+        {
+          "q": "Why does the pre-apply step matter so much?",
+          "a": "Most portal application forms have 3-5 open-ended questions per role (why this company, why this role, tell us about a relevant project, salary expectations). These are the 15-20 minutes per application where most candidates default to copy-paste templates that recruiters can spot in two seconds. career-ops's apply mode reads the JD and the candidate profile and drafts each answer to the specific role. The candidate reviews and pastes. That is the unlock."
+        }
+      ]
+    },
+    {
+      "slug": "career-ops-vs-jobhire",
+      "competitor": {
+        "name": "JobHire.AI",
+        "url": "https://jobhire.ai/",
+        "tagline": "Autonomous AI agent that applies to jobs in the background on your behalf.",
+        "pricing": "$23–$50/month. Higher tier ($50) fully unlocks the autonomous agent.",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Cloud SaaS. Resume, profile, and application history on JobHire servers."
+      },
+      "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-jobhire.jpg",
+      "intro": "JobHire.AI is the autonomous-agent flavor of auto-apply — set rules, walk away, the bot resume-tailors and submits in the background. career-ops is the opposite stance: you stay in the loop, the system drafts everything you need to apply well, and you click submit. Different philosophies, very different ethical postures.",
+      "features": [
+        {
+          "name": "Application model",
+          "careerOps": "Score-gated apply. You stay in the loop on every submission.",
+          "competitor": "Autonomous agent. Set parameters, the bot submits applications automatically based on resume-JD matching."
+        },
+        {
+          "name": "Pre-apply form assistance",
+          "careerOps": "Yes — apply mode drafts contextual answers for every open-ended portal question from your profile + JD. The candidate reviews and pastes.",
+          "competitor": "Auto-fills and submits forms without explicit candidate review per submission. Open-ended answers generated and submitted by the agent."
+        },
+        {
+          "name": "Candidate visibility",
+          "careerOps": "Every artifact is a local file you can read, edit, version-control.",
+          "competitor": "Cloud dashboard. Visibility into what the agent submitted is post-hoc."
+        },
+        {
+          "name": "Refund policy",
+          "careerOps": "N/A — the software is free and MIT-licensed.",
+          "competitor": "Marketed 'Money-Back Guarantee' if no interview in 15 days. Reddit threads document widespread refund-claim disputes."
+        },
+        {
+          "name": "Submission volume",
+          "careerOps": "Bounded by the rubric — typically 5-10 high-fit applications per day during active search.",
+          "competitor": "High. The agent submits continuously based on configured parameters."
+        },
+        {
+          "name": "Recruiter pipeline impact",
+          "careerOps": "Filter-driven. Recruiters get fewer, better-matched applications.",
+          "competitor": "Volume-driven. Same pipeline-degradation contribution as other auto-apply tools."
+        },
+        {
+          "name": "Tailoring depth",
+          "careerOps": "Tailor mode rewrites cv.md per listing through your AI CLI. Tailoring is auditable in the local file.",
+          "competitor": "Resume optimization advertised per submission. Quality varies; user reports include submissions to roles outside the candidate's seniority band."
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local-first. Profile, applications, history on your machine.",
+          "competitor": "Cloud-hosted. Profile and complete search history on JobHire servers."
+        },
+        {
+          "name": "User-reported reliability",
+          "careerOps": "Stable. Failures are visible because everything runs locally.",
+          "competitor": "Mixed. Aggressive marketing claims ('land an interview 10x faster') are not consistently borne out in user-reported outcomes."
+        },
+        {
+          "name": "Recurring cost",
+          "careerOps": "$0 for the tool. Claude Pro $20/mo typical.",
+          "competitor": "$23–$50/month depending on tier."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed. github.com/santifer/career-ops.",
+          "competitor": "Closed."
+        },
+        {
+          "name": "Ethical posture",
+          "careerOps": "The candidate retains the commit decision on every submission. Drafting is automated; submitting is not.",
+          "competitor": "Submission is automated. The candidate effectively delegates judgment to the agent's matching algorithm."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you want the system to draft everything but keep the submit decision yours. Pick JobHire.AI if you want to step away from the search and accept the trade-offs.",
+        "body": [
+          "JobHire.AI sells convenience. Upload a resume, set parameters, walk away. The agent applies in the background while you do other things. For candidates who have decided the job search is not where they want to spend cognitive cycles, that pitch has real value.",
+          "The trade-offs match the auto-apply category broadly. Submission quality varies; user reports include applications going to roles outside the candidate's seniority band. The 'money-back guarantee' is contested in practice — Reddit threads document users struggling to actually claim refunds when promised interviews did not materialize. And the contribution to recruiter pipeline saturation is the same as any other auto-apply tool, which means response rates on JobHire-submitted applications skew lower than on tailored applications.",
+          "career-ops takes the opposite stance because the maintainer used it on his own search and concluded the leverage is in tailoring depth, not volume. Every application goes through the apply mode, which drafts contextual answers for every open-ended question. The candidate reviews and submits. That keeps the cognitive cost meaningful but capped (5 minutes per application instead of 25), and it keeps the response rate where it needs to be for an active search to actually convert. If you are willing to invest a few hours a week in a search that produces interviews, career-ops produces materially better outcomes. If you have decided you genuinely cannot, JobHire.AI is the trade-off you are choosing."
+        ]
+      },
+      "faq": [
+        {
+          "q": "Will career-ops apply for me autonomously like JobHire.AI?",
+          "a": "No. The apply mode drafts the application content — the CV variant, the cover letter, the open-ended portal answers — and surfaces it for your review. The candidate clicks submit. The maintainer rejected autonomous submission in Discussion #274 because mass auto-apply degrades the recruiter pipeline for everyone, and the response rate on auto-submitted applications is meaningfully lower than on candidate-reviewed submissions in 2026 data."
+        },
+        {
+          "q": "Is the JobHire 'land an interview in 15 days' guarantee real?",
+          "a": "The marketing is real; the practical claim is contested in user reports. Reddit threads from 2025-2026 document widespread refund-claim disputes — users report difficulty actually receiving the refund when no interviews materialized. The pattern is common across the autonomous auto-apply category and is not unique to JobHire."
+        },
+        {
+          "q": "What does career-ops actually save me time on?",
+          "a": "The 15-20 minutes per application spent answering open-ended portal questions ('why this role', 'why this company', 'describe a relevant project'). career-ops's apply mode drafts those answers contextually from your profile and the JD; you review and paste. JobHire.AI also generates those answers but submits them without your review, which is the trade-off."
+        },
+        {
+          "q": "Can I just use JobHire for volume and career-ops for top-tier applications?",
+          "a": "Technically yes, and some candidates do split their search this way. The risk is that the auto-submitted applications under JobHire to companies you actually want often go in before you have engaged seriously, which can burn the listing for a tailored follow-up. The cleaner approach: use career-ops for everything you care about, and accept that the long tail of marginal-fit listings is not worth applying to."
         }
       ]
     }
