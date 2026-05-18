@@ -49,6 +49,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/privacy`,
       lastModified: lastModFor('src/app/privacy/page.tsx'),
     },
+    {
+      url: `${SITE_URL}/sustain`,
+      lastModified: lastModFor('src/app/sustain/page.tsx'),
+    },
   ];
 
   for (const page of source.getPages()) {
