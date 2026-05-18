@@ -54,23 +54,32 @@ export function CompareRotator() {
       </p>
 
       <div className="flex flex-col items-center gap-8">
-        {/* Slideshow — bigger now (max-w-5xl). Synced with the picker
-            below via shared `idx` state. Calm scale+opacity crossfade
-            (OG images are dense; heavy motion competes). */}
+        {/* Slideshow — all eight images render stacked, only the
+            current one visible (opacity-100). Eager-loading ensures
+            every image is in browser cache from the first paint, so
+            the rotation is smooth even on the first cycle (no
+            loading flash). CSS opacity transition is 700ms to match
+            the picker wheel duration exactly — wordmark and image
+            stay perfectly synced. */}
         <Link
           href={`/compare/career-ops-vs-${current.slug}`}
           className="relative block w-full max-w-5xl mx-auto aspect-[1200/630] overflow-hidden rounded-lg border border-fd-foreground/10 hover:border-fd-foreground/30 transition-colors"
           aria-label={`career-ops vs ${current.name} comparison`}
         >
-          <Image
-            key={current.slug}
-            src={`/og/compare/career-ops-vs-${current.slug}.jpg`}
-            alt={`career-ops vs ${current.name}`}
-            fill
-            sizes="(min-width: 1024px) 1024px, 100vw"
-            className={`object-cover ${reduced ? '' : 'compare-image-in'}`}
-            priority={idx === 0}
-          />
+          {competitors.map((c, i) => (
+            <Image
+              key={c.slug}
+              src={`/og/compare/career-ops-vs-${c.slug}.jpg`}
+              alt={`career-ops vs ${c.name}`}
+              fill
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              priority={i === 0}
+              loading={i === 0 ? undefined : 'eager'}
+              className={`absolute inset-0 object-cover transition-opacity duration-700 ${
+                i === idx ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          ))}
         </Link>
 
         {/* Picker row — vs sits at the horizontal center of the row
