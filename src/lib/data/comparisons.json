@@ -1,0 +1,96 @@
+{
+  "$schema-comment": "Comparison source data — used by /compare/[slug]/page.tsx and sitemap.ts. Add new entries by appending objects. Each requires: slug, competitor.name + url + tagline + pricing + license + dataModel, features[], verdict, faq[].",
+  "comparisons": [
+    {
+      "slug": "career-ops-vs-jobscan",
+      "competitor": {
+        "name": "Jobscan",
+        "url": "https://www.jobscan.co/",
+        "tagline": "ATS resume scanner and keyword optimizer.",
+        "pricing": "$49.95/mo (or $39.95/mo annual). Free tier: 2 scans/month.",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Cloud SaaS. Resume and job description uploaded to Jobscan servers."
+      },
+      "lastModified": "2026-05-18",
+      "intro": "Jobscan is a polished ATS scanner with a low setup bar. career-ops is an end-to-end pipeline that runs on your machine. Different tools, different audiences. Here is the honest comparison.",
+      "features": [
+        {
+          "name": "ATS keyword matching",
+          "careerOps": "Yes — built into the evaluate mode, scored against six dimensions",
+          "competitor": "Yes — core product feature with detailed match report"
+        },
+        {
+          "name": "Resume tailoring per listing",
+          "careerOps": "Yes — automated via the tailor mode, generates a new CV draft per job",
+          "competitor": "Manual — surfaces gaps, you rewrite"
+        },
+        {
+          "name": "Job scanning across portals",
+          "careerOps": "Yes — scans Greenhouse, Ashby, Lever, Workday, SmartRecruiters",
+          "competitor": "No — single-listing focus"
+        },
+        {
+          "name": "Application tracker",
+          "careerOps": "Yes — Go TUI dashboard, pipeline stages",
+          "competitor": "Yes — separate product, additional cost"
+        },
+        {
+          "name": "Cover letter generation",
+          "careerOps": "Yes — tailored per listing via apply mode",
+          "competitor": "Yes — separate tool, included in higher tiers"
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local-first. Your CV, evaluations, and tracking never leave your machine.",
+          "competitor": "Uploaded to Jobscan cloud. Subject to their privacy policy."
+        },
+        {
+          "name": "Setup",
+          "careerOps": "git clone + npm install + config. 10–15 minutes if you have Node 20+.",
+          "competitor": "Sign up, paste resume. Two minutes."
+        },
+        {
+          "name": "Recurring cost",
+          "careerOps": "$0 for the tool. AI CLI subscription you already pay for (Claude Pro $20/mo typical).",
+          "competitor": "$49.95/mo monthly or $39.95/mo annual."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed. github.com/santifer/career-ops.",
+          "competitor": "Closed. You see the output, not the logic."
+        },
+        {
+          "name": "Methodology transparency",
+          "careerOps": "Published rubric (six dimensions, A–G evaluation prompt). career-ops.org/methodology.",
+          "competitor": "Algorithm not disclosed."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you write code and want the full pipeline. Pick Jobscan if you want a one-click ATS scan and zero setup.",
+        "body": [
+          "Jobscan does one thing well: tells you which keywords your resume is missing for a specific job description. Their UX is polished, their match score is easy to read, and you are productive in two minutes. The trade-offs are real: $50 a month, your data lives on their servers, and the algorithm is a black box.",
+          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent six-dimension rubric, tailor your CV per job, draft applications, track everything in a Go TUI. The trade-offs are also real: you need Node 20+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
+          "Different audiences, different price points, different philosophies. Neither is wrong."
+        ]
+      },
+      "faq": [
+        {
+          "q": "Can career-ops replace Jobscan for ATS scoring?",
+          "a": "For technical users, yes. The evaluate mode scores any listing against a six-dimension rubric that includes ATS-relevant signals — keyword density, role alignment, seniority match. It also gives you the tailor mode and apply mode that Jobscan does not. For non-technical users who want a polished GUI, Jobscan is still the easier tool."
+        },
+        {
+          "q": "Is career-ops really free?",
+          "a": "The software is MIT-licensed and costs zero. The actual recurring cost is whatever AI CLI you already pay for — most users run it on Claude Pro at $20/month, which covers all the evaluations, tailoring, and applications they will run in a typical job search."
+        },
+        {
+          "q": "What happens to my resume data with career-ops?",
+          "a": "Nothing. Your CV, your evaluation history, your tracked applications — all of it stays on your machine. There is no career-ops cloud, no account, no telemetry. The only network traffic is what your AI CLI of choice generates when you invoke it."
+        },
+        {
+          "q": "Why is career-ops harder to set up than Jobscan?",
+          "a": "It is a command-line tool, not a SaaS product. You git clone the repo, run npm install, configure a profile YAML, and invoke modes through your AI CLI. That setup buys you data ownership, transparent methodology, and a tool that does scan + evaluate + tailor + apply + track — things Jobscan splits across multiple paid products."
+        }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import { statSync } from 'node:fs';
 import path from 'node:path';
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
+import comparisonsData from '@/lib/data/comparisons.json';
 
 export const revalidate = 3600;
 
@@ -53,7 +54,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/sustain`,
       lastModified: lastModFor('src/app/sustain/page.tsx'),
     },
+    {
+      url: `${SITE_URL}/compare`,
+      lastModified: lastModFor('src/app/compare/page.tsx'),
+    },
   ];
+
+  // /compare/[slug] — one entry per comparison in comparisons.json.
+  // lastModified comes from the data file's lastModified field
+  // (preferred) or git history of the data JSON itself.
+  for (const c of comparisonsData.comparisons) {
+    entries.push({
+      url: `${SITE_URL}/compare/${c.slug}`,
+      lastModified: c.lastModified
+        ? new Date(`${c.lastModified}T00:00:00Z`)
+        : lastModFor('src/lib/data/comparisons.json'),
+    });
+  }
 
   for (const page of source.getPages()) {
     // page.url already includes the /docs prefix via baseUrl in source.ts.

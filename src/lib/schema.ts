@@ -569,6 +569,90 @@ export function homeFaqSchema() {
   };
 }
 
+// /compare/[slug] — comparison page schema. Emits SoftwareApplication
+// for both products (career-ops via @id reference to the canonical node
+// in siteSchema; competitor as a fresh node), a WebPage of type
+// AboutPage for the comparison itself, an ItemList encoding the feature
+// matrix, FAQPage with comparison-specific questions, and a
+// BreadcrumbList. We deliberately avoid Review or AggregateRating —
+// no fake ratings. The honest matrix and verdict carry the comparison
+// signal without manufactured social proof.
+type ComparisonData = {
+  slug: string;
+  competitor: {
+    name: string;
+    url: string;
+    tagline: string;
+    pricing: string;
+    license: string;
+    dataModel: string;
+  };
+  intro: string;
+  lastModified: string;
+  features: Array<{ name: string; careerOps: string; competitor: string }>;
+  verdict: { headline: string; body: string[] };
+  faq: Array<{ q: string; a: string }>;
+};
+
+export function comparisonSchema(data: ComparisonData) {
+  const pageUrl = `https://career-ops.org/compare/${data.slug}`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: `career-ops vs ${data.competitor.name}`,
+        description: data.intro,
+        inLanguage: 'en',
+        dateModified: `${data.lastModified}T00:00:00Z`,
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        about: { '@id': 'https://career-ops.org/#software' },
+        author: { '@id': PERSON_ID },
+      },
+      {
+        '@type': 'SoftwareApplication',
+        '@id': `${pageUrl}#competitor`,
+        name: data.competitor.name,
+        url: data.competitor.url,
+        applicationCategory: 'BusinessApplication',
+        description: data.competitor.tagline,
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${pageUrl}#feature-matrix`,
+        name: `Feature comparison: career-ops vs ${data.competitor.name}`,
+        numberOfItems: data.features.length,
+        itemListElement: data.features.map((f, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: f.name,
+          description: `career-ops: ${f.careerOps} — ${data.competitor.name}: ${f.competitor}`,
+        })),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}#faq`,
+        mainEntity: data.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${pageUrl}#breadcrumbs`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+          { '@type': 'ListItem', position: 2, name: 'Compare', item: 'https://career-ops.org/compare' },
+          { '@type': 'ListItem', position: 3, name: `vs ${data.competitor.name}`, item: pageUrl },
+        ],
+      },
+    ],
+  };
+}
+
 // /about — adds ProfilePage + BreadcrumbList. The full Person entity
 // now lives in siteSchema (root layout) so every page emits it; here we
 // only reference Person via @id and surface the page-specific nodes.
