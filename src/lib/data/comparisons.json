@@ -97,6 +97,205 @@
           "a": "It is a command-line tool, not a SaaS product. You git clone the repo, run npm install, configure a profile YAML, and invoke modes through your AI CLI. That setup buys you data ownership, transparent methodology, and a tool that does scan + evaluate + tailor + apply + track — things Jobscan splits across multiple paid products."
         }
       ]
+    },
+    {
+      "slug": "career-ops-vs-teal",
+      "competitor": {
+        "name": "Teal",
+        "url": "https://www.tealhq.com/",
+        "tagline": "Career intelligence platform with resume builder and job tracker.",
+        "pricing": "Free tier limited. Teal+ at $29/mo or $79/year (annual prepay).",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Cloud SaaS. Resume content, job descriptions, and tracking data stored on Teal servers."
+      },
+      "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-teal.jpg",
+      "intro": "Teal bundles an AI resume builder, a Chrome-extension job tracker, and a match-mode scorer into one polished web app. career-ops runs the same pipeline locally through your AI CLI, with the rubric and the code in the open. Same problem, different philosophy.",
+      "features": [
+        {
+          "name": "Resume builder UI",
+          "careerOps": "No builder UI. You author cv.md and the tailor mode generates per-job variants from it.",
+          "competitor": "Yes — drag-and-drop builder with templates and live ATS score."
+        },
+        {
+          "name": "Job tracker / pipeline",
+          "careerOps": "Yes — Go TUI dashboard with stages: scanned, evaluated, applied, interview, rejected.",
+          "competitor": "Yes — Kanban board with status columns. Chrome extension to add jobs from any portal."
+        },
+        {
+          "name": "Match-mode scoring",
+          "careerOps": "Yes — six-dimension rubric scored 1.0–5.0, recommendations gated at 4.0. Cited evidence per dimension.",
+          "competitor": "Yes — match score against a single job description. Algorithm not disclosed."
+        },
+        {
+          "name": "Resume tailoring",
+          "careerOps": "Automated per listing — tailor mode rewrites bullets and reorders sections against the JD.",
+          "competitor": "Manual — suggests keywords to add, you edit."
+        },
+        {
+          "name": "Cover letter generation",
+          "careerOps": "Yes — apply mode drafts a tailored cover per listing.",
+          "competitor": "Yes — included in Teal+. Limited in free tier."
+        },
+        {
+          "name": "Chrome extension",
+          "careerOps": "None. Scanning happens via your AI CLI hitting public job-board APIs and Playwright.",
+          "competitor": "Yes — one-click save jobs from LinkedIn, Indeed, Greenhouse, and others into the tracker."
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local-first. Resumes, applications, scoring history never leave your machine.",
+          "competitor": "Stored on Teal servers. Subject to Teal's privacy policy and terms."
+        },
+        {
+          "name": "Recurring cost",
+          "careerOps": "$0 for the software. Only the AI CLI subscription you already pay for ($20/mo typical).",
+          "competitor": "Free tier exists but is heavily gated. Teal+ at $29/mo or $79/year for the full feature set."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed. github.com/santifer/career-ops.",
+          "competitor": "Closed. You see the output, not the logic."
+        },
+        {
+          "name": "Methodology transparency",
+          "careerOps": "Published rubric — six dimensions and the Block A–G evaluation prompt. career-ops.org/methodology.",
+          "competitor": "Match-score algorithm is proprietary."
+        },
+        {
+          "name": "Press / media coverage",
+          "careerOps": "Featured in WIRED Greece and Business Insider (US & DE), April 2026. 44K+ GitHub stars.",
+          "competitor": "Featured in Inc. and TechCrunch over the years. Backed by Inspired Capital."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you live in a terminal and want to own the stack. Pick Teal if you want a polished web app with a Chrome extension and zero CLI.",
+        "body": [
+          "Teal is the friendliest UI in this space. The Chrome extension is genuinely useful — you find a job on LinkedIn, hit a button, and it lands in your tracker with metadata extracted. The resume builder is well-designed for people who do not want to fight Word templates. The trade-offs are familiar: $29 a month for the full toolset, your career data lives on their servers, and the match algorithm is a black box.",
+          "career-ops is the inverse. No Chrome extension. No drag-and-drop. You edit cv.md in your editor, configure a YAML, and invoke modes from a terminal. In exchange you get an MIT-licensed pipeline, a rubric you can read, and a tracker that never asks for an account.",
+          "If you have never used a terminal, Teal will be friction-free in a way career-ops never will. If you already live in one, the calculus inverts."
+        ]
+      },
+      "faq": [
+        {
+          "q": "Can career-ops replace Teal end-to-end?",
+          "a": "For technically comfortable users, yes. The scan, evaluate, tailor, apply, and track modes cover the same ground as Teal's job tracker, resume builder, match mode, and cover-letter generator. What career-ops does not have is Teal's Chrome extension and its polished GUI."
+        },
+        {
+          "q": "Is career-ops really free?",
+          "a": "The software is MIT-licensed and costs zero. The only recurring cost is the AI CLI you already pay for. A typical job search runs on Claude Pro at $20/month and covers all the evaluations, tailoring, and applications you will need."
+        },
+        {
+          "q": "What about my data with career-ops?",
+          "a": "Nothing leaves your machine. Your cv.md, the listings you evaluate, your tracked applications — all of it lives in local files. There is no career-ops account, no telemetry, no cloud sync. The only network traffic is what your AI CLI sends to its provider when you invoke it."
+        },
+        {
+          "q": "Does career-ops have a Chrome extension like Teal?",
+          "a": "No. Job scanning happens through your AI CLI hitting the public APIs of Greenhouse, Ashby, and Lever (zero-token, no scraping), or through Playwright for portals without a clean API. The trade-off: no one-click save from LinkedIn, but also no browser permissions and no data flowing to a third party."
+        }
+      ]
+    },
+    {
+      "slug": "career-ops-vs-huntr",
+      "competitor": {
+        "name": "Huntr",
+        "url": "https://huntr.co/",
+        "tagline": "Kanban-style job application tracker with Chrome extension and AI resume tools.",
+        "pricing": "Free tier limited. Huntr paid plans from $9–39/month depending on tier.",
+        "license": "Proprietary, closed-source",
+        "dataModel": "Cloud SaaS. Applications, resumes, contacts, and notes stored on Huntr servers."
+      },
+      "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-huntr.jpg",
+      "intro": "Huntr is the original Kanban job tracker — boards, columns, drag-and-drop, and a Chrome extension that scrapes job posts into cards. career-ops covers the same pipeline plus scanning, evaluation, and tailoring, but it lives in your terminal and on your disk. Same job, different surface area.",
+      "features": [
+        {
+          "name": "Application tracker UX",
+          "careerOps": "Go TUI dashboard with stages and keyboard navigation. Terminal-native.",
+          "competitor": "Web Kanban board with drag-and-drop columns. Mobile app available."
+        },
+        {
+          "name": "Job scanning",
+          "careerOps": "Yes — scan mode hits Greenhouse, Ashby, Lever, Workday, SmartRecruiters APIs.",
+          "competitor": "Manual paste or Chrome extension scrape from any job board."
+        },
+        {
+          "name": "AI evaluation against rubric",
+          "careerOps": "Yes — six-dimension scoring with cited evidence. Gated recommendation at 4.0/5.0.",
+          "competitor": "Match score per job. Algorithm not disclosed."
+        },
+        {
+          "name": "Resume tailoring",
+          "careerOps": "Automated per listing — tailor mode generates a CV variant per job.",
+          "competitor": "AI Resume Tailor in paid tier. Manual review required."
+        },
+        {
+          "name": "Cover letter generation",
+          "careerOps": "Yes — apply mode drafts per listing using profile and JD context.",
+          "competitor": "Yes — AI Cover Letters in paid tier."
+        },
+        {
+          "name": "Autofill applications",
+          "careerOps": "Apply mode generates application content; you paste into the actual form.",
+          "competitor": "Yes — autofills application forms via Chrome extension."
+        },
+        {
+          "name": "Contacts and notes",
+          "careerOps": "Free-form markdown files alongside your application data.",
+          "competitor": "Built-in contacts and notes inside each application card."
+        },
+        {
+          "name": "Mobile access",
+          "careerOps": "None. Terminal-only. Use SSH if you want it on a tablet.",
+          "competitor": "Native iOS and Android apps."
+        },
+        {
+          "name": "Data ownership",
+          "careerOps": "Local files. Applications, resumes, contacts never leave your machine.",
+          "competitor": "Stored on Huntr servers. Standard SaaS data-processing terms."
+        },
+        {
+          "name": "Recurring cost",
+          "careerOps": "$0 for the tool. Only your AI CLI ($20/mo typical with Claude Pro).",
+          "competitor": "Free tier capped. Paid plans $9–39/month."
+        },
+        {
+          "name": "Source code",
+          "careerOps": "Open source, MIT-licensed.",
+          "competitor": "Closed."
+        },
+        {
+          "name": "Press / media coverage",
+          "careerOps": "Featured in WIRED Greece and Business Insider (US & DE), April 2026. 44K+ GitHub stars.",
+          "competitor": "Featured in Forbes, Inc., Mashable over the years. Hundreds of thousands of users since 2014."
+        }
+      ],
+      "verdict": {
+        "headline": "Pick career-ops if you want the full pipeline on your machine. Pick Huntr if the Kanban board and the mobile app are the features that change your workflow.",
+        "body": [
+          "Huntr nailed two things: the Kanban metaphor for a job search and a Chrome extension that turns any job posting into a card with one click. The mobile apps mean you can move cards between columns from a bus. For someone who treats job search as an Asana-style project, Huntr is the right shape.",
+          "career-ops covers the same tracker plus the work upstream of it — scanning portals, evaluating listings against a rubric, tailoring CVs per job, drafting applications. It does this in a terminal, with everything as local files you can grep and version-control. No mobile, no GUI, no card view.",
+          "Different audiences. Huntr is for people whose primary surface is a browser tab; career-ops is for people whose primary surface is an editor."
+        ]
+      },
+      "faq": [
+        {
+          "q": "Does career-ops have a Kanban board like Huntr?",
+          "a": "No. The Go TUI dashboard groups applications by stage (scanned, evaluated, applied, interview, rejected) but it is a terminal view, not a drag-and-drop board. If the Kanban metaphor is the reason you use Huntr, career-ops will not give you that."
+        },
+        {
+          "q": "Can career-ops replace Huntr for application tracking?",
+          "a": "For technical users who do not need a mobile app or a browser-based UI, yes. The TUI dashboard, the per-application markdown files, and the apply mode cover the same ground. For non-technical users or anyone who wants to move cards on a phone, Huntr is the better fit."
+        },
+        {
+          "q": "What does career-ops do that Huntr does not?",
+          "a": "The work before tracking. Scan mode pulls listings from Greenhouse, Ashby, Lever, Workday, and SmartRecruiters via their public APIs. Evaluate mode scores each listing against a six-dimension rubric with cited evidence. Tailor mode generates a CV variant per job. Huntr starts when you have a posting to track; career-ops starts when you have a profile and want listings worth tracking."
+        },
+        {
+          "q": "Is career-ops really free?",
+          "a": "The software is MIT-licensed and costs zero. The only recurring cost is your AI CLI subscription, typically Claude Pro at $20/month for a full job search."
+        }
+      ]
     }
   ]
 }
