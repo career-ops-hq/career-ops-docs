@@ -81,9 +81,6 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <a href="/methodology" className="hover:text-fd-foreground hover:underline">
                   Methodology
                 </a>
-                <a href="/sustain" className="hover:text-fd-foreground hover:underline">
-                  Sustain
-                </a>
                 <a href="/compare" className="hover:text-fd-foreground hover:underline">
                   Compare
                 </a>
@@ -92,6 +89,12 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 </a>
                 <a href="/privacy" className="hover:text-fd-foreground hover:underline">
                   Privacy
+                </a>
+                <a
+                  href="/sustain"
+                  className="text-brand hover:text-brand-200 hover:underline font-medium"
+                >
+                  Sustain
                 </a>
                 <span className="flex items-center gap-3 ml-1">
                   <a
