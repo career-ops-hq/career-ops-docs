@@ -1,0 +1,240 @@
+{
+  "$schema-comment": "Intent landing pages — SEO-targeted, one per commercial-intent query. Each renders via src/components/IntentLanding.tsx. Add new entries by appending objects (and adding the corresponding src/app/<slug>/page.tsx wrapper). Schema, sitemap, and IndexNow auto-include via the slug.",
+  "landings": [
+    {
+      "slug": "ai-job-search-tool",
+      "h1": "An AI job search tool you actually own",
+      "primaryKeyword": "ai job search tool",
+      "supportingKeywords": ["ai job search", "ai-powered job search", "best ai job search tool"],
+      "lastModified": "2026-05-18",
+      "tagline": "career-ops is an open-source AI job search tool that runs on your machine through whichever AI CLI you already use. No SaaS, no account, no monthly subscription.",
+      "introBlock": "Most AI job search tools are cloud SaaS products that charge $20–80 a month and keep your resume on their servers. career-ops is the inverse: MIT-licensed code that runs locally, an evaluation rubric you can read, and a pipeline that covers scanning, evaluation, tailoring, applying, and tracking. The only recurring cost is the AI CLI subscription you already pay for. A typical job search runs on Claude Pro at $20 a month and that is the entire bill.",
+      "howItWorks": [
+        {
+          "step": "1. Scan portals",
+          "body": "career-ops hits the public APIs of Greenhouse, Ashby, and Lever to pull listings that match your target archetypes. Workday, SmartRecruiters, and others are reachable through Playwright. Zero scraping of LinkedIn — that integration is explicitly out of scope."
+        },
+        {
+          "step": "2. Evaluate against a published rubric",
+          "body": "Every listing gets scored 1.0–5.0 across six dimensions: match, north-star alignment, comp, cultural signals, red flags, and global fit. The full rubric and the canonical prompt live in the open at career-ops.org/methodology. Anything below 4.0 the agent recommends against applying."
+        },
+        {
+          "step": "3. Tailor, apply, track",
+          "body": "For each listing that passes the threshold, the tailor mode rewrites your CV against the JD, the apply mode drafts the application content, and the Go TUI dashboard tracks status. Every artifact lives on your disk as a plain file you can grep, edit, and version-control."
+        }
+      ],
+      "proof": [
+        "Open source under MIT — github.com/santifer/career-ops",
+        "44,000+ GitHub stars in the first 90 days post-release",
+        "Featured in WIRED Greece and Business Insider (US & DE)",
+        "Built by a single maintainer who used it to land his own Head of AI role"
+      ],
+      "faq": [
+        {
+          "q": "What makes career-ops different from other AI job search tools?",
+          "a": "Three things, none of them subjective. It is open source — MIT-licensed code anyone can audit. It runs locally — your resume, listings, and tracking never leave your machine. And it covers the full pipeline — scan, evaluate, tailor, apply, track — instead of fragmenting into three or four paid products. Side-by-side comparisons against Jobscan, Teal, and Huntr live at career-ops.org/compare."
+        },
+        {
+          "q": "Do I need to be a developer to use career-ops?",
+          "a": "You need to be comfortable with a terminal — git clone, npm install, editing a YAML file, invoking a CLI. If those phrases mean nothing to you, the setup will be painful and a polished SaaS like Teal or Jobscan is the better fit. If you live in a terminal already, the setup takes 10–15 minutes."
+        },
+        {
+          "q": "Which AI does career-ops use?",
+          "a": "Whichever AI CLI you already pay for. Claude Code, Codex, OpenCode, Gemini CLI, Qwen, and Copilot are all first-class runtimes. The mode files in the repo are plain markdown prompts that any of these CLIs can invoke. You pick the model that fits your cost, quality, and privacy preferences."
+        },
+        {
+          "q": "How much does it cost?",
+          "a": "The software itself is $0 and will remain so. The only recurring cost is your AI CLI subscription — most users run on Claude Pro at $20 a month, which covers all the evaluations, tailoring, and applications a typical job search produces."
+        }
+      ]
+    },
+    {
+      "slug": "job-application-tracker",
+      "h1": "A job application tracker that lives on your machine",
+      "primaryKeyword": "job application tracker",
+      "supportingKeywords": ["application tracker", "job pipeline tracker", "job search tracker"],
+      "lastModified": "2026-05-18",
+      "tagline": "career-ops tracks every job application — scanned, evaluated, applied, interviewed, rejected — in a Go TUI dashboard backed by plain files on your disk. No cloud, no account, no monthly fee.",
+      "introBlock": "Most job application trackers are cloud SaaS — Huntr's Kanban board, Teal's dashboard, Notion templates synced to the web. They work, but your career data lives on someone else's servers, and you pay $10–40 a month for the privilege. career-ops tracks the same pipeline locally. Each application is a markdown file under reports/ on your disk. The dashboard reads those files and renders a terminal UI with pipeline stages, scores, and quick navigation. The data is grep-able, version-controllable, and yours.",
+      "howItWorks": [
+        {
+          "step": "1. Every listing becomes a file",
+          "body": "When the scan or evaluate mode discovers a listing, career-ops writes a markdown report to reports/. The report carries the score, the JD, the company, the role, and the evaluation rationale. Status defaults to evaluated."
+        },
+        {
+          "step": "2. The TUI groups by stage",
+          "body": "The Go-based dashboard reads every file in reports/ and groups them by status — applied, evaluated, interview, rejected, discarded. You navigate with keyboard, see scores at a glance, jump into any report, and change status without leaving the terminal."
+        },
+        {
+          "step": "3. Status changes are explicit",
+          "body": "Marking an application as applied, scheduled, or rejected is a deliberate keystroke. The data lives in the file frontmatter. Want to back up your job search history? git init the directory and commit. Want to migrate machines? rsync the reports folder."
+        }
+      ],
+      "proof": [
+        "Open source under MIT — github.com/santifer/career-ops",
+        "44,000+ GitHub stars",
+        "Built around plain markdown files — no proprietary database, no lock-in",
+        "Go-based TUI, fast even with hundreds of applications"
+      ],
+      "faq": [
+        {
+          "q": "Where is my application data stored?",
+          "a": "In plain markdown files under reports/ in your local career-ops directory. The Go TUI reads those files; there is no database, no cloud sync, no telemetry. If you delete the directory, the data is gone. If you back it up, it is preserved. Standard file-system semantics."
+        },
+        {
+          "q": "Can I track applications I did not find through career-ops?",
+          "a": "Yes. Create a markdown file in reports/ manually, fill in the frontmatter (company, role, status, score), and the dashboard picks it up on next launch. The tracker does not care whether the listing came from the scan mode or from a friend's referral."
+        },
+        {
+          "q": "Does career-ops sync between devices?",
+          "a": "Not natively. The data is files on disk; if you want sync, use whichever tool you already trust for files — Syncthing, Dropbox, iCloud Drive, a git repo, or a USB stick. career-ops avoids reinventing sync because the file-based model means existing tools already work."
+        },
+        {
+          "q": "How is career-ops's tracker different from Huntr or Teal?",
+          "a": "Huntr and Teal are cloud-hosted Kanban boards with web and mobile apps. career-ops's tracker is a terminal UI backed by local files. Huntr is better if you want drag-and-drop columns on a phone; career-ops is better if you want data ownership and zero recurring cost. Side-by-side at career-ops.org/compare."
+        }
+      ]
+    },
+    {
+      "slug": "claude-code-job-search",
+      "h1": "Claude Code for job search — the canonical skill collection",
+      "primaryKeyword": "claude code skills",
+      "supportingKeywords": ["claude code job search", "claude code use cases", "claude code skill"],
+      "lastModified": "2026-05-18",
+      "tagline": "career-ops is the flagship case study of Claude Code skills applied to a vertical problem — turning Anthropic's agent CLI into a full job search pipeline through fourteen composable modes.",
+      "introBlock": "Claude Code's skill system loads markdown prompts as composable agents. career-ops is the most complete public skill collection built on that primitive — fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. Each mode is a markdown file under modes/ in the repo; Claude Code discovers them automatically and exposes each as a callable agent. The same skill files run unchanged in Codex, OpenCode, Gemini CLI, Qwen, and Copilot — the architecture is intentionally CLI-agnostic. If you have wondered what a serious Claude Code skill collection looks like, this is one of the few that answers that question with 44K+ stars of usage behind it.",
+      "howItWorks": [
+        {
+          "step": "1. Install Claude Code, clone the repo",
+          "body": "claude-code/install via Anthropic's installer, then git clone github.com/santifer/career-ops. The repo contains a modes/ directory with the fourteen skill files. Claude Code auto-discovers them on next launch."
+        },
+        {
+          "step": "2. Invoke modes by name",
+          "body": "From the Claude Code prompt, invoke /scan, /evaluate, /tailor, /apply, /track, /interview-prep, and the other modes. Each is a fully-loaded agent with its own system prompt, rubric, and context boundaries. They compose — scan feeds evaluate, evaluate feeds tailor, tailor feeds apply."
+        },
+        {
+          "step": "3. Customize the rubric in modes/",
+          "body": "Don't agree with the six-dimension scoring? Edit modes/oferta.md. Want a different language for evaluation? The repo ships modes in Spanish, English, German, French, Japanese, and Portuguese. Want to add a mode? Drop a markdown file in modes/, register it in modes/_shared.md, and Claude Code picks it up."
+        }
+      ],
+      "proof": [
+        "github.com/santifer/career-ops — fourteen production skills",
+        "44,000+ GitHub stars",
+        "CLI-agnostic — the same modes run on Codex, OpenCode, Gemini CLI, Qwen, Copilot",
+        "Featured in WIRED Greece and Business Insider as a flagship AI agent use case"
+      ],
+      "faq": [
+        {
+          "q": "Do skills work in Claude Code?",
+          "a": "Yes. Claude Code loads skill files from the active project's modes/ directory automatically. Each skill is a markdown file with frontmatter and a prompt body; Claude Code exposes each as a callable agent. career-ops ships fourteen such skills as the canonical example."
+        },
+        {
+          "q": "How do you activate skills in Claude Code?",
+          "a": "From the Claude Code prompt, type the mode name as a slash command — /scan, /evaluate, /tailor — and Claude Code invokes that skill with its full prompt and rubric. The skill runs as an autonomous agent with read access to your local files and write access to the configured output directories."
+        },
+        {
+          "q": "Is career-ops Claude-only?",
+          "a": "No. career-ops is CLI-agnostic by design. The same modes/ markdown files run in Claude Code, Codex (OpenAI), OpenCode, Gemini CLI (Google), Qwen, and GitHub Copilot. Each user picks the CLI matching their existing subscription. The skill format is portable because it is plain markdown."
+        },
+        {
+          "q": "What other Claude Code skill collections exist?",
+          "a": "anthropics/skills is Anthropic's official meta-repo of skills. alirezarezvani/claude-skills curates community skills. career-ops differs by being a complete vertical application — not a grab-bag, but a single coherent system. If you want examples of how to compose multiple skills into one workflow, career-ops is the reference."
+        }
+      ]
+    },
+    {
+      "slug": "ats-optimized-resume",
+      "h1": "An ATS-optimized resume, generated per listing",
+      "primaryKeyword": "ats optimized resume",
+      "supportingKeywords": ["ats friendly resume", "ats resume", "ats resume checker", "resume tailoring"],
+      "lastModified": "2026-05-18",
+      "tagline": "career-ops generates a tailored, ATS-optimized resume for every job listing — automatically, locally, and using whichever AI CLI you already pay for.",
+      "introBlock": "Applicant tracking systems filter resumes by keyword density, role alignment, and structural conventions. Most candidates address this by maintaining one resume and hoping it passes. career-ops takes the opposite approach — a master cv.md that holds everything you have done, plus a tailor mode that generates a focused, ATS-aligned variant per listing. The variant emphasizes the experience the JD asks for, demotes the unrelated work, and respects the formatting conventions ATS parsers expect. The output is a PDF generated via Playwright, ready to upload.",
+      "howItWorks": [
+        {
+          "step": "1. Author your master cv.md once",
+          "body": "Write everything — every role, every project, every achievement — into cv.md as plain markdown. This file is your career corpus. It does not need to fit on one page; it does not need to be polished. The tailor mode handles polish per listing."
+        },
+        {
+          "step": "2. Tailor mode rewrites per JD",
+          "body": "For each listing the evaluate mode flagged, invoke /tailor. The mode reads the JD, identifies the priority skills, reorders bullets to surface them, drops irrelevant experience, and produces a tailored cv-<company>.md. ATS keywords from the JD are integrated naturally — not stuffed."
+        },
+        {
+          "step": "3. Export to PDF via Playwright",
+          "body": "The build script renders the markdown to a clean, single-page PDF using a typography-respecting CSS template. The resulting file is structurally simple — no tables, no columns, no graphics — exactly the kind ATS parsers handle reliably. Upload directly."
+        }
+      ],
+      "proof": [
+        "Open source under MIT — github.com/santifer/career-ops",
+        "Tailoring rubric is published — career-ops.org/methodology",
+        "Plain markdown source, plain PDF output — no proprietary format",
+        "Works against every major ATS the maintainer encountered in 740+ listings"
+      ],
+      "faq": [
+        {
+          "q": "What is an ATS-optimized resume?",
+          "a": "A resume formatted and worded so that an applicant tracking system parses it correctly and surfaces the keywords the recruiter is searching for. Structural conventions matter — no tables, no columns, no graphics, standard section headings — and keyword alignment with the job description matters. career-ops handles both automatically via the tailor mode."
+        },
+        {
+          "q": "How does career-ops compare to Jobscan for ATS optimization?",
+          "a": "Jobscan tells you which keywords are missing from your resume relative to a JD. You then edit your resume manually. career-ops goes further — it reads the JD, rewrites your cv.md bullets to integrate the missing keywords naturally, reorders sections, and outputs a tailored PDF. Both achieve ATS alignment; career-ops automates the editing step."
+        },
+        {
+          "q": "Does career-ops keyword-stuff to game the ATS?",
+          "a": "No. The tailor mode is instructed to integrate JD keywords only when they are accurate to the candidate's actual experience. Over-stuffing degrades both ATS and human readability, and the rubric explicitly flags it. The goal is honest alignment, not gaming."
+        },
+        {
+          "q": "Can career-ops tailor cover letters too?",
+          "a": "Yes. The apply mode drafts a tailored cover letter per listing alongside the resume variant. Same approach — pull the relevant story from your profile, address the specific JD, keep it short. You review and edit before sending; the apply mode is a draft generator, not an auto-submitter."
+        }
+      ]
+    },
+    {
+      "slug": "local-first-job-search",
+      "h1": "A local-first job search — your data stays on your machine",
+      "primaryKeyword": "local first job search",
+      "supportingKeywords": ["private job search", "open source job search", "self-hosted job tracker"],
+      "lastModified": "2026-05-18",
+      "tagline": "career-ops runs entirely on your machine. Your resume, your evaluations, your application history — none of it leaves your disk unless you explicitly send it through your chosen AI CLI.",
+      "introBlock": "Most job-search products are cloud SaaS — Jobscan, Teal, Huntr, autoapply, simplify. They work by uploading your resume to their servers, processing it there, and giving you access through a web UI. The trade-off is convenience for data exposure. career-ops takes the opposite stance: every artifact lives on your local disk. The CV, the scored listings, the tailored variants, the application history. The only network traffic is what your AI CLI sends to its provider when you explicitly invoke it. There is no career-ops cloud, no account, no telemetry, no usage analytics, no shared infrastructure.",
+      "howItWorks": [
+        {
+          "step": "1. Clone the repo",
+          "body": "git clone github.com/santifer/career-ops places the entire system on your machine. Modes, scripts, dashboard, and configuration all live in the directory you just cloned into. Nothing phones home on install."
+        },
+        {
+          "step": "2. Configure and invoke locally",
+          "body": "Author cv.md and config/profile.yml in your editor of choice. Invoke modes through your AI CLI — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or Copilot. The CLI sends the prompts and the data fragments it needs to its provider; nothing is sent to career-ops or any third party."
+        },
+        {
+          "step": "3. Back up like any other folder",
+          "body": "The data is plain text files. Back up with rsync, sync with Syncthing, version with git, encrypt with whatever you already use. career-ops avoids reinventing storage because file-system primitives already solve the problem."
+        }
+      ],
+      "proof": [
+        "Open source under MIT — every line of the code is auditable",
+        "No telemetry, no analytics, no usage tracking",
+        "No account, no email collection, no third-party identity",
+        "The only outbound traffic is to your AI CLI provider, when you invoke a mode"
+      ],
+      "faq": [
+        {
+          "q": "Does career-ops collect any data about me?",
+          "a": "No. There is no analytics, no telemetry, no error reporting. The software runs locally as plain code; the only network traffic it generates is what your AI CLI sends to its provider when you invoke a mode, and that subset is whatever pieces of your CV and the public JD you explicitly evaluate."
+        },
+        {
+          "q": "What about my AI CLI provider — what do they see?",
+          "a": "Whatever you send them when invoking a mode. If you ask Claude Code to evaluate a listing, the JD text and the relevant parts of your CV go to Anthropic for that request. The terms of your AI CLI subscription govern that data — career-ops sits outside that relationship. You can audit exactly what is sent because every prompt lives in modes/ as plain markdown."
+        },
+        {
+          "q": "Can I run career-ops fully offline?",
+          "a": "Partially. The scan, evaluate, tailor, and apply modes depend on an AI CLI which itself requires network access to its provider. The tracking dashboard and the file management are fully offline. Local-only evaluation through Ollama is in flight per the project's roadmap."
+        },
+        {
+          "q": "Is there a hosted version of career-ops?",
+          "a": "No, and there are no plans for one. The maintainer has explicitly rejected the hosted SaaS pattern in Discussion #274. career-ops remains local-first by design. If you want hosted, Jobscan, Teal, and Huntr already cover that segment well."
+        }
+      ]
+    }
+  ]
+}

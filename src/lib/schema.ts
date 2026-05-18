@@ -565,6 +565,92 @@ export function homeFaqSchema() {
           text: 'career-ops was built by Santiago Fernández de Valderrama — an Applied AI Operator with 16+ years building products, founder and operator of a Spanish phone-repair business (2009–2025) before exiting, and currently Head of Applied AI at Zinkee. He created career-ops in early 2026 to manage his own AI-era job search — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
         },
       },
+      {
+        '@type': 'Question',
+        name: 'Is career-ops a Claude Code skill or a standalone tool?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'career-ops is CLI-agnostic. It works with Claude Code, Codex, OpenCode, Gemini CLI, Qwen, and Copilot — whichever AI coding agent the user already pays for. The skill files (modes/) live in the repo as plain markdown prompts; any agent that supports skill loading can invoke them. There is no Anthropic-specific dependency. Claude Code happens to be the most common runtime because of its skill loader, but the same modes run unchanged in the other CLIs.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How is career-ops different from other AI job search tools?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Most AI job search tools — Jobscan, Teal, Huntr, autoapply.ai — are cloud SaaS products that upload your resume and job data to their servers, charge $20–80/month, and keep their matching algorithm closed. career-ops is the inverse: open source, MIT-licensed, runs locally on your machine through whichever AI CLI you already use, and publishes the full evaluation rubric. The only recurring cost is your AI CLI subscription. Side-by-side comparisons at career-ops.org/compare.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What AI tools does career-ops work with?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Claude Code (primary), Codex (OpenAI), OpenCode, Gemini CLI (Google), Qwen, and GitHub Copilot. The same mode files run on all six. Each user picks the CLI that fits their existing subscription and cost preferences — career-ops never locks you to one provider. A typical job search runs on Claude Pro at $20/month, but the choice is yours.',
+        },
+      },
+    ],
+  };
+}
+
+// Intent landing — TechArticle + FAQPage + BreadcrumbList. One per
+// SEO-targeted commercial-intent query. The TechArticle carries the
+// keyword-aligned headline and dateModified; the FAQPage encodes the
+// PAA-style questions for AI-citation extraction; the breadcrumb
+// emits the path. We deliberately omit Article/NewsArticle because
+// these are evergreen landing pages, not dated editorial pieces.
+type IntentLandingData = {
+  slug: string;
+  h1: string;
+  primaryKeyword: string;
+  supportingKeywords: string[];
+  lastModified: string;
+  tagline: string;
+  introBlock: string;
+  howItWorks: Array<{ step: string; body: string }>;
+  proof: string[];
+  faq: Array<{ q: string; a: string }>;
+};
+
+export function intentLandingSchema(data: IntentLandingData) {
+  const pageUrl = `https://career-ops.org/${data.slug}`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'TechArticle',
+        '@id': `${pageUrl}#article`,
+        url: pageUrl,
+        headline: data.h1,
+        description: data.tagline,
+        datePublished: `${data.lastModified}T00:00:00Z`,
+        dateModified: `${data.lastModified}T00:00:00Z`,
+        author: { '@id': PERSON_ID },
+        publisher: { '@id': PERSON_ID },
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        about: { '@id': 'https://career-ops.org/#software' },
+        mainEntityOfPage: pageUrl,
+        inLanguage: 'en',
+        keywords: [data.primaryKeyword, ...data.supportingKeywords],
+        wordCount: 1200,
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}#faq`,
+        mainEntity: data.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${pageUrl}#breadcrumbs`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+          { '@type': 'ListItem', position: 2, name: data.h1, item: pageUrl },
+        ],
+      },
     ],
   };
 }

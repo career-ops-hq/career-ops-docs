@@ -625,6 +625,60 @@ export default async function HomePage() {
               it under MIT once he no longer needed it.
             </dd>
           </div>
+          <div>
+            <dt className="text-fd-foreground font-medium text-lg lg:text-xl mb-2">
+              Is career-ops a Claude Code skill or a standalone tool?
+            </dt>
+            <dd className="text-fd-foreground/80 leading-relaxed">
+              career-ops is CLI-agnostic. It works with Claude Code,
+              Codex, OpenCode, Gemini CLI, Qwen, and Copilot —
+              whichever AI coding agent the user already pays for. The
+              skill files (<code className="font-mono text-fd-foreground">modes/</code>)
+              live in the repo as plain markdown prompts; any agent
+              that supports skill loading can invoke them. There is
+              no Anthropic-specific dependency. Claude Code happens
+              to be the most common runtime because of its skill
+              loader, but the same modes run unchanged in the other
+              CLIs.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-fd-foreground font-medium text-lg lg:text-xl mb-2">
+              How is career-ops different from other AI job search tools?
+            </dt>
+            <dd className="text-fd-foreground/80 leading-relaxed">
+              Most AI job search tools — Jobscan, Teal, Huntr,
+              autoapply.ai — are cloud SaaS products that upload your
+              resume and job data to their servers, charge $20–80/month,
+              and keep their matching algorithm closed. career-ops is
+              the inverse: open source, MIT-licensed, runs locally on
+              your machine through whichever AI CLI you already use,
+              and publishes the full evaluation rubric. The only
+              recurring cost is your AI CLI subscription. Side-by-side
+              comparisons at{' '}
+              <Link
+                href="/compare"
+                className="text-fd-foreground hover:underline underline-offset-2"
+              >
+                career-ops.org/compare
+              </Link>
+              .
+            </dd>
+          </div>
+          <div>
+            <dt className="text-fd-foreground font-medium text-lg lg:text-xl mb-2">
+              What AI tools does career-ops work with?
+            </dt>
+            <dd className="text-fd-foreground/80 leading-relaxed">
+              Claude Code (primary), Codex (OpenAI), OpenCode, Gemini
+              CLI (Google), Qwen, and GitHub Copilot. The same mode
+              files run on all six. Each user picks the CLI that fits
+              their existing subscription and cost preferences —
+              career-ops never locks you to one provider. A typical
+              job search runs on Claude Pro at $20/month, but the
+              choice is yours.
+            </dd>
+          </div>
         </dl>
       </section>
 
