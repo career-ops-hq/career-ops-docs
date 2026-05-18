@@ -593,65 +593,6 @@ export function homeFaqSchema() {
   };
 }
 
-// /use-cases/[slug] — TechArticle for each programmatic mode/portal/CLI
-// landing. The category field discriminates ('mode', 'portal', 'cli')
-// so the BreadcrumbList carries the correct second-level label
-// (Modes / Portals / CLIs).
-type UseCaseData = {
-  slug: string;
-  category: 'mode' | 'portal' | 'cli';
-  slugName: string;
-  displayName: string;
-  h1: string;
-  summary: string;
-  whatItDoes: string;
-  whenToUse: string;
-  example: string;
-  gotchas: string;
-  related: string[];
-};
-
-export function useCaseSchema(data: UseCaseData) {
-  const pageUrl = `https://career-ops.org/use-cases/${data.slug}`;
-  const categoryLabel =
-    data.category === 'mode'
-      ? 'Modes'
-      : data.category === 'portal'
-        ? 'Portals'
-        : 'CLIs';
-  return {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'TechArticle',
-        '@id': `${pageUrl}#article`,
-        url: pageUrl,
-        headline: data.h1,
-        description: data.summary,
-        author: { '@id': PERSON_ID },
-        publisher: { '@id': PERSON_ID },
-        isPartOf: { '@id': 'https://career-ops.org/#website' },
-        about: { '@id': 'https://career-ops.org/#software' },
-        mainEntityOfPage: pageUrl,
-        inLanguage: 'en',
-        articleSection: categoryLabel,
-        proficiencyLevel: 'Beginner',
-        applicationCategory: 'DeveloperApplication',
-      },
-      {
-        '@type': 'BreadcrumbList',
-        '@id': `${pageUrl}#breadcrumbs`,
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
-          { '@type': 'ListItem', position: 2, name: 'Use cases', item: 'https://career-ops.org/use-cases' },
-          { '@type': 'ListItem', position: 3, name: categoryLabel, item: 'https://career-ops.org/use-cases' },
-          { '@type': 'ListItem', position: 4, name: data.displayName, item: pageUrl },
-        ],
-      },
-    ],
-  };
-}
-
 // /blog/[slug] — BlogPosting schema. Author is the canonical Person
 // entity via @id; publisher is the same Person (single-author blog).
 // dateModified is the freshness signal Google ranks on.

@@ -1,0 +1,29 @@
+---
+title: pdf
+description: "Generates a tailored PDF resume against a specific JD using Playwright to render markdown through a clean typographic template. The output is structurally simple — no tables, no columns, no graphics — exactly what ATS parsers handle reliably."
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+pdf mode reads your master cv.md, the JD context, and runs the tailor step (rewriting bullets, reordering sections, integrating priority keywords) before exporting to PDF via Playwright with a CSS template that respects ATS parser conventions. The result is upload-ready.
+
+## When to use it
+
+Use pdf when you have already evaluated the listing and decided to apply, and want only the tailored PDF without re-running the evaluation step.
+
+## Example
+
+```
+`/career-ops pdf` referencing an evaluated listing — output is `cv-<company>.pdf` in reports/.
+```
+
+## Gotchas
+
+Requires Playwright installed locally. The build script may fail on minimal Linux installs missing system fonts. Run `npm run doctor` to diagnose.
+
+## Related
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)

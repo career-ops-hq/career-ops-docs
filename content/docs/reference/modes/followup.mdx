@@ -1,0 +1,30 @@
+---
+title: followup
+description: "Flags applications and interviews that are overdue for followup based on the cadence rules you configure. Drafts the followup messages so you can review and send."
+icon: CalendarClock
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+followup mode reads every report in the applied and interview stages, checks the date of last contact against your configured cadence (default: 7 days after apply, 5 days after interview), and flags overdue entries. For each flagged entry, it drafts a contextual followup message.
+
+## When to use it
+
+Run followup on Monday mornings as a weekly ritual. Each Monday it surfaces the followups due that week with drafts ready to send.
+
+## Example
+
+```
+`/career-ops followup` — output is a list of overdue contacts with a draft message per entry.
+```
+
+## Gotchas
+
+followup is conservative by default — it does not flag entries until the cadence threshold has clearly passed. Tighten the cadence in config if you want more aggressive nudges.
+
+## Related
+
+- [tracker](/docs/reference/modes/tracker)
+- [patterns](/docs/reference/modes/patterns)

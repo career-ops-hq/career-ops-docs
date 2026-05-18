@@ -1,0 +1,31 @@
+---
+title: interview-prep
+description: "Post-#489 the interview-prep mode splits by interview round type: recruiter screen, hiring manager, peer technical, and panel. Each variant produces a focused prep doc with likely questions, talking points, and STAR-format stories from your profile."
+icon: GraduationCap
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+interview-prep reads the company context (ideally already enriched via deep mode), the JD, and your profile, then produces a prep document scoped to a specific round type. The doc covers expected question patterns, talking points specific to your background, and pre-written STAR stories you can adapt live.
+
+## When to use it
+
+Use interview-prep the night before each round. The recruiter-screen variant covers comp negotiation prep. The hiring-manager variant focuses on role fit. The peer-technical variant focuses on architecture/coding questions. The panel variant covers leadership signals.
+
+## Example
+
+```
+`/career-ops interview-prep` + select round type — output is a prep document of 1,500–2,500 words organized by question pattern.
+```
+
+## Gotchas
+
+Each variant assumes you have already run oferta against the company. The prep depth scales with how much context the agent has — fold in deep-mode output and contacto-mode notes for richer prep.
+
+## Related
+
+- [deep](/docs/reference/modes/deep)
+- [contacto](/docs/reference/modes/contacto)
+- [oferta](/docs/reference/modes/oferta)

@@ -29,6 +29,21 @@
       "source": "/sponsors",
       "destination": "/sustain",
       "permanent": true
+    },
+    {
+      "source": "/use-cases",
+      "destination": "/docs/reference/modes",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/mode-:slug",
+      "destination": "/docs/reference/modes/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/use-cases/portal-:slug",
+      "destination": "/docs/reference/portals/:slug",
+      "permanent": true
     }
   ]
 }

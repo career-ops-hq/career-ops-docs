@@ -1,0 +1,32 @@
+---
+title: auto-pipeline
+description: "Default flow when you paste a job description URL or raw text. Runs A–F evaluation, generates the report, exports a tailored PDF, and writes a tracker entry — without manual intervention between steps."
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+career-ops invokes auto-pipeline whenever you drop a JD URL or pasted text into the prompt. The mode reads the listing, scores it against the six-dimension rubric (A through F), writes the evaluation to reports/, generates the tailored PDF via Playwright, and updates the tracker entry — all in a single agent turn.
+
+## When to use it
+
+Use auto-pipeline when you want the full pipeline executed automatically. It is the default mode for new listings entering your search.
+
+## Example
+
+```
+Paste in chat: `https://job-boards.greenhouse.io/notion/jobs/4523451008` — auto-pipeline runs end-to-end. No flags, no follow-up commands.
+```
+
+## Gotchas
+
+If you only want the evaluation without the PDF (faster, cheaper), invoke `/career-ops oferta` instead. auto-pipeline costs more tokens because it runs the full chain.
+
+## Related
+
+- [pipeline](/docs/reference/modes/pipeline)
+- [oferta](/docs/reference/modes/oferta)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)

@@ -1,0 +1,30 @@
+---
+title: Greenhouse
+description: "career-ops hits Greenhouse's public boards API directly. No HTML scraping, no rate-limit risk, no AI tokens consumed during the scan itself."
+icon: Leaf
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+The greenhouse provider in providers/greenhouse.mjs makes HTTP requests to boards-api.greenhouse.io/v1/boards/`{slug}`/jobs and parses the JSON response into the career-ops listing format. The slug is the company's Greenhouse board identifier (e.g. 'notion' for Notion).
+
+## When to use it
+
+Use Greenhouse scanning when your target companies use Greenhouse as their ATS. Most US tech companies in the 50–10,000-employee range do. templates/portals.example.yml ships with 70+ pre-configured Greenhouse slugs you can enable.
+
+## Example
+
+```
+In your portals.yml: `- provider: greenhouse\n  slug: notion\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.
+```
+
+## Gotchas
+
+Greenhouse-API listings only include the title, location, and department in the boards endpoint. Full JD text requires a follow-up request per listing, which career-ops handles automatically during the evaluate step.
+
+## Related
+
+- [ashby](/docs/reference/portals/ashby)
+- [lever](/docs/reference/portals/lever)

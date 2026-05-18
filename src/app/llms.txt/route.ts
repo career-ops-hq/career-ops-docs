@@ -31,8 +31,9 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/methodology — scoring rubric, six dimensions, canonical evaluation prompt (Block A–G), edge cases, and explicit anti-features
 - https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to sponsor the maintainer
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
-- https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr and other AI job search tools
-- https://career-ops.org/use-cases — every career-ops mode, portal, and CLI runtime documented (sourced from v1.8.0 canonical manifest)
+- https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
+- https://career-ops.org/docs/reference/modes — reference docs for every career-ops mode (auto-pipeline, oferta, interview-prep, tracker, and 9 more)
+- https://career-ops.org/docs/reference/portals — reference docs for the three zero-token portal scanners (Greenhouse, Ashby, Lever)
 
 ## Long-form (blog)
 

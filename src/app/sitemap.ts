@@ -6,7 +6,6 @@ import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
 import comparisonsData from '@/lib/data/comparisons.json';
 import landingsData from '@/lib/data/intent-landings.json';
-import useCasesData from '@/lib/data/use-cases.json';
 
 export const revalidate = 3600;
 
@@ -104,18 +103,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // /use-cases index + /use-cases/[slug] — programmatic per mode/portal/CLI.
-  entries.push({
-    url: `${SITE_URL}/use-cases`,
-    lastModified: lastModFor('src/app/use-cases/page.tsx'),
-  });
-  for (const u of useCasesData.useCases) {
-    entries.push({
-      url: `${SITE_URL}/use-cases/${u.slug}`,
-      lastModified: lastModFor('src/lib/data/use-cases.json'),
-    });
-  }
-
+  // /docs/** auto-discovered from Fumadocs source (includes
+  // /docs/reference/modes/* and /docs/reference/portals/* shipped
+  // post-migration from the deleted /use-cases routes).
   for (const page of source.getPages()) {
     // page.url already includes the /docs prefix via baseUrl in source.ts.
     // Reconstruct MDX path from slugs:

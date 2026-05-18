@@ -1,0 +1,31 @@
+---
+title: oferta
+description: "Runs the A–F evaluation against one listing. Skips PDF generation and tracker write-back. Use it when you only need the scoring decision and not the full pipeline."
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+oferta mode reads a single JD (URL or pasted text), scores it against the six-dimension rubric with cited evidence, and writes the evaluation report. No PDF, no tracker entry. Fast and cheap.
+
+## When to use it
+
+Use oferta to triage a borderline listing quickly. If the score clears 4.0 and you decide to apply, escalate to auto-pipeline or apply mode.
+
+## Example
+
+```
+Paste JD text + `/career-ops oferta` — output is the structured A–F evaluation in reports/ with the score and the dimension-by-dimension reasoning.
+```
+
+## Gotchas
+
+oferta does not write the tracker entry; the listing will not appear in the dashboard until you escalate. If you want the listing tracked even when below threshold, use auto-pipeline.
+
+## Related
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [ofertas](/docs/reference/modes/ofertas)
+- [pdf](/docs/reference/modes/pdf)

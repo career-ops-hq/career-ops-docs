@@ -1,0 +1,30 @@
+---
+title: contacto
+description: "The LinkedIn power move. Given a company name and your network context, contacto surfaces likely-warm contacts (mutuals, second-degree) and drafts a short outreach message tailored to the role you are applying to."
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+contacto mode reads the company name and the JD context, then suggests outreach targets based on patterns the agent finds (alumni networks, prior employers, mutual contacts mentioned in your profile). It drafts a short message — five to seven sentences — tailored to the role.
+
+## When to use it
+
+Use contacto when you have applied to a role and want to surface a referral path. Or use it before applying when a warm intro could move you past the recruiter pile.
+
+## Example
+
+```
+Invoke `/career-ops contacto` with the company and JD context. Output: 2-3 suggested LinkedIn contacts + a draft message per contact.
+```
+
+## Gotchas
+
+contacto does not scrape LinkedIn (rejected per issue #238). It works from the context you supply: your CV, your prior employers, mutual connections you mention. The agent does not have access to your LinkedIn graph.
+
+## Related
+
+- [deep](/docs/reference/modes/deep)
+- [interview-prep](/docs/reference/modes/interview-prep)

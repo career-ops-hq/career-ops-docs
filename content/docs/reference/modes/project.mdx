@@ -1,0 +1,29 @@
+---
+title: project
+description: "Builders accumulate ideas faster than they can ship. project mode scores a portfolio project idea against your target roles, your existing portfolio, and the time investment, surfacing whether it is worth building."
+icon: Lightbulb
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+project mode reads the project idea description, your target archetypes from config/profile.yml, and your existing portfolio context, then scores the project on three dimensions: signal value for target roles, differentiation from your existing portfolio, and estimated time-to-shippable.
+
+## When to use it
+
+Use project when you have three or four side-project ideas and want to pick the one that actually moves your job search forward. It is the side-project equivalent of the oferta mode.
+
+## Example
+
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+
+## Gotchas
+
+The mode does not validate technical feasibility, only career signal value. Run a separate technical scoping pass.
+
+## Related
+
+- [training](/docs/reference/modes/training)

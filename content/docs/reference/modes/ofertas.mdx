@@ -1,0 +1,30 @@
+---
+title: ofertas
+description: "Used when you have two or more competing offers in hand and need a normalized comparison across comp, role fit, growth trajectory, and red flags. Outputs a ranked recommendation."
+icon: GitCompare
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+ofertas reads multiple JD evaluations (already produced by oferta or auto-pipeline) and ranks them against each other on the six dimensions plus a normalized decision matrix. The output is a side-by-side comparison report and a ranked recommendation.
+
+## When to use it
+
+Use ofertas when you reach late-stage interviews for multiple roles and need a structured way to decide between them. Particularly useful for staff-level offers where comp packages and growth paths differ substantially.
+
+## Example
+
+```
+After running oferta against three different offers, invoke `/career-ops ofertas` and reference the three evaluation files. The mode produces a ranked decision matrix.
+```
+
+## Gotchas
+
+ofertas does not re-evaluate the offers; it ranks the existing reports. Make sure each offer has been scored individually first.
+
+## Related
+
+- [oferta](/docs/reference/modes/oferta)
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)

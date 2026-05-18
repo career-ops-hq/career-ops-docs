@@ -1,0 +1,30 @@
+---
+title: Ashby
+description: "Ashby is the modern ATS choice for Series A–C startups in the AI and dev-tools space. career-ops hits the public job-board API directly."
+icon: Sparkles
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+The ashby provider in providers/ashby.mjs makes HTTP requests to api.ashbyhq.com/posting-api/job-board/`{slug}` and parses the resulting JSON. The slug is the company's Ashby job board identifier (e.g. 'anthropic' for Anthropic).
+
+## When to use it
+
+Use Ashby scanning when targeting AI labs, infrastructure companies, and modern startups. Anthropic, Vercel, Replicate, and many YC companies use Ashby. About 40+ pre-configured slugs ship in templates/portals.example.yml.
+
+## Example
+
+```
+In your portals.yml: `- provider: ashby\n  slug: anthropic\n  careers_url: https://jobs.ashbyhq.com/anthropic` — then scan picks up active Anthropic roles.
+```
+
+## Gotchas
+
+Ashby's job board API returns full JD text directly, no follow-up request needed. Evaluation is slightly faster than for Greenhouse listings.
+
+## Related
+
+- [greenhouse](/docs/reference/portals/greenhouse)
+- [lever](/docs/reference/portals/lever)

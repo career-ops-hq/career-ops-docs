@@ -1,0 +1,30 @@
+---
+title: tracker
+description: "Quick read of where every application stands. Useful as a daily check-in or when preparing the weekly review. The full keyboard-driven UI lives in the Go TUI dashboard; this mode is the chat-side summary."
+icon: LayoutGrid
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+tracker reads every file in reports/ and produces a structured summary grouped by stage: applied, evaluated, interview, rejected, discarded. Counts per stage, recent activity, and overdue followups are surfaced in a single response.
+
+## When to use it
+
+Use tracker for a daily fifteen-second status check. Use the Go TUI dashboard when you need to dig in.
+
+## Example
+
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+
+## Gotchas
+
+tracker is read-only. Status changes are explicit keystrokes in the Go TUI dashboard or manual edits to the report frontmatter.
+
+## Related
+
+- [followup](/docs/reference/modes/followup)
+- [patterns](/docs/reference/modes/patterns)

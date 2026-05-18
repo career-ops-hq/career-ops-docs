@@ -1,0 +1,30 @@
+---
+title: Lever
+description: "Lever is the established ATS for mid-market and growth-stage companies. career-ops hits Lever's public postings API directly."
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+The lever provider in providers/lever.mjs makes HTTP requests to api.lever.co/v0/postings/`{slug}` and parses the JSON response. The slug is the company's Lever postings identifier (e.g. 'figma' for Figma).
+
+## When to use it
+
+Use Lever scanning for companies in the Series C+ to pre-IPO range that have not migrated to Greenhouse or Ashby. Figma, Brex, and many fintech companies still use Lever.
+
+## Example
+
+```
+In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
+```
+
+## Gotchas
+
+Lever's API exposes the full JD in the postings response. Some Lever boards include role internal metadata that career-ops surfaces as additional signal during scoring.
+
+## Related
+
+- [greenhouse](/docs/reference/portals/greenhouse)
+- [ashby](/docs/reference/portals/ashby)

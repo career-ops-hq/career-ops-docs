@@ -1,0 +1,29 @@
+---
+title: pipeline
+description: "Reads URLs queued in data/pipeline.md and runs the full auto-pipeline against each one. Use it when you collected ten or twenty listings during the day and want to crunch them in a single session."
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-05-18"
+---
+
+## What it does
+
+pipeline mode iterates over the URLs in data/pipeline.md (one per line) and invokes auto-pipeline against each. Reports, PDFs, and tracker entries are written for every listing that produces a valid evaluation. Failed scrapes are logged and skipped.
+
+## When to use it
+
+Use pipeline when you have a backlog of URLs to process. Drop them in data/pipeline.md, invoke /career-ops pipeline, and step away.
+
+## Example
+
+```
+Edit data/pipeline.md, add five Greenhouse URLs one per line, then run `/career-ops pipeline`. Each URL is processed sequentially; failures are reported at the end.
+```
+
+## Gotchas
+
+pipeline can run for several minutes against a long queue. Token usage scales linearly with the number of URLs. Use `/career-ops batch` if you want parallel processing.
+
+## Related
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
