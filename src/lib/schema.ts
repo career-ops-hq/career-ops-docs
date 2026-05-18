@@ -214,12 +214,10 @@ export async function siteSchema() {
           'https://www.wikidata.org/wiki/Q139007988',
         ],
         subjectOf: SOFTWARE_SUBJECT_OF,
-        offers: {
-          '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
-          availability: 'https://schema.org/InStock',
-        },
+        // `offers` deliberately omitted on SoftwareSourceCode — schema.org
+        // allows it but Google Search Console occasionally flags it as
+        // unusual for source-code types. Keep `offers` only on the
+        // SoftwareApplication node below, where it semantically belongs.
         interactionStatistic: [
           {
             '@type': 'InteractionCounter',
@@ -249,6 +247,9 @@ export async function siteSchema() {
         '@type': 'SoftwareApplication',
         '@id': 'https://career-ops.org/#application',
         name: 'career-ops',
+        description:
+          'Open-source AI-powered job search command center. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
+        softwareVersion: '1.8.0',
         url: 'https://career-ops.org',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
@@ -259,6 +260,7 @@ export async function siteSchema() {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
         },
       },
       // Full Person definition lives in the site-level schema so every

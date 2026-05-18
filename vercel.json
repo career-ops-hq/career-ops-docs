@@ -44,6 +44,11 @@
       "source": "/use-cases/portal-:slug",
       "destination": "/docs/reference/portals/:slug",
       "permanent": true
+    },
+    {
+      "source": "/use-cases/:path*",
+      "destination": "/docs/reference/modes",
+      "permanent": true
     }
   ]
 }
