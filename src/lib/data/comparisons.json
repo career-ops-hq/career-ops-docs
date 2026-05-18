@@ -12,6 +12,7 @@
         "dataModel": "Cloud SaaS. Resume and job description uploaded to Jobscan servers."
       },
       "lastModified": "2026-05-18",
+      "heroImage": "/og/compare/career-ops-vs-jobscan.jpg",
       "intro": "Jobscan is a polished ATS scanner with a low setup bar. career-ops is an end-to-end pipeline that runs on your machine. Different tools, different audiences. Here is the honest comparison.",
       "features": [
         {
@@ -63,6 +64,11 @@
           "name": "Methodology transparency",
           "careerOps": "Published rubric (six dimensions, A–G evaluation prompt). career-ops.org/methodology.",
           "competitor": "Algorithm not disclosed."
+        },
+        {
+          "name": "Press / media coverage",
+          "careerOps": "Featured in WIRED Greece and Business Insider (US & DE), April 2026. 44K+ GitHub stars.",
+          "competitor": "Established 2013. Industry-trade press coverage over the years (jobscan.co/press)."
         }
       ],
       "verdict": {

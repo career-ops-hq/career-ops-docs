@@ -589,6 +589,7 @@ type ComparisonData = {
   };
   intro: string;
   lastModified: string;
+  heroImage?: string;
   features: Array<{ name: string; careerOps: string; competitor: string }>;
   verdict: { headline: string; body: string[] };
   faq: Array<{ q: string; a: string }>;
@@ -596,6 +597,9 @@ type ComparisonData = {
 
 export function comparisonSchema(data: ComparisonData) {
   const pageUrl = `https://career-ops.org/compare/${data.slug}`;
+  const imageUrl = data.heroImage
+    ? `https://career-ops.org${data.heroImage}`
+    : undefined;
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -610,6 +614,14 @@ export function comparisonSchema(data: ComparisonData) {
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         about: { '@id': 'https://career-ops.org/#software' },
         author: { '@id': PERSON_ID },
+        ...(imageUrl && {
+          image: {
+            '@type': 'ImageObject',
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+          },
+        }),
       },
       {
         '@type': 'SoftwareApplication',

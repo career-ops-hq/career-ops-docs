@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { comparisonSchema } from '@/lib/schema';
@@ -24,6 +25,9 @@ export async function generateMetadata({
   if (!data) return { title: 'Comparison not found' };
   const title = `career-ops vs ${data.competitor.name} · honest comparison`;
   const description = data.intro;
+  const imageUrl = data.heroImage
+    ? `https://career-ops.org${data.heroImage}`
+    : undefined;
   return {
     title,
     description,
@@ -34,7 +38,13 @@ export async function generateMetadata({
       siteName: 'career-ops',
       title,
       description,
+      ...(imageUrl && {
+        images: [{ url: imageUrl, width: 1200, height: 630, alt: `career-ops vs ${data.competitor.name}` }],
+      }),
     },
+    twitter: imageUrl
+      ? { card: 'summary_large_image', images: [imageUrl] }
+      : undefined,
     robots: { index: true, follow: true },
   };
 }
@@ -76,6 +86,19 @@ export default async function ComparisonPage({
             {data.intro}
           </p>
         </header>
+
+        {data.heroImage && (
+          <figure className="mb-12 -mx-2 md:-mx-6">
+            <Image
+              src={data.heroImage}
+              alt={`career-ops vs ${data.competitor.name}`}
+              width={1200}
+              height={630}
+              className="w-full h-auto rounded-lg border border-fd-foreground/10"
+              priority
+            />
+          </figure>
+        )}
 
         <div className="space-y-12 text-fd-foreground/90 leading-relaxed">
           <section>
