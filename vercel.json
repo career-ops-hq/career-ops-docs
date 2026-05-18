@@ -49,6 +49,31 @@
       "source": "/use-cases/:path*",
       "destination": "/docs/reference/modes",
       "permanent": true
+    },
+    {
+      "source": "/ai-job-search-tool",
+      "destination": "/blog/the-complete-ai-job-search-guide",
+      "permanent": true
+    },
+    {
+      "source": "/job-application-tracker",
+      "destination": "/docs/reference/modes/tracker",
+      "permanent": true
+    },
+    {
+      "source": "/claude-code-job-search",
+      "destination": "/blog/why-career-ops",
+      "permanent": true
+    },
+    {
+      "source": "/ats-optimized-resume",
+      "destination": "/docs/reference/modes/pdf",
+      "permanent": true
+    },
+    {
+      "source": "/local-first-job-search",
+      "destination": "/blog/why-career-ops",
+      "permanent": true
     }
   ]
 }

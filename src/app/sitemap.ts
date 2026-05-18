@@ -5,7 +5,6 @@ import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
 import comparisonsData from '@/lib/data/comparisons.json';
-import landingsData from '@/lib/data/intent-landings.json';
 
 export const revalidate = 3600;
 
@@ -88,18 +87,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastMod
         ? new Date(`${lastMod}T00:00:00Z`)
         : lastModFor(mdxRel),
-    });
-  }
-
-  // /<slug> — one entry per intent landing in intent-landings.json.
-  // Each landing is a flat top-level route (not nested under a prefix)
-  // for maximum keyword-aligned URL value.
-  for (const l of landingsData.landings) {
-    entries.push({
-      url: `${SITE_URL}/${l.slug}`,
-      lastModified: l.lastModified
-        ? new Date(`${l.lastModified}T00:00:00Z`)
-        : lastModFor('src/lib/data/intent-landings.json'),
     });
   }
 

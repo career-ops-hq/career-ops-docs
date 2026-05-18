@@ -624,68 +624,6 @@ export function blogPostSchema(args: {
   };
 }
 
-// Intent landing — TechArticle + FAQPage + BreadcrumbList. One per
-// SEO-targeted commercial-intent query. The TechArticle carries the
-// keyword-aligned headline and dateModified; the FAQPage encodes the
-// PAA-style questions for AI-citation extraction; the breadcrumb
-// emits the path. We deliberately omit Article/NewsArticle because
-// these are evergreen landing pages, not dated editorial pieces.
-type IntentLandingData = {
-  slug: string;
-  h1: string;
-  primaryKeyword: string;
-  supportingKeywords: string[];
-  lastModified: string;
-  tagline: string;
-  introBlock: string;
-  howItWorks: Array<{ step: string; body: string }>;
-  proof: string[];
-  faq: Array<{ q: string; a: string }>;
-};
-
-export function intentLandingSchema(data: IntentLandingData) {
-  const pageUrl = `https://career-ops.org/${data.slug}`;
-  return {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'TechArticle',
-        '@id': `${pageUrl}#article`,
-        url: pageUrl,
-        headline: data.h1,
-        description: data.tagline,
-        datePublished: `${data.lastModified}T00:00:00Z`,
-        dateModified: `${data.lastModified}T00:00:00Z`,
-        author: { '@id': PERSON_ID },
-        publisher: { '@id': PERSON_ID },
-        isPartOf: { '@id': 'https://career-ops.org/#website' },
-        about: { '@id': 'https://career-ops.org/#software' },
-        mainEntityOfPage: pageUrl,
-        inLanguage: 'en',
-        keywords: [data.primaryKeyword, ...data.supportingKeywords],
-        wordCount: 1200,
-      },
-      {
-        '@type': 'FAQPage',
-        '@id': `${pageUrl}#faq`,
-        mainEntity: data.faq.map((item) => ({
-          '@type': 'Question',
-          name: item.q,
-          acceptedAnswer: { '@type': 'Answer', text: item.a },
-        })),
-      },
-      {
-        '@type': 'BreadcrumbList',
-        '@id': `${pageUrl}#breadcrumbs`,
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
-          { '@type': 'ListItem', position: 2, name: data.h1, item: pageUrl },
-        ],
-      },
-    ],
-  };
-}
-
 // /compare/[slug] — comparison page schema. Emits SoftwareApplication
 // for both products (career-ops via @id reference to the canonical node
 // in siteSchema; competitor as a fresh node), a WebPage of type
