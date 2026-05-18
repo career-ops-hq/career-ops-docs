@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 export default function UseCasesIndex() {
   const modes = useCasesData.useCases.filter((u) => u.category === 'mode');
   const portals = useCasesData.useCases.filter((u) => u.category === 'portal');
-  const clis = useCasesData.useCases.filter((u) => u.category === 'cli');
 
   return (
     <article className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
@@ -41,7 +40,29 @@ export default function UseCasesIndex() {
 
       <Section title="Modes" entries={modes} />
       <Section title="Portals" entries={portals} />
-      <Section title="CLIs" entries={clis} />
+
+      <section className="mt-8 rounded-lg border border-fd-foreground/10 bg-fd-foreground/[0.02] p-5">
+        <p className="text-sm text-fd-muted-foreground">
+          career-ops runs on Claude Code, Codex, Gemini CLI, OpenCode,
+          Qwen Code, Copilot, and Kimi — all first-class via the
+          agentskills.io standard. Each CLI reads <code className="font-mono">AGENTS.md</code> natively
+          and exposes the same mode surface. See{' '}
+          <a
+            href="/blog/why-career-ops"
+            className="text-fd-foreground underline underline-offset-2"
+          >
+            the thesis post
+          </a>{' '}
+          or{' '}
+          <a
+            href="/compare"
+            className="text-fd-foreground underline underline-offset-2"
+          >
+            the comparisons
+          </a>{' '}
+          for the full multi-CLI story.
+        </p>
+      </section>
     </article>
   );
 }
