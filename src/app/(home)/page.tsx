@@ -380,7 +380,7 @@ export default async function HomePage() {
         {/* Feature grid — 4 cards forming a 2x2 in lg+: technical (AI-Native),
             philosophical (Not spray), practical (45+ portals), human (Community).
             Each card title is h3 (children of the h2 statement above). */}
-        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card relative flex flex-col overflow-hidden z-2 min-h-[340px]">
+        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card relative flex flex-col overflow-hidden z-2 min-h-[300px]">
           <h3
             className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
           >
@@ -390,7 +390,7 @@ export default async function HomePage() {
             Works with any coding CLI — Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI, GitHub
             Copilot. Built on the Open Agent Skill Standard.
           </p>
-          <div className="flex flex-row flex-wrap items-center gap-6 md:gap-7">
+          <div className="flex flex-row flex-wrap items-center gap-6 md:gap-7 mt-auto">
             {CLIS.map((cli) => (
               <Image
                 key={cli.name}
@@ -406,38 +406,40 @@ export default async function HomePage() {
           <AgnosticBackground />
         </div>
 
-        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-bl from-brand/10 via-transparent to-transparent min-h-[340px]">
+        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-bl from-brand/10 via-transparent to-transparent min-h-[300px] flex flex-col">
           <h3
             className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
           >
-            Not spray-and-pray.
+            Drafts the open-ended answers.
           </h3>
+          <p className="mb-4">
+            Greenhouse, Ashby and Lever forms ask &ldquo;Why this role?&rdquo; and &ldquo;Tell us about a project.&rdquo; <code className="font-mono text-brand">/career-ops apply</code> reads the form, drafts every answer from your CV and the JD, and hands them back paste-ready.
+          </p>
           <p className="mb-6">
-            The system refuses to recommend applying to anything scoring below 4.0 out of 5. Every
-            evaluation is a hard filter — not a nudge.
+            You edit, you submit. The assistant never clicks for you.
           </p>
           <Link
-            href="/docs/introduction/what-is-career-ops"
-            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm')}
+            href="/docs/reference/modes/apply"
+            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}
           >
-            Read our mission statement
+            See how apply works
           </Link>
         </div>
 
-        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-tr from-brand/10 via-transparent to-transparent min-h-[340px] flex flex-col">
+        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-tr from-brand/10 via-transparent to-transparent min-h-[300px] flex flex-col">
           <h3
             className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
           >
-            45+ company portals. Zero manual searching.
+            100+ company portals. Zero manual searching.
           </h3>
           <p className="mb-6">
-            Pre-configured scrapers check career pages across 45+ companies and job aggregators on
-            demand. Run <code className="font-mono text-brand">/career-ops scan</code> and get a
+            Pre-configured scrapers check 100+ career pages across Greenhouse, Ashby and Lever on
+            demand — zero API tokens spent. Run <code className="font-mono text-brand">/career-ops scan</code> and get a
             ranked list back in minutes.
           </p>
           <Link
             href="/docs"
-            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit')}
+            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}
           >
             See all portals
           </Link>
@@ -446,7 +448,7 @@ export default async function HomePage() {
         {/* Card 4 — community. Closes the 2x2 grid; gradient in the fourth
             corner (top-left → to-br) so all four cards have distinct
             personality without copy-paste. */}
-        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-br from-brand/10 via-transparent to-transparent min-h-[340px] flex flex-col">
+        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-br from-brand/10 via-transparent to-transparent min-h-[300px] flex flex-col">
           <h3
             className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
           >
@@ -459,9 +461,9 @@ export default async function HomePage() {
           </p>
           <Link
             href="/community"
-            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit')}
+            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}
           >
-            Join 2,500+ builders in Discord
+            Join 3,000+ builders in Discord
           </Link>
         </div>
 

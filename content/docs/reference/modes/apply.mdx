@@ -1,0 +1,31 @@
+---
+title: apply
+description: "Live application assistant. Reads the open-ended questions Greenhouse, Ashby and Lever forms ask, and drafts answers grounded in your CV and the JD."
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-05-19"
+---
+
+## What it does
+
+apply reads an open application form (Greenhouse, Ashby, Lever), identifies the open-ended questions — "Why this role?", "Tell us about a project", "What's your salary expectation?" — and drafts answers grounded in your CV and the job description. You edit the drafts inline, copy them into the portal, submit.
+
+## When to use it
+
+Open the JD and the application form side-by-side. Run apply once the form is loaded. The output is paste-ready, not a finished application — you stay in the loop for tone, facts and any field the portal layers on top.
+
+## Example
+
+```
+`/career-ops apply` — drafts every open-ended answer the form asks, one block per question.
+```
+
+## Gotchas
+
+apply does not submit forms or click buttons. It reads the questions and produces answer drafts in the chat. The submission step is yours. Closed-ended fields (dropdowns, radio buttons, file uploads) are out of scope.
+
+## Related
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)
