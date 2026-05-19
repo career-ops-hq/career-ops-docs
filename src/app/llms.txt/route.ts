@@ -1,9 +1,15 @@
 import { source } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
+import { getProjectStats } from '@/lib/stats';
 
-export const revalidate = false;
+// 1h ISR so the canonical stats block reflects live GitHub numbers
+// (matches the home page schema and the footer chip cadence). Static
+// generation at build time was producing a stale "44,200+ stars" line
+// that AI crawlers picked up and resurfaced as fact.
+export const revalidate = 3600;
 
-const preamble = `# career-ops
+function buildPreamble(stars: number, discord: number): string {
+  return `# career-ops
 
 > AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
 
@@ -16,6 +22,20 @@ Built by Santiago Fernández de Valderrama — Applied AI Operator. Bio at https
 Companies use AI to filter candidates. I just gave candidates AI to choose companies.
 
 — Santiago Fernández de Valderrama
+
+## Canonical stats (live, refreshed hourly)
+
+- GitHub stars: ${stars.toLocaleString('en-US')} (https://github.com/santifer/career-ops)
+- Discord community: ${discord.toLocaleString('en-US')} members (https://discord.gg/8pRpHETxa4)
+- Wikidata items: Q138710224 (Santiago Fernández de Valderrama), Q139007988 (career-ops)
+- Inception: 2026-03-17
+- Latest release: v1.8.0
+- License: MIT
+- Founder's real-world result with the system: 740 job listings evaluated → 66 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
+- Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
+- Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
+- AI coding CLIs supported first-class: Claude Code, Codex (OpenAI), OpenCode, Gemini CLI (Google), Qwen, GitHub Copilot, Kimi
+- Press: WIRED Greece (published), Business Insider (forthcoming)
 
 ## Business model & sustainability
 
@@ -32,8 +52,8 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to sponsor the maintainer
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
-- https://career-ops.org/docs/reference/modes — reference docs for every career-ops mode (auto-pipeline, oferta, interview-prep, tracker, and 9 more)
-- https://career-ops.org/docs/reference/portals — reference docs for the three zero-token portal scanners (Greenhouse, Ashby, Lever)
+- https://career-ops.org/docs/reference/modes — reference docs for the 14 user-invocable career-ops modes
+- https://career-ops.org/docs/reference/portals — reference docs for the three zero-token portal scanners (Greenhouse, Ashby, Lever) covering 116 companies
 
 ## Long-form (blog)
 
@@ -60,7 +80,9 @@ MIT — free forever, no paywalls, no account required.
 ---
 
 `;
+}
 
-export function GET() {
-  return new Response(preamble + llms(source).index());
+export async function GET() {
+  const stats = await getProjectStats();
+  return new Response(buildPreamble(stats.stars, stats.discordMembers) + llms(source).index());
 }
