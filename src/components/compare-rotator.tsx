@@ -41,7 +41,7 @@ export function CompareRotator() {
   const current = competitors[idx];
 
   return (
-    <div className="w-full bg-fd-secondary/40 dark:bg-fd-secondary/30 mt-16 lg:mt-24 py-16 lg:py-24 border-y border-fd-foreground/5">
+    <div className="w-full bg-[#efeeed] dark:bg-stone-900 mt-16 lg:mt-24 py-16 lg:py-24">
     <section className="mx-auto w-full max-w-[1200px] px-6 md:px-12">
       <h2
         className={`${instrumentSerifRegular.className} text-center tracking-tight text-3xl md:text-4xl lg:text-5xl mb-6 lg:mb-8`}
