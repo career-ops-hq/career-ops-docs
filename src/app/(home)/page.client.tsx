@@ -108,15 +108,30 @@ export function CreateAppAnimation(props: ComponentProps<'div'>) {
   const timeCommandEnd = timeCommandRun + 3;
   const timeWindowOpen = timeCommandEnd + 1;
   const timeEnd = timeWindowOpen + 1;
+  // After the final frame (PipelineReadyWindow visible + "Generating
+  // tailored resume..." printed) hold the result on screen for ~4s so
+  // the visitor can read the outcome, THEN reset to 0 to loop. Without
+  // this hold the demo felt frenetic — the last line appeared and the
+  // animation immediately restarted from scratch.
+  const pauseTicks = 40;
+  const cycleEnd = timeEnd + pauseTicks;
 
-  const [tick, setTick] = useState(timeEnd);
+  const [tick, setTick] = useState(0);
 
   useEffect(() => {
+    // Respect prefers-reduced-motion: skip the loop entirely and
+    // freeze the demo on its final frame so the content is still
+    // visible without animation.
+    if (typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTick(timeEnd);
+      return;
+    }
     const timer = setInterval(() => {
-      setTick((prev) => (prev >= timeEnd ? prev : prev + 1));
+      setTick((prev) => (prev >= cycleEnd ? 0 : prev + 1));
     }, tickTime);
     return () => clearInterval(timer);
-  }, [timeEnd]);
+  }, [cycleEnd, timeEnd]);
 
   const lines: ReactElement[] = [];
 
@@ -157,12 +172,7 @@ export function CreateAppAnimation(props: ComponentProps<'div'>) {
     );
 
   return (
-    <div
-      {...props}
-      onMouseEnter={() => {
-        if (tick >= timeEnd) setTick(0);
-      }}
-    >
+    <div {...props}>
       {tick > timeWindowOpen && (
         <PipelineReadyWindow className="absolute bottom-5 right-4 z-10 animate-terminal-popup" />
       )}

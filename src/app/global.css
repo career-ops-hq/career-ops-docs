@@ -156,6 +156,30 @@ body {
   background-color: var(--color-fd-background);
 }
 
+/* Dot grid ambient pattern — adapted from santifer.io's home background
+   (cv-santiago consultation 2026-05-19). Pure CSS radial-gradient repeated
+   via background-size; zero DOM nodes, GPU-composited, no CLS/LCP impact.
+   The alpha values are deliberately low (0.10–0.18) so the grid reads as
+   ambient texture, not as a paper-grid kitsch. Used on the home page only
+   to give the manifesto / What-is / feature grid sections subtle depth
+   without the orbs or canvas animation that would saturate a docs site. */
+:root {
+  --dot-grid: 240 5% 35% / 0.18;
+}
+.dark {
+  --dot-grid: 240 5% 65% / 0.10;
+}
+@layer utilities {
+  .dot-bg {
+    background-image: radial-gradient(
+      circle,
+      hsl(var(--dot-grid)) 1px,
+      transparent 1px
+    );
+    background-size: 24px 24px;
+  }
+}
+
 main {
   @apply text-landing-foreground pt-4 pb-6 dark:text-landing-foreground-dark md:pb-12;
 }

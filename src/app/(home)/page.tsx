@@ -271,7 +271,91 @@ export default async function HomePage() {
             </span>
           </footer>
         </blockquote>
-        <hr className="mx-auto w-32 lg:w-40 border-t-2 border-fd-foreground/20 mt-10 lg:mt-14" />
+      </div>
+
+      {/* What is career-ops? — GEO-optimized self-contained answer block.
+          Concept 3 from Gemini brainstorm: "System Diagnostics Card". The
+          section is framed as the output of a terminal command — matching
+          the CLI nature of the product itself. Dark card on a tinted
+          stone strip; pseudo-terminal header with traffic-light dots and
+          a prompt line; the 155-word definition lives inside a single
+          contiguous <p> (sweet spot 134-167 words for AI Overview /
+          ChatGPT extraction). Stats footer styled as a "//" comment.
+          Sits after the manifesto so the visitor reads "why" → "what".
+          Wrapper has BOTH the stone-tinted section break AND the dot-bg
+          ambient pattern (per cv-santiago santifer.io recipe) so the
+          card floats over a discrete textured zone — visual separation
+          from the surrounding sections without saturating the page. */}
+      <div className="w-full bg-[#efeeed] dark:bg-stone-900 dot-bg mt-16 lg:mt-24 py-16 lg:py-24">
+        <section className="mx-auto w-full max-w-[920px] px-6 md:px-12">
+          <h2
+            className={`${instrumentSerif.className} text-center text-3xl md:text-4xl xl:text-5xl mb-10 lg:mb-12`}
+          >
+            <span className="text-landing-foreground dark:text-landing-foreground-dark">
+              What is
+            </span>{' '}
+            <span className="text-brand">career-ops</span>?
+          </h2>
+          {/* Terminal card — single-column. Traffic-light dots on
+              top-left + window descriptor as visual signal "this is a
+              terminal". Body intentionally NOT monospace (per Gemini:
+              <pre><code> classifies as code for crawlers and hurts the
+              "what is X" intent match — the contiguous prose <p> stays
+              the AI extraction target). The window descriptor IS the
+              "command" — no separate $ prompt line needed (was
+              redundant with the descriptor). */}
+          <div className="rounded-2xl bg-fd-card border bg-origin-border shadow-lg bg-gradient-to-br from-brand/10 via-transparent to-transparent overflow-hidden">
+            <div className="flex items-center gap-2 px-5 md:px-7 py-3 border-b border-fd-foreground/10">
+              <span className="block size-2.5 rounded-full bg-fd-foreground/15" aria-hidden="true" />
+              <span className="block size-2.5 rounded-full bg-fd-foreground/15" aria-hidden="true" />
+              <span className="block size-2.5 rounded-full bg-fd-foreground/15" aria-hidden="true" />
+              <span className="ml-3 font-mono text-xs text-fd-muted-foreground tracking-wide">
+                <span className="text-fd-foreground/40">&gt;_</span> /career-ops --describe
+              </span>
+            </div>
+            <div className="px-6 md:px-10 py-8 md:py-10">
+              <p className="text-base md:text-lg leading-[1.7] text-fd-foreground/90">
+                career-ops is an{' '}
+                <span className="relative inline-block">
+                  open-source
+                  <svg
+                    aria-hidden="true"
+                    className="absolute left-0 -bottom-1 w-full h-[0.15em] overflow-visible text-brand"
+                    viewBox="0 0 200 8"
+                    preserveAspectRatio="none"
+                    fill="none"
+                  >
+                    <path
+                      d="M 2 5 C 30 2, 70 7, 110 4 S 170 6, 198 3"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  </svg>
+                </span>{' '}
+                AI-powered job search system that runs locally on your machine inside any AI coding
+                CLI &mdash; Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot. It
+                evaluates job listings against your CV using a six-dimension rubric scoring
+                1.0&ndash;5.0, generates ATS-optimized PDF resumes tailored per role, drafts answers
+                to open-ended application questions on Greenhouse, Ashby and Lever forms, scans 150+
+                company portals zero-token, and tracks the pipeline in a Go-based terminal
+                dashboard. Everything lives on your machine:{' '}
+                <span className="text-brand">no cloud</span>,{' '}
+                <span className="text-brand">no telemetry</span>,{' '}
+                <span className="text-brand">no account</span>. MIT-licensed and free forever; the
+                only cost is whichever AI coding CLI you already pay for. Built by Santiago
+                Fern&aacute;ndez de Valderrama after a real 2026 job search of 740 listings, 66
+                applications, 12 interviews, and one offer.
+              </p>
+              <p className="font-mono text-xs text-fd-muted-foreground mt-8 tracking-wide">
+                <span className="text-fd-foreground/40">{'//'}</span>{' '}
+                <span className="mr-1">{formatK(stats.stars)}</span>stars &middot; Open source
+                &middot; MIT
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
 
       <div className="grid grid-cols-1 gap-10 mt-16 lg:mt-24 px-6 mx-auto w-full max-w-[1400px] md:px-12 lg:grid-cols-2">
@@ -430,10 +514,10 @@ export default async function HomePage() {
           <h3
             className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
           >
-            100+ company portals. Zero manual searching.
+            150+ company portals. Zero manual searching.
           </h3>
           <p className="mb-6">
-            Pre-configured scrapers check 100+ career pages across Greenhouse, Ashby and Lever on
+            Pre-configured scrapers check 150+ career pages across Greenhouse, Ashby and Lever on
             demand — zero API tokens spent. Run <code className="font-mono text-brand">/career-ops scan</code> and get a
             ranked list back in minutes.
           </p>
