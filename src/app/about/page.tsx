@@ -58,6 +58,46 @@ const PRESS = [
   },
 ];
 
+// Social and entity links. Two rel conventions per cv-santiago consultation:
+// - rel="me noreferrer noopener" for sites that link out to Santiago's own
+//   profiles where he posts/identifies (LinkedIn, X, GitHub, ORCID).
+// - rel="author noreferrer noopener" for santifer.io (different domain, same
+//   person — author rather than "me" per IndieAuth norms).
+// - rel="noreferrer noopener" for indices (Wikidata) where the entry is not
+//   self-edited.
+const LINKS: { label: string; href: string; rel: string }[] = [
+  { label: 'Personal site', href: 'https://santifer.io', rel: 'author noreferrer noopener' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/santifer', rel: 'me noreferrer noopener' },
+  { label: 'GitHub', href: 'https://github.com/santifer', rel: 'me noreferrer noopener' },
+  { label: 'X', href: 'https://x.com/santifer', rel: 'me noreferrer noopener' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@santifer_io', rel: 'me noreferrer noopener' },
+  { label: 'ORCID', href: 'https://orcid.org/0009-0006-2192-7210', rel: 'me noreferrer noopener' },
+  { label: 'Wikidata', href: 'https://www.wikidata.org/wiki/Q138710224', rel: 'noreferrer noopener' },
+];
+
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: 'Why did you build career-ops?',
+    a: 'I needed it. In early 2026 I ran a structured job search across 740 listings to land my next role. I built career-ops along the way because manually scoring each posting against a six-dimension rubric inside a spreadsheet was slower than letting Claude Code do it. When I no longer needed the system I open-sourced it under MIT.',
+  },
+  {
+    q: 'Why open source instead of a SaaS?',
+    a: 'Two reasons. First, the data is the candidate’s: a CV, an application history, the reasons you turned down a role. None of that should live on someone else’s server. Second, I would rather the tool outlast my attention. MIT plus a Sovereign Maintainer funding model decouples its survival from my own continued involvement.',
+  },
+  {
+    q: 'Do you take feature requests?',
+    a: 'Yes — via GitHub issues and Discord. Triage is open. The pace is what one maintainer can sustain alongside a full-time role; release notes are honest about what shipped and what got cut.',
+  },
+  {
+    q: 'Are you for hire?',
+    a: 'I am Head of Applied AI at Zinkee. I am not available for full-time roles. I occasionally take advisory engagements in the Applied AI / multi-agent space — reach me on email or LinkedIn if the fit is concrete.',
+  },
+  {
+    q: 'Can I sponsor the project?',
+    a: 'Yes — via GitHub Sponsors. There are nine tiers; the corporate ones add a logo on /sustain and the README. No premium features, no roadmap influence. The full model lives at /sustain.',
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -81,37 +121,53 @@ export default function AboutPage() {
           >
             Santiago Fernández de Valderrama
           </h1>
-          <p className="mt-2 text-fd-muted-foreground text-base">Applied AI Operator</p>
+          <p className="mt-2 text-fd-muted-foreground text-base">
+            Applied AI Operator · creator of career-ops
+          </p>
         </header>
 
+        {/* Bio — three short paragraphs focused on the creator role (not the
+            full transversal persona which lives at santifer.io). Density vs
+            prose length traded toward facts: operator history, current role,
+            why career-ops exists. Manifesto blockquote sits between the
+            history paragraph and the proof paragraph so the philosophy
+            is anchored by both. */}
         <div className="mt-12 space-y-6 text-fd-foreground/90 leading-relaxed">
           <p>
-            Spanish tech entrepreneur with 16+ years building products. Founded and exited a
-            phone repair business (2009–2025), where he automated to 90% self-service before
-            selling. Currently Head of Applied AI at{' '}
+            Spanish tech entrepreneur with 16+ years building and selling products. Founded{' '}
+            <a
+              href="https://www.wikidata.org/wiki/Q138778364"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              Santifer iRepair
+            </a>{' '}
+            in 2009, the largest mobile repair chain in southern Spain, automating it to 90%
+            self-service before selling in 2025. Now Head of Applied AI at{' '}
             <a
               href="https://zinkee.com"
               target="_blank"
               rel="noreferrer noopener"
-              className="text-fd-foreground underline underline-offset-2"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               Zinkee
-            </a>
-            .
+            </a>{' '}
+            — designing the AI layer of an operations platform used by thousands of independent
+            shops across Spain.
           </p>
           <p>
-            career-ops emerged from his own AI-era job search in early 2026 — 740 listings
-            evaluated, one Head of Applied AI role landed. He open-sourced it under MIT when he
-            no longer needed it. An extended case study — timeline, metrics, decisions — lives
-            at{' '}
-            <a
-              href="https://santifer.io/career-ops"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-fd-foreground underline underline-offset-2"
+            career-ops grew out of a personal job search in early 2026. After the exit, instead
+            of spraying applications, he wrote a structured evaluator: six dimensions, a 1.0–5.0
+            score, and a hard floor at 4.0 below which the system refuses to recommend applying.
+            740 listings evaluated, 66 applications sent, 12 interview processes, one offer
+            signed. The funnel data lives at{' '}
+            <Link
+              href="/blog/job-search-data-from-740-listings"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
-              santifer.io/career-ops
-            </a>
+              /blog/job-search-data-from-740-listings
+            </Link>
             .
           </p>
           <blockquote
@@ -126,12 +182,13 @@ export default function AboutPage() {
             </p>
           </blockquote>
           <p>
-            Featured in{' '}
+            When the search ended he open-sourced the system under MIT. career-ops crossed 46,000
+            GitHub stars in its first month, was picked up by{' '}
             <a
               href="https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4"
               target="_blank"
               rel="noreferrer noopener"
-              className="text-fd-foreground underline underline-offset-2"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               Business Insider
             </a>{' '}
@@ -140,19 +197,22 @@ export default function AboutPage() {
               href="https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/"
               target="_blank"
               rel="noreferrer noopener"
-              className="text-fd-foreground underline underline-offset-2"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               WIRED Greece
             </a>
-            . Teaching Fellow at the AI Product Academy (Maven, with Dr. Marily Nika of Google).
+            , and is sustained as a sovereign-maintainer project — Santiago has other paid work
+            for income; sponsorship enables deeper focus on the code.
           </p>
-          <p className="text-fd-muted-foreground">
-            For Santiago&rsquo;s other work and technical writing, see{' '}
+          <p>
+            Certified by Anthropic and Airtable. Teaching Fellow at the AI Product Academy
+            (Maven, with Dr. Marily Nika of Google). For Santiago&rsquo;s other work and writing,
+            see{' '}
             <a
               href="https://santifer.io"
               target="_blank"
-              rel="me author noreferrer noopener"
-              className="text-fd-foreground underline underline-offset-2"
+              rel="author noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               santifer.io
             </a>
@@ -175,6 +235,10 @@ export default function AboutPage() {
           </p>
         </section>
 
+        {/* Press — kept as the existing date+outlet+headline list (more compact
+            than the card pattern santifer.io uses, and keeps the focus on the
+            article titles themselves). rel="nofollow" added per cv-santiago
+            consultation: no need to pass link juice to large publishers. */}
         <section className="mt-12">
           <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Press</h2>
           <ul className="mt-4 space-y-3">
@@ -189,7 +253,7 @@ export default function AboutPage() {
                   <a
                     href={item.url}
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noreferrer noopener nofollow"
                     className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
                   >
                     {item.headline}
@@ -198,6 +262,25 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* FAQ — creator-specific Q&A. Five questions answer the predictable
+            visitor curiosities: motivation, license choice, contributions
+            policy, hireability, sponsorship. Plain dl, no schema FAQ (Google
+            restricted FAQ rich snippets to gov/healthcare since Aug 2023;
+            structured data adds no rich result for this site type). */}
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+            Frequently asked
+          </h2>
+          <dl className="mt-4 space-y-5">
+            {FAQ.map(({ q, a }) => (
+              <div key={q}>
+                <dt className="font-medium text-fd-foreground">{q}</dt>
+                <dd className="mt-1 text-fd-foreground/85 leading-relaxed">{a}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
 
         <section className="mt-12">
@@ -217,6 +300,39 @@ export default function AboutPage() {
           </p>
         </section>
 
+        {/* Connect — primary mailto CTA + social/entity link grid. Email is
+            project-scoped (hi@career-ops.org via Cloudflare routing to
+            hi@santifer.io) so a stranger writes "to the project" rather than
+            "to Santi personally" — keeps boundary clean. Grid renders 2-col
+            mobile, 3-col tablet+, monochrome under-styled (per cv-santiago
+            "no brand logos clutter" rule). */}
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Connect</h2>
+          <a
+            href="mailto:hi@career-ops.org"
+            className="mt-4 inline-flex items-center gap-2 rounded-md bg-fd-foreground text-fd-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            hi@career-ops.org
+          </a>
+          <p className="mt-3 text-sm text-fd-muted-foreground">
+            For sponsorship, advisory, or anything that doesn&rsquo;t fit in a GitHub issue.
+          </p>
+          <ul className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel={link.rel}
+                  className="block rounded-md border border-fd-foreground/15 px-3 py-2 text-sm text-fd-foreground hover:border-fd-foreground/40 transition-colors"
+                >
+                  {link.label} →
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <hr className="my-12 w-32 mx-auto border-t-2 border-fd-foreground/20 lg:w-40" />
 
         <div className="text-center">
@@ -229,7 +345,7 @@ export default function AboutPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-05-07">7 May 2026</time>
+          Last updated <time dateTime="2026-05-20">20 May 2026</time>
         </p>
       </article>
     </>
