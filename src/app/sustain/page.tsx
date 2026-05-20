@@ -149,10 +149,10 @@ export default function SustainPage() {
               tier. For custom enterprise arrangements or larger commitments, reach out
               via{' '}
               <a
-                href="mailto:privacy@career-ops.org"
+                href="mailto:hi@career-ops.org"
                 className="text-fd-foreground underline underline-offset-2"
               >
-                privacy@career-ops.org
+                hi@career-ops.org
               </a>
               .
             </p>
