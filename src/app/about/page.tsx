@@ -220,6 +220,60 @@ export default function AboutPage() {
           </p>
         </div>
 
+        {/* Canonical identity — added 2026-05-25 against the typosquat
+            careerops.org (no hyphen, registered 2026-04-06, GoDaddy). One
+            self-contained ~140-word passage that AI engines can extract
+            verbatim for "what is career-ops" queries. Names the canonical
+            domain, the Wikidata entity, the GitHub repo, and disambiguates
+            from impersonators without naming them (reads as identification,
+            not as defense). Anchor `canonical-identity` makes it linkable
+            from external surfaces (Reddit, blog citations). */}
+        <section id="canonical-identity" className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+            About this site
+          </h2>
+          <p className="mt-3 text-fd-foreground/90 leading-relaxed">
+            The canonical home of career-ops is{' '}
+            <a
+              href="https://career-ops.org"
+              rel="me noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              career-ops.org
+            </a>{' '}
+            (hyphenated). The project is maintained by Santiago Fern&aacute;ndez de Valderrama
+            (Wikidata{' '}
+            <a
+              href="https://www.wikidata.org/wiki/Q138710224"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              Q138710224
+            </a>
+            ) and the software itself is registered as Wikidata{' '}
+            <a
+              href="https://www.wikidata.org/wiki/Q139007988"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              Q139007988
+            </a>
+            . The canonical source repository is{' '}
+            <a
+              href="https://github.com/santifer/career-ops"
+              rel="me noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              github.com/santifer/career-ops
+            </a>
+            . There is no commercial company behind the project, no signup wall, and no other
+            domain. If you landed here through a different URL claiming to be career-ops, this
+            one is the official site &mdash; verify via the GitHub repository above.
+          </p>
+        </section>
+
         <section className="mt-12">
           <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Stack</h2>
           <p className="mt-3 text-fd-foreground/90 leading-relaxed">
@@ -345,7 +399,7 @@ export default function AboutPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-05-20">20 May 2026</time>
+          Last updated <time dateTime="2026-05-25">25 May 2026</time>
         </p>
       </article>
     </>

@@ -7,6 +7,49 @@
 import { getProjectStats } from './stats';
 
 const PERSON_ID = 'https://santifer.io/#person';
+const ORGANIZATION_ID = 'https://career-ops.org/#organization';
+
+// Brand alternateName list. Added 2026-05-25 in response to typosquat
+// `careerops.org` (no hyphen, registered 2026-04-06) attempting to rank
+// for brand-relevant queries. Telling Google KG that "careerops" without
+// hyphen is an alias of THIS entity prevents the squat from being
+// resolved as a separate entity behind the bare keyword.
+const ALTERNATE_NAMES = [
+  'careerops',
+  'career ops',
+  'Career-Ops',
+  'career-ops CLI',
+];
+
+// Wikidata PropertyValue identifier — pins this WebSite/Organization/Software
+// to the canonical Q139007988 entity in Google's Knowledge Graph. Single
+// strongest "this is the canonical brand" signal short of a Wikipedia
+// article (which is in flight via external editor).
+const WIKIDATA_SOFTWARE_IDENTIFIER = {
+  '@type': 'PropertyValue',
+  propertyID: 'Wikidata',
+  value: 'Q139007988',
+  url: 'https://www.wikidata.org/wiki/Q139007988',
+};
+
+const WIKIDATA_PERSON_IDENTIFIER = {
+  '@type': 'PropertyValue',
+  propertyID: 'Wikidata',
+  value: 'Q138710224',
+  url: 'https://www.wikidata.org/wiki/Q138710224',
+};
+
+// Organization sameAs — surfaces the brand owns across the web. Used by
+// Knowledge Graph + LLMs to verify entity provenance independently of
+// any single domain. Critical that GitHub repo + Wikidata Q-ID + Discord
+// all bind to career-ops.org (not the typosquat).
+const ORGANIZATION_SAMEAS = [
+  'https://github.com/santifer/career-ops',
+  'https://www.wikidata.org/wiki/Q139007988',
+  'https://discord.gg/8pRpHETxa4',
+  'https://x.com/santifer',
+  'https://www.npmjs.com/package/career-ops',
+];
 
 // sameAs URLs — Santiago's verified profiles across the web. Matches the
 // canonical list maintained on santifer.io. Wikidata Q138710224 is the
@@ -193,22 +236,59 @@ export async function siteSchema() {
         '@id': 'https://career-ops.org/#website',
         url: 'https://career-ops.org',
         name: 'career-ops',
+        alternateName: ALTERNATE_NAMES,
         description:
           'AI-powered job search command center. Open source, CLI-agnostic, runs locally.',
         inLanguage: 'en',
-        publisher: { '@id': PERSON_ID },
+        publisher: { '@id': ORGANIZATION_ID },
+        identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
+        sameAs: [
+          'https://github.com/santifer/career-ops',
+          'https://www.wikidata.org/wiki/Q139007988',
+        ],
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://career-ops.org/docs?q={search_term_string}',
+          },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      // Organization node — added 2026-05-25 to anchor the brand entity
+      // for Google Knowledge Graph. Previously the graph only had
+      // WebSite + SoftwareSourceCode + SoftwareApplication + Person, but
+      // KG builds brand entities primarily from Organization. With Org +
+      // alternateName + Wikidata identifier present, brand queries for
+      // "careerops" / "career-ops" / "Career-Ops" all resolve to THIS
+      // entity, not the typosquat.
+      {
+        '@type': 'Organization',
+        '@id': ORGANIZATION_ID,
+        name: 'career-ops',
+        alternateName: ALTERNATE_NAMES,
+        url: 'https://career-ops.org',
+        description:
+          'Open-source AI-powered job search command center. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama.',
+        founder: { '@id': PERSON_ID },
+        foundingDate: '2026-03-17',
+        sameAs: ORGANIZATION_SAMEAS,
+        identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
       },
       {
         '@type': 'SoftwareSourceCode',
         '@id': 'https://career-ops.org/#software',
         name: 'career-ops',
+        alternateName: ALTERNATE_NAMES,
         url: 'https://career-ops.org',
         codeRepository: 'https://github.com/santifer/career-ops',
         programmingLanguage: ['TypeScript', 'Go', 'Bash'],
         license: 'https://opensource.org/licenses/MIT',
         creator: { '@id': PERSON_ID },
         author: { '@id': PERSON_ID },
+        publisher: { '@id': ORGANIZATION_ID },
         discussionUrl: 'https://discord.gg/8pRpHETxa4',
+        identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: [
           'https://github.com/santifer/career-ops',
           'https://www.wikidata.org/wiki/Q139007988',
@@ -247,6 +327,7 @@ export async function siteSchema() {
         '@type': 'SoftwareApplication',
         '@id': 'https://career-ops.org/#application',
         name: 'career-ops',
+        alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI-powered job search command center. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
         softwareVersion: '1.8.0',
@@ -255,7 +336,9 @@ export async function siteSchema() {
         operatingSystem: 'Linux, macOS, Windows',
         creator: { '@id': PERSON_ID },
         author: { '@id': PERSON_ID },
+        publisher: { '@id': ORGANIZATION_ID },
         license: 'https://opensource.org/licenses/MIT',
+        identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -276,7 +359,15 @@ export async function siteSchema() {
         url: 'https://santifer.io/about',
         image: 'https://santifer.io/foto-avatar.png',
         jobTitle: 'Applied AI Operator',
-        worksFor: { '@type': 'Organization', name: 'Zinkee' },
+        worksFor: { '@type': 'Organization', name: 'Zinkee', url: 'https://zinkee.com' },
+        hasOccupation: {
+          '@type': 'Occupation',
+          name: 'Head of Applied AI',
+          occupationLocation: { '@type': 'Organization', name: 'Zinkee' },
+          skills: 'Applied AI, multi-agent orchestration, product strategy, open source maintenance',
+        },
+        founderOf: { '@id': ORGANIZATION_ID },
+        identifier: WIKIDATA_PERSON_IDENTIFIER,
         sameAs: PERSON_SAMEAS,
         subjectOf: PERSON_SUBJECT_OF,
       },

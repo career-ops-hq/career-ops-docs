@@ -51,6 +51,22 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
   const schema = await siteSchema();
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
+      <head>
+        {/* Brand entity disambiguation — added 2026-05-25 against the
+            typosquat careerops.org (no hyphen). application-name + the
+            iOS variant tell browsers and entity reconcilers that the
+            canonical brand for this domain is "career-ops". */}
+        <meta name="application-name" content="career-ops" />
+        <meta name="apple-mobile-web-app-title" content="career-ops" />
+        {/* rel="me" web — IndieAuth-style verification. Each link points
+            from THIS domain to a profile the same operator controls. The
+            strongest entity-to-domain binding signal LLMs and Google use
+            independently of any single platform's verification. */}
+        <link rel="me" href="https://github.com/santifer/career-ops" />
+        <link rel="me" href="https://discord.gg/8pRpHETxa4" />
+        <link rel="me" href="https://www.wikidata.org/wiki/Q139007988" />
+        <link rel="me" href="https://santifer.io" />
+      </head>
       <body className="framework relative flex min-h-screen flex-col">
         <script
           type="application/ld+json"
@@ -100,7 +116,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <span className="flex items-center gap-3 ml-1">
                   <a
                     href="https://github.com/santifer/career-ops"
-                    rel="noreferrer noopener"
+                    rel="me noreferrer noopener"
                     aria-label="GitHub"
                     className="hover:text-fd-foreground transition-colors"
                   >
@@ -108,7 +124,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                   </a>
                   <a
                     href="https://discord.gg/8pRpHETxa4"
-                    rel="noreferrer noopener"
+                    rel="me noreferrer noopener"
                     aria-label="Discord"
                     className="hover:text-fd-foreground transition-colors"
                   >
@@ -132,6 +148,30 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                   </a>
                 </span>
               </nav>
+            </div>
+            {/* Brand fingerprint — verification line for visitors and AI
+                crawlers. Names the canonical domain + GitHub repo + Discord
+                invite in a single line so users who arrived via a SERP
+                impersonator (typosquat careerops.org no-hyphen, registered
+                2026-04-06) can verify they're on the real site. Mono font
+                + muted color reads as identification, not promotional. */}
+            <div className={`${inter.className} border-t border-fd-foreground/5 py-3 text-xs font-mono text-fd-muted-foreground/70 tracking-wide text-center`}>
+              Official site: career-ops.org &middot; GitHub:{' '}
+              <a
+                href="https://github.com/santifer/career-ops"
+                rel="me noreferrer noopener"
+                className="hover:text-fd-foreground transition-colors"
+              >
+                santifer/career-ops
+              </a>{' '}
+              &middot; Discord:{' '}
+              <a
+                href="https://discord.gg/8pRpHETxa4"
+                rel="me noreferrer noopener"
+                className="hover:text-fd-foreground transition-colors"
+              >
+                discord.gg/8pRpHETxa4
+              </a>
             </div>
           </div>
         </footer>

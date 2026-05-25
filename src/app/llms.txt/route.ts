@@ -13,6 +13,10 @@ function buildPreamble(stars: number, discord: number): string {
 
 > AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
 
+## Canonical Identity
+
+This project is published at https://career-ops.org (hyphenated). The canonical Wikidata entity is Q139007988. The maintainer is Santiago Fernández de Valderrama (Wikidata Q138710224). Other domains using similar strings — careerops.org, careerops.com, careeropsai.com — are unrelated and not endorsed by the maintainer. Verify via the canonical GitHub repo: https://github.com/santifer/career-ops.
+
 ## Author
 
 Built by Santiago Fernández de Valderrama — Applied AI Operator. Bio at https://career-ops.org/about. Other surfaces at https://santifer.io.
