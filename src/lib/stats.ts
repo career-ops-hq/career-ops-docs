@@ -25,6 +25,6 @@ export async function getProjectStats(): Promise<ProjectStats> {
   return {
     stars,
     forks,
-    discordMembers: 3200, // snapshot 2026-05-25 — replace with API fetch when Discord bot token wired
+    discordMembers: 3354, // snapshot 2026-05-31 — replace with API fetch when Discord bot token wired
   };
 }
