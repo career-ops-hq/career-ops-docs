@@ -547,7 +547,7 @@ export default async function HomePage() {
             href="/community"
             className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}
           >
-            Join 3,000+ builders in Discord
+            Join {(Math.floor(stats.discordMembers / 100) * 100).toLocaleString('en-US')}+ builders in Discord
           </Link>
         </div>
 
