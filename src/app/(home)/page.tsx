@@ -565,7 +565,19 @@ export default async function HomePage() {
             <h2
               className={`${instrumentSerifRegular.className} tracking-tight text-4xl lg:text-5xl text-brand`}
             >
-              100% Open-Source.
+              {/* Links to the canonical GitHub repo — the statement "100%
+                  Open-Source" is most naturally proven by the link to the
+                  repo itself. rel="me" because the repo is one of the
+                  IndieAuth-verified surfaces in the entity graph (matches
+                  the rel=me policy in src/app/layout.tsx). */}
+              <a
+                href="https://github.com/santifer/career-ops"
+                target="_blank"
+                rel="me noopener noreferrer"
+                className="hover:text-brand-200 transition-colors"
+              >
+                100% Open-Source.
+              </a>
             </h2>
             <p
               className={`${instrumentSerifRegular.className} text-2xl md:text-3xl tabular-nums tracking-tight text-fd-foreground/60 flex flex-wrap items-center justify-center gap-x-3`}
