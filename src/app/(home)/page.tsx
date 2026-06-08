@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/cn';
-import { TerminalIcon } from 'lucide-react';
+import { TerminalIcon, Trophy } from 'lucide-react';
 import { Hero, CreateAppAnimation, AgnosticBackground } from './page.client';
 import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { SubscribeForm } from '@/components/subscribe-form';
@@ -568,13 +568,32 @@ export default async function HomePage() {
               100% Open-Source.
             </h2>
             <p
-              className={`${instrumentSerifRegular.className} text-2xl md:text-3xl tabular-nums tracking-tight text-fd-foreground/60`}
+              className={`${instrumentSerifRegular.className} text-2xl md:text-3xl tabular-nums tracking-tight text-fd-foreground/60 flex flex-wrap items-center justify-center gap-x-3`}
             >
               <span>{formatK(stats.stars)} stars</span>
-              <span aria-hidden="true" className="mx-3 text-fd-foreground/25">
+              <span aria-hidden="true" className="text-fd-foreground/25">
                 ·
               </span>
               <span>{formatK(stats.forks)} forks</span>
+              <span aria-hidden="true" className="text-fd-foreground/25">
+                ·
+              </span>
+              {/* Trendshift "#1 Repo of the Day" milestone — third-party authority signal
+                  matching the editorial dek tone. Links to Trendshift's profile for
+                  career-ops where the trending history lives publicly. nofollow because
+                  it's a service citation, not an endorsement we sponsor. */}
+              <a
+                href="https://trendshift.io/repositories/25195"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                className="inline-flex items-center gap-1.5 hover:text-fd-foreground transition-colors"
+              >
+                <Trophy
+                  aria-hidden="true"
+                  className="size-5 md:size-6 text-brand"
+                />
+                #1 Repo of the Day
+              </a>
             </p>
           </div>
           <p className="max-w-2xl text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
