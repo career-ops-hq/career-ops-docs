@@ -345,7 +345,7 @@ export default async function HomePage() {
                 <span className="text-brand">no telemetry</span>,{' '}
                 <span className="text-brand">no account</span>. MIT-licensed and free forever; the
                 only cost is whichever AI coding CLI you already pay for. Built by Santiago
-                Fern&aacute;ndez de Valderrama after a real 2026 job search of 740 listings, 66
+                Fern&aacute;ndez de Valderrama after a real 2026 job search of 740 listings, 68
                 applications, 12 interviews, and one offer.
               </p>
               <p className="font-mono text-xs text-fd-muted-foreground mt-8 tracking-wide">

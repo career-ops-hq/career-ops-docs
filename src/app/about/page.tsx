@@ -160,7 +160,7 @@ export default function AboutPage() {
             career-ops grew out of a personal job search in early 2026. After the exit, instead
             of spraying applications, he wrote a structured evaluator: six dimensions, a 1.0–5.0
             score, and a hard floor at 4.0 below which the system refuses to recommend applying.
-            740 listings evaluated, 66 applications sent, 12 interview processes, one offer
+            740 listings evaluated, 68 applications sent, 12 interview processes, one offer
             signed. The funnel data lives at{' '}
             <Link
               href="/blog/job-search-data-from-740-listings"

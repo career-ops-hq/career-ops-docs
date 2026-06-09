@@ -1,6 +1,7 @@
 import { source } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats } from '@/lib/stats';
+import comparisonsData from '@/lib/data/comparisons.json';
 
 // 1h ISR so the canonical stats block reflects live GitHub numbers
 // (matches the home page schema and the footer chip cadence). Static
@@ -35,7 +36,7 @@ Companies use AI to filter candidates. I just gave candidates AI to choose compa
 - Inception: 2026-03-17
 - Latest release: v1.8.0
 - License: MIT
-- Founder's real-world result with the system: 740 job listings evaluated → 66 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
+- Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
 - Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
 - AI coding CLIs supported first-class: Claude Code, Codex (OpenAI), OpenCode, Gemini CLI (Google), Qwen, GitHub Copilot, Kimi
@@ -58,6 +59,15 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
 - https://career-ops.org/docs/reference/modes — reference docs for the 14 user-invocable career-ops modes
 - https://career-ops.org/docs/reference/portals — reference docs for the three zero-token portal scanners (Greenhouse, Ashby, Lever) covering 116 companies
+
+## Comparisons (individual pages, honest framing, feature matrices + FAQ)
+
+${comparisonsData.comparisons
+  .map(
+    (c) =>
+      `- https://career-ops.org/compare/${c.slug} — career-ops vs ${c.competitor.name} (${c.competitor.tagline})`,
+  )
+  .join('\n')}
 
 ## Long-form (blog)
 

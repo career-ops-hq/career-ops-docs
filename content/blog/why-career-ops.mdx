@@ -2,7 +2,7 @@
 title: Why career-ops
 description: The thesis behind the project — why I built it, what it explicitly is not, and what 740 listings taught me about AI-era job search.
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-06-09"
 tags: [thesis, career-ops, ai-job-search, open-source]
 summary: I built career-ops to manage my own job search after exiting a 16-year operator role. 740 listings evaluated, one Head of AI offer landed. Then I open-sourced it. Here is what the project is, what it deliberately is not, and why this asymmetry needed a tool on the candidate side.
 ---
@@ -13,7 +13,7 @@ That sentence is the whole project. Everything else — the fourteen modes, the 
 
 ## The asymmetry
 
-Every company over fifty employees runs an applicant tracking system. Greenhouse, Ashby, Lever, Workday, SmartRecruiters — these tools read résumés at scale, score them against requisitions, and surface what looks like a match to a human recruiter. Fortune 500 companies hit 99% ATS adoption. The recruiter side of the table is heavily AI-augmented and has been for nearly a decade.
+Every company over fifty employees runs an applicant tracking system. Greenhouse, Ashby, Lever, Workday, SmartRecruiters — these tools read résumés at scale, score them against requisitions, and surface what looks like a match to a human recruiter. 97.8% of Fortune 500 companies run an ATS — 489 of the 500, per [Jobscan's annual usage audit](https://www.jobscan.co/blog/fortune-500-use-applicant-tracking-systems/). The recruiter side of the table is heavily AI-augmented and has been for nearly a decade.
 
 The candidate side, until recently, had nothing. You wrote a résumé in Word, customized it manually per application if you had time, and submitted into systems whose ranking logic you could not see. Most candidates did not customize. Most candidates lost.
 
@@ -61,13 +61,13 @@ Three things stand out from the data that I did not expect going in.
 
 First, the ratio. Nine percent of scanned listings cleared the threshold. The rest were either off-archetype (most of them), under-leveled (too junior or too senior), priced wrong (comp band below market), or showed red flags in the JD itself (vague responsibilities, founder-mode language, no comp transparency). Most candidates I have talked to apply to roles in the bottom 91% routinely because they have no way to filter at scale. Filtering at scale changes the math.
 
-Second, the tailoring delta. Every application went out tailored. Every. Single. One. Before career-ops I might have tailored a third of my applications because tailoring well takes thirty minutes per listing. With career-ops the cost per tailoring fell to under a minute of LLM time and about five minutes of human review. The economics inverted. Tailored applications correlate strongly with response rate — I cannot publish raw numbers without naming specific companies, but the response rate on tailored applications was several multiples of the historical norm.
+Second, the tailoring delta. Every application went out tailored. Every. Single. One. Before career-ops I might have tailored a third of my applications because tailoring well takes thirty minutes per listing. With career-ops the cost per tailoring fell to under a minute of LLM time and about five minutes of human review. The economics inverted. Tailored applications correlate strongly with response rate — I cannot publish raw numbers without naming specific companies, but the response rate on tailored applications was at least three times the historical norm — 68 tailored applications produced 12 interview processes, a 17.6% application-to-interview rate.
 
 Third, the dashboard's emotional value. Job search is psychologically rough. A queue of sixty open applications with no clear status creates anxiety. A keyboard-navigable TUI that groups applications by stage and surfaces the next action gives the search a structure that reduces that anxiety substantially. I did not know this would matter until I was three weeks into using the tool.
 
 ## Open source as default
 
-The decision to open-source career-ops under MIT was not strategic. I did not need the tool anymore, the rubric and prompts had value to other people in similar searches, and proprietary career-search tooling that charges $20–80 a month felt like the wrong shape for what I had built. The repo went public in April 2026, hit 27,000 stars in three weeks, was featured in WIRED Greece and Business Insider, and at the time of writing sits at 44K+ stars with 2,900+ Discord members.
+The decision to open-source career-ops under MIT was not strategic. I did not need the tool anymore, the rubric and prompts had value to other people in similar searches, and proprietary career-search tooling that charges $20–80 a month felt like the wrong shape for what I had built. The repo went public in April 2026, hit 27,000 stars in three weeks, was featured in WIRED Greece and Business Insider, and as of June 2026 sits at 50K+ stars with 3,400+ Discord members.
 
 The business model is the model in the open. There is no paid tier and there will not be one. There is no career-ops cloud and there will not be one. Sustainability comes from voluntary patronage via [GitHub Sponsors](https://github.com/sponsors/santifer) — nine tiers from $1 to $1,000 per month, none of which gate features or unlock content. The full reasoning is at [/sustain](/sustain). I have other paid work; sponsorship is not a livelihood, it is a way to dedicate focused time to the project.
 
