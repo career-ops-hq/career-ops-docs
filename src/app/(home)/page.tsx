@@ -393,7 +393,7 @@ export default async function HomePage() {
                 Try it out
               </span>
               <CopyableCommand
-                command="git clone https://github.com/santifer/career-ops.git"
+                command="npx @santifer/career-ops init"
                 className="flex-1 min-w-0"
               />
             </div>
