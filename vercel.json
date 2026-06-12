@@ -11,6 +11,31 @@
       "permanent": true
     },
     {
+      "source": "/docs/introduction/guides/quick-start.mdx",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/introduction/quick-start.mdx",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/introduction/guides/quick-start",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/introduction/quick-start",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/:path(.+)\\.mdx",
+      "destination": "/docs/:path",
+      "permanent": true
+    },
+    {
       "source": "/community",
       "destination": "https://discord.gg/8pRpHETxa4",
       "permanent": false
