@@ -660,6 +660,37 @@ export default async function HomePage() {
           >
             Meet our contributors →
           </a>
+
+          {/* Warpchart star-history embed — animated SVG served as a plain
+              <img> (zero JS, edge-cached at warpchart.dev). Two themed
+              variants toggled by the site theme class so it follows the
+              site toggle rather than the OS preference. Plain <img>
+              instead of next/image: a cross-origin animated SVG gains
+              nothing from the optimizer. Followed link on purpose — same
+              author, entity reciprocity with warpchart.dev. */}
+          <a
+            href="https://warpchart.dev/r/santifer/career-ops?utm_source=career-ops.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 w-full max-w-[800px]"
+          >
+            <img
+              src="https://warpchart.dev/api/chart?repo=santifer/career-ops&theme=light&w=800&h=420"
+              alt="career-ops star history on Warpchart — 0 to 50K+ GitHub stars drawn from real timestamps"
+              width={800}
+              height={420}
+              loading="lazy"
+              className="w-full h-auto dark:hidden"
+            />
+            <img
+              src="https://warpchart.dev/api/chart?repo=santifer/career-ops&theme=dark&w=800&h=420"
+              alt="career-ops star history on Warpchart — 0 to 50K+ GitHub stars drawn from real timestamps"
+              width={800}
+              height={420}
+              loading="lazy"
+              className="w-full h-auto hidden dark:block"
+            />
+          </a>
         </div>
 
       </div>
