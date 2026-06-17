@@ -841,3 +841,56 @@ export function aboutSchema() {
     ],
   };
 }
+
+// Press / brand-kit page. WebPage bound to the software entity, plus the
+// downloadable brand assets surfaced as ImageObject nodes so crawlers and
+// LLMs can resolve "career-ops logo" / "career-ops press kit" queries to a
+// canonical answer. mainEntity → #software keeps entity provenance on the
+// canonical domain (not the typosquat). dateModified stamped on edit.
+export function pressSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': 'https://career-ops.org/press/#webpage',
+        url: 'https://career-ops.org/press',
+        name: 'Press & Brand Kit · career-ops',
+        description:
+          'Official press kit for career-ops: boilerplate descriptions, key facts, logos, and media coverage. Open-source, MIT-licensed AI job-search tool by Santiago Fernández de Valderrama.',
+        inLanguage: 'en',
+        about: { '@id': 'https://career-ops.org/#software' },
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        publisher: { '@id': ORGANIZATION_ID },
+        dateModified: '2026-06-17T00:00:00Z',
+        primaryImageOfPage: { '@id': 'https://career-ops.org/press/#logo' },
+      },
+      {
+        '@type': 'ImageObject',
+        '@id': 'https://career-ops.org/press/#logo',
+        url: 'https://career-ops.org/bimi-logo.svg',
+        caption: 'career-ops logo — the "co" mark',
+        encodingFormat: 'image/svg+xml',
+        width: '96',
+        height: '96',
+      },
+      {
+        '@type': 'ImageObject',
+        '@id': 'https://career-ops.org/press/#banner',
+        url: 'https://career-ops.org/og-banner.jpg',
+        caption: 'career-ops social banner',
+        encodingFormat: 'image/jpeg',
+        width: '2400',
+        height: '1339',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://career-ops.org/press/#breadcrumbs',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+          { '@type': 'ListItem', position: 2, name: 'Press', item: 'https://career-ops.org/press' },
+        ],
+      },
+    ],
+  };
+}

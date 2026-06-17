@@ -104,6 +104,9 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <a href="/blog" className="hover:text-fd-foreground hover:underline">
                   Blog
                 </a>
+                <a href="/press" className="hover:text-fd-foreground hover:underline">
+                  Press
+                </a>
                 <a href="/privacy" className="hover:text-fd-foreground hover:underline">
                   Privacy
                 </a>

@@ -48,6 +48,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastModFor('src/app/methodology/page.tsx'),
     },
     {
+      url: `${SITE_URL}/press`,
+      lastModified: lastModFor('src/app/press/page.tsx'),
+    },
+    {
       url: `${SITE_URL}/privacy`,
       lastModified: lastModFor('src/app/privacy/page.tsx'),
     },
