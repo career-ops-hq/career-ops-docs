@@ -87,10 +87,10 @@ const ASSETS = [
 // standfirst, and a full "about" paragraph.
 const BOILERPLATE = {
   short:
-    'career-ops is a free, open-source job-search tool that runs locally inside your AI coding assistant.',
+    'career-ops is a free, open-source system that puts hiring leverage on the candidate’s side — running locally inside your AI coding assistant.',
   medium:
-    'career-ops is an open-source, MIT-licensed job-search command center that runs entirely on your own machine, inside any AI coding CLI — Claude Code, Codex, Gemini CLI, and others. It scans listings, scores them against a transparent six-dimension rubric, tailors your CV per role, and tracks the whole pipeline. No account, no cloud, no telemetry.',
-  long: 'career-ops is a free, open-source (MIT) job-search system built by Santiago Fernández de Valderrama. It runs locally inside whichever AI coding assistant the user already pays for — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot — and never sends a CV or application history to a third-party server. The system scans Greenhouse, Ashby, and Lever, scores each listing from 1.0 to 5.0 against a published six-dimension rubric, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months.',
+    'career-ops is an open-source, MIT-licensed system that puts hiring leverage on the candidate’s side. It runs entirely on your own machine, inside any AI coding CLI — Claude Code, Codex, Gemini CLI, and others — scanning listings, scoring them against a transparent six-dimension rubric, tailoring your CV per role, and tracking the whole pipeline. No account, no cloud, no telemetry.',
+  long: 'career-ops is a free, open-source (MIT) system that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama, it runs locally inside whichever AI coding assistant the user already pays for — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot — and never sends a CV or application history to a third-party server. Today it scans Greenhouse, Ashby, and Lever, scores each listing from 1.0 to 5.0 against a published six-dimension rubric, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months.',
 };
 
 function roundDown(n: number, to: number): string {
@@ -102,7 +102,10 @@ export default async function PressPage() {
 
   const facts: { label: string; value: React.ReactNode }[] = [
     { label: 'Name', value: 'career-ops (lowercase, hyphenated)' },
-    { label: 'Category', value: 'AI-powered job-search tool / command center' },
+    {
+      label: 'Category',
+      value: 'Candidate-side hiring-leverage system · AI-powered job search',
+    },
     { label: 'Creator', value: 'Santiago Fernández de Valderrama' },
     { label: 'License', value: 'MIT — free forever, no paid tier' },
     { label: 'Model', value: 'Local-first. No account, no cloud, no telemetry.' },
