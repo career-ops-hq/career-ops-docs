@@ -5,6 +5,7 @@
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
 import { getProjectStats } from './stats';
+import { MANIFESTO } from './shared';
 
 const PERSON_ID = 'https://santifer.io/#person';
 const ORGANIZATION_ID = 'https://career-ops.org/#organization';
@@ -270,6 +271,10 @@ export async function siteSchema() {
         url: 'https://career-ops.org',
         description:
           'Open-source AI-powered job search command center. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama.',
+        // Signature thesis as a structured slogan — gives LLMs an
+        // attributable, entity-bound version of the manifesto they already
+        // see in prose on the home/about/methodology pages and in llms.txt.
+        slogan: MANIFESTO,
         founder: { '@id': PERSON_ID },
         foundingDate: '2026-03-17',
         sameAs: ORGANIZATION_SAMEAS,
@@ -330,7 +335,10 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI-powered job search command center. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
-        softwareVersion: '1.8.0',
+        // Sourced live from the GitHub releases API (1h ISR) so it can never
+        // drift stale; falls back to LATEST_RELEASE_FALLBACK in shared.ts.
+        softwareVersion: stats.softwareVersion,
+        slogan: MANIFESTO,
         url: 'https://career-ops.org',
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Linux, macOS, Windows',
@@ -625,6 +633,37 @@ export function docsBreadcrumbSchema(opts: {
   };
 }
 
+// /docs/** — TechArticle bound to the canonical Person author + the
+// software entity. Docs pages previously emitted only BreadcrumbList, so
+// AI extractors received clean prose with zero provenance (no author, no
+// entity link, no date). This gives every docs page an attributable
+// author, topic, and freshness signal without editing the MDX. The
+// `dateModified` is supplied by the git/build resolver in the page when
+// available; omitted otherwise so we never assert a fake date.
+export function docsTechArticleSchema(opts: {
+  url: string;
+  title: string;
+  description?: string;
+  dateModified?: string;
+}) {
+  const pageUrl = `https://career-ops.org${opts.url}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    '@id': `${pageUrl}#article`,
+    url: pageUrl,
+    headline: opts.title,
+    ...(opts.description ? { description: opts.description } : {}),
+    author: { '@id': PERSON_ID },
+    publisher: { '@id': PERSON_ID },
+    isPartOf: { '@id': 'https://career-ops.org/#website' },
+    about: { '@id': 'https://career-ops.org/#software' },
+    inLanguage: 'en',
+    mainEntityOfPage: pageUrl,
+    ...(opts.dateModified ? { dateModified: opts.dateModified } : {}),
+  };
+}
+
 // /home — three high-priority FAQs surfaced as a separate JSON-LD graph.
 // These are the questions that buyers, journalists, and developers ask
 // first; pre-answering them in machine-readable form is direct AEO play.
@@ -696,7 +735,12 @@ export function blogPostSchema(args: {
   date: string;
   lastModified: string;
   tags: string[];
+  image?: string;
 }) {
+  // Google's Article rich result requires `image`; without it all three
+  // posts were ineligible (2026-06-30 audit). Defaults to the site OG
+  // banner when a post doesn't supply its own absolute image URL.
+  const imageUrl = args.image ?? 'https://career-ops.org/og-banner.jpg';
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -708,6 +752,12 @@ export function blogPostSchema(args: {
     dateModified: args.lastModified,
     author: { '@id': PERSON_ID },
     publisher: { '@id': PERSON_ID },
+    image: {
+      '@type': 'ImageObject',
+      url: imageUrl,
+      width: 1200,
+      height: 630,
+    },
     inLanguage: 'en',
     keywords: args.tags.join(', '),
     isPartOf: { '@id': 'https://career-ops.org/#website' },
