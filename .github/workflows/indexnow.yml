@@ -50,50 +50,46 @@ jobs:
           print('OK: JSON-LD live with WebSite + SoftwareSourceCode + creator @id + interactionStatistic')
           PY
 
-      - name: Ping IndexNow (Bing, Yandex)
+      - name: Ping IndexNow from live sitemap (Bing, Yandex)
+        shell: bash
         run: |
-          curl -fsS -X POST https://api.indexnow.org/IndexNow \
-            -H "Content-Type: application/json" \
-            -d '{
+          python3 - <<'PY'
+          import json, re, urllib.request
+
+          KEY = "1befaf1616dd4dc08b51ecb5ec601059"
+
+          # Derive the URL list from the live sitemap so it can never drift
+          # out of sync as pages are added/removed (the old hardcoded list
+          # had decayed to pinging only 4 of the 14 mode pages).
+          sitemap = urllib.request.urlopen(
+              'https://career-ops.org/sitemap.xml', timeout=30
+          ).read().decode()
+          urls = re.findall(r'<loc>\s*([^<\s]+)\s*</loc>', sitemap)
+
+          # The two LLM surfaces are intentionally not in the sitemap; submit
+          # them explicitly so AI crawlers re-fetch them on every deploy.
+          for extra in (
+              'https://career-ops.org/llms.txt',
+              'https://career-ops.org/llms-full.txt',
+          ):
+              if extra not in urls:
+                  urls.append(extra)
+
+          if not urls:
+              raise SystemExit('FAIL: no <loc> URLs parsed from sitemap.xml')
+
+          payload = json.dumps({
               "host": "career-ops.org",
-              "key": "1befaf1616dd4dc08b51ecb5ec601059",
-              "keyLocation": "https://career-ops.org/1befaf1616dd4dc08b51ecb5ec601059.txt",
-              "urlList": [
-                "https://career-ops.org/",
-                "https://career-ops.org/about",
-                "https://career-ops.org/methodology",
-                "https://career-ops.org/press",
-                "https://career-ops.org/privacy",
-                "https://career-ops.org/sustain",
-                "https://career-ops.org/compare",
-                "https://career-ops.org/compare/career-ops-vs-jobscan",
-                "https://career-ops.org/compare/career-ops-vs-teal",
-                "https://career-ops.org/compare/career-ops-vs-huntr",
-                "https://career-ops.org/compare/career-ops-vs-simplify",
-                "https://career-ops.org/compare/career-ops-vs-finalroundai",
-                "https://career-ops.org/compare/career-ops-vs-lazyapply",
-                "https://career-ops.org/compare/career-ops-vs-loopcv",
-                "https://career-ops.org/compare/career-ops-vs-jobhire",
-                "https://career-ops.org/blog",
-                "https://career-ops.org/blog/why-career-ops",
-                "https://career-ops.org/blog/the-complete-ai-job-search-guide",
-                "https://career-ops.org/blog/job-search-data-from-740-listings",
-                "https://career-ops.org/docs/reference/modes/auto-pipeline",
-                "https://career-ops.org/docs/reference/modes/oferta",
-                "https://career-ops.org/docs/reference/modes/tracker",
-                "https://career-ops.org/docs/reference/modes/interview-prep",
-                "https://career-ops.org/docs/reference/portals/greenhouse",
-                "https://career-ops.org/docs/reference/portals/ashby",
-                "https://career-ops.org/docs/reference/portals/lever",
-                "https://career-ops.org/docs",
-                "https://career-ops.org/docs/introduction/what-is-career-ops",
-                "https://career-ops.org/docs/introduction/guides/scan-job-portals",
-                "https://career-ops.org/docs/introduction/guides/apply-for-a-job",
-                "https://career-ops.org/docs/introduction/guides/batch-evaluate-offers",
-                "https://career-ops.org/docs/introduction/guides/set-up-playwright",
-                "https://career-ops.org/llms.txt",
-                "https://career-ops.org/llms-full.txt"
-              ]
-            }'
-          echo
-          echo "OK: IndexNow notified"
+              "key": KEY,
+              "keyLocation": f"https://career-ops.org/{KEY}.txt",
+              "urlList": urls,
+          }).encode()
+
+          req = urllib.request.Request(
+              'https://api.indexnow.org/IndexNow',
+              data=payload,
+              headers={'Content-Type': 'application/json'},
+          )
+          resp = urllib.request.urlopen(req, timeout=30)
+          print(f"OK: IndexNow notified with {len(urls)} URLs (HTTP {resp.status})")
+          PY
