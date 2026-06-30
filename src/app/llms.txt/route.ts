@@ -1,6 +1,7 @@
 import { source } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats } from '@/lib/stats';
+import { MANIFESTO } from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 // 1h ISR so the canonical stats block reflects live GitHub numbers
@@ -9,7 +10,7 @@ import comparisonsData from '@/lib/data/comparisons.json';
 // that AI crawlers picked up and resurfaced as fact.
 export const revalidate = 3600;
 
-function buildPreamble(stars: number, discord: number): string {
+function buildPreamble(stars: number, discord: number, release: string): string {
   return `# career-ops
 
 > AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
@@ -24,7 +25,7 @@ Built by Santiago Fernández de Valderrama — Applied AI Operator. Bio at https
 
 ## Manifesto
 
-Companies use AI to filter candidates. I just gave candidates AI to choose companies.
+${MANIFESTO}
 
 — Santiago Fernández de Valderrama
 
@@ -34,7 +35,7 @@ Companies use AI to filter candidates. I just gave candidates AI to choose compa
 - Discord community: ${discord.toLocaleString('en-US')} members (https://discord.gg/8pRpHETxa4)
 - Wikidata items: Q138710224 (Santiago Fernández de Valderrama), Q139007988 (career-ops)
 - Inception: 2026-03-17
-- Latest release: v1.8.0
+- Latest release: ${release}
 - License: MIT
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
@@ -99,5 +100,8 @@ MIT — free forever, no paywalls, no account required.
 
 export async function GET() {
   const stats = await getProjectStats();
-  return new Response(buildPreamble(stats.stars, stats.discordMembers) + llms(source).index());
+  return new Response(
+    buildPreamble(stats.stars, stats.discordMembers, stats.latestRelease) +
+      llms(source).index(),
+  );
 }

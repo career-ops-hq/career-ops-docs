@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { methodologySchema } from '@/lib/schema';
+import { MANIFESTO } from '@/lib/shared';
 
 export const metadata: Metadata = {
   title: 'Methodology · career-ops',
@@ -51,6 +52,21 @@ export default function MethodologyPage() {
             respect both your time and the recruiter&rsquo;s.
           </p>
         </header>
+
+        {/* Signature thesis — the home blockquote's cite points here, so the
+            manifesto must live on this page verbatim. Anchors the whole
+            methodology to the asymmetry it exists to close. */}
+        <figure className="mb-12 border-l-2 border-fd-foreground/25 pl-6">
+          <blockquote
+            cite="https://career-ops.org/methodology"
+            className={`${instrumentSerifRegular.className} text-fd-foreground text-2xl md:text-3xl leading-snug`}
+          >
+            &ldquo;{MANIFESTO}&rdquo;
+          </blockquote>
+          <figcaption className="mt-3 text-sm text-fd-muted-foreground">
+            — Santiago Fernández de Valderrama
+          </figcaption>
+        </figure>
 
         <div className="space-y-12 text-fd-foreground/90 leading-relaxed">
           <Section title="The 4.0 / 5.0 threshold">
