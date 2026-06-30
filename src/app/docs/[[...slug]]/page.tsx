@@ -12,7 +12,8 @@ import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
-import { docsBreadcrumbSchema } from '@/lib/schema';
+import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
+import { gitLastMod } from '@/lib/git-date';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -21,6 +22,16 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
 
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
+
+  // Real authored date from git (build time). Only surfaced when git can
+  // resolve it — we never assert a synthetic "Updated" date.
+  const gitDate = gitLastMod(`content/docs/${page.path}`);
+  const dateModified = gitDate?.toISOString();
+  const dateModifiedLabel = gitDate?.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
@@ -32,6 +43,19 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           ),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            docsTechArticleSchema({
+              url: page.url,
+              title: page.data.title,
+              description: page.data.description,
+              dateModified,
+            }),
+          ),
+        }}
+      />
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
@@ -40,6 +64,12 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
           markdownUrl={markdownUrl}
           githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
         />
+        {dateModifiedLabel && (
+          <span className="ml-auto text-xs text-fd-muted-foreground">
+            Updated{' '}
+            <time dateTime={dateModified}>{dateModifiedLabel}</time>
+          </span>
+        )}
       </div>
       <DocsBody>
         <MDX

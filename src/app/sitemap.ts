@@ -1,37 +1,12 @@
-import { execSync } from 'node:child_process';
-import { statSync } from 'node:fs';
-import path from 'node:path';
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
+import { lastModFor } from '@/lib/git-date';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 export const revalidate = 3600;
 
 const SITE_URL = 'https://career-ops.org';
-const REPO_ROOT = path.resolve(process.cwd());
-
-// lastmod resolution chain:
-//   1. git log (real authored timestamp)
-//   2. fs.statSync mtime (survives Vercel shallow clones)
-//   3. build time fallback
-function lastModFor(relPath: string): Date {
-  try {
-    const iso = execSync(`git log -1 --format=%cI -- "${relPath}"`, {
-      cwd: REPO_ROOT,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim();
-    if (iso) return new Date(iso);
-  } catch {
-    /* fall through */
-  }
-  try {
-    return statSync(path.join(REPO_ROOT, relPath)).mtime;
-  } catch {
-    return new Date();
-  }
-}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [
