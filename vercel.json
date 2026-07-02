@@ -46,6 +46,16 @@
       "permanent": true
     },
     {
+      "source": "/github",
+      "destination": "https://github.com/santifer/career-ops",
+      "permanent": true
+    },
+    {
+      "source": "/career-ops",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/twitter",
       "destination": "https://x.com/santifer",
       "permanent": true

@@ -204,6 +204,13 @@ export default async function ComparisonPage({
           >
             /about
           </a>
+          . The numbers behind the approach:{' '}
+          <a
+            href="/blog/job-search-data-from-740-listings"
+            className="text-fd-foreground underline underline-offset-2"
+          >
+            740 listings, analyzed
+          </a>
           .
         </p>
       </article>

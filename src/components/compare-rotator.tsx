@@ -55,33 +55,39 @@ export function CompareRotator() {
       </p>
 
       <div className="flex flex-col items-center gap-8">
-        {/* Slideshow — all eight images render stacked, only the
-            current one visible (opacity-100). Eager-loading ensures
-            every image is in browser cache from the first paint, so
-            the rotation is smooth even on the first cycle (no
-            loading flash). CSS opacity transition is 700ms to match
-            the picker wheel duration exactly — wordmark and image
-            stay perfectly synced. */}
-        <Link
-          href={`/compare/career-ops-vs-${current.slug}`}
-          className="relative block w-full max-w-5xl mx-auto aspect-[1200/630] overflow-hidden rounded-lg border border-fd-foreground/10 hover:border-fd-foreground/30 transition-colors"
-          aria-label={`career-ops vs ${current.name} comparison`}
-        >
+        {/* Slideshow — all eight slides render stacked, each inside
+            its own link, only the current one visible and clickable.
+            Every /compare/career-ops-vs-* href must be present in the
+            server-rendered HTML: with a single link whose href changed
+            client-side, crawlers only ever saw the first slide's URL.
+            Hidden slides are out of the tab order and inert. Eager
+            loading keeps every image in browser cache from the first
+            paint; the 700ms opacity transition matches the picker
+            wheel exactly — wordmark and image stay perfectly synced. */}
+        <div className="relative block w-full max-w-5xl mx-auto aspect-[1200/630] overflow-hidden rounded-lg border border-fd-foreground/10 hover:border-fd-foreground/30 transition-colors">
           {competitors.map((c, i) => (
-            <Image
+            <Link
               key={c.slug}
-              src={`/og/compare/career-ops-vs-${c.slug}.jpg`}
-              alt={`career-ops vs ${c.name}`}
-              fill
-              sizes="(min-width: 1024px) 1024px, 100vw"
-              priority={i === 0}
-              loading={i === 0 ? undefined : 'eager'}
-              className={`absolute inset-0 object-cover transition-opacity duration-700 ${
-                i === idx ? 'opacity-100' : 'opacity-0'
+              href={`/compare/career-ops-vs-${c.slug}`}
+              aria-label={`career-ops vs ${c.name} comparison`}
+              aria-hidden={i === idx ? undefined : true}
+              tabIndex={i === idx ? undefined : -1}
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                i === idx ? 'opacity-100' : 'pointer-events-none opacity-0'
               }`}
-            />
+            >
+              <Image
+                src={`/og/compare/career-ops-vs-${c.slug}.jpg`}
+                alt={`career-ops vs ${c.name}`}
+                fill
+                sizes="(min-width: 1024px) 1024px, 100vw"
+                priority={i === 0}
+                loading={i === 0 ? undefined : 'eager'}
+                className="object-cover"
+              />
+            </Link>
           ))}
-        </Link>
+        </div>
 
         {/* Picker row — vs sits at the horizontal center of the row
             (same max-w-5xl container as the image, so the vs aligns

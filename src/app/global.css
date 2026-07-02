@@ -51,6 +51,14 @@
   --color-fd-primary-foreground: white;
 }
 
+/* Fumadocs' default muted-foreground (45.1% lightness) measures 4.09:1
+   against the cream dot-bg sections — just under WCAG AA's 4.5:1. 39%
+   clears AA on both cream (#efeeed, ~5.1:1) and white (~6:1). Dark mode
+   keeps the library default (its own .dark block still wins over :root). */
+:root {
+  --color-fd-muted-foreground: hsl(0, 0%, 39%);
+}
+
 @keyframes fade-in-delayed {
   from { opacity: 0; }
   to { opacity: 1; }
