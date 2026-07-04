@@ -1,0 +1,93 @@
+---
+title: Set up a free AI engine
+description: Run career-ops for $0. Free ways to give career-ops its AI brain — OpenCode with a free provider, a fully local model with Ollama, or any OpenAI-compatible endpoint. No credit card required.
+icon: Sparkles
+---
+
+career-ops is free and open source (MIT). The one thing it needs to think is an **AI engine** — an AI coding assistant that reads its prompts and does the work. That engine can be free too.
+
+You bring your own engine and your own key. Nothing runs on our servers — everything happens on your machine. This page shows the free paths, from the easiest to the most hands-on. Pick one and you're ready for the [Quick Start](/docs).
+
+<Callout title="What am I actually setting up?">
+Think of career-ops as the recipe and the AI engine as the cook. The recipe is free forever. This page is about getting a cook for free — whether that's a hosted model with a free tier or a model running entirely on your own computer.
+</Callout>
+
+## Which path is right for me?
+
+| If you want… | Use | Free? | Needs a good computer? |
+| --- | --- | --- | --- |
+| The easiest free start | **OpenCode + a free provider** | Yes | No |
+| Everything 100% offline & private | **Ollama (local model)** | Yes | Yes — 16GB+ VRAM |
+| To reuse a CLI you already have | **Its own free tier** | Usually | No |
+| The one-command shortcut | **`npm run or`** | Yes | No |
+
+Most people should start with the first row. The rest are here when you want them.
+
+## Path 1 — OpenCode + a free provider (recommended)
+
+[OpenCode](https://opencode.ai) is a free, open-source AI coding assistant. Santiago's take: *"opencode is top."* It connects to plenty of providers that offer a **free tier**, so you can run career-ops without spending anything.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Install OpenCode">
+        Follow the one-line install on [opencode.ai](https://opencode.ai). It runs in your terminal, like the other AI CLIs.
+      </Step>
+      <Step title="Pick a free provider">
+        Sign up for any provider with a free tier and copy your API key. Popular free options the community uses: **OpenRouter** (models tagged `:free`), **Google AI Studio** (Gemini free tier), and OpenAI-compatible endpoints like **Nvidia's** free tier. The [budget guide](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) keeps the up-to-date list of models that hold up well.
+      </Step>
+      <Step title="Point OpenCode at it">
+        Set your key and base URL as environment variables, then open OpenCode inside the career-ops folder:
+        ```bash title="Terminal"
+        export OPENAI_API_BASE="https://openrouter.ai/api/v1"
+        export OPENAI_API_KEY="your_free_api_key_here"
+        opencode
+        ```
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+That's it — OpenCode is now your engine. Head to the [Quick Start](/docs).
+
+## Path 2 — A CLI you already have
+
+Already using **Claude Code, Gemini CLI, Codex, Qwen Code, or GitHub Copilot CLI**? You're done — career-ops works with all of them, and several ship a free tier (Gemini CLI, for one). Just open your CLI inside the career-ops folder. No extra setup on this page.
+
+## Path 3 — 100% local with Ollama (fully offline)
+
+Want zero cloud, zero cost, and total privacy? Run the model on your own machine with [Ollama](https://ollama.com). Nothing leaves your computer.
+
+The trade-off is hardware. career-ops asks the model to score jobs across many dimensions and tailor your CV — small models struggle with that.
+
+<Callout type="warn" title="Pick a model that's big enough">
+Skip the tiny 7–8B models — they fail the scoring format and produce generic CVs. Use a **32B model or larger** (e.g. Qwen 2.5 Coder 32B), which needs a GPU with **16–24GB of VRAM** (an RTX 3090/4090, or an Apple Silicon Mac with 32GB+ unified memory). No such machine? Path 1 is the better free route.
+</Callout>
+
+```bash title="Terminal"
+# Install Ollama from ollama.com, then pull a capable model:
+ollama pull qwen2.5-coder:32b
+```
+
+Then point your AI CLI (OpenCode works well here) at the local Ollama endpoint, or use the built-in local evaluator described in the [budget guide](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md).
+
+## Path 4 — The one-command shortcut: `npm run or`
+
+career-ops ships a built-in runner that routes to **OpenRouter's free models with automatic fallback** — no CLI configuration to fiddle with. Once you've cloned career-ops and set an OpenRouter key, one command runs the pipeline:
+
+```bash title="Terminal"
+export OPENROUTER_API_KEY="your_free_key_here"
+npm run or            # runs the full pipeline on free models
+```
+
+There are focused variants too — `npm run or:scan`, `or:eval`, `or:apply` — for running a single step.
+
+---
+
+<Callout title="For developers — tune models & cost">
+Want the maintained model recommendations, per-provider examples, standalone evaluators (`node openai-eval.mjs`, `node ollama-eval.mjs`), and token-saving flags? The core repo's **[Running on a Budget](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** guide goes deep. career-ops is fully model-agnostic — point it at any OpenAI-compatible endpoint with zero code changes.
+</Callout>
+
+## You're ready
+
+Once your engine is set up, continue to the **[Quick Start](/docs)** — you'll clone career-ops, add your CV, and run your first free scan.
