@@ -20,6 +20,26 @@ Use tracker for a daily fifteen-second status check. Use the Go TUI dashboard wh
 `/career-ops tracker` — output is a structured status summary in the chat.
 ```
 
+## What a run looks like
+
+A tracker run prints the full applications table plus a statistics block in a single response, so you can read the whole search at a glance. Each row is one application with its company, role, score, current status, and whether a tailored PDF and an evaluation report have been generated.
+
+```txt title="Example"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       |  87   | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    |  79   | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   |  72   | Evaluated | yes | yes
+
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 79   PDF generated: 100%   Report generated: 100%
+```
+
+An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, update the row in the tracker table or use the Go TUI dashboard.
+
+## Reading the lifetime numbers
+
+For cumulative figures — the full funnel, scanner totals, portal coverage, and follow-up compliance — the mode runs `node stats.mjs --summary` and presents its output verbatim. That command reads your local files and costs zero tokens, so the numbers are never recomputed by hand or estimated from memory. Use the chat summary above for a fast daily read, and the stats command when you want the running totals across the whole search.
+
 ## Gotchas
 
 tracker is read-only. Status changes are explicit keystrokes in the Go TUI dashboard or manual edits to the report frontmatter.

@@ -20,6 +20,29 @@ Use Ashby scanning when targeting AI labs, infrastructure companies, and modern 
 In your portals.yml: `- provider: ashby\n  slug: anthropic\n  careers_url: https://jobs.ashbyhq.com/anthropic` — then scan picks up active Anthropic roles.
 ```
 
+## What the scanner does
+
+The scanner reads your enabled Ashby slugs from portals.yml, calls Ashby's public job-board API for each one, and merges the fresh roles into your pipeline with no browser, no login, and zero LLM tokens spent on the fetch itself. A single `node scan.mjs` run covers your Ashby, Greenhouse, and Lever boards together, then filters the results by the title keywords you configured.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 41 total
+Filtered by title: 6 relevant
+Duplicates: 3 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Anthropic | Applied AI Engineer | ashby
+  + Replicate | Inference Engineer  | ashby
+```
+
+## How career-ops talks to Ashby
+
+career-ops queries Ashby's `ApiJobBoardWithTeams` GraphQL endpoint with your board slug and reads the `jobPostings` list straight from the JSON response. For each posting it pulls the title, an id used to build the public apply URL, the location name, the employment type, and a compensation summary when the board exposes one. Because this is a structured API call rather than page scraping, the scan is fast, stays inside rate limits, and spends no model tokens. Tokens are only spent later, during the evaluate step, when you decide a role is worth a closer look. Re-running the scan is safe: every URL is deduplicated against your scan history, your evaluated applications, and the current pipeline, so a role you have already seen is never added twice.
+
 ## Gotchas
 
 Ashby's job board API returns full JD text directly, no follow-up request needed. Evaluation is slightly faster than for Greenhouse listings.

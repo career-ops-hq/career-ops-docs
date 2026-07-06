@@ -14,15 +14,33 @@ The `patterns` mode reads every report in the rejected and discarded stages, loo
 
 Run patterns after every 20–30 rejections to recalibrate. The mode surfaces blind spots in your profile and helps you avoid sending applications into the same dead patterns.
 
-## Example
+## What a run looks like
 
+You run the mode after a batch of outcomes and it returns a dated pattern-analysis report plus a short summary of the three findings that matter most. Under the hood it runs `analyze-patterns.mjs` over your tracker and reports, then reads back a conversion funnel, a score-versus-outcome table, top blockers, and a recommended score floor.
+
+```bash title="Terminal"
+/career-ops patterns
 ```
-`/career-ops patterns` after a month of search — output is a structured pattern analysis with recommendations to adjust config/profile.yml or your scan filters.
+
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+
+Full report: reports/pattern-analysis-2026-05-18.md
 ```
 
-## Gotchas
+After presenting the summary, the mode offers to act on the findings — updating `portals.yml` filters, setting a score threshold, or reweighting which archetypes you target.
 
-patterns needs a meaningful sample size (15+ rejections) to surface real signal. With fewer rejections, the analysis is noise.
+## When to reach for it
+
+Reach for patterns once enough applications have moved past evaluation that outcomes carry signal. The hard gate is five entries with a status beyond "Evaluated" — Applied, Responded, Interview, Offer, Rejected, or Discarded; below that the mode exits and asks you to come back with more data. More outcomes mean sharper patterns, so it earns its keep after a month of steady applying.
+
+- If you keep interview transcripts in `interview-prep/sessions/`, the mode adds a targeting signal: where your most fluent, specific answers cluster, which catches when your strongest role-type differs from the one you keep applying to.
+- The report never names a real interviewer or company from those sessions — it summarizes competency clusters only, so anything committed stays private.
 
 ## Related
 

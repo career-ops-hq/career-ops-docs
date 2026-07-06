@@ -12,17 +12,44 @@ interview-prep reads the company context (ideally already enriched via deep mode
 
 ## When to use it
 
-Use interview-prep the night before each round. The recruiter-screen variant covers comp negotiation prep. The hiring-manager variant focuses on role fit. The peer-technical variant focuses on architecture/coding questions. The panel variant covers leadership signals.
+Use interview-prep the night before each round. The recruiter-screen variant covers comp negotiation prep. The hiring-manager variant focuses on role fit. The peer-technical variant focuses on architecture/coding questions. The panel variant covers leadership signals. For deliberate, round-by-round drills, career-ops also ships focused `plan`, `practice`, and `debrief` interview modes — see the [interview modes guide](/docs/introduction/guides/interview-modes).
 
-## Example
+## What a run looks like
 
+You name the company and role, and the mode returns one interview intel report scoped to the rounds that company actually runs. It researches the process, classifies each round by audience — recruiter screen, hiring manager, peer-technical, or panel — and drafts likely questions, tagging every one with a source citation or an `[inferred from JD]` label.
+
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
 ```
-`/career-ops interview-prep` + select round type — output is a prep document of 1,500–2,500 words organized by question pattern.
+
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
 ```
 
-## Gotchas
+The report also maps stories from your `story-bank.md` to each likely question and flags the gaps where you have no story prepared yet.
 
-Each variant assumes you have already run oferta against the company. The prep depth scales with how much context the agent has — fold in deep-mode output and contacto-mode notes for richer prep.
+## When to reach for it
+
+Reach for interview-prep once a round is scheduled and you want a working document instead of generic advice. A few things sharpen the output:
+
+- Run `oferta` or `deep` against the company first. The prep reads the evaluation report for archetype, gaps, and matched proof points, so more context yields more specific questions.
+- Paste the interviewers' names or the schedule when you have them. For a panel, the mode builds a per-interviewer read and drafts one tailored closing question for each slot.
+- Trust the tags: sourced questions cite Glassdoor or Blind, inferred ones carry `[inferred from JD]`. The mode never invents a question and attributes it to a candidate.
 
 ## Related
 

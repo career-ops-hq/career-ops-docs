@@ -14,11 +14,27 @@ career-ops invokes auto-pipeline whenever you drop a JD URL or pasted text into 
 
 Use auto-pipeline when you want the full pipeline executed automatically. It is the default mode for new listings entering your search.
 
-## Example
+## What a run looks like
 
+Paste a job URL with no sub-command and auto-pipeline runs the whole chain end to end: it extracts the description, checks the posting is live, scores it, saves the report, exports a tailored PDF, and records the entry in your tracker.
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
 ```
-Paste in chat: `https://job-boards.greenhouse.io/notion/jobs/4523451008` — auto-pipeline runs end-to-end. No flags, no follow-up commands.
-```
+
+## Good to know
+
+- Paste a URL and auto-pipeline handles extraction for you: Playwright first for single-page portals like Lever, Ashby, Greenhouse and Workday, then WebFetch for static pages, then WebSearch as a last resort.
+- A liveness gate runs before the evaluation. If the link is dead or the page is an empty "position filled" shell, the mode stops there instead of scoring phantom content — and if the entry came from `data/pipeline.md`, it marks that row closed.
+- Draft application answers are written only when the score is 4.5 or higher, so low-fit roles do not spend tokens on copy you will not send.
 
 ## Gotchas
 

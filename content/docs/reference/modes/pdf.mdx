@@ -14,11 +14,30 @@ pdf mode reads your master cv.md, the JD context, and runs the tailor step (rewr
 
 Use pdf when you have already evaluated the listing and decided to apply, and want only the tailored PDF without re-running the evaluation step.
 
-## Example
+## What a run looks like
 
+You point the mode at a listing you've already evaluated and it produces one tailored, ATS-ready PDF — no re-evaluation. It extracts 15-20 keywords from the JD, picks the paper size from the company's location, rewrites your summary and reorders bullets around the role, then renders the HTML to PDF and reports keyword coverage.
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
-`/career-ops pdf` referencing an evaluated listing — output is `cv-<company>.pdf` in reports/.
-```
+
+The layout stays single-column with standard section headers and selectable text — the structure ATS parsers read cleanly — and keywords are woven into real achievements, never invented.
+
+## When to reach for it
+
+Reach for pdf when you've decided to apply and want only the tailored resume, skipping the evaluation step. A few behaviors worth knowing:
+
+- Paper size follows the company's location automatically: `letter` for US and Canada roles, `a4` everywhere else.
+- Keyword injection is truth-based. The mode rewords real experience into the JD's exact vocabulary but never adds a skill you do not have.
+- For DACH and much of continental Europe you can opt into a photo by setting `candidate.photo` in `config/profile.yml`; leave it empty and the CV renders pixel-for-pixel identical without one, which is the safer default for US, UK, and ATS-first markets.
 
 ## Gotchas
 

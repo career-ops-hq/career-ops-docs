@@ -5,8 +5,10 @@
     "free-ai-engine",
     "introduction/what-is-career-ops",
     "introduction/guides",
+    "faq",
     "---Reference---",
     "reference/modes",
-    "reference/portals"
+    "reference/portals",
+    "reference/glossary"
   ]
 }

@@ -1,8 +1,9 @@
 {
-    "pages": [          
-      "scan-job-portals",                                                                                                                                                
-      "apply-for-a-job",
-      "batch-evaluate-offers",
-      "set-up-playwright"
-    ]
+  "pages": [
+    "scan-job-portals",
+    "apply-for-a-job",
+    "batch-evaluate-offers",
+    "set-up-playwright",
+    "interview-modes"
+  ]
 }

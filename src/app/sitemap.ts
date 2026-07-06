@@ -23,6 +23,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastModFor('src/app/methodology/page.tsx'),
     },
     {
+      // The changelog's real freshness is the latest release date (the
+      // page re-renders hourly from the GitHub Releases API); the file's
+      // git date is the best build-time proxy available here.
+      url: `${SITE_URL}/changelog`,
+      lastModified: lastModFor('src/app/changelog/page.tsx'),
+    },
+    {
       url: `${SITE_URL}/press`,
       lastModified: lastModFor('src/app/press/page.tsx'),
     },

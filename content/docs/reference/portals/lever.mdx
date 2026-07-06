@@ -20,6 +20,29 @@ Use Lever scanning for companies in the Series C+ to pre-IPO range that have not
 In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
 ```
 
+## What the scanner does
+
+The scanner reads your enabled Lever slugs from portals.yml, calls Lever's public postings API for each one, and merges new, title-matching roles into your pipeline with no browser session and zero LLM tokens spent on the fetch. The same `node scan.mjs` run also covers your Greenhouse and Ashby boards, then filters everything by your configured title keywords.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 33 total
+Filtered by title: 5 relevant
+Duplicates: 2 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Figma | AI Product Engineer | lever
+  + Brex  | Applied AI Engineer | lever
+```
+
+## How career-ops talks to Lever
+
+career-ops requests `api.lever.co/v0/postings/{slug}`, or the `api.eu.lever.co` host for EU boards, and reads the JSON array of postings. For each role it takes the `text` field as the title and the `hostedUrl` as the link, falling back to `applyUrl` when `hostedUrl` is absent. Because Lever returns the whole board in one structured response, the scan is a single public HTTPS GET per company that stays inside rate limits and spends no model tokens. Token cost only begins later, when you evaluate a role you want to pursue. Re-running the scan is safe: every URL is deduplicated against your scan history, your evaluated applications, and the current pipeline, so a role you have already seen is never added twice.
+
 ## Gotchas
 
 Lever's API exposes the full JD in the postings response. Some Lever boards include role internal metadata that career-ops surfaces as additional signal during scoring.

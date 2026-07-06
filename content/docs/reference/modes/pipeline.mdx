@@ -14,15 +14,35 @@ pipeline mode iterates over the URLs in data/pipeline.md (one per line) and invo
 
 Use pipeline when you have a backlog of URLs to process. Drop them in data/pipeline.md, invoke /career-ops pipeline, and step away.
 
-## Example
+## What a run looks like
 
+You drop URLs into `data/pipeline.md` and the mode processes the whole inbox in one pass. First it runs a zero-token liveness sweep to drop expired postings, then it evaluates each surviving URL through the full auto-pipeline and ends with a summary table of what it found.
+
+```txt title="Pipeline run"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (parallel workers)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
 ```
-Edit data/pipeline.md, add five Greenhouse URLs one per line, then run `/career-ops pipeline`. Each URL is processed sequentially; failures are reported at the end.
-```
 
-## Gotchas
+Each processed URL moves from the `## Pending` to the `## Processed` section of the file, so the inbox stays a live record of what is left.
 
-pipeline can run for several minutes against a long queue. Token usage scales linearly with the number of URLs. Use `/career-ops batch` if you want parallel processing.
+## When to reach for it
+
+Reach for pipeline when you have collected a backlog of listings during the day and want to crunch them in a single session. How it handles the queue:
+
+- The `## Pending` section accepts any shape — a bare pasted URL works, or you can add `company`, `role`, `location`, and `comp` columns, and the mode reads them all.
+- The liveness sweep runs before the per-URL loop, so a stale inbox of eight URLs does not cost eight wasted evaluations.
+- With three or more pending URLs it processes them in parallel, one worker per URL, rather than one at a time.
+- PDFs are generated only when a score clears `auto_pdf_score_threshold` (default 3.0); raise it to skip PDFs for marginal roles and generate them on demand later with `/career-ops pdf`.
 
 ## Related
 

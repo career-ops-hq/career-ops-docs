@@ -20,6 +20,29 @@ Use Greenhouse scanning when your target companies use Greenhouse as their ATS. 
 In your portals.yml: `- provider: greenhouse\n  slug: notion\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.
 ```
 
+## What the scanner does
+
+The scanner reads your enabled Greenhouse slugs from portals.yml, calls the public boards API for each one, and adds new, title-matching roles to your pipeline with no scraping and zero LLM tokens spent on the fetch. A single `node scan.mjs` run handles your Greenhouse, Ashby, and Lever boards in one pass, then filters the results by your configured title keywords.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 58 total
+Filtered by title: 9 relevant
+Duplicates: 6 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Notion | AI Product Engineer | greenhouse
+  + OpenAI | Applied Engineer    | greenhouse
+```
+
+## How career-ops talks to Greenhouse
+
+career-ops requests `boards-api.greenhouse.io/v1/boards/{slug}/jobs` and reads the `jobs` array from the JSON, taking each role's title and its `absolute_url`. That boards endpoint returns listing metadata — title, location, and department — but not the full description, so career-ops pulls the complete job text with a follow-up request per role during the evaluate step, or by appending `?content=true` where the board supports it. The scan itself is a plain HTTPS GET against a public endpoint, which is why it stays inside rate limits and spends no model tokens. Re-running the scan is safe: every URL is deduplicated against your scan history, your evaluated applications, and the current pipeline, so a role you have already seen is never added twice.
+
 ## Gotchas
 
 Greenhouse-API listings only include the title, location, and department in the boards endpoint. Full JD text requires a follow-up request per listing, which career-ops handles automatically during the evaluate step.

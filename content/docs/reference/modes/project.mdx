@@ -20,6 +20,34 @@ Use project when you have three or four side-project ideas and want to pick the 
 `/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
 ```
 
+## What a run looks like
+
+A project run returns a legitimacy read, a weighted score across six dimensions, and one clear verdict. You hand the mode an idea, and it grades that idea the way a hiring manager would read it off your portfolio rather than judging whether the code will compile.
+
+```txt title="Example"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+
+The verdict is always one of three: BUILD, with weekly milestones; SKIP, with what to do instead; or PIVOT TO an alternative that carries more signal for the roles you are chasing. The six dimensions are weighted, so a project that demos well and produces clean metrics can outrank a more novel idea that has no visible payoff.
+
+## The interview pack
+
+Every approved project ships with an interview pack, because the story is the deliverable, not the repository. The pack has three parts: a one-pager covering product, architecture, metrics, and evaluation plan; a demo, either a live URL or a two-minute recorded walkthrough; and a postmortem of what worked, what did not, and how you mitigated it. A built project with no narrative attached rarely moves a job search, while a modest project with a crisp trade-off story often does. The 80/20 plan reflects this: week one is the MVP with its core metric, week two is polish plus the pack itself.
+
 ## Gotchas
 
 The mode does not validate technical feasibility, only career signal value. Run a separate technical scoping pass.

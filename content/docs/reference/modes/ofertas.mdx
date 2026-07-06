@@ -14,15 +14,37 @@ The `ofertas` mode reads multiple JD evaluations (already produced by oferta or 
 
 Use ofertas when you reach late-stage interviews for multiple roles and need a structured way to decide between them. Particularly useful for staff-level offers where comp packages and growth paths differ substantially.
 
-## Example
+## What a run looks like
 
+You give the mode two or more offers and it scores each one across ten weighted dimensions, then ranks them. The heaviest weight sits on North Star alignment (25%), followed by CV match and seniority (15% each); compensation and growth trajectory carry 10% each, with reputation, remote quality, tech stack, time-to-offer, and cultural signals filling the rest.
+
+```bash title="Terminal"
+/career-ops ofertas
 ```
-After running oferta against three different offers, invoke `/career-ops ofertas` and reference the three evaluation files. The mode produces a ranked decision matrix.
+
+```txt title="Comparison excerpt"
+# Offer Comparison — 3 roles
+
+| Dimension (weight)       | Acme | Globex | Initech |
+|--------------------------|------|--------|---------|
+| North Star align (25%)   | 5    | 3      | 4       |
+| CV match (15%)           | 4    | 4      | 3       |
+| Compensation (10%)       | 3    | 5      | 4       |
+| Growth trajectory (10%)  | 5    | 3      | 3       |
+| ...                      |      |        |         |
+| Weighted total           | 4.4  | 3.6    | 3.5     |
+
+Recommendation: Acme — strongest North Star fit and growth path.
+Globex pays more but ranks lower on trajectory and time-to-offer.
 ```
 
-## Gotchas
+## When to reach for it
 
-ofertas does not re-evaluate the offers; it ranks the existing reports. Make sure each offer has been scored individually first.
+Reach for ofertas when you hold two or more competing offers and need a normalized way to choose. It is most useful at staff level, where comp packages and growth paths diverge enough that gut feel misleads.
+
+- Supply the postings as pasted text, URLs, or references to jobs already in your tracker; if none are in context, the mode asks for them.
+- Score each offer individually first — with `oferta` or `auto-pipeline` — so the comparison ranks consistent evaluations rather than mixing depths.
+- Because North Star alignment is weighted at 25%, a higher salary alone will not top the ranking; a role that matches your target trajectory can outscore a better-paid detour.
 
 ## Related
 

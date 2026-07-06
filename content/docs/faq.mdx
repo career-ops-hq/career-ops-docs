@@ -1,0 +1,43 @@
+---
+title: FAQ
+description: Frequently asked questions about career-ops — cost, privacy, supported AI CLIs, scan vs scan:full, token limits, Windows setup, and what career-ops will never do on your behalf.
+icon: CircleQuestionMark
+---
+
+{/* Mirrored with src/lib/faq-data.ts (FAQPage JSON-LD) — edit both together.
+    Answers are verified against the core repo's docs/FAQ.md; the core file
+    is the source of truth for technical behavior. */}
+
+Common questions, answered in one place. For anything not covered here, ask in [Discord](https://discord.gg/8pRpHETxa4) or open a [GitHub Discussion](https://github.com/santifer/career-ops/discussions).
+
+## Is career-ops free?
+
+Yes. career-ops is open source under the MIT license, forever. The only potential cost is the AI engine it runs on — and that can be free too: OpenCode with a free provider, a local model via Ollama, or the built-in `npm run or` runner on OpenRouter free models. The [Set up a free AI engine](/docs/free-ai-engine) guide walks through every path.
+
+## Where does my data live?
+
+On your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers. System updates never touch your data layer (`cv.md`, `config/`, `data/`, `reports/`, `output/`): that separation is the **Data Contract**, and every update honors it.
+
+## Which AI coding CLIs does career-ops work with?
+
+Claude Code, Gemini CLI, Codex, Qwen Code, OpenCode, and GitHub Copilot CLI. career-ops is AI-agnostic: it ships prompt files that the CLI executes, so you can also point it at any OpenAI-compatible endpoint or a local model with zero code changes.
+
+## What is the difference between `scan` and `scan:full`?
+
+`npm run scan` reads the companies you configured in `portals.yml` and hits their ATS APIs ([Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby), [Lever](/docs/reference/portals/lever)) directly, consuming zero LLM tokens — that's your regular daily or weekly discovery run. `npm run scan:full` inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your `title_filter` / `location_filter`, so you catch roles from companies you haven't manually added.
+
+## How do I avoid hitting token or rate limits during a batch run?
+
+Cap the run with `./batch/batch-runner.sh --limit 5` to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use `--resume-paused` to skip already-completed jobs so no tokens are wasted on work that finished.
+
+## Skills aren't loading on Windows — symlink error on install
+
+Windows does not create symlinks by default, so Git checks out the CLI skill entrypoints as plain pointer files. The installer and updater detect this automatically: run `node update-system.mjs apply` (or `npx @santifer/career-ops init` on a fresh install) and the materialize step replaces the pointer files with the full skill content. No manual `mklink` or Developer Mode changes needed.
+
+## Can I run career-ops on a cheaper or local model?
+
+Yes — career-ops is fully AI-agnostic. The core repo's [Running on a Budget](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) guide covers OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama and other low-cost or local providers, with recommended model sizes (32B+ for reliable scoring) and token-saving practices.
+
+## Does career-ops auto-submit applications?
+
+No. career-ops prepares — it scans, scores, tailors your CV, and can pre-fill ATS application forms — but submitting is always your explicit click. The project explicitly rejects spray-and-pray automation: the point is choosing companies well, not applying blindly at volume.

@@ -8,21 +8,38 @@ lastModified: "2026-05-18"
 
 ## What it does
 
-deep mode runs a research prompt against the company name, pulling together funding history (Crunchbase, Pitchbook signals), recent news, leadership backgrounds, product/business model summary, comp signals from public sources, and a flagged-risks section. The output is a structured brief you can read in fifteen minutes.
+The `deep` mode generates a structured research prompt for a company you are evaluating, organized around six axes: its AI strategy, its moves in the last six months, its engineering culture, the technical challenges it likely faces, its competitors and differentiation, and your angle as a candidate. You paste that prompt into a research tool — Perplexity, Claude, or ChatGPT — and it returns a brief you can read before the interview. deep personalizes each axis with the specific role and company.
 
 ## When to use it
 
-Use deep when applying to a company at Series B or later where the decision to apply (or not) requires knowing more than the JD tells you.
+Use deep when applying to a company at Series B or later where the decision to apply — or how to interview — needs more than the JD tells you. The candidate-angle axis pulls from your cv.md and profile.yml, so the returned brief closes on what you specifically bring rather than on generic company facts.
 
-## Example
+## What a run looks like
 
-```
-`/career-ops deep` + company name — output is a markdown brief covering funding, leadership, product, and risk signals.
+Give deep a company and role and it writes a ready-to-paste research prompt. Each of the six axes is a checklist of questions the research tool should answer, and the final axis turns the findings back toward you.
+
+```txt title="Example"
+> /career-ops deep notion
+
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
 ```
 
 ## Gotchas
 
-deep depends on the quality of public information about the company. Stealth-mode startups will produce sparse briefs. Verify everything against primary sources before high-stakes decisions.
+The brief is only as good as the public information the research tool can find. Stealth-mode startups produce thin results, and any tool can hallucinate a funding round or a leadership name. Verify everything against primary sources before you make a high-stakes decision on it.
 
 ## Related
 

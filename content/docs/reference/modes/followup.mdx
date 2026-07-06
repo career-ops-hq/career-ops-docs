@@ -8,21 +8,40 @@ lastModified: "2026-05-18"
 
 ## What it does
 
-followup mode reads every report in the applied and interview stages, checks the date of last contact against your configured cadence (default: 7 days after apply, 5 days after interview), and flags overdue entries. For each flagged entry, it drafts a contextual followup message.
+followup mode reads your application tracker, checks the date of last contact against the configured cadence (default: a first nudge 7 days after you apply, and 1 day after an interview for a thank-you note), and flags the entries that are overdue or urgent. For each flagged entry it drafts a contextual followup message grounded in that report and your CV.
 
 ## When to use it
 
-Run followup on Monday mornings as a weekly ritual. Each Monday it surfaces the followups due that week with drafts ready to send.
+Run followup on Monday mornings as a weekly ritual. Each Monday it surfaces the followups due that week with drafts ready to send. It is conservative by design — it will not flag an entry until the cadence threshold has clearly passed, so the dashboard stays short and every item on it is genuinely due.
 
-## Example
+## What a run looks like
 
-```
-`/career-ops followup` — output is a list of overdue contacts with a draft message per entry.
+followup runs a cadence script over your tracker, prints a dashboard sorted by urgency, and drafts a message for each overdue or urgent row. The drafts lead with a concrete proof point, not with the ask, and they never say "just checking in."
+
+```txt title="Terminal"
+> /career-ops followup
+
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
 ```
 
 ## Gotchas
 
-followup is conservative by default — it does not flag entries until the cadence threshold has clearly passed. Tighten the cadence in config if you want more aggressive nudges.
+An Applied role gets at most two follow-ups; after the second goes unanswered, followup stops drafting and suggests you close the entry or try a different contact through `contacto`. Want a tighter schedule than the seven-day default? Pass a flag to the cadence script — `node followup-cadence.mjs --applied-days 5` — rather than editing the drafts by hand.
 
 ## Related
 

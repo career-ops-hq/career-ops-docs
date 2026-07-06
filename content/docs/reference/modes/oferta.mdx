@@ -14,15 +14,42 @@ oferta mode reads a single JD (URL or pasted text), scores it against the six-di
 
 Use oferta to triage a borderline listing quickly. If the score clears 4.0 and you decide to apply, escalate to auto-pipeline or apply mode.
 
-## Example
+## What a run looks like
 
+You hand the mode one listing and it returns the seven-block evaluation — Blocks A through F plus a Block G legitimacy read — with a score and cited reasoning. Paste JD text directly, or pass a URL and the mode first confirms the posting is still live so a dead link never burns a full evaluation.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
 ```
-Paste JD text + `/career-ops oferta` — output is the structured A–F evaluation in reports/ with the score and the dimension-by-dimension reasoning.
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
 ```
 
-## Gotchas
+Blocks B through F cover CV match and gaps, level strategy, comp and demand, a customization plan, and STAR+R interview stories mapped to the job's requirements.
 
-oferta does not write the tracker entry; the listing will not appear in the dashboard until you escalate. If you want the listing tracked even when below threshold, use auto-pipeline.
+## When to reach for it
+
+Reach for oferta to score a single listing quickly without committing to the full pipeline. Worth knowing:
+
+- Pass a URL and a liveness check runs first — an expired or 404 posting is stopped before Block A, so you never spend a run on phantom content.
+- Company and comp research is bounded to at most five web searches; this is an evaluation, not deep research. Run `/career-ops deep` separately when you want the fuller company picture.
+- Block G returns one of three tiers — High Confidence, Proceed with Caution, or Suspicious — so likely ghost jobs surface before you invest interview effort.
 
 ## Related
 

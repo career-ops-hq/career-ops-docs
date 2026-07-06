@@ -20,6 +20,30 @@ Use training when you are tempted by a learning offering but unsure if it actual
 `/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
 ```
 
+## What a run looks like
+
+A training run scores a course or certification across six dimensions and returns one of three verdicts, so you see the return on time and money before you commit to either. You give it the offering — syllabus, weeks, hours per week, and cost — and it grades that against your stated career direction.
+
+```txt title="Example"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+
+A DO verdict comes with a four-to-twelve-week plan with weekly deliverables and a scoreboard. A DON'T DO verdict names a better alternative and explains why. DO WITH TIMEBOX caps the weeks and strips the plan to essentials, which is the common outcome for courses that are useful but padded.
+
+## What scores highest
+
+The mode weights offerings that build credibility in production-grade AI over generic credentials. In priority order, that means LLM evaluation and testing, observability and monitoring, cost and reliability trade-offs, AI governance and safety, and enterprise AI architecture. A course that ends in a demonstrable artifact — an eval harness, a monitored deployment — outscores one that ends in a certificate alone, because the artifact is what a hiring manager can actually see.
+
 ## Gotchas
 
 The mode is biased toward your stated North Star. If you have not filled in config/profile.yml's North Star section thoughtfully, the evaluation will be shallow.

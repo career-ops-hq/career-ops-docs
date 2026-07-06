@@ -12,17 +12,48 @@ The `apply` mode reads an open application form (Greenhouse, Ashby, Lever), iden
 
 ## When to use it
 
-Open the JD and the application form side-by-side. Run apply once the form is loaded. The output is paste-ready, not a finished application — you stay in the loop for tone, facts and any field the portal layers on top.
+Open the JD and the application form side-by-side. Run apply once the form is loaded. The output is paste-ready, not a finished application — you stay in the loop for tone, facts and any field the portal layers on top. apply works best with Playwright in visible mode, where it reads the live page as you see it; without Playwright, paste the questions or share a screenshot and it drafts from that instead.
 
-## Example
+## What a run looks like
 
-```
-`/career-ops apply` — drafts every open-ended answer the form asks, one block per question.
+Run apply with the application form open in Chrome. Before it writes a single answer, the mode reads the active tab, matches it to the report you already generated for that job, confirms the posting is still live, and scans the form for knock-out questions that could auto-reject you.
+
+```txt title="Example"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year. (paste-ready)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here. (paste-ready)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
 ```
 
 ## Gotchas
 
-apply does not submit forms or click buttons. It reads the questions and produces answer drafts in the chat. The submission step is yours. Closed-ended fields (dropdowns, radio buttons, file uploads) are out of scope.
+apply does not submit forms or click buttons. It reads the questions and produces answer drafts in the chat. The submission step is yours. Closed-ended fields (dropdowns, radio buttons, file uploads) are out of scope. If the preflight finds the posting has closed, apply refuses to draft final copy unless you explicitly override it — a dead link is not worth a tailored answer.
+
+## Known ATS quirks
+
+apply has been field-tested across roughly a dozen Playwright-driven applications, and a few portals break a run if you do not account for them:
+
+- **Ashby** deduplicates candidates by email per company, so a second application can silently merge into your first. If a report for that company already exists, apply suggests a `+tag` email alias.
+- **Lever** throws a captcha when a checkbox or radio button is clicked programmatically, so apply fills only text fields and hands you the rest to tick.
+- **Workday** ignores values set without real keystrokes, so apply types answers character by character and asks you to review the work-authorization dropdowns before you save.
 
 ## Related
 

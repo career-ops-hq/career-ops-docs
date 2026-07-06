@@ -8,21 +8,38 @@ lastModified: "2026-05-18"
 
 ## What it does
 
-contacto mode reads the company name and the JD context, then suggests outreach targets based on patterns the agent finds (alumni networks, prior employers, mutual contacts mentioned in your profile). It drafts a short message — five to seven sentences — tailored to the role.
+contacto mode reads the company name and the JD context, then suggests outreach targets it finds through WebSearch — the hiring manager, the assigned recruiter, two or three team peers, and a known interviewer. It drafts a short message — three sentences, under 300 characters — tailored to the role and to who the contact is.
 
 ## When to use it
 
-Use contacto when you have applied to a role and want to surface a referral path. Or use it before applying when a warm intro could move you past the recruiter pile.
+Use contacto when you have applied to a role and want to surface a referral path. Or use it before applying when a warm intro could move you past the recruiter pile. The default is the LinkedIn power move; for a platform with a hard character limit — a job-board chat box, a cold-email opener, BOSS Zhipin's 打招呼 — ask for a "greeting" and contacto writes one ultra-short first-touch message with no contact discovery.
 
-## Example
+## What a run looks like
 
-```
-Invoke `/career-ops contacto` with the company and JD context. Output: 2-3 suggested LinkedIn contacts + a draft message per contact.
+Give contacto a company and it finds the people worth contacting, picks the one who benefits most from you being there, and writes a message built for that persona: a recruiter hears hard requirements met, a hiring manager hears impact.
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
 ```
 
 ## Gotchas
 
-contacto does not scrape LinkedIn (rejected per issue #238). It works from the context you supply: your CV, your prior employers, mutual connections you mention. The agent does not have access to your LinkedIn graph.
+contacto does not scrape LinkedIn (rejected per issue #238). It works from the context you supply — your CV, your prior employers, the mutual connections you mention — plus public WebSearch results. The agent has no access to your private LinkedIn graph. Every message stays under LinkedIn's 300-character connection-request limit and never includes your phone number.
 
 ## Related
 
