@@ -21,7 +21,7 @@ function formatK(n: number): string {
 }
 export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
-  title: 'career-ops — AI-powered job search command center',
+  title: 'career-ops — open-source AI job search command center',
   description:
     'Open source AI-powered job search system. Runs in your CLI on your machine. CLI-agnostic, MIT-licensed, local-first. Evaluate jobs, generate tailored CVs, track applications.',
   alternates: { canonical: 'https://career-ops.org' },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://career-ops.org',
     siteName: 'career-ops',
-    title: 'career-ops — AI-powered job search command center',
+    title: 'career-ops — open-source AI job search command center',
     description:
       'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
   },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@santifer',
     creator: '@santifer',
-    title: 'career-ops — AI-powered job search command center',
+    title: 'career-ops — open-source AI job search command center',
     description:
       'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
   },
