@@ -3,10 +3,13 @@ export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';
 
-// fill this with your actual GitHub info, for example:
+// Repo the docs CONTENT lives in — used to build the "Open in GitHub"
+// link on every docs page. This is the docs site repo, NOT the core
+// `career-ops` repo (that mismatch shipped 404 links on all docs pages
+// until 2026-07-06).
 export const gitConfig = {
   user: 'santifer',
-  repo: 'career-ops',
+  repo: 'career-ops-docs',
   branch: 'main',
 };
 
