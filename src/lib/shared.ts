@@ -26,7 +26,9 @@ export const MANIFESTO =
 export const STATS_FLOOR = {
   stars: 56000,
   forks: 11000,
-  discordMembers: 3836,
+  // Live count now comes from Discord's public invite endpoint in
+  // stats.ts (crossed 4,000 on 2026-07-05); this is just the net.
+  discordMembers: 4000,
 };
 
 // Fallback release tag used when the GitHub releases API is unreachable at

@@ -10,6 +10,10 @@ import { STATS_FLOOR, LATEST_RELEASE_FALLBACK } from './shared';
 const REPO_API = 'https://api.github.com/repos/santifer/career-ops';
 const RELEASES_API =
   'https://api.github.com/repos/santifer/career-ops/releases/latest';
+// Discord's public invite endpoint returns approximate_member_count with
+// no bot and no auth — the invite code is the public one on the site.
+const DISCORD_INVITE_API =
+  'https://discord.com/api/v10/invites/8pRpHETxa4?with_counts=true';
 
 export type ProjectStats = {
   stars: number;
@@ -49,6 +53,21 @@ export async function getProjectStats(): Promise<ProjectStats> {
     // keep floors — fail silent so the page still renders real-ish numbers
   }
 
+  let discordMembers = STATS_FLOOR.discordMembers;
+  try {
+    const res = await fetch(DISCORD_INVITE_API, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const data = await res.json();
+      if (
+        typeof data.approximate_member_count === 'number' &&
+        data.approximate_member_count > discordMembers
+      )
+        discordMembers = data.approximate_member_count;
+    }
+  } catch {
+    // keep the floor
+  }
+
   let { display: latestRelease, version: softwareVersion } =
     normaliseTag(LATEST_RELEASE_FALLBACK);
 
@@ -69,7 +88,7 @@ export async function getProjectStats(): Promise<ProjectStats> {
   return {
     stars,
     forks,
-    discordMembers: STATS_FLOOR.discordMembers,
+    discordMembers,
     latestRelease,
     softwareVersion,
   };
