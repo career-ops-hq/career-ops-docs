@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Pause, Play } from 'lucide-react';
 import { CoMark } from '@/components/co-mark';
 import { instrumentSerifRegular } from '@/lib/fonts';
 
@@ -24,6 +25,9 @@ const competitors = [
 export function CompareRotator() {
   const [idx, setIdx] = useState(0);
   const [reduced, setReduced] = useState(false);
+  // WCAG 2.2.2 — auto-rotating content needs an explicit pause
+  // affordance beyond prefers-reduced-motion.
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     // Respect prefers-reduced-motion — visitors who opted out of
@@ -31,12 +35,12 @@ export function CompareRotator() {
     // full set via the link below.
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReduced(mq.matches);
-    if (mq.matches) return;
+    if (mq.matches || paused) return;
     const t = setInterval(() => {
       setIdx((i) => (i + 1) % competitors.length);
     }, 5500);
     return () => clearInterval(t);
-  }, []);
+  }, [paused]);
 
   const current = competitors[idx];
 
@@ -82,11 +86,32 @@ export function CompareRotator() {
                 fill
                 sizes="(min-width: 1024px) 1024px, 100vw"
                 priority={i === 0}
-                loading={i === 0 ? undefined : 'eager'}
+                // Hidden slides load lazily at browser-idle priority so
+                // ~220KB of JPGs stop competing with the hero for LCP
+                // bandwidth; they still arrive well inside the first
+                // 5.5s rotation window. (2026-06-30 audit, perf #10a.)
+                loading={i === 0 ? undefined : 'lazy'}
                 className="object-cover"
               />
             </Link>
           ))}
+          {!reduced && (
+            <button
+              type="button"
+              onClick={() => setPaused((p) => !p)}
+              aria-pressed={paused}
+              aria-label={
+                paused ? 'Resume comparison slideshow' : 'Pause comparison slideshow'
+              }
+              className="absolute bottom-3 right-3 z-10 flex size-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm transition-opacity hover:bg-black/75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+            >
+              {paused ? (
+                <Play className="size-4" aria-hidden="true" />
+              ) : (
+                <Pause className="size-4" aria-hidden="true" />
+              )}
+            </button>
+          )}
         </div>
 
         {/* Picker row — vs sits at the horizontal center of the row

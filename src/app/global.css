@@ -5,8 +5,20 @@
 @theme {
   /* Brand — light mode */
   --color-brand: hsl(26, 73%, 51%);
-  --color-brand-foreground: white;
+  /* Text/icon color ON brand surfaces. White measured 3.13:1 on the
+     brand orange (AA fail for normal text); near-black is 5.2:1 on
+     brand and 8.2:1 on brand-200 hover (the Amazon pattern — the
+     orange itself never changes, only what sits on top). Shared-token
+     decision with career-ops-ui (core PR #1627) + career-ops-ux. */
+  --color-brand-foreground: hsl(24, 30%, 12%);
   --color-brand-200: hsl(33, 100%, 50%);
+  /* Brand-hued TEXT on regular surfaces. Raw brand orange as small
+     text only passes AA in dark (4.95:1); in light it reads 2.6-3.1:1
+     on white/cream. brand-text is the darkened light-mode ink
+     (5.5/5.1:1 on white/cream); dark mode keeps the raw brand. Use for
+     small/inline brand-colored text; keep `brand` for surfaces, icons,
+     and large display type. */
+  --color-brand-text: hsl(26, 80%, 36%);
   --color-brand-secondary: #c6bb58;
   --color-brand-secondary-foreground: #97890c;
 
@@ -22,8 +34,10 @@
    initial Fumadocs scaffold; replaced with the real brand colour. */
 .dark {
   --color-brand: hsl(26, 73%, 51%);
-  --color-brand-foreground: white;
+  --color-brand-foreground: hsl(24, 30%, 12%);
   --color-brand-200: hsl(33, 100%, 60%);
+  /* Raw brand passes AA as text on dark surfaces (4.95:1). */
+  --color-brand-text: hsl(26, 73%, 51%);
   --color-brand-secondary: #fc7744;
   --color-brand-secondary-foreground: #521700;
 
@@ -153,6 +167,20 @@
 @media (prefers-reduced-motion: reduce) {
   .cli-cursor {
     animation: none;
+  }
+}
+
+/* Touch targets — Fumadocs header icon buttons default to ~34px, under
+   the 44px touch floor (WCAG 2.5.8 / audit 2026-06-30 a11y #11c). Lift
+   them only on coarse pointers so desktop density is untouched.
+   #nd-nav = home layout header, #nd-subnav = docs mobile header. */
+@media (pointer: coarse) {
+  #nd-nav button,
+  #nd-nav [role='button'],
+  #nd-subnav button,
+  #nd-subnav [role='button'] {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 

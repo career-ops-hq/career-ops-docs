@@ -275,6 +275,12 @@ export async function siteSchema() {
         // attributable, entity-bound version of the manifesto they already
         // see in prose on the home/about/methodology pages and in llms.txt.
         slogan: MANIFESTO,
+        // Square brand mark (the BIMI asset doubles as the KG logo —
+        // BIMI already requires exactly this shape).
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://career-ops.org/bimi-logo.svg',
+        },
         founder: { '@id': PERSON_ID },
         foundingDate: '2026-03-17',
         sameAs: ORGANIZATION_SAMEAS,
@@ -767,8 +773,9 @@ export function blogPostSchema(args: {
 
 // /compare/[slug] — comparison page schema. Emits SoftwareApplication
 // for both products (career-ops via @id reference to the canonical node
-// in siteSchema; competitor as a fresh node), a WebPage of type
-// AboutPage for the comparison itself, an ItemList encoding the feature
+// in siteSchema; competitor as a fresh node), a plain WebPage for the
+// comparison itself (AboutPage was considered and rejected — the page
+// is about a comparison, not about the subject), an ItemList encoding the feature
 // matrix, FAQPage with comparison-specific questions, and a
 // BreadcrumbList. We deliberately avoid Review or AggregateRating —
 // no fake ratings. The honest matrix and verdict carry the comparison

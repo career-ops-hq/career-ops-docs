@@ -389,7 +389,7 @@ export default async function HomePage() {
           {/* Terminal box centered */}
           <div className="w-full max-w-[800px] p-2 bg-fd-card text-fd-card-foreground border rounded-2xl shadow-lg">
             <div className="flex flex-col sm:flex-row gap-2">
-              <span className="text-brand text-center sm:content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 py-1 sm:py-0 rounded-xl text-sm self-start sm:self-auto">
+              <span className="text-brand-text text-center sm:content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 py-1 sm:py-0 rounded-xl text-sm self-start sm:self-auto">
                 Try it out
               </span>
               <CopyableCommand
@@ -397,6 +397,17 @@ export default async function HomePage() {
                 className="flex-1 min-w-0"
               />
             </div>
+
+            <p className="mt-2 px-1 text-xs text-fd-muted-foreground">
+              Needs an AI coding CLI as its engine — no AI set up yet?{' '}
+              <a
+                href="/docs/free-ai-engine"
+                className="text-fd-foreground underline underline-offset-2"
+              >
+                Get one free
+              </a>
+              .
+            </p>
 
             <div className="relative bg-fd-secondary rounded-xl mt-2 border shadow-md">
               <div className="flex flex-row items-center gap-2 border-b p-2 text-fd-muted-foreground">

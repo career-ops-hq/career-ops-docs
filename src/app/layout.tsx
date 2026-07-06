@@ -104,6 +104,9 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <a href="/blog" className="hover:text-fd-foreground hover:underline">
                   Blog
                 </a>
+                <a href="/changelog" className="hover:text-fd-foreground hover:underline">
+                  Changelog
+                </a>
                 <a href="/press" className="hover:text-fd-foreground hover:underline">
                   Press
                 </a>
@@ -112,7 +115,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 </a>
                 <a
                   href="/sustain"
-                  className="text-brand hover:text-brand-200 hover:underline font-medium"
+                  className="text-brand-text hover:underline font-medium"
                 >
                   Sustain
                 </a>

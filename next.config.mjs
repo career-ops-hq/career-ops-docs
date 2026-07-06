@@ -12,7 +12,9 @@ const cspReportOnly = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://avatars.githubusercontent.com https://santifer.io https://img.youtube.com",
+  // warpchart.dev serves the home star-history chart (SVG embed) — it
+  // must be whitelisted before this policy can ever flip to enforcing.
+  "img-src 'self' data: blob: https://avatars.githubusercontent.com https://santifer.io https://img.youtube.com https://warpchart.dev",
   "font-src 'self' data:",
   "connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com https://api.github.com",
   "frame-ancestors 'none'",
@@ -24,6 +26,14 @@ const cspReportOnly = [
 
 // Baseline security headers applied to every route.
 const securityHeaders = [
+  {
+    // Added 2026-07-06 AFTER fixing the www subdomain (valid cert +
+    // 308 to apex) — includeSubDomains would have bricked www before
+    // that. send.career-ops.org is mail-only (SPF/MX), unaffected by
+    // an HTTPS-only policy.
+    key: 'Strict-Transport-Security',
+    value: 'max-age=63072000; includeSubDomains; preload',
+  },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -39,6 +49,11 @@ const config = {
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Default deviceSizes top out at 3840, which over-serves the hero
+    // AVIF (~195KB) to 2x-retina laptops whose ideal rung is ~2560
+    // (~108KB). Content maxes at 1400px wide, so 2560 covers 2x DPR
+    // with margin. (2026-06-30 audit, perf #10b.)
+    deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920, 2560],
     remotePatterns: [
       { hostname: 'avatars.githubusercontent.com' },
     ],

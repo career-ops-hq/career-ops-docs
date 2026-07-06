@@ -306,8 +306,16 @@ function Message({ message, ...props }: { message: ChatUIMessage } & ComponentPr
   );
 }
 
-export function AISearch({ children }: { children: ReactNode }) {
-  const [open, setOpen] = useState(false);
+export function AISearch({
+  children,
+  defaultOpen = false,
+}: {
+  children: ReactNode;
+  // Used by the interaction-gated mount (lazy.tsx): when the tree only
+  // renders after the user asked for it, it should open immediately.
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
   const chat = useChat<ChatUIMessage>({
     id: 'search',
     transport: new DefaultChatTransport({
