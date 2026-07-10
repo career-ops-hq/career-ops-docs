@@ -202,7 +202,18 @@ export default function AboutPage() {
               WIRED Greece
             </a>
             , and is sustained as a sovereign-maintainer project — Santiago has other paid work
-            for income; sponsorship enables deeper focus on the code.
+            for income; sponsorship enables deeper focus on the code. The maintenance system
+            itself — a fleet of Claude Code agents handling triage, tests, review briefs and
+            releases in about four hours a week — is documented end to end in{' '}
+            <a
+              href="https://santifer.io/ai-agent-fleet"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              the AI agent fleet playbook
+            </a>{' '}
+            on santifer.io.
           </p>
           <p>
             Certified by Anthropic and Airtable. Teaching Fellow at the AI Product Academy
