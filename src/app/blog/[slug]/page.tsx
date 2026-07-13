@@ -85,7 +85,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
               href="/about"
               className="text-fd-foreground underline underline-offset-2"
             >
-              Santiago Fernández de Valderrama
+              Santiago Fernández de Valderrama Aparicio
             </a>
             , Applied AI Operator ·{' '}
             <time dateTime={data.date}>{formatDate(data.date)}</time>

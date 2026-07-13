@@ -72,7 +72,7 @@ export default async function ComparisonPage({
               href="/about"
               className="text-fd-foreground underline underline-offset-2"
             >
-              Santiago Fernández de Valderrama
+              Santiago Fernández de Valderrama Aparicio
             </a>
             , Applied AI Operator · Last updated{' '}
             <time dateTime={data.lastModified}>{formatDate(data.lastModified)}</time>

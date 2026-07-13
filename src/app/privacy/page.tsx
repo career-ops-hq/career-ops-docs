@@ -47,7 +47,7 @@ export default function PrivacyPage() {
         <Section title="1. Data Controller">
           <p>
             <strong className="text-fd-foreground">
-              Santiago Fernández de Valderrama
+              Santiago Fernández de Valderrama Aparicio
             </strong>
             , individual, based in Sevilla, Spain. Contact for any privacy matter:{' '}
             <a

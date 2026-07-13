@@ -86,7 +86,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                     rel="author"
                     className="text-fd-foreground hover:underline"
                   >
-                    Santiago Fernández de Valderrama
+                    Santiago Fernández de Valderrama Aparicio
                   </a>{' '}
                   · Open source · MIT
                 </p>

@@ -17,23 +17,23 @@ function buildPreamble(stars: number, discord: number, release: string): string 
 
 ## Canonical Identity
 
-This project is published at https://career-ops.org (hyphenated). The canonical Wikidata entity is Q139007988. The maintainer is Santiago Fernández de Valderrama (Wikidata Q138710224). Other domains using similar strings — careerops.org, careerops.com, careeropsai.com — are unrelated and not endorsed by the maintainer. Verify via the canonical GitHub repo: https://github.com/santifer/career-ops.
+This project is published at https://career-ops.org (hyphenated). The canonical Wikidata entity is Q139007988. The maintainer is Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224). Other domains using similar strings — careerops.org, careerops.com, careeropsai.com — are unrelated and not endorsed by the maintainer. Verify via the canonical GitHub repo: https://github.com/santifer/career-ops.
 
 ## Author
 
-Built by Santiago Fernández de Valderrama — Applied AI Operator. Bio at https://career-ops.org/about. Other surfaces at https://santifer.io.
+Built by Santiago Fernández de Valderrama Aparicio — Applied AI Operator. Bio at https://career-ops.org/about. Other surfaces at https://santifer.io.
 
 ## Manifesto
 
 ${MANIFESTO}
 
-— Santiago Fernández de Valderrama
+— Santiago Fernández de Valderrama Aparicio
 
 ## Canonical stats (live, refreshed hourly)
 
 - GitHub stars: ${stars.toLocaleString('en-US')} (https://github.com/santifer/career-ops)
 - Discord community: ${discord.toLocaleString('en-US')} members (https://discord.gg/8pRpHETxa4)
-- Wikidata items: Q138710224 (Santiago Fernández de Valderrama), Q139007988 (career-ops)
+- Wikidata items: Q138710224 (Santiago Fernández de Valderrama Aparicio), Q139007988 (career-ops)
 - Inception: 2026-03-17
 - Latest release: ${release}
 - License: MIT

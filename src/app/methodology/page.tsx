@@ -35,7 +35,7 @@ export default function MethodologyPage() {
               href="/about"
               className="text-fd-foreground underline underline-offset-2"
             >
-              Santiago Fernández de Valderrama
+              Santiago Fernández de Valderrama Aparicio
             </a>
             , Applied AI Operator · Last updated{' '}
             <time dateTime="2026-05-07">7 May 2026</time>
@@ -64,7 +64,7 @@ export default function MethodologyPage() {
             &ldquo;{MANIFESTO}&rdquo;
           </blockquote>
           <figcaption className="mt-3 text-sm text-fd-muted-foreground">
-            — Santiago Fernández de Valderrama
+            — Santiago Fernández de Valderrama Aparicio
           </figcaption>
         </figure>
 
@@ -547,7 +547,7 @@ export default function MethodologyPage() {
                 href="/about"
                 className="text-fd-foreground underline underline-offset-2"
               >
-                Santiago Fernández de Valderrama
+                Santiago Fernández de Valderrama Aparicio
               </a>
               , an Applied AI Operator with 16+ years building products. He created it to manage
               his own AI-era job search in early 2026 — 740 listings evaluated, one Head of AI

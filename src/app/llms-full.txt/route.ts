@@ -18,7 +18,7 @@ async function blogLLMText(page: BlogPage) {
 
   return `# ${page.data.title} (${SITE}${page.url})
 
-Published: ${page.data.date} · Last modified: ${modified} · Author: Santiago Fernández de Valderrama
+Published: ${page.data.date} · Last modified: ${modified} · Author: Santiago Fernández de Valderrama Aparicio
 
 ${processed}`;
 }
@@ -58,7 +58,7 @@ ${faq}`;
 
 const AUTHORITY_PAGES = `# About the author (${SITE}/about)
 
-Santiago Fernández de Valderrama (Wikidata Q138710224) is an Applied AI Operator. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He is currently Head of Applied AI at Zinkee. He built career-ops to run his own AI-era job search in early 2026 — 740 listings evaluated, 68 applications sent, 12 interview processes, one offer signed — then open-sourced it under MIT. Other surfaces: ${SITE}/about and https://santifer.io.
+Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is an Applied AI Operator. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He is currently Head of Applied AI at Zinkee. He built career-ops to run his own AI-era job search in early 2026 — 740 listings evaluated, 68 applications sent, 12 interview processes, one offer signed — then open-sourced it under MIT. Other surfaces: ${SITE}/about and https://santifer.io.
 
 # Methodology — how career-ops scores listings (${SITE}/methodology)
 

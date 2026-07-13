@@ -5,7 +5,7 @@ import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { aboutSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
-  title: 'Santiago Fernández de Valderrama · career-ops',
+  title: 'Santiago Fernández de Valderrama Aparicio · career-ops',
   description:
     'Applied AI Operator. Built career-ops after evaluating 740 listings. 16+ years building products. Currently Head of Applied AI at Zinkee. Featured in WIRED, Business Insider.',
   alternates: { canonical: 'https://career-ops.org/about' },
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     type: 'profile',
     url: 'https://career-ops.org/about',
     siteName: 'career-ops',
-    title: 'Santiago Fernández de Valderrama · career-ops',
+    title: 'Santiago Fernández de Valderrama Aparicio · career-ops',
     description:
       'Applied AI Operator. Built career-ops after evaluating 740 listings. Featured in WIRED, Business Insider.',
   },
@@ -109,7 +109,7 @@ export default function AboutPage() {
         <header className="flex flex-col items-center text-center">
           <Image
             src="https://santifer.io/foto-avatar.png"
-            alt="Santiago Fernández de Valderrama"
+            alt="Santiago Fernández de Valderrama Aparicio"
             width={96}
             height={96}
             className="rounded-full mb-6"
@@ -119,7 +119,7 @@ export default function AboutPage() {
           <h1
             className={`${instrumentSerifRegular.className} text-fd-foreground text-3xl md:text-4xl tracking-tight`}
           >
-            Santiago Fernández de Valderrama
+            Santiago Fernández de Valderrama Aparicio
           </h1>
           <p className="mt-2 text-fd-muted-foreground text-base">
             Applied AI Operator · creator of career-ops
@@ -252,7 +252,7 @@ export default function AboutPage() {
             >
               career-ops.org
             </a>{' '}
-            (hyphenated). The project is maintained by Santiago Fern&aacute;ndez de Valderrama
+            (hyphenated). The project is maintained by Santiago Fern&aacute;ndez de Valderrama Aparicio
             (Wikidata{' '}
             <a
               href="https://www.wikidata.org/wiki/Q138710224"

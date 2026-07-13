@@ -10,7 +10,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: 'Press & Brand Kit · career-ops',
   description:
-    'Official press kit for career-ops: boilerplate copy, key facts, logos, and media coverage. Open-source, MIT-licensed, local-first AI job-search tool by Santiago Fernández de Valderrama.',
+    'Official press kit for career-ops: boilerplate copy, key facts, logos, and media coverage. Open-source, MIT-licensed, local-first AI job-search tool by Santiago Fernández de Valderrama Aparicio.',
   alternates: { canonical: 'https://career-ops.org/press' },
   openGraph: {
     type: 'website',
@@ -90,7 +90,7 @@ const BOILERPLATE = {
     'career-ops is a free, open-source system that puts hiring leverage on the candidate’s side — running locally inside your AI coding assistant.',
   medium:
     'career-ops is an open-source, MIT-licensed system that puts hiring leverage on the candidate’s side. It runs entirely on your own machine, inside any AI coding CLI — Claude Code, Codex, Gemini CLI, and others — scanning listings, scoring them against a transparent six-dimension rubric, tailoring your CV per role, and tracking the whole pipeline. No account, no cloud, no telemetry.',
-  long: 'career-ops is a free, open-source (MIT) system that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama, it runs locally inside whichever AI coding assistant the user already pays for — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot — and never sends a CV or application history to a third-party server. Today it scans Greenhouse, Ashby, and Lever, scores each listing from 1.0 to 5.0 against a published six-dimension rubric, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months.',
+  long: 'career-ops is a free, open-source (MIT) system that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama Aparicio, it runs locally inside whichever AI coding assistant the user already pays for — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot — and never sends a CV or application history to a third-party server. Today it scans Greenhouse, Ashby, and Lever, scores each listing from 1.0 to 5.0 against a published six-dimension rubric, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months.',
 };
 
 function roundDown(n: number, to: number): string {
@@ -106,7 +106,7 @@ export default async function PressPage() {
       label: 'Category',
       value: 'Candidate-side hiring-leverage system · AI-powered job search',
     },
-    { label: 'Creator', value: 'Santiago Fernández de Valderrama' },
+    { label: 'Creator', value: 'Santiago Fernández de Valderrama Aparicio' },
     { label: 'License', value: 'MIT — free forever, no paid tier' },
     { label: 'Model', value: 'Local-first. No account, no cloud, no telemetry.' },
     { label: 'Inception', value: '17 March 2026' },
@@ -233,7 +233,7 @@ export default async function PressPage() {
               companies.&rdquo;
             </p>
             <footer className="mt-2 text-sm text-fd-muted-foreground">
-              — Santiago Fernández de Valderrama
+              — Santiago Fernández de Valderrama Aparicio
             </footer>
           </blockquote>
         </section>
@@ -243,7 +243,7 @@ export default async function PressPage() {
           <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Founder</h2>
           <p className="mt-3 text-fd-foreground/90 leading-relaxed">
             <strong className="font-medium text-fd-foreground">
-              Santiago Fernández de Valderrama
+              Santiago Fernández de Valderrama Aparicio
             </strong>{' '}
             is an Applied AI Operator with 16+ years building and selling products. He founded
             Santifer iRepair in 2009 and sold it in 2025; he is now Head of Applied AI at Zinkee.

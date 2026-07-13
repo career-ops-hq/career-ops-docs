@@ -254,7 +254,7 @@ export default async function HomePage() {
           <footer className="mt-6 flex items-center justify-center gap-2.5 text-sm text-fd-muted-foreground">
             <Image
               src="/santiago-avatar.png"
-              alt="Santiago Fernández de Valderrama"
+              alt="Santiago Fernández de Valderrama Aparicio"
               width={44}
               height={44}
               className="rounded-full"
@@ -265,7 +265,7 @@ export default async function HomePage() {
                 rel="author"
                 className="text-fd-muted-foreground hover:text-fd-foreground hover:underline"
               >
-                Santiago Fernández de Valderrama
+                Santiago Fernández de Valderrama Aparicio
               </a>
               , 16-year operator and Head of Applied AI
             </span>
@@ -345,7 +345,7 @@ export default async function HomePage() {
                 <span className="text-brand">no telemetry</span>,{' '}
                 <span className="text-brand">no account</span>. MIT-licensed and free forever; the
                 only cost is whichever AI coding CLI you already pay for. Built by Santiago
-                Fern&aacute;ndez de Valderrama after a real 2026 job search of 740 listings, 68
+                Fern&aacute;ndez de Valderrama Aparicio after a real 2026 job search of 740 listings, 68
                 applications, 12 interviews, and one offer.
               </p>
               <p className="font-mono text-xs text-fd-muted-foreground mt-8 tracking-wide">
@@ -467,7 +467,7 @@ export default async function HomePage() {
               rel="author"
               className="hover:text-fd-foreground hover:underline"
             >
-              Santiago Fernández de Valderrama
+              Santiago Fernández de Valderrama Aparicio
             </a>
           </footer>
         </blockquote>
@@ -626,7 +626,7 @@ export default async function HomePage() {
               rel="author"
               className="text-fd-foreground font-medium hover:underline"
             >
-              Santiago Fernández de Valderrama
+              Santiago Fernández de Valderrama Aparicio
             </a>{' '}
             after evaluating 740 job listings.
             <br />
@@ -780,7 +780,7 @@ export default async function HomePage() {
                 rel="author"
                 className="text-fd-foreground hover:underline underline-offset-2"
               >
-                Santiago Fernández de Valderrama
+                Santiago Fernández de Valderrama Aparicio
               </Link>{' '}
               — an Applied AI Operator with 16+ years building
               products, founder and operator of a Spanish phone-repair

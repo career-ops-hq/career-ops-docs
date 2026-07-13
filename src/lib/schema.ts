@@ -208,7 +208,7 @@ const PERSON_SUBJECT_OF = [
     '@type': 'VideoObject',
     '@id': 'https://career-ops.org/#video-create-os-lounge',
     url: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
-    name: 'Create OS Lounge — Santiago Fernández de Valderrama',
+    name: 'Create OS Lounge — Santiago Fernández de Valderrama Aparicio',
     description:
       'Conversation with Eric on career-ops origins, multi-agent orchestration, and the asymmetry between candidate-side AI and recruiter-side ATS.',
     thumbnailUrl: 'https://img.youtube.com/vi/pDkAe5JbREk/maxresdefault.jpg',
@@ -270,7 +270,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         url: 'https://career-ops.org',
         description:
-          'Open-source AI-powered job search command center. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama.',
+          'Open-source AI-powered job search command center. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama Aparicio.',
         // Signature thesis as a structured slogan — gives LLMs an
         // attributable, entity-bound version of the manifesto they already
         // see in prose on the home/about/methodology pages and in llms.txt.
@@ -369,7 +369,11 @@ export async function siteSchema() {
       {
         '@type': 'Person',
         '@id': PERSON_ID,
-        name: 'Santiago Fernández de Valderrama',
+        name: 'Santiago Fernández de Valderrama Aparicio',
+        // Short forms kept as alternateName so the entity resolves from
+        // either spelling — the Wikidata label is the full "Aparicio"
+        // form (2026-07-13) with the short form preserved as an alias.
+        alternateName: ['Santiago Fernández de Valderrama', 'santifer', 'Santi'],
         url: 'https://santifer.io/about',
         image: 'https://santifer.io/foto-avatar.png',
         jobTitle: 'Applied AI Operator',
@@ -436,7 +440,7 @@ const DEFINED_TERMS = [
   {
     name: 'career-ops',
     description:
-      'An open-source AI-powered job search command center. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
+      'An open-source AI-powered job search command center. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama Aparicio in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
   },
   {
     name: 'Block A-G evaluation',
@@ -527,7 +531,7 @@ export function methodologySchema() {
             name: 'Who built career-ops? Why?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops was built by Santiago Fernández de Valderrama, an Applied AI Operator with 16+ years building products. He created it to manage his own AI-era job search in early 2026 — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
+              text: 'career-ops was built by Santiago Fernández de Valderrama Aparicio, an Applied AI Operator with 16+ years building products. He created it to manage his own AI-era job search in early 2026 — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
             },
           },
           {
@@ -700,7 +704,7 @@ export function homeFaqSchema() {
         name: 'Who built career-ops?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'career-ops was built by Santiago Fernández de Valderrama — an Applied AI Operator with 16+ years building products, founder and operator of a Spanish phone-repair business (2009–2025) before exiting, and currently Head of Applied AI at Zinkee. He created career-ops in early 2026 to manage his own AI-era job search — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
+          text: 'career-ops was built by Santiago Fernández de Valderrama Aparicio — an Applied AI Operator with 16+ years building products, founder and operator of a Spanish phone-repair business (2009–2025) before exiting, and currently Head of Applied AI at Zinkee. He created career-ops in early 2026 to manage his own AI-era job search — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
         },
       },
       {
@@ -879,7 +883,7 @@ export function aboutSchema() {
         '@type': 'ProfilePage',
         '@id': 'https://career-ops.org/about/#profilepage',
         url: 'https://career-ops.org/about',
-        name: 'Santiago Fernández de Valderrama',
+        name: 'Santiago Fernández de Valderrama Aparicio',
         description:
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
@@ -914,7 +918,7 @@ export function pressSchema() {
         url: 'https://career-ops.org/press',
         name: 'Press & Brand Kit · career-ops',
         description:
-          'Official press kit for career-ops: boilerplate descriptions, key facts, logos, and media coverage. Open-source, MIT-licensed AI job-search tool by Santiago Fernández de Valderrama.',
+          'Official press kit for career-ops: boilerplate descriptions, key facts, logos, and media coverage. Open-source, MIT-licensed AI job-search tool by Santiago Fernández de Valderrama Aparicio.',
         inLanguage: 'en',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
