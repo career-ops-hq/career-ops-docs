@@ -55,6 +55,9 @@ const config = {
       './src/app/manifesto/s/[username]/*.ttf',
     ],
     '/manifesto/sign-preview': ['./src/app/manifesto/s/[username]/*.ttf'],
+    '/manifesto/s/[username]/card-square': [
+      './src/app/manifesto/s/[username]/*.ttf',
+    ],
   },
   images: {
     formats: ['image/avif', 'image/webp'],

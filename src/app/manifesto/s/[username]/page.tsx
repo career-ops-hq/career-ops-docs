@@ -9,6 +9,7 @@ import {
   signatureAvatarUrl,
 } from '@/lib/signatures';
 import { CAREEROPS_DEFINITION } from '@/lib/shared';
+import { ShareRow } from '@/components/manifesto/share-row';
 
 // Path-based share URL for a signature (signature-flywheel spec v2 §2).
 // Hash fragments never reach the server, so /manifesto#sig-x gives every
@@ -177,8 +178,36 @@ export default async function SignatureSharePage({ params }: Props) {
               Add your signature
             </Link>
           </div>
+
+          {/* Native-image escape hatch: platforms where links die (IG,
+              WhatsApp, stories) get the card as a file, verification URL
+              printed on it. Real signers only — previews stay
+              watermarked and non-downloadable. */}
+          <p className="mt-7 text-sm text-[rgba(244,237,228,0.6)]">
+            Download your card:{' '}
+            <a
+              href={`/manifesto/s/${sig.username.toLowerCase()}/opengraph-image`}
+              download={`careerops-signatory-${sig.ordinal}-${sig.username.toLowerCase()}.png`}
+              className="underline underline-offset-4 decoration-[rgba(244,237,228,0.4)] hover:decoration-current text-[rgba(244,237,228,0.9)]"
+            >
+              wide
+            </a>{' '}
+            ·{' '}
+            <a
+              href={`/manifesto/s/${sig.username.toLowerCase()}/card-square`}
+              download={`careerops-signatory-${sig.ordinal}-${sig.username.toLowerCase()}-square.png`}
+              className="underline underline-offset-4 decoration-[rgba(244,237,228,0.4)] hover:decoration-current text-[rgba(244,237,228,0.9)]"
+            >
+              square
+            </a>
+          </p>
         </div>
       </div>
+
+      <ShareRow
+        url={`https://career-ops.org/manifesto/s/${sig.username.toLowerCase()}`}
+        ordinal={sig.ordinal}
+      />
 
       <p className="mt-6 text-center text-xs text-fd-muted-foreground">
         Every signature is a public commit in the{' '}
