@@ -53,12 +53,12 @@ export default function MethodologyPage() {
           </p>
         </header>
 
-        {/* Signature thesis — the home blockquote's cite points here, so the
-            manifesto must live on this page verbatim. Anchors the whole
-            methodology to the asymmetry it exists to close. */}
+        {/* Signature thesis — canonical home: /manifesto (The CareerOps
+            Manifesto, since 2026-07-14). Kept verbatim here too; anchors
+            the whole methodology to the asymmetry it exists to close. */}
         <figure className="mb-12 border-l-2 border-fd-foreground/25 pl-6">
           <blockquote
-            cite="https://career-ops.org/methodology"
+            cite="https://career-ops.org/manifesto"
             className={`${instrumentSerifRegular.className} text-fd-foreground text-2xl md:text-3xl leading-snug`}
           >
             &ldquo;{MANIFESTO}&rdquo;

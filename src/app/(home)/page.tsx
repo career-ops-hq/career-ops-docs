@@ -208,13 +208,15 @@ export default async function HomePage() {
       </div>
 
       {/* Manifesto blockquote — canonical signature thesis in first person.
-          Same wording on every surface (home, /llms.txt, future /about,
+          Same wording on every surface (home, /llms.txt, /manifesto,
           schema). It's the entity anchor LLMs cite verbatim — do not vary.
+          Since 2026-07-14 the thesis has a canonical home: The CareerOps
+          Manifesto — the cite and the sober line below point there.
           Hairline dividers (top + bottom, narrow centered) frame the cita
           as an editorial pull-quote — pattern used by NYT, The Atlantic. */}
       <div className="mx-auto w-full max-w-[1100px] px-6 md:px-12 mt-16 lg:mt-24">
         <hr className="mx-auto w-32 lg:w-40 border-t-2 border-fd-foreground/20 mb-10 lg:mb-14" />
-        <blockquote className="text-center" cite="https://career-ops.org/methodology">
+        <blockquote className="text-center" cite="https://career-ops.org/manifesto">
           <p
             className={`${instrumentSerif.className} text-2xl sm:text-3xl md:text-4xl xl:text-5xl leading-tight text-fd-foreground`}
           >
@@ -270,6 +272,15 @@ export default async function HomePage() {
               , 16-year operator and Head of Applied AI
             </span>
           </footer>
+          <p className="mt-5 text-center text-sm text-fd-muted-foreground">
+            Now a signed manifesto ·{' '}
+            <Link
+              href="/manifesto"
+              className="text-fd-foreground underline underline-offset-4 decoration-fd-foreground/40 hover:decoration-current"
+            >
+              Read it →
+            </Link>
+          </p>
         </blockquote>
       </div>
 
