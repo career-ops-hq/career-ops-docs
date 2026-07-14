@@ -45,6 +45,20 @@ export type Signature = {
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const ID_RE = /^id:(\d+)$/;
 
+// Documentation placeholders, never real signers. Launch-day incident
+// (2026-07-14): the ledger header's format example once started with
+// "- @username | ... | id:12345678" and rendered as a ghost Signatory on
+// the live wall. The header was fixed upstream, but the wall must never
+// trust example identities again — defense in depth on our side.
+const PLACEHOLDER_USERNAMES = new Set([
+  'username',
+  'your-github-username',
+  'your-username',
+  'login',
+  'user',
+]);
+const PLACEHOLDER_IDS = new Set(['12345678']);
+
 /** Canonical DOM anchor for a signature: immutable ID when the bot has
  *  stamped one, username as fallback for hand-merged early lines. */
 export function signatureAnchor(sig: Signature): string {
@@ -101,6 +115,13 @@ export async function getSignatures(): Promise<Signature[]> {
     for (const line of text.split('\n')) {
       const sig = parseLine(line.trim());
       if (!sig) continue;
+      // Never render documentation examples as signers (ghost-Signatory
+      // incident, 2026-07-14).
+      if (
+        PLACEHOLDER_USERNAMES.has(sig.username.toLowerCase()) ||
+        (sig.id && PLACEHOLDER_IDS.has(sig.id))
+      )
+        continue;
       // Dedupe by immutable ID when present (usernames get freed and can
       // recur); fall back to username for pre-bot lines.
       const key = sig.id ? `id:${sig.id}` : sig.username.toLowerCase();
