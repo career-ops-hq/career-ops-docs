@@ -186,9 +186,11 @@ export function SignPreview() {
         <div className="flex items-start gap-3">
           <StepChip n="3" />
           <p className="text-sm text-fd-foreground/90 leading-relaxed pt-0.5">
-            Press <strong>Start discussion</strong> there. Done: your
-            signature and your permanent card appear within minutes, and
-            the commit is credited to your GitHub account.
+            Press <strong>Start discussion</strong> there. GitHub may ask
+            you to confirm you searched for similar discussions; just tick
+            it and post, it is a standard GitHub step. Done: your signature
+            and your permanent card appear within minutes, and the commit
+            is credited to your GitHub account.
           </p>
         </div>
       </div>
