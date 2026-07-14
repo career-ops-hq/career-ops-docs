@@ -33,6 +33,20 @@ export const metadata: Metadata = {
     siteName: 'career-ops',
     title: 'The CareerOps Manifesto',
     description: CAREEROPS_DEFINITION,
+    images: [
+      {
+        url: 'https://career-ops.org/og-manifesto.png',
+        width: 1200,
+        height: 630,
+        alt: 'The CareerOps Manifesto. Whose side is your agent on?',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The CareerOps Manifesto',
+    description: CAREEROPS_DEFINITION,
+    images: ['https://career-ops.org/og-manifesto.png'],
   },
   robots: { index: true, follow: true },
 };

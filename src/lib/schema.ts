@@ -612,7 +612,7 @@ export function manifestoSchema() {
         articleSection: 'Manifesto',
         image: {
           '@type': 'ImageObject',
-          url: 'https://career-ops.org/og-banner.jpg',
+          url: 'https://career-ops.org/og-manifesto.png',
           width: 1200,
           height: 630,
         },
