@@ -20,8 +20,44 @@
 // prose, blank lines) are ignored, so the file can carry an intro and the
 // honesty/fraud headers without confusing the parser.
 
+// Primary read: GitHub Contents API — NO CDN cache in front, so a
+// webhook purge re-fetches truly fresh content. raw.githubusercontent
+// sits behind a ~5-minute CDN that our revalidation cannot purge; that
+// window served 'merged in waves' placeholders on freshly-published
+// share links three times on launch day (signers #2, #3, @llwp).
+// GITHUB_TOKEN (read-only) lifts the shared-IP 60 req/hr ceiling to
+// 5,000; our ISR caps calls at ~12/hr + one per wave anyway. The raw
+// URL stays as fallback: rate-limit-proof, at worst ~5 min stale.
+const SIGNATURES_API_URL =
+  'https://api.github.com/repos/santifer/career-ops/contents/SIGNATURES.md';
 const SIGNATURES_RAW_URL =
   'https://raw.githubusercontent.com/santifer/career-ops/main/SIGNATURES.md';
+
+async function fetchLedgerText(): Promise<string | null> {
+  try {
+    const res = await fetch(SIGNATURES_API_URL, {
+      headers: {
+        Accept: 'application/vnd.github.raw+json',
+        ...(process.env.GITHUB_TOKEN
+          ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` }
+          : {}),
+      },
+      next: { revalidate: 300, tags: ['signatures'] },
+    });
+    if (res.ok) return await res.text();
+  } catch {
+    // fall through to the raw CDN
+  }
+  try {
+    const res = await fetch(SIGNATURES_RAW_URL, {
+      next: { revalidate: 300, tags: ['signatures'] },
+    });
+    if (res.ok) return await res.text();
+  } catch {
+    // both paths down — caller degrades to an empty wall
+  }
+  return null;
+}
 
 export type Signature = {
   /** GitHub username, without the leading @ (mutable — logins get renamed) */
@@ -110,11 +146,8 @@ function parseLine(line: string): Omit<Signature, 'ordinal'> | null {
 
 export async function getSignatures(): Promise<Signature[]> {
   try {
-    const res = await fetch(SIGNATURES_RAW_URL, {
-      next: { revalidate: 300, tags: ['signatures'] },
-    });
-    if (!res.ok) return [];
-    const text = await res.text();
+    const text = await fetchLedgerText();
+    if (text === null) return [];
     const seen = new Set<string>();
     const signatures: Signature[] = [];
     for (const line of text.split('\n')) {
