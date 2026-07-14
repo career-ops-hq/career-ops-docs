@@ -47,6 +47,15 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  // The personalized signature OG card reads its serif TTF from disk at
+  // request time (undici fetch rejects file: URLs); whitelist it for
+  // Vercel's file tracing so the lambda bundle includes it.
+  outputFileTracingIncludes: {
+    '/manifesto/s/[username]/opengraph-image': [
+      './src/app/manifesto/s/[username]/*.ttf',
+    ],
+    '/manifesto/sign-preview': ['./src/app/manifesto/s/[username]/*.ttf'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     // Default deviceSizes top out at 3840, which over-serves the hero

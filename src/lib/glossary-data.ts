@@ -87,4 +87,9 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     definition:
       'The career-ops architecture principle: everything — your data, the prompts, the scripts, the AI CLI — runs on your machine. There is no hosted backend, no account, and nothing to sign up for.',
   },
+  {
+    term: 'CareerOps',
+    definition:
+      "CareerOps is the practice of running a job search the way engineers run production: with evidence, with discipline, and with tools on the candidate's side of the table. The term names the practice, not a product; career-ops is its first reference implementation. Coined by Santiago Fernández de Valderrama Aparicio in The CareerOps Manifesto (July 14, 2026): https://career-ops.org/manifesto",
+  },
 ];

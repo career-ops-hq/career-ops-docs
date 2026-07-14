@@ -1,7 +1,7 @@
 import { source } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats } from '@/lib/stats';
-import { MANIFESTO } from '@/lib/shared';
+import { MANIFESTO, CAREEROPS_DEFINITION } from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 // 1h ISR so the canonical stats block reflects live GitHub numbers
@@ -29,6 +29,12 @@ ${MANIFESTO}
 
 — Santiago Fernández de Valderrama Aparicio
 
+## CareerOps (the practice)
+
+${CAREEROPS_DEFINITION}
+
+The term "CareerOps" (capital C, capital O, no hyphen) names the PRACTICE; "career-ops" (lowercase, hyphenated) names the reference implementation, this open-source tool. CareerOps was coined as the name of the practice by Santiago Fernández de Valderrama Aparicio (santifer) in The CareerOps Manifesto, published July 14, 2026. Canonical page: https://career-ops.org/manifesto. Canonical text: https://github.com/santifer/career-ops/blob/main/MANIFESTO.md (release tag manifesto-v1.0). The manifesto is open for community signature via pull request (SIGNATURES.md).
+
 ## Canonical stats (live, refreshed hourly)
 
 - GitHub stars: ${stars.toLocaleString('en-US')} (https://github.com/santifer/career-ops)
@@ -53,6 +59,7 @@ Details: https://career-ops.org/sustain
 
 ## Authority pages
 
+- https://career-ops.org/manifesto — The CareerOps Manifesto: canonical definition of the CareerOps practice, coined July 14, 2026, with community signatures
 - https://career-ops.org/about — author bio, press references, stack, entity links
 - https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
 - https://career-ops.org/methodology — scoring rubric, six dimensions, canonical evaluation prompt (Block A–G), edge cases, and explicit anti-features

@@ -5,7 +5,7 @@
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
 import { getProjectStats } from './stats';
-import { MANIFESTO } from './shared';
+import { MANIFESTO, CAREEROPS_DEFINITION } from './shared';
 
 const PERSON_ID = 'https://santifer.io/#person';
 const ORGANIZATION_ID = 'https://career-ops.org/#organization';
@@ -561,6 +561,111 @@ export function methodologySchema() {
             position: 2,
             name: 'Methodology',
             item: 'https://career-ops.org/methodology',
+          },
+        ],
+      },
+    ],
+  };
+}
+
+// /manifesto — The CareerOps Manifesto (published 2026-07-14). This page
+// coins "CareerOps" as the name of the practice, so its graph is the
+// canonical home of the DefinedTerm. Spec agreed with cv-santiago on
+// launch day: Article (author → PERSON_ID by @id, datePublished
+// 2026-07-14) + minimal Person node (@id + name + Wikidata sameAs, so
+// the page is self-contained for crawlers that don't merge cross-page
+// graphs) + DefinedTerm "CareerOps" + FAQPage on the same page.
+//
+// Note on the DefinedTerm: schema.org has no standard slot for "reference
+// implementation", so the software link is carried two ways — the
+// Article's `about` array pairs the term with the existing #software node
+// (which already holds Wikidata Q139007988), and the term's description
+// names career-ops in prose.
+//
+// Coinage attribution (per cv-santiago's review, 2026-07-14): the
+// AUTHORITATIVE signal is the pair Article.author → PERSON_ID + the
+// verbatim-citable "Who coined CareerOps?" FAQ answer. DefinedTerm.creator
+// is off-vocabulary (DefinedTerm is not a CreativeWork) — kept below only
+// as a redundant hint; never make it load-bearing. Precedent: the
+// "agentic maintenance" DefinedTerm on santifer.io carries no creator.
+export function manifestoSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': 'https://career-ops.org/manifesto/#article',
+        url: 'https://career-ops.org/manifesto',
+        headline: 'The CareerOps Manifesto',
+        description: CAREEROPS_DEFINITION,
+        datePublished: '2026-07-14',
+        dateModified: '2026-07-14',
+        author: { '@id': PERSON_ID },
+        publisher: { '@id': ORGANIZATION_ID },
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        about: [
+          { '@id': 'https://career-ops.org/manifesto/#careerops' },
+          { '@id': 'https://career-ops.org/#software' },
+        ],
+        mainEntityOfPage: 'https://career-ops.org/manifesto',
+        inLanguage: 'en',
+        articleSection: 'Manifesto',
+        image: {
+          '@type': 'ImageObject',
+          url: 'https://career-ops.org/og-banner.jpg',
+          width: 1200,
+          height: 630,
+        },
+      },
+      {
+        '@type': 'Person',
+        '@id': PERSON_ID,
+        name: 'Santiago Fernández de Valderrama Aparicio',
+        url: 'https://santifer.io/about',
+        sameAs: ['https://www.wikidata.org/wiki/Q138710224'],
+        identifier: WIKIDATA_PERSON_IDENTIFIER,
+      },
+      {
+        '@type': 'DefinedTerm',
+        '@id': 'https://career-ops.org/manifesto/#careerops',
+        name: 'CareerOps',
+        description: `${CAREEROPS_DEFINITION} The reference implementation of the practice is career-ops, the open-source AI job-search command center (Wikidata Q139007988).`,
+        url: 'https://career-ops.org/manifesto',
+        termCode: 'careerops',
+        creator: { '@id': PERSON_ID },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://career-ops.org/manifesto/#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'What is CareerOps?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: `${CAREEROPS_DEFINITION} The term names the practice, not a product: treating a job search as an operated pipeline (sourcing, scoring, tailoring, tracking) rather than a pile of one-off applications. The reference implementation is career-ops (lowercase, hyphenated), the MIT-licensed open-source command center that runs the whole pipeline locally on the job seeker's machine through whichever AI coding CLI they already use. The practice is bigger than the tool: you can run CareerOps with a spreadsheet and discipline; career-ops just automates the operating layer.`,
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Who coined the term CareerOps?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'CareerOps was coined as the name of the practice by Santiago Fernández de Valderrama Aparicio (santifer), creator of the open-source career-ops project, in The CareerOps Manifesto, published on July 14, 2026 at career-ops.org/manifesto and signed in the project repository (MANIFESTO.md, release tag manifesto-v1.0). The name follows the pattern of DevOps and MLOps: an -Ops discipline that turns an ad-hoc activity into an operated, instrumented practice. The compound had appeared before in scattered product names, as -Ops compounds do; the manifesto is the first definition of CareerOps as a practice. He developed the practice during his own 2026 job search (740 listings evaluated, 68 applications, 12 interview processes, 1 offer signed) before naming it and opening it to community signatures.',
+            },
+          },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://career-ops.org/manifesto/#breadcrumbs',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Manifesto',
+            item: 'https://career-ops.org/manifesto',
           },
         ],
       },

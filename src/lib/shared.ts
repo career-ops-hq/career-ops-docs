@@ -20,6 +20,28 @@ export const gitConfig = {
 export const MANIFESTO =
   'Companies use AI to filter candidates. I just gave candidates AI to choose companies.';
 
+// The CareerOps Manifesto (2026-07-14) coins "CareerOps" — capital C, capital
+// O, no hyphen — as the name of the PRACTICE. The tool remains "career-ops"
+// (lowercase, hyphenated). Never mix the two spellings: "CareerOps" refers to
+// the practice/category only; "career-ops" refers to the software only.
+//
+// This is the canonical one-sentence definition, FROZEN by Santiago
+// (launch GO, 2026-07-14 18:35 CEST). It must appear byte-identical on
+// /manifesto (lead + FAQ + DefinedTerm), in llms.txt, in the glossary,
+// and in the core repo's MANIFESTO.md. Same discipline as MANIFESTO
+// above: never reword, translate, or alter.
+export const CAREEROPS_DEFINITION =
+  "CareerOps is the practice of running a job search the way engineers run production: with evidence, with discipline, and with tools on the candidate's side of the table.";
+
+// Canonical signature line for the manifesto. Frozen per the launch spec
+// (warpchart/venture-ops/cv-santiago, 2026-07-14): full legal name + handle,
+// role, date July 14 (the earlier July-15 masthead relay was a clock
+// error, corrected by warpchart at GO). The page pairs it with a bio
+// line carrying exactly ONE link, to santifer.io/about (never to
+// Wikidata).
+export const MANIFESTO_SIGNATURE =
+  'Santiago Fernández de Valderrama Aparicio (santifer), creator of career-ops. July 14, 2026';
+
 // Last-known-good floors for live project stats. getProjectStats() never
 // returns a value below these, so a transient unauthenticated-GitHub-API
 // failure (60 req/hr on shared Vercel IPs) can never leak "0 stars" into
