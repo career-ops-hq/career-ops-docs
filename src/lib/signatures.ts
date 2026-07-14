@@ -76,7 +76,12 @@ export function signatureAvatarUrl(sig: Signature, size = 96): string {
 }
 
 function parseLine(line: string): Omit<Signature, 'ordinal'> | null {
-  const m = line.match(/^-\s+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,38}))\s*(.*)$/);
+  // The dash MUST be at column 0: markdown code blocks are indented 4+
+  // spaces, and the ledger header documents the format inside one. The
+  // ghost-Signatory incident happened because the line was trimmed
+  // before this check — never trim here (structural fix, 2026-07-14;
+  // the placeholder blacklist below stays as second layer).
+  const m = line.match(/^-\s+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,38}))\s*(.*?)\s*$/);
   if (!m) return null;
   const sig: Omit<Signature, 'ordinal'> = {
     username: m[1],
@@ -113,7 +118,7 @@ export async function getSignatures(): Promise<Signature[]> {
     const seen = new Set<string>();
     const signatures: Signature[] = [];
     for (const line of text.split('\n')) {
-      const sig = parseLine(line.trim());
+      const sig = parseLine(line);
       if (!sig) continue;
       // Never render documentation examples as signers (ghost-Signatory
       // incident, 2026-07-14).
