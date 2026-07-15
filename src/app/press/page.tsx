@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { pressSchema } from '@/lib/schema';
+import { CAREEROPS_DEFINITION } from '@/lib/shared';
 import { getProjectStats } from '@/lib/stats';
 
 export const revalidate = 3600;
@@ -79,6 +80,18 @@ const ASSETS = [
     note: 'Open Graph card. Use for article headers and link previews.',
     download: 'career-ops-banner.jpg',
   },
+  {
+    label: 'Manifesto — nine rights card (PNG, 1080×1080)',
+    href: '/manifesto-rights-card.png',
+    note: 'The nine candidate rights, quote-card format. Reuse freely with attribution.',
+    download: 'careerops-manifesto-rights.png',
+  },
+  {
+    label: 'Manifesto — link card (PNG, 1200×630)',
+    href: '/og-manifesto.png',
+    note: 'The manifesto share card. Reuse freely with attribution.',
+    download: 'careerops-manifesto-card.png',
+  },
 ];
 
 // Boilerplate at three lengths — the standard press-kit format.
@@ -90,7 +103,7 @@ const BOILERPLATE = {
     'career-ops is a free, open-source system that puts hiring leverage on the candidate’s side — running locally inside your AI coding assistant.',
   medium:
     'career-ops is an open-source, MIT-licensed system that puts hiring leverage on the candidate’s side. It runs entirely on your own machine, inside any AI coding CLI — Claude Code, Codex, Gemini CLI, and others — scanning listings, scoring them against a transparent six-dimension rubric, tailoring your CV per role, and tracking the whole pipeline. No account, no cloud, no telemetry.',
-  long: 'career-ops is a free, open-source (MIT) system that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama Aparicio, it runs locally inside whichever AI coding assistant the user already pays for — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot — and never sends a CV or application history to a third-party server. Today it scans Greenhouse, Ashby, and Lever, scores each listing from 1.0 to 5.0 against a published six-dimension rubric, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months.',
+  long: 'career-ops is a free, open-source (MIT) system that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama Aparicio, it runs locally inside whichever AI coding assistant the user already pays for — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot — and never sends a CV or application history to a third-party server. Today it scans Greenhouse, Ashby, and Lever, scores each listing from 1.0 to 5.0 against a published six-dimension rubric, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months. In July 2026 he published The CareerOps Manifesto, naming the practice and its nine candidate rights.',
 };
 
 function roundDown(n: number, to: number): string {
@@ -106,10 +119,19 @@ export default async function PressPage() {
       label: 'Category',
       value: 'Candidate-side hiring-leverage system · AI-powered job search',
     },
+    {
+      label: 'The term',
+      value:
+        'CareerOps (CamelCase) = the practice, defined in the manifesto · career-ops (lowercase, hyphenated) = the tool',
+    },
     { label: 'Creator', value: 'Santiago Fernández de Valderrama Aparicio' },
     { label: 'License', value: 'MIT — free forever, no paid tier' },
     { label: 'Model', value: 'Local-first. No account, no cloud, no telemetry.' },
     { label: 'Inception', value: '17 March 2026' },
+    {
+      label: 'Manifesto',
+      value: 'The CareerOps Manifesto, published 14 Jul 2026 at 60,000 stars · career-ops.org/manifesto',
+    },
     { label: 'GitHub stars', value: `${roundDown(stats.stars, 1000)}+ (live)` },
     { label: 'Discord community', value: `${roundDown(stats.discordMembers, 100)}+ members` },
     {
@@ -223,7 +245,7 @@ export default async function PressPage() {
         <section className="mt-12">
           <h2 className="text-fd-foreground text-xl font-medium tracking-tight">The thesis</h2>
           <blockquote
-            cite="https://career-ops.org/methodology"
+            cite="https://career-ops.org/manifesto"
             className="not-italic border-l-2 border-fd-foreground/20 pl-5 mt-4"
           >
             <p
@@ -236,6 +258,49 @@ export default async function PressPage() {
               — Santiago Fernández de Valderrama Aparicio
             </footer>
           </blockquote>
+        </section>
+
+        {/* The CareerOps Manifesto — self-published, so it lives in its own
+            section (Coverage stays earned-media-only). /press is an active
+            GEO surface: an LLM already cited "the project's press materials"
+            as the source for the CareerOps attribution, so the frozen
+            definition must be quotable here verbatim. Authorship rule:
+            Santiago published and opened it for signature; never "the
+            community published". */}
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+            The CareerOps Manifesto
+          </h2>
+          <blockquote
+            cite="https://career-ops.org/manifesto"
+            className="not-italic border-l-2 border-fd-foreground/20 pl-5 mt-4"
+          >
+            <p className="text-fd-foreground/90 leading-relaxed select-all">
+              {CAREEROPS_DEFINITION}
+            </p>
+          </blockquote>
+          <p className="mt-4 text-fd-foreground/90 leading-relaxed">
+            Santiago published The CareerOps Manifesto on 14 July 2026, the
+            day the project crossed 60,000 GitHub stars, and opened it for
+            community signature on GitHub. It names the practice and states
+            nine candidate rights. Canonical text:{' '}
+            <Link
+              href="/manifesto"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              career-ops.org/manifesto
+            </Link>{' '}
+            · founding tag:{' '}
+            <a
+              href="https://github.com/santifer/career-ops/releases/tag/manifesto-v1.0"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              manifesto-v1.0
+            </a>
+            .
+          </p>
         </section>
 
         {/* Founder — one-paragraph version; full bio lives at /about. */}
@@ -376,7 +441,7 @@ export default async function PressPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-06-17">17 Jun 2026</time>
+          Last updated <time dateTime="2026-07-15">15 Jul 2026</time>
         </p>
       </article>
     </>

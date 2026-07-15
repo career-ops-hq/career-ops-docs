@@ -1028,7 +1028,10 @@ export function pressSchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-06-17T00:00:00Z',
+        dateModified: '2026-07-15T00:00:00Z',
+        // Reference the canonical DefinedTerm node on /manifesto — never
+        // duplicate the definition here.
+        mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },
         primaryImageOfPage: { '@id': 'https://career-ops.org/press/#logo' },
       },
       {
