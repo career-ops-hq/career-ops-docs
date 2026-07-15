@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { after } from 'next/server';
 import Image from 'next/image';
 import Link from 'next/link';
 import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
@@ -10,6 +11,7 @@ import {
 } from '@/lib/signatures';
 import { CAREEROPS_DEFINITION } from '@/lib/shared';
 import { ShareRow } from '@/components/manifesto/share-row';
+import { trackCertVia } from '@/lib/track';
 
 // Path-based share URL for a signature (signature-flywheel spec v2 §2).
 // Hash fragments never reach the server, so /manifesto#sig-x gives every
@@ -81,19 +83,15 @@ export default async function SignatureSharePage({
   // here with ?fresh=1 — proof first, artifact second, ONE ask. Without
   // the param the certificate renders exactly as always.
   const fresh = sp.fresh === '1';
-  // ?via={username} attribution on inbound share traffic: logged
-  // server-side ONLY (never surfaced publicly, never in the ledger).
-  // TODO(measurement): Vercel runtime logs are ephemeral (~hours); for
-  // durable counts move this line to a KV/edge counter when we add an
-  // analytics layer.
+  // ?via={username} attribution on inbound share traffic: recorded
+  // server-side ONLY (never surfaced publicly, never in the ledger) as
+  // one private blob per event in careerops-analytics — durable layer
+  // approved 2026-07-15 (kill-rule needs 7-day CTR/k-factor). after()
+  // runs post-response and trackCertVia swallows failures: a Blob
+  // outage can never break the certificate flow.
   if (sp.via) {
-    console.log(
-      JSON.stringify({
-        evt: 'cert_via',
-        via: String(sp.via).slice(0, 40),
-        to: username.toLowerCase(),
-      }),
-    );
+    const via = String(sp.via);
+    after(() => trackCertVia(via, username.toLowerCase()));
   }
   const sig = await findSignature(username);
 
