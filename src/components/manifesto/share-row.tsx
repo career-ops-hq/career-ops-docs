@@ -7,39 +7,63 @@ import { useState } from 'react';
 // card's owner in the overwhelming case: they arrive from the merge
 // reply), fully editable in each composer. 'CareerOps Manifesto'
 // verbatim in every share propagates the term with attribution.
+//
+// variant='fresh' (SPEC-1b, the just-signed moment — the bot links the
+// certificate with ?fresh=1): WhatsApp/Telegram first (dark-social 1:1
+// converts better right after signing), gate-approved prefill in the
+// signer's own voice, and ?via={username} attribution appended to every
+// outgoing link — measured only in private server logs on landing,
+// never surfaced publicly.
 
-export function ShareRow({ url, ordinal }: { url: string; ordinal: number }) {
+export function ShareRow({
+  url,
+  ordinal,
+  variant = 'default',
+  viaUser,
+}: {
+  url: string;
+  ordinal: number;
+  variant?: 'default' | 'fresh';
+  viaUser?: string;
+}) {
   const [copied, setCopied] = useState(false);
-
-  const post = `I signed the CareerOps Manifesto. Nine rights every job seeker should have. Signatory #${ordinal}.`;
-  const chat = `I just signed the CareerOps Manifesto, nine rights every job seeker should have: ${url}`;
   const enc = encodeURIComponent;
 
-  const links = [
-    {
-      label: 'X',
-      href: `https://x.com/intent/post?text=${enc(`${post} ${url}`)}`,
-    },
-    {
-      label: 'LinkedIn',
-      // share-offsite is URL-only; the OG card carries the visual.
-      href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`,
-    },
-    {
-      label: 'WhatsApp',
-      href: `https://wa.me/?text=${enc(chat)}`,
-    },
-    {
-      label: 'Telegram',
-      href: `https://t.me/share/url?url=${enc(url)}&text=${enc(
-        'I just signed the CareerOps Manifesto, nine rights every job seeker should have.',
-      )}`,
-    },
-  ];
+  const fresh = variant === 'fresh';
+  const shareUrl =
+    fresh && viaUser ? `${url}?via=${enc(viaUser)}` : url;
+
+  // Gate-approved copys — do not reword.
+  const post = fresh
+    ? `just signed the CareerOps Manifesto. my signature is a commit: ${shareUrl}`
+    : `I signed the CareerOps Manifesto. Nine rights every job seeker should have. Signatory #${ordinal}. ${url}`;
+  const chat = fresh
+    ? `just signed the CareerOps Manifesto. my signature is a commit: ${shareUrl}`
+    : `I just signed the CareerOps Manifesto, nine rights every job seeker should have: ${url}`;
+
+  const x = { label: 'X', href: `https://x.com/intent/post?text=${enc(post)}` };
+  const linkedin = {
+    label: 'LinkedIn',
+    // share-offsite is URL-only; the OG card carries the visual.
+    href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(shareUrl)}`,
+  };
+  const whatsapp = { label: 'WhatsApp', href: `https://wa.me/?text=${enc(chat)}` };
+  const telegram = {
+    label: 'Telegram',
+    href: `https://t.me/share/url?url=${enc(shareUrl)}&text=${enc(
+      fresh
+        ? 'just signed the CareerOps Manifesto. my signature is a commit:'
+        : 'I just signed the CareerOps Manifesto, nine rights every job seeker should have.',
+    )}`,
+  };
+
+  const links = fresh
+    ? [whatsapp, telegram, x, linkedin]
+    : [x, linkedin, whatsapp, telegram];
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
