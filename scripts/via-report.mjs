@@ -20,7 +20,8 @@ let cursor;
 do {
   const res = await list({ prefix: 'via-events/', cursor, limit: 1000 });
   for (const b of res.blobs) {
-    const m = b.pathname.match(/^via-events\/(\d+)__([a-z0-9_-]+)__([a-z0-9_-]+)/);
+    // The trailing '__' anchors the third field before the random suffix.
+    const m = b.pathname.match(/^via-events\/(\d+)__([a-z0-9_-]+)__([a-z0-9_-]+)__/);
     if (!m || Number(m[1]) < since) continue;
     total += 1;
     byVia.set(m[2], (byVia.get(m[2]) ?? 0) + 1);

@@ -21,8 +21,11 @@ export async function trackCertVia(via: string, to: string): Promise<void> {
       to: safe(to),
       at: new Date().toISOString(),
     };
+    // Trailing '__e' terminator: addRandomSuffix appends '-{rand}' right
+    // before the extension, which would otherwise corrupt the last data
+    // field (caught by the launch-day E2E: 'llwp' parsed as 'llwp-bwbg').
     await put(
-      `via-events/${Date.now()}__${event.via}__${event.to}.json`,
+      `via-events/${Date.now()}__${event.via}__${event.to}__e.json`,
       JSON.stringify(event),
       {
         access: 'private',
