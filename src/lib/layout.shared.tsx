@@ -29,6 +29,9 @@ export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps 
       transparentMode: 'top',
       enabled: true,
     },
-    githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
+    // Navbar GitHub icon → the FLAGSHIP repo (the 60K-star project the
+    // visitor came for), NOT gitConfig.repo: that one is the docs repo
+    // and exists only for the per-page "edit on GitHub" links.
+    githubUrl: `https://github.com/${gitConfig.user}/career-ops`,
   };
 }
