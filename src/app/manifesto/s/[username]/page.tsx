@@ -158,6 +158,21 @@ export default async function SignatureSharePage({
   const displayName = sig.name ?? (await getGithubDisplayName(sig));
   const wallTarget = `/manifesto#${signatureAnchor(sig)}`;
 
+  // SPEC-4c (bug Santiago caught walking the badge funnel): the
+  // foundational signature's src points at the manifesto-v1.0 TAG — a
+  // frozen view where the ledger holds ONE signature. A visitor landing
+  // there concludes nobody signed. Rule: no visitor may reach a frozen
+  // view without the label saying so, and the live ledger is always one
+  // click away. Discussion/PR sources are living threads and keep the
+  // plain label; blob links pinned to a tag or SHA are frozen records.
+  const frozenSource =
+    !!sig.sourceUrl &&
+    sig.sourceUrl.includes('/blob/') &&
+    !sig.sourceUrl.includes('/blob/main/');
+  const sourceLabel = frozenSource
+    ? 'Signature record (frozen at signing) ↗'
+    : 'Source ↗';
+
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-12 md:py-20">
       {/* Proof first (fresh order: proof → artifact → one ask). */}
@@ -182,7 +197,7 @@ export default async function SignatureSharePage({
                 rel="noreferrer noopener"
                 className="underline underline-offset-2"
               >
-                Source ↗
+                {sourceLabel}
               </a>
             </>
           )}
@@ -354,14 +369,14 @@ export default async function SignatureSharePage({
 
       {!fresh && (
       <p className="mt-6 text-center text-xs text-fd-muted-foreground">
-        Every signature is a public commit in the{' '}
+        Every signature is a public commit in the career-ops repository —{' '}
         <a
           href={SIGNATURES_GITHUB_URL}
           target="_blank"
           rel="noreferrer noopener"
           className="underline underline-offset-2"
         >
-          career-ops repository
+          full ledger ↗
         </a>
         .{' '}
         <Link href={wallTarget} className="underline underline-offset-2">
@@ -370,13 +385,14 @@ export default async function SignatureSharePage({
         {sig.sourceUrl && (
           <>
             {' '}
+            ·{' '}
             <a
               href={sig.sourceUrl}
               target="_blank"
               rel="noreferrer noopener"
               className="underline underline-offset-2"
             >
-              · Source ↗
+              {sourceLabel}
             </a>
           </>
         )}
