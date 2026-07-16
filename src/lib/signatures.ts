@@ -223,6 +223,46 @@ export async function getGithubDisplayName(ref: {
   }
 }
 
+/** True when the signature's source discussion carries the maintainer's
+ *  `first-public-contribution` label — applied ONLY after the signer
+ *  confirms with a yes in their thread (never speculative; ledger-bot
+ *  job confirm-first). Fail-closed: no token, no discussion source, or
+ *  any API error renders no mark. The POST is uncached, which is fine —
+ *  it runs at ISR regeneration time (5-min bridge + the same webhook the
+ *  bot already fires right after labeling), never per-request. */
+export async function hasFirstContributionMark(sig: {
+  sourceUrl: string | null;
+}): Promise<boolean> {
+  const m = sig.sourceUrl?.match(/\/discussions\/(\d+)$/);
+  if (!m || !process.env.GITHUB_TOKEN) return false;
+  try {
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query:
+          'query($n:Int!){repository(owner:"santifer",name:"career-ops"){discussion(number:$n){labels(first:20){nodes{name}}}}}',
+        variables: { n: Number(m[1]) },
+      }),
+    });
+    if (!res.ok) return false;
+    const data = (await res.json()) as {
+      data?: {
+        repository?: {
+          discussion?: { labels?: { nodes?: Array<{ name?: string }> } };
+        };
+      };
+    };
+    const labels = data.data?.repository?.discussion?.labels?.nodes ?? [];
+    return labels.some((l) => l?.name === 'first-public-contribution');
+  } catch {
+    return false;
+  }
+}
+
 /** ISO timestamp of the last commit touching SIGNATURES.md — the ledger
  *  lines only carry dates, so the "last one N minutes ago" dynamic norm
  *  needs the commit time. Same tag + 5-minute cadence as the wall; null

@@ -6,6 +6,7 @@ import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import {
   findSignature,
   getGithubDisplayName,
+  hasFirstContributionMark,
   signatureAnchor,
   signatureAvatarUrl,
 } from '@/lib/signatures';
@@ -155,7 +156,10 @@ export default async function SignatureSharePage({
 
   // v2.3: the ledger's bot-stamped Display Name is the source; the
   // profile API is only a fallback for pre-v2.3 lines.
-  const displayName = sig.name ?? (await getGithubDisplayName(sig));
+  const [displayName, firstContribution] = await Promise.all([
+    sig.name ?? getGithubDisplayName(sig),
+    hasFirstContributionMark(sig),
+  ]);
   const wallTarget = `/manifesto#${signatureAnchor(sig)}`;
 
   // SPEC-4c (bug Santiago caught walking the badge funnel): the
@@ -263,6 +267,20 @@ export default async function SignatureSharePage({
             )}
             career-ops.org/manifesto
           </p>
+
+          {/* First-contribution mark — rendered ONLY from the
+              maintainer's post-confirmation label (the signer said yes
+              in their thread). A distinction, not a gimmick: one quiet
+              amber line in the manifesto's lowercase voice. */}
+          {firstContribution && (
+            <p
+              className="mt-3 text-xs tracking-wide"
+              style={{ color: AMBER }}
+            >
+              ✦ this signature is @{sig.username}&rsquo;s first public
+              contribution on GitHub
+            </p>
+          )}
 
           {/* Badge landing (SPEC-4b): the signer's card is the social
               proof; the one job of this view is a dignified invitation
