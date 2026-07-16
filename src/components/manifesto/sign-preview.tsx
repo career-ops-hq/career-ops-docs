@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { signOnGitHubUrl } from '@/lib/sign-link';
 
 // THE signing widget (how-to-sign): single published path per Santiago's
 // final call — a prefilled GitHub DISCUSSION under the signer's own
@@ -21,15 +22,10 @@ const DEFAULT_CARD = '/manifesto/s/santifer/opengraph-image';
 const LINE_PROMPT =
   'what changed in your search, or what you want hiring to become';
 
-// GitHub Discussions accept prefill via query params (category, title,
-// body). Slug CONFIRMED AND FROZEN by the maintainer (IPC 2026-07-15
-// 01:50, read from the live API after Santiago created the category):
-// 'signatures' (GraphQL categoryId DIC_kwDOR50T8s4DBMUj). Renaming the
-// category breaks this button silently — changes require prior IPC.
-// Verified (warpchart, real HTTP): /discussions/new prefilled SURVIVES
-// the GitHub login redirect (302 to /login?return_to=<full URL>), so
-// logged-out signers land on the filled form after signing in.
-const DISCUSSION_CATEGORY = 'signatures';
+// Sign-link strings live in src/lib/sign-link.ts (single frozen source,
+// shared with the certificate invitation state). Verified (warpchart,
+// real HTTP): /discussions/new prefilled SURVIVES the GitHub login
+// redirect, so logged-out signers land on the filled form.
 
 function cleanLine(value: string): string {
   return value
@@ -81,15 +77,9 @@ export function SignPreview() {
   // box reads as breakage; absence reads as nothing.
   const broken = failedSrc === src;
 
-  // With no line written, the prefill doubles as an in-form placeholder:
-  // a markdown HTML comment (invisible once published) explains the dash
-  // right where the signer is looking, and submitting untouched is still
-  // a valid signature. The maintainer's sanitizer mirrors this rule and
-  // ignores <!-- --> blocks when extracting the line. With a line, the
-  // body is just their sentence, clean.
-  const EMPTY_BODY =
-    '<!-- Optional: replace the dash below with one sentence about your search, or what you want hiring to become. Leaving just the dash is a perfectly valid signature. -->\n-';
-  const signUrl = `https://github.com/santifer/career-ops/discussions/new?category=${DISCUSSION_CATEGORY}&title=${encodeURIComponent('Signing the manifesto')}&body=${encodeURIComponent(cleanLine(line) || EMPTY_BODY)}`;
+  // With no line written, the prefill doubles as an in-form placeholder
+  // (frozen EMPTY_BODY inside sign-link.ts). With a line, just the line.
+  const signUrl = signOnGitHubUrl(cleanLine(line));
 
   return (
     <div className="mt-6">

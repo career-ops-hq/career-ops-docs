@@ -11,6 +11,8 @@ import {
 } from '@/lib/signatures';
 import { CAREEROPS_DEFINITION } from '@/lib/shared';
 import { ShareRow } from '@/components/manifesto/share-row';
+import { BadgeSnippet } from '@/components/manifesto/badge-snippet';
+import { signOnGitHubUrl } from '@/lib/sign-link';
 import { trackCertVia } from '@/lib/track';
 
 // Path-based share URL for a signature (signature-flywheel spec v2 §2).
@@ -96,22 +98,42 @@ export default async function SignatureSharePage({
   const sig = await findSignature(username);
 
   if (!sig) {
+    // SPEC-4 piece 3 (Santiago): the "what about MY page?" curiosity lands
+    // on an open door, not a 404. HONESTY RULES: never simulate a
+    // signature, zero real-certificate elements, and the badge SVG for
+    // this person keeps 404ing regardless.
     return (
       <main className="mx-auto w-full max-w-xl px-6 py-24 text-center">
         <h1 className="text-fd-foreground text-2xl font-medium tracking-tight">
-          This signature isn&rsquo;t on the wall yet
+          No signature from @{username.toLowerCase()} in the ledger yet
         </h1>
         <p className="mt-4 text-fd-muted-foreground leading-relaxed">
-          Signatures are merged in waves and appear here within minutes of
-          being merged. If you just opened your pull request, hold tight; if
-          it was merged a while ago, the wave that carries it is on its way.
+          Every signature is a public commit in the career-ops repository,
+          with a permanent card and a page like this one. Signing takes
+          about thirty seconds.
         </p>
         <p className="mt-8">
+          <a
+            href={signOnGitHubUrl()}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-block rounded-lg px-5 py-2.5 text-sm font-medium"
+            style={{
+              backgroundColor: 'var(--color-fd-foreground)',
+              color: 'var(--color-fd-background)',
+            }}
+          >
+            Sign on GitHub →
+          </a>
+        </p>
+        <p className="mt-6 text-xs text-fd-muted-foreground">
+          Just signed? Your signature lands with the next wave, minutes
+          away.{' '}
           <Link
             href="/manifesto"
-            className="text-fd-foreground underline underline-offset-4"
+            className="underline underline-offset-2"
           >
-            Read The CareerOps Manifesto →
+            Read the manifesto →
           </Link>
         </p>
       </main>
@@ -256,6 +278,8 @@ export default async function SignatureSharePage({
               square
             </a>
           </p>
+
+          <BadgeSnippet username={sig.username.toLowerCase()} />
         </div>
       </div>
 
