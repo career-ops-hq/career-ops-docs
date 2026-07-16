@@ -4,6 +4,7 @@ import { ImageResponse } from 'next/og';
 import {
   findSignature,
   getGithubDisplayName,
+  hasFirstContributionMark,
   signatureAvatarUrl,
 } from '@/lib/signatures';
 
@@ -42,7 +43,12 @@ export default async function Image({
   ) as ArrayBuffer;
 
   const avatarUrl = sig ? signatureAvatarUrl(sig, 240) : null;
-  const displayName = sig ? (sig.name ?? (await getGithubDisplayName(sig))) : null;
+  const [displayName, firstContribution] = sig
+    ? await Promise.all([
+        sig.name ?? getGithubDisplayName(sig),
+        hasFirstContributionMark(sig),
+      ])
+    : [null, false];
 
   // Keep one-liners card-sized; the full line lives on the wall.
   const quote =
@@ -187,6 +193,33 @@ export default async function Image({
           >
             career-ops.org/manifesto
           </div>
+
+          {/* First-contribution mark — same post-confirmation label the
+              certificate page reads; the diamond is a CSS-drawn glyph
+              because satori has no font fallback for ✦. */}
+          {firstContribution && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                marginTop: 18,
+                color: AMBER,
+                fontSize: 19,
+              }}
+            >
+              <div
+                style={{
+                  width: 9,
+                  height: 9,
+                  backgroundColor: AMBER,
+                  transform: 'rotate(45deg)',
+                  display: 'flex',
+                }}
+              />
+              first public contribution on GitHub
+            </div>
+          )}
         </div>
       </div>
     ),

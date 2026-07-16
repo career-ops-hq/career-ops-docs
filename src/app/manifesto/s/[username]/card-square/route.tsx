@@ -4,6 +4,7 @@ import { ImageResponse } from 'next/og';
 import {
   findSignature,
   getGithubDisplayName,
+  hasFirstContributionMark,
   signatureAvatarUrl,
 } from '@/lib/signatures';
 
@@ -34,7 +35,10 @@ export async function GET(
   ]);
   if (!sig) return new Response('not found', { status: 404 });
 
-  const displayName = sig.name ?? (await getGithubDisplayName(sig));
+  const [displayName, firstContribution] = await Promise.all([
+    sig.name ?? getGithubDisplayName(sig),
+    hasFirstContributionMark(sig),
+  ]);
   const serif = serifBuffer.buffer.slice(
     serifBuffer.byteOffset,
     serifBuffer.byteOffset + serifBuffer.byteLength,
@@ -172,6 +176,33 @@ export async function GET(
               }}
             >
               {`Signed ${sig.date}`}
+            </div>
+          )}
+
+          {/* First-contribution mark — same post-confirmation label the
+              certificate page reads; the diamond is a CSS-drawn glyph
+              because satori has no font fallback for ✦. */}
+          {firstContribution && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                marginTop: 20,
+                color: AMBER,
+                fontSize: 22,
+              }}
+            >
+              <div
+                style={{
+                  width: 10,
+                  height: 10,
+                  backgroundColor: AMBER,
+                  transform: 'rotate(45deg)',
+                  display: 'flex',
+                }}
+              />
+              first public contribution on GitHub
             </div>
           )}
         </div>
