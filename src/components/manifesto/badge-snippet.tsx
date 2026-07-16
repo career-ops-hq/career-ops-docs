@@ -65,8 +65,10 @@ export function BadgeSnippet({
   // aggregate separately from share clicks in the private via report;
   // (b) any via arrival renders the VISITOR view of the certificate
   // (participation-first, owner tooling hidden) — Santiago's call,
-  // re-confirmed by career-ops-ux over /manifesto#sign.
-  const certUrl = `https://career-ops.org/manifesto/s/${username}?via=badge--${username}`;
+  // re-confirmed by career-ops-ux over /manifesto#sign. &from=badge
+  // (SPEC-4b, warpchart URL contract) additionally selects the badge
+  // LANDING: signer's card as social proof + one dignified sign CTA.
+  const certUrl = `https://career-ops.org/manifesto/s/${username}?via=badge--${username}&from=badge`;
   const alt = `CareerOps Manifesto — Signed #${n}`;
   const snippets = {
     // Default: one-line markdown, single dark asset — the monocaja is

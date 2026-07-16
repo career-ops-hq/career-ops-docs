@@ -12,6 +12,7 @@ import {
 import { CAREEROPS_DEFINITION } from '@/lib/shared';
 import { ShareRow } from '@/components/manifesto/share-row';
 import { BadgeSnippet } from '@/components/manifesto/badge-snippet';
+import { BadgeSignCta } from '@/components/manifesto/badge-sign-cta';
 import { signOnGitHubUrl } from '@/lib/sign-link';
 import { badgeSvg } from '@/lib/badge-svg';
 import { trackCertVia } from '@/lib/track';
@@ -44,7 +45,7 @@ const AMBER = '#e08a44';
 
 type Props = {
   params: Promise<{ username: string }>;
-  searchParams?: Promise<{ fresh?: string; via?: string }>;
+  searchParams?: Promise<{ fresh?: string; via?: string; from?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -86,11 +87,17 @@ export default async function SignatureSharePage({
   // here with ?fresh=1 — proof first, artifact second, ONE ask. Without
   // the param the certificate renders exactly as always.
   const fresh = sp.fresh === '1';
+  // SPEC-4b badge landing: badge links arrive with ?from=badge (on top
+  // of ?via) — a NEW visitor holding the strongest social proof there
+  // is (someone they know signed this). Their CTA is not sharing: it is
+  // reading and signing. Normal and fresh modes are untouched.
+  const fromBadge = sp.from === 'badge';
   // A via param means an ATTRIBUTED ARRIVAL (badge click or shared
   // link) — a visitor, not the owner. Visitors get the
   // participation-first certificate: the badge embed code is owner
   // tooling and hides (Santiago, 2026-07-16).
-  const visitor = typeof sp.via === 'string' && sp.via.length > 0;
+  const visitor =
+    (typeof sp.via === 'string' && sp.via.length > 0) || fromBadge;
   // ?via={username} attribution on inbound share traffic: recorded
   // server-side ONLY (never surfaced publicly, never in the ledger) as
   // one private blob per event in careerops-analytics — durable layer
@@ -242,9 +249,35 @@ export default async function SignatureSharePage({
             career-ops.org/manifesto
           </p>
 
+          {/* Badge landing (SPEC-4b): the signer's card is the social
+              proof; the one job of this view is a dignified invitation
+              to read and sign. No urgency, no tricks — the manifesto
+              cannot have a landing that violates its own spirit. */}
+          {fromBadge && (
+            <div className="mt-9">
+              <p className="mx-auto max-w-md text-sm leading-relaxed text-[rgba(244,237,228,0.75)]">
+                this is {displayName ?? `@${sig.username}`}&rsquo;s
+                signature on the CareerOps Manifesto.{' '}
+                <Link
+                  href="/manifesto"
+                  className="underline underline-offset-4 decoration-[rgba(244,237,228,0.4)] hover:decoration-current text-[rgba(244,237,228,0.95)]"
+                >
+                  read it
+                </Link>
+                . if it says what you believe, sign it.
+              </p>
+              <BadgeSignCta
+                signUrl={signOnGitHubUrl()}
+                via={String(sp.via ?? `badge--${sig.username.toLowerCase()}`)}
+                to={sig.username.toLowerCase()}
+              />
+            </div>
+          )}
+
           {/* Fresh mode carries exactly ONE ask (the send-your-certificate
-              block below the card) — the navigation CTAs would compete. */}
-          {!fresh && (
+              block below the card) — the navigation CTAs would compete.
+              The badge landing replaces them with its conversion block. */}
+          {!fresh && !fromBadge && (
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/manifesto"
@@ -265,7 +298,9 @@ export default async function SignatureSharePage({
           {/* Native-image escape hatch: platforms where links die (IG,
               WhatsApp, stories) get the card as a file, verification URL
               printed on it. Real signers only — previews stay
-              watermarked and non-downloadable. */}
+              watermarked and non-downloadable. Owner tooling ("your
+              card"), so the badge landing hides it to keep its one job. */}
+          {!fromBadge && (
           <p className="mt-7 text-sm text-[rgba(244,237,228,0.6)]">
             Download your card:{' '}
             <a
@@ -284,6 +319,7 @@ export default async function SignatureSharePage({
               square
             </a>
           </p>
+          )}
 
           {!visitor && (
             <BadgeSnippet
@@ -300,6 +336,13 @@ export default async function SignatureSharePage({
         <p className="mt-6 text-center text-sm text-fd-foreground/90">
           know one person who needs this? send them your certificate, not
           ours.
+        </p>
+      )}
+      {/* Badge landing's discreet secondary — an invitation, not a
+          competing CTA. */}
+      {fromBadge && (
+        <p className="mt-6 text-center text-sm text-fd-muted-foreground">
+          send this to someone who needs it
         </p>
       )}
       <ShareRow
