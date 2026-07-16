@@ -288,7 +288,9 @@ export default async function SignatureSharePage({
           {!visitor && (
             <BadgeSnippet
               username={sig.username.toLowerCase()}
-              svgMarkup={badgeSvg(56)}
+              n={sig.ordinal}
+              svgLarge={badgeSvg(56, { n: sig.ordinal })}
+              svgStandard={badgeSvg(28, { n: sig.ordinal })}
             />
           )}
         </div>

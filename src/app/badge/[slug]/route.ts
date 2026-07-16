@@ -1,5 +1,5 @@
 import { findSignature } from '@/lib/signatures';
-import { badgeSvg, type BadgeHeight } from '@/lib/badge-svg';
+import { badgeSvg, type BadgeHeight, type BadgeTheme } from '@/lib/badge-svg';
 
 // Signatory badge (SPEC-4 piece 1) — a custom brand SVG, deliberately not
 // a generic shields.io: the co mark + launch palette, self-backgrounded so
@@ -24,20 +24,32 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
+  const { searchParams } = new URL(req.url);
   // ?h=28|56 — the asset ships at the EXACT render size (the client
   // never scales), per the size-toggle spec. Whitelisted; default 28.
-  const hParam = new URL(req.url).searchParams.get('h');
-  const h: BadgeHeight = hParam === '56' ? 56 : 28;
+  const h: BadgeHeight = searchParams.get('h') === '56' ? 56 : 28;
+  // ?theme=paper — cream variant for the <picture> dark-README source
+  // (prefers-color-scheme). Whitelisted; default dark.
+  const theme: BadgeTheme =
+    searchParams.get('theme') === 'paper' ? 'paper' : 'dark';
+  // 404s are NEVER cacheable (warpchart flag): if someone loads their
+  // badge before signing and Camo caches the 404, the badge stays broken
+  // right after they sign — the worst possible moment to fail.
+  const notFound = () =>
+    new Response('not found', {
+      status: 404,
+      headers: { 'Cache-Control': 'no-store' },
+    });
   const username = slug.toLowerCase().replace(/\.svg$/, '');
   if (!USERNAME_RE.test(username)) {
-    return new Response('not found', { status: 404 });
+    return notFound();
   }
   const sig = await findSignature(username);
   if (!sig) {
     // ALWAYS 404 for non-signers — this is the counterfeit barrier.
-    return new Response('not found', { status: 404 });
+    return notFound();
   }
-  return new Response(badgeSvg(h), {
+  return new Response(badgeSvg(h, { n: sig.ordinal, theme }), {
     headers: {
       'Content-Type': 'image/svg+xml',
       'Cache-Control': 'public, max-age=3600, s-maxage=3600',

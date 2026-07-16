@@ -74,12 +74,18 @@ export type Signature = {
   date: string | null;
   /** Optional one-line "what changed in my search" evidence */
   evidence: string | null;
-  /** 1-based position in the ledger — "Signatory #N" */
+  /** 1-based signatory number — "Signatory #N", shown on the badge.
+   *  Prefers the bot-stamped immutable `n:` field (format v2.5, frozen
+   *  at merge; removals leave gaps, never renumber); falls back to the
+   *  ledger position until the maintainer's backfill lands. */
   ordinal: number;
+  /** Raw n: field when present (null on pre-v2.5 lines). */
+  n: number | null;
 };
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const ID_RE = /^id:(\d+)$/;
+const N_RE = /^n:(\d+)$/;
 
 // Documentation placeholders, never real signers. Launch-day incident
 // (2026-07-14): the ledger header's format example once started with
@@ -126,6 +132,7 @@ function parseLine(line: string): Omit<Signature, 'ordinal'> | null {
     date: null,
     evidence: null,
     sourceUrl: null,
+    n: null,
   };
   // Fields are pipe-separated; classify each by shape rather than trusting
   // position, so omitted optionals never shift meaning.
@@ -133,7 +140,9 @@ function parseLine(line: string): Omit<Signature, 'ordinal'> | null {
     const field = raw.trim();
     if (!field) continue;
     const idMatch = field.match(ID_RE);
+    const nMatch = field.match(N_RE);
     if (idMatch) sig.id = idMatch[1];
+    else if (nMatch) sig.n = parseInt(nMatch[1], 10);
     else if (field.startsWith('src:')) {
       const url = field.slice(4).trim();
       if (/^https:\/\/github\.com\//.test(url)) sig.sourceUrl = url;
@@ -165,7 +174,9 @@ export async function getSignatures(): Promise<Signature[]> {
       const key = sig.id ? `id:${sig.id}` : sig.username.toLowerCase();
       if (seen.has(key)) continue;
       seen.add(key);
-      signatures.push({ ...sig, ordinal: signatures.length + 1 });
+      // Immutable bot-stamped n: wins; derived position is the interim
+      // fallback (identical while the ledger has no removals).
+      signatures.push({ ...sig, ordinal: sig.n ?? signatures.length + 1 });
     }
     return signatures;
   } catch {
