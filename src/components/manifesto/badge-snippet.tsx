@@ -82,7 +82,7 @@ export function BadgeSnippet({
           bitmap (the blur Santiago reported twice) — inline participates
           in the document's vector render and is crisp at any size. */}
       <div
-        className="mt-4 flex justify-center rounded-lg border border-[rgba(244,237,228,0.14)] bg-[rgba(244,237,228,0.05)] px-4 py-6 [&_svg]:h-14 [&_svg]:w-auto"
+        className="mt-4 flex justify-center rounded-lg border border-[rgba(244,237,228,0.14)] bg-[rgba(244,237,228,0.05)] px-4 py-6"
         role="img"
         aria-label={alt}
         dangerouslySetInnerHTML={{ __html: svgMarkup }}

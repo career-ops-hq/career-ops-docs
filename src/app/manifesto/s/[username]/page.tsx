@@ -13,7 +13,7 @@ import { CAREEROPS_DEFINITION } from '@/lib/shared';
 import { ShareRow } from '@/components/manifesto/share-row';
 import { BadgeSnippet } from '@/components/manifesto/badge-snippet';
 import { signOnGitHubUrl } from '@/lib/sign-link';
-import { BADGE_SVG } from '@/lib/badge-svg';
+import { badgeSvg } from '@/lib/badge-svg';
 import { trackCertVia } from '@/lib/track';
 
 // Path-based share URL for a signature (signature-flywheel spec v2 §2).
@@ -288,7 +288,7 @@ export default async function SignatureSharePage({
           {!visitor && (
             <BadgeSnippet
               username={sig.username.toLowerCase()}
-              svgMarkup={BADGE_SVG}
+              svgMarkup={badgeSvg(56)}
             />
           )}
         </div>

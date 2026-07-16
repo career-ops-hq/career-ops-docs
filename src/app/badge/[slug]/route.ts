@@ -1,5 +1,5 @@
 import { findSignature } from '@/lib/signatures';
-import { BADGE_SVG } from '@/lib/badge-svg';
+import { badgeSvg, type BadgeHeight } from '@/lib/badge-svg';
 
 // Signatory badge (SPEC-4 piece 1) — a custom brand SVG, deliberately not
 // a generic shields.io: the co mark + launch palette, self-backgrounded so
@@ -20,10 +20,14 @@ const USERNAME_RE = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$/;
 // diagnosis.
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
+  // ?h=28|56 — the asset ships at the EXACT render size (the client
+  // never scales), per the size-toggle spec. Whitelisted; default 28.
+  const hParam = new URL(req.url).searchParams.get('h');
+  const h: BadgeHeight = hParam === '56' ? 56 : 28;
   const username = slug.toLowerCase().replace(/\.svg$/, '');
   if (!USERNAME_RE.test(username)) {
     return new Response('not found', { status: 404 });
@@ -33,7 +37,7 @@ export async function GET(
     // ALWAYS 404 for non-signers — this is the counterfeit barrier.
     return new Response('not found', { status: 404 });
   }
-  return new Response(BADGE_SVG, {
+  return new Response(badgeSvg(h), {
     headers: {
       'Content-Type': 'image/svg+xml',
       'Cache-Control': 'public, max-age=3600, s-maxage=3600',
