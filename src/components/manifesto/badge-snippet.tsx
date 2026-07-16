@@ -28,12 +28,22 @@ function CheckIcon() {
   );
 }
 
-export function BadgeSnippet({ username }: { username: string }) {
+export function BadgeSnippet({
+  username,
+  svgMarkup,
+}: {
+  username: string;
+  svgMarkup: string;
+}) {
   const [tab, setTab] = useState<'md' | 'html'>('md');
   const [copied, setCopied] = useState(false);
 
   const badgeUrl = `https://career-ops.org/badge/${username}.svg`;
-  const certUrl = `https://career-ops.org/manifesto/s/${username}`;
+  // The wrapping link carries ?via=badge--{user}: (a) badge-driven clicks
+  // aggregate separately from share clicks in the private via report;
+  // (b) any via arrival renders the VISITOR view of the certificate
+  // (participation-first, owner tooling hidden) — Santiago's call.
+  const certUrl = `https://career-ops.org/manifesto/s/${username}?via=badge--${username}`;
   const alt = 'CareerOps Manifesto · signatory';
   const snippets = {
     md: `[![${alt}](${badgeUrl})](${certUrl})`,
@@ -67,12 +77,16 @@ export function BadgeSnippet({ username }: { username: string }) {
         it only renders for real signatures.
       </p>
 
-      {/* Large preview on its own quiet panel — 2x render keeps the serif
-          crisp instead of squinting at 28px. */}
-      <div className="mt-4 flex justify-center rounded-lg border border-[rgba(244,237,228,0.14)] bg-[rgba(244,237,228,0.05)] px-4 py-6">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={badgeUrl} alt={alt} style={{ height: 56, width: 'auto' }} />
-      </div>
+      {/* Large preview on its own quiet panel. INLINE SVG, not <img>:
+          WebKit rasterizes SVG-in-img at intrinsic size and upscales the
+          bitmap (the blur Santiago reported twice) — inline participates
+          in the document's vector render and is crisp at any size. */}
+      <div
+        className="mt-4 flex justify-center rounded-lg border border-[rgba(244,237,228,0.14)] bg-[rgba(244,237,228,0.05)] px-4 py-6 [&_svg]:h-14 [&_svg]:w-auto"
+        role="img"
+        aria-label={alt}
+        dangerouslySetInnerHTML={{ __html: svgMarkup }}
+      />
 
       {/* Editor-style embed block: tabs + icon copy button. */}
       <div className="mt-4 overflow-hidden rounded-lg border border-[rgba(244,237,228,0.14)] bg-[#1a1511]">

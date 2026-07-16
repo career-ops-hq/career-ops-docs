@@ -13,6 +13,7 @@ import { CAREEROPS_DEFINITION } from '@/lib/shared';
 import { ShareRow } from '@/components/manifesto/share-row';
 import { BadgeSnippet } from '@/components/manifesto/badge-snippet';
 import { signOnGitHubUrl } from '@/lib/sign-link';
+import { BADGE_SVG } from '@/lib/badge-svg';
 import { trackCertVia } from '@/lib/track';
 
 // Path-based share URL for a signature (signature-flywheel spec v2 §2).
@@ -85,6 +86,11 @@ export default async function SignatureSharePage({
   // here with ?fresh=1 — proof first, artifact second, ONE ask. Without
   // the param the certificate renders exactly as always.
   const fresh = sp.fresh === '1';
+  // A via param means an ATTRIBUTED ARRIVAL (badge click or shared
+  // link) — a visitor, not the owner. Visitors get the
+  // participation-first certificate: the badge embed code is owner
+  // tooling and hides (Santiago, 2026-07-16).
+  const visitor = typeof sp.via === 'string' && sp.via.length > 0;
   // ?via={username} attribution on inbound share traffic: recorded
   // server-side ONLY (never surfaced publicly, never in the ledger) as
   // one private blob per event in careerops-analytics — durable layer
@@ -279,7 +285,12 @@ export default async function SignatureSharePage({
             </a>
           </p>
 
-          <BadgeSnippet username={sig.username.toLowerCase()} />
+          {!visitor && (
+            <BadgeSnippet
+              username={sig.username.toLowerCase()}
+              svgMarkup={BADGE_SVG}
+            />
+          )}
         </div>
       </div>
 
