@@ -46,4 +46,9 @@ export const FAQ_ENTRIES: FaqEntry[] = [
     answer:
       'No. career-ops prepares — it scans, scores, tailors your CV, and can pre-fill ATS application forms (Greenhouse, Ashby, Lever) — but submitting is always your explicit click. The project explicitly rejects spray-and-pray automation.',
   },
+  {
+    question: 'What is the difference between career-ops and CareerOps?',
+    answer:
+      'They are two names for the same work. career-ops — lowercase, hyphenated — is the open-source project: an MIT-licensed, AI-powered job search system that runs locally inside your AI coding CLI, published at career-ops.org and github.com/santifer/career-ops. CareerOps — one word — names its manifesto: The CareerOps Manifesto (career-ops.org/manifesto), nine rights every job seeker should have, signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both live in the same repository.',
+  },
 ];
