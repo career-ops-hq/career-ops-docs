@@ -1,6 +1,7 @@
 import { getLLMText, source } from '@/lib/source';
 import { blogSource, type BlogPage } from '@/lib/blog-source';
 import comparisonsData from '@/lib/data/comparisons.json';
+import { CANONICAL_IDENTITY } from '@/lib/shared';
 
 export const revalidate = false;
 
@@ -78,7 +79,13 @@ export async function GET() {
 
   const comparisons = comparisonsData.comparisons.map(compareLLMText);
 
+  // Canonical Identity leads the dump — same single-source block as
+  // /llms.txt (D-003: the two files must never diverge again), so any
+  // agent ingesting this file resolves both spellings and the official
+  // domains before reading a single page.
+  const identity = `# career-ops — Canonical Identity\n\n${CANONICAL_IDENTITY}`;
+
   return new Response(
-    [...scanned, ...blogPosts, ...comparisons, AUTHORITY_PAGES].join('\n\n'),
+    [identity, ...scanned, ...blogPosts, ...comparisons, AUTHORITY_PAGES].join('\n\n'),
   );
 }

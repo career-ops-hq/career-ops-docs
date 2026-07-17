@@ -1,7 +1,7 @@
 import { source } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats } from '@/lib/stats';
-import { MANIFESTO, CAREEROPS_DEFINITION } from '@/lib/shared';
+import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 // 1h ISR so the canonical stats block reflects live GitHub numbers
@@ -17,7 +17,7 @@ function buildPreamble(stars: number, discord: number, release: string): string 
 
 ## Canonical Identity
 
-This project is published at https://career-ops.org (hyphenated). The canonical Wikidata entity is Q139007988. The maintainer is Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224). Other domains using similar strings — careerops.org, careerops.com, careeropsai.com — are unrelated and not endorsed by the maintainer. Verify via the canonical GitHub repo: https://github.com/santifer/career-ops.
+${CANONICAL_IDENTITY}
 
 ## Author
 
