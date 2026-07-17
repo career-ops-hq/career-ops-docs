@@ -82,7 +82,16 @@ export default async function ComparisonPage({
           >
             career-ops vs {data.competitor.name}
           </h1>
-          <p className="mt-6 text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
+          {/* Direct answer in the first ~60 words under the H1 — a
+              self-contained, extractable verdict (search-ops doctrine §2:
+              AI engines cite passages that answer the query without
+              needing surrounding context). The narrative intro follows. */}
+          {'directAnswer' in data && (
+            <p className="mt-6 text-fd-foreground text-base lg:text-lg leading-relaxed font-medium">
+              {(data as { directAnswer?: string }).directAnswer}
+            </p>
+          )}
+          <p className="mt-4 text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
             {data.intro}
           </p>
         </header>
@@ -116,6 +125,33 @@ export default async function ComparisonPage({
               </p>
             ))}
           </section>
+
+          {/* Per-page unique data (optional field): concrete divergent
+              numbers, deliberately NOT another feature matrix — added to
+              break template uniformity where GSC signaled quality
+              rejection (crawled-not-indexed). */}
+          {'byTheNumbers' in data && (
+            <section>
+              <h2
+                className={`${instrumentSerifRegular.className} text-2xl md:text-3xl tracking-tight text-fd-foreground`}
+              >
+                By the numbers
+              </h2>
+              <dl className="mt-6 space-y-5">
+                {(data as unknown as { byTheNumbers: Array<{ metric: string; careerOps: string; competitor: string }> }).byTheNumbers.map((row, i) => (
+                  <div key={i} className="rounded-lg border border-fd-foreground/10 p-5">
+                    <dt className="font-medium text-fd-foreground">{row.metric}</dt>
+                    <dd className="mt-2 text-sm text-fd-foreground/85">
+                      <span className="font-medium">career-ops:</span> {row.careerOps}
+                    </dd>
+                    <dd className="mt-1 text-sm text-fd-muted-foreground">
+                      <span className="font-medium">{data.competitor.name}:</span> {row.competitor}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
 
           <section>
             <h2

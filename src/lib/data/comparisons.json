@@ -101,7 +101,8 @@
           "q": "Why is career-ops harder to set up than Jobscan?",
           "a": "It is a command-line tool, not a SaaS product. You git clone the repo, run npm install, configure a profile YAML, and invoke modes through your AI CLI. That setup buys you data ownership, transparent methodology, and a tool that does scan + evaluate + tailor + apply + track — things Jobscan splits across multiple paid products."
         }
-      ]
+      ],
+      "directAnswer": "career-ops is a free, MIT-licensed job search pipeline that runs locally inside your AI coding CLI — it scans portals, scores listings, tailors your CV and tracks applications. Jobscan is a paid web tool that checks one resume against one job description for ATS keywords. Use Jobscan for spot-checks; use career-ops to run the entire search."
     },
     {
       "slug": "career-ops-vs-teal",
@@ -203,7 +204,8 @@
           "q": "Does career-ops have a Chrome extension like Teal?",
           "a": "No. Job scanning happens through your AI CLI hitting the public APIs of Greenhouse, Ashby, and Lever (zero-token, no scraping), or through Playwright for portals without a clean API. The trade-off: no one-click save from LinkedIn, but also no browser permissions and no data flowing to a third party."
         }
-      ]
+      ],
+      "directAnswer": "Teal is a polished web app: resume builder, Chrome-extension tracker and match scoring, with your data on Teal's servers. career-ops covers the same ground — plus portal scanning and per-listing CV tailoring — as free, open-source software that keeps every file on your machine. Browser-first convenience versus local-first control is the real choice."
     },
     {
       "slug": "career-ops-vs-huntr",
@@ -215,7 +217,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Applications, resumes, contacts, and notes stored on Huntr servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-07-17",
       "heroImage": "/og/compare/career-ops-vs-huntr.jpg",
       "intro": "Huntr is the original Kanban job tracker — boards, columns, drag-and-drop, and a Chrome extension that scrapes job posts into cards. career-ops covers the same pipeline plus scanning, evaluation, and tailoring, but it lives in your terminal and on your disk. Same job, different surface area.",
       "features": [
@@ -309,6 +311,29 @@
         {
           "q": "Is career-ops really free?",
           "a": "The software is MIT-licensed and costs zero. The only recurring cost is your AI CLI subscription, typically Claude Pro at $20/month for a full job search."
+        }
+      ],
+      "directAnswer": "Huntr is the original Kanban job tracker: boards, drag-and-drop, a Chrome extension that clips postings into cards. career-ops includes that tracking stage but adds everything upstream — automated portal scanning, six-dimension AI scoring, tailored CVs and cover letters — for $0, MIT-licensed, with all data in local files you own instead of a SaaS database.",
+      "byTheNumbers": [
+        {
+          "metric": "Cost over a 12-month search",
+          "careerOps": "$0 in software (MIT). Typical AI engine cost: $20/mo CLI subscription you may already pay, or $0 routes via free providers.",
+          "competitor": "$108–$468/year on Huntr paid tiers ($9–39/mo) for AI resume tools beyond the limited free tier."
+        },
+        {
+          "metric": "Where your search data lives",
+          "careerOps": "Plain Markdown/YAML files on your machine — readable without the tool, exportable by copy-paste, never on our servers (there are none).",
+          "competitor": "Huntr's cloud database — applications, resumes, contacts and notes live on their servers under their retention terms."
+        },
+        {
+          "metric": "Pipeline stages covered",
+          "careerOps": "Six: scan → evaluate → tailor → apply prep → track → interview prep.",
+          "competitor": "Two of those six (tracking, plus resume tools in paid tiers) — scanning, scoring and interview prep stay manual."
+        },
+        {
+          "metric": "Source code",
+          "careerOps": "Fully open — 59,000+ GitHub stars, auditable line by line.",
+          "competitor": "Proprietary, closed-source."
         }
       ]
     },
@@ -412,7 +437,8 @@
           "q": "Is the human-in-the-loop posture the same in both tools?",
           "a": "Yes. Both Simplify and career-ops deliberately keep the user as the one who clicks submit. Neither auto-submits. That posture is the right answer to the recruiter pipeline degradation caused by mass auto-apply tools, and both tools share it."
         }
-      ]
+      ],
+      "directAnswer": "Simplify autofills job applications through a Chrome extension used by over a million people, monetizing via employer partnerships. career-ops takes the opposite architecture: an open-source pipeline in your AI CLI that evaluates listings BEFORE you apply — scoring fit, tailoring your CV per listing — so you send fewer, better applications instead of faster identical ones."
     },
     {
       "slug": "career-ops-vs-finalroundai",
@@ -514,7 +540,8 @@
           "q": "Can I use both tools together?",
           "a": "Yes. career-ops handles the application + prep work, Final Round handles the live moment. The combined cost is meaningful ($20/mo Claude Pro + $25–$149/mo Final Round) but for an active high-stakes search the workflows do not overlap."
         }
-      ]
+      ],
+      "directAnswer": "Final Round AI is real-time interview assistance — it listens to your live interview and flashes suggested answers, a practice many interviewers consider misrepresentation. career-ops prepares you before the interview instead: research briefs, question drills and honest practice from its interview modes, inside a free, open-source pipeline that also scans, scores and tracks your applications."
     },
     {
       "slug": "career-ops-vs-lazyapply",
@@ -611,7 +638,8 @@
           "q": "What is the actual difference in outcome?",
           "a": "Real numbers from the maintainer's own search in early 2026 using career-ops: 740 listings evaluated, 68 applications submitted (all tailored, all with pre-apply drafting), one offer accepted (Head of Applied AI at Zinkee). LazyApply at the Ultimate tier could have submitted 4,500+ applications in the same period with comparable outcomes for senior roles. The funnel shape is opposite."
         }
-      ]
+      ],
+      "directAnswer": "LazyApply clicks Easy Apply buttons for you — hundreds of near-identical applications per day. career-ops explicitly rejects that model: it never auto-submits. It scores each listing against your profile first, tailors a CV for the ones worth pursuing, and leaves the final click to you. Volume automation versus decision automation is the entire difference."
     },
     {
       "slug": "career-ops-vs-loopcv",
@@ -708,7 +736,8 @@
           "q": "Why does the pre-apply step matter so much?",
           "a": "Most portal application forms have 3-5 open-ended questions per role (why this company, why this role, tell us about a relevant project, salary expectations). These are the 15-20 minutes per application where most candidates default to copy-paste templates that recruiters can spot in two seconds. career-ops's apply mode reads the JD and the candidate profile and drafts each answer to the specific role. The candidate reviews and pastes. That is the unlock."
         }
-      ]
+      ],
+      "directAnswer": "Loopcv is the more disciplined auto-apply service: transparent volume caps, cleaner targeting, still submitting on your behalf from its servers. career-ops never submits for you — it automates the judgment work instead (scanning portals, scoring fit across six dimensions, tailoring CVs locally) and keeps you as the only one who ever clicks send."
     },
     {
       "slug": "career-ops-vs-jobhire",
@@ -810,7 +839,8 @@
           "q": "Can I just use JobHire for volume and career-ops for top-tier applications?",
           "a": "Technically yes, and some candidates do split their search this way. The risk is that the auto-submitted applications under JobHire to companies you actually want often go in before you have engaged seriously, which can burn the listing for a tailored follow-up. The cleaner approach: use career-ops for everything you care about, and accept that the long tail of marginal-fit listings is not worth applying to."
         }
-      ]
+      ],
+      "directAnswer": "JobHire.AI is set-and-forget: an autonomous agent that tailors resumes and submits applications in the background. career-ops automates everything except the decision — free, MIT-licensed, running locally in your AI CLI, it scans, scores and prepares each application, then stops. If an agent applying without you feels wrong, that instinct is the comparison."
     }
   ]
 }
