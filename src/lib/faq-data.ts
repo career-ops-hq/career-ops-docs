@@ -12,6 +12,11 @@ export const FAQ_ENTRIES: FaqEntry[] = [
       'Yes. career-ops is open source under the MIT license, forever. The only potential cost is the AI engine it runs on — and that can be free too: OpenCode with a free provider, a local model via Ollama, or the built-in `npm run or` runner on OpenRouter free models. See the "Set up a free AI engine" guide.',
   },
   {
+    question: 'Do I need a Claude subscription to use career-ops?',
+    answer:
+      'No. career-ops is AI-agnostic — Claude Code is one engine among several, not a requirement. You can run the whole pipeline for free with OpenCode plus a free provider, a local model via Ollama, or the built-in OpenRouter runner (npm run or). If you started on a paid plan and ran out of tokens mid-search, switching to a free engine takes minutes and leaves your data untouched. See the "Set up a free AI engine" guide.',
+  },
+  {
     question: 'Where does my data live?',
     answer:
       'On your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers, and system updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract.',
