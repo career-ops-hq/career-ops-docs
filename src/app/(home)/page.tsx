@@ -347,7 +347,7 @@ export default async function HomePage() {
                 </span>{' '}
                 AI-powered job search system that runs locally on your machine inside any AI coding
                 CLI &mdash; Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot. It
-                evaluates job listings against your CV using a six-dimension rubric scoring
+                evaluates job listings against your CV using a five-dimension rubric plus a holistic global score, scoring
                 1.0&ndash;5.0, generates ATS-optimized PDF resumes tailored per role, drafts answers
                 to open-ended application questions on Greenhouse, Ashby and Lever forms, scans 150+
                 company portals zero-token, and tracks the pipeline in a Go-based terminal

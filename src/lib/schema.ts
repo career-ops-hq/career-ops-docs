@@ -463,7 +463,7 @@ export function methodologySchema() {
         url: 'https://career-ops.org/methodology',
         headline: 'How career-ops scores job listings',
         description:
-          'The 4.0/5.0 threshold, the six dimensions, the canonical evaluation prompt, edge cases, and what we explicitly do not do.',
+          'The 4.0/5.0 threshold, the five dimensions and the holistic global score, the canonical evaluation prompt, edge cases, and what we explicitly do not do.',
         datePublished: '2026-05-07T00:00:00Z',
         dateModified: '2026-05-07T00:00:00Z',
         author: { '@id': PERSON_ID },
@@ -491,7 +491,7 @@ export function methodologySchema() {
             name: 'How does career-ops actually score job listings?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops uses a rubric-guided LLM evaluation across six dimensions (match, north-star alignment, comp, cultural signals, red flags, global) producing a score from 1.0 to 5.0. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
+              text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions (match, north-star alignment, comp, cultural signals, red flags) producing a holistic 1.0 to 5.0 global score. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
             },
           },
           {
@@ -793,7 +793,7 @@ export function homeFaqSchema() {
         name: 'How does career-ops score job listings?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'career-ops uses a rubric-guided LLM evaluation across six dimensions — match, north-star alignment, comp, cultural signals, red flags, and global fit — producing a 1.0–5.0 score with citations to specific CV lines and JD requirements. Anything below 4.0 the agent recommends against applying. No closed-form formula, no spray-and-pray. The full rubric is published at career-ops.org/methodology.',
+          text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions — match, north-star alignment, comp, cultural signals, red flags — producing a holistic 1.0–5.0 global score with citations to specific CV lines and JD requirements. Anything below 4.0 the agent recommends against applying. No closed-form formula, no spray-and-pray. The full rubric is published at career-ops.org/methodology.',
         },
       },
       {

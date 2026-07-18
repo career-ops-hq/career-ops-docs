@@ -78,7 +78,7 @@ const LINKS: { label: string; href: string; rel: string }[] = [
 const FAQ: { q: string; a: string }[] = [
   {
     q: 'Why did you build career-ops?',
-    a: 'I needed it. In early 2026 I ran a structured job search across 740 listings to land my next role. I built career-ops along the way because manually scoring each posting against a six-dimension rubric inside a spreadsheet was slower than letting Claude Code do it. When I no longer needed the system I open-sourced it under MIT.',
+    a: 'I needed it. In early 2026 I ran a structured job search across 740 listings to land my next role. I built career-ops along the way because manually scoring each posting against a five-dimension rubric inside a spreadsheet was slower than letting Claude Code do it. When I no longer needed the system I open-sourced it under MIT.',
   },
   {
     q: 'Why open source instead of a SaaS?',
@@ -158,7 +158,7 @@ export default function AboutPage() {
           </p>
           <p>
             career-ops grew out of a personal job search in early 2026. After the exit, instead
-            of spraying applications, he wrote a structured evaluator: six dimensions, a 1.0–5.0
+            of spraying applications, he wrote a structured evaluator: five dimensions, a 1.0–5.0
             score, and a hard floor at 4.0 below which the system refuses to recommend applying.
             740 listings evaluated, 68 applications sent, 12 interview processes, one offer
             signed. The funnel data lives at{' '}

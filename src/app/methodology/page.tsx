@@ -7,7 +7,7 @@ import { MANIFESTO } from '@/lib/shared';
 export const metadata: Metadata = {
   title: 'Methodology · career-ops',
   description:
-    'How career-ops scores job listings: the 4.0/5.0 threshold, the six dimensions, the canonical evaluation prompt, edge cases, and what we explicitly do not do. Radical transparency, no closed-form math.',
+    'How career-ops scores job listings: the 4.0/5.0 threshold, the five dimensions, the canonical evaluation prompt, edge cases, and what we explicitly do not do. Radical transparency, no closed-form math.',
   alternates: { canonical: 'https://career-ops.org/methodology' },
   openGraph: {
     type: 'article',
@@ -116,9 +116,9 @@ export default function MethodologyPage() {
             </p>
           </Section>
 
-          <Section title="The six dimensions">
+          <Section title="The five dimensions and the global score">
             <p>
-              A global score is the LLM&rsquo;s judgement across six dimensions. The rubric is in{' '}
+              A global score is the LLM&rsquo;s holistic judgement across five dimensions. The rubric is in{' '}
               <a
                 href="https://github.com/santifer/career-ops/blob/main/modes/_shared.md"
                 target="_blank"
@@ -493,8 +493,8 @@ export default function MethodologyPage() {
 
           <Section title="Frequently asked">
             <FaqItem question="How does career-ops actually score job listings?">
-              career-ops uses a rubric-guided LLM evaluation across six dimensions (match,
-              north-star alignment, comp, cultural signals, red flags, global) producing a
+              career-ops uses a rubric-guided LLM evaluation across five dimensions (match,
+              north-star alignment, comp, cultural signals, red flags) producing a holistic
               score from 1.0 to 5.0. Below 4.0 the agent recommends against applying. There is
               no closed-form weighting formula — the global score is the LLM&rsquo;s judgement
               given the rubric, with citations to specific CV lines and JD requirements.

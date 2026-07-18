@@ -63,7 +63,7 @@ Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is an Applied A
 
 # Methodology — how career-ops scores listings (${SITE}/methodology)
 
-career-ops uses a rubric-guided LLM evaluation across six dimensions — match, north-star alignment, comp, cultural signals, red flags, and global fit — producing a score from 1.0 to 5.0. The 4.0 threshold is the apply / don't-apply line: below 4.0 the agent recommends against applying. The default is deliberately high because the goal is fewer, better applications.
+career-ops uses a rubric-guided LLM evaluation across five dimensions — match, north-star alignment, comp, cultural signals, red flags — producing a holistic global score from 1.0 to 5.0. There is no weighted-average formula; the global score is the model's holistic judgement over the five dimensions. The 4.0 threshold is the apply / don't-apply line: below 4.0 the agent recommends against applying. The default is deliberately high because the goal is fewer, better applications.
 
 The full evaluation runs as Block A through G: A (role summary), B (CV match), C (level strategy), D (compensation and demand research), E (personalization notes), F (interview preparation with STAR stories), G (posting legitimacy — scam and ghost-job check). When compensation data is missing, Block D says so explicitly instead of inventing numbers. The canonical rubric lives in the open-source repo at https://github.com/santifer/career-ops/blob/main/modes/_shared.md and the evaluation prompt at modes/oferta.md. Full transparency write-up: ${SITE}/methodology.
 

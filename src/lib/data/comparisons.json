@@ -17,7 +17,7 @@
       "features": [
         {
           "name": "ATS keyword matching",
-          "careerOps": "Yes — built into the evaluate mode, scored against five weighted dimensions plus a Global score",
+          "careerOps": "Yes — built into the evaluate mode, scored against five scoring dimensions plus a holistic global score",
           "competitor": "Yes — core product feature with detailed match report"
         },
         {
@@ -67,7 +67,7 @@
         },
         {
           "name": "Methodology transparency",
-          "careerOps": "Published rubric (five weighted dimensions plus Global, A–G evaluation prompt). career-ops.org/methodology.",
+          "careerOps": "Published rubric (five scoring dimensions plus a holistic global score, A–G evaluation prompt). career-ops.org/methodology.",
           "competitor": "Algorithm not disclosed."
         },
         {
@@ -80,14 +80,14 @@
         "headline": "Pick career-ops if you write code and want the full pipeline plus pre-apply form drafting. Pick Jobscan if you want a one-click ATS scan and zero setup.",
         "body": [
           "Jobscan does one thing well: tells you which keywords your resume is missing for a specific job description. Their UX is polished, their match score is easy to read, and you are productive in two minutes. The trade-offs are real: $50 a month, your data lives on their servers, and the algorithm is a black box.",
-          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent weighted rubric — five dimensions plus a Global score, tailor your CV per job, and — the part nobody else does — pre-apply: the apply mode reads the portal's form, drafts answers for every open-ended question from your profile and the JD, and hands them back for you to review and submit. That single feature saves 15-20 minutes per application, the slowest step in any serious search. The trade-offs are also real: you need Node 22.5+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
+          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent rubric of five scoring dimensions plus a holistic global score, tailor your CV per job, and — the part nobody else does — pre-apply: the apply mode reads the portal's form, drafts answers for every open-ended question from your profile and the JD, and hands them back for you to review and submit. That single feature saves 15-20 minutes per application, the slowest step in any serious search. The trade-offs are also real: you need Node 22.5+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
           "Different audiences, different price points, different philosophies. The pre-apply step is where career-ops materially leaves the rest behind."
         ]
       },
       "faq": [
         {
           "q": "Can career-ops replace Jobscan for ATS scoring?",
-          "a": "For technical users, yes. The evaluate mode scores any listing against a weighted rubric — five dimensions plus a Global score — that includes ATS-relevant signals — keyword density, role alignment, seniority match. It also gives you the tailor mode and apply mode that Jobscan does not. For non-technical users who want a polished GUI, Jobscan is still the easier tool."
+          "a": "For technical users, yes. The evaluate mode scores any listing against a rubric of five scoring dimensions plus a holistic global score, that includes ATS-relevant signals — keyword density, role alignment, seniority match. It also gives you the tailor mode and apply mode that Jobscan does not. For non-technical users who want a polished GUI, Jobscan is still the easier tool."
         },
         {
           "q": "Is career-ops really free?",
@@ -130,7 +130,7 @@
         },
         {
           "name": "Match-mode scoring",
-          "careerOps": "Yes — five weighted dimensions plus a Global score, scored 1.0–5.0, recommendations gated at 4.0. Cited evidence per dimension.",
+          "careerOps": "Yes — five scoring dimensions plus a holistic 1.0–5.0 global score, recommendations gated at 4.0. Cited evidence per dimension.",
           "competitor": "Yes — match score against a single job description. Algorithm not disclosed."
         },
         {
@@ -170,7 +170,7 @@
         },
         {
           "name": "Methodology transparency",
-          "careerOps": "Published rubric — five weighted dimensions plus Global, and the Block A–G evaluation prompt. career-ops.org/methodology.",
+          "careerOps": "Published rubric — five scoring dimensions plus a holistic global score, and the Block A–G evaluation prompt. career-ops.org/methodology.",
           "competitor": "Match-score algorithm is proprietary."
         },
         {
@@ -233,7 +233,7 @@
         },
         {
           "name": "AI evaluation against rubric",
-          "careerOps": "Yes — weighted rubric scoring (five dimensions plus Global) with cited evidence. Gated recommendation at 4.0/5.0.",
+          "careerOps": "Yes — rubric scoring — five dimensions plus a holistic global score — with cited evidence. Gated recommendation at 4.0/5.0.",
           "competitor": "Match score per job. Algorithm not disclosed."
         },
         {
@@ -306,14 +306,14 @@
         },
         {
           "q": "What does career-ops do that Huntr does not?",
-          "a": "The work before tracking. Scan mode pulls listings from Greenhouse, Ashby, Lever, Workday, and SmartRecruiters via their public APIs. Evaluate mode scores each listing against a weighted rubric — five dimensions plus Global — with cited evidence. Tailor mode generates a CV variant per job. Huntr starts when you have a posting to track; career-ops starts when you have a profile and want listings worth tracking."
+          "a": "The work before tracking. Scan mode pulls listings from Greenhouse, Ashby, Lever, Workday, and SmartRecruiters via their public APIs. Evaluate mode scores each listing against a rubric of five scoring dimensions plus a holistic global score, with cited evidence. Tailor mode generates a CV variant per job. Huntr starts when you have a posting to track; career-ops starts when you have a profile and want listings worth tracking."
         },
         {
           "q": "Is career-ops really free?",
           "a": "The software is MIT-licensed and costs zero. The only recurring cost is your AI CLI subscription, typically Claude Pro at $20/month for a full job search."
         }
       ],
-      "directAnswer": "Huntr is the original Kanban job tracker: boards, drag-and-drop, a Chrome extension that clips postings into cards. career-ops includes that tracking stage but adds everything upstream — automated portal scanning, weighted-rubric AI scoring, tailored CVs and cover letters — for $0, MIT-licensed, with all data in local files you own instead of a SaaS database.",
+      "directAnswer": "Huntr is the original Kanban job tracker: boards, drag-and-drop, a Chrome extension that clips postings into cards. career-ops includes that tracking stage but adds everything upstream — automated portal scanning, rubric-based AI scoring (five dimensions plus a holistic score), tailored CVs and cover letters — for $0, MIT-licensed, with all data in local files you own instead of a SaaS database.",
       "byTheNumbers": [
         {
           "metric": "Cost over a 12-month search",
@@ -403,7 +403,7 @@
         },
         {
           "name": "Methodology transparency",
-          "careerOps": "Published weighted rubric (five dimensions plus Global) + canonical Block A-G evaluation prompt.",
+          "careerOps": "Published rubric of five scoring dimensions plus a holistic global score + canonical Block A-G evaluation prompt.",
           "competitor": "Match-score algorithm proprietary."
         },
         {
@@ -559,7 +559,7 @@
       "features": [
         {
           "name": "Application model",
-          "careerOps": "Score-gated apply. Listings scored 1.0–5.0 against a weighted rubric (five dimensions plus Global); only those above 4.0 are recommended. Tailored per listing. You submit.",
+          "careerOps": "Score-gated apply. Listings scored 1.0–5.0 against a rubric of five scoring dimensions plus a holistic global score; only those above 4.0 are recommended. Tailored per listing. You submit.",
           "competitor": "Spray-and-pray. The bot clicks Easy Apply on every listing matching a keyword filter, hundreds per day. Generic submissions, no tailoring depth."
         },
         {
@@ -618,7 +618,7 @@
         "body": [
           "LazyApply is honest about what it is. The marketing says spray-and-pray, the product delivers spray-and-pray, and the price ($99–$249 one-time) is reasonable for what it does. For candidates who have already given up on tailoring and just want to maximize the surface area of their search, it works as advertised.",
           "The trade-offs are severe and increasingly priced in. LinkedIn and Indeed have caught up — Trustpilot ratings around 2.1 reflect the bot detection wave that landed in 2025-2026. Profile shadowbans and account suspensions are common in user forums. Worse, the response rate on mass auto-applied roles is dramatically lower than on tailored applications, because recruiters reading 300 applications per day rejected the LazyApply pattern long ago. You can technically apply to 5,000 jobs in a month with the Ultimate tier; the count of those 5,000 that turn into interviews is rounding-error low.",
-          "career-ops is the structural inverse. The weighted rubric rejects roughly 90% of scanned listings before tailoring, so applications go out to the 8-12% that fit. Every application is tailored, including the pre-apply drafting of open-ended portal answers — the part that takes 15-20 minutes that most candidates skip. The result: fewer applications, dramatically higher response rate, and zero risk of being shadowbanned by a platform you depend on. If your goal is to land the role, not to hit the application count, the math is one-sided."
+          "career-ops is the structural inverse. The scoring rubric rejects roughly 90% of scanned listings before tailoring, so applications go out to the 8-12% that fit. Every application is tailored, including the pre-apply drafting of open-ended portal answers — the part that takes 15-20 minutes that most candidates skip. The result: fewer applications, dramatically higher response rate, and zero risk of being shadowbanned by a platform you depend on. If your goal is to land the role, not to hit the application count, the math is one-sided."
         ]
       },
       "faq": [
@@ -632,7 +632,7 @@
         },
         {
           "q": "Can career-ops apply to 100+ jobs in a day like LazyApply?",
-          "a": "Technically possible with batch mode and parallel workers, but the design pushes against it. The weighted rubric is designed to reject most listings before tailoring; an honest daily output is closer to 5-15 high-fit applications. The candidate's leverage in 2026 is filter quality, not volume."
+          "a": "Technically possible with batch mode and parallel workers, but the design pushes against it. The scoring rubric is designed to reject most listings before tailoring; an honest daily output is closer to 5-15 high-fit applications. The candidate's leverage in 2026 is filter quality, not volume."
         },
         {
           "q": "What is the actual difference in outcome?",
@@ -657,7 +657,7 @@
       "features": [
         {
           "name": "Application model",
-          "careerOps": "Score-gated apply against a weighted rubric. ~9% threshold pass rate in real searches.",
+          "careerOps": "Score-gated apply against the scoring rubric. ~9% threshold pass rate in real searches.",
           "competitor": "Auto-apply against configurable loops (location, keywords, salary). 100-300 applications/month depending on tier."
         },
         {
@@ -715,7 +715,7 @@
         "headline": "Pick career-ops if you want depth — fewer applications, each tailored, each pre-drafted. Pick Loopcv if you want breadth and accept the response-rate trade-off.",
         "body": [
           "Loopcv is the most reasonable tool in the auto-apply category. The free tier (10 applications/month) is genuinely useful for testing, the volume caps are transparent, and the matching is meaningfully better than LazyApply's bot-clicking model. For job seekers who want surface-area coverage and accept the lower per-application response rate, it works.",
-          "career-ops takes the opposite posture by design. The weighted rubric is built to reject ~90% of scanned listings before tailoring even begins, so applications go out only to the 8-12% that fit the candidate's archetype. Every application is tailored. The pre-apply step drafts the open-ended portal answers — the part Loopcv's auto-submission either skips or fills with generic content. That 15-20 minutes per application is where applications stop looking generic, and where response rates start to differ.",
+          "career-ops takes the opposite posture by design. The scoring rubric is built to reject ~90% of scanned listings before tailoring even begins, so applications go out only to the 8-12% that fit the candidate's archetype. Every application is tailored. The pre-apply step drafts the open-ended portal answers — the part Loopcv's auto-submission either skips or fills with generic content. That 15-20 minutes per application is where applications stop looking generic, and where response rates start to differ.",
           "Concretely: in a 90-day active search, Loopcv at Premium ($59.99/mo) submits ~900 applications. career-ops at the equivalent intensity submits ~60-80 applications, all tailored, all pre-drafted. The interview-conversion ratio on the second pattern is multiples of the first. If your goal is the role, not the count, the math favors career-ops. If you genuinely want to maximize coverage and respond to interest in bulk, Loopcv is the right tool."
         ]
       },
@@ -737,7 +737,7 @@
           "a": "Most portal application forms have 3-5 open-ended questions per role (why this company, why this role, tell us about a relevant project, salary expectations). These are the 15-20 minutes per application where most candidates default to copy-paste templates that recruiters can spot in two seconds. career-ops's apply mode reads the JD and the candidate profile and drafts each answer to the specific role. The candidate reviews and pastes. That is the unlock."
         }
       ],
-      "directAnswer": "Loopcv is the more disciplined auto-apply service: transparent volume caps, cleaner targeting, still submitting on your behalf from its servers. career-ops never submits for you — it automates the judgment work instead (scanning portals, scoring fit against a weighted rubric, tailoring CVs locally) and keeps you as the only one who ever clicks send."
+      "directAnswer": "Loopcv is the more disciplined auto-apply service: transparent volume caps, cleaner targeting, still submitting on your behalf from its servers. career-ops never submits for you — it automates the judgment work instead (scanning portals, scoring fit across five dimensions plus a holistic global score, tailoring CVs locally) and keeps you as the only one who ever clicks send."
     },
     {
       "slug": "career-ops-vs-jobhire",

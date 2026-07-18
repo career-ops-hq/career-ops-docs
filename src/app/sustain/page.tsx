@@ -41,7 +41,7 @@ export default function SustainPage() {
           <section>
             <p>
               career-ops is free software, MIT-licensed forever. The 14 modes, 45+ portal
-              scrapers, the six-dimension rubric, the Block A&ndash;G evaluation prompt &mdash;
+              scrapers, the five-dimension rubric, the Block A&ndash;G evaluation prompt &mdash;
               they cost nothing to install, and they never will. But sustained craft costs
               time. Time to read 250 community issues and write thoughtful responses. Time
               to investigate the edge case in <code className="font-mono text-fd-foreground">/scan</code>{' '}
