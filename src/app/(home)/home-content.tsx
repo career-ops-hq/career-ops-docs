@@ -101,7 +101,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           </h1>
           <div className="flex flex-row items-center gap-4 flex-wrap w-fit">
             <Link
-              href="/docs"
+              href={dict.docsHref}
               className={cn(buttonVariants(), 'inline-flex items-center gap-2 max-sm:text-sm')}
             >
               {dict.runItNow}
@@ -291,7 +291,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-tr from-brand/10 via-transparent to-transparent min-h-[300px] flex flex-col">
           <h3 className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}>{dict.featScanTitle}</h3>
           <p className="mb-6">{dict.featScanBody}</p>
-          <Link href="/docs" className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}>{dict.featScanCta}</Link>
+          <Link href={dict.docsHref} className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}>{dict.featScanCta}</Link>
         </div>
 
         <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-br from-brand/10 via-transparent to-transparent min-h-[300px] flex flex-col">
@@ -364,7 +364,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         <p className={`${instrumentSerifRegular.className} text-3xl md:text-4xl xl:text-5xl tracking-tight mb-8 max-w-3xl mx-auto`}>
           {dict.finalCta}
         </p>
-        <Link href="/docs" className={cn(buttonVariants(), 'text-base px-8 py-3.5 inline-flex items-center gap-2')}>
+        <Link href={dict.docsHref} className={cn(buttonVariants(), 'text-base px-8 py-3.5 inline-flex items-center gap-2')}>
           {dict.yourTurn}
           <span aria-hidden="true" className="cli-cursor inline-block h-[1em] w-[0.35em] bg-current align-middle" />
         </Link>
