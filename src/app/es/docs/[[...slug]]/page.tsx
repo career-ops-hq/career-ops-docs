@@ -1,7 +1,7 @@
 import { source } from '@/lib/source';
 import { DocsPageView } from '@/components/docs-page-view';
 import { docsHreflang } from '@/lib/i18n-map';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 
 // Spanish docs route — reuses the SAME render trunk (DocsPageView) as /docs/**,
@@ -12,7 +12,13 @@ type Props = { params: Promise<{ slug?: string[] }> };
 export default async function Page(props: Props) {
   const { slug } = await props.params;
   const page = source.getPage(slug, 'es');
-  if (!page) notFound();
+  if (!page) {
+    // No Spanish translation for this doc yet → send the reader to the English
+    // page rather than a 404, so the language toggle is always safe to click.
+    const en = source.getPage(slug);
+    if (en) redirect(en.url);
+    notFound();
+  }
 
   return <DocsPageView page={page} />;
 }

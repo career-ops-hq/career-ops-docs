@@ -1,6 +1,7 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { appName, gitConfig } from './shared';
 import { CoMark } from '@/components/co-mark';
+import { LanguageBar } from '@/components/language-bar';
 import { instrumentSerifRegular } from './fonts';
 
 type Options = {
@@ -8,20 +9,12 @@ type Options = {
   // renders the title in the narrow sidebar and the full home-style
   // branding wraps awkwardly.
   compact?: boolean;
-  // Language of the current surface. Adds the language switcher link:
-  // EN surfaces link to the Spanish home, ES surfaces link back to EN.
-  // The switcher is the discoverable entry to the /es version.
+  // Accepted for backward-compat with the call sites; the language control is
+  // now the self-detecting <LanguageBar/>, which reads the locale from the URL.
   locale?: 'en' | 'es';
 };
 
-export function baseOptions({
-  compact = false,
-  locale = 'en',
-}: Options = {}): BaseLayoutProps {
-  const languageLink =
-    locale === 'es'
-      ? { text: 'English', url: '/', external: false }
-      : { text: 'Español', url: '/es', external: false };
+export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps {
   return {
     nav: {
       title: (
@@ -44,6 +37,7 @@ export function baseOptions({
     // visitor came for), NOT gitConfig.repo: that one is the docs repo
     // and exists only for the per-page "edit on GitHub" links.
     githubUrl: `https://github.com/${gitConfig.user}/career-ops`,
-    links: [languageLink],
+    // Language button + browser-detection suggestion, both in the header.
+    links: [{ type: 'custom', secondary: true, children: <LanguageBar /> }],
   };
 }
