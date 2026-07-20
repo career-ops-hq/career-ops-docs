@@ -1,0 +1,52 @@
+---
+title: pdf
+description: "Genera un CV en PDF adaptado a una JD concreta usando Playwright para renderizar markdown con una plantilla tipográfica limpia. El resultado es estructuralmente simple — sin tablas, sin columnas, sin gráficos — exactamente lo que los parsers ATS procesan de forma fiable."
+seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: beb822061e860203
+localized: true
+translatedFrom: /docs/reference/modes/pdf
+---
+
+## Qué hace
+
+El modo pdf lee tu cv.md maestro y el contexto de la JD, y ejecuta el paso de adaptación (reescribe bullets, reordena secciones, integra keywords prioritarias) antes de exportar a PDF vía Playwright con una plantilla CSS que respeta las convenciones de los parsers ATS. El resultado está listo para subir.
+
+## Cuándo usarlo
+
+Usa pdf cuando ya has evaluado la oferta y has decidido aplicar, y solo quieres el PDF adaptado sin volver a ejecutar el paso de evaluación.
+
+## Cómo es una ejecución
+
+Apuntas el modo a una oferta que ya has evaluado y produce un único PDF adaptado y listo para ATS — sin re-evaluación. Extrae 15-20 keywords de la JD, elige el tamaño de papel según la ubicación de la empresa, reescribe tu resumen y reordena los bullets en torno al puesto, y después renderiza el HTML a PDF e informa de la cobertura de keywords.
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+
+El layout se mantiene a una sola columna, con cabeceras de sección estándar y texto seleccionable — la estructura que los parsers ATS leen sin problemas — y las keywords se entretejen en logros reales, nunca se inventan.
+
+## Cuándo recurrir a él
+
+Recurre a pdf cuando has decidido aplicar y solo quieres el CV adaptado, saltándote el paso de evaluación. Algunos comportamientos que conviene conocer:
+
+- El tamaño de papel sigue automáticamente la ubicación de la empresa: `letter` para puestos en EE. UU. y Canadá, `a4` en el resto del mundo.
+- La inyección de keywords se basa en la verdad. El modo reformula experiencia real con el vocabulario exacto de la JD, pero nunca añade una habilidad que no tienes.
+- Para DACH y buena parte de la Europa continental puedes optar por incluir foto configurando `candidate.photo` en `config/profile.yml`; déjalo vacío y el CV se renderiza píxel a píxel idéntico pero sin ella, que es la opción por defecto más segura para EE. UU., Reino Unido y mercados ATS-first.
+
+## Posibles problemas
+
+Requiere Playwright instalado en local. El script de build puede fallar en instalaciones Linux mínimas sin fuentes del sistema. Ejecuta `npm run doctor` para diagnosticar.
+
+## Relacionado
+
+- [auto-pipeline](/es/docs/reference/modes/auto-pipeline)

@@ -32,7 +32,7 @@ async function createSearchServer() {
   });
 
   const docs = await chunkedAll(
-    source.getPages().map(async (page) => {
+    source.getPages('en').map(async (page) => {
       if (!('getText' in page.data)) return null;
 
       return {

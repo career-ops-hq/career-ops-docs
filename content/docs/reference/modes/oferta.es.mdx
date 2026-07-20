@@ -1,0 +1,62 @@
+---
+title: oferta
+description: "Ejecuta la evaluación A–G sobre un único anuncio. Omite la generación de PDF y la escritura en el tracker. Úsalo cuando solo necesitas la decisión de puntuación y no el pipeline completo."
+seoTitle: "Modo oferta de career-ops — puntúa una oferta de empleo antes de aplicar"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 1d733a23b8c520f8
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## Qué hace
+
+El modo oferta lee una única JD (URL o texto pegado), la puntúa contra la rúbrica — cinco dimensiones más una puntuación global holística — con evidencia citada, y escribe el informe de evaluación. Sin PDF, sin entrada en el tracker. Rápido y barato.
+
+## Cuándo usarlo
+
+Usa oferta para hacer un triaje rápido de un anuncio dudoso. Si la puntuación supera el 4.0 y decides aplicar, escala a auto-pipeline o al modo apply.
+
+## Cómo es una ejecución
+
+Le pasas al modo un anuncio y devuelve la evaluación de siete bloques — los Bloques A a F más una lectura de legitimidad en el Bloque G — con puntuación y razonamiento citado. Pega el texto de la JD directamente, o pasa una URL y el modo confirma primero que la publicación sigue activa, de modo que un enlace muerto nunca quema una evaluación completa.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+
+Los Bloques B a F cubren el encaje del CV y sus carencias, la estrategia de nivel, compensación y demanda, un plan de personalización, e historias de entrevista STAR+R mapeadas a los requisitos del puesto.
+
+## Cuándo recurrir a él
+
+Recurre a oferta para puntuar un único anuncio rápidamente sin comprometerte con el pipeline completo. Conviene saber:
+
+- Si pasas una URL, primero se ejecuta una comprobación de liveness — una publicación caducada o con 404 se detiene antes del Bloque A, así que nunca gastas una ejecución en contenido fantasma.
+- La investigación de empresa y compensación está acotada a un máximo de cinco búsquedas web; esto es una evaluación, no una investigación en profundidad. Ejecuta `/career-ops deep` por separado cuando quieras la imagen más completa de la empresa.
+- El Bloque G devuelve uno de tres niveles — High Confidence, Proceed with Caution o Suspicious — de modo que los probables ghost jobs salen a la luz antes de que inviertas esfuerzo en la entrevista.
+
+## Relacionados
+
+- [auto-pipeline](/es/docs/reference/modes/auto-pipeline)
+- [ofertas](/es/docs/reference/modes/ofertas)
+- [pdf](/es/docs/reference/modes/pdf)

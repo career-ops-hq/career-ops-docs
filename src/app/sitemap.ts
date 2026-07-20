@@ -83,7 +83,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // /docs/** auto-discovered from Fumadocs source (includes
   // /docs/reference/modes/* and /docs/reference/portals/* shipped
   // post-migration from the deleted /use-cases routes).
-  for (const page of source.getPages()) {
+  for (const page of source.getPages('en')) {
     // page.url already includes the /docs prefix via baseUrl in source.ts.
     // Reconstruct MDX path from slugs:
     //   []                                 -> content/docs/index.mdx

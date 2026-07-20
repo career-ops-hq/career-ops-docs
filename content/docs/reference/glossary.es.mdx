@@ -1,0 +1,82 @@
+---
+title: Glosario
+description: El vocabulario de una búsqueda de empleo con IA, definido — ATS, puntuación A–F, Data Contract, spray-and-pray, liveness check, tailoring, zero-token scan, historias STAR+R y todos los términos que usa career-ops.
+seoTitle: "Glosario de career-ops — términos de la búsqueda de empleo con IA, definidos"
+icon: BookOpen
+translationHash: 908b3fb3fc8e8f13
+localized: true
+translatedFrom: /docs/reference/glossary
+---
+
+{/* Mirrored with src/lib/glossary-data.ts (DefinedTermSet JSON-LD) — edit
+    both together. Definitions must stay verifiable against the core repo. */}
+
+Todos los términos que usa career-ops, definidos en un solo lugar. Cada término enlaza a su referencia más detallada cuando existe.
+
+## ATS (Applicant Tracking System)
+
+El software que usan las empresas para recibir, almacenar y filtrar candidaturas — [Greenhouse](/es/docs/reference/portals/greenhouse), [Ashby](/es/docs/reference/portals/ashby) y [Lever](/es/docs/reference/portals/lever) son ejemplos habituales. career-ops lee sus APIs públicas de empleo para descubrir vacantes y puede prerrellenar sus formularios de solicitud, pero nunca envía nada automáticamente.
+
+## Puntuación A–F
+
+La nota que career-ops asigna a una oferta tras evaluarla frente a tu CV y tu perfil en múltiples dimensiones. Una **A** significa «presenta tu candidatura ya, con plena convicción»; una **F** significa que la oferta no supera tus propios criterios. La rúbrica de puntuación es pública en la [página de metodología](https://career-ops.org/methodology).
+
+## Data Contract
+
+La promesa arquitectónica central de career-ops: la **capa de sistema** (scripts, modos, plantillas) puede actualizarse en cualquier momento, mientras que la **capa de usuario** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — no se toca jamás durante una actualización. Tus datos sobreviven a todas las versiones.
+
+## Spray-and-pray
+
+La estrategia de solicitud masiva: enviar el mismo CV a cientos de ofertas sin ningún criterio. career-ops la rechaza explícitamente: el pipeline evalúa y clasifica las ofertas primero, de modo que el esfuerzo se concentra en el pequeño conjunto de puestos que de verdad merecen la pena.
+
+## Liveness check
+
+Una heurística que career-ops ejecuta para detectar si una oferta sigue abierta antes de que gastes tiempo o tokens en ella. Es una señal orientativa — las ofertas caducadas a veces siguen publicadas en los portales de empleo — y puedes marcar una oferta manualmente cuando la heurística se equivoca.
+
+## Tailoring
+
+Reescribir tu CV para una oferta concreta — reordenando el énfasis, destacando las habilidades y métricas que encajan, alineando el vocabulario con la descripción del puesto — manteniendo cada afirmación fiel a tu experiencia real. career-ops genera un CV adaptado por candidatura, en Markdown que puedes editar.
+
+## Modo
+
+Un flujo de trabajo enfocado, definido como prompt, que career-ops distribuye como un fichero Markdown plano que tu CLI de IA ejecuta — [scan, apply, tracker](/es/docs/reference/modes), [interview/practice](/es/docs/introduction/guides/interview-modes) y una docena más. Los modos son texto inspeccionable, no código de caja negra.
+
+## Pipeline
+
+El flujo de trabajo de career-ops de principio a fin: escanear portales → evaluar ofertas A–F → adaptar el CV → solicitar → hacer seguimiento → preparar entrevistas. Cada etapa es un modo que puedes ejecutar por separado o en batch.
+
+## Zero-token scan
+
+Una pasada de descubrimiento que no consume tokens de LLM: `scan.mjs` llama directamente por HTTP a las APIs de los ATS (Greenhouse, Ashby, Lever), así que encontrar ofertas nuevas es gratis con independencia del motor de IA que uses.
+
+## Motor de IA
+
+La CLI de programación con IA que ejecuta los prompts de career-ops — Claude Code, OpenCode, Codex, GitHub Copilot CLI y [otras CLIs compatibles](/docs/supported-clis) — o cualquier endpoint compatible con OpenAI. career-ops es agnóstico respecto al motor y [funciona también con motores gratuitos](/docs/free-ai-engine).
+
+## Banco de preguntas
+
+Un fichero Markdown local (`interview-prep/question-bank.md`) donde career-ops acumula preguntas reales de entrevista y tu desempeño en cada una (✅/🟡/🔴). El [modo interview/debrief](/es/docs/introduction/guides/interview-modes) lo actualiza después de cada entrevista real, de modo que la preparación se acumula ronda tras ronda.
+
+## Historia STAR+R
+
+Una historia de entrevista estructurada como **S**ituación, **T**area, **A**cción, **R**esultado, más **R**eflexión — el formato que career-ops usa en su banco de historias para que las respuestas conductuales sean concretas, cuantificadas y reutilizables de una entrevista a otra.
+
+## Banco de historias
+
+Un fichero Markdown local (`interview-prep/story-bank.md`) con tus historias STAR+R preparadas. Las sesiones de práctica verifican tus respuestas contra él, y los debriefs extraen historias nuevas de lo que realmente dijiste en las entrevistas reales.
+
+## Portal
+
+La página de empleo de una empresa, respaldada por un ATS, que career-ops puede escanear. Tus portales en seguimiento viven en `portals.yml`; el escáner lee sus APIs públicas en cada ejecución.
+
+## Evaluación en batch
+
+Puntuar muchas ofertas guardadas en una sola ejecución en vez de una a una, con flags para mantener el control: `--limit` acota el tamaño del batch, `--dry-run` muestra una vista previa de lo que se procesaría y `--resume-paused` continúa una ejecución interrumpida sin volver a gastar tokens.
+
+## Local-first
+
+El principio arquitectónico de career-ops: todo — tus datos, los prompts, los scripts, la CLI de IA — se ejecuta en tu máquina. No hay backend alojado, no hay cuenta y no hay que registrarse en nada.
+
+## CareerOps
+
+CareerOps es la práctica de llevar la búsqueda de empleo como los ingenieros llevan producción: con evidencia, con disciplina y con herramientas en el lado de la mesa donde se sienta el candidato. El término nombra la práctica, no un producto; career-ops es su primera implementación de referencia. Acuñado por Santiago Fernández de Valderrama Aparicio en [The CareerOps Manifesto](https://career-ops.org/manifesto) (14 de julio de 2026).

@@ -1,0 +1,57 @@
+---
+title: Lever
+description: "Lever es el ATS consolidado entre las empresas mid-market y en fase de crecimiento. career-ops consulta directamente la API pública de postings de Lever."
+seoTitle: "Escanea ofertas de Lever con career-ops — escaneo de portales ATS sin gastar tokens"
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 535b6f24a4a180f6
+localized: true
+translatedFrom: /docs/reference/portals/lever
+---
+
+## Qué hace
+
+El provider lever de providers/lever.mjs hace peticiones HTTP a api.lever.co/v0/postings/`{slug}` y parsea la respuesta JSON. El slug es el identificador de postings de Lever de la empresa (p. ej. 'figma' para Figma).
+
+## Cuándo usarlo
+
+Usa el escaneo de Lever para empresas en el rango de Serie C+ a pre-IPO que no hayan migrado a Greenhouse ni a Ashby. Figma, Brex y muchas empresas fintech siguen usando Lever.
+
+## Ejemplo
+
+```
+In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
+```
+
+## Qué hace el escáner
+
+El escáner lee tus slugs de Lever habilitados en portals.yml, llama a la API pública de postings de Lever para cada uno y fusiona en tu pipeline los roles nuevos cuyo título coincida, sin sesión de navegador y sin gastar un solo token de LLM en la descarga. La misma ejecución de `node scan.mjs` cubre también tus boards de Greenhouse y Ashby, y después filtra todo por las palabras clave de título que hayas configurado.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 33 total
+Filtered by title: 5 relevant
+Duplicates: 2 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Figma | AI Product Engineer | lever
+  + Brex  | Applied AI Engineer | lever
+```
+
+## Cómo se comunica career-ops con Lever
+
+career-ops solicita `api.lever.co/v0/postings/{slug}` — o el host `api.eu.lever.co` para los boards de la UE — y lee el array JSON de postings. De cada rol toma el campo `text` como título y `hostedUrl` como enlace, recurriendo a `applyUrl` cuando `hostedUrl` no está presente. Como Lever devuelve el board completo en una sola respuesta estructurada, el escaneo es un único GET público por HTTPS por empresa, que se mantiene dentro de los rate limits y no gasta tokens del modelo. El coste en tokens solo empieza más tarde, cuando evalúas un rol que te interesa. Repetir el escaneo es seguro: cada URL se deduplica contra tu historial de escaneos, tus candidaturas ya evaluadas y el pipeline actual, de modo que un rol que ya has visto nunca se añade dos veces.
+
+## A tener en cuenta
+
+La API de Lever expone la descripción del puesto (JD) completa en la respuesta de postings. Algunos boards de Lever incluyen metadatos internos del rol que career-ops saca a la superficie como señal adicional durante el scoring.
+
+## Relacionado
+
+- [greenhouse](/es/docs/reference/portals/greenhouse)
+- [ashby](/es/docs/reference/portals/ashby)

@@ -1,0 +1,61 @@
+---
+title: project
+description: "Los builders acumulan ideas más rápido de lo que pueden lanzarlas. El modo project puntúa una idea de proyecto de portfolio frente a tus roles objetivo, tu portfolio existente y la inversión de tiempo necesaria, y hace visible si merece la pena construirla."
+seoTitle: "Modo project de career-ops — puntúa un proyecto de portfolio frente a los roles objetivo"
+icon: Lightbulb
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 87b86e456dd18f90
+localized: true
+translatedFrom: /docs/reference/modes/project
+---
+
+## Qué hace
+
+El modo `project` lee la descripción de la idea de proyecto, tus arquetipos objetivo de config/profile.yml y el contexto de tu portfolio existente, y después puntúa el proyecto en tres dimensiones: valor de señal para los roles objetivo, diferenciación respecto a tu portfolio existente y tiempo estimado hasta tener algo publicable.
+
+## Cuándo usarlo
+
+Usa project cuando tengas tres o cuatro ideas de side-projects y quieras elegir la que de verdad hace avanzar tu búsqueda de empleo. Es el equivalente para side-projects del modo oferta.
+
+## Ejemplo
+
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+
+## Cómo es una ejecución
+
+Una ejecución de project devuelve una lectura de legitimidad, una puntuación ponderada en seis dimensiones y un único veredicto claro. Le entregas una idea al modo, y él la califica tal y como la leería un hiring manager al encontrarla en tu portfolio, en lugar de juzgar si el código va a compilar.
+
+```txt title="Example"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+
+El veredicto es siempre uno de tres: BUILD, con hitos semanales; SKIP, con qué hacer en su lugar; o PIVOT TO, hacia una alternativa que aporte más señal para los roles que persigues. Las seis dimensiones están ponderadas, de modo que un proyecto que se demuestra bien y produce métricas limpias puede superar a una idea más novedosa que no tiene un retorno visible.
+
+## El interview pack
+
+Todo proyecto aprobado se entrega con un interview pack, porque el entregable es la historia, no el repositorio. El pack tiene tres partes: un one-pager que cubre producto, arquitectura, métricas y plan de evaluación; una demo, ya sea una URL en vivo o un recorrido grabado de dos minutos; y un postmortem de qué funcionó, qué no y cómo lo mitigaste. Un proyecto construido sin narrativa detrás rara vez mueve una búsqueda de empleo, mientras que un proyecto modesto con una historia nítida de trade-offs a menudo sí lo hace. El plan 80/20 refleja esto: la semana uno es el MVP con su métrica principal, la semana dos es el pulido más el propio pack.
+
+## Advertencias
+
+El modo no valida la viabilidad técnica, solo el valor de señal para tu carrera. Haz una pasada de scoping técnico aparte.
+
+## Relacionado
+
+- [training](/es/docs/reference/modes/training)

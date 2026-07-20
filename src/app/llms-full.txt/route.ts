@@ -72,7 +72,7 @@ The full evaluation runs as Block A through G: A (role summary), B (CV match), C
 career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Nine tiers: seven individual ($1–$250) are identical statements of support; two corporate ($500 Corporate Supporter, $1,000 Ecosystem Partner) add logo placement on the README and /sustain — nothing else changes. No premium features, no roadmap influence, no priority support. Path 3 Sovereign Maintainer model.`;
 
 export async function GET() {
-  const scan = source.getPages().map(getLLMText);
+  const scan = source.getPages('en').map(getLLMText);
   const scanned = await Promise.all(scan);
 
   const blogPosts = await Promise.all(blogSource.getPages().map(blogLLMText));

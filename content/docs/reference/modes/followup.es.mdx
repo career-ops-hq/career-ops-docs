@@ -1,0 +1,53 @@
+---
+title: followup
+description: "Marca las candidaturas y entrevistas con el seguimiento vencido según las reglas de cadencia que configures. Redacta los mensajes de seguimiento para que los revises y envíes."
+seoTitle: "Modo followup de career-ops — controla los seguimientos vencidos y redacta los mensajes"
+icon: CalendarClock
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: b1eb8003f10d7ed3
+localized: true
+translatedFrom: /docs/reference/modes/followup
+---
+
+## Qué hace
+
+El modo followup lee tu tracker de candidaturas, compara la fecha del último contacto con la cadencia configurada (por defecto: un primer toque 7 días después de aplicar, y 1 día después de una entrevista para la nota de agradecimiento) y marca las entradas vencidas o urgentes. Para cada entrada marcada redacta un mensaje de seguimiento contextual, basado en ese informe y en tu CV.
+
+## Cuándo usarlo
+
+Ejecuta followup los lunes por la mañana como ritual semanal. Cada lunes saca a la superficie los seguimientos que tocan esa semana, con los borradores listos para enviar. Es conservador por diseño — no marca una entrada hasta que el umbral de cadencia ha pasado con claridad, así que el dashboard se mantiene corto y todo lo que aparece en él está genuinamente pendiente.
+
+## Cómo es una ejecución
+
+followup ejecuta un script de cadencia sobre tu tracker, imprime un dashboard ordenado por urgencia y redacta un mensaje para cada fila vencida o urgente. Los borradores abren con una prueba concreta, no con la petición, y nunca dicen "just checking in".
+
+```txt title="Terminal"
+> /career-ops followup
+
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
+```
+
+## Cosas a tener en cuenta
+
+Un puesto en estado Applied recibe como máximo dos seguimientos; cuando el segundo queda sin respuesta, followup deja de redactar borradores y sugiere cerrar la entrada o probar con otro contacto a través de `contacto`. ¿Quieres un ritmo más ajustado que los siete días por defecto? Pasa un flag al script de cadencia — `node followup-cadence.mjs --applied-days 5` — en lugar de editar los borradores a mano.
+
+## Relacionado
+
+- [tracker](/es/docs/reference/modes/tracker)
+- [patterns](/es/docs/reference/modes/patterns)

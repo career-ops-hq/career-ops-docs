@@ -1,0 +1,51 @@
+---
+title: contacto
+description: "La jugada maestra de LinkedIn. A partir del nombre de una empresa y el contexto de tu red, contacto saca a la luz contactos probablemente cercanos (conexiones en común, segundo grado) y redacta un mensaje de outreach corto adaptado al puesto al que estás aplicando."
+seoTitle: "modo contacto de career-ops — encuentra contactos cercanos en LinkedIn y redacta el outreach"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: ef2b573d6f41f444
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## Qué hace
+
+El modo contacto lee el nombre de la empresa y el contexto de la oferta, y a continuación sugiere objetivos de outreach que encuentra mediante WebSearch: el hiring manager, el recruiter asignado, dos o tres compañeros del equipo y algún entrevistador conocido. Redacta un mensaje corto — tres frases, menos de 300 caracteres — adaptado al puesto y a quién es cada contacto.
+
+## Cuándo usarlo
+
+Usa contacto cuando ya has aplicado a un puesto y quieres encontrar una vía de referral. O úsalo antes de aplicar, cuando una intro cálida pueda sacarte del montón del recruiter. Lo predeterminado es la jugada maestra de LinkedIn; para una plataforma con un límite estricto de caracteres — el chat de un portal de empleo, la primera línea de un cold email, el 打招呼 de BOSS Zhipin — pide un "greeting" y contacto escribe un único mensaje de primer contacto ultracorto, sin fase de descubrimiento de contactos.
+
+## Cómo es una ejecución
+
+Dale a contacto una empresa y encuentra a las personas que merece la pena contactar, elige a la que más se beneficia de que tú acabes allí y escribe un mensaje construido para ese perfil: un recruiter oye requisitos imprescindibles cumplidos, un hiring manager oye impacto.
+
+```txt title="Ejemplo"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## Cosas a tener en cuenta
+
+contacto no hace scraping de LinkedIn (rechazado según el issue #238). Trabaja con el contexto que tú aportas — tu CV, tus empresas anteriores, las conexiones en común que menciones — más resultados públicos de WebSearch. El agente no tiene acceso a tu grafo privado de LinkedIn. Cada mensaje se mantiene por debajo del límite de 300 caracteres de las solicitudes de conexión de LinkedIn y nunca incluye tu número de teléfono.
+
+## Relacionado
+
+- [deep](/es/docs/reference/modes/deep)
+- [interview-prep](/es/docs/reference/modes/interview-prep)

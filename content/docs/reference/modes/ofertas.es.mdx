@@ -1,0 +1,56 @@
+---
+title: ofertas
+description: "Se usa cuando tienes dos o más ofertas competidoras sobre la mesa y necesitas una comparación normalizada de compensación, encaje del rol, trayectoria de crecimiento y red flags. Genera una recomendación con ranking."
+seoTitle: "modo ofertas de career-ops — compara ofertas de empleo competidoras lado a lado"
+icon: GitCompare
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: b51253649996ab03
+localized: true
+translatedFrom: /docs/reference/modes/ofertas
+---
+
+## Qué hace
+
+El modo `ofertas` lee varias evaluaciones de JD (ya producidas por oferta o auto-pipeline) y las clasifica entre sí sobre las cinco dimensiones más una puntuación global holística y una matriz de decisión normalizada. El resultado es un informe comparativo lado a lado y una recomendación con ranking.
+
+## Cuándo usarlo
+
+Usa ofertas cuando llegues a fases finales de entrevista para varios roles y necesites una forma estructurada de decidir entre ellos. Es especialmente útil para ofertas de nivel staff, donde los paquetes de compensación y las vías de crecimiento difieren sustancialmente.
+
+## Cómo es una ejecución
+
+Le das al modo dos o más ofertas y puntúa cada una en diez dimensiones ponderadas, y después las ordena. El mayor peso recae en la alineación con el North Star (25 %), seguida del encaje con el CV y la seniority (15 % cada una); la compensación y la trayectoria de crecimiento pesan un 10 % cada una, y la reputación, la calidad del trabajo remoto, el stack tecnológico, el time-to-offer y las señales culturales completan el resto.
+
+```bash title="Terminal"
+/career-ops ofertas
+```
+
+```txt title="Comparison excerpt"
+# Offer Comparison — 3 roles
+
+| Dimension (weight)       | Acme | Globex | Initech |
+|--------------------------|------|--------|---------|
+| North Star align (25%)   | 5    | 3      | 4       |
+| CV match (15%)           | 4    | 4      | 3       |
+| Compensation (10%)       | 3    | 5      | 4       |
+| Growth trajectory (10%)  | 5    | 3      | 3       |
+| ...                      |      |        |         |
+| Weighted total           | 4.4  | 3.6    | 3.5     |
+
+Recommendation: Acme — strongest North Star fit and growth path.
+Globex pays more but ranks lower on trajectory and time-to-offer.
+```
+
+## Cuándo recurrir a él
+
+Recurre a ofertas cuando tengas dos o más ofertas competidoras y necesites una forma normalizada de elegir. Donde más rinde es a nivel staff, donde los paquetes de compensación y las vías de crecimiento divergen lo suficiente como para que la intuición engañe.
+
+- Proporciona las vacantes como texto pegado, URLs o referencias a empleos que ya estén en tu tracker; si no hay ninguna en contexto, el modo te las pedirá.
+- Puntúa primero cada oferta por separado — con `oferta` o `auto-pipeline` — para que la comparación ordene evaluaciones consistentes en lugar de mezclar profundidades distintas.
+- Como la alineación con el North Star pondera un 25 %, un salario más alto por sí solo no encabezará el ranking; un rol que encaje con tu trayectoria objetivo puede superar en puntuación a un desvío mejor pagado.
+
+## Relacionados
+
+- [oferta](/es/docs/reference/modes/oferta)
+- [auto-pipeline](/es/docs/reference/modes/auto-pipeline)

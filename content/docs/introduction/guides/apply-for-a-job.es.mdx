@@ -1,0 +1,147 @@
+---
+title: Presentar una candidatura
+description: Usa career-ops para rellenar formularios de candidatura con respuestas adaptadas a tu perfil y al puesto que buscas.
+seoTitle: "Cómo presentar una candidatura con career-ops — redacta respuestas ATS y adapta tu CV"
+icon: FileInput
+translationHash: f2922090f40c99ec
+localized: true
+translatedFrom: /docs/introduction/guides/apply-for-a-job
+---
+
+Esta guía explica cómo usar `/career-ops apply` para rellenar un formulario de candidatura con respuestas adaptadas a tu perfil, tus proof points y el puesto concreto al que te presentas.
+
+<Callout title="Antes de empezar">
+  Asegúrate de haber completado la guía [Escanear portales de empleo](./scan-job-portals.mdx). El comando `apply` depende de un informe de evaluación existente. Si no existe informe para el puesto, ejecuta primero el pipeline.
+</Callout>
+
+## Ejecuta el comando apply
+
+Abre tu CLI agéntica en la carpeta raíz de career-ops y escribe:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name}
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+</Tabs>
+
+Por ejemplo:
+
+```bash title="Claude Code"
+/career-ops apply Anthropic
+```
+
+career-ops localiza el informe correspondiente en `reports/`, usa Playwright para abrir una ventana del navegador y lee el formulario. Después genera una respuesta para cada campo — lista para copiar y pegar. No necesitas abrir el navegador tú mismo.
+
+<Callout title="Nota">
+  Si Playwright no está disponible, career-ops recurre a WebFetch para leer el formulario. Consulta [Configurar Playwright](./set-up-playwright.mdx) si quieres activar la experiencia completa basada en navegador.
+</Callout>
+
+**Si ejecutas el comando `/career-ops apply` sin argumentos**, el sistema te pide que aportes el contexto manualmente:
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Opción                          | Cómo                                                                                                  |
+    | ------------------------------- | ----------------------------------------------------------------------------------------------------- |
+    | Comparte una captura de pantalla | Haz una captura de pantalla del formulario y compártela en el chat. career-ops lee imágenes directamente. |
+    | Pega las preguntas              | Copia las preguntas del formulario como texto y pégalas en el chat.                                    |
+    | Indica la empresa y el puesto   | Escribe el nombre de la empresa y el título del puesto. career-ops busca la coincidencia en `reports/`. |
+    | Comparte la URL de la candidatura | Pega la URL y career-ops navega hasta el formulario.                                                 |
+  </div>
+</div>
+
+## Rellena el formulario
+
+El sistema devuelve una lista numerada de respuestas — una por campo del formulario — que refleja el orden del propio formulario. Recorre la lista de arriba abajo y pega cada respuesta en el campo correspondiente.
+
+La salida tiene dos partes:
+
+**Respuestas** — cada campo del formulario, en orden:
+
+```
+1. Name
+   Andres Urdaneta
+
+2. Email
+   andres@example.com
+
+...
+
+12. Cover Letter (optional)
+    I've spent 5+ years shipping production Rails applications...
+```
+
+Los campos simples como el nombre, el email y las preguntas de sí/no van primero. Los campos de texto libre, como la carta de presentación, van al final.
+
+**Key notes** — un bloque breve después de las respuestas con todo lo que conviene tener en cuenta antes de enviar:
+
+```
+Key notes:
+- No salary field — you'll negotiate at offer. Anchor to $160K–$175K at offer stage.
+- Add github.com/yourhandle to your resume PDF before uploading.
+- Cover letter is optional but the draft above is tight — worth including.
+```
+
+Cada respuesta se construye a partir de una parte concreta de tu informe de evaluación:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Tipo de campo                                | Fuente                                                    |
+    | -------------------------------------------- | --------------------------------------------------------- |
+    | Carta de presentación, «por qué este puesto» | Proof points del Bloque B + historias STAR del Bloque F   |
+    | Preguntas cortas de texto libre              | El proof point o la historia más relevante para esa pregunta |
+    | Desplegables, sí/no                          | Respuestas directas extraídas de tu perfil                |
+  </div>
+</div>
+
+<Callout title="Campos de subida de archivos">
+  Usa el archivo de `output/` generado al crear el informe. Si todavía no existe ningún PDF, ejecuta primero `/career-ops pdf` y vuelve después al formulario. Consulta [Generar un PDF](generate-a-pdf.md).
+</Callout>
+
+## Envía la candidatura
+
+Revisa todas las respuestas y envía el formulario tú mismo. career-ops no hace clic en Submit.
+
+Después de enviarla, confírmalo en el chat:
+
+> "Enviada."
+
+career-ops hará lo siguiente:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Actualizar el estado de la candidatura">
+        Actualiza `data/applications.md` — cambiando el estado de `Evaluated` a `Applied`
+      </Step>
+      <Step title="Guardar las respuestas en el informe">
+        Guarda las respuestas finales en la Sección G del informe para futuras consultas
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## Qué hacer después
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Puntuación        | Siguiente paso                                                                                                                                                                                     |
+    | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | **4.0 o más**     | Ejecuta `/career-ops contacto`. career-ops encuentra a un hiring manager o a un miembro del equipo en LinkedIn y redacta un mensaje de contacto. Enviarlo antes de que revisen tu candidatura mejora tu visibilidad. |
+    | **Cualquier puntuación** | Ejecuta `/career-ops tracker` para ver el estado actual de todo lo que tienes en tu pipeline.                                                                                                |
+  </div>
+</div>

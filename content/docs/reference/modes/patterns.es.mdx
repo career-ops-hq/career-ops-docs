@@ -1,0 +1,52 @@
+---
+title: patterns
+description: "Lee tus candidaturas rechazadas y descartadas y saca a la luz patrones — formas de JD que puntúan alto pero nunca convierten, desajustes de arquetipo, problemas de banda salarial. El resultado es una señal de calibración para tu filtro de targeting."
+seoTitle: "Modo patterns de career-ops — descubre por qué tus candidaturas no convierten"
+icon: TrendingDown
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 392fb9e40a5ff463
+localized: true
+translatedFrom: /docs/reference/modes/patterns
+---
+
+## Qué hace
+
+El modo `patterns` lee todos los informes de las etapas de rechazadas y descartadas, busca rasgos comunes (sector, tamaño de empresa, nivel de seniority, palabras clave concretas) y produce un análisis estructurado de qué está funcionando y qué no en tu targeting.
+
+## Cuándo usarlo
+
+Ejecuta patterns cada 20–30 rechazos para recalibrar. El modo saca a la luz puntos ciegos de tu perfil y te ayuda a no seguir enviando candidaturas hacia los mismos patrones muertos.
+
+## Cómo es una ejecución
+
+Ejecutas el modo después de una tanda de resultados y te devuelve un informe de análisis de patrones con fecha, más un resumen breve de los tres hallazgos que más importan. Por debajo, ejecuta `analyze-patterns.mjs` sobre tu tracker y tus informes, y después te presenta un funnel de conversión, una tabla de puntuación frente a resultado, los principales bloqueadores y un suelo de puntuación recomendado.
+
+```bash title="Terminal"
+/career-ops patterns
+```
+
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+
+Full report: reports/pattern-analysis-2026-05-18.md
+```
+
+Tras presentar el resumen, el modo se ofrece a actuar sobre los hallazgos — actualizar los filtros de `portals.yml`, fijar un umbral de puntuación o reponderar qué arquetipos tienes como objetivo.
+
+## Cuándo recurrir a él
+
+Recurre a patterns cuando suficientes candidaturas hayan pasado ya de la evaluación como para que los resultados aporten señal. La barrera dura son cinco entradas con un estado posterior a "Evaluated" — Applied, Responded, Interview, Offer, Rejected o Discarded; por debajo de eso el modo termina y te pide que vuelvas con más datos. Cuantos más resultados, más nítidos los patrones, así que rinde de verdad tras un mes de candidaturas constantes.
+
+- Si guardas transcripciones de entrevistas en `interview-prep/sessions/`, el modo añade una señal de targeting: dónde se concentran tus respuestas más fluidas y específicas, lo que detecta cuando el tipo de rol en el que eres más fuerte difiere de aquel al que no dejas de aplicar.
+- El informe nunca menciona a un entrevistador o una empresa reales de esas sesiones — solo resume clusters de competencias, de modo que lo que acabe en un commit sigue siendo privado.
+
+## Relacionados
+
+- [tracker](/es/docs/reference/modes/tracker)
+- [followup](/es/docs/reference/modes/followup)

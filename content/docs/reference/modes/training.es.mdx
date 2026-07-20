@@ -1,0 +1,57 @@
+---
+title: training
+description: "¿Deberías hacer ese curso de sistemas de ML de 4.000 $? ¿La especialización de Coursera? ¿La cara certificación de AWS? El modo training puntúa una inversión en formación contra la dirección profesional que has declarado y saca a la luz el retorno real en tiempo y dinero."
+seoTitle: "Modo training de career-ops — ¿merece la pena ese curso o certificación?"
+icon: BookOpen
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: f9ba1d91483777d9
+localized: true
+translatedFrom: /docs/reference/modes/training
+---
+
+## Qué hace
+
+El modo `training` lee los detalles del curso o certificación (temario, dedicación de tiempo, coste), lee tu sección North Star de config/profile.yml y puntúa la inversión en tres dimensiones: cierre de la brecha de habilidades, valor de señal para los roles objetivo y coste de oportunidad.
+
+## Cuándo usarlo
+
+Usa training cuando te tiente una oferta formativa pero no tengas claro si de verdad te acerca a la dirección que has declarado. Especialmente útil para certificaciones caras y bootcamps.
+
+## Ejemplo
+
+```
+`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
+```
+
+## Cómo es una ejecución
+
+Una ejecución de training puntúa un curso o certificación en cinco dimensiones más una puntuación global holística y devuelve uno de tres veredictos, de modo que ves el retorno en tiempo y dinero antes de comprometer ninguno de los dos. Le das la oferta formativa — temario, semanas, horas por semana y coste — y la califica contra la dirección profesional que has declarado.
+
+```txt title="Ejemplo"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+
+Un veredicto DO viene con un plan de cuatro a doce semanas con entregables semanales y un marcador. Un veredicto DON'T DO nombra una alternativa mejor y explica por qué. DO WITH TIMEBOX limita las semanas y reduce el plan a lo esencial, que es el resultado habitual para cursos útiles pero con relleno.
+
+## Qué puntúa más alto
+
+El modo da más peso a las ofertas que construyen credibilidad en IA de nivel de producción frente a credenciales genéricas. En orden de prioridad, eso significa evaluación y testing de LLMs, observabilidad y monitorización, trade-offs de coste y fiabilidad, gobernanza y seguridad de IA, y arquitectura de IA empresarial. Un curso que termina en un artefacto demostrable — un eval harness, un despliegue monitorizado — puntúa más que uno que termina solo en un certificado, porque el artefacto es lo que un hiring manager puede ver de verdad.
+
+## Advertencias
+
+El modo está sesgado hacia tu North Star declarado. Si no has rellenado con cuidado la sección North Star de config/profile.yml, la evaluación será superficial.
+
+## Relacionado
+
+- [project](/es/docs/reference/modes/project)

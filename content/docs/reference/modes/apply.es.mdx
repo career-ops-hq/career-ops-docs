@@ -1,0 +1,66 @@
+---
+title: apply
+description: "Asistente de candidatura en vivo. Lee las preguntas abiertas de los formularios de Greenhouse, Ashby y Lever, y redacta respuestas basadas en tu CV y en la descripción del puesto."
+seoTitle: "Modo apply de career-ops — borradores automáticos de respuestas a preguntas de formularios ATS"
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-05-19"
+translationHash: 2b3d824399a29c66
+localized: true
+translatedFrom: /docs/reference/modes/apply
+---
+
+## Qué hace
+
+El modo `apply` lee un formulario de candidatura abierto (Greenhouse, Ashby, Lever), identifica las preguntas abiertas — «¿Por qué este puesto?», «Cuéntanos sobre un proyecto», «¿Cuál es tu expectativa salarial?» — y redacta respuestas basadas en tu CV y en la descripción del puesto. Tú editas los borradores sobre la marcha, los copias en el portal y envías.
+
+## Cuándo usarlo
+
+Abre la descripción del puesto y el formulario de candidatura en paralelo. Ejecuta apply cuando el formulario esté cargado. El resultado está listo para pegar, no es una candidatura terminada — tú sigues al mando del tono, los datos y cualquier campo extra que el portal añada por encima. apply funciona mejor con Playwright en modo visible, donde lee la página en vivo tal y como tú la ves; sin Playwright, pega las preguntas o comparte una captura de pantalla y redactará a partir de eso.
+
+## Cómo es una ejecución
+
+Ejecuta apply con el formulario de candidatura abierto en Chrome. Antes de escribir una sola respuesta, el modo lee la pestaña activa, la cruza con el informe que ya generaste para esa oferta, confirma que la publicación sigue activa y examina el formulario en busca de preguntas eliminatorias (knock-out) que podrían descartarte automáticamente.
+
+```txt title="Example"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year. (paste-ready)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here. (paste-ready)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+
+## Advertencias
+
+apply no envía formularios ni pulsa botones. Lee las preguntas y produce borradores de respuesta en el chat. El paso de envío es tuyo. Los campos cerrados (desplegables, botones de opción, subida de archivos) quedan fuera del alcance. Si la comprobación preflight detecta que la publicación ha cerrado, apply se niega a redactar la versión final salvo que lo fuerces explícitamente — un enlace muerto no merece una respuesta a medida.
+
+## Peculiaridades conocidas de los ATS
+
+apply se ha probado en campo en cerca de una docena de candidaturas gestionadas con Playwright, y algunos portales rompen la ejecución si no los tienes en cuenta:
+
+- **Ashby** deduplica candidatos por email dentro de cada empresa, así que una segunda candidatura puede fusionarse silenciosamente con la primera. Si ya existe un informe para esa empresa, apply sugiere un alias de email con `+tag`.
+- **Lever** lanza un captcha cuando una casilla o un botón de opción se marca de forma programática, así que apply rellena solo los campos de texto y te deja el resto para que lo marques tú.
+- **Workday** ignora los valores introducidos sin pulsaciones de teclado reales, así que apply escribe las respuestas carácter a carácter y te pide revisar los desplegables de autorización de trabajo antes de guardar.
+
+## Relacionado
+
+- [auto-pipeline](/es/docs/reference/modes/auto-pipeline)
+- [pdf](/es/docs/reference/modes/pdf)
+- [tracker](/es/docs/reference/modes/tracker)

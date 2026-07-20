@@ -1,0 +1,52 @@
+---
+title: auto-pipeline
+description: "Flujo por defecto cuando pegas la URL de una descripción de puesto o su texto sin formato. Ejecuta la evaluación A–G, genera el informe, exporta un PDF adaptado y escribe una entrada en el tracker — sin intervención manual entre pasos."
+seoTitle: "auto-pipeline de career-ops — evalúa una oferta y construye CV + tracker desde una sola URL"
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: a103f3feac73a799
+localized: true
+translatedFrom: /docs/reference/modes/auto-pipeline
+---
+
+## Qué hace
+
+career-ops invoca auto-pipeline cada vez que sueltas en el prompt la URL de una JD o su texto pegado. El modo lee la oferta, la puntúa contra la rúbrica — cinco dimensiones más una puntuación global holística —, escribe la evaluación en reports/, genera el PDF adaptado vía Playwright y actualiza la entrada del tracker — todo en un único turno del agente.
+
+## Cuándo usarlo
+
+Usa auto-pipeline cuando quieras que el pipeline completo se ejecute automáticamente. Es el modo por defecto para las ofertas nuevas que entran en tu búsqueda.
+
+## Cómo es una ejecución
+
+Pega la URL de una oferta sin ningún subcomando y auto-pipeline ejecuta la cadena entera de principio a fin: extrae la descripción, comprueba que la publicación sigue activa, la puntúa, guarda el informe, exporta un PDF adaptado y registra la entrada en tu tracker.
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+
+## Conviene saber
+
+- Pega una URL y auto-pipeline se encarga de la extracción por ti: primero Playwright para portales de una sola página como Lever, Ashby, Greenhouse y Workday, después WebFetch para páginas estáticas y, como último recurso, WebSearch.
+- Antes de la evaluación se ejecuta una comprobación de vigencia (liveness gate). Si el enlace está muerto o la página es un cascarón vacío de «posición ya cubierta», el modo se detiene ahí en lugar de puntuar contenido fantasma — y si la entrada venía de `data/pipeline.md`, marca esa fila como cerrada.
+- Los borradores de respuestas de candidatura solo se escriben cuando la puntuación es 4.5 o superior, para que los puestos con poco encaje no gasten tokens en textos que no vas a enviar.
+
+## Posibles problemas
+
+Si solo quieres la evaluación sin el PDF (más rápido, más barato), invoca `/career-ops oferta` en su lugar. auto-pipeline consume más tokens porque ejecuta la cadena completa.
+
+## Relacionado
+
+- [pipeline](/es/docs/reference/modes/pipeline)
+- [oferta](/es/docs/reference/modes/oferta)
+- [pdf](/es/docs/reference/modes/pdf)
+- [tracker](/es/docs/reference/modes/tracker)

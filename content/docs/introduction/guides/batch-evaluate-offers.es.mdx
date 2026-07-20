@@ -1,0 +1,157 @@
+---
+title: Evalúa ofertas en lote
+description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
+seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
+icon: FileStack
+translationHash: 5abe712784127777
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+Usa esta guía cuando tengas 10 o más ofertas de empleo que revisar y quieras procesarlas todas en una sola sesión en lugar de una a una.
+
+Cada oferta recibe su propio worker de Claude. Ese worker lee tu CV, puntúa el encaje, redacta un informe completo y guarda un PDF adaptado — todo sin que muevas un dedo.
+
+## Paso 1: Añade tus ofertas al fichero de entrada
+
+El sistema de batch lee las URLs de las ofertas desde un fichero llamado **`batch/batch-input.tsv`**. Piensa en él como una lista de tareas para el evaluador.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Abre **`batch/batch-input.tsv`** en cualquier editor de texto.
+      </Step>
+      <Step>
+        Añade una fila por oferta. Cada fila tiene cuatro columnas separadas por un tabulador:
+
+        | Columna | Qué escribir |
+        |--------|---------------|
+        | `id` | Un número único para esta oferta (1, 2, 3, …) |
+        | `url` | La URL completa de la oferta de empleo |
+        | `source` | Dónde la encontraste (p. ej., `LinkedIn`, `Greenhouse`) |
+        | `notes` | Una nota opcional — déjala en blanco si no tienes ninguna |
+      </Step>
+      <Step>
+        Guarda el fichero.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**Ejemplo:**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="Consejo">
+  Cada ID debe ser un número único. No te saltes números ni los repitas.
+</Callout>
+
+## Paso 2: Previsualiza tu batch (recomendado)
+
+Antes de procesar nada, ejecuta una comprobación rápida para ver cuántas ofertas están en espera. Todavía no se evalúa nada — esto es solo una vista previa.
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+Verás una lista de las ofertas pendientes con sus IDs. Si algo no cuadra, corrige el fichero de entrada ahora, antes de dedicar tiempo a una lista incorrecta.
+
+## Paso 3: Ejecuta el batch
+
+Cuando estés listo, arranca el batch. Puedes procesar las ofertas de una en una o varias a la vez.
+
+**De una en una (la opción más lenta, la que menos memoria consume):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**De dos en dos (una buena opción por defecto):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**De tres en tres (más rápido, pero más exigente con tu máquina):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**Omite las ofertas que puntúen por debajo de un umbral (p. ej., por debajo de 4.0 sobre 5):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+Observa la terminal mientras corre el batch. Cada línea te indica qué oferta se está procesando y si terminó o falló.
+
+## Paso 4: Lee los resultados según van llegando
+
+No necesitas esperar a que el batch termine. Los resultados aparecen a medida que se completa cada oferta.
+
+**Informes de evaluación completos** → `reports/`
+
+Cada informe es un fichero con un nombre del tipo `042-company-name-2026-04-14.md`. Ábrelo para ver:
+
+- Un resumen del puesto
+- Cómo de bien encaja tu CV con la oferta
+- Un análisis salarial
+- Un plan sugerido de preparación de la entrevista
+
+**Entradas de una línea para el tracker** → `batch/tracker-additions/`
+
+Cada oferta deja también aquí un fichero con un resumen breve. Estos se añaden a tu tracker principal en el Paso 6.
+
+## Paso 5: Reintenta las ofertas fallidas
+
+A veces un worker falla — por ejemplo, si la URL de una oferta dejó de cargar. Las ofertas fallidas aparecen en la terminal con un mensaje de error breve.
+
+**Reintenta solo las ofertas fallidas:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**Reintenta con hasta 3 intentos en lugar de los 2 por defecto:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+El batch omite cualquier oferta que ya terminó con éxito — así que volver a ejecutarlo es siempre seguro.
+
+## Paso 6: Fusiona los resultados en tu tracker
+
+Cuando el batch termine, ejecuta este comando para añadir todas las evaluaciones nuevas a `data/applications.md`:
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+Este script:
+
+1. Lee los ficheros de resumen de `batch/tracker-additions/`
+2. Comprueba duplicados para que nunca acabes con dos filas para la misma oferta
+3. Añade las entradas nuevas a tu tracker de candidaturas
+4. Archiva los ficheros procesados en `batch/tracker-additions/merged/`
+
+**Para previsualizar los cambios sin escribir nada:**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## Qué hacer a continuación
+
+Abre **`data/applications.md`** para ver todas tus evaluaciones en una sola tabla. Desde ahí puedes:
+
+- Ordenar por puntuación para encontrar tus mejores encajes
+- Abrir los informes individuales en `reports/` para un análisis en profundidad
+- Iniciar el proceso de candidatura para tus mejores opciones con `/career-ops apply`

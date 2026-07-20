@@ -1,0 +1,46 @@
+---
+title: Modos
+description: "Los 14 modos de career-ops invocables por el usuario — evaluar, adaptar, aplicar, hacer seguimiento y preparar entrevistas — cada uno una skill en markdown que corre en cualquier CLI de IA compatible."
+seoTitle: "Modos de career-ops — los 14 comandos de búsqueda de empleo (evaluar, adaptar, aplicar, seguir, preparar)"
+icon: Layers
+translationHash: 4d490714e084c6f4
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## Los 14 modos
+
+career-ops incluye **14 modos invocables por el usuario**. Cada uno es una skill en markdown plano que el agente carga y ejecuta dentro del CLI de IA que ya uses — Claude Code, Codex, OpenCode, Gemini CLI, Qwen o GitHub Copilot. Un modo se invoca como `/career-ops <mode>`, y cada uno cubre una etapa de la búsqueda de empleo: evaluar una oferta contra la rúbrica (cinco dimensiones más una puntuación global holística), adaptar el CV, redactar una candidatura, hacer seguimiento de los resultados o preparar entrevistas. Los modos son System Layer según el [Data Contract](https://github.com/santifer/career-ops/blob/main/DATA_CONTRACT.md) — se actualizan con la herramienta y nunca modifican tu `cv.md`, tu perfil ni tus informes.
+
+## Evaluar
+
+El bucle central de puntuación — leer una oferta de empleo y puntuarla contra las cinco dimensiones más una puntuación global holística antes de invertir esfuerzo en ella.
+
+- **[auto-pipeline](/es/docs/reference/modes/auto-pipeline)** — el flujo por defecto. Pega la URL o el texto de una JD; ejecuta la evaluación A–F, escribe el informe, exporta un PDF adaptado y registra una entrada en el tracker sin pasos manuales de por medio.
+- **[pipeline](/es/docs/reference/modes/pipeline)** — ejecuta auto-pipeline contra cada URL encolada en `data/pipeline.md`, de modo que las ofertas de todo un día se procesan en una sola sesión.
+- **[oferta](/es/docs/reference/modes/oferta)** — la evaluación A–F contra una única oferta cuando solo necesitas la decisión de puntuación, no el pipeline completo.
+- **[ofertas](/es/docs/reference/modes/ofertas)** — clasifica dos o más ofertas en competencia según compensación, encaje, crecimiento y red flags en una única matriz de decisión.
+- **[deep](/es/docs/reference/modes/deep)** — un documento de investigación en profundidad sobre la empresa (financiación, equipo directivo, prensa, señales de compensación, red flags) antes de aplicar a una empresa que no conoces bien.
+
+## Adaptar y aplicar
+
+Convierte una oferta con puntuación alta en una candidatura enviada.
+
+- **[pdf](/es/docs/reference/modes/pdf)** — genera un CV en PDF adaptado y limpio para ATS contra una JD concreta vía Playwright.
+- **[apply](/es/docs/reference/modes/apply)** — lee las preguntas abiertas de un formulario de candidatura y redacta respuestas fundamentadas en tu CV y la JD.
+- **[contacto](/es/docs/reference/modes/contacto)** — identifica contactos de LinkedIn con los que probablemente tengas cercanía y redacta un mensaje de contacto breve y específico para el puesto.
+- **[followup](/es/docs/reference/modes/followup)** — detecta candidaturas y entrevistas con el seguimiento atrasado y redacta los mensajes.
+
+## Seguir y crecer
+
+Mantén la búsqueda organizada y calíbrala con el tiempo.
+
+- **[tracker](/es/docs/reference/modes/tracker)** — un resumen de estado en el propio chat de todas las candidaturas agrupadas por etapa.
+- **[patterns](/es/docs/reference/modes/patterns)** — lee tus candidaturas rechazadas y descartadas para sacar a la luz patrones en tu enfoque y puntos ciegos.
+- **[interview-prep](/es/docs/reference/modes/interview-prep)** — documentos de preparación específicos por ronda (recruiter, hiring manager, técnica con pares, panel) con preguntas probables e historias STAR.
+- **[training](/es/docs/reference/modes/training)** — puntúa un curso o certificación contra la dirección de carrera que has declarado y su coste de oportunidad.
+- **[project](/es/docs/reference/modes/project)** — puntúa una idea de proyecto de portfolio contra tus puestos objetivo y el tiempo que llevaría construirla.
+
+## Portales
+
+Los tres escáneres de portales que no consumen tokens — Greenhouse, Ashby y Lever — tienen su propia [referencia de portales](/es/docs/reference/portals).
