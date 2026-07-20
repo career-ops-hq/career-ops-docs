@@ -30,3 +30,16 @@ export function hreflangFor(enPath: string): Record<string, string> | null {
     'x-default': `${ORIGIN}${enPath}`,
   };
 }
+
+/** The home pair: EN at `/`, ES at `/es`. Kept separate from the docs
+ *  ES_TRANSLATIONS map because the EN home path is `/` (root), not a
+ *  docs URL. Same bidirectional + x-default → EN shape. */
+export const HOME_EN = '/';
+export const HOME_ES = '/es';
+export function hreflangHome(): Record<string, string> {
+  return {
+    en: `${ORIGIN}/`,
+    es: `${ORIGIN}/es`,
+    'x-default': `${ORIGIN}/`,
+  };
+}

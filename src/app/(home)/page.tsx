@@ -11,6 +11,7 @@ import { CopyableCommand } from '@/components/copyable-command';
 import { CompareRotator } from '@/components/compare-rotator';
 import { getProjectStats } from '@/lib/stats';
 import { homeFaqSchema } from '@/lib/schema';
+import { hreflangHome } from '@/lib/i18n-map';
 
 // "43,204" → "43K+". Floor-rounding to the thousands keeps the number
 // honestly conservative (the live count is always at-or-above what we
@@ -24,7 +25,10 @@ export const metadata: Metadata = {
   title: 'career-ops — open-source AI job search command center',
   description:
     'Open source AI-powered job search system. Runs in your CLI on your machine. CLI-agnostic, MIT-licensed, local-first. Evaluate jobs, generate tailored CVs, track applications.',
-  alternates: { canonical: 'https://career-ops.org' },
+  alternates: {
+    canonical: 'https://career-ops.org',
+    languages: hreflangHome(),
+  },
   openGraph: {
     type: 'website',
     url: 'https://career-ops.org',
@@ -346,7 +350,7 @@ export default async function HomePage() {
                   </svg>
                 </span>{' '}
                 AI-powered job search system that runs locally on your machine inside any AI coding
-                CLI &mdash; Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot. It
+                CLI &mdash; Claude Code, OpenCode, Codex, GitHub Copilot, and more. It
                 evaluates job listings against your CV using a five-dimension rubric plus a holistic global score, scoring
                 1.0&ndash;5.0, generates ATS-optimized PDF resumes tailored per role, drafts answers
                 to open-ended application questions on Greenhouse, Ashby and Lever forms, scans 150+
@@ -493,7 +497,7 @@ export default async function HomePage() {
             AI-Native &amp; Agnostic
           </h3>
           <p className="mb-6">
-            Works with any coding CLI — Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI, GitHub
+            Works with any coding CLI — Claude Code, OpenCode, Codex, GitHub Copilot, and more. GitHub
             Copilot. Built on the Open Agent Skill Standard.
           </p>
           <div className="flex flex-row flex-wrap items-center gap-6 md:gap-7 mt-auto">
@@ -808,7 +812,7 @@ export default async function HomePage() {
             </dt>
             <dd className="text-fd-foreground/80 leading-relaxed">
               career-ops is CLI-agnostic. It works with Claude Code,
-              Codex, OpenCode, Gemini CLI, Qwen, and Copilot —
+              OpenCode, Codex, GitHub Copilot, and more —
               whichever AI coding agent the user already pays for. The
               skill files (<code className="font-mono text-fd-foreground">modes/</code>)
               live in the repo as plain markdown prompts; any agent

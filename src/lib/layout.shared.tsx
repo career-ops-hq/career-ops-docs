@@ -8,9 +8,20 @@ type Options = {
   // renders the title in the narrow sidebar and the full home-style
   // branding wraps awkwardly.
   compact?: boolean;
+  // Language of the current surface. Adds the language switcher link:
+  // EN surfaces link to the Spanish home, ES surfaces link back to EN.
+  // The switcher is the discoverable entry to the /es version.
+  locale?: 'en' | 'es';
 };
 
-export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps {
+export function baseOptions({
+  compact = false,
+  locale = 'en',
+}: Options = {}): BaseLayoutProps {
+  const languageLink =
+    locale === 'es'
+      ? { text: 'English', url: '/', external: false }
+      : { text: 'Español', url: '/es', external: false };
   return {
     nav: {
       title: (
@@ -33,5 +44,6 @@ export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps 
     // visitor came for), NOT gitConfig.repo: that one is the docs repo
     // and exists only for the per-page "edit on GitHub" links.
     githubUrl: `https://github.com/${gitConfig.user}/career-ops`,
+    links: [languageLink],
   };
 }
