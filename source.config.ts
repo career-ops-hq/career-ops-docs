@@ -7,7 +7,13 @@ import { z } from 'zod';
 export const docs = defineDocs({
   dir: 'content/docs',
   docs: {
-    schema: pageSchema,
+    // seoTitle decouples the <title> tag (long, query + brand — for
+    // SERP/AI-citation) from the visible H1 (short, the command name —
+    // Fumadocs ties both to `title` by default). Optional: pages
+    // without it keep title as the <title>.
+    schema: pageSchema.extend({
+      seoTitle: z.string().optional(),
+    }),
     postprocess: {
       includeProcessedMarkdown: true,
     },

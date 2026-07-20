@@ -35,6 +35,40 @@ function extraSchemaFor(slug: string[] | undefined): object | null {
       })),
     };
   }
+  if (key === 'free-ai-engine') {
+    // HowTo schema (Google favours it in AI Overviews) mirroring the
+    // page's recommended Path 1 — OpenCode + a free provider. Steps kept
+    // in sync with the MDX by convention. Fragment anchors omitted: the
+    // page uses <Steps>, not id'd sections, so page-level url is honest.
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      '@id': 'https://career-ops.org/docs/free-ai-engine#howto',
+      name: 'How to run career-ops for free',
+      description:
+        'Run career-ops at $0 using a free AI engine — OpenCode with a free provider, a local model via Ollama, or the built-in OpenRouter runner. No Claude subscription required.',
+      step: [
+        {
+          '@type': 'HowToStep',
+          name: 'Install OpenCode',
+          text: 'Install OpenCode, a free, open-source AI coding assistant that runs in your terminal like the other AI CLIs.',
+          url: 'https://career-ops.org/docs/free-ai-engine',
+        },
+        {
+          '@type': 'HowToStep',
+          name: 'Pick a free provider',
+          text: 'Sign up for any provider with a free tier — OpenRouter free models, Google AI Studio, or an OpenAI-compatible endpoint — and copy your API key.',
+          url: 'https://career-ops.org/docs/free-ai-engine',
+        },
+        {
+          '@type': 'HowToStep',
+          name: 'Point OpenCode at it and run',
+          text: 'Set your key and base URL as environment variables, open OpenCode inside the career-ops folder, and evaluate your first job listing at zero cost.',
+          url: 'https://career-ops.org/docs/free-ai-engine',
+        },
+      ],
+    };
+  }
   if (key === 'reference/glossary') {
     return {
       '@context': 'https://schema.org',
@@ -137,12 +171,17 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
+  // seoTitle (optional frontmatter) drives the <title> tag when present;
+  // the visible H1 stays page.data.title (short command name). QW1.
+  const metaTitle = page.data.seoTitle ?? page.data.title;
   return {
-    title: page.data.title,
+    title: metaTitle,
     description: page.data.description,
     alternates: { canonical: `https://career-ops.org${page.url}` },
     robots: { index: true, follow: true },
     openGraph: {
+      title: metaTitle,
+      description: page.data.description,
       images: getPageImage(page).url,
     },
   };
