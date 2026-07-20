@@ -55,7 +55,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'AI engine',
     definition:
-      'The AI coding CLI that executes career-ops prompts — Claude Code, Gemini CLI, Codex, Qwen Code, OpenCode, or GitHub Copilot CLI — or any OpenAI-compatible endpoint. career-ops is engine-agnostic and runs on free engines too.',
+      'The AI coding CLI that executes career-ops prompts — Claude Code, OpenCode, Codex, GitHub Copilot CLI, and other supported CLIs — or any OpenAI-compatible endpoint. career-ops is engine-agnostic and runs on free engines too.',
   },
   {
     term: 'Question bank',

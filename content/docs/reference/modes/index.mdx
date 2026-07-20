@@ -7,11 +7,11 @@ icon: Layers
 
 ## The 14 modes
 
-career-ops ships **14 user-invocable modes**. Each one is a plain-markdown skill the agent loads and runs inside whichever AI coding CLI you already use — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot. You invoke a mode as `/career-ops <mode>`, and each covers one stage of the job search: evaluating a listing against the six-dimension rubric, tailoring a CV, drafting an application, tracking outcomes, or preparing for interviews. Modes are System Layer per the [Data Contract](https://github.com/santifer/career-ops/blob/main/DATA_CONTRACT.md) — they update with the tool and never modify your `cv.md`, profile, or reports.
+career-ops ships **14 user-invocable modes**. Each one is a plain-markdown skill the agent loads and runs inside whichever AI coding CLI you already use — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot. You invoke a mode as `/career-ops <mode>`, and each covers one stage of the job search: evaluating a listing against the rubric (five dimensions plus a holistic global score), tailoring a CV, drafting an application, tracking outcomes, or preparing for interviews. Modes are System Layer per the [Data Contract](https://github.com/santifer/career-ops/blob/main/DATA_CONTRACT.md) — they update with the tool and never modify your `cv.md`, profile, or reports.
 
 ## Evaluate
 
-The core scoring loop — read a job listing and score it against the six dimensions before you spend any effort on it.
+The core scoring loop — read a job listing and score it against the five dimensions plus a holistic global score before you spend any effort on it.
 
 - **[auto-pipeline](/docs/reference/modes/auto-pipeline)** — the default flow. Paste a JD URL or text; it runs the A–F evaluation, writes the report, exports a tailored PDF, and logs a tracker entry with no manual steps in between.
 - **[pipeline](/docs/reference/modes/pipeline)** — runs auto-pipeline against every URL queued in `data/pipeline.md`, so a day's worth of listings crunch in one session.

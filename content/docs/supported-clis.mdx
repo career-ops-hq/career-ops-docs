@@ -1,0 +1,28 @@
+---
+title: Supported AI CLIs
+seoTitle: "Which AI CLI works with career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
+description: "career-ops is AI-agnostic — it runs on every major AI coding CLI, so you use the assistant you already pay for and never get locked into one vendor. The full, always-current list lives in the core repo."
+icon: Terminal
+---
+
+**career-ops runs on every major AI coding CLI — you are not locked into any single vendor.** Because career-ops ships prompt files that the CLI executes (it does not bundle its own model), you point it at whichever AI coding assistant you already use and it runs on top of that engine unchanged. When a better model ships, you switch CLIs and keep your pipeline, your data and your setup.
+
+<Callout title="Use what you already have">
+The best CLI for career-ops is the one you already pay for. If that is Claude Code, you're done. If you want to run for free, see [Set up a free AI engine](/docs/free-ai-engine).
+</Callout>
+
+## Which CLIs are supported?
+
+career-ops works first-class with **Claude Code, OpenCode, Antigravity CLI, Codex, Grok Build CLI, Qwen, Kimi, and GitHub Copilot CLI** — eight actively-maintained AI coding CLIs. (Gemini CLI is supported as a legacy wrapper, transitioned into Antigravity CLI.) The architecture is shared: a single canonical `AGENTS.md` drives the logic, and thin per-CLI entry files handle the invocation nuances of each tool.
+
+The **canonical, always-current list — with the exact command to invoke career-ops in each CLI — lives in the core repo** so it never drifts out of date:
+
+- [docs/SUPPORTED_CLIS.md](https://github.com/santifer/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — the full matrix of supported CLIs, entry files, and how to invoke them (interactive and headless/batch).
+
+## Which one should I choose?
+
+- **Already paying for Claude Code, Codex, or Copilot?** Use it. career-ops runs on top with zero extra setup — open the CLI inside the career-ops folder.
+- **Want to run at $0?** [OpenCode with a free provider, a local model via Ollama, or the built-in OpenRouter runner](/docs/free-ai-engine) all work.
+- **Care about a specific model or provider?** career-ops is model-agnostic — point any of these CLIs at any OpenAI-compatible endpoint or local model. Nothing in career-ops changes.
+
+Whatever you pick, the [14 modes](/docs/reference/modes) behave the same way — the CLI is the engine, career-ops is the structure on top.

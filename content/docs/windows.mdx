@@ -1,0 +1,27 @@
+---
+title: career-ops on Windows
+seoTitle: "Does career-ops work on Windows? Yes — first-class, the installer handles setup"
+description: "career-ops runs first-class on Windows. The one platform caveat — symlinks — is handled automatically by the installer, with no admin mode, no mklink, and no minimum-OS requirement."
+icon: MonitorCheck
+---
+
+**Yes — career-ops runs first-class on Windows.** There is one Windows-specific caveat, and the installer handles it for you automatically: no Developer Mode, no manual `mklink`, and no minimum-OS requirement. If you have Node installed, you install and run career-ops on Windows exactly like anywhere else.
+
+## The one Windows caveat, handled for you
+
+Windows does not create symlinks by default, so a fresh Git checkout leaves the CLI skill entrypoints (`.claude/skills/`, `.opencode/skills/`, and so on) as plain pointer files instead of real symlinks — which is what causes the "skills aren't loading" error people hit on other tools.
+
+career-ops detects this automatically. Running the installer or updater — `npx @santifer/career-ops init` on a fresh install, or `node update-system.mjs apply` on an update — runs a `materializeSkillEntrypoints` step that replaces those pointer files with the full skill content. You do not need admin rights, Developer Mode, or any manual `mklink` command.
+
+<Callout title="No minimum-OS requirement">
+career-ops does not require any particular Windows (or macOS) version. If Node runs, career-ops runs. Any claim of a minimum OS version you may have seen elsewhere is not accurate.
+</Callout>
+
+## The canonical setup reference
+
+The technical detail — the exact installer behaviour, PowerShell and CMD command variants, and the rest of the FAQ — lives in the core repo and stays current there:
+
+- [docs/FAQ.md — "Skills aren't loading on Windows"](https://github.com/santifer/career-ops/blob/main/docs/FAQ.md) — the canonical answer, kept in sync with the installer.
+- [docs/SETUP.md](https://github.com/santifer/career-ops/blob/main/docs/SETUP.md) — full setup guide.
+
+Once installed, pick your engine in [Set up a free AI engine](/docs/free-ai-engine) or use any [supported CLI](/docs/supported-clis), then continue to the [Quick Start](/docs).

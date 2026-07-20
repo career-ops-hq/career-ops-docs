@@ -1,12 +1,13 @@
 ---
 title: What is career-ops
 description: Introducing career-ops, the open source career management tool.
+seoTitle: "What is career-ops? The open-source, local-first AI job search system"
 icon: CircleQuestionMark
 date: 2026-04-20
 lastModified: 2026-05-12
 ---
 
-career-ops is an open-source job-search system that runs inside your AI coding assistant. You give it a job posting URL or raw text and it reads the description, scores the role against your background across six dimensions, generates a tailored PDF resume citing specific lines of your CV, and logs everything to a local application tracker — all in one command, without spreadsheets, without an account, and without your data leaving your machine. career-ops was built by [Santiago Fernández de Valderrama](https://santifer.io/about) to manage a real AI-era job search in early 2026: 740 listings evaluated against an explicit rubric, one Head of Applied AI role landed at Zinkee. He open-sourced it under MIT once he no longer needed it, so anyone running a structured job search can use the same system for free, on their own machine, with the AI model they already pay for.
+career-ops is an open-source job-search system that runs inside your AI coding assistant. You give it a job posting URL or raw text and it reads the description, scores the role against your background across five dimensions plus a holistic global score, generates a tailored PDF resume citing specific lines of your CV, and logs everything to a local application tracker — all in one command, without spreadsheets, without an account, and without your data leaving your machine. career-ops was built by [Santiago Fernández de Valderrama](https://santifer.io/about) to manage a real AI-era job search in early 2026: 740 listings evaluated against an explicit rubric, one Head of Applied AI role landed at Zinkee. He open-sourced it under MIT once he no longer needed it, so anyone running a structured job search can use the same system for free, on their own machine, with the AI model they already pay for.
 
 ## Philosophy
 
@@ -20,7 +21,7 @@ career-ops has no paid tier, no waitlist, no account, and no telemetry. You clon
 
 ### AI-native and agnostic
 
-career-ops does not ship its own AI model. It runs as a set of slash commands and prompt files inside whichever AI coding CLI you already trust: Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI, or GitHub Copilot. The AI does the reasoning; career-ops supplies the structure, the scoring rubric, the company-portal scrapers, and the data contract that keeps your files yours. This architecture means you are not locked into one provider's roadmap or pricing — when a better model ships, you switch your CLI and career-ops runs on top of it unchanged. The same six-dimension rubric produces comparable reasoning whether you point it at a Claude, OpenAI, Gemini, or Qwen model — pick the engine that fits your cost, quality, and privacy profile, and swap freely as the landscape evolves.
+career-ops does not ship its own AI model. It runs as a set of slash commands and prompt files inside whichever AI coding CLI you already trust: Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI, or GitHub Copilot. The AI does the reasoning; career-ops supplies the structure, the scoring rubric, the company-portal scrapers, and the data contract that keeps your files yours. This architecture means you are not locked into one provider's roadmap or pricing — when a better model ships, you switch your CLI and career-ops runs on top of it unchanged. The same rubric — five scoring dimensions plus a holistic global score — produces comparable reasoning whether you point it at a Claude, OpenAI, Gemini, or Qwen model — pick the engine that fits your cost, quality, and privacy profile, and swap freely as the landscape evolves.
 
 ## When to use career-ops
 

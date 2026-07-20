@@ -46,12 +46,12 @@ The term "CareerOps" (capital C, capital O, no hyphen) names the PRACTICE; "care
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
 - Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
-- AI coding CLIs supported first-class: Claude Code, Codex (OpenAI), OpenCode, Gemini CLI (Google), Qwen, GitHub Copilot, Kimi
+- AI coding CLIs supported first-class (8): Claude Code, OpenCode, Antigravity CLI, Codex, Grok Build CLI, Qwen, Kimi, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/santifer/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
 - Press: WIRED Greece (published), Business Insider (forthcoming)
 
 ## Business model & sustainability
 
-career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot).
+career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, OpenCode, Codex, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
 
 Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Nine tiers exist: seven individual tiers ($1–$250) are identical statements of support; two corporate tiers ($500 Corporate Supporter, $1,000 Ecosystem Partner) add logo placement on the README and the /sustain page as public acknowledgment — nothing else changes. No premium product features, no roadmap influence, no priority support, no early access. The maintainer has other paid work for income; sponsorship enables deeper focus on the project. Path 3 Sovereign Maintainer model.
 

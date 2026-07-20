@@ -31,7 +31,7 @@ The flow is simple enough to summarize in five verbs:
 
 **Scan.** career-ops hits the public APIs of Greenhouse, Ashby, and Lever — zero scraping, zero tokens, free. For portals without API access, the scan mode invokes Playwright through your AI CLI to navigate listings. The output is a flat file of every posting that matches your target archetypes.
 
-**Evaluate.** Every scanned listing gets scored against a six-dimension rubric: match, north-star alignment, comp, cultural signals, red flags, and global fit. The score is a number between 1.0 and 5.0, cited against specific lines in your CV and specific phrases in the JD. The rubric is published in full at [/methodology](/methodology). Anything below 4.0 the agent recommends against applying. The default threshold is deliberately high because the goal is fewer applications, not more.
+**Evaluate.** Every scanned listing gets scored against five dimensions — match, north-star alignment, comp, cultural signals, red flags — plus a holistic global score. The score is a number between 1.0 and 5.0, cited against specific lines in your CV and specific phrases in the JD. The rubric is published in full at [/methodology](/methodology). Anything below 4.0 the agent recommends against applying. The default threshold is deliberately high because the goal is fewer applications, not more.
 
 **Tailor.** For each listing that crosses the threshold, the tailor mode rewrites your master `cv.md` into a focused, ATS-aligned variant. It reorders bullets, surfaces relevant experience, drops the unrelated work, and integrates the JD's priority keywords where they accurately describe what you have done. The output is a clean markdown file ready for PDF export via Playwright.
 
@@ -71,7 +71,7 @@ The decision to open-source career-ops under MIT was not strategic. I did not ne
 
 The business model is the model in the open. There is no paid tier and there will not be one. There is no career-ops cloud and there will not be one. Sustainability comes from voluntary patronage via [GitHub Sponsors](https://github.com/sponsors/santifer) — nine tiers from $1 to $1,000 per month, none of which gate features or unlock content. The full reasoning is at [/sustain](/sustain). I have other paid work; sponsorship is not a livelihood, it is a way to dedicate focused time to the project.
 
-If career-ops saved you hours of spreadsheet work, surfaced a job interview, or just clarified what AI-augmented work looks like — and you have spare income — sustaining the maintainer is how you keep that work moving. Same six-dimension rubric. Same anti-spray-and-pray philosophy. Same MIT license. Just more depth.
+If career-ops saved you hours of spreadsheet work, surfaced a job interview, or just clarified what AI-augmented work looks like — and you have spare income — sustaining the maintainer is how you keep that work moving. Same scoring rubric — five dimensions plus a holistic global score. Same anti-spray-and-pray philosophy. Same MIT license. Just more depth.
 
 If you want to start using it, [the repo](https://github.com/santifer/career-ops) has a fifteen-minute setup. If you want to read the methodology first, [it is here](/methodology). If you want to compare it against the SaaS alternatives, [those comparisons are here](/compare).
 
