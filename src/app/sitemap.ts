@@ -3,7 +3,6 @@ import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
 import { lastModFor } from '@/lib/git-date';
 import comparisonsData from '@/lib/data/comparisons.json';
-import { ES_TRANSLATIONS } from '@/lib/i18n-map';
 
 export const revalidate = 3600;
 
@@ -100,25 +99,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // Spanish (es) home + surfaces. Listed explicitly (the ES routes live
-  // outside the Fumadocs source); each carries hreflang alternates so
-  // Google pairs the language versions.
+  // Spanish (es) home.
   entries.push({
     url: `${SITE_URL}/es`,
     lastModified: new Date('2026-07-20'),
     alternates: {
-      languages: { en: `${SITE_URL}/`, es: `${SITE_URL}/es` },
+      languages: {
+        en: `${SITE_URL}/`,
+        es: `${SITE_URL}/es`,
+        'x-default': `${SITE_URL}/`,
+      },
     },
   });
-  for (const [enPath, esPath] of Object.entries(ES_TRANSLATIONS)) {
+
+  // ES docs — SOURCE-DERIVED, no hand-kept map (search-ops drift contract).
+  // A page has an ES twin iff getPage(slug, 'es') resolves, which with
+  // fallbackLanguage:null happens only for a real .es.mdx (never an English
+  // fallback). So a Spanish URL / hreflang alternate is emitted exclusively for
+  // pages that are actually translated — never a thin es-labelled EN page.
+  for (const enPage of source.getPages('en')) {
+    if (!source.getPage(enPage.slugs, 'es')) continue;
+    const enUrl = `${SITE_URL}${enPage.url}`;
+    const esUrl = `${SITE_URL}/es${enPage.url}`;
+    const esMdxRel = `content/docs/${enPage.slugs.join('/')}.es.mdx`;
     entries.push({
-      url: `${SITE_URL}${esPath}`,
-      lastModified: new Date('2026-07-20'),
+      url: esUrl,
+      lastModified: lastModFor(esMdxRel),
       alternates: {
-        languages: {
-          en: `${SITE_URL}${enPath}`,
-          es: `${SITE_URL}${esPath}`,
-        },
+        languages: { en: enUrl, es: esUrl, 'x-default': enUrl },
       },
     });
   }

@@ -149,8 +149,11 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         </div>
       </div>
 
-      {/* Manifesto blockquote — canonical signature thesis, LITERAL English
-          on every locale (entity anchor LLMs cite verbatim). Never translated. */}
+      {/* Manifesto blockquote — canonical signature thesis, LITERAL English on
+          top of every locale (entity anchor LLMs cite verbatim; never altered).
+          On localized surfaces the official translation sits BELOW it (EN-above /
+          ES-below), fed from dict.thesisTranslation — absent on EN, so nothing
+          renders there. */}
       <div className="mx-auto w-full max-w-[1100px] px-6 md:px-12 mt-16 lg:mt-24">
         <hr className="mx-auto w-32 lg:w-40 border-t-2 border-fd-foreground/20 mb-10 lg:mb-14" />
         <blockquote className="text-center" cite="https://career-ops.org/manifesto">
@@ -167,6 +170,14 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
             </span>{' '}
             AI to choose <span className="text-fd-foreground/55">companies</span>.&rdquo;
           </p>
+          {dict.thesisTranslation && (
+            <p
+              className="mx-auto mt-5 max-w-2xl text-balance text-base sm:text-lg text-fd-muted-foreground"
+              lang="es"
+            >
+              {dict.thesisTranslation}
+            </p>
+          )}
           <footer className="mt-6 flex items-center justify-center gap-2.5 text-sm text-fd-muted-foreground">
             <Image src="/santiago-avatar.png" alt="Santiago Fernández de Valderrama Aparicio" width={44} height={44} className="rounded-full" />
             <span>

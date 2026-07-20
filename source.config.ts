@@ -13,6 +13,14 @@ export const docs = defineDocs({
     // without it keep title as the <title>.
     schema: pageSchema.extend({
       seoTitle: z.string().optional(),
+      // i18n contract (search-ops, 2026-07-20). Only present on translation
+      // files (page.es.mdx); EN pages omit them. translationHash = hash of the
+      // EN response body this translation tracks (drift trigger, read by the
+      // Phase-2 sync Action). localized = its framing is transcreated to the
+      // language's fan-out (excluded from parity). translatedFrom = EN source URL.
+      translationHash: z.string().optional(),
+      localized: z.boolean().optional(),
+      translatedFrom: z.string().optional(),
     }),
     postprocess: {
       includeProcessedMarkdown: true,

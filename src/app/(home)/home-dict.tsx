@@ -19,6 +19,10 @@ export type HomeDict = {
   viewSource: string;
   featuredIn: string;
   authorTagline: string;
+  // Official localized rendering of the signature thesis, shown BELOW the
+  // literal-English blockquote (which stays verbatim on every locale, it is the
+  // citable entity anchor). Optional: absent on EN (no sub-line), present on ES.
+  thesisTranslation?: string;
   nowSignedManifesto: ReactNode;
   readIt: string;
   whatIsHeading: ReactNode;
@@ -323,6 +327,11 @@ export const homeEs: HomeDict = {
   viewSource: 'Ver el código',
   featuredIn: 'Apareció en',
   authorTagline: ', 16 años como operador y Head of Applied AI',
+  // Versión «yo» oficial del README.es (superficie personal = home). El
+  // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo
+  // («descartarte») puede afinarse a «filtrar candidatos» — venture-ops lo cierra.
+  thesisTranslation:
+    'Las empresas usan IA para descartarte. Yo le di a los candidatos IA para elegirlas.',
   nowSignedManifesto: <>Ahora, un manifiesto firmado ·</>,
   readIt: 'Léelo →',
   whatIsHeading: (

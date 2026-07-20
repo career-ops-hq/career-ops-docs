@@ -1,45 +1,30 @@
-// NOTE (2026-07-20): the docs ES surfaces are migrating to native
-// Fumadocs i18n (.es.mdx + hideLocale). This map + the standalone /es
-// docs route are the interim; the home (/ ↔ /es) keeps using this map
-// for its hreflang since the home is a TSX dict component, not a docs
-// page. See memory i18n-es-architecture.
+// hreflang helpers for the Spanish (es) surfaces of career-ops.org.
 //
-// Translation map for the Spanish (es) surfaces of career-ops.org.
+// The docs cluster is NO LONGER a hand-kept map (search-ops drift contract,
+// point b): a page has an ES twin iff its .es.mdx exists, which the Fumadocs
+// source knows directly (source.getPage(slug, 'es') resolves only for real
+// translations, because i18n runs with fallbackLanguage:null). Callers check
+// that existence and, when true, build the cluster with `docsHreflang`. The ES
+// URL is deterministic — /es + the EN path — because slugs are not translated.
 //
-// The full Fumadocs i18n system (defineI18n + [lang] routing) is the
-// eventual home for this — until then, translated pages ship as
-// standalone /es/ routes at the SAME path they will keep under Fumadocs
-// i18n (hideLocale: 'default-locale'), so there is no URL change / link
-// rot when the system lands. This map is the single source for the
-// bidirectional hreflang cluster: the EN docs page reads it to emit its
-// alternate, and each ES page emits the reciprocal — a one-directional
-// or self-refless hreflang is worse than none (search-ops).
-//
-// Key: the EN docs URL path (page.url from the Fumadocs source).
-// Value: the ES URL path.
-export const ES_TRANSLATIONS: Record<string, string> = {
-  '/docs/introduction/what-is-career-ops':
-    '/es/docs/introduction/what-is-career-ops',
-};
+// The home pair stays explicit here: the home is a TSX dictionary component,
+// not a Fumadocs docs page, so there is no .es.mdx to derive it from.
 
 const ORIGIN = 'https://career-ops.org';
 
-/** hreflang alternates for a page that has an ES twin (or is one).
- *  Returns the languages map for Next metadata `alternates.languages`,
- *  bidirectional + x-default → EN. Pass the EN path (the map key). */
-export function hreflangFor(enPath: string): Record<string, string> | null {
-  const esPath = ES_TRANSLATIONS[enPath];
-  if (!esPath) return null;
+/** Bidirectional hreflang for a docs page that HAS a real ES twin.
+ *  Pass the EN page.url (e.g. /docs/introduction/what-is-career-ops); the ES
+ *  twin lives at /es + that path. x-default → EN (the canonical language). */
+export function docsHreflang(enUrl: string): Record<string, string> {
   return {
-    en: `${ORIGIN}${enPath}`,
-    es: `${ORIGIN}${esPath}`,
-    'x-default': `${ORIGIN}${enPath}`,
+    en: `${ORIGIN}${enUrl}`,
+    es: `${ORIGIN}/es${enUrl}`,
+    'x-default': `${ORIGIN}${enUrl}`,
   };
 }
 
-/** The home pair: EN at `/`, ES at `/es`. Kept separate from the docs
- *  ES_TRANSLATIONS map because the EN home path is `/` (root), not a
- *  docs URL. Same bidirectional + x-default → EN shape. */
+/** The home pair: EN at `/`, ES at `/es`. Same bidirectional + x-default → EN
+ *  shape, kept explicit because the home is not a Fumadocs docs page. */
 export const HOME_EN = '/';
 export const HOME_ES = '/es';
 export function hreflangHome(): Record<string, string> {

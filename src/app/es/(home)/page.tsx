@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { hreflangHome } from '@/lib/i18n-map';
-import { HomeContent } from '../(home)/home-content';
-import { homeEs } from '../(home)/home-dict';
+import { HomeContent } from '../../(home)/home-content';
+import { homeEs } from '../../(home)/home-dict';
 
 // Spanish home — SAME trunk as the English home (HomeContent), rendered
 // with the Spanish dictionary. One component, one dict per locale: no

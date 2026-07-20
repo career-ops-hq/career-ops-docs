@@ -1,0 +1,74 @@
+# Glosario canónico de NO-traducibles (i18n)
+#
+# OWNER: search-ops (dueño del grafo de entidad y las strings canónicas).
+# HOST: este fichero vive en career-ops-docs porque lo consume la Action de
+# traducción, pero su CONTENIDO solo se cambia con ratificación de search-ops.
+# Fuente de verdad: search-ops/doctrine/i18n-nontranslatables.md
+#
+# Se inyecta en el system-prompt del motor de traducción (Action + Claude)
+# para que estos términos JAMÁS se traduzcan ni se alteren.
+
+thesis:
+  # Regla especial: NUNCA se traduce automáticamente. El motor no inventa.
+  en_literal: "Companies use AI to filter candidates. I just gave candidates AI to choose companies."
+  # Traducción ES oficial (del README.es) — pendiente de ratificación de venture-ops.
+  es_official: "Las empresas usan IA para descartarte. Yo le di a los candidatos IA para elegirlas."
+  rule: "En superficie: tesis EN (frase-firma citable) + traducción oficial debajo. Nunca inventar."
+
+brand_spellings:
+  - "career-ops"   # guion, minúscula = el proyecto OSS
+  - "CareerOps"    # una palabra = The CareerOps Manifesto
+
+canonical_name: "Santiago Fernández de Valderrama Aparicio"  # CON Aparicio, nunca abreviar
+
+mode_ids:  # identificadores de comando, no palabras
+  - apply
+  - scan
+  - pipeline
+  - auto-pipeline
+  - oferta
+  - ofertas
+  - contacto
+  - deep
+  - followup
+  - interview-prep
+  - pdf
+  - project
+  - patterns
+  - tracker
+
+technical_terms:
+  - Open Agent Skill Standard
+  - MIT
+  - ATS
+  - CLI
+
+cli_names:
+  - Claude Code
+  - Codex
+  - OpenCode
+  - Antigravity CLI
+  - Grok
+  - Qwen
+  - Kimi
+  - GitHub Copilot
+
+portals: [Greenhouse, Ashby, Lever, Wellfound]
+
+files: [DATA_CONTRACT.md, CONTRIBUTING.md]
+
+domains: [career-ops.org, santifer.io, "github.com/santifer/career-ops"]
+
+wikidata:
+  software: Q139007988
+  person: Q138710224
+
+rules:
+  general: >
+    En duda, no traducir un término de marca o técnico. Cuando el inglés es el
+    estándar de facto del español técnico (open source, commit, pull request,
+    builder), se acepta en inglés — no forzar calcos.
+  anti_inclusive_symbols: >
+    Prohibido @/x como marca de género inclusivo (List@, tod@s, todxs): rompe la
+    citabilidad y es decisión de voz reservada a Santiago/venture-ops. Usar
+    masculino genérico o reformular sin género.

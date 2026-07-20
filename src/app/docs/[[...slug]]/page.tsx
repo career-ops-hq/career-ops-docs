@@ -1,170 +1,23 @@
-import { getPageImage, getPageMarkdownUrl, source } from '@/lib/source';
-import {
-  DocsBody,
-  DocsDescription,
-  DocsPage,
-  DocsTitle,
-  MarkdownCopyButton,
-  ViewOptionsPopover,
-} from 'fumadocs-ui/layouts/docs/page';
+import { getPageImage, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { gitConfig } from '@/lib/shared';
-import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
-import { gitLastMod } from '@/lib/git-date';
-import { hreflangFor } from '@/lib/i18n-map';
-import { FAQ_ENTRIES } from '@/lib/faq-data';
-import { GLOSSARY_TERMS } from '@/lib/glossary-data';
-
-// Two docs pages carry an extra structured-data layer beyond
-// TechArticle: /docs/faq (FAQPage) and /docs/reference/glossary
-// (DefinedTermSet). Data lives in src/lib/*-data.ts, mirrored with the
-// MDX by convention — see the comment at the top of each data module.
-function extraSchemaFor(slug: string[] | undefined): object | null {
-  const key = (slug ?? []).join('/');
-  if (key === 'faq') {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      '@id': 'https://career-ops.org/docs/faq#faq',
-      mainEntity: FAQ_ENTRIES.map((e) => ({
-        '@type': 'Question',
-        name: e.question,
-        acceptedAnswer: { '@type': 'Answer', text: e.answer },
-      })),
-    };
-  }
-  if (key === 'free-ai-engine') {
-    // HowTo schema (Google favours it in AI Overviews) mirroring the
-    // page's recommended Path 1 — OpenCode + a free provider. Steps kept
-    // in sync with the MDX by convention. Fragment anchors omitted: the
-    // page uses <Steps>, not id'd sections, so page-level url is honest.
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'HowTo',
-      '@id': 'https://career-ops.org/docs/free-ai-engine#howto',
-      name: 'How to run career-ops for free',
-      description:
-        'Run career-ops at $0 using a free AI engine — OpenCode with a free provider, a local model via Ollama, or the built-in OpenRouter runner. No Claude subscription required.',
-      step: [
-        {
-          '@type': 'HowToStep',
-          name: 'Install OpenCode',
-          text: 'Install OpenCode, a free, open-source AI coding assistant that runs in your terminal like the other AI CLIs.',
-          url: 'https://career-ops.org/docs/free-ai-engine',
-        },
-        {
-          '@type': 'HowToStep',
-          name: 'Pick a free provider',
-          text: 'Sign up for any provider with a free tier — OpenRouter free models, Google AI Studio, or an OpenAI-compatible endpoint — and copy your API key.',
-          url: 'https://career-ops.org/docs/free-ai-engine',
-        },
-        {
-          '@type': 'HowToStep',
-          name: 'Point OpenCode at it and run',
-          text: 'Set your key and base URL as environment variables, open OpenCode inside the career-ops folder, and evaluate your first job listing at zero cost.',
-          url: 'https://career-ops.org/docs/free-ai-engine',
-        },
-      ],
-    };
-  }
-  if (key === 'reference/glossary') {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'DefinedTermSet',
-      '@id': 'https://career-ops.org/docs/reference/glossary#terms',
-      name: 'career-ops glossary — AI-powered job search vocabulary',
-      hasDefinedTerm: GLOSSARY_TERMS.map((t) => ({
-        '@type': 'DefinedTerm',
-        name: t.term,
-        description: t.definition,
-        inDefinedTermSet:
-          'https://career-ops.org/docs/reference/glossary#terms',
-      })),
-    };
-  }
-  return null;
-}
+import { DocsPageView } from '@/components/docs-page-view';
+import { docsHreflang } from '@/lib/i18n-map';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  const MDX = page.data.body;
-  const markdownUrl = getPageMarkdownUrl(page).url;
-  const extraSchema = extraSchemaFor(params.slug);
-
-  // Real authored date from git (build time). Only surfaced when git can
-  // resolve it — we never assert a synthetic "Updated" date.
-  const gitDate = gitLastMod(`content/docs/${page.path}`);
-  const dateModified = gitDate?.toISOString();
-  const dateModifiedLabel = gitDate?.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            docsBreadcrumbSchema({ url: page.url, title: page.data.title }),
-          ),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            docsTechArticleSchema({
-              url: page.url,
-              title: page.data.title,
-              description: page.data.description,
-              dateModified,
-            }),
-          ),
-        }}
-      />
-      {extraSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(extraSchema) }}
-        />
-      )}
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
-      <div className="flex flex-row gap-2 items-center border-b pb-6">
-        <MarkdownCopyButton markdownUrl={markdownUrl} />
-        <ViewOptionsPopover
-          markdownUrl={markdownUrl}
-          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${page.path}`}
-        />
-        {dateModifiedLabel && (
-          <span className="ml-auto text-xs text-fd-muted-foreground">
-            Updated{' '}
-            <time dateTime={dateModified}>{dateModifiedLabel}</time>
-          </span>
-        )}
-      </div>
-      <DocsBody>
-        <MDX
-          components={getMDXComponents({
-            // this allows you to link to other pages with relative file paths
-            a: createRelativeLink(source, page),
-          })}
-        />
-      </DocsBody>
-    </DocsPage>
-  );
+  return <DocsPageView page={page} />;
 }
 
 export async function generateStaticParams() {
-  return source.generateParams();
+  // With i18n enabled, source.generateParams() emits a `lang` key and one entry
+  // per language — which does not match this EN-only, lang-less route. Enumerate
+  // the default-language pages explicitly so /docs/** stays exactly the EN URLs
+  // it was before i18n (the ES twins live at /es/docs/** via their own route).
+  return source.getPages('en').map((page) => ({ slug: page.slugs }));
 }
 
 export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): Promise<Metadata> {
@@ -175,10 +28,12 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
   // seoTitle (optional frontmatter) drives the <title> tag when present;
   // the visible H1 stays page.data.title (short command name). QW1.
   const metaTitle = page.data.seoTitle ?? page.data.title;
-  // Reciprocal hreflang when this EN page has a Spanish twin (i18n
-  // pilot). Bidirectional + x-default → EN; a one-directional cluster is
-  // worse than none, so both sides emit it from the same map.
-  const languages = hreflangFor(page.url);
+  // Reciprocal hreflang, but ONLY when this EN page has a real Spanish twin.
+  // Source-derived (no hand-kept map): with fallbackLanguage:null, getPage(slug,
+  // 'es') resolves iff an .es.mdx exists — never an English fallback — so the
+  // bidirectional + x-default→EN cluster is always truthful (search-ops).
+  const hasEsTwin = source.getPage(page.slugs, 'es') != null;
+  const languages = hasEsTwin ? docsHreflang(page.url) : undefined;
   return {
     title: metaTitle,
     description: page.data.description,
