@@ -543,7 +543,7 @@ export const homeEs: HomeDict = {
       ),
     },
   ],
-  finalCta: '¿List@ para filtrar ofertas en vez de que te filtren a ti?',
+  finalCta: '¿Filtras tú las ofertas, o dejas que te filtren a ti?',
   yourTurn: 'Te toca',
   followWhatWeShip: 'O sigue lo que lanzamos.',
   releaseBlurb: (
