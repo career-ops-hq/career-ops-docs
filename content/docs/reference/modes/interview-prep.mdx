@@ -1,19 +1,23 @@
 ---
 title: interview-prep
-description: "Post-#489 the interview-prep mode splits by interview round type: recruiter screen, hiring manager, peer technical, and panel. Each variant produces a focused prep doc with likely questions, talking points, and STAR-format stories from your profile."
-seoTitle: "career-ops interview-prep — round-by-round interview preparation"
+description: "career-ops interview-prep generates a company- and role-specific interview intelligence document, segmented by who is in the room — recruiter, hiring manager, peer-technical, or panel — with likely questions, talking points, and STAR stories drawn from your own profile."
+seoTitle: "career-ops interview-prep — company-specific, round-by-round interview preparation"
 icon: GraduationCap
 date: "2026-05-18"
 lastModified: "2026-05-18"
 ---
 
+career-ops **interview-prep** turns a scheduled interview into a working intelligence document. You name a company and role — or hand it a job posting for a role you never formally evaluated — and it researches the hiring process, classifies each round by who runs it (recruiter screen, hiring manager, peer-technical, or panel), and drafts the questions each is likely to ask, each with a draft answer pulled from your own background. It never invents a question: every one is either sourced (Glassdoor, Blind) or tagged `[inferred from JD]`. The result is a saved prep doc, not a chat.
+
 ## What it does
 
-interview-prep reads the company context (ideally already enriched via deep mode), the JD, and your profile, then produces a prep document scoped to a specific round type. The doc covers expected question patterns, talking points specific to your background, and pre-written STAR stories you can adapt live.
+interview-prep reads the company context (ideally already enriched via `deep` or `oferta`), the job description, and your profile, then produces one prep document scoped to the rounds that company actually runs. The doc covers expected question patterns by audience, talking points specific to your background, and pre-written STAR stories you can adapt live. When an evaluation report already exists for the role, that report is authoritative; when you pass a URL for a role you never evaluated, interview-prep fetches the JD itself — structured ATS API first, then Playwright, with a headless fallback — and never fabricates a posting.
 
 ## When to use it
 
-Use interview-prep the night before each round. The recruiter-screen variant covers comp negotiation prep. The hiring-manager variant focuses on role fit. The peer-technical variant focuses on architecture/coding questions. The panel variant covers leadership signals. For deliberate, round-by-round drills, career-ops also ships focused `plan`, `practice`, and `debrief` interview modes — see the [interview modes guide](/docs/introduction/guides/interview-modes).
+Run interview-prep once a round is on the calendar — it produces a single document with a section per audience the process involves: the recruiter-screen section covers comp-negotiation prep, hiring-manager covers role fit, peer-technical covers architecture and coding, and panel covers leadership signals. It also fires automatically when you move a role that scored 4.0 or higher to `Interview` in your tracker.
+
+interview-prep is the **research** step — the intelligence document you study beforehand. It is a different mode from the interactive `plan`, `practice`, and `debrief` interview drills, which rehearse you live and review a round afterwards; they link up (a debrief feeds back into the material interview-prep reads next time). For those drills see the [interview modes guide](/docs/introduction/guides/interview-modes).
 
 ## What a run looks like
 
@@ -50,6 +54,7 @@ Reach for interview-prep once a round is scheduled and you want a working docume
 
 - Run `oferta` or `deep` against the company first. The prep reads the evaluation report for archetype, gaps, and matched proof points, so more context yields more specific questions.
 - Paste the interviewers' names or the schedule when you have them. For a panel, the mode builds a per-interviewer read and drafts one tailored closing question for each slot.
+- If you have already named a compensation number for the role, the recruiter-screen section folds it in — career-ops reads your stated figure so the comp-negotiation prep is grounded in what you actually said, not a guess.
 - Trust the tags: sourced questions cite Glassdoor or Blind, inferred ones carry `[inferred from JD]`. The mode never invents a question and attributes it to a candidate.
 
 ## Related
