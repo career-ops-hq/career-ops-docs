@@ -3,6 +3,7 @@ import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
 import { lastModFor } from '@/lib/git-date';
 import comparisonsData from '@/lib/data/comparisons.json';
+import { ES_TRANSLATIONS } from '@/lib/i18n-map';
 
 export const revalidate = 3600;
 
@@ -96,6 +97,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({
       url: `${SITE_URL}${page.url}`,
       lastModified: lastModFor(mdxRel),
+    });
+  }
+
+  // Spanish (es) surfaces — i18n pilot. Listed explicitly for now (the
+  // ES routes live outside the Fumadocs source until the full i18n
+  // system lands); each carries hreflang alternates so Google pairs the
+  // language versions. Keyed off the ES_TRANSLATIONS map.
+  for (const [enPath, esPath] of Object.entries(ES_TRANSLATIONS)) {
+    entries.push({
+      url: `${SITE_URL}${esPath}`,
+      lastModified: new Date('2026-07-20'),
+      alternates: {
+        languages: {
+          en: `${SITE_URL}${enPath}`,
+          es: `${SITE_URL}${esPath}`,
+        },
+      },
     });
   }
 

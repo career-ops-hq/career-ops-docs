@@ -14,6 +14,7 @@ import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
 import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
 import { gitLastMod } from '@/lib/git-date';
+import { hreflangFor } from '@/lib/i18n-map';
 import { FAQ_ENTRIES } from '@/lib/faq-data';
 import { GLOSSARY_TERMS } from '@/lib/glossary-data';
 
@@ -174,10 +175,17 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
   // seoTitle (optional frontmatter) drives the <title> tag when present;
   // the visible H1 stays page.data.title (short command name). QW1.
   const metaTitle = page.data.seoTitle ?? page.data.title;
+  // Reciprocal hreflang when this EN page has a Spanish twin (i18n
+  // pilot). Bidirectional + x-default → EN; a one-directional cluster is
+  // worse than none, so both sides emit it from the same map.
+  const languages = hreflangFor(page.url);
   return {
     title: metaTitle,
     description: page.data.description,
-    alternates: { canonical: `https://career-ops.org${page.url}` },
+    alternates: {
+      canonical: `https://career-ops.org${page.url}`,
+      ...(languages && { languages }),
+    },
     robots: { index: true, follow: true },
     openGraph: {
       title: metaTitle,
