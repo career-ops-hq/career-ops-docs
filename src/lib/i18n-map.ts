@@ -1,3 +1,9 @@
+// NOTE (2026-07-20): the docs ES surfaces are migrating to native
+// Fumadocs i18n (.es.mdx + hideLocale). This map + the standalone /es
+// docs route are the interim; the home (/ ↔ /es) keeps using this map
+// for its hreflang since the home is a TSX dict component, not a docs
+// page. See memory i18n-es-architecture.
+//
 // Translation map for the Spanish (es) surfaces of career-ops.org.
 //
 // The full Fumadocs i18n system (defineI18n + [lang] routing) is the
