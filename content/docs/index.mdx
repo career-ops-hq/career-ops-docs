@@ -21,12 +21,12 @@ You do not need to know how to code. You only need to be comfortable opening a t
       <Step>
       ### AI coding assistant
 
-      Install **[Claude Code](https://claude.ai/code)**, **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)**, or **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — the AI coding assistant that runs this system. career-ops works with all of them. Log in before continuing.
+      Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)**, or **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — the AI coding assistant that runs this system. career-ops works with [eight CLIs first-class](/docs/supported-clis); install any one and log in before continuing.
       </Step>
       <Step>
-        ### Node.js 20 LTS or later
+        ### Node.js 18+ (22.5+ recommended)
 
-        Install **[Node.js](https://nodejs.org) version 20 LTS or later** — a JavaScript runtime used for generating PDFs and running helper scripts.
+        Install **[Node.js](https://nodejs.org)** — minimum **18** (it works, with a warning), **22.5+ recommended** (it enables the SQLite tracker index). It runs the helper scripts and generates PDFs. Check your version with `node --version`.
       </Step>
       <Step>
         ### Git
@@ -39,7 +39,7 @@ You do not need to know how to code. You only need to be comfortable opening a t
 
 ## Step 1: Set up the workspace
 
-Open a terminal in the folder where you want career-ops to live. The recommended path uses one command; an advanced path with `git clone` is below it. If Node 20+ or Git are missing, `npx` will refuse to run — install both first (see prerequisites above).
+Open a terminal in the folder where you want career-ops to live. The recommended path uses one command; an advanced path with `git clone` is below it. If Node (18+) or Git are missing, `npx` will refuse to run — install both first (see prerequisites above).
 
 ### Recommended — one command
 
@@ -80,15 +80,10 @@ npx playwright install chromium
 
 From inside the `career-ops` folder, launch the AI coding CLI you installed.
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
-    ```
-  </Tab>
-  <Tab value="Gemini CLI">
-    ```bash title="Terminal"
-    gemini
     ```
   </Tab>
   <Tab value="Codex">
@@ -96,19 +91,24 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
     codex
     ```
   </Tab>
-  <Tab value="Qwen Code">
-    ```bash title="Terminal"
-    qwen
-    ```
-  </Tab>
   <Tab value="OpenCode">
     ```bash title="Terminal"
     opencode
     ```
   </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash title="Terminal"
     copilot
+    ```
+  </Tab>
+  <Tab value="Gemini CLI">
+    ```bash title="Terminal"
+    gemini
     ```
   </Tab>
 </Tabs>
@@ -125,23 +125,13 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
 
 Once the agent has onboarded you, you are ready to evaluate a real job posting. Copy the URL of any job ad and paste it into the chat. With Claude Code, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
-  <Tab value="Gemini CLI">
-    ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
   <Tab value="Codex">
-    ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
-  <Tab value="Qwen Code">
     ```bash
     Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
     ```
@@ -151,7 +141,17 @@ Once the agent has onboarded you, you are ready to evaluate a real job posting. 
     Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
   <Tab value="GitHub Copilot CLI">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Gemini CLI">
     ```bash
     Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
     ```
@@ -231,7 +231,7 @@ Now that your first evaluation is done, here are a few things you can explore:
     Make sure `cv.md` exists in the root folder and has content in it. If the onboarding finished but `cv.md` is empty, ask the agent: *"my cv.md looks empty, can you help me fill it in?"*
   </Accordion>
   <Accordion title="The PDF did not generate">
-    Run `npx playwright install chromium` again. If that does not fix it, check that Node.js is version 18 or higher by running `node --version`.
+    Run `npx playwright install chromium` again. If that does not fix it, check that Node.js is version 18 or higher (22.5+ recommended) by running `node --version`.
   </Accordion>
   <Accordion title="The score seems off">
     The first few evaluations are rough — the system does not know you well yet. After each evaluation, tell your AI assistant what it got wrong. For example: *"That score is too high — I have no experience with Kubernetes."* It will learn and adjust.

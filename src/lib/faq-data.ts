@@ -17,6 +17,11 @@ export const FAQ_ENTRIES: FaqEntry[] = [
       'No. career-ops is AI-agnostic — Claude Code is one engine among several, not a requirement. You can run the whole pipeline for free with OpenCode plus a free provider, a local model via Ollama, or the built-in OpenRouter runner (npm run or). If you started on a paid plan and ran out of tokens mid-search, switching to a free engine takes minutes and leaves your data untouched. See the "Set up a free AI engine" guide.',
   },
   {
+    question: 'How much does career-ops cost to run per month?',
+    answer:
+      "Only evaluation costs anything, and it can be $0. Scanning for jobs consumes zero AI tokens, so discovering roles is always free; only evaluating a listing calls the model. Three ways run the whole pipeline for nothing: a local model via Ollama, OpenRouter's free models (npm run or), or the Antigravity free tier. On a cheap paid model like DeepSeek V3 (with prompt caching) an evaluation costs well under a cent, so a few cents covers dozens of listings. If you already have a Claude subscription the marginal cost is effectively $0; on the raw API, budget roughly $0.05 to $0.10 per evaluation (an estimate that varies with listing length). career-ops itself is free forever, MIT-licensed with no fee and no tier — you only ever pay your AI provider, if at all.",
+  },
+  {
     question: 'Where does my data live?',
     answer:
       'On your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers, and system updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract.',
@@ -54,6 +59,6 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: 'What is the difference between career-ops and CareerOps?',
     answer:
-      'They are two names for the same work. career-ops — lowercase, hyphenated — is the open-source project: an MIT-licensed, AI-powered job search system that runs locally inside your AI coding CLI, published at career-ops.org and github.com/santifer/career-ops. CareerOps — one word — names its manifesto: The CareerOps Manifesto (career-ops.org/manifesto), nine rights every job seeker should have, signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both live in the same repository.',
+      'CareerOps (one word) names the practice; career-ops (hyphen, lowercase) is the open-source project — its first reference implementation. The CareerOps Manifesto defines the practice. In plain terms: career-ops is the MIT-licensed, AI-powered job search system that runs locally inside your AI coding CLI, published at career-ops.org and github.com/santifer/career-ops. CareerOps is the practice it embodies — running a job search the way engineers run production — named and defined in The CareerOps Manifesto (career-ops.org/manifesto), signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both trace back to the same repository.',
   },
 ];
