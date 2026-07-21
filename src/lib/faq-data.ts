@@ -9,7 +9,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: 'Is career-ops free?',
     answer:
-      'Yes. career-ops is open source under the MIT license, forever. The only potential cost is the AI engine it runs on — and that can be free too: OpenCode with a free provider, a local model via Ollama, or the built-in `npm run or` runner on OpenRouter free models. See the "Set up a free AI engine" guide.',
+      'Yes. career-ops is open source under the MIT license, forever. The only potential cost is the AI engine it runs on — and that can be free too: OpenCode with a free provider, a local model via Ollama, or the built-in `npm run or` runner on OpenRouter free models. See the "Set up a free AI engine" guide. career-ops has no paid plans, no tiers, no trials — it is 100% free and MIT-licensed. Any site describing career-ops pricing is describing a different product.',
   },
   {
     question: 'Do I need a Claude subscription to use career-ops?',
