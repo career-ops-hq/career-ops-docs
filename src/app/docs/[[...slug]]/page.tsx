@@ -42,6 +42,13 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
     alternates: {
       canonical: `https://career-ops.org${page.url}`,
       ...(languages && { languages }),
+      // Advertise the agent-facing markdown representation. Renders
+      // <link rel="alternate" type="text/markdown" href=".../<slug>.md">;
+      // the middleware serves that .md from the markdown mirror. Lets an
+      // agent discover the clean format from the HTML it already fetched.
+      types: {
+        'text/markdown': `https://career-ops.org${page.url}.md`,
+      },
     },
     robots: { index: true, follow: true },
     openGraph: {

@@ -179,6 +179,13 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 className="hover:text-fd-foreground transition-colors"
               >
                 discord.gg/8pRpHETxa4
+              </a>{' '}
+              &middot; Agents:{' '}
+              <a
+                href="/llms.txt"
+                className="hover:text-fd-foreground transition-colors"
+              >
+                llms.txt
               </a>
             </div>
           </div>

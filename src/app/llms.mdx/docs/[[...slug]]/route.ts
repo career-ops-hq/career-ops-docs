@@ -10,7 +10,13 @@ export async function GET(_req: Request, { params }: RouteContext<'/llms.mdx/doc
 
   return new Response(await getLLMText(page), {
     headers: {
-      'Content-Type': 'text/markdown',
+      'Content-Type': 'text/markdown; charset=utf-8',
+      // The canonical, indexable representation is the HTML docs page. This
+      // raw-markdown mirror (reached directly, via `<url>.md`, or via
+      // `Accept: text/markdown`) is an alternate format for agents — keep it
+      // out of search so it never dilutes the HTML page as duplicate content.
+      // On-demand agent retrieval (ChatGPT-User, Claude-Web) is unaffected.
+      'X-Robots-Tag': 'noindex',
     },
   });
 }

@@ -34,8 +34,11 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        // Internal/asset endpoints, not human content.
-        disallow: ['/api/', '/og/', '/llms.mdx/'],
+        // Internal/asset endpoints, not human content. /llms.mdx/ (the
+        // agent-facing markdown mirror) is deliberately NOT disallowed: agents
+        // must be able to fetch it, and its X-Robots-Tag: noindex keeps the raw
+        // markdown out of the search index without blocking retrieval.
+        disallow: ['/api/', '/og/'],
       },
       ...aiCrawlers.map((userAgent) => ({ userAgent, allow: '/' })),
     ],
