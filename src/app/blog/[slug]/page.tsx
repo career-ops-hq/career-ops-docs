@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { blogSource } from '@/lib/blog-source';
 import { getMDXComponents } from '@/components/mdx';
 import { instrumentSerifRegular } from '@/lib/fonts';
-import { blogPostSchema } from '@/lib/schema';
+import { blogPostSchema, faqPageSchema } from '@/lib/schema';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 
 type BlogFrontmatter = {
@@ -13,6 +13,7 @@ type BlogFrontmatter = {
   lastModified?: string;
   summary?: string;
   tags: string[];
+  faq?: Array<{ q: string; a: string }>;
 };
 
 export async function generateStaticParams() {
@@ -77,6 +78,16 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
           ),
         }}
       />
+      {data.faq && data.faq.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              faqPageSchema(`https://career-ops.org${page.url}`, data.faq),
+            ),
+          }}
+        />
+      )}
       <article className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
         <header className="mb-12">
           <p className="text-sm text-fd-muted-foreground">

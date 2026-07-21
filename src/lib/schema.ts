@@ -968,6 +968,26 @@ export function blogPostSchema(args: {
   };
 }
 
+// Generic FAQPage graph for a page that has a visible FAQ section (blog
+// posts via their `faq` frontmatter). Kept separate from BlogPosting so a
+// post only emits it when it actually ships a FAQ. Answer engines prefer
+// FAQ structured data backed by visible on-page Q&A.
+export function faqPageSchema(
+  pageUrl: string,
+  items: Array<{ q: string; a: string }>,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${pageUrl}#faq`,
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  };
+}
+
 // /compare/[slug] — comparison page schema. Emits SoftwareApplication
 // for both products (career-ops via @id reference to the canonical node
 // in siteSchema; competitor as a fresh node), a plain WebPage for the

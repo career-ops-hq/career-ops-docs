@@ -43,6 +43,13 @@ export const blog = defineDocs({
       lastModified: z.string().optional(),
       tags: z.array(z.string()).default([]),
       summary: z.string().optional(),
+      // Optional FAQ mirror — when present, the post emits a FAQPage JSON-LD
+      // alongside the BlogPosting graph (AI Overviews prefer FAQ structured
+      // data backed by visible content, so keep these in sync with the
+      // visible "Frequently asked" section in the body).
+      faq: z
+        .array(z.object({ q: z.string(), a: z.string() }))
+        .optional(),
     }),
     postprocess: {
       includeProcessedMarkdown: true,

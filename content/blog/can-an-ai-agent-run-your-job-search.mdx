@@ -1,0 +1,79 @@
+---
+title: Can an AI agent run your whole job search?
+description: An AI agent can scan, evaluate, tailor, and track — but it should not press apply for you. Here is what an agent can and can't automate in a 2026 job search, and how career-ops runs the whole pipeline human-in-the-loop.
+date: "2026-07-21"
+lastModified: "2026-07-21"
+tags: ["ai-job-search", "agents", "career-ops"]
+summary: What an AI agent can and can't automate in a job search, and why the part it can't do is the point.
+faq:
+  - q: "Can an AI agent apply to jobs for me?"
+    a: "It can prepare every application to one click: the evaluation, the tailored résumé, and the tracker entry are all done automatically, but it does not submit for you. You review and send each one yourself. That is deliberate: mass auto-apply damages your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the decision with you."
+  - q: "Is it safe to let an AI agent handle my job search?"
+    a: "career-ops runs entirely on your own machine, inside the AI CLI you already use, and keeps zero telemetry: your CV, profile, and application history never leave your computer unless you push them somewhere. It reads and prepares; it never submits, deletes, or shares anything without your explicit action."
+  - q: "Do I need Claude, or does any AI CLI work?"
+    a: "Any supported CLI works. Claude Code is the most common runtime because of its skill loader, but career-ops is engine-agnostic: the same prompt files run on Codex, OpenCode, Qwen, GitHub Copilot CLI, and more, and you can point it at your own or a local model. Several options run at $0."
+---
+
+{/* FAQ below is mirrored in the `faq` frontmatter (FAQPage JSON-LD) — edit both together. */}
+
+Partly, and the part it can't do is the point. An AI agent can scan job boards, evaluate each listing against your CV, tailor a résumé, and track every application. What it should not do is press *apply* for you: mass auto-apply burns your reputation and misfires. career-ops runs the whole pipeline as a human-in-the-loop system; the agent does the work, you make the call.
+
+## What an AI agent can automate today
+
+A capable agent already handles the mechanical weight of a search, end to end:
+
+- **Scan.** Pull open roles from company career pages and ATS APIs (Greenhouse, Ashby, Lever) without you opening thirty tabs.
+- **Evaluate.** Read each job description, score it against your background across five dimensions plus a holistic global score, and cite the specific lines of your CV and the JD that drove the number.
+- **Tailor.** Generate a résumé tuned to the role in front of you: the same CV, re-emphasised, never invented.
+- **Track.** Log every application to a local file so you have one source of truth instead of a spreadsheet you stopped updating in week two.
+
+That is four stages of real work the agent does while you sleep. The fifth stage, pressing *apply*, is the one it deliberately hands back to you.
+
+## Why mass auto-apply fails
+
+The loud promise of the last two years has been the opposite: an agent that fires hundreds of applications a day on your behalf. It reads well and works badly.
+
+Applying is a one-shot, reputation-bearing move. Send a generic application to a role you half-fit and you don't just miss that job, you teach a recruiter, and sometimes an entire company's ATS, to down-rank your name. Volume is not leverage here; precision is. An agent that optimises for applications-sent is optimising the wrong number.
+
+So the honest answer to *"can an AI apply to jobs for me?"* is: it can prepare every application to the point of one click (the evaluation, the tailored résumé, and the tracker row are all done) and then it stops. **You decide what to send, and you send it.** That is not a limitation bolted on; it is the design. The agent removes the tedium, not the judgment.
+
+## Running it with Claude Code, or any AI CLI you already pay for
+
+career-ops does not ship its own model. It is a set of prompt files and slash commands that run *inside* an AI coding CLI you already use, and the reasoning comes from whichever model you point it at.
+
+Claude Code is the most common way people run it, because its skill loader makes the modes one command away, but it is a flagship path, not a requirement. The same files run on Codex, OpenCode, Qwen, GitHub Copilot CLI, and others, and you can bring your own model or a local one. Pick the engine that fits your cost, quality, and privacy profile; career-ops runs on top of it unchanged. Naming Claude Code here is descriptive, not an endorsement; you are never locked to one vendor.
+
+Everything runs on your own machine. Your CV, your profile, and your application history never leave it unless you push them somewhere yourself. career-ops keeps **zero telemetry**: there is no product-side dashboard of what anyone scanned or applied to.
+
+## What one real search looked like
+
+Because there is no telemetry, the only numbers we can honestly show are personal ones. In my own 2026 job search, career-ops **evaluated 740 listings; I applied to 68, got 12 interviews, and 1 offer.**
+
+The interesting brick is the middle: **68 applications turned into 12 interviews, a 17.6% interview rate.** That is what "the agent does the work, you make the call" buys you: not more applications, but fewer, better-chosen ones, each prepared well enough that a much larger share of them turned into a conversation.
+
+## Limitations: where an agent still can't help
+
+An honest page names the edges. career-ops is a strong pipeline, not magic:
+
+- **It doesn't know the room.** The agent researches a company from public sources; it cannot tell you the unwritten dynamics of a specific team. That is still your network's job.
+- **Scoring is a rubric, not an oracle.** The first few evaluations are rough: the system does not know you well yet, and you correct it as you go. A 4.7 is a strong signal, not a guarantee.
+- **Liveness is heuristic.** It checks whether a listing is still open, but a job marked live can still be filled internally, and a closed one can still be worth a referral.
+- **It won't negotiate for you.** It preps you for the comp conversation; you have it.
+- **It is for an active, structured search.** If you are sending one or two applications, the fifteen-minute setup is not worth it. This is a tool for people running a real search, comfortable in a terminal even if they don't code professionally.
+
+The part an AI agent can't do (read a room, hold a conversation, decide what you actually want) is the part that was always yours. career-ops just clears everything else off your desk so you have the attention for it.
+
+## Frequently asked
+
+**Can an AI agent apply to jobs for me?**
+It can prepare every application to one click: the evaluation, the tailored résumé, and the tracker entry are all done automatically, but it does not submit for you. You review and send each one yourself. That is deliberate: mass auto-apply damages your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the decision with you.
+
+**Is it safe to let an AI agent handle my job search?**
+career-ops runs entirely on your own machine, inside the AI CLI you already use, and keeps zero telemetry: your CV, profile, and application history never leave your computer unless you push them somewhere. It reads and prepares; it never submits, deletes, or shares anything without your explicit action.
+
+**Do I need Claude, or does any AI CLI work?**
+Any supported CLI works. Claude Code is the most common runtime because of its skill loader, but career-ops is engine-agnostic: the same prompt files run on Codex, OpenCode, Qwen, GitHub Copilot CLI, and more, and you can point it at your own or a local model. Several options run at $0.
+
+---
+
+*Ready to try it? Start with the [Quick Start](/docs) or read [what career-ops is](/docs/introduction/what-is-career-ops).*
