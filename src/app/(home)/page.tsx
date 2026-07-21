@@ -6,7 +6,10 @@ import { homeEn } from './home-dict';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
-  title: 'career-ops — open-source AI job search command center',
+  // SEO <title> — category-first, brand at the end (search-ops-measured,
+  // venture-ops GO). The H1/hero stay brand-first (identity); the title is a
+  // SERP door, not identity. og/twitter titles keep the brand-first form.
+  title: 'Open-source AI job search agent, local-first | career-ops',
   description:
     'Open source AI-powered job search system. Runs in your CLI on your machine. CLI-agnostic, MIT-licensed, local-first. Evaluate jobs, generate tailored CVs, track applications.',
   alternates: {
