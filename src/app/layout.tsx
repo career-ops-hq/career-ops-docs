@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
-import { FooterDocsLink } from '@/components/footer-docs-link';
+import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 
 // Social brand marks as inline SVG (the installed lucide-react 1.8.0
@@ -93,10 +93,8 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 </p>
               </div>
               <nav className={`${inter.className} flex flex-row flex-wrap items-center gap-x-5 gap-y-2 text-sm`}>
-                <FooterDocsLink />
-                <a href="/manifesto" className="hover:text-fd-foreground hover:underline">
-                  Manifesto
-                </a>
+                <FooterLocaleLink path="/docs">Docs</FooterLocaleLink>
+                <FooterLocaleLink path="/manifesto">Manifesto</FooterLocaleLink>
                 <a href="/methodology" className="hover:text-fd-foreground hover:underline">
                   Methodology
                 </a>

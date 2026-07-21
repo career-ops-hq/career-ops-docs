@@ -21,6 +21,10 @@ export type HomeDict = {
   // ES '/es/docs'. Keeps the Spanish home sending users into the Spanish docs
   // (which now has a translated landing) instead of dropping them into English.
   docsHref: string;
+  // Locale-aware manifesto link (EN '/manifesto', ES '/es/manifesto'). Same
+  // reason as docsHref: the Spanish home must send readers to the Spanish
+  // manifesto, not drop them into the English one.
+  manifestoHref: string;
   featuredIn: string;
   authorTagline: string;
   // Official localized rendering of the signature thesis, shown BELOW the
@@ -83,6 +87,7 @@ export const homeEn: HomeDict = {
   runItNow: 'Run it now',
   viewSource: 'View source',
   docsHref: '/docs',
+  manifestoHref: '/manifesto',
   featuredIn: 'Featured in',
   authorTagline: ', 16-year operator and Head of Applied AI',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
@@ -363,6 +368,7 @@ export const homeEs: HomeDict = {
   runItNow: 'Empezar ahora',
   viewSource: 'Ver el código',
   docsHref: '/es/docs',
+  manifestoHref: '/es/manifesto',
   featuredIn: 'Apareció en',
   authorTagline: ', 16 años como operador y Head of Applied AI',
   // Versión «yo» oficial del README.es (superficie personal = home). El

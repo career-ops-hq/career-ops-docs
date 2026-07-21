@@ -156,7 +156,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           renders there. */}
       <div className="mx-auto w-full max-w-[1100px] px-6 md:px-12 mt-16 lg:mt-24">
         <hr className="mx-auto w-32 lg:w-40 border-t-2 border-fd-foreground/20 mb-10 lg:mb-14" />
-        <blockquote className="text-center" cite="https://career-ops.org/manifesto">
+        <blockquote className="text-center" cite={`https://career-ops.org${dict.manifestoHref}`}>
           <p className={`${instrumentSerif.className} text-2xl sm:text-3xl md:text-4xl xl:text-5xl leading-tight text-fd-foreground`} lang="en">
             &ldquo;<span className="text-fd-foreground/55">Companies</span> use AI to filter{' '}
             <span className="text-brand">candidates</span>.
@@ -189,7 +189,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           </footer>
           <p className="mt-5 text-center text-sm text-fd-muted-foreground">
             {dict.nowSignedManifesto}{' '}
-            <Link href="/manifesto" className="text-fd-foreground underline underline-offset-4 decoration-fd-foreground/40 hover:decoration-current">
+            <Link href={dict.manifestoHref} className="text-fd-foreground underline underline-offset-4 decoration-fd-foreground/40 hover:decoration-current">
               {dict.readIt}
             </Link>
           </p>
@@ -285,7 +285,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           <h3 className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}>{dict.featApplyTitle}</h3>
           <p className="mb-4">{dict.featApplyBody1}</p>
           <p className="mb-6">{dict.featApplyBody2}</p>
-          <Link href="/docs/reference/modes/apply" className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}>{dict.featApplyCta}</Link>
+          <Link href={`${dict.docsHref}/reference/modes/apply`} className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}>{dict.featApplyCta}</Link>
         </div>
 
         <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-tr from-brand/10 via-transparent to-transparent min-h-[300px] flex flex-col">
