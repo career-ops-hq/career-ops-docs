@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { homeFaqSchemaEs } from '@/lib/schema';
 import { hreflangHome } from '@/lib/i18n-map';
 import { HomeContent } from '../../(home)/home-content';
 import { homeEs } from '../../(home)/home-dict';
@@ -28,5 +29,13 @@ export const metadata: Metadata = {
 };
 
 export default function HomePageEs() {
-  return <HomeContent dict={homeEs} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchemaEs()) }}
+      />
+      <HomeContent dict={homeEs} />
+    </>
+  );
 }

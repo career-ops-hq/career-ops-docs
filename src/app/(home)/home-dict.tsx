@@ -219,6 +219,25 @@ export const homeEn: HomeDict = {
       ),
     },
     {
+      q: 'Does career-ops apply to jobs for me?',
+      a: (
+        <>
+          It prepares every application right up to the click: it scans roles,
+          scores each against your CV, and tailors a resume. Then it hands the
+          decision back to you. You review and send each one yourself. That is
+          deliberate: mass auto-apply burns your standing with recruiters and ATS
+          systems, so career-ops removes the busywork and keeps the choice yours.
+          More in{' '}
+          <a
+            href="/blog/can-an-ai-agent-run-your-job-search"
+            className="text-fd-foreground hover:underline underline-offset-2"
+          >
+            Can an AI agent run your whole job search?
+          </a>
+        </>
+      ),
+    },
+    {
       q: 'Is career-ops free? What is the business model?',
       a: (
         <>
@@ -234,6 +253,19 @@ export const homeEn: HomeDict = {
             career-ops.org/sustain
           </a>{' '}
           for details.
+        </>
+      ),
+    },
+    {
+      q: 'Where does my data live?',
+      a: (
+        <>
+          On your own machine, in plain files you own: your CV, profile,
+          pipeline, and reports are local Markdown and YAML. career-ops runs
+          entirely locally through your AI CLI: no account, no telemetry, nothing
+          uploaded to a career-ops server. System updates never touch your data
+          layer; that separation is the Data Contract. The only data that leaves
+          your computer is whatever your chosen AI CLI sends to its own provider.
         </>
       ),
     },
@@ -270,16 +302,16 @@ export const homeEn: HomeDict = {
       ),
     },
     {
-      q: 'How is career-ops different from other AI job search tools?',
+      q: 'How is career-ops different from resume checkers and auto-apply tools?',
       a: (
         <>
-          Most AI job search tools — Jobscan, Teal, Huntr, autoapply.ai — are
-          cloud SaaS products that upload your resume and job data to their
-          servers, charge $20–80/month, and keep their matching algorithm closed.
-          career-ops is the inverse: open source, MIT-licensed, runs locally on
-          your machine through whichever AI CLI you already use, and publishes the
-          full evaluation rubric. The only recurring cost is your AI CLI
-          subscription. Side-by-side comparisons at{' '}
+          career-ops is open source and MIT-licensed, runs locally on your own
+          machine through whichever AI coding CLI you already use, and publishes
+          its full evaluation rubric. A human stays in the loop on every
+          application; it never auto-submits. There is no account, no telemetry,
+          and no subscription to career-ops itself; the only recurring cost is the
+          AI CLI you choose. For honest, side-by-side comparisons with specific
+          tools, see{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare
           </a>
@@ -291,7 +323,7 @@ export const homeEn: HomeDict = {
       q: 'What AI tools does career-ops work with?',
       a: (
         <>
-          Claude Code, OpenCode, Antigravity CLI, Codex, Grok Build CLI, Qwen,
+          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
           Kimi, and GitHub Copilot CLI — eight first-class CLIs (Gemini CLI is a
           legacy wrapper). The same mode files run on all of them. Each user picks
           the CLI that fits their existing subscription and cost preferences —
@@ -475,6 +507,18 @@ export const homeEs: HomeDict = {
       ),
     },
     {
+      q: '¿career-ops aplica a las ofertas por mí?',
+      a: (
+        <>
+          Prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno
+          contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú
+          revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema
+          tu reputación con los reclutadores y los ATS, así que career-ops te quita
+          el trabajo tedioso, no el criterio.
+        </>
+      ),
+    },
+    {
       q: '¿career-ops es gratis? ¿Cuál es el modelo de negocio?',
       a: (
         <>
@@ -490,6 +534,20 @@ export const homeEs: HomeDict = {
             career-ops.org/sustain
           </a>
           .
+        </>
+      ),
+    },
+    {
+      q: '¿Dónde se guardan mis datos? ¿career-ops es privado?',
+      a: (
+        <>
+          En tu propia máquina, en archivos planos que son tuyos: tu CV, tu
+          perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops
+          corre por completo en local a través de tu CLI de IA: sin cuenta, sin
+          telemetría, sin nada subido a un servidor de career-ops. Las
+          actualizaciones del sistema nunca tocan tu capa de datos; esa separación
+          es el Data Contract. Lo único que sale de tu máquina es lo que tu CLI de
+          IA envíe a su propio proveedor.
         </>
       ),
     },
@@ -527,16 +585,15 @@ export const homeEs: HomeDict = {
       ),
     },
     {
-      q: '¿En qué se diferencia career-ops de otras herramientas de búsqueda de empleo con IA?',
+      q: '¿En qué se diferencia career-ops de los revisores de CV y las herramientas de auto-aplicación?',
       a: (
         <>
-          La mayoría de las herramientas de búsqueda de empleo con IA — Jobscan,
-          Teal, Huntr, autoapply.ai — son productos SaaS en la nube que suben tu CV
-          y tus datos a sus servidores, cobran 20–80 $/mes y mantienen su algoritmo
-          de matching cerrado. career-ops es lo contrario: open source, con
-          licencia MIT, se ejecuta en local en tu máquina a través del CLI de IA que
-          ya uses, y publica la rúbrica de evaluación completa. El único coste
-          recurrente es tu suscripción al CLI de IA. Comparativas lado a lado en{' '}
+          career-ops es open source y con licencia MIT, se ejecuta en local en tu
+          propia máquina a través del CLI de IA que ya uses, y publica su rúbrica de
+          evaluación completa. Un humano decide en cada candidatura; nunca envía
+          solo. No hay cuenta, ni telemetría, ni suscripción al propio career-ops;
+          el único coste recurrente es el CLI de IA que elijas. Para comparativas
+          honestas y lado a lado con herramientas concretas, mira{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare
           </a>
@@ -548,7 +605,7 @@ export const homeEs: HomeDict = {
       q: '¿Con qué herramientas de IA funciona career-ops?',
       a: (
         <>
-          Claude Code, OpenCode, Antigravity CLI, Codex, Grok Build CLI, Qwen,
+          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
           Kimi y GitHub Copilot CLI — ocho CLIs de primera clase (Gemini CLI es un
           wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
           usuario elige el CLI que encaja con su suscripción y sus preferencias de

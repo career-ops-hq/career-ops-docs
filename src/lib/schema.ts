@@ -867,65 +867,105 @@ export function docsTechArticleSchema(opts: {
   };
 }
 
-// /home — three high-priority FAQs surfaced as a separate JSON-LD graph.
-// These are the questions that buyers, journalists, and developers ask
-// first; pre-answering them in machine-readable form is direct AEO play.
-export function homeFaqSchema() {
+// /home — the visible home FAQ, mirrored as a FAQPage JSON-LD graph (direct
+// AEO play: the questions buyers, journalists, and developers ask first).
+// MUST stay in sync with the visible FAQ in src/app/(home)/home-dict.tsx —
+// edit both together. Per-locale: the EN home emits homeFaqSchema(), the ES
+// home emits homeFaqSchemaEs() with the Spanish questions (C1, search-ops
+// 2026-07-21). Q5 is category-framed (no competitor names) on the entity
+// surface; named comparisons live at /compare.
+type HomeFaqQA = { q: string; a: string };
+
+function homeFaqGraph(id: string, lang: string, entries: HomeFaqQA[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    '@id': 'https://career-ops.org/#faq',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'How does career-ops score job listings?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions — match, north-star alignment, comp, cultural signals, red flags — producing a holistic 1.0–5.0 global score with citations to specific CV lines and JD requirements. Anything below 4.0 the agent recommends against applying. No closed-form formula, no spray-and-pray. The full rubric is published at career-ops.org/methodology.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is career-ops free? What is the business model?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. The maintainer has other paid work for income; sponsorship enables deeper focus on the project. See career-ops.org/sustain for details.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Who built career-ops?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'career-ops was built by Santiago Fernández de Valderrama Aparicio — an Applied AI Operator with 16+ years building products, founder and operator of a Spanish phone-repair business (2009–2025) before exiting, and currently Head of Applied AI at Zinkee. He created career-ops in early 2026 to manage his own AI-era job search — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Is career-ops a Claude Code skill or a standalone tool?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'career-ops is CLI-agnostic. It works with Claude Code, Codex, OpenCode, Gemini CLI, Qwen, and Copilot — whichever AI coding agent the user already pays for. The skill files (modes/) live in the repo as plain markdown prompts; any agent that supports skill loading can invoke them. There is no Anthropic-specific dependency. Claude Code happens to be the most common runtime because of its skill loader, but the same modes run unchanged in the other CLIs.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How is career-ops different from other AI job search tools?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Most AI job search tools — Jobscan, Teal, Huntr, autoapply.ai — are cloud SaaS products that upload your resume and job data to their servers, charge $20–80/month, and keep their matching algorithm closed. career-ops is the inverse: open source, MIT-licensed, runs locally on your machine through whichever AI CLI you already use, and publishes the full evaluation rubric. The only recurring cost is your AI CLI subscription. Side-by-side comparisons at career-ops.org/compare.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What AI tools does career-ops work with?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Claude Code (primary), Codex (OpenAI), OpenCode, Gemini CLI (Google), Qwen, and GitHub Copilot. The same mode files run on all six. Each user picks the CLI that fits their existing subscription and cost preferences — career-ops never locks you to one provider. A typical job search runs on Claude Pro at $20/month, but the choice is yours.',
-        },
-      },
-    ],
+    '@id': id,
+    inLanguage: lang,
+    mainEntity: entries.map((e) => ({
+      '@type': 'Question',
+      name: e.q,
+      acceptedAnswer: { '@type': 'Answer', text: e.a },
+    })),
   };
+}
+
+const HOME_FAQ_EN: HomeFaqQA[] = [
+  {
+    q: 'How does career-ops score job listings?',
+    a: 'career-ops uses a rubric-guided LLM evaluation across five dimensions — match, north-star alignment, comp, cultural signals, red flags — producing a holistic 1.0–5.0 global score with citations to specific CV lines and JD requirements. Anything below 4.0 the agent recommends against applying. No closed-form formula, no spray-and-pray. The full rubric is published at career-ops.org/methodology.',
+  },
+  {
+    q: 'Does career-ops apply to jobs for me?',
+    a: 'It prepares every application right up to the click: it scans roles, scores each against your CV, and tailors a resume. Then it hands the decision back to you. You review and send each one yourself. That is deliberate: mass auto-apply burns your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the choice yours.',
+  },
+  {
+    q: 'Is career-ops free? What is the business model?',
+    a: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. The maintainer has other paid work for income; sponsorship enables deeper focus on the project. See career-ops.org/sustain for details.',
+  },
+  {
+    q: 'Where does my data live?',
+    a: 'On your own machine, in plain files you own: your CV, profile, pipeline, and reports are local Markdown and YAML. career-ops runs entirely locally through your AI CLI: no account, no telemetry, nothing uploaded to a career-ops server. System updates never touch your data layer; that separation is the Data Contract. The only data that leaves your computer is whatever your chosen AI CLI sends to its own provider.',
+  },
+  {
+    q: 'Who built career-ops?',
+    a: 'career-ops was built by Santiago Fernández de Valderrama Aparicio — an Applied AI Operator with 16+ years building products, founder and operator of a Spanish phone-repair business (2009–2025) before exiting, and currently Head of Applied AI at Zinkee. He created career-ops in early 2026 to manage his own AI-era job search — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
+  },
+  {
+    q: 'Is career-ops a Claude Code skill or a standalone tool?',
+    a: 'career-ops is CLI-agnostic. It works with Claude Code, OpenCode, Codex, GitHub Copilot, and more — whichever AI coding agent the user already pays for. The skill files (modes/) live in the repo as plain markdown prompts; any agent that supports skill loading can invoke them. There is no Anthropic-specific dependency. Claude Code happens to be the most common runtime because of its skill loader, but the same modes run unchanged in the other CLIs.',
+  },
+  {
+    q: 'How is career-ops different from resume checkers and auto-apply tools?',
+    a: 'career-ops is open source and MIT-licensed, runs locally on your own machine through whichever AI coding CLI you already use, and publishes its full evaluation rubric. A human stays in the loop on every application; it never auto-submits. There is no account, no telemetry, and no subscription to career-ops itself; the only recurring cost is the AI CLI you choose. For honest, side-by-side comparisons with specific tools, see career-ops.org/compare.',
+  },
+  {
+    q: 'What AI tools does career-ops work with?',
+    a: 'Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, and GitHub Copilot CLI — eight first-class CLIs (Gemini CLI is a legacy wrapper). The same mode files run on all of them. Each user picks the CLI that fits their existing subscription and cost preferences — career-ops never locks you to one provider. A typical job search runs on Claude Pro at $20/month, but the choice is yours.',
+  },
+];
+
+const HOME_FAQ_ES: HomeFaqQA[] = [
+  {
+    q: '¿Cómo puntúa career-ops las ofertas de empleo?',
+    a: 'career-ops usa una evaluación con LLM guiada por rúbrica en cinco dimensiones — encaje, alineación con tu norte, compensación, señales culturales y red flags — que produce una nota global holística de 1.0 a 5.0 con citas a líneas concretas de tu CV y a los requisitos de la oferta. Por debajo de 4.0, el agente recomienda no postular. Sin fórmula cerrada, sin postular a ciegas. La rúbrica completa está publicada en career-ops.org/methodology.',
+  },
+  {
+    q: '¿career-ops aplica a las ofertas por mí?',
+    a: 'Prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema tu reputación con los reclutadores y los ATS, así que career-ops te quita el trabajo tedioso, no el criterio.',
+  },
+  {
+    q: '¿career-ops es gratis? ¿Cuál es el modelo de negocio?',
+    a: 'career-ops es gratis para siempre, con licencia MIT y financiado por la comunidad. No hay plan de pago, ni lista de espera, ni cuenta, ni telemetría, ni funciones premium. Clonas el repositorio, configuras tu perfil y ejecutas el sistema en local con el CLI de IA que ya uses. La sostenibilidad viene del mecenazgo voluntario de la comunidad vía GitHub Sponsors — no de planes premium, funciones de pago ni datos. El maintainer tiene otro trabajo remunerado; el patrocinio le permite dedicarle más foco. Detalles en career-ops.org/sustain.',
+  },
+  {
+    q: '¿Dónde se guardan mis datos? ¿career-ops es privado?',
+    a: 'En tu propia máquina, en archivos planos que son tuyos: tu CV, tu perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops corre por completo en local a través de tu CLI de IA: sin cuenta, sin telemetría, sin nada subido a un servidor de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos; esa separación es el Data Contract. Lo único que sale de tu máquina es lo que tu CLI de IA envíe a su propio proveedor.',
+  },
+  {
+    q: '¿Quién creó career-ops?',
+    a: 'career-ops lo creó Santiago Fernández de Valderrama Aparicio — un Applied AI Operator con más de 16 años construyendo productos, fundador y operador de un negocio español de reparación de móviles (2009–2025) antes de su salida, y actualmente Head of Applied AI en Zinkee. Creó career-ops a principios de 2026 para gestionar su propia búsqueda de empleo en la era de la IA — 740 ofertas evaluadas, un puesto de Head of AI conseguido — y lo publicó bajo licencia MIT cuando dejó de necesitarlo.',
+  },
+  {
+    q: '¿career-ops es una skill de Claude Code o una herramienta independiente?',
+    a: 'career-ops es independiente del CLI. Funciona con Claude Code, OpenCode, Codex, GitHub Copilot y más — el agente de IA que el usuario ya pague. Los archivos de skill (modes/) viven en el repositorio como prompts en markdown; cualquier agente que soporte carga de skills puede invocarlos. No hay dependencia específica de Anthropic. Claude Code es el runtime más común por su cargador de skills, pero los mismos modos funcionan sin cambios en los demás CLIs.',
+  },
+  {
+    q: '¿En qué se diferencia career-ops de los revisores de CV y las herramientas de auto-aplicación?',
+    a: 'career-ops es open source y con licencia MIT, se ejecuta en local en tu propia máquina a través del CLI de IA que ya uses, y publica su rúbrica de evaluación completa. Un humano decide en cada candidatura; nunca envía solo. No hay cuenta, ni telemetría, ni suscripción al propio career-ops; el único coste recurrente es el CLI de IA que elijas. Para comparativas honestas y lado a lado con herramientas concretas, mira career-ops.org/compare.',
+  },
+  {
+    q: '¿Con qué herramientas de IA funciona career-ops?',
+    a: 'Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi y GitHub Copilot CLI — ocho CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada usuario elige el CLI que encaja con su suscripción y sus preferencias de coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de empleo típica corre con Claude Pro a 20 $/mes, pero la elección es tuya.',
+  },
+];
+
+export function homeFaqSchema() {
+  return homeFaqGraph('https://career-ops.org/#faq', 'en', HOME_FAQ_EN);
+}
+
+export function homeFaqSchemaEs() {
+  return homeFaqGraph('https://career-ops.org/es/#faq', 'es', HOME_FAQ_ES);
 }
 
 // /blog/[slug] — BlogPosting schema. Author is the canonical Person
