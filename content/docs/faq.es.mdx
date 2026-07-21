@@ -9,7 +9,7 @@ translatedFrom: /docs/faq
 ---
 
 {/* Espejado con src/lib/faq-data.ts (FAQPage JSON-LD) — editar ambos a la vez.
-    Las respuestas están verificadas contra docs/FAQ.md del repo core; el fichero
+    Las respuestas están verificadas contra docs/FAQ.md del repo core; el archivo
     del core es la fuente de verdad del comportamiento técnico. */}
 
 Las preguntas más comunes, respondidas en un solo sitio. Para cualquier cosa que no esté cubierta aquí, pregunta en [Discord](https://discord.gg/8pRpHETxa4) o abre una [GitHub Discussion](https://github.com/santifer/career-ops/discussions).
@@ -26,11 +26,11 @@ No. career-ops es agnóstico respecto a la IA — Claude Code es un motor entre 
 
 ## ¿Dónde se guardan mis datos? ¿career-ops es privado?
 
-En tu máquina, en ficheros planos que son tuyos — tu CV, tu perfil, tu pipeline y tus informes son Markdown/YAML locales. Nada corre en servidores de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos (`cv.md`, `config/`, `data/`, `reports/`, `output/`): esa separación es el **Data Contract**, y todas las actualizaciones lo respetan.
+En tu máquina, en archivos planos que son tuyos — tu CV, tu perfil, tu pipeline y tus informes son Markdown/YAML locales. Nada corre en servidores de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos (`cv.md`, `config/`, `data/`, `reports/`, `output/`): esa separación es el **Data Contract**, y todas las actualizaciones lo respetan.
 
 ## ¿Con qué CLIs de programación con IA funciona career-ops?
 
-Ocho, con soporte de primera clase: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi y GitHub Copilot CLI (Gemini CLI está soportado como wrapper legacy). career-ops es agnóstico respecto a la IA: distribuye ficheros de prompts que el CLI ejecuta, así que también puedes apuntarlo a cualquier endpoint compatible con OpenAI o a un modelo local sin cambiar una sola línea de código. Consulta [CLIs de IA compatibles](/docs/supported-clis) para ver la lista actual y cómo invocar cada uno.
+Ocho, con soporte de primera clase: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi y GitHub Copilot CLI (Gemini CLI está soportado como wrapper legacy). career-ops es agnóstico respecto a la IA: distribuye archivos de prompts que el CLI ejecuta, así que también puedes apuntarlo a cualquier endpoint compatible con OpenAI o a un modelo local sin cambiar una sola línea de código. Consulta [CLIs de IA compatibles](/docs/supported-clis) para ver la lista actual y cómo invocar cada uno.
 
 ## ¿Cuál es la diferencia entre `scan` y `scan:full`?
 
@@ -42,7 +42,7 @@ Acota la ejecución con `./batch/batch-runner.sh --limit 5` para inspeccionar la
 
 ## Las skills no cargan en Windows — error de symlink al instalar
 
-Windows no crea symlinks por defecto, así que al hacer checkout Git deja los puntos de entrada de las skills del CLI como simples ficheros puntero. El instalador y el actualizador lo detectan automáticamente: ejecuta `node update-system.mjs apply` (o `npx @santifer/career-ops init` en una instalación nueva) y el paso de materialización sustituye los ficheros puntero por el contenido completo de cada skill. No hace falta ningún `mklink` manual ni activar el Modo de desarrollador.
+Windows no crea symlinks por defecto, así que al hacer checkout Git deja los puntos de entrada de las skills del CLI como simples archivos puntero. El instalador y el actualizador lo detectan automáticamente: ejecuta `node update-system.mjs apply` (o `npx @santifer/career-ops init` en una instalación nueva) y el paso de materialización sustituye los archivos puntero por el contenido completo de cada skill. No hace falta ningún `mklink` manual ni activar el Modo de desarrollador.
 
 ## ¿Puedo ejecutar career-ops con un modelo más barato o local?
 

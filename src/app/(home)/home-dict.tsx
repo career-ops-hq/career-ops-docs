@@ -814,6 +814,18 @@ export const homeFr: HomeDict = {
       ),
     },
     {
+      q: 'Comment automatiser sa recherche d’emploi sans perdre le contrôle ?',
+      a: (
+        <>
+          career-ops automatise le travail répétitif — il parcourt les offres,
+          les évalue face à votre CV, adapte votre CV et prépare les réponses —
+          mais vous gardez le dernier mot sur chaque envoi. L’agent prépare, vous
+          décidez : rien n’est envoyé sans votre clic explicite. C’est le principe
+          human-in-the-loop : vous récupérez le temps, pas le contrôle.
+        </>
+      ),
+    },
+    {
       q: 'career-ops est-il gratuit ? Quel est le modèle économique ?',
       a: (
         <>

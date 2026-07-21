@@ -978,6 +978,10 @@ const HOME_FAQ_FR: HomeFaqQA[] = [
     a: 'Il prépare chaque candidature jusqu’au clic : il parcourt les offres, note chacune face à votre CV et adapte un CV. Puis il vous rend la décision. Vous relisez et envoyez chaque candidature vous-même. C’est délibéré : la candidature automatique de masse abîme votre réputation auprès des recruteurs et des ATS ; career-ops vous enlève le travail fastidieux, pas le jugement.',
   },
   {
+    q: 'Comment automatiser sa recherche d’emploi sans perdre le contrôle ?',
+    a: 'career-ops automatise le travail répétitif — il parcourt les offres, les évalue face à votre CV, adapte votre CV et prépare les réponses — mais vous gardez le dernier mot sur chaque envoi. L’agent prépare, vous décidez : rien n’est envoyé sans votre clic explicite. C’est le principe human-in-the-loop : vous récupérez le temps, pas le contrôle.',
+  },
+  {
     q: 'career-ops est-il gratuit ? Quel est le modèle économique ?',
     a: 'career-ops est gratuit pour toujours, sous licence MIT et financé par la communauté. Pas d’offre payante, pas de liste d’attente, pas de compte, pas de télémétrie, pas de fonctionnalités premium. Vous clonez le dépôt, configurez votre profil et lancez le système en local avec le CLI d’IA que vous utilisez déjà. La pérennité vient du mécénat volontaire de la communauté via GitHub Sponsors, pas d’offres premium, de fonctionnalités payantes ou de données. Le mainteneur a un autre travail rémunéré ; le parrainage lui permet de s’y consacrer davantage. Détails sur career-ops.org/sustain.',
   },

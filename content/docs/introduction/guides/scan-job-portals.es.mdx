@@ -16,7 +16,7 @@ Esta guía explica cómo configurar `portals.yml` y ejecutar el escáner de port
 
 ## Configura portals.yml
 
-`portals.yml` es el fichero que controla qué busca el escáner y dónde lo busca. Lo creas una vez a partir de la plantilla incluida y después lo editas para que coincida con los puestos que buscas.
+`portals.yml` es el archivo que controla qué busca el escáner y dónde lo busca. Lo creas una vez a partir de la plantilla incluida y después lo editas para que coincida con los puestos que buscas.
 
 Ejecuta este comando desde la carpeta del proyecto:
 
@@ -24,13 +24,13 @@ Ejecuta este comando desde la carpeta del proyecto:
 cp templates/portals.example.yml portals.yml
 ```
 
-Abre `portals.yml` en cualquier editor de texto. El fichero tiene tres secciones. Los pasos siguientes recorren cada una de ellas.
+Abre `portals.yml` en cualquier editor de texto. El archivo tiene tres secciones. Los pasos siguientes recorren cada una de ellas.
 
 ### Configura tu filtro de títulos
 
 El filtro de títulos es la forma en que el escáner decide si merece la pena mostrarte una oferta. Compara el título del puesto con dos listas de palabras clave.
 
-Busca la sección `title_filter` cerca del principio del fichero:
+Busca la sección `title_filter` cerca del principio del archivo:
 
 ```yaml title="portals.yml"
 title_filter:
@@ -81,7 +81,7 @@ title_filter:
 
 La sección `tracked_companies` es una lista de empresas concretas que quieres que el escáner compruebe en cada ejecución. El escáner va directamente a la página de empleo de cada empresa y lee los puestos abiertos.
 
-Busca la sección `tracked_companies` cerca del final del fichero. Cada entrada tiene este aspecto:
+Busca la sección `tracked_companies` cerca del final del archivo. Cada entrada tiene este aspecto:
 
 ```yaml title="portals.yml"
 tracked_companies:
@@ -230,7 +230,7 @@ Si **New offers added** es 0, puede que tu filtro de títulos sea demasiado estr
 
 **Adónde van las ofertas nuevas:** cada oferta nueva se añade como una línea en `data/pipeline.md`. Esa es la lista de ofertas pendientes de evaluar.
 
-**Qué hace `data/scan-history.tsv`:** cada URL que el escáner ve — tanto si se añadió, se filtró o se omitió — queda registrada aquí. Así es como el escáner evita mostrarte la misma oferta dos veces en escaneos futuros. No necesitas editar este fichero.
+**Qué hace `data/scan-history.tsv`:** cada URL que el escáner ve — tanto si se añadió, se filtró o se omitió — queda registrada aquí. Así es como el escáner evita mostrarte la misma oferta dos veces en escaneos futuros. No necesitas editar este archivo.
 
 ## Evalúa las ofertas nuevas de un escaneo
 
@@ -271,7 +271,7 @@ Esto es lo que significa cada columna:
 
 **Para leer la evaluación completa de un puesto**, tienes dos opciones:
 
-- **Abre el fichero del informe directamente** — encuéntralo en la carpeta `reports/` usando el número de la tabla.
+- **Abre el archivo del informe directamente** — encuéntralo en la carpeta `reports/` usando el número de la tabla.
 - **Usa el dashboard** — ejecuta `./dashboard/career-dashboard` desde la carpeta del proyecto para navegar por todos tus informes en una interfaz de terminal. Puedes filtrar por puntuación y estado, y abrir cualquier informe sin salir del terminal.
 
 ## Qué hacer después

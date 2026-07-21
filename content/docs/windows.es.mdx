@@ -12,9 +12,9 @@ translatedFrom: /docs/windows
 
 ## La única particularidad de Windows, resuelta por ti
 
-Windows no crea symlinks por defecto, así que un checkout recién hecho de Git deja los puntos de entrada de las skills del CLI (`.claude/skills/`, `.opencode/skills/`, etc.) como simples ficheros puntero en lugar de symlinks reales — que es justo lo que provoca el error de "las skills no cargan" que la gente sufre en otras herramientas.
+Windows no crea symlinks por defecto, así que un checkout recién hecho de Git deja los puntos de entrada de las skills del CLI (`.claude/skills/`, `.opencode/skills/`, etc.) como simples archivos puntero en lugar de symlinks reales — que es justo lo que provoca el error de "las skills no cargan" que la gente sufre en otras herramientas.
 
-career-ops lo detecta automáticamente. Al ejecutar el instalador o el actualizador — `npx @santifer/career-ops init` en una instalación nueva, o `node update-system.mjs apply` en una actualización — se ejecuta un paso `materializeSkillEntrypoints` que sustituye esos ficheros puntero por el contenido completo de cada skill. No necesitas permisos de administrador, ni Modo de desarrollador, ni ningún comando `mklink` manual.
+career-ops lo detecta automáticamente. Al ejecutar el instalador o el actualizador — `npx @santifer/career-ops init` en una instalación nueva, o `node update-system.mjs apply` en una actualización — se ejecuta un paso `materializeSkillEntrypoints` que sustituye esos archivos puntero por el contenido completo de cada skill. No necesitas permisos de administrador, ni Modo de desarrollador, ni ningún comando `mklink` manual.
 
 <Callout title="Sin requisito de versión mínima del sistema">
 career-ops no exige ninguna versión concreta de Windows (ni de macOS). Si Node funciona, career-ops funciona. Cualquier afirmación sobre una versión mínima del sistema operativo que hayas podido ver en otro sitio no es correcta.

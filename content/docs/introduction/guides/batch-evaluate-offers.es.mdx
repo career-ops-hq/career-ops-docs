@@ -12,9 +12,9 @@ Usa esta guía cuando tengas 10 o más ofertas de empleo que revisar y quieras p
 
 Cada oferta recibe su propio worker de Claude. Ese worker lee tu CV, puntúa el encaje, redacta un informe completo y guarda un PDF adaptado — todo sin que muevas un dedo.
 
-## Paso 1: Añade tus ofertas al fichero de entrada
+## Paso 1: Añade tus ofertas al archivo de entrada
 
-El sistema de batch lee las URLs de las ofertas desde un fichero llamado **`batch/batch-input.tsv`**. Piensa en él como una lista de tareas para el evaluador.
+El sistema de batch lee las URLs de las ofertas desde un archivo llamado **`batch/batch-input.tsv`**. Piensa en él como una lista de tareas para el evaluador.
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
   <div className="rounded-xl bg-fd-background p-3">
@@ -33,7 +33,7 @@ El sistema de batch lee las URLs de las ofertas desde un fichero llamado **`batc
         | `notes` | Una nota opcional — déjala en blanco si no tienes ninguna |
       </Step>
       <Step>
-        Guarda el fichero.
+        Guarda el archivo.
       </Step>
     </Steps>
   </div>
@@ -60,7 +60,7 @@ Antes de procesar nada, ejecuta una comprobación rápida para ver cuántas ofer
 ./batch/batch-runner.sh --dry-run
 ```
 
-Verás una lista de las ofertas pendientes con sus IDs. Si algo no cuadra, corrige el fichero de entrada ahora, antes de dedicar tiempo a una lista incorrecta.
+Verás una lista de las ofertas pendientes con sus IDs. Si algo no cuadra, corrige el archivo de entrada ahora, antes de dedicar tiempo a una lista incorrecta.
 
 ## Paso 3: Ejecuta el batch
 
@@ -98,7 +98,7 @@ No necesitas esperar a que el batch termine. Los resultados aparecen a medida qu
 
 **Informes de evaluación completos** → `reports/`
 
-Cada informe es un fichero con un nombre del tipo `042-company-name-2026-04-14.md`. Ábrelo para ver:
+Cada informe es un archivo con un nombre del tipo `042-company-name-2026-04-14.md`. Ábrelo para ver:
 
 - Un resumen del puesto
 - Cómo de bien encaja tu CV con la oferta
@@ -107,7 +107,7 @@ Cada informe es un fichero con un nombre del tipo `042-company-name-2026-04-14.m
 
 **Entradas de una línea para el tracker** → `batch/tracker-additions/`
 
-Cada oferta deja también aquí un fichero con un resumen breve. Estos se añaden a tu tracker principal en el Paso 6.
+Cada oferta deja también aquí un archivo con un resumen breve. Estos se añaden a tu tracker principal en el Paso 6.
 
 ## Paso 5: Reintenta las ofertas fallidas
 
@@ -137,10 +137,10 @@ node merge-tracker.mjs
 
 Este script:
 
-1. Lee los ficheros de resumen de `batch/tracker-additions/`
+1. Lee los archivos de resumen de `batch/tracker-additions/`
 2. Comprueba duplicados para que nunca acabes con dos filas para la misma oferta
 3. Añade las entradas nuevas a tu tracker de candidaturas
-4. Archiva los ficheros procesados en `batch/tracker-additions/merged/`
+4. Archiva los archivos procesados en `batch/tracker-additions/merged/`
 
 **Para previsualizar los cambios sin escribir nada:**
 
