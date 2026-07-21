@@ -1,0 +1,66 @@
+---
+title: apply
+description: "Assistant de candidature en direct. Il lit les questions ouvertes posées par les formulaires Greenhouse, Ashby et Lever, et rédige des brouillons de réponses fondés sur votre CV et l'offre d'emploi."
+seoTitle: "Mode apply de career-ops — brouillons automatiques de réponses aux questions de candidature ATS"
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-05-19"
+translationHash: 2b3d824399a29c66
+localized: true
+translatedFrom: /docs/reference/modes/apply
+---
+
+## Ce que fait ce mode
+
+Le mode `apply` lit un formulaire de candidature ouvert (Greenhouse, Ashby, Lever), identifie les questions ouvertes — « Pourquoi ce poste ? », « Parlez-nous d'un projet », « Quelles sont vos prétentions salariales ? » — et rédige des réponses fondées sur votre CV et la description du poste. Vous retouchez les brouillons directement, vous les copiez dans le portail, puis vous envoyez.
+
+## Quand l'utiliser
+
+Ouvrez l'offre d'emploi et le formulaire de candidature côte à côte. Lancez apply une fois le formulaire chargé. Le résultat est prêt à coller, pas une candidature terminée — vous restez aux commandes pour le ton, les faits et tout champ supplémentaire que le portail ajoute par-dessus. apply fonctionne au mieux avec Playwright en mode visible, où il lit la page en direct telle que vous la voyez ; sans Playwright, collez les questions ou partagez une capture d'écran, et il rédigera à partir de là.
+
+## À quoi ressemble une exécution
+
+Lancez apply avec le formulaire de candidature ouvert dans Chrome. Avant d'écrire la moindre réponse, le mode lit l'onglet actif, le rapproche du rapport que vous avez déjà généré pour cette offre, vérifie que l'annonce est toujours en ligne et analyse le formulaire à la recherche de questions éliminatoires qui pourraient entraîner un rejet automatique.
+
+```txt title="Exemple"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year. (paste-ready)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here. (paste-ready)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+
+## Pièges à connaître
+
+apply n'envoie pas les formulaires et ne clique sur aucun bouton. Il lit les questions et produit des brouillons de réponses dans le chat. L'étape d'envoi vous revient. Les champs fermés (listes déroulantes, boutons radio, envois de fichiers) sont hors périmètre. Si la vérification préalable détecte que l'annonce est fermée, apply refuse de rédiger un texte final à moins que vous ne l'y forciez explicitement — un lien mort ne vaut pas une réponse sur mesure.
+
+## Particularités connues des ATS
+
+apply a été éprouvé sur le terrain à travers une douzaine de candidatures pilotées par Playwright, et quelques portails font échouer une exécution si vous n'en tenez pas compte :
+
+- **Ashby** déduplique les candidats par adresse e-mail au sein de chaque entreprise : une seconde candidature peut donc fusionner silencieusement avec la première. Si un rapport existe déjà pour cette entreprise, apply vous suggère un alias e-mail `+tag`.
+- **Lever** déclenche un captcha lorsqu'une case à cocher ou un bouton radio est cliqué de façon programmatique : apply ne remplit donc que les champs texte et vous laisse cocher le reste.
+- **Workday** ignore les valeurs saisies sans véritables frappes clavier : apply tape donc les réponses caractère par caractère et vous demande de vérifier les listes déroulantes d'autorisation de travail avant d'enregistrer.
+
+## Pages liées
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)

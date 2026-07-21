@@ -1,0 +1,53 @@
+---
+title: followup
+description: "Signale les candidatures et les entretiens dont la relance est en retard, selon les règles de cadence que vous configurez. Rédige les messages de relance pour que vous puissiez les relire et les envoyer."
+seoTitle: "Mode followup de career-ops — suivre les relances en retard et rédiger les messages"
+icon: CalendarClock
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: b1eb8003f10d7ed3
+localized: true
+translatedFrom: /docs/reference/modes/followup
+---
+
+## Ce que fait ce mode
+
+Le mode followup lit votre tracker de candidatures, compare la date du dernier contact avec la cadence configurée (par défaut : une première relance 7 jours après votre candidature, et 1 jour après un entretien pour un message de remerciement), et signale les entrées en retard ou urgentes. Pour chaque entrée signalée, il rédige un message de relance contextuel, fondé sur le rapport correspondant et sur votre CV.
+
+## Quand l'utiliser
+
+Lancez followup le lundi matin, comme un rituel hebdomadaire. Chaque lundi, il fait remonter les relances à effectuer dans la semaine, avec des brouillons prêts à envoyer. Il est volontairement conservateur : il ne signale pas une entrée tant que le seuil de cadence n'est pas clairement dépassé, si bien que le tableau de bord reste court et que chaque élément qui y figure mérite réellement une relance.
+
+## À quoi ressemble une exécution
+
+followup exécute un script de cadence sur votre tracker, affiche un tableau de bord trié par urgence et rédige un message pour chaque ligne en retard ou urgente. Les brouillons s'ouvrent sur une preuve concrète, pas sur la demande, et ne disent jamais « just checking in ».
+
+```txt title="Terminal"
+> /career-ops followup
+
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
+```
+
+## Pièges à éviter
+
+Une candidature au statut Applied reçoit au maximum deux relances ; si la seconde reste sans réponse, followup cesse de rédiger et vous suggère de clore l'entrée ou d'essayer un autre contact via `contacto`. Vous voulez un rythme plus serré que les sept jours par défaut ? Passez un flag au script de cadence — `node followup-cadence.mjs --applied-days 5` — plutôt que de modifier les brouillons à la main.
+
+## Pages associées
+
+- [tracker](/docs/reference/modes/tracker)
+- [patterns](/docs/reference/modes/patterns)

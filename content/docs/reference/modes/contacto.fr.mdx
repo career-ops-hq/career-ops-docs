@@ -1,0 +1,51 @@
+---
+title: contacto
+description: "Le power move LinkedIn. À partir d'un nom d'entreprise et du contexte de votre réseau, contacto fait remonter les contacts probablement chauds (relations communes, 2e niveau) et rédige un court message de prise de contact adapté au poste auquel vous candidatez."
+seoTitle: "Mode contacto de career-ops — trouver des contacts LinkedIn chauds et rédiger une prise de contact"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: ef2b573d6f41f444
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## Ce qu'il fait
+
+Le mode contacto lit le nom de l'entreprise et le contexte de l'offre, puis suggère des cibles de prise de contact qu'il trouve via WebSearch — le hiring manager, le recruteur assigné, deux ou trois pairs dans l'équipe et un interviewer connu. Il rédige un message court — trois phrases, moins de 300 caractères — adapté au poste et à l'identité du contact.
+
+## Quand l'utiliser
+
+Utilisez contacto lorsque vous avez déjà candidaté à un poste et que vous voulez faire émerger une piste de cooptation. Ou utilisez-le avant de candidater, quand une introduction chaleureuse peut vous faire passer devant la pile du recruteur. Par défaut, c'est le power move LinkedIn ; pour une plateforme avec une limite stricte de caractères — la messagerie d'un job board, l'accroche d'un cold email, le 打招呼 de BOSS Zhipin — demandez un « greeting » et contacto rédige un tout premier message ultra-court, sans recherche de contacts.
+
+## À quoi ressemble une exécution
+
+Donnez une entreprise à contacto : il trouve les personnes qui valent la peine d'être contactées, choisit celle qui a le plus à gagner à votre arrivée, et rédige un message construit pour ce persona : un recruteur entend que les prérequis sont remplis, un hiring manager entend l'impact.
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## Points d'attention
+
+contacto ne scrape pas LinkedIn (approche rejetée — voir l'issue #238). Il travaille à partir du contexte que vous fournissez — votre CV, vos anciens employeurs, les relations communes que vous mentionnez — plus les résultats publics de WebSearch. L'agent n'a aucun accès à votre graphe LinkedIn privé. Chaque message reste sous la limite des 300 caractères des demandes de connexion LinkedIn et n'inclut jamais votre numéro de téléphone.
+
+## Voir aussi
+
+- [deep](/docs/reference/modes/deep)
+- [interview-prep](/docs/reference/modes/interview-prep)

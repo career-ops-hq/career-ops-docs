@@ -1,0 +1,141 @@
+---
+title: Configurer Playwright
+description: Installez et configurez Playwright pour l'automatisation du navigateur.
+seoTitle: "Configurer Playwright pour career-ops — scraping d'offres d'emploi et export de CV en PDF"
+icon: Globe
+translationHash: d900e7e8e58ee7f6
+localized: true
+translatedFrom: /docs/introduction/guides/set-up-playwright
+---
+
+Ce guide décrit les trois étapes d'installation qui donnent à career-ops ses capacités d'automatisation du navigateur :
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Installer le package Playwright">
+        Installez le package Node de Playwright
+      </Step>
+      <Step title="Télécharger Chromium">
+        Téléchargez le navigateur Chromium que Playwright pilote
+      </Step>
+      <Step title="Configurer le MCP Playwright">
+        Configurez le MCP Playwright pour que Claude puisse piloter le navigateur pendant l'étape apply
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+<Callout title="Avant de commencer">
+  Terminez d'abord le guide de [démarrage rapide](../../index.mdx). Node.js 20 LTS ou une version ultérieure doit être installé et vous devez vous trouver dans le dossier racine de career-ops.
+</Callout>
+
+---
+
+## Installer le package Playwright
+
+Exécutez `npm install` depuis le dossier racine de career-ops :
+
+```bash title="Terminal"
+npm install
+```
+
+Cette commande installe Playwright ainsi que toutes les autres dépendances du projet déclarées dans `package.json`. Passez cette étape si vous l'avez déjà exécutée lors de l'installation initiale.
+
+## Télécharger Chromium
+
+Playwright a besoin de sa propre copie de Chromium pour l'automatisation. L'installeur la télécharge normalement de façon automatique juste après les dépendances ; si `npm run doctor` signale qu'elle est manquante, téléchargez-la en exécutant :
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+Cette étape ne s'effectue qu'une seule fois. Vous n'avez pas besoin de la répéter après les mises à jour `npm`.
+
+## Configurer le MCP Playwright
+
+Le MCP Playwright permet à Claude de contrôler directement le navigateur pendant l'étape `/career-ops apply` — naviguer vers les formulaires de candidature, lire les libellés des champs et suggérer des réponses.
+
+### Enregistrer le serveur MCP
+
+Exécutez cette commande depuis n'importe quel emplacement pour enregistrer le MCP Playwright auprès de Claude Code :
+
+```bash title="Terminal"
+claude mcp add playwright npx @playwright/mcp@latest
+```
+
+C'est la méthode d'enregistrement en une seule étape décrite dans la [documentation du MCP Playwright](https://playwright.dev/docs/getting-started-mcp). Elle ajoute automatiquement l'entrée du serveur à vos paramètres Claude.
+
+### Configuration manuelle (alternative)
+
+Si vous préférez le configurer à la main, ajoutez l'entrée suivante à `.claude/settings.local.json` dans la racine de career-ops, ou à vos paramètres Claude globaux :
+
+```json title=".claude/settings.local.json"
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["y", "@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+Redémarrez Claude Code après avoir enregistré le fichier. career-ops aura alors accès à `browser_navigate` et `browser_snapshot` pendant les sessions apply.
+
+---
+
+## Vérifier l'installation
+
+Exécutez le script doctor pour confirmer que les trois composants sont en place :
+
+```bash title="Terminal"
+npm run doctor
+```
+
+Vérifiez que Playwright, Chromium et le serveur MCP sont tous signalés comme prêts. Si la vérification réussit, l'installation est terminée.
+
+---
+
+## Regarder le navigateur remplir le formulaire
+
+Par défaut, Playwright s'exécute en mode headless — il lit et remplit le formulaire en arrière-plan sans ouvrir de fenêtre visible.
+
+Pour voir le navigateur s'ouvrir et remplir le formulaire en direct, ajoutez une instruction à la commande apply :
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name} open up with playwright the browser and fill out the entire form
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+</Tabs>
+
+Sans cette instruction, career-ops utilise quand même Playwright et le MCP — il opère simplement en silence, en arrière-plan.
+
+## Ce que chaque composant apporte
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Composant          | Rôle                                                                                                              |
+    | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+    | Package Playwright | Bibliothèque principale qui pilote l'automatisation du navigateur                                                 |
+    | Chromium           | Affiche les pages, génère des PDF de qualité impression via `/career-ops pdf`, vérifie si les offres d'emploi sont toujours en ligne et alimente les scans ATS complets |
+    | MCP Playwright     | Permet à career-ops de naviguer dans les formulaires et de suggérer des réponses aux champs pendant `/career-ops apply` |
+  </div>
+</div>

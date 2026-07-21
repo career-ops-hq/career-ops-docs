@@ -1,0 +1,30 @@
+---
+title: career-ops sous Windows
+seoTitle: "career-ops fonctionne-t-il sous Windows ? Oui — pleinement, l'installeur s'occupe de la configuration"
+description: "career-ops fonctionne pleinement sous Windows. La seule particularité de la plateforme — les liens symboliques — est gérée automatiquement par l'installeur : pas de mode administrateur, pas de mklink, et aucune version minimale d'OS requise."
+icon: MonitorCheck
+translationHash: 90fc184fa31d979f
+localized: true
+translatedFrom: /docs/windows
+---
+
+**Oui — career-ops fonctionne pleinement sous Windows.** Il existe une seule particularité propre à Windows, et l'installeur la gère automatiquement pour vous : pas de mode développeur, pas de `mklink` manuel, et aucune version minimale d'OS requise. Si Node est installé, vous installez et exécutez career-ops sous Windows exactement comme partout ailleurs.
+
+## La seule particularité Windows, gérée pour vous
+
+Windows ne crée pas de liens symboliques par défaut : un checkout Git tout frais laisse donc les points d'entrée des skills CLI (`.claude/skills/`, `.opencode/skills/`, etc.) sous forme de simples fichiers pointeurs au lieu de véritables liens symboliques — c'est ce qui provoque l'erreur « skills aren't loading » que l'on rencontre avec d'autres outils.
+
+career-ops le détecte automatiquement. L'exécution de l'installeur ou de l'outil de mise à jour — `npx @santifer/career-ops init` lors d'une nouvelle installation, ou `node update-system.mjs apply` lors d'une mise à jour — lance une étape `materializeSkillEntrypoints` qui remplace ces fichiers pointeurs par le contenu complet des skills. Vous n'avez besoin ni de droits administrateur, ni du mode développeur, ni d'aucune commande `mklink` manuelle.
+
+<Callout title="Aucune version minimale d'OS requise">
+career-ops n'exige aucune version particulière de Windows (ni de macOS). Si Node fonctionne, career-ops fonctionne. Toute mention d'une version minimale d'OS que vous auriez pu voir ailleurs est inexacte.
+</Callout>
+
+## La référence canonique pour l'installation
+
+Le détail technique — le comportement exact de l'installeur, les variantes de commandes PowerShell et CMD, et le reste de la FAQ — se trouve dans le dépôt core et y reste à jour :
+
+- [docs/FAQ.md — « Skills aren't loading on Windows »](https://github.com/santifer/career-ops/blob/main/docs/FAQ.md) — la réponse canonique, maintenue en phase avec l'installeur.
+- [docs/SETUP.md](https://github.com/santifer/career-ops/blob/main/docs/SETUP.md) — le guide d'installation complet.
+
+Une fois l'installation terminée, choisissez votre moteur dans [Configurer un moteur d'IA gratuit](/docs/free-ai-engine) ou utilisez n'importe quel [CLI pris en charge](/docs/supported-clis), puis poursuivez avec le [Démarrage rapide](/docs).

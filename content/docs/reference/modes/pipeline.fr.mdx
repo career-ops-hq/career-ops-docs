@@ -1,0 +1,53 @@
+---
+title: pipeline
+description: "Lit les URL en file d'attente dans data/pipeline.md et exécute l'auto-pipeline complet sur chacune d'elles. Utilisez-le lorsque vous avez collecté dix ou vingt annonces au cours de la journée et que vous voulez les traiter en une seule session."
+seoTitle: "Mode pipeline de career-ops — évaluer en lot de nombreuses offres d'emploi à la fois"
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 1e5c70f073c9c18b
+localized: true
+translatedFrom: /docs/reference/modes/pipeline
+---
+
+## Ce qu'il fait
+
+Le mode pipeline parcourt les URL de data/pipeline.md (une par ligne) et invoque auto-pipeline sur chacune. Des rapports, des PDF et des entrées de tracker sont écrits pour chaque annonce qui produit une évaluation valide. Les scrapes en échec sont journalisés puis ignorés.
+
+## Quand l'utiliser
+
+Utilisez pipeline lorsque vous avez un arriéré d'URL à traiter. Déposez-les dans data/pipeline.md, invoquez /career-ops pipeline, puis laissez tourner.
+
+## À quoi ressemble une exécution
+
+Vous déposez des URL dans `data/pipeline.md` et le mode traite toute la boîte de réception en une seule passe. Il exécute d'abord un balayage de liveness à zéro token pour écarter les annonces expirées, puis il évalue chaque URL survivante via l'auto-pipeline complet et termine par un tableau récapitulatif de ce qu'il a trouvé.
+
+```txt title="Pipeline run"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (parallel workers)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+
+Chaque URL traitée passe de la section `## Pending` à la section `## Processed` du fichier, de sorte que la boîte de réception reste un registre vivant de ce qu'il reste à faire.
+
+## Quand y recourir
+
+Recourez à pipeline lorsque vous avez accumulé un arriéré d'annonces au cours de la journée et que vous voulez les traiter en une seule session. Comment il gère la file d'attente :
+
+- La section `## Pending` accepte n'importe quel format — une URL collée telle quelle fonctionne, ou vous pouvez ajouter des colonnes `company`, `role`, `location` et `comp`, et le mode les lit toutes.
+- Le balayage de liveness s'exécute avant la boucle par URL, de sorte qu'une boîte de réception périmée de huit URL ne coûte pas huit évaluations gaspillées.
+- À partir de trois URL en attente, il les traite en parallèle, un worker par URL, plutôt qu'une à la fois.
+- Les PDF ne sont générés que lorsqu'un score dépasse `auto_pdf_score_threshold` (3.0 par défaut) ; augmentez ce seuil pour éviter les PDF des postes marginaux et les générer plus tard à la demande avec `/career-ops pdf`.
+
+## Voir aussi
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)

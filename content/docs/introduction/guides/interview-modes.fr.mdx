@@ -1,0 +1,66 @@
+---
+title: Se préparer aux entretiens
+description: Utilisez les modes interview — plan, practice, debrief — pour préparer un tour d'entretien précis, le répéter avec un intervieweur IA et transformer chaque entretien réel en enseignements pour le suivant.
+seoTitle: "Préparation aux entretiens avec career-ops — une préparation tour par tour"
+icon: GraduationCap
+translationHash: 684f86b0ae8151c2
+localized: true
+translatedFrom: /docs/introduction/guides/interview-modes
+---
+
+Les modes interview constituent le système de préparation aux entretiens de career-ops, livré dans la v1.16.0 : `interview/plan` construit un plan de préparation découpé en blocs horaires pour un tour précis, `interview/practice` mène un entretien blanc réaliste, une question à la fois, et `interview/debrief` consigne ce qui s'est réellement passé pour que le tour suivant démarre plus intelligemment. Ensemble, ils forment une boucle — planifier, s'entraîner, passer l'entretien, débriefer, recommencer — dont les effets se cumulent tout au long d'un processus de recrutement.
+
+Ils complètent le [mode `interview-prep`](/docs/reference/modes/interview-prep), plus ancien, qui construit votre socle durable (banque d'histoires, banque de questions). Les trois modes ciblés, eux, portent sur un *tour précis à venir*.
+
+<Callout title="Ce qu'il vous faut d'abord">
+Un espace de travail avec votre `cv.md` et votre `config/profile.yml` en place (le [Démarrage rapide](/docs) configure les deux). Les modes les lisent pour ancrer chaque plan et chaque retour dans votre expérience réelle — pas dans des conseils d'entretien génériques.
+</Callout>
+
+## La boucle en un coup d'œil
+
+| Mode | Quand | Ce que vous obtenez |
+| --- | --- | --- |
+| `interview/plan` | Dès qu'un tour est programmé | Un plan de préparation en blocs horaires, dimensionné selon les heures dont vous disposez réellement |
+| `interview/practice` | Avant le tour | Un entretien blanc réaliste avec un retour structuré pour chaque réponse |
+| `interview/debrief` | Juste après l'entretien réel | Une évaluation honnête question par question + une banque de questions mise à jour |
+
+## Plan : transformer une date en planning
+
+Donnez à `interview/plan` la description du poste ainsi que la date et l'heure de l'entretien, plus le type de tour et le nom de l'intervieweur si vous les connaissez. Il lit votre CV et votre profil, réalise une évaluation honnête de votre adéquation au poste — points forts sur lesquels vous appuyer, lacunes susceptibles d'être testées — et répartit les heures qu'il vous reste en blocs de préparation concrets.
+
+```txt title="Example"
+/career-ops interview/plan
+
+→ Inputs: JD (pasted), interview Thursday 14:00, HM screen with Ana (Eng Manager)
+→ Fit assessment: 4 strengths to anchor · 2 gaps ranked by test likelihood
+→ Plan (9 hours available):
+   Block 1 — Lock your narrative (~1.5h): timeline, "why us", strongest proof point
+   Block 2 — Gap: event-driven architectures (~3h)
+   Block 3 — Behavioral stories, STAR+R (~2h)
+   Block 4 — Mock run + comp answer (~1.5h)
+```
+
+Le plan se calibre selon le tour : un échange de présélection avec un recruteur reçoit de la logistique et du récit, pas des détails techniques pointus ; un entretien approfondi avec un praticien reçoit de la profondeur sur la compétence centrale de la fiche de poste. Si une banque de questions issue d'un tour précédent existe, tout ce qui vous a posé problème reçoit un bloc dédié — les données de performance réelles priment sur le risque supposé.
+
+## Practice : répéter face à un intervieweur réaliste
+
+`interview/practice` joue le rôle de l'intervieweur — avec son nom et sa fonction si vous les fournissez — et pose une question à la fois, sans sortir de son personnage, avec des relances naturelles là où un véritable intervieweur creuserait. Après chaque réponse, vous recevez un retour structuré : ce qui a fait mouche, ce qu'il faut resserrer, et une version plus solide de votre réponse, ancrée dans votre CV réel et votre banque d'histoires.
+
+Il suit aussi la session comme le ferait un intervieweur : si vous ressortez deux fois la même histoire, il signale que votre répertoire d'exemples paraît mince ; si votre réponse se conclut sur le mauvais domaine pour le poste, il vous indique où la faire atterrir à la place.
+
+<Callout>
+Practice est honnête sur ses propres limites : si vous n'avez pas encore constitué de banque de questions ni de notes de préparation propres au poste, il le dit et propose d'exécuter d'abord `interview-prep` ou `interview/plan`, plutôt que de dérouler en silence une session générique.
+</Callout>
+
+## Debrief : ne jamais perdre les enseignements d'un entretien
+
+Lancez `interview/debrief` juste après un entretien réel, tant que votre mémoire est fraîche. Il passe en revue avec vous chaque question dont vous vous souvenez, note comment l'intervieweur a réagi et produit une évaluation honnête question par question. Puis il accomplit le travail qui se cumule :
+
+- **Il met à jour la banque de questions** — chaque question est marquée ✅ / 🟡 / 🔴 selon votre performance réelle, pas au ressenti.
+- **Il comble les lacunes** — pour chaque 🔴, il explique la bonne réponse avec un exemple détaillé et la relie à une histoire que vous possédez déjà.
+- **Il extrait de nouvelles histoires** — si vous avez raconté en entretien quelque chose qui ne figure pas encore dans votre banque d'histoires, il en fait sur-le-champ une histoire au format STAR+R.
+- **Il anticipe le tour suivant** — si vous en connaissez le format, il prédit les questions probables à partir de la fonction de l'intervieweur et de ce que ce tour a déjà couvert.
+
+## Pourquoi cette boucle fonctionne
+
+La préparation aux entretiens repart d'habitude de zéro à chaque tour. Les modes interview la rendent cumulative : ce qu'un véritable intervieweur a réellement demandé devient le signal de préparation le plus prioritaire pour le tour suivant, stocké dans de simples fichiers Markdown (`interview-prep/question-bank.md`, `story-bank.md`) qui vous appartiennent, sur votre machine, comme tout le reste dans career-ops.

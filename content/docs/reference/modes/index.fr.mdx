@@ -1,0 +1,46 @@
+---
+title: Modes
+description: "Les 14 modes career-ops invocables par l'utilisateur — évaluer, adapter, postuler, suivre et préparer — chacun un skill en markdown qui s'exécute dans n'importe quel CLI de codage IA pris en charge."
+seoTitle: "Modes career-ops — les 14 commandes de recherche d'emploi (évaluer, adapter, postuler, suivre, préparer)"
+icon: Layers
+translationHash: 4d490714e084c6f4
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## Les 14 modes
+
+career-ops embarque **14 modes invocables par l'utilisateur**. Chacun est un skill en markdown pur que l'agent charge et exécute dans le CLI de codage IA que vous utilisez déjà — Claude Code, Codex, OpenCode, Gemini CLI, Qwen ou GitHub Copilot. Vous invoquez un mode avec `/career-ops <mode>`, et chacun couvre une étape de la recherche d'emploi : évaluer une offre selon la grille (cinq dimensions plus un score global holistique), adapter un CV, rédiger une candidature, suivre les résultats ou préparer les entretiens. Les modes relèvent de la System Layer au sens du [Data Contract](https://github.com/santifer/career-ops/blob/main/DATA_CONTRACT.md) — ils évoluent avec l'outil et ne modifient jamais votre `cv.md`, votre profil ni vos rapports.
+
+## Évaluer
+
+La boucle de scoring centrale — lire une offre d'emploi et la noter sur les cinq dimensions plus un score global holistique, avant d'y investir le moindre effort.
+
+- **[auto-pipeline](/docs/reference/modes/auto-pipeline)** — le flux par défaut. Collez l'URL ou le texte d'une offre ; il exécute l'évaluation A–F, rédige le rapport, exporte un PDF adapté et consigne une entrée dans le tracker, sans aucune étape manuelle entre les deux.
+- **[pipeline](/docs/reference/modes/pipeline)** — exécute auto-pipeline sur chaque URL en file d'attente dans `data/pipeline.md`, de quoi traiter une journée entière d'offres en une seule session.
+- **[oferta](/docs/reference/modes/oferta)** — l'évaluation A–F d'une offre unique, quand vous n'avez besoin que de la décision de scoring, pas du pipeline complet.
+- **[ofertas](/docs/reference/modes/ofertas)** — classe deux offres concurrentes ou plus — rémunération, adéquation, potentiel de progression et red flags — dans une matrice de décision unique.
+- **[deep](/docs/reference/modes/deep)** — un document de recherche approfondie sur l'entreprise (levées de fonds, équipe dirigeante, presse, signaux de rémunération, red flags) avant de postuler auprès d'une entreprise que vous connaissez mal.
+
+## Adapter & postuler
+
+Transformez une offre bien notée en candidature envoyée.
+
+- **[pdf](/docs/reference/modes/pdf)** — génère via Playwright un CV en PDF adapté à une offre précise et propre pour les ATS.
+- **[apply](/docs/reference/modes/apply)** — lit les questions ouvertes d'un formulaire de candidature affiché à l'écran et rédige des réponses ancrées dans votre CV et dans l'offre.
+- **[contacto](/docs/reference/modes/contacto)** — fait remonter les contacts LinkedIn susceptibles d'être réceptifs et rédige un court message de prise de contact propre au poste.
+- **[followup](/docs/reference/modes/followup)** — repère les candidatures et les entretiens dont la relance est en retard et rédige les messages correspondants.
+
+## Suivre & progresser
+
+Gardez votre recherche organisée et calibrez-la dans la durée.
+
+- **[tracker](/docs/reference/modes/tracker)** — un récapitulatif d'état, directement dans la conversation, de toutes vos candidatures regroupées par étape.
+- **[patterns](/docs/reference/modes/patterns)** — analyse vos candidatures rejetées ou écartées pour faire émerger des schémas de ciblage et des angles morts.
+- **[interview-prep](/docs/reference/modes/interview-prep)** — des documents de préparation propres à chaque tour d'entretien (recruteur, hiring manager, entretien technique entre pairs, panel), avec les questions probables et des récits STAR.
+- **[training](/docs/reference/modes/training)** — évalue un cours ou une certification au regard du cap de carrière que vous vous êtes fixé et de son coût d'opportunité.
+- **[project](/docs/reference/modes/project)** — évalue une idée de projet de portfolio au regard de vos postes cibles et du temps qu'il faudrait pour le construire.
+
+## Portails
+
+Les trois scanners de portails zéro token — Greenhouse, Ashby et Lever — disposent de leur propre [référence des portails](/docs/reference/portals).

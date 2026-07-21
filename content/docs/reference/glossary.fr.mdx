@@ -1,0 +1,82 @@
+---
+title: Glossaire
+description: Le vocabulaire de la recherche d'emploi assistée par IA, défini — ATS, score A–F, Data Contract, spray-and-pray, liveness check, tailoring, scan zéro token, histoires STAR+R, et chaque terme utilisé par career-ops.
+seoTitle: "Glossaire career-ops — les termes de la recherche d'emploi assistée par IA, définis"
+icon: BookOpen
+translationHash: 908b3fb3fc8e8f13
+localized: true
+translatedFrom: /docs/reference/glossary
+---
+
+{/* Mirrored with src/lib/glossary-data.ts (DefinedTermSet JSON-LD) — edit
+    both together. Definitions must stay verifiable against the core repo. */}
+
+Chaque terme utilisé par career-ops, défini en un seul endroit. Les termes renvoient à la référence plus détaillée lorsqu'elle existe.
+
+## ATS (Applicant Tracking System)
+
+Le logiciel que les entreprises utilisent pour recevoir, stocker et filtrer les candidatures — [Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby) et [Lever](/docs/reference/portals/lever) en sont des exemples courants. career-ops lit leurs API publiques d'offres pour découvrir les postes ouverts et peut pré-remplir leurs formulaires de candidature, mais ne soumet jamais rien automatiquement.
+
+## Score A–F
+
+La note que career-ops attribue à une offre d'emploi après l'avoir évaluée, sur plusieurs dimensions, par rapport à votre CV et à votre profil. Un **A** signifie « postulez maintenant, avec une forte conviction » ; un **F** signifie que l'offre échoue face à vos propres critères. La grille de notation est publique sur la [page méthodologie](https://career-ops.org/methodology).
+
+## Data Contract
+
+La promesse architecturale centrale de career-ops : la **couche système** (scripts, modes, templates) peut être mise à jour à tout moment, tandis que la **couche utilisateur** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — n'est jamais touchée par une mise à jour. Vos données survivent à toutes les versions.
+
+## Spray-and-pray
+
+La stratégie de candidature de masse qui consiste à envoyer le même CV à des centaines d'offres sans aucun ciblage. career-ops la rejette explicitement : le pipeline évalue et classe d'abord les offres, pour que l'effort se concentre sur le petit nombre de postes qui valent vraiment la peine.
+
+## Liveness check
+
+Une heuristique que career-ops exécute pour détecter si une offre d'emploi est encore ouverte avant que vous n'y consacriez du temps ou des tokens. C'est un signal best-effort — des annonces expirées traînent parfois sur les job boards — et les offres peuvent être marquées manuellement lorsque l'heuristique se trompe.
+
+## Tailoring
+
+Réécrire votre CV pour une offre d'emploi précise — réorganiser les priorités, mettre en avant les compétences et les chiffres qui correspondent, aligner le vocabulaire sur la description du poste — tout en gardant chaque affirmation fidèle à votre expérience réelle. career-ops génère un CV sur mesure par candidature, en Markdown, que vous pouvez modifier.
+
+## Mode
+
+Un workflow ciblé, défini par un prompt, que career-ops livre sous forme de simple fichier Markdown que votre CLI d'IA exécute — [scan, apply, tracker](/docs/reference/modes), [interview/practice](/docs/introduction/guides/interview-modes) et une douzaine d'autres. Les modes sont du texte inspectable, pas du code boîte noire.
+
+## Pipeline
+
+Le workflow career-ops de bout en bout : scan des portails → évaluation des offres de A à F → CV sur mesure → candidature → suivi → préparation des entretiens. Chaque étape est un mode que vous pouvez exécuter indépendamment ou par lot.
+
+## Scan zéro token
+
+Une passe de découverte qui ne consomme aucun token de LLM : `scan.mjs` appelle directement les API des ATS (Greenhouse, Ashby, Lever) en HTTP — trouver de nouvelles offres est donc gratuit, quel que soit le moteur d'IA que vous utilisez.
+
+## Moteur d'IA
+
+Le CLI de codage IA qui exécute les prompts de career-ops — Claude Code, OpenCode, Codex, GitHub Copilot CLI et [les autres CLI pris en charge](/docs/supported-clis) — ou n'importe quel endpoint compatible OpenAI. career-ops est agnostique quant au moteur et [fonctionne aussi avec des moteurs gratuits](/docs/free-ai-engine).
+
+## Banque de questions
+
+Un fichier Markdown local (`interview-prep/question-bank.md`) où career-ops accumule les questions posées lors de vrais entretiens et votre performance sur chacune (✅/🟡/🔴). Le [mode interview/debrief](/docs/introduction/guides/interview-modes) le met à jour après chaque entretien réel, si bien que la préparation se cumule d'un tour à l'autre.
+
+## Histoire STAR+R
+
+Une histoire d'entretien structurée en **S**ituation, **T**âche, **A**ction, **R**ésultat, plus **R**éflexion — le format que career-ops utilise dans sa banque d'histoires pour que les réponses comportementales soient concrètes, chiffrées et réutilisables d'un entretien à l'autre.
+
+## Banque d'histoires
+
+Un fichier Markdown local (`interview-prep/story-bank.md`) contenant vos histoires STAR+R préparées. Les sessions d'entraînement vérifient vos réponses par rapport à ce fichier, et les débriefs en extraient de nouvelles histoires à partir de ce que vous avez réellement dit lors de vos entretiens réels.
+
+## Portail
+
+Un site carrières d'entreprise adossé à un ATS que career-ops peut scanner. Vos portails suivis vivent dans `portals.yml` ; le scanner lit leurs API publiques à chaque exécution.
+
+## Évaluation par lot
+
+Noter de nombreuses offres sauvegardées en une seule exécution plutôt qu'une par une, avec des flags pour garder le contrôle : `--limit` plafonne la taille du lot, `--dry-run` prévisualise ce qui serait traité, et `--resume-paused` reprend une exécution interrompue sans dépenser de nouveau des tokens.
+
+## Local-first
+
+Le principe architectural de career-ops : tout — vos données, les prompts, les scripts, le CLI d'IA — s'exécute sur votre machine. Il n'y a pas de backend hébergé, pas de compte, et rien qui nécessite une inscription.
+
+## CareerOps
+
+CareerOps est la pratique qui consiste à mener une recherche d'emploi comme les ingénieurs font tourner la production : avec des preuves, avec de la discipline, et avec des outils du côté du candidat. Le terme désigne la pratique, pas un produit ; career-ops en est la première implémentation de référence. Forgé par Santiago Fernández de Valderrama Aparicio dans [The CareerOps Manifesto](https://career-ops.org/manifesto) (14 juillet 2026).

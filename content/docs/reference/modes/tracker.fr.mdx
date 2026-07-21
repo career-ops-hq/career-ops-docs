@@ -1,0 +1,54 @@
+---
+title: tracker
+description: "Lecture rapide de l'état de chaque candidature. Utile comme point quotidien ou pour préparer la revue hebdomadaire. L'interface complète pilotée au clavier vit dans le dashboard TUI en Go ; ce mode est le résumé côté chat."
+seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidature"
+icon: LayoutGrid
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: eb25e59a2aa5c2a3
+localized: true
+translatedFrom: /docs/reference/modes/tracker
+---
+
+## Ce que fait ce mode
+
+Le mode `tracker` lit chaque fichier de reports/ et produit un résumé structuré, groupé par étape : applied, evaluated, interview, rejected, discarded. Le nombre de candidatures par étape, l'activité récente et les relances en retard apparaissent dans une seule réponse.
+
+## Quand l'utiliser
+
+Utilisez tracker pour un point d'état quotidien de quinze secondes. Utilisez le dashboard TUI en Go quand vous avez besoin de creuser.
+
+## Exemple
+
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+
+## À quoi ressemble une exécution
+
+Une exécution de tracker affiche le tableau complet des candidatures ainsi qu'un bloc de statistiques dans une seule réponse, pour que vous puissiez lire l'ensemble de votre recherche d'un coup d'œil. Chaque ligne correspond à une candidature, avec son entreprise, son poste, son score, son statut actuel, et l'indication qu'un PDF sur mesure et un rapport d'évaluation ont été générés ou non.
+
+```txt title="Example"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       |  87   | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    |  79   | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   |  72   | Evaluated | yes | yes
+
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 79   PDF generated: 100%   Report generated: 100%
+```
+
+Une candidature traverse un ensemble fixe d'états : Evaluated (rapport rédigé, décision en attente), Applied (vous avez postulé), Responded (l'entreprise a répondu mais pas encore d'entretien), Interview (un processus actif), puis un état terminal — Offer, Rejected, Discarded, ou SKIP pour les postes qui ne conviennent pas. Pour enregistrer un changement de statut, mettez à jour la ligne dans le tableau du tracker ou utilisez le dashboard TUI en Go.
+
+## Lire les chiffres cumulés
+
+Pour les chiffres cumulés — le funnel complet, les totaux du scanner, la couverture des portails et le respect des relances — le mode exécute `node stats.mjs --summary` et présente sa sortie telle quelle. Cette commande lit vos fichiers locaux et ne coûte aucun token : les chiffres ne sont donc jamais recalculés à la main ni estimés de mémoire. Utilisez le résumé côté chat ci-dessus pour une lecture quotidienne rapide, et la commande de statistiques quand vous voulez les totaux cumulés sur l'ensemble de votre recherche.
+
+## Pièges à connaître
+
+tracker est en lecture seule. Les changements de statut se font par des touches explicites dans le dashboard TUI en Go ou par des modifications manuelles du frontmatter du rapport.
+
+## Pages liées
+
+- [followup](/docs/reference/modes/followup)
+- [patterns](/docs/reference/modes/patterns)

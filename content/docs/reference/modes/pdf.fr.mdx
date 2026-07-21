@@ -1,0 +1,52 @@
+---
+title: pdf
+description: "Génère un CV PDF adapté à une JD précise en utilisant Playwright pour rendre le markdown à travers un modèle typographique épuré. Le résultat est structurellement simple — pas de tableaux, pas de colonnes, pas de graphiques — exactement ce que les parseurs ATS traitent de manière fiable."
+seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: beb822061e860203
+localized: true
+translatedFrom: /docs/reference/modes/pdf
+---
+
+## Ce qu'il fait
+
+Le mode pdf lit votre cv.md maître ainsi que le contexte de la JD, puis exécute l'étape de personnalisation (réécriture des puces, réorganisation des sections, intégration des mots-clés prioritaires) avant l'export en PDF via Playwright, avec un modèle CSS qui respecte les conventions des parseurs ATS. Le résultat est prêt à être téléversé.
+
+## Quand l'utiliser
+
+Utilisez pdf lorsque vous avez déjà évalué l'annonce et décidé de postuler, et que vous souhaitez uniquement le PDF personnalisé sans relancer l'étape d'évaluation.
+
+## À quoi ressemble une exécution
+
+Vous pointez le mode vers une annonce déjà évaluée et il produit un seul PDF personnalisé, prêt pour les ATS — sans réévaluation. Il extrait 15 à 20 mots-clés de la JD, choisit le format de papier selon la localisation de l'entreprise, réécrit votre résumé et réorganise les puces autour du poste, puis convertit le HTML en PDF et indique la couverture des mots-clés.
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+
+La mise en page reste sur une seule colonne, avec des en-têtes de section standard et du texte sélectionnable — la structure que les parseurs ATS lisent sans difficulté — et les mots-clés sont intégrés à de véritables réalisations, jamais inventés.
+
+## Quand y recourir
+
+Recourez à pdf lorsque vous avez décidé de postuler et que vous souhaitez uniquement le CV personnalisé, en sautant l'étape d'évaluation. Quelques comportements à connaître :
+
+- Le format de papier suit automatiquement la localisation de l'entreprise : `letter` pour les postes aux États-Unis et au Canada, `a4` partout ailleurs.
+- L'injection de mots-clés repose sur la vérité. Le mode reformule une expérience réelle dans le vocabulaire exact de la JD, mais n'ajoute jamais une compétence que vous ne possédez pas.
+- Pour la région DACH et une grande partie de l'Europe continentale, vous pouvez opter pour une photo en renseignant `candidate.photo` dans `config/profile.yml` ; laissez ce champ vide et le CV s'affiche à l'identique, au pixel près, sans photo — le choix par défaut le plus sûr pour les États-Unis, le Royaume-Uni et les marchés centrés sur les ATS.
+
+## Pièges à connaître
+
+Nécessite Playwright installé en local. Le script de build peut échouer sur des installations Linux minimales dépourvues de polices système. Exécutez `npm run doctor` pour diagnostiquer.
+
+## Pages associées
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)

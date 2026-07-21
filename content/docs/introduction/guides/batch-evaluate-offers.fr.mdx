@@ -1,0 +1,157 @@
+---
+title: Évaluer des offres par lot
+description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
+seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
+icon: FileStack
+translationHash: 5abe712784127777
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+Utilisez ce guide lorsque vous avez 10 offres d'emploi ou plus à examiner et que vous souhaitez toutes les traiter en une seule session plutôt qu'une par une.
+
+Chaque offre dispose de son propre worker Claude. Ce worker lit votre CV, note la correspondance, rédige un rapport complet et enregistre un PDF sur mesure — sans que vous ayez à lever le petit doigt.
+
+## Étape 1 : Ajoutez vos offres au fichier d'entrée
+
+Le système de traitement par lot lit les URL des offres depuis un fichier nommé **`batch/batch-input.tsv`**. Voyez-le comme une liste de tâches pour l'évaluateur.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Ouvrez **`batch/batch-input.tsv`** dans n'importe quel éditeur de texte.
+      </Step>
+      <Step>
+        Ajoutez une ligne par offre. Chaque ligne comporte quatre colonnes séparées par une tabulation :
+
+        | Colonne | Que saisir |
+        |--------|---------------|
+        | `id` | Un numéro unique pour cette offre (1, 2, 3, …) |
+        | `url` | L'URL complète de l'annonce |
+        | `source` | Où vous l'avez trouvée (par ex. `LinkedIn`, `Greenhouse`) |
+        | `notes` | Une note facultative — laissez vide si vous n'en avez pas |
+      </Step>
+      <Step>
+        Enregistrez le fichier.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**Exemple :**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="Astuce">
+  Chaque ID doit être un numéro unique. Ne sautez pas de numéros et ne les répétez pas.
+</Callout>
+
+## Étape 2 : Prévisualisez votre lot (recommandé)
+
+Avant de traiter quoi que ce soit, lancez une vérification rapide pour voir combien d'offres sont en attente. Rien n'est encore évalué — il s'agit simplement d'un aperçu.
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+Vous verrez la liste des offres en attente et leurs ID. Si quelque chose semble incorrect, corrigez le fichier d'entrée maintenant, avant de perdre du temps sur une mauvaise liste.
+
+## Étape 3 : Lancez le lot
+
+Quand vous êtes prêt, démarrez le lot. Vous pouvez traiter une offre à la fois ou plusieurs en même temps.
+
+**Une à la fois (le plus lent, consomme le moins de mémoire) :**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**Deux à la fois (un bon réglage par défaut) :**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**Trois à la fois (plus rapide, mais plus lourd pour votre machine) :**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**Ignorer les offres dont la note est inférieure à un seuil (par ex. en dessous de 4,0 sur 5) :**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+Surveillez le terminal pendant l'exécution du lot. Chaque ligne vous indique quelle offre est en cours de traitement et si elle s'est terminée ou a échoué.
+
+## Étape 4 : Consultez les résultats au fur et à mesure
+
+Vous n'avez pas besoin d'attendre la fin du lot. Les résultats apparaissent à mesure que chaque offre est traitée.
+
+**Rapports d'évaluation complets** → `reports/`
+
+Chaque rapport est un fichier nommé par exemple `042-company-name-2026-04-14.md`. Ouvrez-le pour consulter :
+
+- Un résumé du poste
+- Le degré de correspondance entre votre CV et l'offre
+- Une recherche sur le salaire
+- Un plan de préparation d'entretien suggéré
+
+**Entrées de tracker en une ligne** → `batch/tracker-additions/`
+
+Chaque offre dépose également un court fichier de synthèse ici. Ces fichiers seront ajoutés à votre tracker principal à l'étape 6.
+
+## Étape 5 : Relancez les offres en échec
+
+Il arrive qu'un worker échoue — par exemple si l'URL d'une annonce ne se charge plus. Les offres en échec apparaissent dans le terminal avec un court message d'erreur.
+
+**Relancer uniquement les offres en échec :**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**Relancer avec jusqu'à 3 tentatives au lieu des 2 par défaut :**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+Le lot ignore toute offre déjà traitée avec succès — relancer cette commande est donc toujours sans risque.
+
+## Étape 6 : Fusionnez les résultats dans votre tracker
+
+Une fois le lot terminé, exécutez cette commande pour ajouter toutes les nouvelles évaluations à `data/applications.md` :
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+Ce script :
+
+1. Lit les fichiers de synthèse depuis `batch/tracker-additions/`
+2. Vérifie les doublons pour que vous n'ayez jamais deux lignes pour la même offre
+3. Ajoute les nouvelles entrées à votre tracker de candidatures
+4. Archive les fichiers traités dans `batch/tracker-additions/merged/`
+
+**Pour prévisualiser les changements sans rien écrire :**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## Et ensuite ?
+
+Ouvrez **`data/applications.md`** pour voir toutes vos évaluations dans un seul tableau. De là, vous pouvez :
+
+- Trier par note pour repérer vos meilleures correspondances
+- Ouvrir les rapports individuels dans `reports/` pour une analyse approfondie
+- Lancer le processus de candidature pour vos meilleures offres avec `/career-ops apply`

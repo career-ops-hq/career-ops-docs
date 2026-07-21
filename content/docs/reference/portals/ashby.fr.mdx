@@ -1,0 +1,57 @@
+---
+title: Ashby
+description: "Ashby est l'ATS moderne privilégié par les startups en Série A–C dans l'univers de l'IA et des dev-tools. career-ops interroge directement l'API publique du job board."
+seoTitle: "Scanner les offres Ashby avec career-ops — scan de portail ATS zéro token"
+icon: Sparkles
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 013014c1d6d759e4
+localized: true
+translatedFrom: /docs/reference/portals/ashby
+---
+
+## Ce qu'il fait
+
+Le provider ashby, situé dans providers/ashby.mjs, effectue des requêtes HTTP vers api.ashbyhq.com/posting-api/job-board/`{slug}` et analyse le JSON renvoyé. Le slug est l'identifiant du job board Ashby de l'entreprise (par exemple 'anthropic' pour Anthropic).
+
+## Quand l'utiliser
+
+Utilisez le scan Ashby lorsque vous ciblez des labos d'IA, des entreprises d'infrastructure et des startups modernes. Anthropic, Vercel, Replicate et de nombreuses entreprises YC utilisent Ashby. Plus de 40 slugs préconfigurés sont fournis dans templates/portals.example.yml.
+
+## Exemple
+
+```
+In your portals.yml: `- provider: ashby\n  slug: anthropic\n  careers_url: https://jobs.ashbyhq.com/anthropic` — then scan picks up active Anthropic roles.
+```
+
+## Ce que fait le scanner
+
+Le scanner lit les slugs Ashby activés dans votre portals.yml, appelle l'API publique de job board d'Ashby pour chacun d'eux, puis fusionne les nouvelles offres dans votre pipeline — sans navigateur, sans login et sans dépenser le moindre token LLM pour la récupération elle-même. Une seule exécution de `node scan.mjs` couvre à la fois vos boards Ashby, Greenhouse et Lever, puis filtre les résultats selon les mots-clés de titre que vous avez configurés.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 41 total
+Filtered by title: 6 relevant
+Duplicates: 3 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Anthropic | Applied AI Engineer | ashby
+  + Replicate | Inference Engineer  | ashby
+```
+
+## Comment career-ops communique avec Ashby
+
+career-ops interroge l'endpoint GraphQL `ApiJobBoardWithTeams` d'Ashby avec le slug de votre board et lit la liste `jobPostings` directement dans la réponse JSON. Pour chaque annonce, il récupère le titre, un id servant à construire l'URL publique de candidature, le nom de la localisation, le type de contrat et un résumé de la rémunération lorsque le board en expose un. Comme il s'agit d'un appel API structuré et non de scraping de pages, le scan est rapide, reste dans les limites de débit et ne consomme aucun token de modèle. Les tokens ne sont dépensés que plus tard, lors de l'étape evaluate, lorsque vous décidez qu'une offre mérite un examen plus attentif. Relancer le scan est sans risque : chaque URL est dédupliquée par rapport à votre historique de scan, vos candidatures évaluées et le pipeline en cours, si bien qu'une offre déjà vue n'est jamais ajoutée deux fois.
+
+## Pièges à connaître
+
+L'API de job board d'Ashby renvoie directement le texte complet de la fiche de poste, sans requête supplémentaire. L'évaluation est légèrement plus rapide que pour les annonces Greenhouse.
+
+## Voir aussi
+
+- [greenhouse](/docs/reference/portals/greenhouse)
+- [lever](/docs/reference/portals/lever)

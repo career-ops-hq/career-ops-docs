@@ -1,0 +1,52 @@
+---
+title: auto-pipeline
+description: "Flux par défaut lorsque vous collez l'URL d'une description de poste ou son texte brut. Exécute l'évaluation A–G, génère le rapport, exporte un PDF personnalisé et écrit une entrée dans le tracker — sans intervention manuelle entre les étapes."
+seoTitle: "career-ops auto-pipeline — évaluer une offre et générer CV + tracker à partir d'une seule URL"
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: a103f3feac73a799
+localized: true
+translatedFrom: /docs/reference/modes/auto-pipeline
+---
+
+## Ce que fait ce mode
+
+career-ops invoque auto-pipeline dès que vous déposez l'URL d'une description de poste (JD) ou un texte collé dans le prompt. Le mode lit l'annonce, la note selon la grille d'évaluation — cinq dimensions plus un score global holistique — écrit l'évaluation dans reports/, génère le PDF personnalisé via Playwright et met à jour l'entrée du tracker — le tout en un seul tour d'agent.
+
+## Quand l'utiliser
+
+Utilisez auto-pipeline lorsque vous souhaitez que le pipeline complet s'exécute automatiquement. C'est le mode par défaut pour les nouvelles offres qui entrent dans votre recherche.
+
+## À quoi ressemble une exécution
+
+Collez l'URL d'une offre sans sous-commande et auto-pipeline déroule toute la chaîne de bout en bout : il extrait la description, vérifie que l'annonce est toujours en ligne, la note, enregistre le rapport, exporte un PDF personnalisé et consigne l'entrée dans votre tracker.
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+
+## Bon à savoir
+
+- Collez une URL et auto-pipeline se charge de l'extraction pour vous : Playwright d'abord pour les portails à page unique comme Lever, Ashby, Greenhouse et Workday, puis WebFetch pour les pages statiques, et WebSearch en dernier recours.
+- Un contrôle de disponibilité (liveness gate) s'exécute avant l'évaluation. Si le lien est mort ou si la page n'est qu'une coquille vide « poste pourvu », le mode s'arrête là au lieu de noter un contenu fantôme — et si l'entrée provenait de `data/pipeline.md`, il marque cette ligne comme fermée.
+- Les brouillons de réponses de candidature ne sont rédigés que lorsque le score atteint 4.5 ou plus, afin que les postes peu pertinents ne consomment pas de tokens pour un texte que vous n'enverrez pas.
+
+## Pièges à éviter
+
+Si vous ne voulez que l'évaluation, sans le PDF (plus rapide et moins coûteux), invoquez `/career-ops oferta` à la place. auto-pipeline consomme davantage de tokens car il exécute la chaîne complète.
+
+## Pages liées
+
+- [pipeline](/docs/reference/modes/pipeline)
+- [oferta](/docs/reference/modes/oferta)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)

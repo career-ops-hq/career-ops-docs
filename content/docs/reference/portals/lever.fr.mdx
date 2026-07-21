@@ -1,0 +1,57 @@
+---
+title: Lever
+description: "Lever est l'ATS établi pour les entreprises du mid-market et en phase de croissance. career-ops interroge directement l'API publique de postings de Lever."
+seoTitle: "Scanner les offres Lever avec career-ops — scan de portail ATS zéro token"
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 535b6f24a4a180f6
+localized: true
+translatedFrom: /docs/reference/portals/lever
+---
+
+## Ce qu'il fait
+
+Le provider lever dans providers/lever.mjs effectue des requêtes HTTP vers api.lever.co/v0/postings/`{slug}` et analyse la réponse JSON. Le slug est l'identifiant des postings Lever de l'entreprise (par exemple 'figma' pour Figma).
+
+## Quand l'utiliser
+
+Utilisez le scan Lever pour les entreprises situées entre la série C+ et la pré-IPO qui n'ont pas migré vers Greenhouse ou Ashby. Figma, Brex et de nombreuses fintechs utilisent encore Lever.
+
+## Exemple
+
+```
+In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
+```
+
+## Ce que fait le scanner
+
+Le scanner lit vos slugs Lever activés dans portals.yml, appelle l'API publique de postings de Lever pour chacun d'eux, et fusionne les nouveaux postes correspondant à vos intitulés dans votre pipeline, sans session de navigateur et sans dépenser le moindre token LLM pour la récupération. La même exécution de `node scan.mjs` couvre aussi vos boards Greenhouse et Ashby, puis filtre l'ensemble selon les mots-clés d'intitulé que vous avez configurés.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Sortie"
+Portal Scan - 2026-07-06
+Offers found: 33 total
+Filtered by title: 5 relevant
+Duplicates: 2 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Figma | AI Product Engineer | lever
+  + Brex  | Applied AI Engineer | lever
+```
+
+## Comment career-ops communique avec Lever
+
+career-ops interroge `api.lever.co/v0/postings/{slug}`, ou l'hôte `api.eu.lever.co` pour les boards européens, et lit le tableau JSON des postings. Pour chaque poste, il prend le champ `text` comme intitulé et `hostedUrl` comme lien, en se rabattant sur `applyUrl` lorsque `hostedUrl` est absent. Comme Lever renvoie l'intégralité du board en une seule réponse structurée, le scan se résume à un unique GET HTTPS public par entreprise, qui reste dans les limites de débit et ne consomme aucun token de modèle. Le coût en tokens ne commence que plus tard, lorsque vous évaluez un poste que vous souhaitez poursuivre. Relancer le scan est sans risque : chaque URL est dédupliquée par rapport à votre historique de scan, vos candidatures évaluées et le pipeline en cours, de sorte qu'un poste déjà vu n'est jamais ajouté deux fois.
+
+## Pièges à connaître
+
+L'API de Lever expose la fiche de poste complète dans la réponse des postings. Certains boards Lever incluent des métadonnées internes sur les postes, que career-ops fait remonter comme signal supplémentaire lors du scoring.
+
+## Voir aussi
+
+- [greenhouse](/docs/reference/portals/greenhouse)
+- [ashby](/docs/reference/portals/ashby)

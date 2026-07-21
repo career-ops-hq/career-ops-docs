@@ -1,0 +1,62 @@
+---
+title: oferta
+description: "Exécute l'évaluation A–G sur une seule annonce. Saute la génération du PDF et l'écriture dans le tracker. À utiliser quand vous n'avez besoin que de la décision de scoring, et pas du pipeline complet."
+seoTitle: "Mode oferta de career-ops — noter une offre d'emploi avant de postuler"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 1d733a23b8c520f8
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## Ce que fait ce mode
+
+Le mode oferta lit une seule fiche de poste (URL ou texte collé), la note selon la grille — cinq dimensions plus un score global holistique — avec des preuves citées à l'appui, puis rédige le rapport d'évaluation. Pas de PDF, pas d'entrée dans le tracker. Rapide et peu coûteux.
+
+## Quand l'utiliser
+
+Utilisez oferta pour trancher rapidement le cas d'une annonce limite. Si le score dépasse 4.0 et que vous décidez de postuler, passez au mode auto-pipeline ou apply.
+
+## À quoi ressemble une exécution
+
+Vous confiez une annonce au mode et il renvoie l'évaluation en sept blocs — les blocs A à F, plus un bloc G de lecture de légitimité — avec un score et un raisonnement sourcé. Collez directement le texte de la fiche de poste, ou passez une URL : le mode confirme alors d'abord que l'annonce est toujours en ligne, pour qu'un lien mort ne consomme jamais une évaluation complète.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Extrait d'évaluation"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+
+Les blocs B à F couvrent l'adéquation du CV et ses lacunes, la stratégie de niveau, la rémunération et la demande du marché, un plan de personnalisation, et des histoires d'entretien STAR+R alignées sur les exigences du poste.
+
+## Quand y recourir
+
+Recourez à oferta pour noter rapidement une seule annonce sans vous engager dans le pipeline complet. Bon à savoir :
+
+- Passez une URL et une vérification de disponibilité s'exécute en premier — une annonce expirée ou renvoyant une 404 est arrêtée avant le bloc A, si bien que vous ne dépensez jamais une exécution sur un contenu fantôme.
+- La recherche sur l'entreprise et la rémunération est limitée à cinq recherches web au maximum ; il s'agit d'une évaluation, pas d'une recherche approfondie. Lancez `/career-ops deep` séparément quand vous voulez un tableau plus complet de l'entreprise.
+- Le bloc G renvoie l'un de trois niveaux — High Confidence, Proceed with Caution ou Suspicious — de sorte que les probables offres fantômes ressortent avant que vous n'investissiez des efforts de préparation d'entretien.
+
+## Pages liées
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [ofertas](/docs/reference/modes/ofertas)
+- [pdf](/docs/reference/modes/pdf)
