@@ -1,0 +1,35 @@
+---
+title: "Qu'est-ce que career-ops"
+description: "career-ops est un système de recherche d'emploi par IA, gratuit et open source, qui s'exécute en local dans le CLI d'IA que vous utilisez déjà — il note les offres, adapte votre CV et suit vos candidatures."
+seoTitle: "Qu'est-ce que career-ops ? Le système open source et local-first de recherche d'emploi par IA"
+icon: CircleQuestionMark
+date: 2026-04-20
+lastModified: 2026-05-12
+translationHash: d9bc36a25cdb29ac
+localized: true
+translatedFrom: /docs/introduction/what-is-career-ops
+---
+
+career-ops est un système de recherche d'emploi open source qui s'exécute dans votre assistant de code IA. Vous lui donnez l'URL d'une offre d'emploi ou son texte brut, et il lit la description, évalue le poste par rapport à votre parcours selon cinq dimensions plus un score global holistique, génère un CV PDF sur mesure citant des lignes précises de votre CV, et consigne tout dans un tracker de candidatures local — le tout en une seule commande, sans tableurs, sans compte, et sans que vos données quittent votre machine. career-ops a été créé par [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) pour gérer une véritable recherche d'emploi à l'ère de l'IA début 2026 : 740 offres évaluées selon une grille explicite, un poste de Head of Applied AI décroché chez Zinkee. Il l'a publié en open source sous licence MIT une fois qu'il n'en avait plus besoin, afin que quiconque mène une recherche d'emploi structurée puisse utiliser le même système gratuitement, sur sa propre machine, avec le modèle d'IA qu'il paie déjà.
+
+## Philosophie
+
+### Open source, pour de vrai
+
+career-ops n'a ni offre payante, ni liste d'attente, ni compte, ni télémétrie. Vous clonez le repo, remplissez une config YAML, déposez votre CV en markdown, et exécutez le système en local avec le CLI de code IA que vous utilisez déjà. Votre CV, votre profil et votre historique de candidatures ne quittent jamais votre machine, sauf si vous les poussez quelque part vous-même. Le projet grandit grâce aux contributions de la communauté, relues au grand jour : quand quelqu'un ajoute un scraper de portail d'entreprise, améliore la grille de notation ou corrige un bug, cette amélioration est livrée à tout le monde dans la release suivante. C'est là tout le modèle économique — pas d'upsell, pas d'offre enterprise, pas de vente de données prévue. Le système est sous licence MIT pour toujours ; même si le mainteneur cesse de publier, la grille, les prompts et les scrapers restent à vous : libre à vous de les forker, de les auditer et de les exécuter.
+
+<Callout title="Envie de contribuer ?">
+  Lisez le [guide de contribution](https://github.com/santifer/career-ops/blob/main/CONTRIBUTING.md) avant d'ouvrir une pull request. En résumé : ouvrez d'abord une issue pour discuter du changement, puis soumettez votre PR. Les mainteneurs relisent rapidement.
+</Callout>
+
+### Natif IA et agnostique
+
+career-ops n'embarque pas son propre modèle d'IA. Il fonctionne comme un ensemble de slash commands et de fichiers de prompts dans le CLI de code IA auquel vous faites déjà confiance : Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI ou GitHub Copilot. L'IA se charge du raisonnement ; career-ops fournit la structure, la grille de notation, les scrapers de portails d'entreprise et le data contract qui garantit que vos fichiers restent les vôtres. Cette architecture signifie que vous n'êtes pas enfermé dans la roadmap ou la tarification d'un fournisseur unique — quand un meilleur modèle sort, vous changez de CLI et career-ops fonctionne par-dessus sans aucune modification. La même grille — cinq dimensions de notation plus un score global holistique — produit un raisonnement comparable que vous la pointiez vers un modèle Claude, OpenAI, Gemini ou Qwen : choisissez le moteur qui correspond à votre profil de coût, de qualité et de confidentialité, et changez librement à mesure que le paysage évolue.
+
+## Quand utiliser career-ops
+
+career-ops est le bon outil quand vous menez une recherche d'emploi active et structurée — pas quand vous parcourez les offres par simple curiosité. Il convient le mieux aux candidats qui ont un CV dont ils sont satisfaits et veulent l'adapter à chaque candidature sans le réécrire manuellement à chaque fois, qui suivent plusieurs candidatures et veulent une source de vérité unique plutôt qu'un tableur tentaculaire, qui veulent postuler uniquement aux postes qui leur correspondent vraiment plutôt qu'à tout ce qui est vaguement pertinent, et qui sont à l'aise avec l'exécution de commandes dans un terminal même s'ils n'écrivent pas de code professionnellement. career-ops n'est probablement pas ce qu'il vous faut si vous envoyez une ou deux candidatures et vous en tenez là. La mise en place — cloner le repo, configurer votre profil, ajouter votre CV — prend environ quinze minutes, un investissement qui ne devient rentable que lorsque vous évaluez plus d'une poignée de postes.
+
+## Ce que career-ops n'est pas
+
+career-ops ne postule pas aux offres à votre place. Le système évalue, note, génère et assure le suivi — mais chaque envoi est votre décision, prise avec le raisonnement de l'agent visible à chaque étape, et rien ne part nulle part sans votre approbation explicite. career-ops n'est pas non plus un générateur de CV ni un optimiseur LinkedIn ; vous apportez le CV que vous avez déjà, et le système veille à ce que chaque version soit ajustée à l'offre que vous avez sous les yeux. C'est un pipeline, pas une usine à contenu. La frontière entre le code système (qui se met à jour à chaque release) et les données utilisateur (qui ne sont jamais écrasées) est garantie par le DATA_CONTRACT.md du dépôt : votre CV, votre profil et votre historique de candidatures sont souverains — career-ops les lira, mais ne réécrira ni ne supprimera jamais silencieusement ce que vous y avez mis, quelle que soit la release.

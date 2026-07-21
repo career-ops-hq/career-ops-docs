@@ -94,7 +94,9 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
               </div>
               <nav className={`${inter.className} flex flex-row flex-wrap items-center gap-x-5 gap-y-2 text-sm`}>
                 <FooterLocaleLink path="/docs">Docs</FooterLocaleLink>
-                <FooterLocaleLink path="/manifesto">Manifesto</FooterLocaleLink>
+                <FooterLocaleLink path="/manifesto" locales={['es']}>
+                  Manifesto
+                </FooterLocaleLink>
                 <a href="/methodology" className="hover:text-fd-foreground hover:underline">
                   Methodology
                 </a>

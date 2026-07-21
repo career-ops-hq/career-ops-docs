@@ -31,6 +31,7 @@
 
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 
 /** Strip the leading YAML frontmatter block, if present. */
 function stripFrontmatter(raw) {
@@ -78,8 +79,11 @@ export function contentHash(raw) {
   return createHash('sha256').update(body, 'utf8').digest('hex').slice(0, 16);
 }
 
-// CLI entry point.
-const file = process.argv[2];
-if (file) {
-  process.stdout.write(contentHash(readFileSync(file, 'utf8')) + '\n');
+// CLI entry point — only when run directly (`node .i18n/hash.mjs <file>`), never
+// on import. Without this guard, importing contentHash (e.g. from translate.mjs)
+// would run this block against the importer's argv and read a stray arg as a
+// file (a --lang flag crashed it, 2026-07-21).
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  const file = process.argv[2];
+  if (file) process.stdout.write(contentHash(readFileSync(file, 'utf8')) + '\n');
 }

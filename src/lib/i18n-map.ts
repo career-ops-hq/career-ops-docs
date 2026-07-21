@@ -12,25 +12,38 @@
 
 const ORIGIN = 'https://career-ops.org';
 
-/** Bidirectional hreflang for a docs page that HAS a real ES twin.
- *  Pass the EN page.url (e.g. /docs/introduction/what-is-career-ops); the ES
- *  twin lives at /es + that path. x-default → EN (the canonical language). */
-export function docsHreflang(enUrl: string): Record<string, string> {
-  return {
+/** Non-default locales that can have docs twins. Extend as languages are added
+ *  (each also needs its route group + defineI18n entry). */
+export const DOCS_LOCALES = ['es', 'fr'] as const;
+
+/** Bidirectional hreflang cluster for a docs page, built from the locales that
+ *  actually have a twin. Pass the EN page.url and the subset of DOCS_LOCALES
+ *  whose .<loc>.mdx exists (the caller checks via source.getPage(slug, loc), so
+ *  the cluster is always truthful — never a hand-kept map). Locale URL is
+ *  deterministically /<loc> + the EN path (slugs are not translated). x-default
+ *  → EN (the canonical language). */
+export function docsHreflang(
+  enUrl: string,
+  locales: readonly string[],
+): Record<string, string> {
+  const langs: Record<string, string> = {
     en: `${ORIGIN}${enUrl}`,
-    es: `${ORIGIN}/es${enUrl}`,
     'x-default': `${ORIGIN}${enUrl}`,
   };
+  for (const loc of locales) langs[loc] = `${ORIGIN}/${loc}${enUrl}`;
+  return langs;
 }
 
 /** The home pair: EN at `/`, ES at `/es`. Same bidirectional + x-default → EN
  *  shape, kept explicit because the home is not a Fumadocs docs page. */
 export const HOME_EN = '/';
 export const HOME_ES = '/es';
+export const HOME_FR = '/fr';
 export function hreflangHome(): Record<string, string> {
   return {
     en: `${ORIGIN}/`,
     es: `${ORIGIN}/es`,
+    fr: `${ORIGIN}/fr`,
     'x-default': `${ORIGIN}/`,
   };
 }

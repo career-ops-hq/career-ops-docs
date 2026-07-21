@@ -2,7 +2,7 @@ import { getPageImage, source } from '@/lib/source';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { DocsPageView } from '@/components/docs-page-view';
-import { docsHreflang } from '@/lib/i18n-map';
+import { docsHreflang, DOCS_LOCALES } from '@/lib/i18n-map';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -28,12 +28,14 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
   // seoTitle (optional frontmatter) drives the <title> tag when present;
   // the visible H1 stays page.data.title (short command name). QW1.
   const metaTitle = page.data.seoTitle ?? page.data.title;
-  // Reciprocal hreflang, but ONLY when this EN page has a real Spanish twin.
-  // Source-derived (no hand-kept map): with fallbackLanguage:null, getPage(slug,
-  // 'es') resolves iff an .es.mdx exists — never an English fallback — so the
-  // bidirectional + x-default→EN cluster is always truthful (search-ops).
-  const hasEsTwin = source.getPage(page.slugs, 'es') != null;
-  const languages = hasEsTwin ? docsHreflang(page.url) : undefined;
+  // Reciprocal hreflang, built from the locales that actually have a twin.
+  // Source-derived (no hand-kept map): with fallbackLanguage:null,
+  // getPage(slug, loc) resolves iff a .<loc>.mdx exists — never a fallback — so
+  // the bidirectional + x-default→EN cluster is always truthful (search-ops).
+  const twins = DOCS_LOCALES.filter(
+    (loc) => source.getPage(page.slugs, loc) != null,
+  );
+  const languages = twins.length ? docsHreflang(page.url, twins) : undefined;
   return {
     title: metaTitle,
     description: page.data.description,

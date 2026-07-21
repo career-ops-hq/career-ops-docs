@@ -6,7 +6,8 @@
 // canonical non-translatables, and stamps the drift-tracking translationHash.
 //
 // Usage:
-//   node .i18n/translate.mjs content/docs/reference/modes/pdf.mdx [more.mdx ...]
+//   node .i18n/translate.mjs [--lang es|fr] content/docs/reference/modes/pdf.mdx [more.mdx ...]
+//   (--lang defaults to es for back-compat; the output suffix follows the lang)
 //
 // It calls `claude -p` once per file (a headless one-shot), captures the
 // translated file on stdout, injects the i18n frontmatter contract fields, and
@@ -20,6 +21,21 @@ import { contentHash } from './hash.mjs';
 
 const GLOSSARY = readFileSync(new URL('./nontranslatables.yml', import.meta.url), 'utf8');
 
+// Target languages. `name` is injected into the prompt; `suffix` names the
+// output file (page.<suffix>.mdx). ES is neutral-panhispanic per search-ops
+// doctrine (2026-07-21): avoid strong Iberian-only tells. Add a language here
+// + its defineI18n entry + its /<suffix> route group to grow to N languages.
+const LANGS = {
+  es: {
+    suffix: 'es',
+    name: 'natural, neutral panhispanic Spanish (Spanish understood across Spain and Latin America). Avoid strong Iberian-only tells: write "archivo" not "fichero", "equipo" or "máquina" not "ordenador"; address the reader as "tú" (never vosotros or usted)',
+  },
+  fr: {
+    suffix: 'fr',
+    name: 'natural French (France), addressing the reader as "vous"',
+  },
+};
+
 /** content/docs/<rel>.mdx  ->  /docs/<rel>  (index -> parent, so /docs). */
 function docsUrl(path) {
   let rel = path.replace(/^.*content\/docs\//, '').replace(/\.mdx$/, '');
@@ -27,11 +43,11 @@ function docsUrl(path) {
   return '/docs' + (rel ? '/' + rel : '');
 }
 
-function buildPrompt(en) {
-  return `You are translating one page of the career-ops documentation from English into natural Spanish (Spain). Output ONLY the translated .mdx file — start directly with the frontmatter \`---\` line, no preamble, no commentary, and do NOT wrap the whole file in a code fence.
+function buildPrompt(en, langName) {
+  return `You are translating one page of the career-ops documentation from English into ${langName}. Output ONLY the translated .mdx file — start directly with the frontmatter \`---\` line, no preamble, no commentary, and do NOT wrap the whole file in a code fence.
 
 RULES
-1. Translate into fluent, natural Spanish of Spain. Translate the prose, the headings, and the frontmatter fields \`title\`, \`description\` and \`seoTitle\`. Keep every other frontmatter key (icon, date, etc.) exactly as-is.
+1. Translate into fluent, ${langName}. Translate the prose, the headings, and the frontmatter fields \`title\`, \`description\` and \`seoTitle\`. Keep every other frontmatter key (icon, date, etc.) exactly as-is.
 2. PRESERVE EXACTLY — never translate: fenced code blocks and their contents, inline \`code\`, shell commands, file names and paths (cv.md, DATA_CONTRACT.md, reports/, output/, config/profile.yml, data/applications.md, AGENTS.md, package names, npm/npx commands), and all URLs. In markdown links translate the visible text but keep the URL. In MDX component tags (<Tabs>, <Tab>, <Callout>, <Steps>, <Step>, <Accordions>, <Accordion>, <details>, <summary>, raw <div>…) keep the tag names and the identifier attributes (value="…", items order) unchanged; you MAY translate human-visible attribute text such as title="…". Keep heading levels and the overall MDX structure identical.
 3. NON-TRANSLATABLES — keep verbatim (this list is authoritative):
 ${GLOSSARY}
@@ -59,11 +75,25 @@ function stampFrontmatter(es, enPath, enRaw) {
   return es.replace(m[0], `---\n${fm}\n${contract}\n---`);
 }
 
-for (const enPath of process.argv.slice(2)) {
-  const esPath = enPath.replace(/\.mdx$/, '.es.mdx');
+// --lang <code> (default es); everything else is a file path.
+const args = process.argv.slice(2);
+let lang = 'es';
+const files = [];
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === '--lang') lang = args[++i];
+  else files.push(args[i]);
+}
+const spec = LANGS[lang];
+if (!spec) {
+  console.error(`unknown --lang ${lang} (known: ${Object.keys(LANGS).join(', ')})`);
+  process.exit(1);
+}
+
+for (const enPath of files) {
+  const outPath = enPath.replace(/\.mdx$/, `.${spec.suffix}.mdx`);
   const enRaw = readFileSync(enPath, 'utf8');
-  process.stdout.write(`→ ${enPath} … `);
-  const res = spawnSync('claude', ['-p', buildPrompt(enRaw)], {
+  process.stdout.write(`→ [${lang}] ${enPath} … `);
+  const res = spawnSync('claude', ['-p', buildPrompt(enRaw, spec.name)], {
     encoding: 'utf8',
     maxBuffer: 20 * 1024 * 1024,
     timeout: 300000,
@@ -73,9 +103,9 @@ for (const enPath of process.argv.slice(2)) {
     continue;
   }
   try {
-    const es = stampFrontmatter(res.stdout, enPath, enRaw);
-    writeFileSync(esPath, es);
-    console.log(`ok → ${esPath}`);
+    const out = stampFrontmatter(res.stdout, enPath, enRaw);
+    writeFileSync(outPath, out);
+    console.log(`ok → ${outPath}`);
   } catch (e) {
     console.log(`POST-FAIL ${e.message}`);
   }

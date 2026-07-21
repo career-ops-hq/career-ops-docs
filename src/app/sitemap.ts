@@ -106,17 +106,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   }
 
-  // Spanish (es) home.
+  // Localized homes (es, fr) — share the same hreflang cluster.
+  const homeCluster = {
+    en: `${SITE_URL}/`,
+    es: `${SITE_URL}/es`,
+    fr: `${SITE_URL}/fr`,
+    'x-default': `${SITE_URL}/`,
+  };
   entries.push({
     url: `${SITE_URL}/es`,
     lastModified: new Date('2026-07-20'),
-    alternates: {
-      languages: {
-        en: `${SITE_URL}/`,
-        es: `${SITE_URL}/es`,
-        'x-default': `${SITE_URL}/`,
-      },
-    },
+    alternates: { languages: homeCluster },
+  });
+  entries.push({
+    url: `${SITE_URL}/fr`,
+    lastModified: lastModFor('src/app/fr/(home)/page.tsx'),
+    alternates: { languages: homeCluster },
   });
 
   // Spanish (es) manifesto — /es/manifesto. Standalone TSX article (like the
@@ -133,23 +138,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   });
 
-  // ES docs — SOURCE-DERIVED, no hand-kept map (search-ops drift contract).
-  // A page has an ES twin iff getPage(slug, 'es') resolves, which with
-  // fallbackLanguage:null happens only for a real .es.mdx (never an English
-  // fallback). So a Spanish URL / hreflang alternate is emitted exclusively for
-  // pages that are actually translated — never a thin es-labelled EN page.
+  // Localized docs (es, fr) — SOURCE-DERIVED, no hand-kept map (search-ops drift
+  // contract). A page has a twin iff getPage(slug, loc) resolves, which with
+  // fallbackLanguage:null happens only for a real .<loc>.mdx (never an English
+  // fallback). For each EN page we emit one entry per existing twin, and every
+  // entry's hreflang cluster lists EN + all the twins that exist for that page.
+  const DOCS_LOCALES = ['es', 'fr'] as const;
   for (const enPage of source.getPages('en')) {
-    if (!source.getPage(enPage.slugs, 'es')) continue;
+    const twins = DOCS_LOCALES.filter(
+      (loc) => source.getPage(enPage.slugs, loc) != null,
+    );
+    if (!twins.length) continue;
     const enUrl = `${SITE_URL}${enPage.url}`;
-    const esUrl = `${SITE_URL}/es${enPage.url}`;
-    const esMdxRel = `content/docs/${enPage.slugs.join('/')}.es.mdx`;
-    entries.push({
-      url: esUrl,
-      lastModified: lastModFor(esMdxRel),
-      alternates: {
-        languages: { en: enUrl, es: esUrl, 'x-default': enUrl },
-      },
-    });
+    const cluster: Record<string, string> = {
+      en: enUrl,
+      'x-default': enUrl,
+    };
+    for (const loc of twins) cluster[loc] = `${SITE_URL}/${loc}${enPage.url}`;
+    for (const loc of twins) {
+      const mdxRel = `content/docs/${enPage.slugs.join('/')}.${loc}.mdx`;
+      entries.push({
+        url: `${SITE_URL}/${loc}${enPage.url}`,
+        lastModified: lastModFor(mdxRel),
+        alternates: { languages: cluster },
+      });
+    }
   }
 
   // priority and changefreq deliberately omitted — Google has ignored

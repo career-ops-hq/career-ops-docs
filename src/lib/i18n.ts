@@ -22,7 +22,10 @@ import { defineI18n } from 'fumadocs-core/i18n';
 //                            hand-kept map (search-ops drift contract, point b).
 export const i18n = defineI18n({
   defaultLanguage: 'en',
-  languages: ['en', 'es'],
+  // 'fr' added 2026-07-21 (French pilot). Same loader-only model: a page has a
+  // French twin iff its .fr.mdx exists; /fr/docs/** is served by an explicit
+  // Next route reusing the EN render. Grows page by page like 'es'.
+  languages: ['en', 'es', 'fr'],
   parser: 'dot',
   hideLocale: 'default-locale',
   fallbackLanguage: null,

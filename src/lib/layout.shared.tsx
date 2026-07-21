@@ -11,7 +11,7 @@ type Options = {
   compact?: boolean;
   // Accepted for backward-compat with the call sites; the language control is
   // now the self-detecting <LanguageBar/>, which reads the locale from the URL.
-  locale?: 'en' | 'es';
+  locale?: 'en' | 'es' | 'fr';
 };
 
 export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps {

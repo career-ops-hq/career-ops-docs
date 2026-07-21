@@ -5,21 +5,28 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 
-// Language button + browser-detection suggestion, both living in the header.
+// Language switcher + browser-detection suggestion, both living in the header.
 // Ported from santifer.io's pattern (cv-santiago): suggest, never auto-redirect
-// (an auto-redirect breaks Google's crawl of the hreflang pair and annoys users
-// whose browser is in a language they don't read — a banner is Google's own
-// guidance). Detection is client-only; the banner never renders in SSR (that
-// caused a React #418 hydration mismatch on santifer.io).
+// (an auto-redirect breaks Google's crawl of the hreflang cluster and annoys
+// users whose browser is in a language they don't read — a banner is Google's
+// own guidance). Detection is client-only; the banner never renders in SSR
+// (that caused a React #418 hydration mismatch on santifer.io).
 //
-// Multi-language ready: add a locale to LOCALES + create its /prefix routes and
-// the pill becomes a menu; detection already walks navigator.languages.
+// N-locale (en/es/fr, 2026-07-21): the switcher shows the current locale plus a
+// link per other locale (stateless, no dropdown). Each link resolves to the
+// SAFE URL for that locale — docs go to /<loc>/docs (the route redirects an
+// untranslated slug to EN), the home to /<loc>, the manifesto to its twin when
+// one exists (es) or the locale home otherwise (fr has no manifesto yet), and
+// any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es';
+type Code = 'en' | 'es' | 'fr';
 const LOCALES: { code: Code; label: string }[] = [
   { code: 'en', label: 'EN' },
   { code: 'es', label: 'ES' },
+  { code: 'fr', label: 'FR' },
 ];
+// Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
+const MANIFESTO_LOCALES: Code[] = ['es'];
 
 /** Circular flag icons (SVG, not emoji — emoji renders inconsistently). */
 function FlagES({ className = 'w-3.5 h-3.5' }: { className?: string }) {
@@ -48,30 +55,53 @@ function FlagEN({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+function FlagFR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
+      <clipPath id="flagCircleFR"><circle cx="8" cy="8" r="8" /></clipPath>
+      <g clipPath="url(#flagCircleFR)">
+        <rect width="6" height="16" fill="#002395" />
+        <rect x="5" width="6" height="16" fill="#fff" />
+        <rect x="10" width="6" height="16" fill="#ed2939" />
+      </g>
+    </svg>
+  );
+}
 const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   en: FlagEN,
   es: FlagES,
+  fr: FlagFR,
 };
 
-/** Which locale is this path? (ES surfaces are prefixed /es; everything else EN.) */
+/** Which locale is this path? (localized surfaces are prefixed /es or /fr.) */
 function localeOf(pathname: string): Code {
-  return pathname === '/es' || pathname.startsWith('/es/') ? 'es' : 'en';
+  if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
+  if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
+  return 'en';
 }
 
-/** The mirrored URL in the other locale. Routes are prefix-mirrored for the home
- *  and the docs tree; other (EN-only) pages fall back to the locale home. The ES
- *  docs route redirects an untranslated slug to its EN page, so this never 404s. */
-function alternateUrl(pathname: string): string {
-  if (localeOf(pathname) === 'es') {
-    if (pathname === '/es') return '/';
-    if (pathname === '/es/manifesto') return '/manifesto';
-    if (pathname.startsWith('/es/docs')) return pathname.slice(3) || '/';
-    return '/';
+/** The EN-relative base path of the current page (locale prefix stripped). */
+function baseOf(pathname: string): string {
+  const loc = localeOf(pathname);
+  if (loc === 'en') return pathname;
+  return pathname.slice(3) || '/'; // drop '/es' or '/fr'
+}
+
+/** The URL for `target` locale of the page whose EN-relative path is `base`.
+ *  Always resolves to a route that exists (or safely redirects), so no 404. */
+function localeUrl(base: string, target: Code): string {
+  if (target === 'en') {
+    // EN pages are unprefixed. Docs/home/manifesto/etc. all live at `base`.
+    return base;
   }
-  if (pathname === '/') return '/es';
-  if (pathname === '/manifesto') return '/es/manifesto';
-  if (pathname.startsWith('/docs')) return '/es' + pathname;
-  return '/es';
+  if (base === '/') return `/${target}`; // home
+  if (base.startsWith('/docs')) return `/${target}${base}`; // route redirects if untranslated
+  if (base === '/manifesto') {
+    // A manifesto twin exists only for some locales; otherwise send to the home.
+    return MANIFESTO_LOCALES.includes(target) ? `/${target}/manifesto` : `/${target}`;
+  }
+  // Any other EN-only page (about, blog, compare, …) has no localized version.
+  return `/${target}`;
 }
 
 /** Best browser-preferred locale we support (walks navigator.languages in order). */
@@ -90,6 +120,7 @@ function detectLocale(): Code {
 const BANNER: Record<Code, { message: string; prefix: string }> = {
   en: { message: 'This site is available in English', prefix: 'Switch to' },
   es: { message: 'Este sitio está disponible en español', prefix: 'Cambiar a' },
+  fr: { message: 'Ce site est disponible en français', prefix: 'Passer en' },
 };
 
 /**
@@ -100,7 +131,7 @@ const BANNER: Record<Code, { message: string; prefix: string }> = {
  *  banner and expires with the session, so a return visit is re-offered once.
  *  No cookie, no localStorage → zero GDPR surface.
  */
-function useLanguageBanner(current: Code, target: Code, mismatch: boolean) {
+function useLanguageBanner(target: Code, mismatch: boolean) {
   const KEY = `lang-banner-dismissed:${target}`;
   const stored = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem(KEY) : null;
   const [visible, setVisible] = useState(stored === 'shown');
@@ -134,15 +165,15 @@ function useLanguageBanner(current: Code, target: Code, mismatch: boolean) {
 export function LanguageBar() {
   const pathname = usePathname() || '/';
   const current = localeOf(pathname);
-  const alt = alternateUrl(pathname);
-  const other = LOCALES.find((l) => l.code !== current)!; // 2-locale toggle; menu when >2
+  const base = baseOf(pathname);
+  const others = LOCALES.filter((l) => l.code !== current);
 
   // Client-only: don't render the detection banner during SSR (hydration).
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const target = mounted ? detectLocale() : current;
   const mismatch = mounted && target !== current;
-  const { showBanner, dismiss, animate } = useLanguageBanner(current, target, mismatch);
+  const { showBanner, dismiss, animate } = useLanguageBanner(target, mismatch);
 
   const CurrentFlag = FLAG[current];
   const TargetFlag = FLAG[target];
@@ -157,13 +188,13 @@ export function LanguageBar() {
             {BANNER[target].message}
           </span>
           <Link
-            href={alt}
+            href={localeUrl(base, target)}
             onClick={dismiss}
             className="inline-flex items-center gap-1 font-medium text-brand hover:text-brand-200 transition-colors"
           >
             {BANNER[target].prefix}
             <TargetFlag className="w-3.5 h-3.5 mx-0.5" />
-            {other.label}
+            {LOCALES.find((l) => l.code === target)!.label}
           </Link>
           <button
             onClick={dismiss}
@@ -174,14 +205,27 @@ export function LanguageBar() {
           </button>
         </div>
       )}
-      <Link
-        href={alt}
-        aria-label={`Idioma: ${current.toUpperCase()} — cambiar a ${other.label}`}
-        className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-full border bg-fd-card text-sm font-medium text-fd-muted-foreground hover:text-fd-foreground hover:border-fd-primary/40 transition-colors"
-      >
+      {/* Switcher: current locale (highlighted) + a link per other locale. */}
+      <div className="inline-flex items-center gap-1 h-8 px-2 rounded-full border bg-fd-card text-sm">
         <CurrentFlag className="w-3.5 h-3.5" />
-        {LOCALES.find((l) => l.code === current)!.label}
-      </Link>
+        <span className="font-medium text-fd-foreground">
+          {LOCALES.find((l) => l.code === current)!.label}
+        </span>
+        {others.map((l) => {
+          const Flag = FLAG[l.code];
+          return (
+            <Link
+              key={l.code}
+              href={localeUrl(base, l.code)}
+              aria-label={`Switch language to ${l.label}`}
+              className="inline-flex items-center gap-1 pl-1.5 ml-0.5 border-l border-fd-border text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+            >
+              <Flag className="w-3.5 h-3.5" />
+              {l.label}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

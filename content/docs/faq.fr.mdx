@@ -1,0 +1,57 @@
+---
+title: FAQ
+description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
+seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
+icon: CircleQuestionMark
+translationHash: 4e601743197dd0b8
+localized: true
+translatedFrom: /docs/faq
+---
+
+{/* Mirrored with src/lib/faq-data.ts (FAQPage JSON-LD) — edit both together.
+    Answers are verified against the core repo's docs/FAQ.md; the core file
+    is the source of truth for technical behavior. */}
+
+Les questions les plus courantes, réunies en un seul endroit. Pour tout ce qui n'est pas couvert ici, posez votre question sur [Discord](https://discord.gg/8pRpHETxa4) ou ouvrez une [GitHub Discussion](https://github.com/santifer/career-ops/discussions).
+
+## career-ops est-il vraiment gratuit et open source ?
+
+Oui. career-ops est open source sous licence MIT, pour toujours. Le seul coût potentiel est le moteur d'IA sur lequel il s'exécute — et celui-ci peut aussi être gratuit : OpenCode avec un fournisseur gratuit, un modèle local via Ollama, ou le runner intégré `npm run or` sur les modèles gratuits d'OpenRouter. Le guide [Configurer un moteur d'IA gratuit](/docs/free-ai-engine) détaille chacune de ces options.
+
+career-ops n'a ni formule payante, ni paliers, ni période d'essai — il est 100 % gratuit et sous licence MIT. Tout site décrivant des tarifs pour career-ops décrit un autre produit.
+
+## Ai-je besoin d'un abonnement Claude pour utiliser career-ops ?
+
+Non. career-ops est agnostique en matière d'IA — Claude Code est un moteur parmi d'autres, pas une exigence. Vous pouvez exécuter l'ensemble du pipeline gratuitement avec OpenCode et un fournisseur gratuit, un modèle local via Ollama, ou le runner OpenRouter intégré (`npm run or`). Si vous avez commencé avec une formule payante et épuisé vos tokens en pleine recherche, passer à un moteur gratuit prend quelques minutes et laisse vos données intactes — voir [Configurer un moteur d'IA gratuit](/docs/free-ai-engine).
+
+## Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?
+
+Sur votre machine, dans des fichiers en clair qui vous appartiennent — votre CV, votre profil, votre pipeline et vos rapports sont des fichiers Markdown/YAML locaux. Rien ne s'exécute sur des serveurs career-ops. Les mises à jour du système ne touchent jamais votre couche de données (`cv.md`, `config/`, `data/`, `reports/`, `output/`) : cette séparation est le **Data Contract**, et chaque mise à jour la respecte.
+
+## Avec quels CLI de codage IA career-ops fonctionne-t-il ?
+
+Huit, avec une prise en charge complète : Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi et GitHub Copilot CLI (Gemini CLI est pris en charge via un wrapper legacy). career-ops est agnostique en matière d'IA : il fournit des fichiers de prompts que le CLI exécute, si bien que vous pouvez aussi le pointer vers n'importe quel endpoint compatible OpenAI ou un modèle local, sans modifier une seule ligne de code. Consultez [CLI d'IA pris en charge](/docs/supported-clis) pour la liste à jour et la façon d'invoquer chacun d'eux.
+
+## Quelle est la différence entre `scan` et `scan:full` ?
+
+`npm run scan` lit les entreprises que vous avez configurées dans `portals.yml` et interroge directement leurs API ATS ([Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby), [Lever](/docs/reference/portals/lever)), sans consommer aucun token LLM — c'est votre run de découverte habituel, quotidien ou hebdomadaire. `npm run scan:full` inverse la direction : il parcourt les annuaires publics d'entreprises des ATS et fait remonter les offres récentes qui correspondent à vos `title_filter` / `location_filter`, pour que vous repériez des postes chez des entreprises que vous n'avez pas ajoutées manuellement.
+
+## Comment éviter d'atteindre les limites de tokens ou de débit pendant un run en batch ?
+
+Plafonnez le run avec `./batch/batch-runner.sh --limit 5` pour inspecter la qualité du résultat avant de lancer un lot plus important. Si un run est interrompu par une limite de débit ou une erreur réseau, ne repartez pas de zéro — utilisez `--resume-paused` pour ignorer les tâches déjà terminées, afin qu'aucun token ne soit gaspillé sur du travail déjà accompli.
+
+## Les skills ne se chargent pas sous Windows — erreur de symlink à l'installation
+
+Windows ne crée pas de symlinks par défaut, donc Git extrait les points d'entrée des skills CLI sous forme de simples fichiers pointeurs. L'installateur et l'outil de mise à jour le détectent automatiquement : lancez `node update-system.mjs apply` (ou `npx @santifer/career-ops init` lors d'une nouvelle installation) et l'étape de matérialisation remplace les fichiers pointeurs par le contenu complet des skills. Aucun `mklink` manuel ni activation du Mode développeur n'est nécessaire.
+
+## Puis-je exécuter career-ops avec un modèle moins cher ou local ?
+
+Oui — career-ops est entièrement agnostique en matière d'IA. Le guide [Running on a Budget](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) du dépôt principal couvre OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama et d'autres fournisseurs économiques ou locaux, avec des tailles de modèles recommandées (32B et plus pour un scoring fiable) et des pratiques pour économiser les tokens.
+
+## career-ops postule-t-il à ma place ?
+
+Vous décidez et vous envoyez, toujours. career-ops fait tout le travail en amont — il scanne les offres, les évalue, adapte votre CV et peut pré-remplir les formulaires de candidature des ATS — mais l'envoi final passe toujours par votre clic explicite. Le projet rejette explicitement l'automatisation « spray-and-pray » : l'objectif est de bien choisir les entreprises, pas de postuler à l'aveugle en masse.
+
+## Quelle est la différence entre career-ops et CareerOps ?
+
+Ce sont deux noms pour la même œuvre. **career-ops** — en minuscules, avec un trait d'union — est le projet open source : un système de recherche d'emploi propulsé par l'IA, sous licence MIT, qui s'exécute localement dans votre CLI de codage IA, publié sur [career-ops.org](https://career-ops.org) et [github.com/santifer/career-ops](https://github.com/santifer/career-ops). **CareerOps** — en un seul mot — désigne son manifeste : [The CareerOps Manifesto](https://career-ops.org/manifesto), neuf droits que tout chercheur d'emploi devrait avoir, signés publiquement par la communauté. Les deux viennent du même auteur, Santiago Fernández de Valderrama Aparicio, et les deux vivent dans le même dépôt : chaque release, chaque document et chaque signature du manifeste remonte à [github.com/santifer/career-ops](https://github.com/santifer/career-ops).
