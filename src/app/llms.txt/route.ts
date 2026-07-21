@@ -1,4 +1,4 @@
-import { source } from '@/lib/source';
+import { source, normalizeAgentMarkdown } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats } from '@/lib/stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
@@ -105,10 +105,25 @@ MIT — free forever, no paywalls, no account required.
 `;
 }
 
+// The docs index for agents. fumadocs' llms(source).index() emits one "# Docs"
+// block PER LOCALE with RELATIVE links to the HTML routes — so an agent lands
+// on 126-253KB of HTML instead of the 2-12KB .md mirror (x20-100 tokens), and
+// the ES/FR blocks bloat the file with links whose .md twins don't exist yet.
+// Keep only the EN block and rewrite every /docs link to its absolute .md
+// mirror. (search-ops audit-md-calidad-2026-W30, leak #1 — CRITICAL.)
+function agentDocsIndex(): string {
+  const raw = llms(source).index();
+  const enBlock = raw.split(/^#\s+Docs\s*$/m)[1] ?? raw;
+  return `# Docs (agent-ready markdown)
+
+Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens. You can also append \`.md\` to any docs URL, or request one with \`Accept: text/markdown\`.
+${normalizeAgentMarkdown(enBlock)}`;
+}
+
 export async function GET() {
   const stats = await getProjectStats();
   return new Response(
     buildPreamble(stats.stars, stats.discordMembers, stats.latestRelease) +
-      llms(source).index(),
+      agentDocsIndex(),
   );
 }

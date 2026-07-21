@@ -8,15 +8,20 @@ import { NextResponse, type NextRequest } from 'next/server';
 //                               ~59% of agent format-404s in the Mintlify
 //                               docs-url-discovery bench).
 //   2. `Accept: text/markdown` — HTTP content negotiation.
-// A complete, clean markdown mirror already existed at
-// /llms.mdx/docs/<slug>/content.md (see src/app/llms.mdx/docs) — it was just
-// invisible. Both branches below rewrite to that mirror, which returns
-// text/markdown (+ X-Robots-Tag: noindex so the raw markdown never competes
-// with the canonical HTML in search).
+// Both resolve to the clean markdown mirror at /llms.mdx/docs/<slug>/content.md
+// (see src/app/llms.mdx/docs), which returns text/markdown + X-Robots-Tag:
+// noindex so the raw markdown never competes with the canonical HTML in search.
+//
+// Split by mechanism, each using the right tool: `<docs-url>.md` is a
+// next.config `beforeFiles` rewrite (a routing rewrite fires deterministically
+// for file-extension paths — middleware interception of `.md` proved
+// unreliable across the Next 16 middleware→proxy migration, 404'ing on the
+// `.md` before reaching the mirror). This proxy handles ONLY the Accept header,
+// which a static rewrite cannot read.
 //
 // Humans are never affected: a browser always lists `text/html` in Accept and
-// never appends `.md`, so neither branch fires for them. (search-ops audit
-// audit-capa-agentica-2026-W30 §2.)
+// never appends `.md`, so neither path fires for them. (search-ops audits
+// audit-capa-agentica-2026-W30 §2 + audit-md-calidad-2026-W30.)
 
 const DOCS_PREFIX = '/docs/';
 
@@ -36,18 +41,17 @@ function prefersMarkdown(accept: string | null): boolean {
   return accept.includes('text/markdown') && !accept.includes('text/html');
 }
 
-export function middleware(req: NextRequest): NextResponse {
+export function proxy(req: NextRequest): NextResponse {
   const { pathname } = req.nextUrl;
-  const rel = pathname === '/docs' ? '' : pathname.slice(DOCS_PREFIX.length);
 
-  // 1. `<docs-url>.md` → markdown mirror (a distinct, cache-safe URL).
-  if (pathname.endsWith('.md')) {
-    return mirrorRewrite(req, rel.slice(0, -'.md'.length));
-  }
+  // `<docs-url>.md` is served by the next.config rewrite → the markdown mirror.
+  // Leave it for the routing layer (see the file header for why).
+  if (pathname.endsWith('.md')) return NextResponse.next();
 
-  // 2. `Accept: text/markdown` → markdown mirror at the same human URL.
+  // `Accept: text/markdown` on the human URL → the same markdown mirror.
   if (prefersMarkdown(req.headers.get('accept'))) {
-    return mirrorRewrite(req, rel);
+    const slug = pathname === '/docs' ? '' : pathname.slice(DOCS_PREFIX.length);
+    return mirrorRewrite(req, slug);
   }
 
   return NextResponse.next();

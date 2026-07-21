@@ -1,4 +1,4 @@
-import { getLLMText, source } from '@/lib/source';
+import { getLLMText, normalizeAgentMarkdown, source } from '@/lib/source';
 import { blogSource, type BlogPage } from '@/lib/blog-source';
 import comparisonsData from '@/lib/data/comparisons.json';
 import { CANONICAL_IDENTITY } from '@/lib/shared';
@@ -14,7 +14,7 @@ export const revalidate = false;
 const SITE = 'https://career-ops.org';
 
 async function blogLLMText(page: BlogPage) {
-  const processed = await page.data.getText('processed');
+  const processed = normalizeAgentMarkdown(await page.data.getText('processed'));
   const modified = page.data.lastModified ?? page.data.date;
 
   return `# ${page.data.title} (${SITE}${page.url})

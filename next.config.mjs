@@ -70,6 +70,22 @@ const config = {
       { hostname: 'avatars.githubusercontent.com' },
     ],
   },
+  async rewrites() {
+    return {
+      // beforeFiles so these land ahead of the /docs/[[...slug]] page route,
+      // which would otherwise 404 on the unknown `.md` slug. A routing rewrite
+      // (not middleware) fires deterministically for file-extension paths.
+      // The mirror route sets Content-Type: text/markdown + X-Robots-Tag:
+      // noindex. Agent-facing markdown — search-ops audit, agent layer.
+      beforeFiles: [
+        { source: '/docs.md', destination: '/llms.mdx/docs/content.md' },
+        {
+          source: '/docs/:slug(.*).md',
+          destination: '/llms.mdx/docs/:slug/content.md',
+        },
+      ],
+    };
+  },
   async headers() {
     return [
       {
