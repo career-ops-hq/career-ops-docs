@@ -5,7 +5,7 @@
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
 import { getProjectStats } from './stats';
-import { MANIFESTO, CAREEROPS_DEFINITION } from './shared';
+import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
 
 const PERSON_ID = 'https://santifer.io/#person';
 const ORGANIZATION_ID = 'https://career-ops.org/#organization';
@@ -666,6 +666,94 @@ export function manifestoSchema() {
             position: 2,
             name: 'Manifesto',
             item: 'https://career-ops.org/manifesto',
+          },
+        ],
+      },
+    ],
+  };
+}
+
+// /es/manifesto — Spanish twin of the manifesto graph. Same shape as
+// manifestoSchema() but inLanguage:'es', ES description/FAQ, and /es/manifesto
+// @ids. It does NOT redefine the CareerOps DefinedTerm: the coinage has ONE
+// canonical node (on the EN /manifesto), which this ES Article references via
+// `about` + `translationOfWork` — so the entity/coinage authority stays
+// single-sourced while the ES page carries its own localized FAQ + breadcrumb.
+// Copy is the frozen official translation (search-ops/venture-ops deliverable
+// manifiesto-es-2026-07-21); never reword ad-hoc.
+export function manifestoSchemaEs() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': 'https://career-ops.org/es/manifesto/#article',
+        url: 'https://career-ops.org/es/manifesto',
+        headline: 'El Manifiesto CareerOps',
+        description: CAREEROPS_DEFINITION_ES,
+        datePublished: '2026-07-14',
+        dateModified: '2026-07-14',
+        author: { '@id': PERSON_ID },
+        publisher: { '@id': ORGANIZATION_ID },
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        // The ES article is a translation of the canonical EN manifesto —
+        // states that relationship explicitly for entity reconcilers.
+        translationOfWork: { '@id': 'https://career-ops.org/manifesto/#article' },
+        about: [
+          { '@id': 'https://career-ops.org/manifesto/#careerops' },
+          { '@id': 'https://career-ops.org/#software' },
+        ],
+        mainEntityOfPage: 'https://career-ops.org/es/manifesto',
+        inLanguage: 'es',
+        articleSection: 'Manifiesto',
+        image: {
+          '@type': 'ImageObject',
+          url: 'https://career-ops.org/og-manifesto.png',
+          width: 1200,
+          height: 630,
+        },
+      },
+      {
+        '@type': 'Person',
+        '@id': PERSON_ID,
+        name: 'Santiago Fernández de Valderrama Aparicio',
+        url: 'https://santifer.io/about',
+        sameAs: ['https://www.wikidata.org/wiki/Q138710224'],
+        identifier: WIKIDATA_PERSON_IDENTIFIER,
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://career-ops.org/es/manifesto/#faq',
+        inLanguage: 'es',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: '¿Qué es CareerOps?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: `${CAREEROPS_DEFINITION_ES} El término nombra la práctica, no un producto: tratar la búsqueda de empleo como un pipeline operado (captación, puntuación, adaptación, seguimiento) en lugar de un montón de solicitudes sueltas. La implementación de referencia es career-ops (en minúsculas, con guion), el centro de mando open source con licencia MIT que ejecuta todo el pipeline en local, en la máquina de quien busca empleo, a través del CLI de IA que ya use. La práctica es más grande que la herramienta: puedes practicar CareerOps con una hoja de cálculo y disciplina; career-ops solo automatiza la capa operativa.`,
+            },
+          },
+          {
+            '@type': 'Question',
+            name: '¿Quién acuñó el término CareerOps?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'CareerOps fue acuñado como nombre de la práctica por Santiago Fernández de Valderrama Aparicio (santifer), creador del proyecto open source career-ops, en El Manifiesto CareerOps (The CareerOps Manifesto), publicado el 14 de julio de 2026 en career-ops.org/es/manifesto y firmado en el repositorio del proyecto (MANIFESTO.md, release tag manifesto-v1.0). El nombre sigue el patrón de DevOps y MLOps: una disciplina -Ops que convierte una actividad improvisada en una práctica operada e instrumentada. El compuesto había aparecido antes en nombres de producto sueltos, como pasa con los compuestos -Ops; el manifiesto es la primera definición de CareerOps como práctica. Desarrolló la práctica durante su propia búsqueda de empleo de 2026 (740 vacantes evaluadas, 68 solicitudes, 12 procesos de entrevista, 1 oferta firmada) antes de nombrarla y abrirla a firmas de la comunidad.',
+            },
+          },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://career-ops.org/es/manifesto/#breadcrumbs',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://career-ops.org/es' },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Manifiesto',
+            item: 'https://career-ops.org/es/manifesto',
           },
         ],
       },

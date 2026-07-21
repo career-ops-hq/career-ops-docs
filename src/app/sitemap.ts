@@ -25,6 +25,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${SITE_URL}/manifesto`,
       lastModified: lastModFor('src/app/manifesto/page.tsx'),
+      alternates: {
+        languages: {
+          en: `${SITE_URL}/manifesto`,
+          es: `${SITE_URL}/es/manifesto`,
+          'x-default': `${SITE_URL}/manifesto`,
+        },
+      },
     },
     {
       // The changelog's real freshness is the latest release date (the
@@ -108,6 +115,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
         en: `${SITE_URL}/`,
         es: `${SITE_URL}/es`,
         'x-default': `${SITE_URL}/`,
+      },
+    },
+  });
+
+  // Spanish (es) manifesto — /es/manifesto. Standalone TSX article (like the
+  // home), so it is listed explicitly with its bidirectional hreflang pair.
+  entries.push({
+    url: `${SITE_URL}/es/manifesto`,
+    lastModified: lastModFor('src/app/es/manifesto/page.tsx'),
+    alternates: {
+      languages: {
+        en: `${SITE_URL}/manifesto`,
+        es: `${SITE_URL}/es/manifesto`,
+        'x-default': `${SITE_URL}/manifesto`,
       },
     },
   });

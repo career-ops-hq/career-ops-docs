@@ -33,6 +33,18 @@ export const MANIFESTO =
 export const CAREEROPS_DEFINITION =
   "CareerOps is the practice of running a job search the way engineers run production: with evidence, with discipline, and with tools on the candidate's side of the table.";
 
+// Official Spanish definition — the ONE canonical string for every ES
+// surface (manifesto lead + FAQ + description). Ratified by search-ops +
+// venture-ops (deliverable manifiesto-es-2026-07-21). Same discipline as
+// the EN definition: it is a frozen, signed-document translation, never
+// reworded ad-hoc — it changes only if the canonical EN changes or
+// venture-ops/search-ops ratify a new version. Note the deliberate
+// register split venture-ops logged: the definition uses the third-person
+// "del lado del candidato" while the manifesto body (signer voice) says
+// "de nuestro lado de la mesa" — that divergence is CORRECT, do not unify.
+export const CAREEROPS_DEFINITION_ES =
+  'CareerOps es la práctica de operar la búsqueda de empleo como los ingenieros operan producción: con evidencia, con disciplina y con herramientas que están del lado del candidato.';
+
 // Canonical Identity block for llms.txt AND llms-full.txt — single
 // source so the two files can never diverge again (the gap search-ops
 // found in D-003). Text EXACT per verdict D-003 (Santiago's call,
@@ -50,6 +62,12 @@ export const CANONICAL_IDENTITY =
 // Wikidata).
 export const MANIFESTO_SIGNATURE =
   'Santiago Fernández de Valderrama Aparicio (santifer), creator of career-ops. July 14, 2026';
+
+// Spanish rendering of the signature line for /es/manifesto. Same frozen
+// discipline; the name + handle are non-translatables, only the role and
+// date localize (deliverable manifiesto-es-2026-07-21).
+export const MANIFESTO_SIGNATURE_ES =
+  'Santiago Fernández de Valderrama Aparicio (santifer), creador de career-ops. 14 de julio de 2026';
 
 // Last-known-good floors for live project stats. getProjectStats() never
 // returns a value below these, so a transient unauthenticated-GitHub-API

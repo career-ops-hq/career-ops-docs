@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { manifestoSchema } from '@/lib/schema';
+import { hreflangManifesto } from '@/lib/i18n-map';
 import { CAREEROPS_DEFINITION, MANIFESTO_SIGNATURE } from '@/lib/shared';
 import {
   getLedgerLastSignedAt,
@@ -26,7 +27,10 @@ const RELEASE_TAG_URL =
 export const metadata: Metadata = {
   title: 'The CareerOps Manifesto · career-ops',
   description: CAREEROPS_DEFINITION,
-  alternates: { canonical: 'https://career-ops.org/manifesto' },
+  alternates: {
+    canonical: 'https://career-ops.org/manifesto',
+    languages: hreflangManifesto(),
+  },
   openGraph: {
     type: 'article',
     url: 'https://career-ops.org/manifesto',
@@ -91,7 +95,17 @@ export default async function ManifestoPage() {
               Santiago Fernández de Valderrama Aparicio
             </a>
             , creator of career-ops · Published{' '}
-            <time dateTime="2026-07-14">14 July 2026</time>
+            <time dateTime="2026-07-14">14 July 2026</time> ·{' '}
+            {/* Reciprocal language link to the official Spanish translation —
+                the manifesto has no nav bar, so this is the human path across
+                the hreflang pair. */}
+            <a
+              href="/es/manifesto"
+              hrefLang="es"
+              className="text-fd-foreground underline underline-offset-2"
+            >
+              Español
+            </a>
           </p>
           <h1
             className={`${instrumentSerifRegular.className} mt-4 text-fd-foreground text-3xl md:text-4xl xl:text-5xl tracking-tight`}

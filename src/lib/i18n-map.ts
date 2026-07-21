@@ -34,3 +34,16 @@ export function hreflangHome(): Record<string, string> {
     'x-default': `${ORIGIN}/`,
   };
 }
+
+/** The manifesto pair: EN at `/manifesto`, ES at `/es/manifesto`. Explicit
+ *  like the home because /manifesto is a standalone TSX article, not a
+ *  Fumadocs docs page. Same bidirectional + x-default → EN shape. */
+export const MANIFESTO_EN = '/manifesto';
+export const MANIFESTO_ES = '/es/manifesto';
+export function hreflangManifesto(): Record<string, string> {
+  return {
+    en: `${ORIGIN}/manifesto`,
+    es: `${ORIGIN}/es/manifesto`,
+    'x-default': `${ORIGIN}/manifesto`,
+  };
+}

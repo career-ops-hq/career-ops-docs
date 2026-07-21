@@ -64,10 +64,12 @@ function localeOf(pathname: string): Code {
 function alternateUrl(pathname: string): string {
   if (localeOf(pathname) === 'es') {
     if (pathname === '/es') return '/';
+    if (pathname === '/es/manifesto') return '/manifesto';
     if (pathname.startsWith('/es/docs')) return pathname.slice(3) || '/';
     return '/';
   }
   if (pathname === '/') return '/es';
+  if (pathname === '/manifesto') return '/es/manifesto';
   if (pathname.startsWith('/docs')) return '/es' + pathname;
   return '/es';
 }
