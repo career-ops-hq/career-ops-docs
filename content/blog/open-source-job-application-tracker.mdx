@@ -1,0 +1,83 @@
+---
+title: How to track job applications with a tracker you own
+seoTitle: "Open-source job application tracker: your data, no lock-in"
+description: "Track job applications in a plain-markdown file you own: local, versionable in git, no lock-in. How career-ops's tracker mode and Go dashboard read and write one file."
+date: "2026-07-22"
+lastModified: "2026-07-22"
+tags: ["job-tracker", "open-source", "career-ops"]
+summary: The three ways people track a job search compared, and why an open-source tracker that keeps the data in a file you own beats a spreadsheet or a hosted app.
+faq:
+  - q: "What is the best way to track job applications?"
+    a: "The best way is whatever you will actually keep updated, which usually means automation plus ownership. A spreadsheet is fully yours but you maintain it by hand. A hosted tracker automates the work but stores your history on someone else's server. An open-source, file-based tracker gives you both: the tool updates the records for you, and the records stay in a plain file on your machine you can read, edit, and version in git."
+  - q: "Is there an open source job application tracker?"
+    a: "Yes. career-ops is an MIT-licensed, open-source job-search system whose tracker keeps every application in a plain-markdown file you own (data/applications.md), one row per role with its status, score, and report. Its tracker mode updates the file conversationally, and a Go dashboard reads the same file as a keyboard-driven view. Nothing is stored on a server, and there is no account or lock-in."
+  - q: "Can I keep my job search data private?"
+    a: "Yes. With a file-based tracker your data never leaves your machine. career-ops keeps your applications, CV, and reports as local files with zero telemetry, so nothing is uploaded unless you push it somewhere yourself. That is the opposite of a hosted tracker, where your search history lives in the vendor's database."
+---
+
+{/* FAQ below is mirrored in the `faq` frontmatter (FAQPage JSON-LD): edit both together. */}
+
+There are three ways to track a job search: a spreadsheet, a hosted app, or an open-source tracker that keeps the data in a file you own. They differ on one axis that matters more than the feature list: who owns the data. A spreadsheet is yours but manual. A hosted app is automated but lives on someone else's server. An open-source, file-based tracker gives you both, automation and ownership. career-ops is the third kind.
+
+## Ways to track a job search, compared
+
+Most people start in a spreadsheet, move to a dedicated app when the spreadsheet gets tedious, and only later notice they have handed their entire search history to a vendor. The three approaches trade off along the same axes:
+
+| | Spreadsheet | Hosted app | Open-source, file-based |
+| --- | --- | --- | --- |
+| Who owns the data | You | The vendor | You |
+| Keeps itself updated | No, manual | Yes | Yes |
+| Versioned history (git) | No | No | Yes |
+| Works offline / portable | Yes | No | Yes |
+| Account required | No | Yes | No |
+| Cost | Free | Often paid | Free |
+| Lock-in | None | High | None |
+
+A spreadsheet wins on ownership and loses on effort: every status change is a manual edit, so it goes stale by week two. A hosted app wins on automation and loses on ownership: the moment you close the account, the history goes with it, and in the meantime your search lives in someone else's database. The open-source, file-based approach is the one that does not force the trade: the tooling does the updating, and the record is a plain file that stays on your machine.
+
+## The career-ops approach: your tracker is a file you own
+
+career-ops keeps your whole pipeline in one plain-markdown file, `data/applications.md`, one row per application. It is a table you can open in any editor, diff in git, and grep from the terminal. There is no database and no server: the file is the source of truth.
+
+The columns are fixed so the tooling and the dashboard agree on the shape:
+
+```markdown
+| # | Date | Company | Role | Score | Status | PDF | Report | Notes |
+| 12 | 2026-03-14 | Acme AI | Staff Engineer, Platform | 4.6/5 | Interview | ✅ | [12](../reports/012-acme-ai-2026-03-14.md) | onsite next week |
+```
+
+The `#` is the report number and the row's identity (it is never renumbered), `Report` links to the full evaluation, and `Status` holds exactly one label from the pipeline: **Evaluated, Applied, Responded, Interview, Offer, Hired**, plus the terminal states **Rejected, Discarded, and SKIP**. Because everything is a file, the history is versionable: `git log data/applications.md` is a timeline of your whole search.
+
+Two things read and write that one file, and it helps to know which does what:
+
+- **Tracker mode** is the writer. You talk to it in your AI CLI ("mark Acme as Applied", "what is overdue for follow-up?") and it edits the rows and shows you where everything stands.
+- **The Go dashboard** is the reader. It is a keyboard-driven terminal view over the *same* `data/applications.md`. It is not a second database, it is a view.
+
+One markdown file as the source of truth; tracker mode writes it, the dashboard visualizes it. Nothing about your search leaves your machine, and career-ops keeps [zero telemetry](/blog/can-an-ai-agent-run-your-job-search) either way.
+
+## Track your applications in practice
+
+The tracker is not a separate tool you set up; it is a mode of the same system that scans and evaluates roles. Once you have run an evaluation, every listing is already a row. To see where everything stands, open your AI CLI in the career-ops folder and run:
+
+```bash
+/career-ops tracker
+```
+
+It reads `data/applications.md` and gives you the chat-side summary: what is active, what is waiting on a reply, what is overdue. For the full keyboard-driven board, launch the Go dashboard, which groups the same rows by stage. Either way you are looking at the file you own, and every status change is a line in your git history.
+
+Full reference for the mode is in the [tracker mode docs](/docs/reference/modes/tracker).
+
+## Frequently asked
+
+**What is the best way to track job applications?**
+The best way is whatever you will actually keep updated, which usually means automation plus ownership. A spreadsheet is fully yours but you maintain it by hand. A hosted tracker automates the work but stores your history on someone else's server. An open-source, file-based tracker gives you both: the tool updates the records for you, and the records stay in a plain file on your machine you can read, edit, and version in git.
+
+**Is there an open source job application tracker?**
+Yes. career-ops is an MIT-licensed, open-source job-search system whose tracker keeps every application in a plain-markdown file you own (`data/applications.md`), one row per role with its status, score, and report. Its tracker mode updates the file conversationally, and a Go dashboard reads the same file as a keyboard-driven view. Nothing is stored on a server, and there is no account or lock-in.
+
+**Can I keep my job search data private?**
+Yes. With a file-based tracker your data never leaves your machine. career-ops keeps your applications, CV, and reports as local files with zero telemetry, so nothing is uploaded unless you push it somewhere yourself. That is the opposite of a hosted tracker, where your search history lives in the vendor's database.
+
+---
+
+*Tracking is one stage of the pipeline. See how the whole thing runs [human-in-the-loop](/blog/can-an-ai-agent-run-your-job-search), or start with the [Quick Start](/docs).*

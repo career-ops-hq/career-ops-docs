@@ -8,6 +8,7 @@ import { createRelativeLink } from 'fumadocs-ui/mdx';
 
 type BlogFrontmatter = {
   title: string;
+  seoTitle?: string;
   description?: string;
   date: string;
   lastModified?: string;
@@ -35,7 +36,7 @@ export async function generateMetadata(
 
   const data = page.data as unknown as BlogFrontmatter;
   return {
-    title: `${data.title} · career-ops blog`,
+    title: `${data.seoTitle ?? data.title} · career-ops blog`,
     description: data.summary || data.description,
     alternates: { canonical: `https://career-ops.org${page.url}` },
     openGraph: {

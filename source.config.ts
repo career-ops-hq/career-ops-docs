@@ -43,6 +43,9 @@ export const blog = defineDocs({
       lastModified: z.string().optional(),
       tags: z.array(z.string()).default([]),
       summary: z.string().optional(),
+      // Same decoupling as docs: seoTitle drives the <title> tag (query-led,
+      // for SERP/AI-citation) while the visible H1 stays `title`. Optional.
+      seoTitle: z.string().optional(),
       // Optional FAQ mirror — when present, the post emits a FAQPage JSON-LD
       // alongside the BlogPosting graph (AI Overviews prefer FAQ structured
       // data backed by visible content, so keep these in sync with the
