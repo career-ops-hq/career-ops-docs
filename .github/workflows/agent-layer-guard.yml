@@ -1,0 +1,56 @@
+# Anti-regression guard for the agent-facing layer (search-ops V2 audit, #7).
+#
+# agentic-seo (Osmani) assumes a static docs site and can't score a Next.js SSR
+# build (AGENTS.md / llms.txt / docs .md are all routes, not files), so the GATE
+# is a bespoke check (scripts/verify-agent-layer.mjs) that asserts the exact
+# invariants each agent-layer PR verifies by hand: the .md rewrite, Accept
+# negotiation, browser-HTML intact, /AGENTS.md pointer, one EN llms.txt Docs
+# index with absolute .md links, no escaped entities, no leaked JSX, no relative
+# links, and the mirror left crawlable. agentic-seo runs afterwards as a
+# non-blocking informational score for the Discovery checks it does evaluate.
+name: Agent-layer guard
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'content/**'
+      - 'next.config.mjs'
+      - 'scripts/verify-agent-layer.mjs'
+      - '.github/workflows/agent-layer-guard.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'content/**'
+      - 'next.config.mjs'
+      - 'scripts/verify-agent-layer.mjs'
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Boot server, run the guard (gate) + agentic-seo (informational)
+        run: |
+          PORT=3999 npm start &
+          SERVER_PID=$!
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:3999/docs/faq >/dev/null && break
+            sleep 2
+          done
+          # Gate: bespoke agent-layer invariants. Its exit code is the job's.
+          BASE=http://localhost:3999 node scripts/verify-agent-layer.mjs
+          GUARD_EXIT=$?
+          # Informational: agentic-seo Discovery checks (never blocks).
+          echo "--- agentic-seo (informational) ---"
+          npx --yes agentic-seo --url http://localhost:3999 --checks robots-txt,llms-txt || true
+          kill "$SERVER_PID" 2>/dev/null || true
+          exit $GUARD_EXIT
