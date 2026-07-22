@@ -27,6 +27,11 @@ export const FAQ_ENTRIES: FaqEntry[] = [
       'On your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers, and system updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract.',
   },
   {
+    question: 'How do I give career-ops my CV?',
+    answer:
+      'During the first-run onboarding you paste your CV text into the chat and the agent writes cv.md for you. That is the guided path. You can also point the agent at an existing CV file, PDF included: it reads the file and converts it, because the parsing is done by your AI agent, not by a career-ops script. And since cv.md is a plain file you own, you can always write or edit it by hand instead. The agent produces clean markdown with standard sections (Summary, Experience, Projects, Education, Skills). During setup you never edit config files by hand either: you answer in plain language and the agent writes config/profile.yml and the rest for you.',
+  },
+  {
     question: 'Which AI coding CLIs does career-ops work with?',
     answer:
       'Eight, first-class: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, and GitHub Copilot CLI (Gemini CLI is supported as a legacy wrapper). career-ops is AI-agnostic: it ships prompt files the CLI executes, so you can also point it at any OpenAI-compatible endpoint or a local model with zero code changes. See the Supported AI CLIs page for the current list and how to invoke each.',
