@@ -69,15 +69,58 @@ function absolutizeLinks(md: string): string {
   });
 }
 
+// Fumadocs docs use MDX components (Tabs / Steps / Accordions / Callout) and
+// Tailwind-styled <div> wrappers. getText('processed') leaks these as raw JSX
+// into the markdown: the long className strings are pure token noise, the
+// <Tabs items={[...]}> serialization is malformed (nested quotes), and the
+// blind task-tests showed the cleanest pages answered best. Convert the tags
+// that carry meaning (a Tab's CLI name, a Step/Accordion title) into headings,
+// drop the structural wrappers, and flatten the indentation they introduce —
+// otherwise unwrapped tables and prose (indented ≥4 spaces) become stray code
+// blocks. Indentation INSIDE fenced code is preserved relative to the fence.
+// (search-ops audit-md-calidad, leak #3.)
+function stripJsx(md: string): string {
+  const tagged = md
+    .replace(/<Tab\s+value="([^"]*)"\s*>/g, '**$1**')
+    .replace(/<Step\s+title="([^"]*)"\s*>/g, '**$1**')
+    .replace(/<Accordion\s+title="([^"]*)"\s*>/g, '#### $1')
+    .replace(/<summary>([\s\S]*?)<\/summary>/g, (_m, t) => `**${t.trim()}**`)
+    .replace(/<Callout\b[^>]*?\btitle="([^"]*)"[^>]*>/g, '> **$1**')
+    .replace(
+      /<\/?(?:div|Tabs|Steps|Accordions|Tab|Step|Accordion|Callout|details|Files?|Folder)\b[^>]*>/g,
+      '',
+    );
+
+  const out: string[] = [];
+  let fenceIndent: number | null = null;
+  for (const line of tagged.split('\n')) {
+    const fence = /^(\s*)(?:```|~~~)/.exec(line);
+    if (fenceIndent === null) {
+      if (fence) {
+        fenceIndent = fence[1].length;
+        out.push(line.slice(fenceIndent)); // opening fence → column 0
+      } else {
+        out.push(line.replace(/^[ \t]+/, '')); // outside a fence → flatten
+      }
+    } else {
+      // inside a fence (incl. its closing line): strip only the fence's own
+      // indent so any relative indentation of the code survives.
+      out.push(line.length >= fenceIndent ? line.slice(fenceIndent) : line.trimStart());
+      if (fence) fenceIndent = null;
+    }
+  }
+  return out.join('\n').replace(/\n{3,}/g, '\n\n');
+}
+
 // Shared serialization cleanup for any markdown served to agents (the docs
 // mirror below and the blog dump in llms-full.txt). Strips MDX/HTML comments
-// (which have leaked internal repo paths), decodes escaped entities, and
-// absolutizes links.
+// (which have leaked internal repo paths), decodes escaped entities, unwraps
+// leaked JSX, and absolutizes links.
 export function normalizeAgentMarkdown(md: string): string {
   const withoutComments = md
     .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
     .replace(/<!--[\s\S]*?-->/g, '');
-  return absolutizeLinks(decodeEntities(withoutComments));
+  return absolutizeLinks(stripJsx(decodeEntities(withoutComments)));
 }
 
 export async function getLLMText(page: InferPageType<typeof source>) {
