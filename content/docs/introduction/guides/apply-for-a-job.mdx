@@ -8,7 +8,7 @@ icon: FileInput
 This guide walks through using `/career-ops apply` to fill out a job application form with answers tailored to your profile, proof points, and the specific role you are applying to.
 
 <Callout title="Before you start">
-  Make sure you have completed the [Scan Job Portals](./scan-job-portals.mdx) guide. The `apply` command depends on an existing evaluation report. If no report exists for the role, run the pipeline first.
+  Make sure you have completed the [Scan Job Portals](/docs/introduction/guides/scan-job-portals) guide. The `apply` command depends on an existing evaluation report. If no report exists for the role, run the pipeline first.
 </Callout>
 
 ## Run the apply command
@@ -47,7 +47,7 @@ For example:
 career-ops finds the matching report in `reports/`, uses Playwright to open a browser window, and reads the form. It then generates an answer for every field — ready to copy and paste. You do not need to open the browser yourself.
 
 <Callout title="Note">
-  If Playwright is not available, career-ops falls back to WebFetch to read the form. See [Set up Playwright](./set-up-playwright.mdx) if you want to enable the full browser-based experience.
+  If Playwright is not available, career-ops falls back to WebFetch to read the form. See [Set up Playwright](/docs/introduction/guides/set-up-playwright) if you want to enable the full browser-based experience.
 </Callout>
 
 **If you run the command `/career-ops apply` without arguments**, the system prompts you to provide context manually:
@@ -107,7 +107,7 @@ Each answer is built from a specific part of your evaluation report:
 </div>
 
 <Callout title="Upload fields">
-  Use the file in `output/` generated when the report was created. If no PDF exists yet, run `/career-ops pdf` first, then return to the form. See [Generate a PDF](generate-a-pdf.md).
+  Use the file in `output/` generated when the report was created. If no PDF exists yet, run `/career-ops pdf` first, then return to the form. See the [pdf mode](/docs/reference/modes/pdf).
 </Callout>
 
 ## Submit the application

@@ -11,7 +11,7 @@ translatedFrom: /docs/introduction/guides/apply-for-a-job
 Esta guía explica cómo usar `/career-ops apply` para rellenar un formulario de candidatura con respuestas adaptadas a tu perfil, tus proof points y el puesto concreto al que te presentas.
 
 <Callout title="Antes de empezar">
-  Asegúrate de haber completado la guía [Escanear portales de empleo](./scan-job-portals.mdx). El comando `apply` depende de un informe de evaluación existente. Si no existe informe para el puesto, ejecuta primero el pipeline.
+  Asegúrate de haber completado la guía [Escanear portales de empleo](/docs/introduction/guides/scan-job-portals). El comando `apply` depende de un informe de evaluación existente. Si no existe informe para el puesto, ejecuta primero el pipeline.
 </Callout>
 
 ## Ejecuta el comando apply
@@ -50,7 +50,7 @@ Por ejemplo:
 career-ops localiza el informe correspondiente en `reports/`, usa Playwright para abrir una ventana del navegador y lee el formulario. Después genera una respuesta para cada campo — lista para copiar y pegar. No necesitas abrir el navegador tú mismo.
 
 <Callout title="Nota">
-  Si Playwright no está disponible, career-ops recurre a WebFetch para leer el formulario. Consulta [Configurar Playwright](./set-up-playwright.mdx) si quieres activar la experiencia completa basada en navegador.
+  Si Playwright no está disponible, career-ops recurre a WebFetch para leer el formulario. Consulta [Configurar Playwright](/docs/introduction/guides/set-up-playwright) si quieres activar la experiencia completa basada en navegador.
 </Callout>
 
 **Si ejecutas el comando `/career-ops apply` sin argumentos**, el sistema te pide que aportes el contexto manualmente:
@@ -110,7 +110,7 @@ Cada respuesta se construye a partir de una parte concreta de tu informe de eval
 </div>
 
 <Callout title="Campos de subida de archivos">
-  Usa el archivo de `output/` generado al crear el informe. Si todavía no existe ningún PDF, ejecuta primero `/career-ops pdf` y vuelve después al formulario. Consulta [Generar un PDF](generate-a-pdf.md).
+  Usa el archivo de `output/` generado al crear el informe. Si todavía no existe ningún PDF, ejecuta primero `/career-ops pdf` y vuelve después al formulario. Consulta [Generar un PDF](/docs/reference/modes/pdf).
 </Callout>
 
 ## Envía la candidatura

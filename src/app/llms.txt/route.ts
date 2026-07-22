@@ -1,4 +1,4 @@
-import { source, normalizeAgentMarkdown } from '@/lib/source';
+import { source, normalizeAgentMarkdown, getLLMText } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats } from '@/lib/stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
@@ -59,6 +59,7 @@ Details: https://career-ops.org/sustain
 
 ## Authority pages
 
+- https://career-ops.org/AGENTS.md — agent entry point: a thin pointer to the repo's canonical AGENTS.md plus this site's markdown surfaces (append .md to any /docs URL, or Accept: text/markdown)
 - https://career-ops.org/manifesto — The CareerOps Manifesto: canonical definition of the CareerOps practice, coined July 14, 2026, with community signatures
 - https://career-ops.org/about — author bio, press references, stack, entity links
 - https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
@@ -111,19 +112,45 @@ MIT — free forever, no paywalls, no account required.
 // the ES/FR blocks bloat the file with links whose .md twins don't exist yet.
 // Keep only the EN block and rewrite every /docs link to its absolute .md
 // mirror. (search-ops audit-md-calidad-2026-W30, leak #1 — CRITICAL.)
-function agentDocsIndex(): string {
+function fmtTokens(t: number): string {
+  return t >= 1000
+    ? `~${(t / 1000).toFixed(1).replace(/\.0$/, '')}k tokens`
+    : `~${t} tokens`;
+}
+
+async function agentDocsIndex(): Promise<string> {
   const raw = llms(source).index();
   const enBlock = raw.split(/^#\s+Docs\s*$/m)[1] ?? raw;
+
+  // Approximate token count per page (~4 chars/token on the .md we actually
+  // serve) so an agent can budget context before fetching. (search-ops
+  // audit-md-calidad addendum #6 — Osmani agentic-seo recommendation.)
+  const tokensByUrl = new Map<string, number>();
+  await Promise.all(
+    source.getPages('en').map(async (p) => {
+      const md = await getLLMText(p);
+      tokensByUrl.set(p.url, Math.round(md.length / 4));
+    }),
+  );
+
+  const withTokens = normalizeAgentMarkdown(enBlock).replace(
+    /\]\((https:\/\/career-ops\.org(\/docs[^)]*?))\.md\)/g,
+    (full, url, path) => {
+      const t = tokensByUrl.get(path);
+      return t ? `](${url}.md) (${fmtTokens(t)})` : full;
+    },
+  );
+
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens. You can also append \`.md\` to any docs URL, or request one with \`Accept: text/markdown\`.
-${normalizeAgentMarkdown(enBlock)}`;
+Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any docs URL, or request one with \`Accept: text/markdown\`.
+${withTokens}`;
 }
 
 export async function GET() {
   const stats = await getProjectStats();
   return new Response(
     buildPreamble(stats.stars, stats.discordMembers, stats.latestRelease) +
-      agentDocsIndex(),
+      (await agentDocsIndex()),
   );
 }
