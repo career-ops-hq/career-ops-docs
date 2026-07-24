@@ -9,13 +9,39 @@ import path from 'node:path';
 
 const REPO_ROOT = path.resolve(process.cwd());
 
+// In a SHALLOW clone (Vercel's default, when `git fetch --unshallow` fails),
+// `git log -1 -- <file>` does NOT return null for old files: the grafted
+// boundary commit appears to "create" every file that existed at that point,
+// so all unchanged files collapse to the boundary commit's single date — 84
+// URLs shared `2026-07-21T15:21:16Z` in prod. That's indistinguishable from
+// fabricated, and Google distrusts it. So: if the repo is shallow, no git date
+// is trustworthy → return null for everything and let callers omit lastmod.
+// Checked once per build. (2026-07-24 audit, sitemap HIGH.)
+let shallowState: boolean | null = null;
+function repoIsShallow(): boolean {
+  if (shallowState === null) {
+    try {
+      shallowState =
+        execSync('git rev-parse --is-shallow-repository', {
+          cwd: REPO_ROOT,
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'ignore'],
+        }).trim() === 'true';
+    } catch {
+      shallowState = false; // not a git runtime → treat as non-shallow
+    }
+  }
+  return shallowState;
+}
+
 /**
  * Real authored timestamp from git history, or null when unavailable
- * (shallow clone with no history for the file, or a non-git runtime).
+ * (shallow clone, no history for the file, or a non-git runtime).
  * Callers that must always have a value use {@link lastModFor}; callers
  * that prefer to omit a date rather than assert a fake one use this.
  */
 export function gitLastMod(relPath: string): Date | null {
+  if (repoIsShallow()) return null; // boundary-commit dates are not trustworthy
   try {
     const iso = execSync(`git log -1 --format=%cI -- "${relPath}"`, {
       cwd: REPO_ROOT,
