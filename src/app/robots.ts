@@ -34,11 +34,14 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        // Internal/asset endpoints, not human content. /llms.mdx/ (the
-        // agent-facing markdown mirror) is deliberately NOT disallowed: agents
-        // must be able to fetch it, and its X-Robots-Tag: noindex keeps the raw
-        // markdown out of the search index without blocking retrieval.
-        disallow: ['/api/', '/og/'],
+        // Only /api/ (POST-only endpoints) is blocked. /og/ is NOT disallowed:
+        // Disallow is the wrong tool for "fetchable but not indexed" — it also
+        // stops LinkedIn/Slack/Discord/X bots from fetching the preview cards
+        // of /docs and every /compare page, blanking their social shares. Those
+        // routes carry X-Robots-Tag: noindex (next.config) instead, keeping the
+        // OG images out of the index while letting share bots render them. Same
+        // pattern as the /llms.mdx/ markdown mirror.
+        disallow: ['/api/'],
       },
       ...aiCrawlers.map((userAgent) => ({ userAgent, allow: '/' })),
     ],

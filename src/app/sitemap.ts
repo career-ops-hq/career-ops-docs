@@ -1,30 +1,37 @@
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
-import { lastModFor } from '@/lib/git-date';
+import { gitLastMod } from '@/lib/git-date';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 export const revalidate = 3600;
 
 const SITE_URL = 'https://career-ops.org';
 
+// lastmod ONLY when git gives a real authored date. When git can't (a shallow
+// Vercel clone with no history for the file), OMIT lastmod rather than fall back
+// to the uniform checkout mtime — 84/116 URLs sharing one fabricated date made
+// Google distrust and ignore lastmod site-wide. Omitting is honest; Google then
+// uses its own crawl signal. (2026-07-24 audit, sitemap HIGH.)
+const gd = (relPath: string): Date | undefined => gitLastMod(relPath) ?? undefined;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/`,
-      lastModified: lastModFor('src/app/(home)/page.tsx'),
+      lastModified: gd('src/app/(home)/page.tsx'),
     },
     {
       url: `${SITE_URL}/about`,
-      lastModified: lastModFor('src/app/about/page.tsx'),
+      lastModified: gd('src/app/about/page.tsx'),
     },
     {
       url: `${SITE_URL}/methodology`,
-      lastModified: lastModFor('src/app/methodology/page.tsx'),
+      lastModified: gd('src/app/methodology/page.tsx'),
     },
     {
       url: `${SITE_URL}/manifesto`,
-      lastModified: lastModFor('src/app/manifesto/page.tsx'),
+      lastModified: gd('src/app/manifesto/page.tsx'),
       alternates: {
         languages: {
           en: `${SITE_URL}/manifesto`,
@@ -38,23 +45,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // page re-renders hourly from the GitHub Releases API); the file's
       // git date is the best build-time proxy available here.
       url: `${SITE_URL}/changelog`,
-      lastModified: lastModFor('src/app/changelog/page.tsx'),
+      lastModified: gd('src/app/changelog/page.tsx'),
     },
     {
       url: `${SITE_URL}/press`,
-      lastModified: lastModFor('src/app/press/page.tsx'),
+      lastModified: gd('src/app/press/page.tsx'),
     },
     {
       url: `${SITE_URL}/privacy`,
-      lastModified: lastModFor('src/app/privacy/page.tsx'),
+      lastModified: gd('src/app/privacy/page.tsx'),
     },
     {
       url: `${SITE_URL}/sustain`,
-      lastModified: lastModFor('src/app/sustain/page.tsx'),
+      lastModified: gd('src/app/sustain/page.tsx'),
     },
     {
       url: `${SITE_URL}/compare`,
-      lastModified: lastModFor('src/app/compare/page.tsx'),
+      lastModified: gd('src/app/compare/page.tsx'),
     },
   ];
 
@@ -66,14 +73,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/compare/${c.slug}`,
       lastModified: c.lastModified
         ? new Date(`${c.lastModified}T00:00:00Z`)
-        : lastModFor('src/lib/data/comparisons.json'),
+        : gd('src/lib/data/comparisons.json'),
     });
   }
 
   // /blog index + /blog/[slug] — auto-discovered from blogSource.
   entries.push({
     url: `${SITE_URL}/blog`,
-    lastModified: lastModFor('src/app/blog/page.tsx'),
+    lastModified: gd('src/app/blog/page.tsx'),
   });
   for (const post of blogSource.getPages()) {
     const data = post.data as { date?: string; lastModified?: string };
@@ -83,7 +90,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}${post.url}`,
       lastModified: lastMod
         ? new Date(`${lastMod}T00:00:00Z`)
-        : lastModFor(mdxRel),
+        : gd(mdxRel),
     });
   }
 
@@ -102,7 +109,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     entries.push({
       url: `${SITE_URL}${page.url}`,
-      lastModified: lastModFor(mdxRel),
+      lastModified: gd(mdxRel),
     });
   }
 
@@ -120,7 +127,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
   entries.push({
     url: `${SITE_URL}/fr`,
-    lastModified: lastModFor('src/app/fr/(home)/page.tsx'),
+    lastModified: gd('src/app/fr/(home)/page.tsx'),
     alternates: { languages: homeCluster },
   });
 
@@ -128,7 +135,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // home), so it is listed explicitly with its bidirectional hreflang pair.
   entries.push({
     url: `${SITE_URL}/es/manifesto`,
-    lastModified: lastModFor('src/app/es/manifesto/page.tsx'),
+    lastModified: gd('src/app/es/manifesto/page.tsx'),
     alternates: {
       languages: {
         en: `${SITE_URL}/manifesto`,
@@ -159,7 +166,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const mdxRel = `content/docs/${enPage.slugs.join('/')}.${loc}.mdx`;
       entries.push({
         url: `${SITE_URL}/${loc}${enPage.url}`,
-        lastModified: lastModFor(mdxRel),
+        lastModified: gd(mdxRel),
         alternates: { languages: cluster },
       });
     }

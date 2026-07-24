@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "git fetch --unshallow 2>/dev/null || true; npm run build",
+  "buildCommand": "git fetch --unshallow || true; npm run build",
   "installCommand": "npm install",
   "redirects": [
     {

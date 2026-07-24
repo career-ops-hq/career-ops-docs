@@ -231,7 +231,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
 
         {/* Demo container */}
         <div className="relative min-h-[520px] lg:min-h-[560px] rounded-2xl col-span-full overflow-hidden flex flex-col items-center justify-center gap-6 lg:gap-8 p-6 md:p-10">
-          <Image src="/buffalo-dither.png" loading="lazy" alt="" width={1628} height={1044} quality={60} sizes="(min-width: 1400px) 1376px, (min-width: 768px) 92vw, 100vw" className="absolute inset-0 size-full object-cover object-center -z-1" />
+          <Image src="/buffalo-dither.png" loading="lazy" alt="" width={1628} height={1044} quality={45} sizes="(min-width: 1400px) 1376px, (min-width: 768px) 92vw, 100vw" className="absolute inset-0 size-full object-cover object-center -z-1" />
           <div className="w-full max-w-[800px] p-2 bg-fd-card text-fd-card-foreground border rounded-2xl shadow-lg">
             <div className="flex flex-col sm:flex-row gap-2">
               <span className="text-brand-text text-center sm:content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 py-1 sm:py-0 rounded-xl text-sm self-start sm:self-auto">

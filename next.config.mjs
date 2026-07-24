@@ -66,6 +66,11 @@ const config = {
     // (~108KB). Content maxes at 1400px wide, so 2560 covers 2x DPR
     // with margin. (2026-06-30 audit, perf #10b.)
     deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920, 2560],
+    // Next 16 restricts `quality` to [75] by default and silently drops any
+    // other value (the request 404s), so the buffalo-dither hero's quality={45}
+    // was being served at 75 (200-278KB). Whitelist the qualities actually used.
+    // (2026-07-24 audit, perf HIGH.)
+    qualities: [45, 60, 75],
     remotePatterns: [
       { hostname: 'avatars.githubusercontent.com' },
     ],
@@ -91,6 +96,13 @@ const config = {
       {
         source: '/:path*',
         headers: securityHeaders,
+      },
+      {
+        // OG/Twitter card images: keep them fetchable by share bots (no robots
+        // Disallow) but out of the search index, so social previews render on
+        // /docs and every /compare page. (2026-07-24 audit, technical HIGH.)
+        source: '/og/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
       },
     ];
   },
