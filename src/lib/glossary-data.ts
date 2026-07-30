@@ -13,9 +13,9 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
       'The software companies use to receive, store, and filter job applications — Greenhouse, Ashby, and Lever are common examples. career-ops reads their public job APIs to discover openings and can pre-fill their application forms, but never auto-submits.',
   },
   {
-    term: 'A–F score',
+    term: 'Global score (1.0–5.0)',
     definition:
-      'The grade career-ops assigns a job listing after evaluating it against your CV and profile across multiple dimensions. An A means apply now with high conviction; an F means the listing fails your own criteria. The scoring rubric is public on the methodology page.',
+      "The LLM's holistic judgement of a job listing across five dimensions (match, north-star alignment, comp, cultural signals, red flags), producing a score from 1.0 to 5.0. At 4.5+ the agent recommends applying immediately; below 4.0 it recommends against applying. There is no closed-form weighting formula: the score is the LLM's judgement given the rubric, which is public on the methodology page.",
   },
   {
     term: 'Data Contract',
@@ -45,7 +45,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Pipeline',
     definition:
-      'The end-to-end career-ops workflow: scan portals → evaluate listings A–F → tailor CV → apply → track → prepare interviews. Each stage is a mode you can run independently or as a batch.',
+      'The end-to-end career-ops workflow: scan portals → evaluate listings (1.0 to 5.0) → tailor CV → apply → track → prepare interviews. Each stage is a mode you can run independently or as a batch.',
   },
   {
     term: 'Zero-token scan',
