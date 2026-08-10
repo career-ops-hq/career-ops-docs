@@ -43,6 +43,15 @@ const CONTENT_SIGNAL = 'search=yes, ai-input=yes, ai-train=yes';
 // Written by hand rather than via MetadataRoute.Robots because Next's
 // metadata helper cannot emit non-standard directives, and Content-Signal is
 // one. Same output as before plus the signal line.
+// Emitted at the top of the served file. venture-ops condition, 2026-08-10:
+// `ai-train=yes` is right for the public documentation of an open-source
+// project and would be wrong on any surface that serves data about people.
+// The scope has to be legible in the file itself so nobody copies it to the
+// wrong site a year from now.
+const SCOPE_NOTE = `# Content-Signal below applies to this site: the public documentation of an
+# open-source project. It does NOT carry over to any surface serving candidate
+# data. Those require the opposite policy.`;
+
 function buildRobots(): string {
   const blocks: string[] = [
     // Only /api/ (POST-only endpoints) is blocked. /og/ is NOT disallowed:
@@ -57,7 +66,7 @@ function buildRobots(): string {
     ),
   ];
 
-  return `${blocks.join('\n\n')}\n\nHost: ${SITE_URL}\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+  return `${SCOPE_NOTE}\n\n${blocks.join('\n\n')}\n\nHost: ${SITE_URL}\nSitemap: ${SITE_URL}/sitemap.xml\n`;
 }
 
 export function GET() {
