@@ -63,7 +63,7 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/manifesto — The CareerOps Manifesto: canonical definition of the CareerOps practice, coined July 14, 2026, with community signatures
 - https://career-ops.org/about — author bio, press references, stack, entity links
 - https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
-- https://career-ops.org/methodology — scoring rubric, five dimensions plus a holistic global score, canonical evaluation prompt (Block A–G), edge cases, and explicit anti-features
+- https://career-ops.org/methodology — scoring rubric, five dimensions plus a holistic global score, canonical evaluation prompt (Block A–H), edge cases, and explicit anti-features
 - https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to sponsor the maintainer
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
@@ -88,7 +88,7 @@ ${comparisonsData.comparisons
 ## Source of truth (core repo)
 
 - https://github.com/santifer/career-ops/blob/main/modes/_shared.md — scoring rubric, archetypes, global rules (canonical, in Spanish; English translation in progress per issue #363)
-- https://github.com/santifer/career-ops/blob/main/modes/oferta.md — Block A–G evaluation prompt (canonical, in Spanish)
+- https://github.com/santifer/career-ops/blob/main/modes/oferta.md — Block A–H evaluation prompt for a single listing (canonical, in Spanish)
 - https://github.com/santifer/career-ops/blob/main/AGENTS.md — agent-agnostic instruction file (canonical post #572)
 - https://github.com/santifer/career-ops/blob/main/DATA_CONTRACT.md — system / user file boundary
 

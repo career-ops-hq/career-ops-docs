@@ -443,9 +443,9 @@ const DEFINED_TERMS = [
       'An open-source AI-powered job search command center. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama Aparicio in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
   },
   {
-    name: 'Block A-G evaluation',
+    name: 'Block A-H evaluation',
     description:
-      'The canonical career-ops evaluation prompt structure: a seven-section output (Block A through G) covering Role Summary, CV Match, Level Strategy, Comp & Demand, Personalisation Plan, Interview Prep, and Posting Legitimacy. Defined verbatim in modes/oferta.md (canonical Spanish; English translation in flight per issue #363).',
+      'The canonical career-ops evaluation prompt structure: an eight-section output (Block A through H) covering Role Summary, CV Match, Level Strategy, Comp & Demand, Personalisation Plan, Interview Prep, and Posting Legitimacy. Defined verbatim in modes/oferta.md (canonical Spanish; English translation in flight per issue #363).',
   },
 ];
 
