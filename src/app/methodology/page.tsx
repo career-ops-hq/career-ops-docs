@@ -178,7 +178,7 @@ export default function MethodologyPage() {
                     <Term>global</Term>
                   </Td>
                   <Td>Aggregate fit (the score that drives the apply / don&rsquo;t recommendation)</Td>
-                  <Td>LLM-implicit weighting given the rubric and the five sub-dimensions above</Td>
+                  <Td>Holistic judgment integrating the five dimensions above (no arithmetic formula)</Td>
                 </tr>
               </tbody>
             </Table>

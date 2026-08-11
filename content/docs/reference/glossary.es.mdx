@@ -1,9 +1,9 @@
 ---
 title: Glosario
-description: El vocabulario de una búsqueda de empleo con IA, definido — ATS, puntuación A–F, Data Contract, spray-and-pray, liveness check, tailoring, zero-token scan, historias STAR+R y todos los términos que usa career-ops.
+description: El vocabulario de una búsqueda de empleo con IA, definido — ATS, la puntuación global 1.0–5.0, Data Contract, spray-and-pray, liveness check, tailoring, zero-token scan, historias STAR+R y todos los términos que usa career-ops.
 seoTitle: "Glosario de career-ops — términos de la búsqueda de empleo con IA, definidos"
 icon: BookOpen
-translationHash: 908b3fb3fc8e8f13
+translationHash: 3d0e7dc65eb36dbf
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -17,9 +17,9 @@ Todos los términos que usa career-ops, definidos en un solo lugar. Cada términ
 
 El software que usan las empresas para recibir, almacenar y filtrar candidaturas — [Greenhouse](/es/docs/reference/portals/greenhouse), [Ashby](/es/docs/reference/portals/ashby) y [Lever](/es/docs/reference/portals/lever) son ejemplos habituales. career-ops lee sus APIs públicas de empleo para descubrir vacantes y puede prerrellenar sus formularios de solicitud, pero nunca envía nada automáticamente.
 
-## Puntuación A–F
+## Puntuación global (1.0–5.0)
 
-La nota que career-ops asigna a una oferta tras evaluarla frente a tu CV y tu perfil en múltiples dimensiones. Una **A** significa «presenta tu candidatura ya, con plena convicción»; una **F** significa que la oferta no supera tus propios criterios. La rúbrica de puntuación es pública en la [página de metodología](https://career-ops.org/methodology).
+El juicio holístico del LLM sobre una oferta a partir de cinco dimensiones (encaje con el CV, alineación con tu north star, compensación, señales culturales y red flags), que produce una puntuación de 1.0 a 5.0. Con 4.5 o más el agente recomienda presentar la candidatura de inmediato; por debajo de 4.0 recomienda no hacerlo. No hay fórmula cerrada de ponderación: la puntuación es el juicio del LLM guiado por la rúbrica, que es pública en la [página de metodología](https://career-ops.org/methodology).
 
 ## Data Contract
 
@@ -43,7 +43,7 @@ Un flujo de trabajo enfocado, definido como prompt, que career-ops distribuye co
 
 ## Pipeline
 
-El flujo de trabajo de career-ops de principio a fin: escanear portales → evaluar ofertas A–F → adaptar el CV → solicitar → hacer seguimiento → preparar entrevistas. Cada etapa es un modo que puedes ejecutar por separado o en batch.
+El flujo de trabajo de career-ops de principio a fin: escanear portales → evaluar ofertas (1.0 a 5.0) → adaptar el CV → solicitar → hacer seguimiento → preparar entrevistas. Cada etapa es un modo que puedes ejecutar por separado o en batch.
 
 ## Zero-token scan
 

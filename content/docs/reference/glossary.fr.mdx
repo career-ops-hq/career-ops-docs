@@ -1,9 +1,9 @@
 ---
 title: Glossaire
-description: Le vocabulaire de la recherche d'emploi assistée par IA, défini — ATS, score A–F, Data Contract, spray-and-pray, liveness check, tailoring, scan zéro token, histoires STAR+R, et chaque terme utilisé par career-ops.
+description: Le vocabulaire de la recherche d'emploi assistée par IA, défini — ATS, le score global 1.0–5.0, Data Contract, spray-and-pray, liveness check, tailoring, scan zéro token, histoires STAR+R, et chaque terme utilisé par career-ops.
 seoTitle: "Glossaire career-ops — les termes de la recherche d'emploi assistée par IA, définis"
 icon: BookOpen
-translationHash: 908b3fb3fc8e8f13
+translationHash: 3d0e7dc65eb36dbf
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -17,9 +17,9 @@ Chaque terme utilisé par career-ops, défini en un seul endroit. Les termes ren
 
 Le logiciel que les entreprises utilisent pour recevoir, stocker et filtrer les candidatures — [Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby) et [Lever](/docs/reference/portals/lever) en sont des exemples courants. career-ops lit leurs API publiques d'offres pour découvrir les postes ouverts et peut pré-remplir leurs formulaires de candidature, mais ne soumet jamais rien automatiquement.
 
-## Score A–F
+## Score global (1.0–5.0)
 
-La note que career-ops attribue à une offre d'emploi après l'avoir évaluée, sur plusieurs dimensions, par rapport à votre CV et à votre profil. Un **A** signifie « postulez maintenant, avec une forte conviction » ; un **F** signifie que l'offre échoue face à vos propres critères. La grille de notation est publique sur la [page méthodologie](https://career-ops.org/methodology).
+Le jugement holistique du LLM sur une offre d'emploi, selon cinq dimensions (correspondance avec le CV, alignement avec votre north star, rémunération, signaux culturels et red flags), qui produit un score de 1.0 à 5.0. À partir de 4.5, l'agent recommande de postuler immédiatement ; en dessous de 4.0, il recommande de ne pas le faire. Il n'existe pas de formule de pondération fermée : le score est le jugement du LLM guidé par la grille, publique sur la [page méthodologie](https://career-ops.org/methodology).
 
 ## Data Contract
 
@@ -43,7 +43,7 @@ Un workflow ciblé, défini par un prompt, que career-ops livre sous forme de si
 
 ## Pipeline
 
-Le workflow career-ops de bout en bout : scan des portails → évaluation des offres de A à F → CV sur mesure → candidature → suivi → préparation des entretiens. Chaque étape est un mode que vous pouvez exécuter indépendamment ou par lot.
+Le workflow career-ops de bout en bout : scan des portails → évaluation des offres (1.0 à 5.0) → CV sur mesure → candidature → suivi → préparation des entretiens. Chaque étape est un mode que vous pouvez exécuter indépendamment ou par lot.
 
 ## Scan zéro token
 
