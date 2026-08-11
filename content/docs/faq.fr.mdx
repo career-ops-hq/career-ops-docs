@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: 4e601743197dd0b8
+translationHash: 0dc5bb97795f8530
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -23,6 +23,20 @@ career-ops n'a ni formule payante, ni paliers, ni période d'essai — il est 10
 ## Ai-je besoin d'un abonnement Claude pour utiliser career-ops ?
 
 Non. career-ops est agnostique en matière d'IA — Claude Code est un moteur parmi d'autres, pas une exigence. Vous pouvez exécuter l'ensemble du pipeline gratuitement avec OpenCode et un fournisseur gratuit, un modèle local via Ollama, ou le runner OpenRouter intégré (`npm run or`). Si vous avez commencé avec une formule payante et épuisé vos tokens en pleine recherche, passer à un moteur gratuit prend quelques minutes et laisse vos données intactes — voir [Configurer un moteur d'IA gratuit](/docs/free-ai-engine).
+
+## Je paie Claude Pro ou Max. Pourquoi career-ops consomme-t-il mes crédits API ?
+
+Lancez `node doctor.mjs` depuis le dossier `career-ops`. Il vous dit en une ligne lequel des deux cette session utilise, avant que vous ne dépensiez quoi que ce soit d'autre.
+
+La règle n'est pas la nôtre : **c'est votre CLI qui décide, et `ANTHROPIC_API_KEY` l'emporte.** Si cette variable est définie dans votre environnement, Claude Code facture au token même si vous payez Pro ou Max. career-ops ne choisit pas votre source de facturation ; il la détecte et vous avertit. Lorsque la clé est présente, le doctor affiche :
+
+> ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max.
+
+Pour revenir à votre abonnement, supprimez la ligne `export ANTHROPIC_API_KEY=...` de `~/.zshrc`, `~/.bashrc`, `~/.profile` ou du `.env` du projet, redémarrez votre terminal, puis lancez `/login`. Les exécutions par lot font exception : les workers `claude -p` n'utilisent pas la connexion interactive, il leur faut donc `claude setup-token` exporté sous `CLAUDE_CODE_OAUTH_TOKEN`.
+
+Si vous vouliez utiliser des crédits API, tout va bien et il n'y a rien à faire.
+
+Ceci concerne les moteurs Anthropic. Les autres CLI (Codex, OpenCode, Copilot, Gemini, Qwen) définissent chacun leur propre règle abonnement-contre-clé, et career-ops ne la vérifie pas : consultez la documentation de votre CLI.
 
 ## Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?
 
