@@ -3,7 +3,7 @@ title: Démarrage rapide
 description: "Démarrez avec career-ops en cinq minutes : installez le système open source de recherche d'emploi par IA, ouvrez votre CLI d'IA et évaluez votre première offre. Aucune connaissance en code requise."
 seoTitle: "career-ops Démarrage rapide — installez et lancez votre premier scan d'offres par IA en quelques minutes"
 icon: Rocket
-translationHash: c287fd083afe53b9
+translationHash: d61257fcec228488
 localized: true
 translatedFrom: /docs
 ---
@@ -122,6 +122,14 @@ Depuis l'intérieur du dossier `career-ops`, lancez le CLI de codage IA que vous
 
 <Callout title="Une question sans rapport que vous pourriez voir">
   Certains CLI (Claude Code, par exemple) vous demandent si vous faites confiance aux fichiers d'un nouveau dossier la première fois que vous l'ouvrez. Cette question vient du CLI lui-même, pas de career-ops — répondez oui pour continuer. L'onboarding de career-ops démarre juste après.
+</Callout>
+
+<Callout type="warn" title="Vous payez Claude Pro ou Max ? Vérifiez ce que cette session facture">
+  Lancez `node doctor.mjs` depuis le dossier `career-ops` avant votre première évaluation. Il indique votre source de facturation en une ligne.
+
+  Si `ANTHROPIC_API_KEY` est définie dans votre environnement, **votre CLI l'utilise et facture au token, même si vous payez Pro ou Max.** Cette précédence est celle de Claude Code, pas celle de career-ops : le doctor se contente de la détecter et de vous le dire. Pour utiliser votre abonnement, supprimez la ligne `export ANTHROPIC_API_KEY=...` de `~/.zshrc`, `~/.bashrc`, `~/.profile` ou du `.env` du projet, redémarrez votre terminal et lancez `/login`. Si vous vouliez utiliser des crédits API, tout va bien.
+
+  Les autres CLI définissent chacun leur propre règle abonnement-contre-clé, que career-ops ne vérifie pas. La réponse complète est dans [la FAQ](/fr/docs/faq).
 </Callout>
 
 ## Étape 3 : lancer votre première évaluation
