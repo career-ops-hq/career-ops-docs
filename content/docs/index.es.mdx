@@ -3,7 +3,7 @@ title: Guía rápida
 description: "Empieza con career-ops en cinco minutos: instala el sistema open source de búsqueda de empleo con IA, abre tu CLI de IA y evalúa tu primera oferta. Sin necesidad de programar."
 seoTitle: "career-ops Guía rápida — instala y ejecuta tu primer análisis de ofertas con IA en minutos"
 icon: Rocket
-translationHash: c287fd083afe53b9
+translationHash: d61257fcec228488
 localized: true
 translatedFrom: /docs
 ---
@@ -122,6 +122,14 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
 
 <Callout title="Un aviso no relacionado que puede que veas">
   Algunos CLIs (Claude Code, por ejemplo) preguntan si confías en los archivos de una carpeta nueva la primera vez que la abres. Ese aviso viene del propio CLI, no de career-ops — di que sí para continuar. El onboarding de career-ops empieza justo después.
+</Callout>
+
+<Callout type="warn" title="¿Pagas Claude Pro o Max? Comprueba qué está facturando esta sesión">
+  Ejecuta `node doctor.mjs` desde la carpeta `career-ops` antes de tu primera evaluación. Te informa de tu fuente de facturación en una línea.
+
+  Si `ANTHROPIC_API_KEY` está en tu entorno, **tu CLI la usa y cobra por token, aunque estés pagando Pro o Max.** Esa precedencia es de Claude Code, no de career-ops: el doctor solo la detecta y te lo dice. Para usar tu suscripción, quita la línea `export ANTHROPIC_API_KEY=...` de `~/.zshrc`, `~/.bashrc`, `~/.profile` o del `.env` del proyecto, reinicia la terminal y ejecuta `/login`. Si querías usar créditos de la API, no pasa nada.
+
+  Los demás CLIs fijan cada uno su propia regla de suscripción frente a clave, que career-ops no comprueba. Tienes la respuesta completa en [las preguntas frecuentes](/es/docs/faq).
 </Callout>
 
 ## Paso 3: Ejecuta tu primera evaluación
