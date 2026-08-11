@@ -48,7 +48,7 @@ export function proxy(req: NextRequest): NextResponse {
   // Leave it for the routing layer (see the file header for why).
   if (pathname.endsWith('.md')) return NextResponse.next();
 
-  // `Accept: text/markdown` on the human URL → the same markdown mirror.
+  // `Accept: text/markdown` on a docs URL → the markdown mirror.
   if (prefersMarkdown(req.headers.get('accept'))) {
     const slug = pathname === '/docs' ? '' : pathname.slice(DOCS_PREFIX.length);
     return mirrorRewrite(req, slug);
