@@ -83,6 +83,21 @@ const config = {
       // The mirror route sets Content-Type: text/markdown + X-Robots-Tag:
       // noindex. Agent-facing markdown — search-ops audit, agent layer.
       beforeFiles: [
+        // Homepage content negotiation. NOT done in src/proxy.ts: verified
+        // 2026-08-10 that the proxy does not run for `/` at all (a debug
+        // header set unconditionally on the root never appeared), the same
+        // class of Next 16 surprise as the `.md` interception. The routing
+        // layer handles it deterministically instead.
+        //
+        // `has` fires when Accept contains text/markdown; `missing` keeps it
+        // from firing when the client also accepts HTML, so browsers and
+        // Next's own RSC requests are never touched.
+        {
+          source: '/',
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
+          destination: '/llms.mdx/home/content.md',
+        },
         { source: '/docs.md', destination: '/llms.mdx/docs/content.md' },
         {
           source: '/docs/:slug(.*).md',
@@ -121,6 +136,47 @@ const config = {
         headers: [
           { key: 'X-Robots-Tag', value: 'noindex' },
           { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
+        ],
+      },
+      {
+        // RFC 8288 discovery, on the URLs an agent is most likely to hit
+        // first. These advertise the agent-facing layer at the HTTP level, so
+        // a client that only issues HEAD finds llms.txt and the markdown
+        // alternate without parsing HTML. Vary: Accept is REQUIRED on every
+        // content-negotiated route: the same URL returns HTML or markdown
+        // depending on the request, so a cache that does not key on Accept can
+        // serve markdown to a browser or HTML to an agent.
+        // (search-ops verdict, 2026-08-10.)
+        source: '/',
+        headers: [
+          {
+            key: 'Link',
+            value:
+              '</llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt", </llms-full.txt>; rel="alternate"; type="text/plain"; title="llms-full.txt", </>; rel="alternate"; type="text/markdown"',
+          },
+          { key: 'Vary', value: 'Accept' },
+        ],
+      },
+      {
+        source: '/docs/:path*',
+        headers: [
+          {
+            key: 'Link',
+            value:
+              '</llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"',
+          },
+          { key: 'Vary', value: 'Accept' },
+        ],
+      },
+      {
+        source: '/docs',
+        headers: [
+          {
+            key: 'Link',
+            value:
+              '</llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"',
+          },
+          { key: 'Vary', value: 'Accept' },
         ],
       },
     ];
