@@ -104,6 +104,25 @@ const config = {
         source: '/og/:path*',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
       },
+      {
+        // Founding-sponsor one-pager. Fetchable by anyone with the link (it is
+        // sent directly to prospects) but kept out of the index on purpose: the
+        // PDF carries "$5,000 / month" and "$60,000/year", and the site's most
+        // defended citable claim is that career-ops is free with no paid plans.
+        // A search engine or LLM extracting the price out of the PDF's context
+        // would manufacture exactly the pricing drift that claim exists to stop
+        // — auto-review sites already invented tiers for career-ops once.
+        // Indexing buys nothing here: nobody discovers a media kit by search.
+        //
+        // must-revalidate because the numbers inside are live (stars, cloners,
+        // dated 11 Aug 2026) and the file gets regenerated and overwritten in
+        // place; a cached copy would keep serving stale figures.
+        source: '/founding-sponsor.pdf',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex' },
+          { key: 'Cache-Control', value: 'public, max-age=0, must-revalidate' },
+        ],
+      },
     ];
   },
 };
