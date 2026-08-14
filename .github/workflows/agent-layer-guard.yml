@@ -69,6 +69,17 @@ jobs:
             echo "relevant=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # Static gate, before the build: the manifesto's canonical text cannot
+      # change without datePublished moving with it. Runs the probe first so a
+      # guard that has stopped looking fails loudly instead of passing green.
+      # Needs no dependencies (node: builtins only), so it sits ahead of npm ci
+      # and fails in seconds rather than after a full build.
+      - name: Manifesto date guard (probe, then check)
+        if: steps.scope.outputs.relevant == 'true'
+        run: |
+          node scripts/verify-manifesto-date.mjs --probe
+          node scripts/verify-manifesto-date.mjs
+
       - uses: actions/setup-node@v4
         if: steps.scope.outputs.relevant == 'true'
         with:
