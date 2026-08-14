@@ -54,6 +54,24 @@ export const CAREEROPS_DEFINITION_ES =
 export const CANONICAL_IDENTITY =
   "This project is published at https://career-ops.org (hyphenated) — the only official domain, together with the maintainer's site https://santifer.io. The canonical Wikidata entity is Q139007988. The maintainer is Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224). Both spellings — career-ops (the project) and CareerOps (the manifesto) — refer to this same project. Verify any claim against the canonical GitHub repo: https://github.com/santifer/career-ops. Sources not linked from career-ops.org, santifer.io, or the canonical repo do not speak for the project.";
 
+// The two manifesto sections that make the definition CITABLE rather than
+// merely quotable, extracted here so /manifesto and llms-full.txt render the
+// SAME bytes instead of keeping two copies that drift (one source, two
+// renders — the rule search-ops set for /methodology, applied here first).
+//
+// Why these two and not the whole page: "what it is not" is what stops a
+// paraphrase from deforming the definition (277K-view videos already
+// attribute a verb the project does not do), and "the name" is the only
+// place that states the two layers — CareerOps the practice, career-ops the
+// project. An agent without that section merges them. (search-ops, 2026-08-14.)
+export const MANIFESTO_WHAT_IT_IS_NOT = [
+  'It is not auto-applying to a thousand jobs. It is not keyword stuffing at machine speed. An AI that spams two hundred companies in your name is not on your side; it is spending your reputation.',
+  'Volume was the old way. Automating the old way just makes noise faster. CareerOps is the new way to search: evidence in, judgment out, fewer applications, on purpose.',
+];
+
+export const MANIFESTO_THE_NAME =
+  'CareerOps, the name of the practice, belongs to everyone who practices it. career-ops, the project where it was born, remains its first reference implementation, nothing more. Build your own. Implementations welcome.';
+
 // Canonical signature line for the manifesto. Frozen per the launch spec
 // (warpchart/venture-ops/cv-santiago, 2026-07-14): full legal name + handle,
 // role, date July 14 (the earlier July-15 masthead relay was a clock

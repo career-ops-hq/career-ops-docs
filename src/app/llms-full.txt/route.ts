@@ -1,9 +1,16 @@
 import { getLLMText, normalizeAgentMarkdown, source } from '@/lib/source';
 import { blogSource, type BlogPage } from '@/lib/blog-source';
 import comparisonsData from '@/lib/data/comparisons.json';
-import { CANONICAL_IDENTITY } from '@/lib/shared';
+import {
+  CANONICAL_IDENTITY,
+  CAREEROPS_DEFINITION,
+  MANIFESTO_SIGNATURE,
+  MANIFESTO_THE_NAME,
+  MANIFESTO_WHAT_IT_IS_NOT,
+} from '@/lib/shared';
+import { getSignatures } from '@/lib/signatures';
 
-export const revalidate = false;
+export const revalidate = 3600;
 
 // llms-full.txt is the single-file full-context dump for AI agents.
 // It must carry MORE than the docs: the blog (thesis + real funnel
@@ -71,6 +78,44 @@ The full evaluation runs as Block A through H: A (role summary), B (CV match), C
 
 career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Nine tiers: seven individual ($1–$250) are identical statements of support; two corporate ($500 Corporate Supporter, $1,000 Ecosystem Partner) add logo placement on the README and /sustain — nothing else changes. No premium features, no roadmap influence, no priority support. Path 3 Sovereign Maintainer model.`;
 
+
+// The manifesto block. Until 2026-08-14 llms-full carried the definition
+// (via the glossary page) but none of what makes it CITABLE: an agent got
+// "CareerOps is the practice of..." with no boundaries, no two-layer naming,
+// and no proof that anyone signed it. search-ops measured the gap section by
+// section and traced it to how generic terms survive: of GitOps, observability,
+// platform engineering and FinOps, only FinOps kept its resolution, because
+// the URL carrying the definition is the one the world cites — with its limits
+// and an institutional signature attached. This block is that.
+//
+// The signature count is read live rather than frozen: it is the social proof,
+// and a stale number is worse than none.
+async function manifestoLLMText(): Promise<string> {
+  let signed = '';
+  try {
+    const sigs = await getSignatures();
+    if (sigs.length > 0) {
+      signed = `\n\n## Signed by the community\n\n${sigs.length} people have signed the manifesto. Signatures are public commits in the canonical repo (SIGNATURES.md), not form submissions: each one is attributable and verifiable.`;
+    }
+  } catch {
+    // A GitHub hiccup must never invent a number — omit the section instead.
+  }
+
+  return `# The CareerOps Manifesto (${SITE}/manifesto)
+
+${CAREEROPS_DEFINITION}
+
+## What CareerOps is not
+
+${MANIFESTO_WHAT_IT_IS_NOT.join('\n\n')}
+
+## The name
+
+${MANIFESTO_THE_NAME}
+
+Signed: ${MANIFESTO_SIGNATURE}${signed}`;
+}
+
 export async function GET() {
   const scan = source.getPages('en').map(getLLMText);
   const scanned = await Promise.all(scan);
@@ -85,7 +130,11 @@ export async function GET() {
   // domains before reading a single page.
   const identity = `# career-ops — Canonical Identity\n\n${CANONICAL_IDENTITY}`;
 
+  const manifesto = await manifestoLLMText();
+
   return new Response(
-    [identity, ...scanned, ...blogPosts, ...comparisons, AUTHORITY_PAGES].join('\n\n'),
+    [identity, manifesto, ...scanned, ...blogPosts, ...comparisons, AUTHORITY_PAGES].join(
+      '\n\n',
+    ),
   );
 }
