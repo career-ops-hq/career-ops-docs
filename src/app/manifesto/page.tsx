@@ -3,7 +3,12 @@ import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { manifestoSchema } from '@/lib/schema';
 import { hreflangManifesto } from '@/lib/i18n-map';
-import { CAREEROPS_DEFINITION, MANIFESTO_SIGNATURE } from '@/lib/shared';
+import {
+  CAREEROPS_DEFINITION,
+  MANIFESTO_SIGNATURE,
+  MANIFESTO_THE_NAME,
+  MANIFESTO_WHAT_IT_IS_NOT,
+} from '@/lib/shared';
 import {
   getLedgerLastSignedAt,
   getSignatures,
@@ -273,28 +278,15 @@ export default async function ManifestoPage() {
             What CareerOps is not
           </h2>
 
-          <p>
-            It is not auto-applying to a thousand jobs. It is not keyword
-            stuffing at machine speed. An AI that spams two hundred companies
-            in your name is not on your side; it is spending your reputation.
-          </p>
-
-          <p>
-            Volume was the old way. Automating the old way just makes noise
-            faster. CareerOps is the new way to search: evidence in, judgment
-            out, fewer applications, on purpose.
-          </p>
+          {MANIFESTO_WHAT_IT_IS_NOT.map((para) => (
+            <p key={para.slice(0, 24)}>{para}</p>
+          ))}
 
           <h2 className="text-fd-foreground text-xl font-medium tracking-tight pt-4">
             The name
           </h2>
 
-          <p>
-            CareerOps, the name of the practice, belongs to everyone who
-            practices it. career-ops, the project where it was born, remains
-            its first reference implementation, nothing more. Build your own.
-            Implementations welcome.
-          </p>
+          <p>{MANIFESTO_THE_NAME}</p>
 
           <p className="italic text-fd-muted-foreground pt-2">
             To sign, add your name. Your signature becomes a commit. For

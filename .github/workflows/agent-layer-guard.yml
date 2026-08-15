@@ -37,6 +37,13 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Static gate, before the build: the manifesto's canonical text cannot
+      # change without datePublished moving with it. Runs the probe first so a
+      # guard that has stopped looking fails loudly instead of passing green.
+      - name: Manifesto date guard (probe, then check)
+        run: |
+          node scripts/verify-manifesto-date.mjs --probe
+          node scripts/verify-manifesto-date.mjs
       - run: npm run build
       - name: Boot server, run the guard (gate) + agentic-seo (informational)
         run: |

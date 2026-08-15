@@ -40,6 +40,19 @@ const WIKIDATA_PERSON_IDENTIFIER = {
   url: 'https://www.wikidata.org/wiki/Q138710224',
 };
 
+// External identity of the software entity: canonical repo + Wikidata.
+// Carried by EVERY node that represents the software (WebSite,
+// SoftwareSourceCode, SoftwareApplication) so the graph has no node that
+// exists only inside our own site. SoftwareApplication was the one node
+// missing it until 2026-08-14 — the others already agreed, which made it an
+// internal inconsistency rather than a gap. (search-ops graph audit.)
+const MANIFESTO_TERM_SET_ID = 'https://career-ops.org/manifesto/#termset';
+
+const SOFTWARE_SAMEAS = [
+  'https://github.com/santifer/career-ops',
+  'https://www.wikidata.org/wiki/Q139007988',
+];
+
 // Organization sameAs — surfaces the brand owns across the web. Used by
 // Knowledge Graph + LLMs to verify entity provenance independently of
 // any single domain. Critical that GitHub repo + Wikidata Q-ID + Discord
@@ -243,10 +256,7 @@ export async function siteSchema() {
         inLanguage: 'en',
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
-        sameAs: [
-          'https://github.com/santifer/career-ops',
-          'https://www.wikidata.org/wiki/Q139007988',
-        ],
+        sameAs: SOFTWARE_SAMEAS,
         potentialAction: {
           '@type': 'SearchAction',
           target: {
@@ -300,10 +310,7 @@ export async function siteSchema() {
         publisher: { '@id': ORGANIZATION_ID },
         discussionUrl: 'https://discord.gg/8pRpHETxa4',
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
-        sameAs: [
-          'https://github.com/santifer/career-ops',
-          'https://www.wikidata.org/wiki/Q139007988',
-        ],
+        sameAs: SOFTWARE_SAMEAS,
         subjectOf: SOFTWARE_SUBJECT_OF,
         // `offers` deliberately omitted on SoftwareSourceCode — schema.org
         // allows it but Google Search Console occasionally flags it as
@@ -353,6 +360,7 @@ export async function siteSchema() {
         publisher: { '@id': ORGANIZATION_ID },
         license: 'https://opensource.org/licenses/MIT',
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
+        sameAs: SOFTWARE_SAMEAS,
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -625,6 +633,25 @@ export function manifestoSchema() {
         sameAs: ['https://www.wikidata.org/wiki/Q138710224'],
         identifier: WIKIDATA_PERSON_IDENTIFIER,
       },
+      // The term is declared as part of a NAMED, DATED set rather than
+      // floating on its own. Of the generic practice-terms that went
+      // mainstream (GitOps, observability, platform engineering, FinOps),
+      // only FinOps kept its resolution, and the mechanism was that the
+      // definition lives inside a citable framework with a version — not on
+      // a page that can silently change under whoever cited it. This turns
+      // "a page that defines something" into "the canonical definition, in
+      // its published version". (search-ops graph audit, 2026-08-14.)
+      {
+        '@type': 'DefinedTermSet',
+        '@id': MANIFESTO_TERM_SET_ID,
+        name: 'The CareerOps Manifesto',
+        url: 'https://career-ops.org/manifesto',
+        // The publication date is the version: the manifesto is amended by
+        // publishing, not by bumping a number nobody would look up.
+        datePublished: '2026-07-14',
+        author: { '@id': PERSON_ID },
+        hasDefinedTerm: { '@id': 'https://career-ops.org/manifesto/#careerops' },
+      },
       {
         '@type': 'DefinedTerm',
         '@id': 'https://career-ops.org/manifesto/#careerops',
@@ -632,6 +659,7 @@ export function manifestoSchema() {
         description: `${CAREEROPS_DEFINITION} The reference implementation of the practice is career-ops, the open-source AI job-search command center (Wikidata Q139007988).`,
         url: 'https://career-ops.org/manifesto',
         termCode: 'careerops',
+        inDefinedTermSet: { '@id': MANIFESTO_TERM_SET_ID },
         creator: { '@id': PERSON_ID },
       },
       {
