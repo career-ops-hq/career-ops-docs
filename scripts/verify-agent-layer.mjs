@@ -64,9 +64,15 @@ async function main() {
       fail('/changelog.md missing X-Robots-Tag: noindex');
     if (!/^## career-ops v/m.test(body))
       fail('/changelog.md release headings lost their subject (want "## career-ops vX.Y.Z")');
+    // Authority pages list the CANONICAL HTML url (an assistant citing a
+    // source shows that url to a human, who should not land on raw markdown);
+    // the twin rides along inside the same entry. /AGENTS.md is the one .md
+    // entry there, legitimately — it has no HTML form. (search-ops, PR #34.)
     const { body: index } = await get('/llms.txt');
+    if (!/^- https:\/\/career-ops\.org\/changelog /m.test(index))
+      fail('/llms.txt no longer lists the canonical /changelog in Authority pages');
     if (!index.includes('https://career-ops.org/changelog.md'))
-      fail('/llms.txt no longer lists /changelog.md (agents cannot discover it)');
+      fail('/llms.txt no longer names the /changelog.md twin (agents cannot discover it)');
   }
 
   // 3. /llms-full.txt — no escaped entities anywhere (docs + blog).

@@ -29,6 +29,8 @@ The canonical agent instructions ship in the repository:
 - Full-context dump: https://career-ops.org/llms-full.txt
 - Every docs page has a clean markdown twin: append \`.md\` to any /docs URL
   (e.g. https://career-ops.org/docs/faq.md), or send \`Accept: text/markdown\`.
+- That rule covers /docs only. Outside it, the markdown surfaces are exactly
+  this file, https://career-ops.org/changelog.md, and the two above.
 `;
 
 export function GET() {
