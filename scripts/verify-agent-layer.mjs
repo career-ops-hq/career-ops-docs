@@ -113,7 +113,7 @@ async function main() {
     for (const f of failures) console.error(`  - ${f}`);
     process.exit(1);
   }
-  console.log(`✓ Agent-layer guard passed (AGENTS.md, llms.txt, llms-full.txt, robots, ${DOC_SAMPLE.length} docs × .md/Accept/html/clean)`);
+  console.log(`✓ Agent-layer guard passed (AGENTS.md, llms.txt, changelog.md, llms-full.txt, robots, ${DOC_SAMPLE.length} docs × .md/Accept/html/clean)`);
 }
 
 main().catch((e) => {
