@@ -32,7 +32,37 @@ export type ChangelogRelease = {
    * ("career-ops: v1.26.0", "web: v0.6.1").
    */
   component: string;
-  /** True for the career-ops tool train (as opposed to a sub-component). */
+  /**
+   * True for the career-ops tool train (as opposed to a sub-component).
+   *
+   * EDITORIAL GATE — canonical wording, do not restate elsewhere. Both
+   * /changelog and /changelog.md filter on this; each call site points here so
+   * there is one copy to keep true. Decided 2026-08-17 by the maintainer and
+   * venture-ops independently, consolidated by search-ops:
+   *
+   *   The `web-*` train does not appear on /changelog. It is RE-EVALUATED when
+   *   the web leaves RC (milestone 2.0 → GA). If it is published then, it gets
+   *   its OWN page (/changelog/web or equivalent), NEVER mixed into the main
+   *   series — the single series is what protects the surface from
+   *   intermediaries that do not read labels.
+   *
+   * Three reasons, strongest first:
+   *  1. The `web` component exists separately in release-please precisely so
+   *     its commits do NOT move the product version. A public changelog
+   *     telling both trains would editorially undo a separation the repo makes
+   *     on purpose — design coherence, not taste, which is why this reason
+   *     outlives any change of mind about presentation.
+   *  2. Filtering beats labelling: the label protects against yesterday's bug,
+   *     the single series protects against tomorrow's scraper that does not
+   *     exist yet. Our own parser was the first consumer that failed to read
+   *     the label (it rendered `web-v0.6.1` as `vweb-v0.6.1` and gave it the
+   *     "Latest" chip).
+   *  3. /changelog is the contract for what career-ops IS — the local-first
+   *     tool. The dashboard is a component; mixing its releases promotes it to
+   *     product category.
+   *
+   * Status at the time of writing: the web is in RC, milestone 2.0-beta.
+   */
   isCore: boolean;
   /** Display version, e.g. "v1.16.0" */
   version: string;
