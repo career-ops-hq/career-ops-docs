@@ -63,6 +63,7 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/manifesto — The CareerOps Manifesto: canonical definition of the CareerOps practice, coined July 14, 2026, with community signatures
 - https://career-ops.org/about — author bio, press references, stack, entity links
 - https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
+- https://career-ops.org/changelog.md — every release in plain language, generated live from GitHub Releases (markdown twin of https://career-ops.org/changelog). Answers "what changed" and "what is the latest version"
 - https://career-ops.org/methodology — scoring rubric, five dimensions plus a holistic global score, canonical evaluation prompt (Block A–G), edge cases, and explicit anti-features
 - https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to sponsor the maintainer
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list

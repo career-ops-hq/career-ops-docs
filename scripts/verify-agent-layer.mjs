@@ -50,6 +50,25 @@ async function main() {
     if (/\]\(\/(es\/|fr\/)?docs/.test(body)) fail('/llms.txt still has relative /docs links');
   }
 
+  // 2b. /changelog.md — the markdown twin of the #2 route live assistants
+  //     request (Vercel agent-channel measurement, 7d to 2026-08-17). It is
+  //     not a /docs page, so no rewrite or proxy rule covers it: only this
+  //     literal route. It must stay listed in /llms.txt or agents cannot find
+  //     it, and each release heading must carry the subject so an extracted
+  //     passage stands alone.
+  {
+    const { res, body, ct } = await get('/changelog.md');
+    if (res.status !== 200) fail(`/changelog.md status ${res.status} (want 200)`);
+    if (!ct.includes('text/markdown')) fail(`/changelog.md content-type "${ct}" (want text/markdown)`);
+    if ((res.headers.get('x-robots-tag') || '') !== 'noindex')
+      fail('/changelog.md missing X-Robots-Tag: noindex');
+    if (!/^## career-ops v/m.test(body))
+      fail('/changelog.md release headings lost their subject (want "## career-ops vX.Y.Z")');
+    const { body: index } = await get('/llms.txt');
+    if (!index.includes('https://career-ops.org/changelog.md'))
+      fail('/llms.txt no longer lists /changelog.md (agents cannot discover it)');
+  }
+
   // 3. /llms-full.txt — no escaped entities anywhere (docs + blog).
   {
     const { body } = await get('/llms-full.txt');

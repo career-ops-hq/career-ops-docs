@@ -26,6 +26,36 @@
       "permanent": true
     },
     {
+      "source": "/docs/quickstart",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/quick-start",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/getting-started",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/getting-started/:path*",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/installation",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/install",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
       "source": "/docs/introduction/quick-start",
       "destination": "/docs",
       "permanent": true
