@@ -67,10 +67,15 @@ function formatDate(iso: string): string {
 }
 
 export default async function ChangelogPage() {
-  const releases = await getChangelog();
+  // Editorial decision (venture-ops via search-ops, 2026-08-17): one series,
+  // the tool's. The `web-*` component train is filtered out rather than
+  // labelled — a page whose correctness depends on the consumer reading a
+  // label is fragile, and our own parser was the first consumer that did not
+  // read it. See the same filter and rationale in changelog.md/route.ts.
+  const releases = (await getChangelog()).filter((r) => r.isCore);
+  // Both derived from the FILTERED set: an unfiltered releases[0] could carry
+  // a component release's date into the page's dateModified.
   const latestDate = releases[0]?.date;
-  // "Latest" means the latest career-ops release, not merely the newest entry:
-  // the same feed carries the `web-*` component train, which is often on top.
   const latestCore = releases.find((r) => r.isCore)?.version;
 
   return (

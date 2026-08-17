@@ -50,7 +50,14 @@ agents: https://career-ops.org/llms.txt
 }
 
 export async function GET() {
-  const releases = await getChangelog();
+  // Editorial decision (venture-ops via search-ops, 2026-08-17): this page
+  // tells ONE series, the tool's. The `web-*` component train is filtered out
+  // rather than labelled, because a page whose correctness depends on the
+  // consumer reading a label correctly is a fragile protection — our own
+  // parser was the first consumer that failed to read it. A single series
+  // needs no interpretation. If the dashboard ever becomes a first-class
+  // surface, it gets its own page, never a mixed one.
+  const releases = (await getChangelog()).filter((r) => r.isCore);
 
   let body: string;
   if (releases.length === 0) {

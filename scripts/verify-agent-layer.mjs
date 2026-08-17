@@ -64,6 +64,13 @@ async function main() {
       fail('/changelog.md missing X-Robots-Tag: noindex');
     if (!/^## career-ops v/m.test(body))
       fail('/changelog.md release headings lost their subject (want "## career-ops vX.Y.Z")');
+    // One series only — the tool's (venture-ops editorial decision via
+    // search-ops, 2026-08-17). A heading whose subject carries a component
+    // ("## career-ops web v0.6.1") means another train leaked in. This is the
+    // failure mode worth guarding: adding a `cli-*` or `action-*` train would
+    // not error, the .map() would just publish extra, silently.
+    const foreign = (body.match(/^## career-ops (?!v)\S+/gm) || [])[0];
+    if (foreign) fail(`/changelog.md carries a non-tool release train ("${foreign.trim()}")`);
     // Authority pages list the CANONICAL HTML url (an assistant citing a
     // source shows that url to a human, who should not land on raw markdown);
     // the twin rides along inside the same entry. /AGENTS.md is the one .md
