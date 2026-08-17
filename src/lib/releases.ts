@@ -25,6 +25,15 @@ export type ChangelogSection = {
 };
 
 export type ChangelogRelease = {
+  /**
+   * Which release train this belongs to, from the tag prefix: "career-ops"
+   * for the tool itself, "web" for the dashboard component. The repo ships
+   * both from one Releases feed and GitHub names them accordingly
+   * ("career-ops: v1.26.0", "web: v0.6.1").
+   */
+  component: string;
+  /** True for the career-ops tool train (as opposed to a sub-component). */
+  isCore: boolean;
   /** Display version, e.g. "v1.16.0" */
   version: string;
   /** ISO date the release was published */
@@ -34,10 +43,28 @@ export type ChangelogRelease = {
   sections: ChangelogSection[];
 };
 
-// "career-ops-v1.16.0" -> "v1.16.0"
-function displayVersion(tag: string): string {
-  const stripped = tag.replace(/^career-ops-/, '').trim();
-  return stripped.startsWith('v') ? stripped : `v${stripped}`;
+const CORE_COMPONENT = 'career-ops';
+
+// Tags carry the release train as a prefix: "career-ops-v1.26.0" (the tool)
+// and "web-v0.6.1" (the dashboard component). Splitting on the LAST "-v"
+// keeps a hyphenated component name intact.
+//
+// The previous version stripped only "career-ops-" and prefixed a "v" to
+// whatever was left, so "web-v0.6.1" rendered as "vweb-v0.6.1" — malformed,
+// and worse, misattributed: it sat at the top of /changelog looking like the
+// latest career-ops version while /llms.txt correctly said v1.26.0. Two of
+// our own surfaces contradicting each other on the route AI assistants
+// request most. (Found 2026-08-17 while adding the markdown twin.)
+function parseTag(tag: string): { component: string; version: string } {
+  const m = tag.trim().match(/^(.*)-v?(\d[\w.+-]*)$/);
+  if (!m) {
+    const raw = tag.trim();
+    return {
+      component: CORE_COMPONENT,
+      version: raw.startsWith('v') ? raw : `v${raw}`,
+    };
+  }
+  return { component: m[1] || CORE_COMPONENT, version: `v${m[2]}` };
 }
 
 // Human labels for conventional-changelog section headings. Anything not
@@ -93,12 +120,17 @@ export async function getChangelog(): Promise<ChangelogRelease[]> {
     if (!Array.isArray(data)) return [];
     return data
       .filter((r) => !r.draft && !r.prerelease && typeof r.tag_name === 'string')
-      .map((r) => ({
-        version: displayVersion(r.tag_name),
-        date: (r.published_at ?? '').slice(0, 10),
-        url: r.html_url as string,
-        sections: parseBody(typeof r.body === 'string' ? r.body : ''),
-      }))
+      .map((r) => {
+        const { component, version } = parseTag(r.tag_name);
+        return {
+          component,
+          isCore: component === CORE_COMPONENT,
+          version,
+          date: (r.published_at ?? '').slice(0, 10),
+          url: r.html_url as string,
+          sections: parseBody(typeof r.body === 'string' ? r.body : ''),
+        };
+      })
       .filter((r) => r.sections.length > 0);
   } catch {
     return [];

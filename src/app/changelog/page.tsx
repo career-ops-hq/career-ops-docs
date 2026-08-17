@@ -69,6 +69,9 @@ function formatDate(iso: string): string {
 export default async function ChangelogPage() {
   const releases = await getChangelog();
   const latestDate = releases[0]?.date;
+  // "Latest" means the latest career-ops release, not merely the newest entry:
+  // the same feed carries the `web-*` component train, which is often on top.
+  const latestCore = releases.find((r) => r.isCore)?.version;
 
   return (
     <>
@@ -136,7 +139,12 @@ export default async function ChangelogPage() {
                       {release.version}
                     </a>
                   </h2>
-                  {i === 0 && (
+                  {!release.isCore && (
+                    <span className="rounded-full border border-fd-foreground/20 px-2.5 py-0.5 text-xs font-medium text-fd-muted-foreground">
+                      {release.component}
+                    </span>
+                  )}
+                  {release.version === latestCore && release.isCore && (
                     <span className="rounded-full border border-brand/30 px-2.5 py-0.5 text-xs font-medium text-brand-text">
                       Latest
                     </span>
