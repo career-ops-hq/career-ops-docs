@@ -66,6 +66,26 @@
       "permanent": true
     },
     {
+      "source": "/blog/can-an-ai-agent-run-your-whole-job-search",
+      "destination": "/blog/can-an-ai-agent-run-your-job-search",
+      "permanent": true
+    },
+    {
+      "source": "/blog/what-740-listings-taught-me-about-the-ai-era-job-market",
+      "destination": "/blog/job-search-data-from-740-listings",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-track-job-applications-with-a-tracker-you-own",
+      "destination": "/blog/open-source-job-application-tracker",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-complete-guide-to-ai-powered-job-search-in-2026",
+      "destination": "/blog/the-complete-ai-job-search-guide",
+      "permanent": true
+    },
+    {
       "source": "/community",
       "destination": "https://discord.gg/8pRpHETxa4",
       "permanent": false
