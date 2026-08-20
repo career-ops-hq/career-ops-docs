@@ -120,6 +120,25 @@ const config = {
         headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
       },
       {
+        // Email-signature assets. The URL travels inside every message sent
+        // from the domain, so it is fetched by mail clients on machines we do
+        // not control and must stay stable for years, not months.
+        //
+        // `immutable` is correct here ONLY because of a contract: this URL is
+        // FROZEN. If the mark is ever redrawn, publish it under a NEW filename
+        // rather than overwriting this one — a client or CDN that cached it may
+        // keep serving the old bytes for a year, and mail already delivered
+        // will keep pointing here forever regardless.
+        //
+        // noindex because it exists to be fetched, not found: /press is where
+        // logos are published with the context that makes them usable.
+        source: '/email/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex' },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
         // Founding-sponsor one-pager. Fetchable by anyone with the link (it is
         // sent directly to prospects) but kept out of the index on purpose: the
         // PDF carries "$5,000 / month" and "$60,000/year", and the site's most
