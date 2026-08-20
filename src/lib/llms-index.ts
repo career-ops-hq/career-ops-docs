@@ -144,7 +144,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any /docs URL, or request one with \`Accept: text/markdown\`. Outside /docs the rule does not apply; the only markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\` or \`/fr/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all three languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 
