@@ -27,9 +27,9 @@ No necesitas saber programar. Solo necesitas sentirte cómodo abriendo una termi
       Instala **[Claude Code](https://claude.ai/code)**, **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)** o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — el asistente de programación con IA que ejecuta este sistema. career-ops funciona con todos ellos. Inicia sesión antes de continuar.
       </Step>
       <Step>
-        ### Node.js 20 LTS o posterior
+        ### Node.js 18+ (22.5+ recomendado)
 
-        Instala **[Node.js](https://nodejs.org) versión 20 LTS o posterior** — un entorno de ejecución de JavaScript que se usa para generar PDFs y ejecutar scripts auxiliares.
+        Instala **[Node.js](https://nodejs.org)** — mínimo **18** (funciona, con una advertencia), **22.5+ recomendado** (habilita el índice SQLite del tracker). Ejecuta los scripts auxiliares y genera los PDFs. Comprueba tu versión con `node --version`. Si vas a usar Gemini CLI, esa integración necesita **Node 20 o posterior**.
       </Step>
       <Step>
         ### Git
@@ -42,7 +42,7 @@ No necesitas saber programar. Solo necesitas sentirte cómodo abriendo una termi
 
 ## Paso 1: Configura el espacio de trabajo
 
-Abre una terminal en la carpeta donde quieras que viva career-ops. La ruta recomendada usa un solo comando; debajo hay una ruta avanzada con `git clone`. Si te faltan Node 20+ o Git, `npx` se negará a ejecutarse — instala ambos primero (ver prerrequisitos arriba).
+Abre una terminal en la carpeta donde quieras que viva career-ops. La ruta recomendada usa un solo comando; debajo hay una ruta avanzada con `git clone`. Si te faltan Node (18+) o Git, `npx` se negará a ejecutarse — instala ambos primero (ver prerrequisitos arriba).
 
 ### Recomendado — un solo comando
 
@@ -234,7 +234,7 @@ Ahora que tu primera evaluación está hecha, aquí tienes algunas cosas que pue
     Asegúrate de que `cv.md` existe en la carpeta raíz y tiene contenido. Si el onboarding terminó pero `cv.md` está vacío, pídele al agente: *«mi cv.md parece vacío, ¿puedes ayudarme a rellenarlo?»*
   </Accordion>
   <Accordion title="El PDF no se generó">
-    Ejecuta `npx playwright install chromium` de nuevo. Si eso no lo arregla, comprueba que Node.js es la versión 18 o superior ejecutando `node --version`.
+    Ejecuta `npx playwright install chromium` de nuevo. Si eso no lo arregla, comprueba que Node.js es la versión 18 o superior (22.5+ recomendado) ejecutando `node --version`.
   </Accordion>
   <Accordion title="La nota parece incorrecta">
     Las primeras evaluaciones son aproximadas — el sistema todavía no te conoce bien. Después de cada evaluación, dile a tu asistente de IA en qué se equivocó. Por ejemplo: *«Esa nota es demasiado alta — no tengo experiencia con Kubernetes».* Aprenderá y se ajustará.

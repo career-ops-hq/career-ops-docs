@@ -3,6 +3,7 @@ import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
 import { gitLastMod } from '@/lib/git-date';
 import comparisonsData from '@/lib/data/comparisons.json';
+import { getChangelog } from '@/lib/releases';
 
 export const revalidate = 3600;
 
@@ -15,7 +16,15 @@ const SITE_URL = 'https://career-ops.org';
 // uses its own crawl signal. (2026-07-24 audit, sitemap HIGH.)
 const gd = (relPath: string): Date | undefined => gitLastMod(relPath) ?? undefined;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Real publication date of the newest career-ops release (the `web-*`
+  // component train is not part of this page's series — see `isCore`).
+  const releases = (await getChangelog()).filter((r) => r.isCore);
+  const latestReleaseDate = releases[0]?.date;
+  const changelogLastMod = latestReleaseDate
+    ? new Date(`${latestReleaseDate}T00:00:00Z`)
+    : gd('src/app/changelog/page.tsx');
+
   const entries: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/`,
@@ -41,11 +50,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     },
     {
-      // The changelog's real freshness is the latest release date (the
-      // page re-renders hourly from the GitHub Releases API); the file's
-      // git date is the best build-time proxy available here.
+      // The changelog's real freshness is the latest release date, and we
+      // have it: getChangelog() reads the Releases API on the same hourly
+      // cadence as this sitemap. The git date used before was a build-time
+      // proxy that Vercel's shallow clone turned into `undefined`, leaving
+      // the most frequently changing page on the site with NO lastmod at
+      // all. `published_at` is an authored date, so this asserts nothing
+      // fabricated; if the API is down we fall back to omitting it.
+      // (search-ops W34: ChatGPT answers a 4-release-old version — stale,
+      // not poisoned, and staleness is what a freshness signal addresses.)
       url: `${SITE_URL}/changelog`,
-      lastModified: gd('src/app/changelog/page.tsx'),
+      lastModified: changelogLastMod,
     },
     {
       url: `${SITE_URL}/press`,
