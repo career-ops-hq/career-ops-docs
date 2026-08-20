@@ -350,7 +350,7 @@ export default async function PressPage() {
           <div className="mt-5 grid grid-cols-1 gap-x-8 gap-y-2 text-sm text-fd-foreground/85 sm:grid-cols-2">
             <p>
               <span className="text-fd-muted-foreground">Brand color </span>
-              <code className="text-fd-foreground">#D5742E</code>{' '}
+              <code className="text-fd-foreground">#DD7627</code>{' '}
               <span className="text-fd-muted-foreground">(hsl 26 73% 51%)</span>
             </p>
             <p>
