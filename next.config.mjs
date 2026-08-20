@@ -103,6 +103,40 @@ const config = {
           source: '/docs/:slug(.*).md',
           destination: '/llms.mdx/docs/:slug/content.md',
         },
+        // The same two shapes for the non-default locales. They need a separate
+        // destination because the EN mirror resolves pages without a locale,
+        // which fumadocs defaults to `en` — that default is why 32 Spanish URLs
+        // had no markdown twin at all. See the route header for why the locale
+        // is an explicit path segment rather than an optional prefix.
+        {
+          source: '/:lang(es|fr)/docs.md',
+          destination: '/llms.mdx/i18n/:lang/docs/content.md',
+        },
+        {
+          source: '/:lang(es|fr)/docs/:slug(.*).md',
+          destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
+        },
+        // Accept negotiation for the locale docs. NOT done in src/proxy.ts:
+        // verified 2026-08-20 against a production build that the proxy does
+        // not run for locale-prefixed paths — /docs negotiates correctly while
+        // /es/docs returns HTML with identical headers and identical code. Same
+        // class of Next 16 surprise as `/` and as the `.md` interception, and
+        // the same remedy: let the routing layer do it deterministically.
+        //
+        // These must stay AFTER the `.md` rules above, or `:slug(.*)` would
+        // swallow `<url>.md` before the explicit markdown rewrite sees it.
+        {
+          source: '/:lang(es|fr)/docs',
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
+          destination: '/llms.mdx/i18n/:lang/docs/content.md',
+        },
+        {
+          source: '/:lang(es|fr)/docs/:slug(.*)',
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
+          destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
+        },
       ],
     };
   },
