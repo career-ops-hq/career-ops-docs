@@ -12,6 +12,13 @@
 
 const BASE = process.env.BASE || 'http://localhost:3999';
 
+/** Per-locale sample: the index, the entry page, and a nested one. */
+/** Non-default locales that must have full markdown parity with EN. */
+const LOCALES = ['es', 'fr'];
+
+/** Per-locale sample: the index, the entry page, and a nested one. */
+const LOCALE_SAMPLE = ['docs', 'docs/introduction/what-is-career-ops', 'docs/faq'];
+
 /** A representative sample; if these hold the exporter/proxy are healthy. */
 const DOC_SAMPLE = [
   'docs/faq',
@@ -89,12 +96,47 @@ async function main() {
     if (/\]\(\/(?!\/)[^)]*\)/.test(b)) fail(`/${slug}.md contains relative links`);
   }
 
+  // 6. Locale parity. 32 Spanish URLs shipped with NO markdown twin at all —
+  //    the mirror resolved pages without a locale, which fumadocs defaults to
+  //    `en`. Assert the same invariants per locale so the asymmetry cannot come
+  //    back silently, and assert the content really is in that language: a
+  //    mirror quietly serving English would pass every status check while being
+  //    worse than a 404.
+  for (const lang of LOCALES) {
+    for (const slug of LOCALE_SAMPLE) {
+      const url = `/${lang}/${slug}`;
+
+      const md = await get(`${url}.md`);
+      if (md.res.status !== 200) fail(`${url}.md status ${md.res.status} (want 200)`);
+      if (!md.ct.includes('text/markdown')) fail(`${url}.md content-type "${md.ct}"`);
+      if ((md.res.headers.get('x-robots-tag') || '') !== 'noindex')
+        fail(`${url}.md missing X-Robots-Tag: noindex`);
+
+      const acc = await get(url, { Accept: 'text/markdown' });
+      if (!acc.ct.includes('text/markdown'))
+        fail(`${url} with Accept:markdown returned "${acc.ct}"`);
+
+      const html = await get(url, { Accept: 'text/html,*/*;q=0.8' });
+      if (!html.ct.includes('text/html'))
+        fail(`${url} browser request returned "${html.ct}" (want html)`);
+
+      // Must cite its own locale's canonical URL, not the EN one — the cheapest
+      // proof that the locale actually reached source.getPage.
+      if (!md.body.includes(`career-ops.org/${lang}/`))
+        fail(`${url}.md does not cite the ${lang} canonical URL (fell back to en?)`);
+    }
+  }
+
   if (failures.length) {
     console.error(`\n✗ Agent-layer guard: ${failures.length} regression(s)\n`);
     for (const f of failures) console.error(`  - ${f}`);
     process.exit(1);
   }
-  console.log(`✓ Agent-layer guard passed (AGENTS.md, llms.txt, llms-full.txt, robots, ${DOC_SAMPLE.length} docs × .md/Accept/html/clean)`);
+  console.log(
+    `✓ Agent-layer guard passed (AGENTS.md, llms.txt, llms-full.txt, robots, ` +
+      `${DOC_SAMPLE.length} EN docs × .md/Accept/html/clean, ` +
+      `${LOCALES.length} locales × ${LOCALE_SAMPLE.length} pages × .md/Accept/html/locale)`,
+  );
 }
 
 main().catch((e) => {
