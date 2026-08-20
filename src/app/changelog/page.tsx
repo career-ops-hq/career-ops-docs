@@ -67,8 +67,15 @@ function formatDate(iso: string): string {
 }
 
 export default async function ChangelogPage() {
-  const releases = await getChangelog();
+  // One series, the tool's. The `web-*` component train is filtered out, not
+  // labelled. Reasons and the re-evaluation gate: see `isCore` in
+  // src/lib/releases.ts — the single canonical statement, deliberately not
+  // restated here.
+  const releases = (await getChangelog()).filter((r) => r.isCore);
+  // Both derived from the FILTERED set: an unfiltered releases[0] could carry
+  // a component release's date into the page's dateModified.
   const latestDate = releases[0]?.date;
+  const latestCore = releases.find((r) => r.isCore)?.version;
 
   return (
     <>
@@ -136,7 +143,12 @@ export default async function ChangelogPage() {
                       {release.version}
                     </a>
                   </h2>
-                  {i === 0 && (
+                  {!release.isCore && (
+                    <span className="rounded-full border border-fd-foreground/20 px-2.5 py-0.5 text-xs font-medium text-fd-muted-foreground">
+                      {release.component}
+                    </span>
+                  )}
+                  {release.version === latestCore && release.isCore && (
                     <span className="rounded-full border border-brand/30 px-2.5 py-0.5 text-xs font-medium text-brand-text">
                       Latest
                     </span>

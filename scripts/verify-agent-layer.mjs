@@ -57,6 +57,38 @@ async function main() {
     if (/\]\(\/(es\/|fr\/)?docs/.test(body)) fail('/llms.txt still has relative /docs links');
   }
 
+  // 2b. /changelog.md — the markdown twin of the #2 route live assistants
+  //     request (Vercel agent-channel measurement, 7d to 2026-08-17). It is
+  //     not a /docs page, so no rewrite or proxy rule covers it: only this
+  //     literal route. It must stay listed in /llms.txt or agents cannot find
+  //     it, and each release heading must carry the subject so an extracted
+  //     passage stands alone.
+  {
+    const { res, body, ct } = await get('/changelog.md');
+    if (res.status !== 200) fail(`/changelog.md status ${res.status} (want 200)`);
+    if (!ct.includes('text/markdown')) fail(`/changelog.md content-type "${ct}" (want text/markdown)`);
+    if ((res.headers.get('x-robots-tag') || '') !== 'noindex')
+      fail('/changelog.md missing X-Robots-Tag: noindex');
+    if (!/^## career-ops v/m.test(body))
+      fail('/changelog.md release headings lost their subject (want "## career-ops vX.Y.Z")');
+    // One series only — the tool's (venture-ops editorial decision via
+    // search-ops, 2026-08-17). A heading whose subject carries a component
+    // ("## career-ops web v0.6.1") means another train leaked in. This is the
+    // failure mode worth guarding: adding a `cli-*` or `action-*` train would
+    // not error, the .map() would just publish extra, silently.
+    const foreign = (body.match(/^## career-ops (?!v)\S+/gm) || [])[0];
+    if (foreign) fail(`/changelog.md carries a non-tool release train ("${foreign.trim()}")`);
+    // Authority pages list the CANONICAL HTML url (an assistant citing a
+    // source shows that url to a human, who should not land on raw markdown);
+    // the twin rides along inside the same entry. /AGENTS.md is the one .md
+    // entry there, legitimately — it has no HTML form. (search-ops, PR #34.)
+    const { body: index } = await get('/llms.txt');
+    if (!/^- https:\/\/career-ops\.org\/changelog /m.test(index))
+      fail('/llms.txt no longer lists the canonical /changelog in Authority pages');
+    if (!index.includes('https://career-ops.org/changelog.md'))
+      fail('/llms.txt no longer names the /changelog.md twin (agents cannot discover it)');
+  }
+
   // 3. /llms-full.txt — no escaped entities anywhere (docs + blog).
   {
     const { body } = await get('/llms-full.txt');
@@ -133,7 +165,7 @@ async function main() {
     process.exit(1);
   }
   console.log(
-    `✓ Agent-layer guard passed (AGENTS.md, llms.txt, llms-full.txt, robots, ` +
+    `✓ Agent-layer guard passed (AGENTS.md, llms.txt, changelog.md, llms-full.txt, robots, ` +
       `${DOC_SAMPLE.length} EN docs × .md/Accept/html/clean, ` +
       `${LOCALES.length} locales × ${LOCALE_SAMPLE.length} pages × .md/Accept/html/locale)`,
   );

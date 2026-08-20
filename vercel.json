@@ -26,6 +26,36 @@
       "permanent": true
     },
     {
+      "source": "/docs/quickstart",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/quick-start",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/getting-started",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/getting-started/:path*",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/installation",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/install",
+      "destination": "/docs",
+      "permanent": true
+    },
+    {
       "source": "/docs/introduction/quick-start",
       "destination": "/docs",
       "permanent": true
@@ -33,6 +63,26 @@
     {
       "source": "/docs/:path(.+)\\.mdx",
       "destination": "/docs/:path",
+      "permanent": true
+    },
+    {
+      "source": "/blog/can-an-ai-agent-run-your-whole-job-search",
+      "destination": "/blog/can-an-ai-agent-run-your-job-search",
+      "permanent": true
+    },
+    {
+      "source": "/blog/what-740-listings-taught-me-about-the-ai-era-job-market",
+      "destination": "/blog/job-search-data-from-740-listings",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-track-job-applications-with-a-tracker-you-own",
+      "destination": "/blog/open-source-job-application-tracker",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-complete-guide-to-ai-powered-job-search-in-2026",
+      "destination": "/blog/the-complete-ai-job-search-guide",
       "permanent": true
     },
     {
