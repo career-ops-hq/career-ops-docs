@@ -191,7 +191,20 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
           </div>
         </footer>
         <Analytics />
-        <SpeedInsights />
+        {/*
+          3% sampling, not the default 1 (= every page view). The site emitted
+          165,640 data points in 30 days — 1,656% of the 10,000 included in the
+          free tier — and Vercel paused collection account-wide on 2026-08-25.
+          At ~5,500 page views/day, 3% lands at ~4,970/month: under the 10,000
+          cap AND under the 5,000 that Vercel requires before it resumes a
+          paused project, with room for traffic to double before this recurs.
+          5% would clear the cap but sit above the resume threshold, which is
+          the trap — it looks fixed and stays paused.
+          ~166 samples/day still give a solid site-wide p75 for Core Web Vitals;
+          measuring everyone adds confidence intervals, not insight. Per-route
+          p75 for the long tail of /docs is the thing this costs us.
+        */}
+        <SpeedInsights sampleRate={0.03} />
       </body>
     </html>
   );
