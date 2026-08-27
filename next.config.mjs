@@ -154,6 +154,30 @@ const config = {
         headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
       },
       {
+        // FLOSS/fund domain verification. The spec requires text/plain, and
+        // this file has NO EXTENSION — neither Vercel nor Next infers a type
+        // for it, so it ships as application/octet-stream by default.
+        //
+        // That failure is silent in the worst way: the URL returns 200, the
+        // body is correct, and a browser renders it perfectly. Only the
+        // fundingjson validator objects, at submit time. Verify with
+        // `curl -sI`, never with a browser. (Trap hit and documented by
+        // cv-santiago on santifer.io, 2026-08-27.)
+        //
+        // `X-Content-Type-Options: nosniff` from securityHeaders makes getting
+        // this right MORE important, not less: nothing downstream will guess.
+        //
+        // Ordering note: cv-santiago's warning to place this before any
+        // catch-all applies to vercel.json, where the first match wins. Next's
+        // headers() applies every matching rule, and securityHeaders sets no
+        // Content-Type, so there is nothing to collide with here. Do not
+        // "fix" the position.
+        source: '/.well-known/funding-manifest-urls',
+        headers: [
+          { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+        ],
+      },
+      {
         // Email-signature assets. The URL travels inside every message sent
         // from the domain, so it is fetched by mail clients on machines we do
         // not control and must stay stable for years, not months.
