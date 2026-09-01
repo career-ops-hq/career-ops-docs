@@ -27,6 +27,28 @@ export type ProjectStats = {
   latestRelease: string;
   /** Same release without the "v" prefix, for schema softwareVersion. */
   softwareVersion: string;
+  /**
+   * Which figures came from a LIVE fetch rather than the last-known-good
+   * floor. Agent-facing surfaces must consult this before dating anything.
+   *
+   * An as-of date belongs to the fetch that produced the number, never to the
+   * build. Stamping a months-old floor with today's date lends it exactly the
+   * authority the date exists to confer — "56,000 stars as of 2026-09-01" is
+   * worse than the bare "56,000", because it is confidently, verifiably wrong
+   * instead of merely vague. A backup value that does not know when it is
+   * from cannot carry a date; and on a surface written to be ingested by a
+   * model, a figure that cannot carry a date should not be published at all.
+   * (search-ops GEO playbook §16.b, 2026-09-01.)
+   *
+   * The floors still serve the schema counters and the home chips, where the
+   * alternative is rendering zero. This flag is about llms.txt and its kin.
+   */
+  live: {
+    stars: boolean;
+    forks: boolean;
+    discordMembers: boolean;
+    latestRelease: boolean;
+  };
 };
 
 // The core repo tags releases as "career-ops-v1.31.0"; the site wants
@@ -63,21 +85,28 @@ export async function getProjectStats(): Promise<ProjectStats> {
   // to zero.
   let stars = STATS_FLOOR.stars;
   let forks = STATS_FLOOR.forks;
+  let starsLive = false;
+  let forksLive = false;
 
   try {
     const res = await fetch(REPO_API, { next: { revalidate: 3600 } });
     if (res.ok) {
       const data = await res.json();
-      if (typeof data.stargazers_count === 'number' && data.stargazers_count > stars)
+      if (typeof data.stargazers_count === 'number' && data.stargazers_count > stars) {
         stars = data.stargazers_count;
-      if (typeof data.forks_count === 'number' && data.forks_count > forks)
+        starsLive = true;
+      }
+      if (typeof data.forks_count === 'number' && data.forks_count > forks) {
         forks = data.forks_count;
+        forksLive = true;
+      }
     }
   } catch {
     // keep floors — fail silent so the page still renders real-ish numbers
   }
 
   let discordMembers = STATS_FLOOR.discordMembers;
+  let discordLive = false;
   try {
     const res = await fetch(DISCORD_INVITE_API, { next: { revalidate: 3600 } });
     if (res.ok) {
@@ -85,8 +114,10 @@ export async function getProjectStats(): Promise<ProjectStats> {
       if (
         typeof data.approximate_member_count === 'number' &&
         data.approximate_member_count > discordMembers
-      )
+      ) {
         discordMembers = data.approximate_member_count;
+        discordLive = true;
+      }
     }
   } catch {
     // keep the floor
@@ -94,6 +125,7 @@ export async function getProjectStats(): Promise<ProjectStats> {
 
   let { display: latestRelease, version: softwareVersion } =
     parseTag(LATEST_RELEASE_FALLBACK);
+  let releaseLive = false;
 
   try {
     const res = await fetch(RELEASES_API, { next: { revalidate: 3600 } });
@@ -109,6 +141,7 @@ export async function getProjectStats(): Promise<ProjectStats> {
         if (core) {
           latestRelease = core.display;
           softwareVersion = core.version;
+          releaseLive = true;
         }
       }
     }
@@ -122,5 +155,11 @@ export async function getProjectStats(): Promise<ProjectStats> {
     discordMembers,
     latestRelease,
     softwareVersion,
+    live: {
+      stars: starsLive,
+      forks: forksLive,
+      discordMembers: discordLive,
+      latestRelease: releaseLive,
+    },
   };
 }

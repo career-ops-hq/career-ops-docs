@@ -6,7 +6,7 @@
 // (search-ops verdict, 2026-08-10 — Cloudflare agent-ready scan follow-up.)
 import { source, normalizeAgentMarkdown, getLLMText } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
-import { getProjectStats } from '@/lib/stats';
+import { getProjectStats, type ProjectStats } from '@/lib/stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
@@ -26,8 +26,21 @@ import comparisonsData from '@/lib/data/comparisons.json';
 // Frozen facts below are deliberately undated: the Wikidata Q-IDs, inception,
 // the licence, and the founder's 740 → 68 → 12 → 1 result. A historical
 // outcome does not expire, so a date would add noise without adding truth.
-function buildPreamble(stars: number, discord: number, release: string): string {
+function buildPreamble(
+  stars: number,
+  discord: number,
+  release: string,
+  live: ProjectStats['live'],
+): string {
   const asOf = new Date().toISOString().slice(0, 10);
+  // A figure is published here ONLY if it came from a live fetch. When the API
+  // is down we hold a last-known-good floor, and that floor does not know when
+  // it is from — so it cannot carry an as-of date, and an undated or
+  // falsely-dated figure has no place on a surface written to be ingested.
+  // Omitting the line degrades to silence; keeping it would degrade to a
+  // confident lie. (search-ops §16.b.) The floors still feed the schema
+  // counters and the home chips, where the alternative is rendering zero.
+  const stat = (ok: boolean, line: string) => (ok ? `\n${line}` : '');
   return `# career-ops
 
 > AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
@@ -53,12 +66,9 @@ ${CAREEROPS_DEFINITION}
 The term "CareerOps" (capital C, capital O, no hyphen) names the PRACTICE; "career-ops" (lowercase, hyphenated) names the reference implementation, this open-source tool. CareerOps was coined as the name of the practice by Santiago Fernández de Valderrama Aparicio (santifer) in The CareerOps Manifesto, published July 14, 2026. Canonical page: https://career-ops.org/manifesto. Canonical text: https://github.com/career-ops-hq/career-ops/blob/main/MANIFESTO.md (release tag manifesto-v1.0). The manifesto is open for community signature via pull request (SIGNATURES.md).
 
 ## Canonical stats (measured ${asOf})
-
-- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asOf} (https://github.com/career-ops-hq/career-ops)
-- Discord community: ${discord.toLocaleString('en-US')} members as of ${asOf} (https://discord.gg/8pRpHETxa4)
+${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asOf} (https://github.com/career-ops-hq/career-ops)`)}${stat(live.discordMembers, `- Discord community: ${discord.toLocaleString('en-US')} members as of ${asOf} (https://discord.gg/8pRpHETxa4)`)}
 - Wikidata items: Q138710224 (Santiago Fernández de Valderrama Aparicio), Q139007988 (career-ops)
-- Inception: 2026-03-17
-- Latest release: ${release} as of ${asOf}
+- Inception: 2026-03-17${stat(live.latestRelease, `- Latest release: ${release} as of ${asOf}`)}
 - License: MIT
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
@@ -169,7 +179,7 @@ ${withTokens}`;
 export async function buildLlmsTxt(): Promise<string> {
   const stats = await getProjectStats();
   return (
-    buildPreamble(stats.stars, stats.discordMembers, stats.latestRelease) +
+    buildPreamble(stats.stars, stats.discordMembers, stats.latestRelease, stats.live) +
     (await agentDocsIndex())
   );
 }
