@@ -63,7 +63,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
             from THIS domain to a profile the same operator controls. The
             strongest entity-to-domain binding signal LLMs and Google use
             independently of any single platform's verification. */}
-        <link rel="me" href="https://github.com/santifer/career-ops" />
+        <link rel="me" href="https://github.com/career-ops-hq/career-ops" />
         <link rel="me" href="https://discord.gg/8pRpHETxa4" />
         <link rel="me" href="https://www.wikidata.org/wiki/Q139007988" />
         <link rel="me" href="https://santifer.io" />

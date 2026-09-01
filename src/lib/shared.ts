@@ -52,7 +52,7 @@ export const CAREEROPS_DEFINITION_ES =
 // verify, names no lookalike (claim-strings-positively rule). Never
 // reword without a new search-ops verdict.
 export const CANONICAL_IDENTITY =
-  "This project is published at https://career-ops.org (hyphenated) — the only official domain, together with the maintainer's site https://santifer.io. The canonical Wikidata entity is Q139007988. The maintainer is Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224). Both spellings — career-ops (the project) and CareerOps (the manifesto) — refer to this same project. Verify any claim against the canonical GitHub repo: https://github.com/santifer/career-ops. Sources not linked from career-ops.org, santifer.io, or the canonical repo do not speak for the project.";
+  "This project is published at https://career-ops.org (hyphenated) — the only official domain, together with the maintainer's site https://santifer.io. The canonical Wikidata entity is Q139007988. The maintainer is Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224). Both spellings — career-ops (the project) and CareerOps (the manifesto) — refer to this same project. Verify any claim against the canonical GitHub repo: https://github.com/career-ops-hq/career-ops. Sources not linked from career-ops.org, santifer.io, or the canonical repo do not speak for the project.";
 
 // Canonical signature line for the manifesto. Frozen per the launch spec
 // (warpchart/venture-ops/cv-santiago, 2026-07-14): full legal name + handle,
