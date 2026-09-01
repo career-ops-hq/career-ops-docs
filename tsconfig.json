@@ -9,6 +9,17 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    // Enabled 2026-09-01 after an unused const shipped to production. A
+    // conditional `dateModified` was computed and then never spread into the
+    // node, because the string replacement that was meant to insert it did not
+    // match and failed silently. Everything downstream passed: typecheck,
+    // build, CI, and the guard. The only symptom was a field missing from a
+    // JSON-LD node that nobody diffs, and it took an outside agent probing
+    // production to notice.
+    //
+    // The codebase had ZERO unused locals when this was turned on, so it costs
+    // nothing today and closes that path for good.
+    "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,

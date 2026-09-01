@@ -318,6 +318,7 @@ export async function siteSchema() {
       {
         '@type': 'SoftwareSourceCode',
         '@id': 'https://career-ops.org/#software',
+        ...softwareDateModified,
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         url: 'https://career-ops.org',
