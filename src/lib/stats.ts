@@ -7,9 +7,13 @@
 // finding of the 2026-06-30 SEO audit.
 import { STATS_FLOOR, LATEST_RELEASE_FALLBACK } from './shared';
 
-const REPO_API = 'https://api.github.com/repos/santifer/career-ops';
+const REPO_API = 'https://api.github.com/repos/career-ops-hq/career-ops';
+// The LIST, not /releases/latest. The repo ships two trains from one feed
+// (`career-ops-*` for the tool, `web-*` for the dashboard) and /releases/latest
+// can hand back either — it just happens to return the tool's today. Fetching
+// the list lets us pick the tool's train instead of hoping.
 const RELEASES_API =
-  'https://api.github.com/repos/santifer/career-ops/releases/latest';
+  'https://api.github.com/repos/career-ops-hq/career-ops/releases?per_page=30';
 // Discord's public invite endpoint returns approximate_member_count with
 // no bot and no auth — the invite code is the public one on the site.
 const DISCORD_INVITE_API =
@@ -25,13 +29,33 @@ export type ProjectStats = {
   softwareVersion: string;
 };
 
-// The core repo tags releases as "career-ops-v1.15.0"; the site wants
-// "v1.15.0" (display) and "1.15.0" (schema). Normalise both shapes.
-function normaliseTag(tag: string): { display: string; version: string } {
-  const stripped = tag.replace(/^career-ops-/, '').trim();
-  const display = stripped.startsWith('v') ? stripped : `v${stripped}`;
-  return { display, version: display.replace(/^v/, '') };
+// The core repo tags releases as "career-ops-v1.31.0"; the site wants
+// "v1.31.0" (display) and "1.31.0" (schema).
+//
+// Stripping ONLY the "career-ops-" prefix was the bug that published
+// "vweb-v0.6.1" on /changelog for a month — a `web-*` tag survives the strip
+// untouched and then gets a "v" glued on the front. That surface was fixed in
+// src/lib/releases.ts; this copy of the same mistake was still feeding
+// llms.txt, which is the surface assistants read most. It had not fired only
+// because GitHub happened to keep returning the tool's release.
+//
+// Split on the LAST "-v" so a hyphenated component name stays intact, and
+// return the component so the caller can reject a train that is not ours.
+function parseTag(tag: string): { component: string; display: string; version: string } {
+  const m = tag.trim().match(/^(.*)-v?(\d[\w.+-]*)$/);
+  if (!m) {
+    const raw = tag.trim();
+    const display = raw.startsWith('v') ? raw : `v${raw}`;
+    return { component: CORE_COMPONENT, display, version: display.replace(/^v/, '') };
+  }
+  return {
+    component: m[1] || CORE_COMPONENT,
+    display: `v${m[2]}`,
+    version: m[2],
+  };
 }
+
+const CORE_COMPONENT = 'career-ops';
 
 export async function getProjectStats(): Promise<ProjectStats> {
   // Start at the floors. Live values only ever replace a floor when they
@@ -69,16 +93,23 @@ export async function getProjectStats(): Promise<ProjectStats> {
   }
 
   let { display: latestRelease, version: softwareVersion } =
-    normaliseTag(LATEST_RELEASE_FALLBACK);
+    parseTag(LATEST_RELEASE_FALLBACK);
 
   try {
     const res = await fetch(RELEASES_API, { next: { revalidate: 3600 } });
     if (res.ok) {
       const data = await res.json();
-      if (typeof data.tag_name === 'string' && data.tag_name.trim()) {
-        ({ display: latestRelease, version: softwareVersion } = normaliseTag(
-          data.tag_name,
-        ));
+      if (Array.isArray(data)) {
+        // First entry of the TOOL's train. Anything else in the feed is a
+        // sub-component and must never be published as the product version.
+        const core = data
+          .filter((r) => !r.draft && !r.prerelease && typeof r.tag_name === 'string')
+          .map((r) => parseTag(r.tag_name as string))
+          .find((t) => t.component === CORE_COMPONENT);
+        if (core) {
+          latestRelease = core.display;
+          softwareVersion = core.version;
+        }
       }
     }
   } catch {

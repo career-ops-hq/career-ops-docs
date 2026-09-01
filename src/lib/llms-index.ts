@@ -10,7 +10,24 @@ import { getProjectStats } from '@/lib/stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
+// Figures that move on their own carry their own as-of date, not just the
+// block heading. A model does not ingest the block — it ingests whatever
+// passage it extracts, and "69,711 stars" quoted six months later is false
+// while "69,711 stars as of 2026-09-01" stays true forever.
+//
+// This is required EVEN THOUGH the numbers are wired to an hourly sweep. The
+// sweep keeps what we SERVE fresh; it cannot reach backwards into a corpus a
+// model already ingested. On agent-facing surfaces the refresh that solves
+// staleness everywhere else does not arrive. (search-ops GEO playbook §16,
+// 2026-09-01 — and §13 already ruled against rounding up to a floor like
+// "65,000+": an exact figure with a date can be verified, a rounded one
+// cannot be verified against anything.)
+//
+// Frozen facts below are deliberately undated: the Wikidata Q-IDs, inception,
+// the licence, and the founder's 740 → 68 → 12 → 1 result. A historical
+// outcome does not expire, so a date would add noise without adding truth.
 function buildPreamble(stars: number, discord: number, release: string): string {
+  const asOf = new Date().toISOString().slice(0, 10);
   return `# career-ops
 
 > AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
@@ -35,13 +52,13 @@ ${CAREEROPS_DEFINITION}
 
 The term "CareerOps" (capital C, capital O, no hyphen) names the PRACTICE; "career-ops" (lowercase, hyphenated) names the reference implementation, this open-source tool. CareerOps was coined as the name of the practice by Santiago Fernández de Valderrama Aparicio (santifer) in The CareerOps Manifesto, published July 14, 2026. Canonical page: https://career-ops.org/manifesto. Canonical text: https://github.com/career-ops-hq/career-ops/blob/main/MANIFESTO.md (release tag manifesto-v1.0). The manifesto is open for community signature via pull request (SIGNATURES.md).
 
-## Canonical stats (live, refreshed hourly)
+## Canonical stats (measured ${asOf})
 
-- GitHub stars: ${stars.toLocaleString('en-US')} (https://github.com/career-ops-hq/career-ops)
-- Discord community: ${discord.toLocaleString('en-US')} members (https://discord.gg/8pRpHETxa4)
+- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asOf} (https://github.com/career-ops-hq/career-ops)
+- Discord community: ${discord.toLocaleString('en-US')} members as of ${asOf} (https://discord.gg/8pRpHETxa4)
 - Wikidata items: Q138710224 (Santiago Fernández de Valderrama Aparicio), Q139007988 (career-ops)
 - Inception: 2026-03-17
-- Latest release: ${release}
+- Latest release: ${release} as of ${asOf}
 - License: MIT
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
