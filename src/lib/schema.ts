@@ -239,6 +239,25 @@ const PERSON_SUBJECT_OF = [
 
 export async function siteSchema() {
   const stats = await getProjectStats();
+  // The live counters below (stars, forks, Discord) are the most literally
+  // parsed figures we publish: JSON-LD is the most structured surface we have,
+  // so an engine trusts it more and freezes it harder than prose. A bare
+  // number there is the same problem llms.txt had, in the place it weighs most.
+  //
+  // dateModified stamps the node, which is where schema.org puts freshness —
+  // InteractionCounter takes no date of its own. It doubles as an E-E-A-T
+  // freshness signal we were not emitting on this node at all.
+  //
+  // Emitted ONLY when the figures came from a live fetch. If the API is down
+  // we serve last-known-good floors, and a floor wearing today's date is worse
+  // than a floor wearing none: it borrows the authority the date exists to
+  // give. Same rule as llms.txt — the date belongs to the fetch that produced
+  // the number, never to the build. (search-ops GEO playbook §16.b.)
+  const countersLive =
+    stats.live.stars && stats.live.forks && stats.live.discordMembers;
+  const softwareDateModified = countersLive
+    ? { dateModified: new Date().toISOString().slice(0, 10) }
+    : {};
   return {
     '@context': 'https://schema.org',
     '@graph': [
