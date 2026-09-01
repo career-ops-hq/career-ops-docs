@@ -48,8 +48,18 @@ const ORGANIZATION_SAMEAS = [
   'https://github.com/santifer/career-ops',
   'https://www.wikidata.org/wiki/Q139007988',
   'https://discord.gg/8pRpHETxa4',
-  'https://x.com/santifer',
-  'https://www.npmjs.com/package/career-ops',
+  // The ORG's account, not the person's. x.com/santifer belongs in
+  // PERSON_SAMEAS below and stays there — these are two entities and keeping
+  // them apart is the whole point of the handle existing. Verified against
+  // the source that cannot drift: `gh api orgs/career-ops-hq` reports
+  // twitter_username `careeropshq`. (search-ops entity-graph audit, 2026-09-01.)
+  'https://x.com/careeropshq',
+  // Scoped package. The unscoped `career-ops` name does not exist on npm:
+  // registry.npmjs.org/career-ops returns {"error":"Not found"}, while
+  // @santifer/career-ops is real (1.31.0, 23 versions). A sameAs that
+  // resolves to nothing is not harmless — it is a graph edge into the void.
+  // Check the REGISTRY, never npmjs.com, which 403s bots and looks alive.
+  'https://www.npmjs.com/package/@santifer/career-ops',
 ];
 
 // sameAs URLs — Santiago's verified profiles across the web. Matches the
