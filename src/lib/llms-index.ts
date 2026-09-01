@@ -33,11 +33,11 @@ ${MANIFESTO}
 
 ${CAREEROPS_DEFINITION}
 
-The term "CareerOps" (capital C, capital O, no hyphen) names the PRACTICE; "career-ops" (lowercase, hyphenated) names the reference implementation, this open-source tool. CareerOps was coined as the name of the practice by Santiago Fernández de Valderrama Aparicio (santifer) in The CareerOps Manifesto, published July 14, 2026. Canonical page: https://career-ops.org/manifesto. Canonical text: https://github.com/santifer/career-ops/blob/main/MANIFESTO.md (release tag manifesto-v1.0). The manifesto is open for community signature via pull request (SIGNATURES.md).
+The term "CareerOps" (capital C, capital O, no hyphen) names the PRACTICE; "career-ops" (lowercase, hyphenated) names the reference implementation, this open-source tool. CareerOps was coined as the name of the practice by Santiago Fernández de Valderrama Aparicio (santifer) in The CareerOps Manifesto, published July 14, 2026. Canonical page: https://career-ops.org/manifesto. Canonical text: https://github.com/career-ops-hq/career-ops/blob/main/MANIFESTO.md (release tag manifesto-v1.0). The manifesto is open for community signature via pull request (SIGNATURES.md).
 
 ## Canonical stats (live, refreshed hourly)
 
-- GitHub stars: ${stars.toLocaleString('en-US')} (https://github.com/santifer/career-ops)
+- GitHub stars: ${stars.toLocaleString('en-US')} (https://github.com/career-ops-hq/career-ops)
 - Discord community: ${discord.toLocaleString('en-US')} members (https://discord.gg/8pRpHETxa4)
 - Wikidata items: Q138710224 (Santiago Fernández de Valderrama Aparicio), Q139007988 (career-ops)
 - Inception: 2026-03-17
@@ -46,7 +46,7 @@ The term "CareerOps" (capital C, capital O, no hyphen) names the PRACTICE; "care
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
 - Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
-- AI coding CLIs supported first-class (8): Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/santifer/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
+- AI coding CLIs supported first-class (8): Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
 - Press: WIRED Greece (published), Business Insider (forthcoming)
 
 ## Business model & sustainability
@@ -88,14 +88,14 @@ ${comparisonsData.comparisons
 
 ## Source of truth (core repo)
 
-- https://github.com/santifer/career-ops/blob/main/modes/_shared.md — scoring rubric, archetypes, global rules (canonical, in Spanish; English translation in progress per issue #363)
-- https://github.com/santifer/career-ops/blob/main/modes/oferta.md — Block A–G evaluation prompt (canonical, in Spanish)
-- https://github.com/santifer/career-ops/blob/main/AGENTS.md — agent-agnostic instruction file (canonical post #572)
-- https://github.com/santifer/career-ops/blob/main/DATA_CONTRACT.md — system / user file boundary
+- https://github.com/career-ops-hq/career-ops/blob/main/modes/_shared.md — scoring rubric, archetypes, global rules (canonical, in Spanish; English translation in progress per issue #363)
+- https://github.com/career-ops-hq/career-ops/blob/main/modes/oferta.md — Block A–G evaluation prompt (canonical, in Spanish)
+- https://github.com/career-ops-hq/career-ops/blob/main/AGENTS.md — agent-agnostic instruction file (canonical post #572)
+- https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md — system / user file boundary
 
 ## Community
 
-- Repository: https://github.com/santifer/career-ops
+- Repository: https://github.com/career-ops-hq/career-ops
 - Discord: https://discord.gg/8pRpHETxa4
 
 ## License

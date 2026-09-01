@@ -26,7 +26,7 @@ import { getChangelog } from '@/lib/releases';
 // Match the HTML page's cadence so both reflect the same release feed.
 export const revalidate = 3600;
 
-const GITHUB_RELEASES = 'https://github.com/santifer/career-ops/releases';
+const GITHUB_RELEASES = 'https://github.com/career-ops-hq/career-ops/releases';
 
 function formatDate(iso: string): string {
   if (!iso) return '';
