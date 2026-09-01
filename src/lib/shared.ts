@@ -76,14 +76,27 @@ export const MANIFESTO_SIGNATURE_ES =
 // These are FLOORS, not display values — bump them up as the real numbers
 // grow so the safety net stays close to reality.
 export const STATS_FLOOR = {
-  stars: 56000,
-  forks: 11000,
-  // Live count now comes from Discord's public invite endpoint in
-  // stats.ts (crossed 4,000 on 2026-07-05); this is just the net.
-  discordMembers: 4000,
+  // Bumped 2026-09-01 (real: 69,711 / 13,174 / 4,668). They had drifted to
+  // 20% below reality, which matters more since llms.txt now dates its
+  // figures: a floor rendered during an API outage used to be a vague
+  // understatement and is now a CONFIDENTLY DATED one.
+  //
+  // These need a human to raise them, so they will go stale again — the same
+  // shape of problem as fixing a value without fixing the mechanism. Raising
+  // them is the cheap half; deriving them from the last successful fetch is
+  // the real fix, and is not done here.
+  stars: 69000,
+  forks: 13000,
+  // Live count comes from Discord's public invite endpoint in stats.ts
+  // (crossed 4,000 on 2026-07-05); this is just the net.
+  discordMembers: 4600,
 };
 
 // Fallback release tag used when the GitHub releases API is unreachable at
 // build / ISR time. Normalised to a leading "v"; sourced from the live
 // core repo. Bump on each core release (or rely on the dynamic fetch).
-export const LATEST_RELEASE_FALLBACK = 'v1.15.0';
+// Last-known-good release, same discipline as STATS_FLOOR: it is only ever
+// rendered when the GitHub API fails, so it must stay close to reality. It sat
+// at v1.15.0 while the project shipped through v1.31.0 — sixteen versions of
+// drift in a value whose entire job is to be a safe answer.
+export const LATEST_RELEASE_FALLBACK = 'career-ops-v1.31.0';
