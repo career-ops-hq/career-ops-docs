@@ -45,7 +45,7 @@ const WIKIDATA_PERSON_IDENTIFIER = {
 // any single domain. Critical that GitHub repo + Wikidata Q-ID + Discord
 // all bind to career-ops.org (not the typosquat).
 const ORGANIZATION_SAMEAS = [
-  'https://github.com/santifer/career-ops',
+  'https://github.com/career-ops-hq/career-ops',
   'https://www.wikidata.org/wiki/Q139007988',
   'https://discord.gg/8pRpHETxa4',
   // The ORG's account, not the person's. x.com/santifer belongs in
@@ -254,7 +254,7 @@ export async function siteSchema() {
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: [
-          'https://github.com/santifer/career-ops',
+          'https://github.com/career-ops-hq/career-ops',
           'https://www.wikidata.org/wiki/Q139007988',
         ],
         potentialAction: {
@@ -302,7 +302,7 @@ export async function siteSchema() {
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         url: 'https://career-ops.org',
-        codeRepository: 'https://github.com/santifer/career-ops',
+        codeRepository: 'https://github.com/career-ops-hq/career-ops',
         programmingLanguage: ['TypeScript', 'Go', 'Bash'],
         license: 'https://opensource.org/licenses/MIT',
         creator: { '@id': PERSON_ID },
@@ -311,7 +311,7 @@ export async function siteSchema() {
         discussionUrl: 'https://discord.gg/8pRpHETxa4',
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: [
-          'https://github.com/santifer/career-ops',
+          'https://github.com/career-ops-hq/career-ops',
           'https://www.wikidata.org/wiki/Q139007988',
         ],
         subjectOf: SOFTWARE_SUBJECT_OF,

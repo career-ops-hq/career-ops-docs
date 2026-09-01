@@ -228,7 +228,7 @@ export default function MethodologyPage() {
               . The canonical version is in Spanish (the original implementation language); an
               English translation is in progress (
               <a
-                href="https://github.com/santifer/career-ops/issues/363"
+                href="https://github.com/career-ops-hq/career-ops/issues/363"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -313,7 +313,7 @@ export default function MethodologyPage() {
               &ldquo;applications closed&rdquo; regex patterns, and posting age against a role-type
               -adjusted threshold. Recent improvements:{' '}
               <a
-                href="https://github.com/santifer/career-ops/issues/374"
+                href="https://github.com/career-ops-hq/career-ops/issues/374"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -322,7 +322,7 @@ export default function MethodologyPage() {
               </a>{' '}
               tightened the regex set after false positives on multi-month-old jobs (
               <a
-                href="https://github.com/santifer/career-ops/issues/373"
+                href="https://github.com/career-ops-hq/career-ops/issues/373"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -339,7 +339,7 @@ export default function MethodologyPage() {
               Codex, OpenCode, Gemini CLI, Qwen, Copilot — whichever is configured). For users on
               metered API keys this matters; tracking the cost surface is open in{' '}
               <a
-                href="https://github.com/santifer/career-ops/issues/273"
+                href="https://github.com/career-ops-hq/career-ops/issues/273"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -405,7 +405,7 @@ export default function MethodologyPage() {
                 <strong>No LinkedIn scraping.</strong> Persistent-session LinkedIn scanning was
                 approved in concept (
                 <a
-                  href="https://github.com/santifer/career-ops/issues/238"
+                  href="https://github.com/career-ops-hq/career-ops/issues/238"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="text-fd-foreground underline underline-offset-2"
@@ -443,7 +443,7 @@ export default function MethodologyPage() {
             <ul className="mt-3 list-disc space-y-2 pl-6">
               <li>
                 <a
-                  href="https://github.com/santifer/career-ops/issues/363"
+                  href="https://github.com/career-ops-hq/career-ops/issues/363"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="text-fd-foreground underline underline-offset-2"
@@ -466,7 +466,7 @@ export default function MethodologyPage() {
               </li>
               <li>
                 <a
-                  href="https://github.com/santifer/career-ops/issues/557"
+                  href="https://github.com/career-ops-hq/career-ops/issues/557"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="text-fd-foreground underline underline-offset-2"
