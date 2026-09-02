@@ -106,7 +106,7 @@ export const homeEn: HomeDict = {
       locally on your machine inside any AI coding CLI — Claude Code, OpenCode,
       Codex, GitHub Copilot, and more. It evaluates job listings against your CV
       using a five-dimension rubric plus a holistic global score, scoring
-      1.0–5.0, generates ATS-optimized PDF resumes tailored per role, drafts
+      1-5, generates ATS-optimized PDF resumes tailored per role, drafts
       answers to open-ended application questions on Greenhouse, Ashby and Lever
       forms, scans 150+ company portals zero-token, and tracks the pipeline in a
       Go-based terminal dashboard. Everything lives on your machine:{' '}
@@ -212,7 +212,7 @@ export const homeEn: HomeDict = {
         <>
           career-ops uses a rubric-guided LLM evaluation across five dimensions —
           match, north-star alignment, comp, cultural signals, red flags —
-          producing a holistic 1.0–5.0 global score with citations to specific CV
+          producing a holistic 1-5 global score with citations to specific CV
           lines and JD requirements. Anything below 4.0 the agent recommends
           against applying. No closed-form formula, no spray-and-pray. The full
           rubric is published at{' '}

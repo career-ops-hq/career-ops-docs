@@ -158,7 +158,7 @@ export default function AboutPage() {
           </p>
           <p>
             career-ops grew out of a personal job search in early 2026. After the exit, instead
-            of spraying applications, he wrote a structured evaluator: five dimensions, a 1.0–5.0
+            of spraying applications, he wrote a structured evaluator: five dimensions, a 1-5
             score, and a hard floor at 4.0 below which the system refuses to recommend applying.
             740 listings evaluated, 68 applications sent, 12 interview processes, one offer
             signed. The funnel data lives at{' '}

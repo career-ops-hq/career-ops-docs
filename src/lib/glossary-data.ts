@@ -13,7 +13,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
       'The software companies use to receive, store, and filter job applications — Greenhouse, Ashby, and Lever are common examples. career-ops reads their public job APIs to discover openings and can pre-fill their application forms, but never auto-submits.',
   },
   {
-    term: 'Global score (1.0–5.0)',
+    term: 'Global score (1-5)',
     definition:
       "The LLM's holistic judgement of a job listing across five dimensions (match, north-star alignment, comp, cultural signals, red flags), producing a score from 1.0 to 5.0. At 4.5+ the agent recommends applying immediately; below 4.0 it recommends against applying. There is no closed-form weighting formula: the score is the LLM's judgement given the rubric, which is public on the methodology page.",
   },
