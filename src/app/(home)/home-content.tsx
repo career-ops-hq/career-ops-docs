@@ -89,14 +89,27 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           className="absolute top-[58%] left-[25%] max-w-[1400px] rounded-xl block [animation:fade-in-delayed_700ms_ease_400ms_both] [mask-image:linear-gradient(to_right,transparent_0%,black_8%)]"
           priority
         />
+        {/* Readability scrim between the animated backdrop and the copy column.
+            The corner grain-gradient sweeps saturated green (dark) / yellow-orange
+            (light) behind the text, and the terminal screenshot's dark chrome
+            reaches into it from the right; measured worst case without this layer
+            was 1.2:1 (dark, green sweep) and 3.0:1 (light, screenshot overlap)
+            against the muted h1: both under WCAG AA's 4.5:1. The veil is tuned
+            per theme (dark text is translucent and needs a stronger plateau) and
+            fades out before the right half so the shaders keep their punch where
+            nothing needs reading. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-1 bg-[color-mix(in_srgb,var(--color-fd-background)_90%,transparent)] md:bg-[linear-gradient(90deg,color-mix(in_srgb,var(--color-fd-background)_90%,transparent)_0%,color-mix(in_srgb,var(--color-fd-background)_90%,transparent)_46%,color-mix(in_srgb,var(--color-fd-background)_80%,transparent)_56%,color-mix(in_srgb,var(--color-fd-background)_45%,transparent)_66%,transparent_78%)] dark:bg-[color-mix(in_srgb,var(--color-fd-background)_97%,transparent)] dark:md:bg-[linear-gradient(90deg,color-mix(in_srgb,var(--color-fd-background)_97%,transparent)_0%,color-mix(in_srgb,var(--color-fd-background)_97%,transparent)_46%,color-mix(in_srgb,var(--color-fd-background)_92%,transparent)_56%,color-mix(in_srgb,var(--color-fd-background)_60%,transparent)_66%,transparent_78%)]"
+        />
         <div className="flex flex-col z-2 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
           <p
             aria-hidden="true"
-            className={`${instrumentSerifRegular.className} text-5xl mt-12 mb-6 leading-[1.05] xl:text-7xl xl:mb-8`}
+            className={`${instrumentSerifRegular.className} text-5xl mt-12 mb-6 leading-[1.05] xl:text-7xl xl:mb-8 [text-shadow:0_0_30px_var(--color-fd-background)]`}
           >
             {dict.heroHook}
           </p>
-          <h1 className="mb-8 max-w-xl text-base font-normal text-fd-muted-foreground md:text-lg">
+          <h1 className="mb-8 max-w-xl text-base font-normal text-fd-muted-foreground md:text-lg [text-shadow:0_1px_14px_var(--color-fd-background),0_0_36px_var(--color-fd-background)]">
             {dict.heroH1}
           </h1>
           <div className="flex flex-row items-center gap-4 flex-wrap w-fit">
