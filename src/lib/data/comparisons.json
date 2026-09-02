@@ -130,7 +130,7 @@
         },
         {
           "name": "Match-mode scoring",
-          "careerOps": "Yes — five scoring dimensions plus a holistic 1.0–5.0 global score, recommendations gated at 4.0. Cited evidence per dimension.",
+          "careerOps": "Yes — five scoring dimensions plus a holistic 1-5 global score, recommendations gated at 4.0. Cited evidence per dimension.",
           "competitor": "Yes — match score against a single job description. Algorithm not disclosed."
         },
         {
@@ -559,7 +559,7 @@
       "features": [
         {
           "name": "Application model",
-          "careerOps": "Score-gated apply. Listings scored 1.0–5.0 against a rubric of five scoring dimensions plus a holistic global score; only those above 4.0 are recommended. Tailored per listing. You submit.",
+          "careerOps": "Score-gated apply. Listings scored 1-5 against a rubric of five scoring dimensions plus a holistic global score; only those above 4.0 are recommended. Tailored per listing. You submit.",
           "competitor": "Spray-and-pray. The bot clicks Easy Apply on every listing matching a keyword filter, hundreds per day. Generic submissions, no tailoring depth."
         },
         {
