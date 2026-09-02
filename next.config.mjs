@@ -67,7 +67,7 @@ const config = {
     // with margin. (2026-06-30 audit, perf #10b.)
     deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920, 2560],
     // Next 16 restricts `quality` to [75] by default and silently drops any
-    // other value (the request 404s), so the buffalo-dither hero's quality={45}
+    // other value (the request 404s), so the homepage hero's quality={45}
     // was being served at 75 (200-278KB). Whitelist the qualities actually used.
     // (2026-07-24 audit, perf HIGH.)
     qualities: [45, 60, 75],
