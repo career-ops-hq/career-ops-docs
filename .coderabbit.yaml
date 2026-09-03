@@ -195,7 +195,12 @@ chat:
 knowledge_base:
   opt_out: false
   web_search: { enabled: true }
-  learnings: { scope: auto, approval_delay: 0 }
+  # A week for a maintainer to reject a learning before it sticks. Matters
+  # more here than the default of 0 (immediate) because this config links
+  # career-ops-hq/career-ops below: a fact CodeRabbit learns from the core's
+  # context can get applied to this repo, or vice versa, and the wrong
+  # attribution is exactly the failure this window exists to catch.
+  learnings: { scope: auto, approval_delay: 7 }
   issues: { scope: auto }
   pull_requests: { scope: auto }
   code_guidelines:
