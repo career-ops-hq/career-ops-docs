@@ -1,7 +1,8 @@
 # CodeRabbit configuration for career-ops-docs (career-ops-hq).
 # The documentation site for career-ops: Next.js + Fumadocs, 95 MDX pages in
 # EN/ES/FR, deployed to career-ops.org. Modeled on the core repo's config
-# (career-ops-hq/career-ops#3769), adapted to what this repo actually is.
+# (career-ops-hq/career-ops#3769, then #3772 for the incremental-review,
+# recipe and post-merge-report levers), adapted to what this repo actually is.
 # Docs: https://docs.coderabbit.ai/reference/configuration
 language: en-US
 tone_instructions: "Be specific and brief. Cite file:line. Use colons, not dashes. Warm to first-time contributors. One precise finding beats three vague ones. A sentence that says something the tool no longer does is a bug; one that merely reads differently is not."
@@ -24,9 +25,23 @@ reviews:
   auto_assign_reviewers: false
   abort_on_close: true
 
+  # Low-effort and machine-generated PRs are a real cost on a repo where every
+  # merge needs @santifer's own review time. The label is a routing signal for
+  # a human to check first: nothing is ever closed on it, and no automation
+  # acts on it. (career-ops-hq/career-ops#3772, adapted.)
+  slop_detection:
+    enabled: true
+    label: "quality-check"
+
   auto_review:
     enabled: true
     drafts: false
+    auto_incremental_review: true
+    # Default is to pause after 5 reviewed commits in one PR; a contributor
+    # who pushes a sixth fix deserves the sixth review too. If this ever hits
+    # the hourly review ceiling (shared with the core repo, 10/hour), the
+    # ceiling is the thing to raise, not the contributor to ration.
+    auto_pause_after_reviewed_commits: 0
     base_branches:
       - main
     ignore_usernames:
@@ -94,13 +109,35 @@ reviews:
 
   finishing_touches:
     docstrings: { enabled: false }
+    # No test framework or test directory exists in this repo (it is a
+    # Next.js/Fumadocs site, not the core's Node scripts). Configuring
+    # generation conventions here would invent a testing setup that does not
+    # exist; skip until one does.
     unit_tests: { enabled: false }
     simplify: { enabled: false }
     autofix: { enabled: false }       # no bot pushes to a contributor's branch
     fix_ci: { enabled: false }
     resolve_merge_conflict: { enabled: false }
+    # Recipes run only when asked: @coderabbitai run <name>. Each one encodes
+    # a mechanical task that has actually bitten this repo.
+    # (career-ops-hq/career-ops#3772 introduced the pattern; these two are
+    # specific to career-ops-docs, not copied from the core's recipes.)
+    custom:
+      - name: register-sitemap-entry
+        enabled: true
+        instructions: "If this PR adds a new top-level static page (a new route directory under src/app/ with its own page.tsx, other than a page inside (home), docs, es, fr, compare/[slug], or an API route), add it to the entries array in src/app/sitemap.ts, following the existing pattern: url built from SITE_URL, and lastModified from gd('<path to the new page.tsx>') so it degrades to omitted rather than a fabricated date when git has no history for the file. A page invisible to the sitemap is invisible to crawlers even though it renders fine; that already happened once, to /sustain. Do not touch .github/workflows/indexnow.yml: it now derives its URL list from the live sitemap.xml at run time, so nothing there needs registering by hand. Change nothing else."
+      - name: sync-translation
+        enabled: true
+        instructions: "For every content/docs/**/*.mdx page this PR changed in English, bring its .es.mdx and .fr.mdx siblings up to date: same heading structure, same order, same code fences and command output, translated prose. Never touch command names, CLI flags, file paths, or the manifesto/thesis strings imported from src/lib/shared.ts and src/lib/manifesto-text.ts — those are frozen and must read identically to the English source. Do NOT set or guess a translationHash value in the frontmatter: that field is a literal hash of the English body, computed only by running `node .i18n/hash.mjs <path to the English file>`, and writing a plausible-looking value there would make a stale translation look verified. Leave the existing translationHash untouched and note in your summary that it still needs restamping with that command. content/blog/**/*.mdx has no translated siblings; do not create any there. Change nothing else."
 
   pre_merge_checks:
+    # Frozen strings, hand-typed numbers and personal data carry policy, not
+    # taste: the PR's own author should not be the one who waves them through
+    # on their own PR. In practice @santifer is both the sole code owner and
+    # the author of nearly every PR here, so this mostly blocks self-override
+    # until a second collaborator exists to request as a reviewer — same
+    # shape as CODEOWNERS itself. (career-ops-hq/career-ops#3772, adapted.)
+    override_requested_reviewers_only: true
     docstrings: { mode: off }
     title:
       mode: warning
@@ -128,6 +165,19 @@ reviews:
       - name: "Agent-operated PR disclosure"
         mode: warning
         instructions: "If the PR author is a coding agent (branch copilot/* or author app/copilot-swe-agent), warn unless the description contains the sections '## AI assistance' and '## Human review'."
+
+  # Runs after the merge, as a text-only comment on the merged PR. It exists
+  # as a backstop for the "Translations restamped or declared stale" check
+  # above: that check is a warning, not a gate, so a PR can merge with it
+  # unresolved. This leaves a paper trail after the fact so a stale
+  # translation is not simply forgotten once the PR closes.
+  # (career-ops-hq/career-ops#3772 introduced the pattern; this is the docs
+  # repo's one direct analog — a downstream "documentation drift" report
+  # does not apply here, since this repo IS the documentation.)
+  post_merge_actions:
+    - name: "translation drift report"
+      enabled: true
+      prompt: "Only act if this merge changed an English page under content/docs/**/*.mdx (not a .es.mdx or .fr.mdx file itself, and not anything under content/blog/, which has no translated siblings). For each changed English page, check whether its .es.mdx and .fr.mdx siblings were modified in the same merge or declared stale in the PR description. List every one that was neither: name the file, the heading or section that now diverges from the English source, and a one-sentence description of what changed. If every English change in this merge had its translations updated or declared stale, reply with exactly: no translation drift. Post a text report in the result comment only. Do not open a pull request, do not create or edit issues, do not push commits, do not comment anywhere else."
 
   labeling_instructions:
     - label: "documentation"
