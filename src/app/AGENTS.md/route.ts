@@ -32,7 +32,9 @@ The canonical agent instructions ship in the repository:
   send \`Accept: text/markdown\`. The site is EN + ES + FR; each language has
   its own twin and cites its own canonical URL.
 - That rule covers docs only. Outside it the markdown surfaces are exactly this
-  file, https://career-ops.org/changelog.md, and the two above.
+  file, https://career-ops.org/changelog.md, the manifesto in both languages
+  (https://career-ops.org/manifesto.md and https://career-ops.org/es/manifesto.md),
+  and the two above.
 `;
 
 export function GET() {

@@ -36,6 +36,53 @@ async function get(path, headers = {}) {
   return { res, body, ct: res.headers.get('content-type') || '' };
 }
 
+/** Collapse a markdown/HTML fragment to comparable plain text. */
+function normalize(t) {
+  return t
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/\*(.+?)\*/g, '$1')
+    .replace(/^\d+\.\s+/gm, '')
+    .replace(/[\u2018\u2019\u02bc]/g, "'")
+    .replace(/[\u201c\u201d]/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Strip tags + decode the few entities the pages actually emit. */
+function plain(html) {
+  return normalize(
+    html
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&rsquo;|&#x27;|&#39;/g, "'")
+      .replace(/&ldquo;|&rdquo;|&quot;/g, '"')
+      .replace(/&amp;/g, '&')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&mdash;/g, '\u2014')
+      .replace(/&middot;/g, '\u00b7'),
+  );
+}
+
+/**
+ * The signed text of a manifesto twin: between the definition lead and the
+ * signature. The signature LABEL localizes ("Signed:" / "Firmado:") while the
+ * version line does not, so match the label per language — anchoring on the
+ * English one made this return null for Spanish, which the guard caught on its
+ * first run.
+ */
+function signedBody(md) {
+  const start = md.indexOf('**v1.0,');
+  if (start < 0) return null;
+  let end = -1;
+  for (const label of ['**Signed:**', '**Firmado:**']) {
+    const i = md.indexOf(`\n\n${label}`);
+    if (i > start && (end < 0 || i < end)) end = i;
+  }
+  if (end <= start) return null;
+  return md.slice(start, end).trim();
+}
+
 async function main() {
   // 1. /AGENTS.md — 200 markdown, thin pointer to the repo's canonical file.
   {
@@ -87,6 +134,102 @@ async function main() {
       fail('/llms.txt no longer lists the canonical /changelog in Authority pages');
     if (!index.includes('https://career-ops.org/changelog.md'))
       fail('/llms.txt no longer names the /changelog.md twin (agents cannot discover it)');
+  }
+
+  // 2c. /manifesto.md + /es/manifesto.md — the twins of the page that DEFINES
+  //     the practice. Two languages with two different sources of truth, and
+  //     the guard checks each against its own:
+  //
+  //       EN — the core repo ships MANIFESTO.md (frozen at manifesto-v1.0).
+  //            Our copy is frozen too, deliberately (see src/lib/manifesto-text.ts:
+  //            a fetched twin could contradict our own HTML page). So the ONLY
+  //            thing standing between "frozen" and "stale" is this check.
+  //       ES — no upstream exists; the repo is English-only. career-ops.org IS
+  //            the canonical Spanish manifesto, so there is nothing to compare
+  //            it against except its own rendered page.
+  //
+  //     Both are also checked paragraph-by-paragraph against the HTML they
+  //     mirror. That is the invariant that matters: the twin says what the page
+  //     says. It proves the transcription instead of trusting it.
+  {
+    for (const [lang, url] of [['en', '/manifesto'], ['es', '/es/manifesto']]) {
+      const md = await get(`${url}.md`);
+      if (md.res.status !== 200) fail(`${url}.md status ${md.res.status} (want 200)`);
+      if (!md.ct.includes('text/markdown')) fail(`${url}.md content-type "${md.ct}"`);
+      if ((md.res.headers.get('x-robots-tag') || '') !== 'noindex')
+        fail(`${url}.md missing X-Robots-Tag: noindex`);
+
+      const acc = await get(url, { Accept: 'text/markdown' });
+      if (!acc.ct.includes('text/markdown'))
+        fail(`${url} with Accept:markdown returned "${acc.ct}"`);
+
+      const html = await get(url, { Accept: 'text/html,*/*;q=0.8' });
+      if (!html.ct.includes('text/html'))
+        fail(`${url} browser request returned "${html.ct}" (want html)`);
+
+      // Own-canonical invariant, same as the locale docs: a twin that cites the
+      // other language's URL has silently served the wrong document.
+      const wantCanonical = `https://career-ops.org${url}`;
+      if (!md.body.includes(wantCanonical))
+        fail(`${url}.md does not cite its own canonical URL (${wantCanonical})`);
+
+      const body = signedBody(md.body);
+      if (!body) {
+        fail(`${url}.md has no signed body between the lead and the signature`);
+        continue;
+      }
+
+      // The twin must match the page it mirrors, paragraph by paragraph.
+      const pageText = plain(html.body);
+      const missing = body
+        .split(/\n{2,}/)
+        .map(normalize)
+        .filter((para) => para.length > 40 && !pageText.includes(para));
+      if (missing.length)
+        fail(
+          `${url}.md diverges from the rendered page in ${missing.length} paragraph(s); ` +
+            `first: "${missing[0].slice(0, 70)}…"`,
+        );
+
+      if (lang === 'es') {
+        // A Spanish twin quietly serving English would pass every check above
+        // except this one — and unlike the docs, there is no upstream to
+        // recover the Spanish text from if it disappears.
+        if (body.includes('We call this practice'))
+          fail('/es/manifesto.md is serving the ENGLISH manifesto text');
+        if (!body.includes('A esta práctica la llamamos'))
+          fail('/es/manifesto.md lost the Spanish signed text');
+      }
+    }
+
+    // EN against upstream. Three states on purpose: match, mismatch, and
+    // could-not-check — the last one FAILS rather than passing quietly. A guard
+    // that reports success when it could not run is the two-state instrument
+    // that lies when it breaks (search-ops, 2026-08-25).
+    const UPSTREAM =
+      'https://raw.githubusercontent.com/santifer/career-ops/main/MANIFESTO.md';
+    let upstream = null;
+    try {
+      const r = await fetch(UPSTREAM);
+      if (r.ok) upstream = await r.text();
+      else fail(`could not verify /manifesto.md against upstream: HTTP ${r.status}`);
+    } catch (e) {
+      fail(`could not verify /manifesto.md against upstream: ${e.message}`);
+    }
+    if (upstream) {
+      const start = upstream.indexOf('**v1.0,');
+      const end = upstream.indexOf('\n\n**Signed:**');
+      const theirs = start >= 0 && end > start ? upstream.slice(start, end).trim() : null;
+      const { body: mine } = await get('/manifesto.md');
+      const ours = signedBody(mine);
+      if (!theirs) fail('upstream MANIFESTO.md no longer has the expected shape');
+      else if (!ours) fail('/manifesto.md has no signed body to compare with upstream');
+      else if (theirs !== ours)
+        fail(
+          'the frozen manifesto text no longer matches the core repo MANIFESTO.md ' +
+            '(upstream moved, or our copy drifted) — reconcile before shipping',
+        );
+    }
   }
 
   // 3. /llms-full.txt — no escaped entities anywhere (docs + blog).
@@ -165,7 +308,7 @@ async function main() {
     process.exit(1);
   }
   console.log(
-    `✓ Agent-layer guard passed (AGENTS.md, llms.txt, changelog.md, llms-full.txt, robots, ` +
+    `✓ Agent-layer guard passed (AGENTS.md, llms.txt, changelog.md, manifesto.md \u00d72 vs upstream+page, llms-full.txt, robots, ` +
       `${DOC_SAMPLE.length} EN docs × .md/Accept/html/clean, ` +
       `${LOCALES.length} locales × ${LOCALE_SAMPLE.length} pages × .md/Accept/html/locale)`,
   );
