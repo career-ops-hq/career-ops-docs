@@ -1,0 +1,166 @@
+# CodeRabbit configuration for career-ops-docs (career-ops-hq).
+# The documentation site for career-ops: Next.js + Fumadocs, 95 MDX pages in
+# EN/ES/FR, deployed to career-ops.org. Modeled on the core repo's config
+# (career-ops-hq/career-ops#3769), adapted to what this repo actually is.
+# Docs: https://docs.coderabbit.ai/reference/configuration
+language: en-US
+tone_instructions: "Be specific and brief. Cite file:line. Use colons, not dashes. Warm to first-time contributors. Prefer one precise finding over three vague ones. This is a docs site: a sentence that says something the tool no longer does is a bug; a sentence that merely reads differently is not."
+
+reviews:
+  profile: assertive
+  request_changes_workflow: false   # humans decide; the review is a signal
+  high_level_summary: true
+  high_level_summary_instructions: "Explain what changes for a reader of career-ops.org: which page, which guide, which language. Name if the PR touches the agent-facing layer (llms.txt, AGENTS.md, the .md mirrors), routing (next.config.mjs, src/proxy.ts), the schema (src/lib/schema.ts), or anything visual under src/app/(home)."
+  poem: false
+  collapse_walkthrough: true
+  sequence_diagrams: false
+  estimate_code_review_effort: true
+  assess_linked_issues: true
+  related_issues: true
+  related_prs: true
+  suggested_labels: true
+  auto_apply_labels: false          # a maintainer applies labels
+  suggested_reviewers: false        # CODEOWNERS requires @santifer on every path already
+  auto_assign_reviewers: false
+  abort_on_close: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+    ignore_usernames:
+      - renovate[bot]
+      - dependabot[bot]
+      - github-actions[bot]
+      - vercel[bot]
+
+  path_filters:
+    - "!package-lock.json"
+    - "!**/*.pdf"
+    - "!**/*.png"
+    - "!**/*.jpg"
+    - "!**/*.avif"
+    - "!public/**/*.svg"
+    - "!.playwright-mcp/**"
+
+  path_instructions:
+    - path: "src/app/api/**"
+      instructions: "Server routes, including the AI chat. Any change here is security-sensitive: flag new endpoints, changes to what is fetched or where it is sent, and any secret or key. Contributors are not expected to touch this directory at all; say so if a PR does."
+    - path: "next.config.mjs"
+      instructions: "Routing and headers. The .md twins of every /docs page, the Accept: text/markdown negotiation for locale paths, the noindex on generated images and the security headers all live here as rewrites and header rules. Flag any change to the beforeFiles rewrites or to a header rule, and note that the proxy does NOT run for locale-prefixed paths, so locale negotiation must stay in this file."
+    - path: "src/proxy.ts"
+      instructions: "Handles Accept: text/markdown for /docs only. It does not run for the homepage or for /es and /fr paths, on purpose. Flag any attempt to extend its matcher to cover those, and any .md interception moved here from next.config.mjs (it 404s under Next 16)."
+    - path: "scripts/verify-agent-layer.mjs"
+      instructions: "The agent-layer guard. Its checks are three-state on purpose: pass, fail, and could-not-check must all be distinguishable, and could-not-check fails. Flag any change that lets a check pass when it did not run, or that removes an invariant without explanation."
+    - path: ".github/workflows/**"
+      instructions: "Treat as security-sensitive. Flag pull_request_target with a checkout of the fork, secrets exposed to fork code, unpinned third-party actions, and permissions broader than needed. The agent-layer guard boots the built site and is the merge gate; flag anything that makes it advisory."
+    - path: "src/lib/shared.ts"
+      instructions: "Frozen canonical strings: the thesis line, the CareerOps definition in EN and ES, the manifesto signature, the stats floors and the release fallback. The thesis and the definition are byte-identical across the site and the core repo by design. Flag ANY edit to their text, however small, and any floor lowered below its current value."
+    - path: "src/lib/manifesto-text.ts"
+      instructions: "The signed manifesto, frozen. The English body is verified byte-for-byte against the core repo's MANIFESTO.md by the guard; the Spanish body is the canonical Spanish text (the core has no Spanish original). Flag any edit to either body as a change to a signed document."
+    - path: "src/lib/schema.ts"
+      instructions: "The Schema.org entity graph. Organization and Person are two entities: Organization.sameAs must carry the project's accounts (x.com/careeropshq, the npm scope @santifer/career-ops, the org repo), Person.sameAs the founder's. Flag any sameAs that points at a URL that does not resolve, any Person account placed under Organization or vice versa, and any dateModified that is not conditioned on a live fetch."
+    - path: "src/lib/llms-index.ts"
+      instructions: "Builds /llms.txt, the index AI assistants ingest. Every figure that moves (stars, members, release) must carry an as-of date and must be omitted, never faked, when its live fetch failed. Flag any hand-typed number, any figure without a date, and any relative link (all links must be absolute .md mirrors)."
+    - path: "src/app/AGENTS.md/**"
+      instructions: "A thin pointer to the core repo's AGENTS.md. It is never a copy. Flag any content that duplicates instructions from the core instead of linking to them."
+    - path: "src/app/(home)/**"
+      instructions: "The homepage, including the hero. Visual changes are the maintainer's decision and are not accepted from pull requests without prior discussion. Flag any change to layout, colors, backdrop, scrim or typography and say explicitly that it needs the maintainer's sign-off before review continues."
+    - path: "content/**/*.mdx"
+      instructions: "The guides. They describe what career-ops-hq/career-ops ships on main today, never what an open PR there proposes. Check commands, flags, script names and the A to H block letters against the core; flag drift. The scoring scale is named '1-5' (decimal thresholds like 4.0 are values and stay). The brand is 'career-ops' lowercase with a hyphen; 'CareerOps' names the practice. Flag hand-typed project numbers (stars, members): they belong to live fetches, not prose."
+    - path: "content/**/*.{es,fr}.mdx"
+      instructions: "Translations. Each carries translationHash of its English source. If the English sibling changes in the same PR, the hash must be restamped (node .i18n/hash.mjs <english-file>) or the PR must say the translation is now stale. Flag a changed English page whose es/fr siblings were neither updated nor declared stale. Non-translatables (command names, flags, file paths, the thesis line) must match the English exactly."
+    - path: "CONTRIBUTING.md"
+      instructions: "Public contributor rules. Flag anything that contradicts .github/copilot-instructions.md or the CODEOWNERS comment."
+
+  tools:
+    gitleaks: { enabled: true }
+    trufflehog: { enabled: true }
+    presidio: { enabled: true }        # no real personal data in examples
+    actionlint: { enabled: true }
+    zizmor: { enabled: true }
+    shellcheck: { enabled: true }      # templates/og-compare-generator.sh
+    yamllint: { enabled: true }
+    osvScanner: { enabled: true }
+    semgrep: { enabled: true }
+    github-checks: { enabled: true, timeout_ms: 900000 }
+    eslint: { enabled: false }         # this repo has no ESLint config or dependency; enabling it is noise
+    golangci-lint: { enabled: false }  # no Go here
+    markdownlint: { enabled: false }   # 95 MDX pages: style noise, not review
+    languagetool: { enabled: false }
+    vale: { enabled: false }
+    ast-grep: { enabled: false }
+
+  finishing_touches:
+    docstrings: { enabled: false }
+    unit_tests: { enabled: false }
+    simplify: { enabled: false }
+    autofix: { enabled: false }       # no bot pushes to a contributor's branch
+    fix_ci: { enabled: false }
+    resolve_merge_conflict: { enabled: false }
+
+  pre_merge_checks:
+    docstrings: { mode: off }
+    title:
+      mode: warning
+      requirements: "Conventional Commits prefix (feat, fix, docs, chore, i18n, revert) followed by a scope in parentheses when the change is confined to one area, then a factual summary."
+    description:
+      mode: warning
+    issue_assessment:
+      mode: warning
+    custom_checks:
+      - name: "Frozen strings untouched"
+        mode: error
+        instructions: "Fail if the PR changes the text of MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES or MANIFESTO_SIGNATURE in src/lib/shared.ts, or either body in src/lib/manifesto-text.ts. These are signed or canonical strings; a change is a decision the maintainer makes, not a review comment."
+      - name: "No hand-typed project numbers"
+        mode: error
+        instructions: "Fail if the diff adds a star count, member count, contributor count or download count typed into prose or markdown. Those figures come from live fetches with an as-of date. A historical, dated fact (for example the founder's 740 listings evaluated) is fine."
+      - name: "Translations restamped or declared stale"
+        mode: warning
+        instructions: "Warn if an English content/**/*.mdx page changes and a sibling .es.mdx or .fr.mdx exists that was neither modified in this PR nor mentioned in the description as stale."
+      - name: "No personal data"
+        mode: error
+        instructions: "Fail if the diff contains real personal data: a person's real name paired with contact details, real emails, phone numbers, or a real CV. Sample data must use obvious placeholders."
+      - name: "Visual change needs the maintainer"
+        mode: warning
+        instructions: "Warn if the PR changes layout, colors, backdrop, scrim or typography under src/app/(home) or in global.css, unless the description says the maintainer asked for it."
+      - name: "Agent-operated PR disclosure"
+        mode: warning
+        instructions: "If the PR author is a coding agent (branch copilot/* or author app/copilot-swe-agent), warn unless the description contains the sections '## AI assistance' and '## Human review'."
+
+  labeling_instructions:
+    - label: "documentation"
+      instructions: "Apply when the PR changes anything under content/ or a page's prose."
+    - label: "enhancement"
+      instructions: "Apply when the PR adds a page, a section, a route or a capability to the site."
+    - label: "bug"
+      instructions: "Apply when the PR fixes something that was wrong: a broken link, a guide that described behavior the tool no longer has, a 404, a wrong figure."
+
+chat:
+  auto_reply: true
+  allow_non_org_members: true
+  art: false
+
+knowledge_base:
+  opt_out: false
+  web_search: { enabled: true }
+  learnings: { scope: auto, approval_delay: 0 }
+  issues: { scope: auto }
+  pull_requests: { scope: auto }
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "CONTRIBUTING.md"
+      - ".github/copilot-instructions.md"
+  linked_repositories:
+    - repository: career-ops-hq/career-ops
+      instructions: "The tool this site documents. When reviewing a guide, check commands, flags, script names and block letters against what main ships there. A guide is wrong if it describes a flag or behavior that repo does not have."
+
+issue_enrichment:
+  auto_enrich: { enabled: false }
+  planning:
+    enabled: true
+    auto_planning: { enabled: false }
+  labeling:
+    auto_apply_labels: false
