@@ -8,7 +8,7 @@ export const docsContentRoute = '/llms.mdx/docs';
 // `career-ops` repo (that mismatch shipped 404 links on all docs pages
 // until 2026-07-06).
 export const gitConfig = {
-  user: 'santifer',
+  user: 'career-ops-hq',
   repo: 'career-ops-docs',
   branch: 'main',
 };
