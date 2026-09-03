@@ -1,0 +1,17 @@
+# CODEOWNERS — auto-requests @santifer as reviewer on every path.
+#
+# EFFECT, verified 2026-09-03: this file ROUTES review, it does not BLOCK
+# merges. `main` in this repository has no branch protection and no rulesets,
+# so no code-owner approval is required before merging; anyone with write
+# access can merge without it. It only becomes a gate if branch protection
+# with "require review from code owners" is turned on — do not read this
+# file as one until then. (The core repo is different: there, CODEOWNERS
+# blocks.)
+#
+# Today the only account with write access is @santifer (admin). Write is
+# granted person by person, case by case, with the maintainer's OK — never
+# to a team. Last matching pattern wins.
+
+*                 @santifer
+/.github/         @santifer
+/src/app/api/     @santifer
