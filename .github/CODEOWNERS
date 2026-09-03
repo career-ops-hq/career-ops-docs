@@ -1,16 +1,19 @@
-# CODEOWNERS — auto-requests @santifer as reviewer on every path.
+# CODEOWNERS — every path requires @santifer's approval before merging.
 #
-# EFFECT, verified 2026-09-03: this file ROUTES review, it does not BLOCK
-# merges. `main` in this repository has no branch protection and no rulesets,
-# so no code-owner approval is required before merging; anyone with write
-# access can merge without it. It only becomes a gate if branch protection
-# with "require review from code owners" is turned on — do not read this
-# file as one until then. (The core repo is different: there, CODEOWNERS
-# blocks.)
+# EFFECT, verified by API on 2026-09-03 after branch protection was enabled
+# on `main`: this file BLOCKS, it does not merely route. A pull request that
+# touches any owned path — which is every path — cannot be merged until a
+# code owner approves it. Required alongside it: 1 approving review and the
+# `guard` status check (agent-layer-guard.yml) green.
 #
-# Today the only account with write access is @santifer (admin). Write is
-# granted person by person, case by case, with the maintainer's OK — never
-# to a team. Last matching pattern wins.
+# enforce_admins is OFF on purpose. @santifer is the only code owner and
+# GitHub does not let an author approve their own pull request, so without
+# the admin bypass no PR opened by @santifer could ever merge. Admin merges
+# therefore use --admin and show up as a bypass in the PR timeline. The gate
+# protects against everyone else; the admin's own gates live elsewhere.
+#
+# Write access is granted person by person, case by case, with the
+# maintainer's OK — never to a team. Last matching pattern wins.
 
 *                 @santifer
 /.github/         @santifer
