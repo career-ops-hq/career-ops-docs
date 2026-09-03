@@ -4,7 +4,7 @@
 # (career-ops-hq/career-ops#3769), adapted to what this repo actually is.
 # Docs: https://docs.coderabbit.ai/reference/configuration
 language: en-US
-tone_instructions: "Be specific and brief. Cite file:line. Use colons, not dashes. Warm to first-time contributors. Prefer one precise finding over three vague ones. This is a docs site: a sentence that says something the tool no longer does is a bug; a sentence that merely reads differently is not."
+tone_instructions: "Be specific and brief. Cite file:line. Use colons, not dashes. Warm to first-time contributors. One precise finding beats three vague ones. A sentence that says something the tool no longer does is a bug; one that merely reads differently is not."
 
 reviews:
   profile: assertive
