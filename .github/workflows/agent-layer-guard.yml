@@ -8,37 +8,78 @@
 # index with absolute .md links, no escaped entities, no leaked JSX, no relative
 # links, and the mirror left crawlable. agentic-seo runs afterwards as a
 # non-blocking informational score for the Discovery checks it does evaluate.
+#
+# WHY THE SCOPE TEST LIVES IN THE JOB AND NOT IN `on.paths` (4 Sep 2026).
+# `guard` is a required status check on main. A required check that is filtered
+# out by `on.paths` never reports at all, and GitHub reads "never reported" as
+# "not yet satisfied" rather than "not applicable" — so every pull request that
+# touched only public/, the README, package.json or .github/ was unmergeable
+# forever, with no failing check to point at. Refreshing a PDF in public/ hit
+# exactly that and could only be landed with --admin, which is the one thing a
+# branch protection exists to stop being routine.
+#
+# So the workflow now runs on every pull request and decides scope inside the
+# job. Out of scope means the expensive steps are skipped and the check reports
+# green, which is a real verdict of "these invariants cannot have moved". The
+# scope list is the former `on.paths` list unchanged: every agent-layer surface
+# is a route under src/app/, so nothing in public/ can regress it.
 name: Agent-layer guard
 
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'src/**'
-      - 'content/**'
-      - 'next.config.mjs'
-      - 'scripts/verify-agent-layer.mjs'
-      - '.github/workflows/agent-layer-guard.yml'
   push:
     branches: [main]
-    paths:
-      - 'src/**'
-      - 'content/**'
-      - 'next.config.mjs'
-      - 'scripts/verify-agent-layer.mjs'
 
 jobs:
   guard:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Does this change touch the agent layer?
+        id: scope
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            RANGE="origin/${{ github.base_ref }}...HEAD"
+          else
+            case "${{ github.event.before }}" in
+              ''|0000000000000000000000000000000000000000) RANGE="" ;;
+              *) RANGE="${{ github.event.before }}..HEAD" ;;
+            esac
+          fi
+
+          # No trustworthy range (force push, first commit on a branch): don't
+          # guess the scope, run the guard. The fail-safe direction is to work.
+          if [ -z "$RANGE" ] || ! git rev-parse "${RANGE%%.*}" >/dev/null 2>&1; then
+            echo "range unusable, running the guard"
+            echo "relevant=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CHANGED=$(git diff --name-only "$RANGE")
+          echo "changed files:"; echo "$CHANGED" | sed 's/^/  /'
+
+          if echo "$CHANGED" | grep -qE '^(src/|content/|next\.config\.mjs$|scripts/verify-agent-layer\.mjs$|\.github/workflows/agent-layer-guard\.yml$)'; then
+            echo "relevant=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "nothing here can move the agent-layer invariants"
+            echo "relevant=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.scope.outputs.relevant == 'true'
         with:
           node-version: 22
           cache: npm
       - run: npm ci
+        if: steps.scope.outputs.relevant == 'true'
       - run: npm run build
+        if: steps.scope.outputs.relevant == 'true'
       - name: Boot server, run the guard (gate) + agentic-seo (informational)
+        if: steps.scope.outputs.relevant == 'true'
         run: |
           PORT=3999 npm start &
           SERVER_PID=$!
