@@ -6,6 +6,11 @@
 // maintainer's matcher v2.4.2 — changing one character breaks his
 // template-vs-edited detection; IPC him FIRST.
 
+// El repo se actualizo al identificador canonico (4-sep). Lo congelado es el
+// slug de categoria y EMPTY_BODY, no la ruta: el ledger-bot usa context.repo
+// en sus once llamadas y dispara en el repo donde corre, asi que no hay
+// identificador fijado que romper. Verificado ademas que el 301 del enlace
+// viejo preserva el body intacto, que es lo que el matcher lee byte a byte.
 export const DISCUSSION_CATEGORY = 'signatures';
 
 export const EMPTY_BODY =
@@ -13,5 +18,5 @@ export const EMPTY_BODY =
 
 export function signOnGitHubUrl(body?: string): string {
   const clean = (body ?? '').trim();
-  return `https://github.com/santifer/career-ops/discussions/new?category=${DISCUSSION_CATEGORY}&title=${encodeURIComponent('Signing the manifesto')}&body=${encodeURIComponent(clean || EMPTY_BODY)}`;
+  return `https://github.com/career-ops-hq/career-ops/discussions/new?category=${DISCUSSION_CATEGORY}&title=${encodeURIComponent('Signing the manifesto')}&body=${encodeURIComponent(clean || EMPTY_BODY)}`;
 }
