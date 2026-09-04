@@ -105,7 +105,7 @@ export default function MethodologyPage() {
               explicit override-only zone — the agent will say so, the user decides. This
               threshold is canonical: it lives in{' '}
               <a
-                href="https://github.com/santifer/career-ops/blob/main/AGENTS.md"
+                href="https://github.com/career-ops-hq/career-ops/blob/main/AGENTS.md"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -120,7 +120,7 @@ export default function MethodologyPage() {
             <p>
               A global score is the LLM&rsquo;s holistic judgement across five dimensions. The rubric is in{' '}
               <a
-                href="https://github.com/santifer/career-ops/blob/main/modes/_shared.md"
+                href="https://github.com/career-ops-hq/career-ops/blob/main/modes/_shared.md"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -218,7 +218,7 @@ export default function MethodologyPage() {
             <p>
               The full evaluation runs as Block A through G, defined in{' '}
               <a
-                href="https://github.com/santifer/career-ops/blob/main/modes/oferta.md"
+                href="https://github.com/career-ops-hq/career-ops/blob/main/modes/oferta.md"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -278,7 +278,7 @@ export default function MethodologyPage() {
             <Callout>
               The full Spanish prompt is the source of truth. Read it, fork it, audit it:{' '}
               <a
-                href="https://github.com/santifer/career-ops/blob/main/modes/oferta.md"
+                href="https://github.com/career-ops-hq/career-ops/blob/main/modes/oferta.md"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -354,7 +354,7 @@ export default function MethodologyPage() {
             <p>
               Anti-features are as load-bearing as features. From{' '}
               <a
-                href="https://github.com/santifer/career-ops/blob/main/modes/_shared.md"
+                href="https://github.com/career-ops-hq/career-ops/blob/main/modes/_shared.md"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="text-fd-foreground underline underline-offset-2"
@@ -392,7 +392,7 @@ export default function MethodologyPage() {
                 <strong>No anti-bot evasion.</strong> Patchright-style fingerprint masking was
                 considered and rejected (
                 <a
-                  href="https://github.com/santifer/career-ops/pull/235"
+                  href="https://github.com/career-ops-hq/career-ops/pull/235"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="text-fd-foreground underline underline-offset-2"
@@ -419,7 +419,7 @@ export default function MethodologyPage() {
                 only cloud touch is whichever LLM CLI the user picked. Local-only Ollama is
                 pending (
                 <a
-                  href="https://github.com/santifer/career-ops/pull/561"
+                  href="https://github.com/career-ops-hq/career-ops/pull/561"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="text-fd-foreground underline underline-offset-2"
@@ -455,7 +455,7 @@ export default function MethodologyPage() {
               </li>
               <li>
                 <a
-                  href="https://github.com/santifer/career-ops/pull/561"
+                  href="https://github.com/career-ops-hq/career-ops/pull/561"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="text-fd-foreground underline underline-offset-2"
@@ -477,7 +477,7 @@ export default function MethodologyPage() {
               </li>
               <li>
                 <a
-                  href="https://github.com/santifer/career-ops/pull/572"
+                  href="https://github.com/career-ops-hq/career-ops/pull/572"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="text-fd-foreground underline underline-offset-2"
@@ -568,7 +568,7 @@ export default function MethodologyPage() {
         <p className="text-center text-xs text-fd-muted-foreground">
           Source of truth:{' '}
           <a
-            href="https://github.com/santifer/career-ops/blob/main/modes/_shared.md"
+            href="https://github.com/career-ops-hq/career-ops/blob/main/modes/_shared.md"
             target="_blank"
             rel="noreferrer noopener"
             className="underline underline-offset-2"
@@ -577,7 +577,7 @@ export default function MethodologyPage() {
           </a>{' '}
           +{' '}
           <a
-            href="https://github.com/santifer/career-ops/blob/main/modes/oferta.md"
+            href="https://github.com/career-ops-hq/career-ops/blob/main/modes/oferta.md"
             target="_blank"
             rel="noreferrer noopener"
             className="underline underline-offset-2"
@@ -586,7 +586,7 @@ export default function MethodologyPage() {
           </a>{' '}
           (System Layer per{' '}
           <a
-            href="https://github.com/santifer/career-ops/blob/main/DATA_CONTRACT.md"
+            href="https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md"
             target="_blank"
             rel="noreferrer noopener"
             className="underline underline-offset-2"
