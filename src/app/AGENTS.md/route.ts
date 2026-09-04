@@ -19,7 +19,7 @@ The tool runs entirely on the user's machine, inside their AI coding CLI
 account, and no API to call on this domain — you install and run it locally.
 The canonical agent instructions ship in the repository:
 
-- https://raw.githubusercontent.com/santifer/career-ops/main/AGENTS.md (raw)
+- https://raw.githubusercontent.com/career-ops-hq/career-ops/main/AGENTS.md (raw)
 - https://github.com/career-ops-hq/career-ops/blob/main/AGENTS.md (rendered)
 - Repository: https://github.com/career-ops-hq/career-ops
 

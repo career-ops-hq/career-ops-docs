@@ -148,7 +148,7 @@ export default async function PressPage() {
     },
     {
       label: 'Repository',
-      value: 'github.com/santifer/career-ops',
+      value: 'github.com/career-ops-hq/career-ops',
     },
     {
       label: 'Wikidata',
@@ -292,7 +292,7 @@ export default async function PressPage() {
             </Link>{' '}
             · founding tag:{' '}
             <a
-              href="https://github.com/santifer/career-ops/releases/tag/manifesto-v1.0"
+              href="https://github.com/career-ops-hq/career-ops/releases/tag/manifesto-v1.0"
               target="_blank"
               rel="noreferrer noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"

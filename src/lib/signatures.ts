@@ -28,10 +28,29 @@
 // GITHUB_TOKEN (read-only) lifts the shared-IP 60 req/hr ceiling to
 // 5,000; our ISR caps calls at ~12/hr + one per wave anyway. The raw
 // URL stays as fallback: rate-limit-proof, at worst ~5 min stale.
+
+// Every `src:` stamp already written into the core's SIGNATURES.md carries the
+// pre-transfer owner, and the ledger is append-only, so those lines keep it
+// forever. Rewriting on parse is what stops the signature wall — 202 of the 221
+// old-path links the site serves — from publishing an identifier that only
+// resolves through a redirect. The ledger itself is left alone: it is the
+// maintainer's record of what was true when each signature was made.
+const LEGACY_REPO = 'https://github.com/santifer/career-ops';
+const CANONICAL_REPO = 'https://github.com/career-ops-hq/career-ops';
+
+function canonicalRepoUrl(url: string): string {
+  // Exact repo or a path under it. The `/` guard keeps career-ops-ui and its
+  // siblings out, which is the substring bug that bit the 1 Sep publish.
+  if (url === LEGACY_REPO || url.startsWith(LEGACY_REPO + '/')) {
+    return CANONICAL_REPO + url.slice(LEGACY_REPO.length);
+  }
+  return url;
+}
+
 const SIGNATURES_API_URL =
-  'https://api.github.com/repos/santifer/career-ops/contents/SIGNATURES.md';
+  'https://api.github.com/repos/career-ops-hq/career-ops/contents/SIGNATURES.md';
 const SIGNATURES_RAW_URL =
-  'https://raw.githubusercontent.com/santifer/career-ops/main/SIGNATURES.md';
+  'https://raw.githubusercontent.com/career-ops-hq/career-ops/main/SIGNATURES.md';
 
 async function fetchLedgerText(): Promise<string | null> {
   try {
@@ -145,7 +164,7 @@ function parseLine(line: string): Omit<Signature, 'ordinal'> | null {
     else if (nMatch) sig.n = parseInt(nMatch[1], 10);
     else if (field.startsWith('src:')) {
       const url = field.slice(4).trim();
-      if (/^https:\/\/github\.com\//.test(url)) sig.sourceUrl = url;
+      if (/^https:\/\/github\.com\//.test(url)) sig.sourceUrl = canonicalRepoUrl(url);
     } else if (DATE_RE.test(field)) sig.date = field;
     else if (/^[“"].*[”"]$/.test(field)) sig.evidence = field.slice(1, -1).trim();
     else if (!sig.name) sig.name = field;
@@ -244,7 +263,7 @@ export async function hasFirstContributionMark(sig: {
       },
       body: JSON.stringify({
         query:
-          'query($n:Int!){repository(owner:"santifer",name:"career-ops"){discussion(number:$n){labels(first:20){nodes{name}}}}}',
+          'query($n:Int!){repository(owner:"career-ops-hq",name:"career-ops"){discussion(number:$n){labels(first:20){nodes{name}}}}}',
         variables: { n: Number(m[1]) },
       }),
     });
@@ -270,7 +289,7 @@ export async function hasFirstContributionMark(sig: {
 export async function getLedgerLastSignedAt(): Promise<string | null> {
   try {
     const res = await fetch(
-      'https://api.github.com/repos/santifer/career-ops/commits?path=SIGNATURES.md&per_page=1',
+      'https://api.github.com/repos/career-ops-hq/career-ops/commits?path=SIGNATURES.md&per_page=1',
       { next: { revalidate: 300, tags: ['signatures'] } },
     );
     if (!res.ok) return null;

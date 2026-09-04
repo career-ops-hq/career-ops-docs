@@ -96,7 +96,7 @@ export default async function ChangelogPage() {
             Every release, in plain language. career-ops ships several times a
             week; this page reads straight from{' '}
             <a
-              href="https://github.com/santifer/career-ops/releases"
+              href="https://github.com/career-ops-hq/career-ops/releases"
               rel="noreferrer noopener"
               className="text-fd-foreground underline underline-offset-2"
             >
@@ -119,7 +119,7 @@ export default async function ChangelogPage() {
             The release feed is momentarily unavailable. Browse the full
             history on{' '}
             <a
-              href="https://github.com/santifer/career-ops/releases"
+              href="https://github.com/career-ops-hq/career-ops/releases"
               rel="noreferrer noopener"
               className="text-fd-foreground underline underline-offset-2"
             >

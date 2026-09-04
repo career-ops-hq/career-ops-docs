@@ -18,11 +18,11 @@ import { SignPreview } from '@/components/manifesto/sign-preview';
 export const revalidate = 300;
 
 const SIGNATURES_GITHUB_URL =
-  'https://github.com/santifer/career-ops/blob/main/SIGNATURES.md';
+  'https://github.com/career-ops-hq/career-ops/blob/main/SIGNATURES.md';
 const MANIFESTO_MD_URL =
-  'https://github.com/santifer/career-ops/blob/main/MANIFESTO.md';
+  'https://github.com/career-ops-hq/career-ops/blob/main/MANIFESTO.md';
 const RELEASE_TAG_URL =
-  'https://github.com/santifer/career-ops/releases/tag/manifesto-v1.0';
+  'https://github.com/career-ops-hq/career-ops/releases/tag/manifesto-v1.0';
 
 export const metadata: Metadata = {
   title: 'The CareerOps Manifesto · career-ops',

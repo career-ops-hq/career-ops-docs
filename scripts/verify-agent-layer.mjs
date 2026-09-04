@@ -42,7 +42,7 @@ async function main() {
     const { res, body, ct } = await get('/AGENTS.md');
     if (res.status !== 200) fail(`/AGENTS.md status ${res.status} (want 200)`);
     if (!ct.includes('text/markdown')) fail(`/AGENTS.md content-type "${ct}" (want text/markdown)`);
-    if (!body.includes('raw.githubusercontent.com/santifer/career-ops/main/AGENTS.md'))
+    if (!body.includes('raw.githubusercontent.com/career-ops-hq/career-ops/main/AGENTS.md'))
       fail('/AGENTS.md no longer points to the repo raw AGENTS.md');
   }
 
