@@ -33,7 +33,7 @@ export default function SustainPage() {
             career-ops is permanently free, MIT-licensed, and community-funded.
           </h1>
           <p className="mt-4 text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
-            The maintainer has other paid work. Sponsorship buys time, not direction.
+            Sponsorship funds maintenance, security fixes, releases, and documentation. It buys time, not direction.
           </p>
         </header>
 
@@ -60,11 +60,10 @@ export default function SustainPage() {
               How to sustain
             </h2>
             <p className="mt-3">
-              Become a sponsor on GitHub. Nine tiers from $1 to $1,000 per month. The
-              seven individual tiers ($1, $5, $10, $20, $50, $100, $250) are identical
-              statements of support &mdash; no perks gated. The two corporate tiers ($500
-              and $1,000) add logo placement on the README and this page as public
-              acknowledgment; nothing else changes.
+              Become a sponsor on GitHub. Every tier carries the same description and
+              the same terms: each one is a statement of support, and none of them gates a
+              perk. That is deliberate. A tier that buys something is a tier that can be
+              leaned on.
             </p>
             <p className="mt-5">
               <a
@@ -111,48 +110,24 @@ export default function SustainPage() {
 
           <section>
             <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
-              What corporate tiers get
-            </h2>
-            <ul className="mt-3 list-disc space-y-2 pl-6">
-              <li>
-                <strong>$500 Corporate Supporter.</strong>{' '}
-                Logo placement on the README and this page. Acknowledgment in major
-                release notes.
-              </li>
-              <li>
-                <strong>$1,000 Ecosystem Partner.</strong>{' '}
-                Prominent logo placement on the README and this page. Acknowledgment in
-                major releases. Invitation to private architectural discussions on
-                protocol design &mdash; input welcome, no roadmap influence.
-              </li>
-            </ul>
-            <p className="mt-4 text-fd-foreground/90">
-              The only differentiation between individual and corporate tiers is
-              acknowledgment. No premium features. No roadmap influence. The same MIT
-              license, the same anti-spray-and-pray philosophy, the same open community.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
-              Ecosystem partners
+              Corporate sponsorship
             </h2>
             <p className="mt-3">
-              Two corporate sponsorship tiers exist on GitHub Sponsors. The $500 Corporate
-              Supporter tier and the $1,000 Ecosystem Partner tier each grant logo
-              placement on the project README and this page as public acknowledgment.
+              Nothing on GitHub Sponsors buys placement, acknowledgment, or access, at any
+              amount. Corporate logo sponsorship is handled directly instead: a small
+              number of slots, each with a link that carries its own tag from the first
+              day, and a monthly report of the clicks it actually produced rather than an
+              estimate.
             </p>
             <p className="mt-3">
-              If you represent a mission-aligned organization &mdash; an open-source program
+              If you represent a mission-aligned organization, an open-source program
               office, a developer-tooling company, or a hiring-side product that respects
-              the data contract &mdash; the easiest path is the GitHub Sponsors self-serve
-              tier. For custom enterprise arrangements or larger commitments, reach out
-              via{' '}
+              the data contract, write to{' '}
               <a
-                href="mailto:hi@career-ops.org"
+                href="mailto:sponsors@career-ops.org"
                 className="text-fd-foreground underline underline-offset-2"
               >
-                hi@career-ops.org
+                sponsors@career-ops.org
               </a>
               .
             </p>
@@ -173,7 +148,7 @@ export default function SustainPage() {
         </p>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-05-16">16 May 2026</time>
+          Last updated <time dateTime="2026-09-06">6 September 2026</time>
         </p>
       </article>
     </>
