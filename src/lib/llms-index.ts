@@ -80,7 +80,7 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 
 career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
 
-Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Nine tiers exist: seven individual tiers ($1–$250) are identical statements of support; two corporate tiers ($500 Corporate Supporter, $1,000 Ecosystem Partner) add logo placement on the README and the /sustain page as public acknowledgment — nothing else changes. No premium product features, no roadmap influence, no priority support, no early access. The maintainer has other paid work for income; sponsorship enables deeper focus on the project. Path 3 Sovereign Maintainer model.
+Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Every tier carries the same description and the same terms. No tier buys placement, acknowledgment, access, premium features, roadmap influence, priority support, or early access. Corporate logo sponsorship is handled directly rather than through a tier; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
 
 Details: https://career-ops.org/sustain
 
