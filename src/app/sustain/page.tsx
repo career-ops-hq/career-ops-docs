@@ -40,8 +40,8 @@ export default function SustainPage() {
         <div className="space-y-12 text-fd-foreground/90 leading-relaxed">
           <section>
             <p>
-              career-ops is free software, MIT-licensed forever. The 14 modes, 45+ portal
-              scrapers, the five-dimension rubric, the Block A&ndash;G evaluation prompt &mdash;
+              career-ops is free software, MIT-licensed forever. Every mode, every portal
+              scraper, the five-dimension rubric, the Block A&ndash;H evaluation prompt &mdash;
               they cost nothing to install, and they never will. But sustained craft costs
               time. Time to read 250 community issues and write thoughtful responses. Time
               to investigate the edge case in <code className="font-mono text-fd-foreground">/scan</code>{' '}
