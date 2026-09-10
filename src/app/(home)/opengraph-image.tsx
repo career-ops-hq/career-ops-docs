@@ -28,12 +28,21 @@ export const alt = 'career-ops — You got the job. And it didn\'t cost you a th
 // an implicit CTA via the URL.
 export default async function OG() {
   const bannerPath = join(process.cwd(), 'public', 'og-banner.jpg');
-  const [bannerBuffer, instrumentSerifData] = await Promise.all([
+  // The font is read from disk, not fetched. A build-time fetch to
+  // fonts.gstatic.com made every deployment depend on a third party being
+  // reachable at that instant: on 7 Sep it timed out (ETIMEDOUT) and took the
+  // whole build down from a route that renders one static image. The sibling
+  // route under manifesto/s/[username] already vendors its font for the same
+  // reason. The file is the exact bytes that URL served, so the rendering is
+  // unchanged, and the path is whitelisted for file tracing in next.config.mjs.
+  const [bannerBuffer, serifBuffer] = await Promise.all([
     readFile(bannerPath),
-    fetch(
-      'https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf',
-    ).then((r) => r.arrayBuffer()),
+    readFile(join(process.cwd(), 'src/app/(home)/InstrumentSerif-Regular.ttf')),
   ]);
+  const instrumentSerifData = serifBuffer.buffer.slice(
+    serifBuffer.byteOffset,
+    serifBuffer.byteOffset + serifBuffer.byteLength,
+  ) as ArrayBuffer;
 
   const bannerDataUri = `data:image/jpeg;base64,${bannerBuffer.toString('base64')}`;
 

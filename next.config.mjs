@@ -51,6 +51,10 @@ const config = {
   // request time (undici fetch rejects file: URLs); whitelist it for
   // Vercel's file tracing so the lambda bundle includes it.
   outputFileTracingIncludes: {
+    // The home OG route reads its font from disk rather than fetching it, so
+    // the file has to be traced into the bundle or the route 500s at runtime
+    // while the build stays green.
+    '/opengraph-image': ['./src/app/(home)/*.ttf'],
     '/manifesto/s/[username]/opengraph-image': [
       './src/app/manifesto/s/[username]/*.ttf',
     ],
