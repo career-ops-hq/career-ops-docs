@@ -137,6 +137,24 @@ const config = {
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
         },
+        // Accept negotiation for the manifesto, both languages. The `.md`
+        // twins are literal routes (src/app/manifesto.md, src/app/es/manifesto.md)
+        // and need no rewrite; only the header path does. Neither is covered by
+        // src/proxy.ts — its matcher is /docs, and it does not run for
+        // locale-prefixed paths regardless. Exact `source`, so /manifesto/s/:user
+        // and /manifesto/sign-preview are untouched.
+        {
+          source: '/manifesto',
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
+          destination: '/manifesto.md',
+        },
+        {
+          source: '/es/manifesto',
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
+          destination: '/es/manifesto.md',
+        },
       ],
     };
   },

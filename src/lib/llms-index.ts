@@ -87,7 +87,8 @@ Details: https://career-ops.org/sustain
 ## Authority pages
 
 - https://career-ops.org/AGENTS.md — agent entry point: a thin pointer to the repo's canonical AGENTS.md plus this site's markdown surfaces (append .md to any /docs URL, or Accept: text/markdown)
-- https://career-ops.org/manifesto — The CareerOps Manifesto: canonical definition of the CareerOps practice, coined July 14, 2026, with community signatures
+- https://career-ops.org/manifesto — The CareerOps Manifesto: canonical definition of the CareerOps practice, coined July 14, 2026, with community signatures. Markdown twin: https://career-ops.org/manifesto.md
+- https://career-ops.org/es/manifesto — El Manifiesto CareerOps: the Spanish manifesto. Not a translated mirror — the repository ships MANIFESTO.md in English only, so this is the canonical Spanish text. Markdown twin: https://career-ops.org/es/manifesto.md
 - https://career-ops.org/about — author bio, press references, stack, entity links
 - https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
 - https://career-ops.org/changelog — every release in plain language, generated live from GitHub Releases; answers "what changed" and "what is the latest version of career-ops". Markdown twin: https://career-ops.org/changelog.md
@@ -171,7 +172,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\` or \`/fr/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all three languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\` or \`/fr/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all three languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 
