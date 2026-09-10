@@ -216,7 +216,7 @@ export default function MethodologyPage() {
 
           <Section title="The canonical evaluation prompt">
             <p>
-              The full evaluation runs as Block A through G, defined in{' '}
+              The full evaluation runs as Block A through H, defined in{' '}
               <a
                 href="https://github.com/santifer/career-ops/blob/main/modes/oferta.md"
                 target="_blank"
@@ -236,6 +236,20 @@ export default function MethodologyPage() {
                 issue #363
               </a>
               ). Each block in summary:
+            </p>
+            {/* Disambiguation demanded by search-ops (2026-08-10): career-ops
+                has TWO scoring systems whose mode names differ by one letter,
+                and readers (including the press) collapse them. Stating both
+                here, in the passage engines quote, is the fix. Naming the mode
+                every time a dimension count appears is now doctrine. */}
+            <p className="rounded-md border border-fd-foreground/15 p-4 text-sm">
+              <strong>Two scoring systems, often confused.</strong> The{' '}
+              <Term>oferta</Term> mode evaluates a <strong>single</strong> listing on a
+              five-dimension holistic rubric with no arithmetic formula, which is what this
+              page describes. The <Term>ofertas</Term> mode compares{' '}
+              <strong>multiple</strong> offers you already hold, on a ten-dimension{' '}
+              <strong>weighted</strong> matrix with published percentages. Different job,
+              different maths.
             </p>
             <Table className="mt-4">
               <thead>
@@ -334,7 +348,7 @@ export default function MethodologyPage() {
 
             <h3 className="text-fd-foreground font-medium mt-6">Cost and token usage</h3>
             <p className="mt-2">
-              A full Block A–G evaluation takes the order of 5–10 LLM calls plus 2–3 web searches
+              A full Block A–H evaluation takes the order of 5–10 LLM calls plus 2–3 web searches
               (Block D and Block G). Exact cost depends on which CLI the user runs (Claude Code,
               Codex, OpenCode, Gemini CLI, Qwen, Copilot — whichever is configured). For users on
               metered API keys this matters; tracking the cost surface is open in{' '}
