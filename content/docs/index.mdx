@@ -21,7 +21,7 @@ You do not need to know how to code. You only need to be comfortable opening a t
       <Step>
       ### AI coding assistant
 
-      Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)**, or **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — the AI coding assistant that runs this system. career-ops works with [eight CLIs first-class](/docs/supported-clis); install any one and log in before continuing.
+      Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Pi](https://github.com/earendil-works/pi)**, **[Qwen Code](https://qwen.ai/qwencode)**, or **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — the AI coding assistant that runs this system. career-ops works with [nine CLIs first-class](/docs/supported-clis); install any one and log in before continuing.
       </Step>
       <Step>
         ### Node.js 18+ (22.5+ recommended)
@@ -80,7 +80,7 @@ npx playwright install chromium
 
 From inside the `career-ops` folder, launch the AI coding CLI you installed.
 
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI", "Pi"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
@@ -111,6 +111,11 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
     gemini
     ```
   </Tab>
+  <Tab value="Pi">
+    ```bash title="Terminal"
+    pi
+    ```
+  </Tab>
 </Tabs>
 
 <Callout title="The agent will introduce itself">
@@ -122,10 +127,9 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
 </Callout>
 
 ## Step 3: Run your first evaluation
+Once the agent has onboarded you, you are ready to evaluate a real job posting. Copy the URL of any job ad and paste it into the chat. With Claude Code or Pi, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:
 
-Once the agent has onboarded you, you are ready to evaluate a real job posting. Copy the URL of any job ad and paste it into the chat. With Claude Code, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:
-
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI", "Pi"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
@@ -154,6 +158,11 @@ Once the agent has onboarded you, you are ready to evaluate a real job posting. 
   <Tab value="Gemini CLI">
     ```bash
     Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash
+    /skill:career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>
