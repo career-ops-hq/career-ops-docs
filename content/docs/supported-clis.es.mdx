@@ -3,7 +3,7 @@ title: CLIs de IA compatibles
 seoTitle: "¿Con qué CLI de IA funciona career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops es agnóstico a la IA — funciona sobre todos los principales CLIs de programación con IA, así que usas el asistente que ya pagas y nunca quedas atado a un proveedor. La lista completa y siempre actualizada vive en el repo del core."
 icon: Terminal
-translationHash: 65b2eee9925b1726
+translationHash: 5122b481c5f25621
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -16,11 +16,19 @@ El mejor CLI para career-ops es el que ya pagas. Si es Claude Code, ya está. Si
 
 ## ¿Qué CLIs son compatibles?
 
-career-ops ofrece soporte de primer nivel para **Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi y GitHub Copilot CLI** — ocho CLIs de programación con IA con mantenimiento activo. (Gemini CLI se mantiene como wrapper legacy tras su transición a Antigravity CLI.) La arquitectura es compartida: un único `AGENTS.md` canónico dirige la lógica, y unos archivos de entrada ligeros por CLI resuelven los matices de invocación de cada herramienta.
+career-ops ofrece soporte de primer nivel para **Claude Code, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi y GitHub Copilot CLI** — nueve CLIs de programación con IA con mantenimiento activo. (Gemini CLI se mantiene como wrapper legacy tras su transición a Antigravity CLI.) La arquitectura es compartida: un único `AGENTS.md` canónico dirige la lógica, y unos archivos de entrada ligeros por CLI resuelven los matices de invocación de cada herramienta.
 
 La **lista canónica y siempre actualizada — con el comando exacto para invocar career-ops en cada CLI — vive en el repo del core**, de modo que nunca se queda desfasada:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/santifer/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — la matriz completa de CLIs compatibles, archivos de entrada y cómo invocarlos (en modo interactivo y headless/batch).
+
+### Pi
+
+[Pi](https://github.com/earendil-works/pi) no necesita archivo wrapper: carga `AGENTS.md` desde el directorio de trabajo y descubre automáticamente la skill compartida en `.agents/skills/career-ops/SKILL.md`, que expone como el comando `/skill:career-ops`. Instálalo con `npm install -g --ignore-scripts @earendil-works/pi-coding-agent`. Para ejecuciones headless/batch usa `pi -p "prompt"`. Pi pide una decisión de confianza por carpeta, una sola vez, antes de leer los recursos del proyecto — confírmala en modo interactivo con `/trust` (se guarda para futuras ejecuciones) o pasa `-a`/`--approve` para confiar solo en esta ejecución.
+
+```bash title="Terminal"
+pi
+```
 
 ## ¿Cuál debería elegir?
 
