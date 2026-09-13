@@ -13,11 +13,19 @@ The best CLI for career-ops is the one you already pay for. If that is Claude Co
 
 ## Which CLIs are supported?
 
-career-ops works first-class with **Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, and GitHub Copilot CLI** — eight actively-maintained AI coding CLIs. (Gemini CLI is supported as a legacy wrapper, transitioned into Antigravity CLI.) The architecture is shared: a single canonical `AGENTS.md` drives the logic, and thin per-CLI entry files handle the invocation nuances of each tool.
+career-ops works first-class with **Claude Code, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, and GitHub Copilot CLI** — nine actively-maintained AI coding CLIs. (Gemini CLI is supported as a legacy wrapper, transitioned into Antigravity CLI.) The architecture is shared: a single canonical `AGENTS.md` drives the logic, and thin per-CLI entry files handle the invocation nuances of each tool.
 
 The **canonical, always-current list — with the exact command to invoke career-ops in each CLI — lives in the core repo** so it never drifts out of date:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/santifer/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — the full matrix of supported CLIs, entry files, and how to invoke them (interactive and headless/batch).
+
+### Pi
+
+[Pi](https://github.com/earendil-works/pi) needs no wrapper file: it loads `AGENTS.md` from the working directory and auto-discovers the shared skill at `.agents/skills/career-ops/SKILL.md`, exposed as the `/skill:career-ops` slash command. Install it with `npm install -g --ignore-scripts @earendil-works/pi-coding-agent`. For headless and batch runs, use `pi -p "prompt"`. Pi asks for a one-time per-folder trust decision before reading project resources — confirm it interactively with `/trust` (saved for future runs) or pass `-a`/`--approve` to trust them for a single run.
+
+```bash title="Terminal"
+pi
+```
 
 ## Which one should I choose?
 
