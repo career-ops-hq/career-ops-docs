@@ -329,7 +329,8 @@ export const homeEn: HomeDict = {
       a: (
         <>
           Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, and GitHub Copilot CLI — eight first-class CLIs (Gemini CLI is a
+          Kimi, Hermes Agent, and GitHub Copilot CLI — nine first-class CLIs
+          (Gemini CLI is a
           legacy wrapper). The same mode files run on all of them. Each user picks
           the CLI that fits their existing subscription and cost preferences —
           career-ops never locks you to one provider. A typical job search runs on
@@ -612,7 +613,8 @@ export const homeEs: HomeDict = {
       a: (
         <>
           Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi y GitHub Copilot CLI — ocho CLIs de primera clase (Gemini CLI es un
+          Kimi, Hermes Agent y GitHub Copilot CLI — nueve CLIs de primera clase
+          (Gemini CLI es un
           wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
           usuario elige el CLI que encaja con su suscripción y sus preferencias de
           coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de
@@ -917,7 +919,8 @@ export const homeFr: HomeDict = {
       a: (
         <>
           Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi et GitHub Copilot CLI — huit CLIs de premier plan (Gemini CLI est
+          Kimi, Hermes Agent et GitHub Copilot CLI — neuf CLIs de premier plan
+          (Gemini CLI est
           un wrapper legacy). Les mêmes fichiers de mode fonctionnent sur tous.
           Chacun choisit le CLI qui correspond à son abonnement et à ses
           préférences de coût — career-ops ne vous enferme jamais chez un seul
