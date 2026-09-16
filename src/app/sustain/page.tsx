@@ -136,6 +136,33 @@ export default function SustainPage() {
               render placeholders to look bigger than we are.
             </p>
           </section>
+
+          {/* Kept separate from the paid section on purpose. Tools given through
+              an open-source program are not sponsorship and must not read as a
+              logo slot someone bought: mixing the two would make a real sponsor's
+              placement look cheaper and a donated licence look purchased. Same
+              vocabulary as the rest of the page — what it funds, never who it
+              funds. */}
+          <section>
+            <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+              In-kind support
+            </h2>
+            <p className="mt-3">
+              Tooling provided to the maintainer through open source programs. It funds
+              time, not direction, like everything else on this page.
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-6">
+              {/* Deliberately unlinked. openai.com blocks automated checks, and the
+                  one reachable candidate (developers.openai.com/codex/open-source)
+                  documents Codex's open-source components, not the grant programme.
+                  A wrong link on the line that credits a benefactor is worse than
+                  none; name the programme and let the reader search it. */}
+              <li>
+                OpenAI, Codex for Open Source: six months of ChatGPT Pro, from
+                August 2026.
+              </li>
+            </ul>
+          </section>
         </div>
 
         <hr className="my-12 w-32 mx-auto border-t-2 border-fd-foreground/20 lg:w-40" />
