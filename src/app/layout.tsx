@@ -123,7 +123,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 </a>
                 <span className="flex items-center gap-3 ml-1">
                   <a
-                    href="https://github.com/santifer/career-ops"
+                    href="https://github.com/career-ops-hq/career-ops"
                     rel="me noreferrer noopener"
                     aria-label="GitHub"
                     className="hover:text-fd-foreground transition-colors"
@@ -166,11 +166,11 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
             <div className={`${inter.className} border-t border-fd-foreground/5 py-3 text-xs font-mono text-fd-muted-foreground/70 tracking-wide text-center`}>
               Official site: career-ops.org &middot; GitHub:{' '}
               <a
-                href="https://github.com/santifer/career-ops"
+                href="https://github.com/career-ops-hq/career-ops"
                 rel="me noreferrer noopener"
                 className="hover:text-fd-foreground transition-colors"
               >
-                santifer/career-ops
+                career-ops-hq/career-ops
               </a>{' '}
               &middot; Discord:{' '}
               <a

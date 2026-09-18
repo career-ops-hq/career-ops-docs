@@ -57,7 +57,7 @@ export default function CompareIndexPage() {
       <p className="mt-12 text-sm text-fd-muted-foreground text-center">
         More comparisons coming soon. Want to suggest one?{' '}
         <a
-          href="https://github.com/santifer/career-ops/discussions"
+          href="https://github.com/career-ops-hq/career-ops/discussions"
           className="text-fd-foreground underline underline-offset-2"
           rel="noreferrer noopener"
         >

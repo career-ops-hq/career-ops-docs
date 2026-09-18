@@ -64,6 +64,6 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: 'What is the difference between career-ops and CareerOps?',
     answer:
-      'CareerOps (one word) names the practice; career-ops (hyphen, lowercase) is the open-source project — its first reference implementation. The CareerOps Manifesto defines the practice. In plain terms: career-ops is the MIT-licensed, AI-powered job search system that runs locally inside your AI coding CLI, published at career-ops.org and github.com/santifer/career-ops. CareerOps is the practice it embodies — running a job search the way engineers run production — named and defined in The CareerOps Manifesto (career-ops.org/manifesto), signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both trace back to the same repository.',
+      'CareerOps (one word) names the practice; career-ops (hyphen, lowercase) is the open-source project — its first reference implementation. The CareerOps Manifesto defines the practice. In plain terms: career-ops is the MIT-licensed, AI-powered job search system that runs locally inside your AI coding CLI, published at career-ops.org and github.com/career-ops-hq/career-ops. CareerOps is the practice it embodies — running a job search the way engineers run production — named and defined in The CareerOps Manifesto (career-ops.org/manifesto), signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both trace back to the same repository.',
   },
 ];

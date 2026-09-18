@@ -35,7 +35,7 @@ import { trackCertVia } from '@/lib/track';
 export const revalidate = 300;
 
 const SIGNATURES_GITHUB_URL =
-  'https://github.com/santifer/career-ops/blob/main/SIGNATURES.md';
+  'https://github.com/career-ops-hq/career-ops/blob/main/SIGNATURES.md';
 
 // Warm near-black + cream + amber — same palette as the OG cards, fixed
 // dark regardless of site theme: the certificate is an artifact, not a
