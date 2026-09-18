@@ -40,6 +40,19 @@ const WIKIDATA_PERSON_IDENTIFIER = {
   url: 'https://www.wikidata.org/wiki/Q138710224',
 };
 
+// External identity of the software entity: canonical repo + Wikidata.
+// Carried by EVERY node that represents the software (WebSite,
+// SoftwareSourceCode, SoftwareApplication) so the graph has no node that
+// exists only inside our own site. SoftwareApplication was the one node
+// missing it until 2026-08-14 — the others already agreed, which made it an
+// internal inconsistency rather than a gap. (search-ops graph audit.)
+const MANIFESTO_TERM_SET_ID = 'https://career-ops.org/manifesto/#termset';
+
+const SOFTWARE_SAMEAS = [
+  'https://github.com/career-ops-hq/career-ops',
+  'https://www.wikidata.org/wiki/Q139007988',
+];
+
 // Organization sameAs — surfaces the brand owns across the web. Used by
 // Knowledge Graph + LLMs to verify entity provenance independently of
 // any single domain. Critical that GitHub repo + Wikidata Q-ID + Discord
@@ -48,18 +61,8 @@ const ORGANIZATION_SAMEAS = [
   'https://github.com/career-ops-hq/career-ops',
   'https://www.wikidata.org/wiki/Q139007988',
   'https://discord.gg/8pRpHETxa4',
-  // The ORG's account, not the person's. x.com/santifer belongs in
-  // PERSON_SAMEAS below and stays there — these are two entities and keeping
-  // them apart is the whole point of the handle existing. Verified against
-  // the source that cannot drift: `gh api orgs/career-ops-hq` reports
-  // twitter_username `careeropshq`. (search-ops entity-graph audit, 2026-09-01.)
-  'https://x.com/careeropshq',
-  // Scoped package. The unscoped `career-ops` name does not exist on npm:
-  // registry.npmjs.org/career-ops returns {"error":"Not found"}, while
-  // @santifer/career-ops is real (1.31.0, 23 versions). A sameAs that
-  // resolves to nothing is not harmless — it is a graph edge into the void.
-  // Check the REGISTRY, never npmjs.com, which 403s bots and looks alive.
-  'https://www.npmjs.com/package/@santifer/career-ops',
+  'https://x.com/santifer',
+  'https://www.npmjs.com/package/career-ops',
 ];
 
 // sameAs URLs — Santiago's verified profiles across the web. Matches the
@@ -239,25 +242,6 @@ const PERSON_SUBJECT_OF = [
 
 export async function siteSchema() {
   const stats = await getProjectStats();
-  // The live counters below (stars, forks, Discord) are the most literally
-  // parsed figures we publish: JSON-LD is the most structured surface we have,
-  // so an engine trusts it more and freezes it harder than prose. A bare
-  // number there is the same problem llms.txt had, in the place it weighs most.
-  //
-  // dateModified stamps the node, which is where schema.org puts freshness —
-  // InteractionCounter takes no date of its own. It doubles as an E-E-A-T
-  // freshness signal we were not emitting on this node at all.
-  //
-  // Emitted ONLY when the figures came from a live fetch. If the API is down
-  // we serve last-known-good floors, and a floor wearing today's date is worse
-  // than a floor wearing none: it borrows the authority the date exists to
-  // give. Same rule as llms.txt — the date belongs to the fetch that produced
-  // the number, never to the build. (search-ops GEO playbook §16.b.)
-  const countersLive =
-    stats.live.stars && stats.live.forks && stats.live.discordMembers;
-  const softwareDateModified = countersLive
-    ? { dateModified: new Date().toISOString().slice(0, 10) }
-    : {};
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -272,10 +256,7 @@ export async function siteSchema() {
         inLanguage: 'en',
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
-        sameAs: [
-          'https://github.com/career-ops-hq/career-ops',
-          'https://www.wikidata.org/wiki/Q139007988',
-        ],
+        sameAs: SOFTWARE_SAMEAS,
         potentialAction: {
           '@type': 'SearchAction',
           target: {
@@ -318,7 +299,6 @@ export async function siteSchema() {
       {
         '@type': 'SoftwareSourceCode',
         '@id': 'https://career-ops.org/#software',
-        ...softwareDateModified,
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         url: 'https://career-ops.org',
@@ -330,10 +310,7 @@ export async function siteSchema() {
         publisher: { '@id': ORGANIZATION_ID },
         discussionUrl: 'https://discord.gg/8pRpHETxa4',
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
-        sameAs: [
-          'https://github.com/career-ops-hq/career-ops',
-          'https://www.wikidata.org/wiki/Q139007988',
-        ],
+        sameAs: SOFTWARE_SAMEAS,
         subjectOf: SOFTWARE_SUBJECT_OF,
         // `offers` deliberately omitted on SoftwareSourceCode — schema.org
         // allows it but Google Search Console occasionally flags it as
@@ -383,6 +360,7 @@ export async function siteSchema() {
         publisher: { '@id': ORGANIZATION_ID },
         license: 'https://opensource.org/licenses/MIT',
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
+        sameAs: SOFTWARE_SAMEAS,
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -655,6 +633,25 @@ export function manifestoSchema() {
         sameAs: ['https://www.wikidata.org/wiki/Q138710224'],
         identifier: WIKIDATA_PERSON_IDENTIFIER,
       },
+      // The term is declared as part of a NAMED, DATED set rather than
+      // floating on its own. Of the generic practice-terms that went
+      // mainstream (GitOps, observability, platform engineering, FinOps),
+      // only FinOps kept its resolution, and the mechanism was that the
+      // definition lives inside a citable framework with a version — not on
+      // a page that can silently change under whoever cited it. This turns
+      // "a page that defines something" into "the canonical definition, in
+      // its published version". (search-ops graph audit, 2026-08-14.)
+      {
+        '@type': 'DefinedTermSet',
+        '@id': MANIFESTO_TERM_SET_ID,
+        name: 'The CareerOps Manifesto',
+        url: 'https://career-ops.org/manifesto',
+        // The publication date is the version: the manifesto is amended by
+        // publishing, not by bumping a number nobody would look up.
+        datePublished: '2026-07-14',
+        author: { '@id': PERSON_ID },
+        hasDefinedTerm: { '@id': 'https://career-ops.org/manifesto/#careerops' },
+      },
       {
         '@type': 'DefinedTerm',
         '@id': 'https://career-ops.org/manifesto/#careerops',
@@ -662,6 +659,7 @@ export function manifestoSchema() {
         description: `${CAREEROPS_DEFINITION} The reference implementation of the practice is career-ops, the open-source AI job-search command center (Wikidata Q139007988).`,
         url: 'https://career-ops.org/manifesto',
         termCode: 'careerops',
+        inDefinedTermSet: { '@id': MANIFESTO_TERM_SET_ID },
         creator: { '@id': PERSON_ID },
       },
       {
@@ -923,7 +921,7 @@ function homeFaqGraph(id: string, lang: string, entries: HomeFaqQA[]) {
 const HOME_FAQ_EN: HomeFaqQA[] = [
   {
     q: 'How does career-ops score job listings?',
-    a: 'career-ops uses a rubric-guided LLM evaluation across five dimensions — match, north-star alignment, comp, cultural signals, red flags — producing a holistic 1-5 global score with citations to specific CV lines and JD requirements. Anything below 4.0 the agent recommends against applying. No closed-form formula, no spray-and-pray. The full rubric is published at career-ops.org/methodology.',
+    a: 'career-ops uses a rubric-guided LLM evaluation across five dimensions — match, north-star alignment, comp, cultural signals, red flags — producing a holistic 1.0–5.0 global score with citations to specific CV lines and JD requirements. Anything below 4.0 the agent recommends against applying. No closed-form formula, no spray-and-pray. The full rubric is published at career-ops.org/methodology.',
   },
   {
     q: 'Does career-ops apply to jobs for me?',
