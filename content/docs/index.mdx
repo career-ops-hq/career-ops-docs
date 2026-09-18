@@ -121,6 +121,14 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
   Some CLIs (Claude Code, for example) ask whether you trust the files in a new folder the first time you open it. That prompt comes from the CLI itself, not from career-ops — say yes to continue. The career-ops onboarding starts right after.
 </Callout>
 
+<Callout type="warn" title="Paying for Claude Pro or Max? Check what this session is billing">
+  Run `node doctor.mjs` from the `career-ops` folder before your first evaluation. It reports your billing source in one line.
+
+  If `ANTHROPIC_API_KEY` is set in your environment, **your CLI uses it and bills per token, even while you pay for Pro or Max.** That precedence is Claude Code's, not career-ops': the doctor only detects it and tells you. To use your subscription instead, remove the `export ANTHROPIC_API_KEY=...` line from `~/.zshrc`, `~/.bashrc`, `~/.profile` or a project `.env`, restart your terminal, and run `/login`. If you meant to use API credits, nothing is wrong.
+
+  The other CLIs each set their own subscription-versus-key rule, which career-ops does not check. See [the FAQ](/docs/faq) for the full answer.
+</Callout>
+
 ## Step 3: Run your first evaluation
 
 Once the agent has onboarded you, you are ready to evaluate a real job posting. Copy the URL of any job ad and paste it into the chat. With Claude Code, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:

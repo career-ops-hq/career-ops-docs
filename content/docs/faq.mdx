@@ -21,6 +21,20 @@ career-ops has no paid plans, no tiers, no trials — it is 100% free and MIT-li
 
 No. career-ops is AI-agnostic — Claude Code is one engine among several, not a requirement. You can run the whole pipeline for free with OpenCode plus a free provider, a local model via Ollama, or the built-in OpenRouter runner (`npm run or`). If you started on a paid plan and ran out of tokens mid-search, switching to a free engine takes minutes and leaves your data untouched — see [Set up a free AI engine](/docs/free-ai-engine).
 
+## I pay for Claude Pro or Max. Why is career-ops billing my API credits?
+
+Run `node doctor.mjs` from the `career-ops` folder. It tells you which one this session is using, in one line, before you spend anything else.
+
+The rule is not ours: **your CLI decides, and `ANTHROPIC_API_KEY` wins.** If that variable is set in your environment, Claude Code bills per token even while you are paying for Pro or Max. career-ops does not choose your billing source; it only detects it and warns you. When the key is present, the doctor says:
+
+> ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max.
+
+To go back to your subscription, remove the `export ANTHROPIC_API_KEY=...` line from `~/.zshrc`, `~/.bashrc`, `~/.profile` or a project `.env`, restart your terminal, and run `/login`. Batch runs are the exception: `claude -p` workers do not use the interactive login, so they need `claude setup-token` exported as `CLAUDE_CODE_OAUTH_TOKEN`.
+
+If you meant to use API credits, nothing is wrong and there is nothing to do.
+
+This applies to Anthropic engines. The other CLIs (Codex, OpenCode, Copilot, Gemini, Qwen) each set their own subscription-versus-key rule, and career-ops does not check those — see your CLI's own documentation.
+
 ## How much does career-ops cost to run per month?
 
 Only evaluation costs anything, and it can be $0. Scanning for jobs consumes zero AI tokens, so discovering roles is always free; only evaluating a listing calls the model. Three ways run the whole pipeline for nothing: a local model via Ollama, OpenRouter's free models (`npm run or`), or the Antigravity free tier. On a cheap paid model like DeepSeek V3 (with prompt caching) an evaluation costs well under a cent, so a few cents covers dozens of listings. If you already have a Claude subscription the marginal cost is effectively $0; on the raw API, budget roughly $0.05 to $0.10 per evaluation (an estimate that varies with listing length). career-ops itself is free forever, MIT-licensed with no fee and no tier — you only ever pay your AI provider, if at all. The [Set up a free AI engine](/docs/free-ai-engine) guide walks through the $0 paths.
