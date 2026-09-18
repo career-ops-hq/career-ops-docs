@@ -1,0 +1,26 @@
+# Prepares the environment for Copilot cloud agent sessions.
+# Mirrors agent-layer-guard.yml: same Node, same install. `npm ci` runs the
+# fumadocs-mdx postinstall on purpose — it is first-party and generates the
+# content index the build needs. This file stays under CODEOWNERS like every
+# other workflow.
+name: Copilot setup steps
+
+on:
+  workflow_dispatch:
+  push:
+    paths: [.github/workflows/copilot-setup-steps.yml]
+  pull_request:
+    paths: [.github/workflows/copilot-setup-steps.yml]
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
