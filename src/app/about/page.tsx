@@ -273,11 +273,11 @@ export default function AboutPage() {
             </a>
             . The canonical source repository is{' '}
             <a
-              href="https://github.com/santifer/career-ops"
+              href="https://github.com/career-ops-hq/career-ops"
               rel="me noreferrer noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
-              github.com/santifer/career-ops
+              github.com/career-ops-hq/career-ops
             </a>
             . There is no commercial company behind the project, no signup wall, and no other
             domain. If you landed here through a different URL claiming to be career-ops, this

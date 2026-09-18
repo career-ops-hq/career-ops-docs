@@ -40,7 +40,7 @@ La mayoría debería empezar por la primera fila. El resto están aquí para cua
         Sigue la instalación de una sola línea en [opencode.ai](https://opencode.ai). Corre en tu terminal, como los demás CLI de IA.
       </Step>
       <Step title="Elige un proveedor gratuito">
-        Regístrate en cualquier proveedor con free tier y copia tu API key. Opciones gratuitas populares que usa la comunidad: **OpenRouter** (modelos etiquetados `:free`), **Google AI Studio** (free tier de Gemini) y endpoints compatibles con OpenAI como el free tier de **Nvidia**. La [guía de presupuesto](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) mantiene la lista actualizada de modelos que rinden bien.
+        Regístrate en cualquier proveedor con free tier y copia tu API key. Opciones gratuitas populares que usa la comunidad: **OpenRouter** (modelos etiquetados `:free`), **Google AI Studio** (free tier de Gemini) y endpoints compatibles con OpenAI como el free tier de **Nvidia**. La [guía de presupuesto](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) mantiene la lista actualizada de modelos que rinden bien.
       </Step>
       <Step title="Apunta OpenCode hacia él">
         Define tu clave y la URL base como variables de entorno y luego abre OpenCode dentro de la carpeta de career-ops:
@@ -75,7 +75,7 @@ Olvídate de los modelos diminutos de 7–8B — fallan con el formato de scorin
 ollama pull qwen2.5-coder:32b
 ```
 
-Después apunta tu CLI de IA (OpenCode funciona bien aquí) al endpoint local de Ollama, o usa el evaluador local integrado que describe la [guía de presupuesto](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md).
+Después apunta tu CLI de IA (OpenCode funciona bien aquí) al endpoint local de Ollama, o usa el evaluador local integrado que describe la [guía de presupuesto](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md).
 
 ## Vía 4 — El atajo de un solo comando: `npm run or`
 
@@ -91,7 +91,7 @@ También hay variantes específicas — `npm run or:scan`, `or:eval`, `or:apply`
 ---
 
 <Callout title="Para desarrolladores — ajusta modelos y coste">
-¿Quieres las recomendaciones de modelos mantenidas al día, ejemplos por proveedor, evaluadores independientes (`node openai-eval.mjs`, `node ollama-eval.mjs`) y flags para ahorrar tokens? La guía **[Running on a Budget](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** del repo core entra a fondo. career-ops es totalmente agnóstico al modelo — apúntalo a cualquier endpoint compatible con OpenAI sin cambiar una línea de código.
+¿Quieres las recomendaciones de modelos mantenidas al día, ejemplos por proveedor, evaluadores independientes (`node openai-eval.mjs`, `node ollama-eval.mjs`) y flags para ahorrar tokens? La guía **[Running on a Budget](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** del repo core entra a fondo. career-ops es totalmente agnóstico al modelo — apúntalo a cualquier endpoint compatible con OpenAI sin cambiar una línea de código.
 </Callout>
 
 ## Todo listo

@@ -37,7 +37,7 @@ Most people should start with the first row. The rest are here when you want the
         Follow the one-line install on [opencode.ai](https://opencode.ai). It runs in your terminal, like the other AI CLIs.
       </Step>
       <Step title="Pick a free provider">
-        Sign up for any provider with a free tier and copy your API key. Popular free options the community uses: **OpenRouter** (models tagged `:free`), **Google AI Studio** (Gemini free tier), and OpenAI-compatible endpoints like **Nvidia's** free tier. The [budget guide](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) keeps the up-to-date list of models that hold up well.
+        Sign up for any provider with a free tier and copy your API key. Popular free options the community uses: **OpenRouter** (models tagged `:free`), **Google AI Studio** (Gemini free tier), and OpenAI-compatible endpoints like **Nvidia's** free tier. The [budget guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) keeps the up-to-date list of models that hold up well.
       </Step>
       <Step title="Point OpenCode at it">
         Set your key and base URL as environment variables, then open OpenCode inside the career-ops folder:
@@ -72,7 +72,7 @@ Skip the tiny 7–8B models — they fail the scoring format and produce generic
 ollama pull qwen2.5-coder:32b
 ```
 
-Then point your AI CLI (OpenCode works well here) at the local Ollama endpoint, or use the built-in local evaluator described in the [budget guide](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md).
+Then point your AI CLI (OpenCode works well here) at the local Ollama endpoint, or use the built-in local evaluator described in the [budget guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md).
 
 ## Path 4 — The one-command shortcut: `npm run or`
 
@@ -88,7 +88,7 @@ There are focused variants too — `npm run or:scan`, `or:eval`, `or:apply` — 
 ---
 
 <Callout title="For developers — tune models & cost">
-Want the maintained model recommendations, per-provider examples, standalone evaluators (`node openai-eval.mjs`, `node ollama-eval.mjs`), and token-saving flags? The core repo's **[Running on a Budget](https://github.com/santifer/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** guide goes deep. career-ops is fully model-agnostic — point it at any OpenAI-compatible endpoint with zero code changes.
+Want the maintained model recommendations, per-provider examples, standalone evaluators (`node openai-eval.mjs`, `node ollama-eval.mjs`), and token-saving flags? The core repo's **[Running on a Budget](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** guide goes deep. career-ops is fully model-agnostic — point it at any OpenAI-compatible endpoint with zero code changes.
 </Callout>
 
 ## You're ready

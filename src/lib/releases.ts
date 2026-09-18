@@ -12,7 +12,7 @@
 // each entry keeps the raw notes one click away.
 
 const RELEASES_API =
-  'https://api.github.com/repos/santifer/career-ops/releases?per_page=30';
+  'https://api.github.com/repos/career-ops-hq/career-ops/releases?per_page=30';
 
 export type ChangelogItem = {
   scope: string | null;
