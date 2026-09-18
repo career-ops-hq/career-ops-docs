@@ -47,7 +47,7 @@
         },
         {
           "name": "Setup",
-          "careerOps": "git clone + npm install + config. 10–15 minutes if you have Node 22.5+.",
+          "careerOps": "git clone + npm install + config. 10–15 minutes if you already have Node 18+.",
           "competitor": "Sign up, paste resume. Two minutes."
         },
         {
@@ -388,7 +388,7 @@
         },
         {
           "name": "Setup time",
-          "careerOps": "10-15 minutes (git clone + npm install + config) if you have Node 22.5+.",
+          "careerOps": "10-15 minutes (git clone + npm install + config) if you already have Node 18+.",
           "competitor": "Two minutes — install extension, fill profile, done."
         },
         {
@@ -692,7 +692,7 @@
         },
         {
           "name": "Setup time",
-          "careerOps": "10-15 minutes if you have Node 22.5+.",
+          "careerOps": "10-15 minutes if you already have Node 18+.",
           "competitor": "Five minutes — upload CV, configure loops, done."
         },
         {
