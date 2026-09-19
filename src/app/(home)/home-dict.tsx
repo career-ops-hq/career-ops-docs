@@ -251,9 +251,8 @@ export const homeEn: HomeDict = {
           premium features. You clone the repo, configure your profile, and run
           the system locally with whichever AI coding CLI you already use.
           Sustainability comes from voluntary community patronage via GitHub
-          Sponsors — not from premium tiers, paid features, or data. The
-          maintainer has other paid work for income; sponsorship enables deeper
-          focus on the project. See{' '}
+          Sponsors — not from premium tiers, paid features, or data.
+          Sponsorship funds maintenance, security fixes, releases, and documentation. See{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>{' '}

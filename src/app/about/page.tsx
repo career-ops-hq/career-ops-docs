@@ -94,7 +94,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Can I sponsor the project?',
-    a: 'Yes — via GitHub Sponsors. There are nine tiers; the corporate ones add a logo on /sustain and the README. No premium features, no roadmap influence. The full model lives at /sustain.',
+    a: 'Yes, via GitHub Sponsors. Every tier carries the same terms and none of them gates a perk: no premium features, no roadmap influence. Corporate logo sponsorship is handled directly rather than through a tier. The full model lives at /sustain.',
   },
 ];
 
@@ -201,8 +201,7 @@ export default function AboutPage() {
             >
               WIRED Greece
             </a>
-            , and is sustained as a sovereign-maintainer project — Santiago has other paid work
-            for income; sponsorship enables deeper focus on the code. The maintenance system
+            , and is sustained as a sovereign-maintainer project: sponsorship funds maintenance, security fixes, releases, and documentation. The maintenance system
             itself — a fleet of Claude Code agents handling triage, tests, review briefs and
             releases in about four hours a week — is documented end to end in{' '}
             <a

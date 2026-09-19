@@ -814,7 +814,7 @@ export function sustainSchema() {
         significantLink: 'https://github.com/sponsors/santifer',
         mainContentOfPage: {
           '@type': 'WebPageElement',
-          text: 'career-ops is permanently free, MIT-licensed, and community-funded. The maintainer has other paid work; sponsorship is not a livelihood but a way to dedicate time to the project. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
+          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds maintenance, security fixes, releases, and documentation. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
         },
       },
       {
