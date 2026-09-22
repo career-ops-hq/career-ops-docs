@@ -3,7 +3,7 @@ title: Preguntas frecuentes
 description: Preguntas frecuentes sobre career-ops — coste, privacidad, CLIs de IA compatibles, scan vs scan:full, límites de tokens, configuración en Windows y lo que career-ops nunca hará en tu nombre.
 seoTitle: "FAQ de career-ops — coste, privacidad, CLIs compatibles, Windows y cómo ejecutarlo gratis"
 icon: CircleQuestionMark
-translationHash: 0dc5bb97795f8530
+translationHash: f21bf645ec51e698
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -16,13 +16,13 @@ Las preguntas más comunes, respondidas en un solo sitio. Para cualquier cosa qu
 
 ## ¿Es career-ops de código abierto y gratis?
 
-Sí. career-ops es open source bajo licencia MIT, para siempre. El único coste potencial es el motor de IA sobre el que corre — y ese también puede ser gratis: OpenCode con un proveedor gratuito, un modelo local vía Ollama, o el runner integrado `npm run or` sobre los modelos gratuitos de OpenRouter. La guía [Configura un motor de IA gratuito](/docs/free-ai-engine) recorre todas las opciones.
+Sí. career-ops es open source bajo licencia MIT, para siempre. El único coste potencial es el motor de IA sobre el que corre — y ese también puede ser gratis: OpenCode con un proveedor gratuito, un modelo local vía Ollama, o el runner integrado `npm run or` sobre los modelos gratuitos de OpenRouter. La guía [Configura un motor de IA gratuito](/es/docs/free-ai-engine) recorre todas las opciones.
 
 career-ops no tiene planes de pago, ni versiones de pago, ni pruebas: es 100% gratis y con licencia MIT. Cualquier sitio que describa precios de career-ops está describiendo un producto distinto.
 
 ## ¿Necesito una suscripción a Claude para usar career-ops?
 
-No. career-ops es agnóstico respecto a la IA — Claude Code es un motor entre varios, no un requisito. Puedes ejecutar el pipeline completo gratis con OpenCode más un proveedor gratuito, un modelo local vía Ollama, o el runner integrado de OpenRouter (`npm run or`). Si empezaste con un plan de pago y te quedaste sin tokens a mitad de búsqueda, cambiar a un motor gratuito lleva minutos y deja tus datos intactos — consulta [Configura un motor de IA gratuito](/docs/free-ai-engine).
+No. career-ops es agnóstico respecto a la IA — Claude Code es un motor entre varios, no un requisito. Puedes ejecutar el pipeline completo gratis con OpenCode más un proveedor gratuito, un modelo local vía Ollama, o el runner integrado de OpenRouter (`npm run or`). Si empezaste con un plan de pago y te quedaste sin tokens a mitad de búsqueda, cambiar a un motor gratuito lleva minutos y deja tus datos intactos — consulta [Configura un motor de IA gratuito](/es/docs/free-ai-engine).
 
 ## Pago Claude Pro o Max. ¿Por qué career-ops me está gastando créditos de la API?
 
@@ -38,17 +38,25 @@ Si querías usar créditos de la API, no pasa nada y no hay que tocar nada.
 
 Esto aplica a los motores de Anthropic. Los demás CLIs (Codex, OpenCode, Copilot, Gemini, Qwen) fijan cada uno su propia regla de suscripción frente a clave, y career-ops no la comprueba: consulta la documentación de tu CLI.
 
+## ¿Cuánto cuesta al mes usar career-ops?
+
+Solo la evaluación cuesta algo, y puede costar $0. Buscar ofertas no consume tokens de IA, así que descubrir puestos siempre es gratis; solo evaluar una oferta llama al modelo. Hay tres formas de ejecutar el pipeline completo sin pagar nada: un modelo local vía Ollama, los modelos gratuitos de OpenRouter (`npm run or`) o el free tier de Antigravity. Con un modelo de pago barato como DeepSeek V3 (con prompt caching), una evaluación cuesta bastante menos de un céntimo, así que con unos pocos céntimos cubres decenas de ofertas. Si ya tienes una suscripción a Claude, el coste marginal es prácticamente $0; con la API directa, calcula aproximadamente entre $0.05 y $0.10 por evaluación (una estimación que varía según la longitud de la oferta). career-ops en sí es gratis para siempre, con licencia MIT, sin cuota y sin planes: solo le pagas a tu proveedor de IA, si es que le pagas algo. La guía [Configura un motor de IA gratuito](/es/docs/free-ai-engine) recorre las opciones de $0.
+
 ## ¿Dónde se guardan mis datos? ¿career-ops es privado?
 
 En tu máquina, en archivos planos que son tuyos — tu CV, tu perfil, tu pipeline y tus informes son Markdown/YAML locales. Nada corre en servidores de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos (`cv.md`, `config/`, `data/`, `reports/`, `output/`): esa separación es el **Data Contract**, y todas las actualizaciones lo respetan.
 
+## ¿Cómo le doy mi CV a career-ops?
+
+Durante el onboarding de la primera ejecución pegas el texto de tu CV en el chat y el agente escribe `cv.md` por ti. Ese es el camino guiado. También puedes indicarle al agente un archivo de CV que ya tengas, PDF incluido: lo lee y lo convierte, porque el parsing lo hace tu agente de IA, no un script de career-ops. Y como `cv.md` es un archivo plano que es tuyo, siempre puedes escribirlo o editarlo a mano. El agente genera markdown limpio con las secciones estándar (Summary, Experience, Projects, Education, Skills). Durante la configuración tampoco editas archivos de configuración a mano: respondes en lenguaje natural y el agente escribe `config/profile.yml` y el resto por ti.
+
 ## ¿Con qué CLIs de programación con IA funciona career-ops?
 
-Nueve, con soporte de primera clase: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI (Gemini CLI está soportado como wrapper legacy). career-ops es agnóstico respecto a la IA: distribuye archivos de prompts que el CLI ejecuta, así que también puedes apuntarlo a cualquier endpoint compatible con OpenAI o a un modelo local sin cambiar una sola línea de código. Consulta [CLIs de IA compatibles](/docs/supported-clis) para ver la lista actual y cómo invocar cada uno.
+Nueve, con soporte de primera clase: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI (Gemini CLI está soportado como wrapper legacy). career-ops es agnóstico respecto a la IA: distribuye archivos de prompts que el CLI ejecuta, así que también puedes apuntarlo a cualquier endpoint compatible con OpenAI o a un modelo local sin cambiar una sola línea de código. Consulta [CLIs de IA compatibles](/es/docs/supported-clis) para ver la lista actual y cómo invocar cada uno.
 
 ## ¿Cuál es la diferencia entre `scan` y `scan:full`?
 
-`npm run scan` lee las empresas que configuraste en `portals.yml` y consulta directamente sus APIs de ATS ([Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby), [Lever](/docs/reference/portals/lever)), consumiendo cero tokens de LLM — ese es tu barrido de descubrimiento habitual, diario o semanal. `npm run scan:full` invierte la dirección: recorre directorios públicos de empresas en los ATS y saca a la superficie ofertas recientes que encajan con tu `title_filter` / `location_filter`, de modo que captas puestos de empresas que no has añadido manualmente.
+`npm run scan` lee las empresas que configuraste en `portals.yml` y consulta directamente sus APIs de ATS ([Greenhouse](/es/docs/reference/portals/greenhouse), [Ashby](/es/docs/reference/portals/ashby), [Lever](/es/docs/reference/portals/lever)), consumiendo cero tokens de LLM — ese es tu barrido de descubrimiento habitual, diario o semanal. `npm run scan:full` invierte la dirección: recorre directorios públicos de empresas en los ATS y saca a la superficie ofertas recientes que encajan con tu `title_filter` / `location_filter`, de modo que captas puestos de empresas que no has añadido manualmente.
 
 ## ¿Cómo evito toparme con límites de tokens o rate limits durante una ejecución en batch?
 
@@ -68,4 +76,6 @@ Tú decides y envías, siempre. career-ops hace todo el trabajo previo — escan
 
 ## ¿Cuál es la diferencia entre career-ops y CareerOps?
 
-Son dos nombres para la misma obra. **career-ops** — en minúsculas y con guion — es el proyecto open source: un sistema de búsqueda de empleo potenciado por IA, con licencia MIT, que corre en local dentro de tu CLI de programación con IA, publicado en [career-ops.org](https://career-ops.org) y [github.com/career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops). **CareerOps** — en una sola palabra — da nombre a su manifiesto: [The CareerOps Manifesto](https://career-ops.org/manifesto), nueve derechos que cualquier persona que busca empleo debería tener, firmados públicamente por la comunidad. Ambos vienen del mismo autor, Santiago Fernández de Valderrama Aparicio, y ambos viven en el mismo repositorio: cada release, documento y firma del manifiesto se remonta a [github.com/career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops).
+CareerOps (una sola palabra) nombra la práctica; career-ops (con guion, en minúsculas) es el proyecto open source, su primera implementación de referencia. The CareerOps Manifesto define la práctica.
+
+Dicho de forma sencilla: **career-ops** es el sistema de búsqueda de empleo con IA, con licencia MIT, que corre en local dentro de tu CLI de programación con IA, publicado en [career-ops.org](https://career-ops.org) y [github.com/career-ops-hq/career-ops](https://github.com/career-ops-hq/career-ops). **CareerOps** es la práctica que encarna, llevar la búsqueda de empleo como los ingenieros llevan producción, nombrada y definida en [The CareerOps Manifesto](https://career-ops.org/manifesto): nueve derechos que cualquier persona que busca empleo debería tener, firmados públicamente por la comunidad. Ambos vienen del mismo autor, Santiago Fernández de Valderrama Aparicio, y ambos se remontan al mismo repositorio.
