@@ -108,7 +108,7 @@ export const homeEn: HomeDict = {
       using a five-dimension rubric plus a holistic global score, scoring
       1-5, generates ATS-optimized PDF resumes tailored per role, drafts
       answers to open-ended application questions on Greenhouse, Ashby and Lever
-      forms, scans 150+ company portals zero-token, and tracks the pipeline in a
+      forms, scans 150+ job sources zero-token, and tracks the pipeline in a
       Go-based terminal dashboard. Everything lives on your machine:{' '}
       {brand('no cloud')}, {brand('no telemetry')}, {brand('no account')}.
       MIT-licensed and free forever; the only cost is whichever AI coding CLI you
@@ -163,11 +163,12 @@ export const homeEn: HomeDict = {
   ),
   featApplyBody2: 'You edit, you submit. The assistant never clicks for you.',
   featApplyCta: 'See how apply works',
-  featScanTitle: '150+ company portals. Zero manual searching.',
+  featScanTitle: '150+ job sources. Zero manual searching.',
   featScanBody: (
     <>
-      Pre-configured scrapers check 150+ career pages across Greenhouse, Ashby
-      and Lever on demand — zero API tokens spent. Run{' '}
+      Pre-configured scrapers check{' '}
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150+ job sources</a> on demand, Greenhouse, Ashby and Lever
+      among them — zero API tokens spent. Run{' '}
       <code className="font-mono text-brand">/career-ops scan</code> and get a
       ranked list back in minutes.
     </>
@@ -395,7 +396,7 @@ export const homeEs: HomeDict = {
       nota global holística, puntuando de 1.0 a 5.0, genera PDFs de CV
       optimizados para ATS y adaptados a cada puesto, redacta las respuestas
       abiertas de los formularios de Greenhouse, Ashby y Lever, rastrea más de
-      150 portales de empresa sin gastar tokens y hace el seguimiento del
+      150 fuentes de empleo sin gastar tokens y hace el seguimiento del
       pipeline en un panel de terminal escrito en Go. Todo vive en tu máquina:{' '}
       {brand('sin nube')}, {brand('sin telemetría')}, {brand('sin cuenta')}. Con
       licencia MIT y gratis para siempre; el único coste es el CLI de IA que ya
@@ -451,11 +452,12 @@ export const homeEs: HomeDict = {
   ),
   featApplyBody2: 'Tú editas, tú envías. El asistente nunca hace clic por ti.',
   featApplyCta: 'Ver cómo funciona apply',
-  featScanTitle: '150+ portales de empresa. Cero búsqueda manual.',
+  featScanTitle: '150+ fuentes de empleo. Cero búsqueda manual.',
   featScanBody: (
     <>
-      Scrapers preconfigurados revisan más de 150 páginas de empleo en
-      Greenhouse, Ashby y Lever bajo demanda — cero tokens de API. Ejecuta{' '}
+      Scrapers preconfigurados revisan{' '}
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">más de 150 fuentes de empleo</a> bajo demanda, entre ellas
+      Greenhouse, Ashby y Lever — cero tokens de API. Ejecuta{' '}
       <code className="font-mono text-brand">/career-ops scan</code> y recibe una
       lista priorizada en minutos.
     </>
@@ -680,8 +682,8 @@ export const homeFr: HomeDict = {
       évalue les offres face à votre CV avec une grille de cinq dimensions plus
       une note globale, de 1.0 à 5.0, génère des CV PDF optimisés pour les ATS et
       adaptés à chaque poste, rédige les réponses aux questions ouvertes des
-      formulaires Greenhouse, Ashby et Lever, parcourt plus de 150 portails
-      d’entreprise sans consommer de jetons et suit votre pipeline dans un
+      formulaires Greenhouse, Ashby et Lever, parcourt plus de 150 sources
+      d’emploi sans consommer de jetons et suit votre pipeline dans un
       tableau de bord en terminal écrit en Go. Tout vit sur votre machine :{' '}
       {brand('sans cloud')}, {brand('sans télémétrie')}, {brand('sans compte')}.
       Sous licence MIT et gratuit pour toujours ; le seul coût est le CLI d’IA
@@ -739,11 +741,12 @@ export const homeFr: HomeDict = {
   featApplyBody2:
     'Vous éditez, vous envoyez. L’assistant ne clique jamais à votre place.',
   featApplyCta: 'Voir comment fonctionne apply',
-  featScanTitle: '150+ portails d’entreprise. Zéro recherche manuelle.',
+  featScanTitle: '150+ sources d’emploi. Zéro recherche manuelle.',
   featScanBody: (
     <>
-      Des scrapers préconfigurés parcourent plus de 150 pages d’emploi sur
-      Greenhouse, Ashby et Lever à la demande — zéro jeton d’API. Lancez{' '}
+      Des scrapers préconfigurés parcourent{' '}
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">plus de 150 sources d’emploi</a> à la demande, dont
+      Greenhouse, Ashby et Lever — zéro jeton d’API. Lancez{' '}
       <code className="font-mono text-brand">/career-ops scan</code> et recevez
       une liste priorisée en quelques minutes.
     </>
