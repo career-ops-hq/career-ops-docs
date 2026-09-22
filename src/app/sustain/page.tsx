@@ -33,15 +33,15 @@ export default function SustainPage() {
             career-ops is permanently free, MIT-licensed, and community-funded.
           </h1>
           <p className="mt-4 text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
-            The maintainer has other paid work. Sponsorship buys time, not direction.
+            Sponsorship funds maintenance, security fixes, releases, and documentation. It buys time, not direction.
           </p>
         </header>
 
         <div className="space-y-12 text-fd-foreground/90 leading-relaxed">
           <section>
             <p>
-              career-ops is free software, MIT-licensed forever. The 14 modes, 45+ portal
-              scrapers, the five-dimension rubric, the Block A&ndash;G evaluation prompt &mdash;
+              career-ops is free software, MIT-licensed forever. Every mode, every portal
+              scraper, the five-dimension rubric, the Block A&ndash;H evaluation prompt &mdash;
               they cost nothing to install, and they never will. But sustained craft costs
               time. Time to read 250 community issues and write thoughtful responses. Time
               to investigate the edge case in <code className="font-mono text-fd-foreground">/scan</code>{' '}
@@ -60,11 +60,10 @@ export default function SustainPage() {
               How to sustain
             </h2>
             <p className="mt-3">
-              Become a sponsor on GitHub. Nine tiers from $1 to $1,000 per month. The
-              seven individual tiers ($1, $5, $10, $20, $50, $100, $250) are identical
-              statements of support &mdash; no perks gated. The two corporate tiers ($500
-              and $1,000) add logo placement on the README and this page as public
-              acknowledgment; nothing else changes.
+              Become a sponsor on GitHub. Every tier carries the same description and
+              the same terms: each one is a statement of support, and none of them gates a
+              perk. That is deliberate. A tier that buys something is a tier that can be
+              leaned on.
             </p>
             <p className="mt-5">
               <a
@@ -111,55 +110,106 @@ export default function SustainPage() {
 
           <section>
             <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
-              What corporate tiers get
-            </h2>
-            <ul className="mt-3 list-disc space-y-2 pl-6">
-              <li>
-                <strong>$500 Corporate Supporter.</strong>{' '}
-                Logo placement on the README and this page. Acknowledgment in major
-                release notes.
-              </li>
-              <li>
-                <strong>$1,000 Ecosystem Partner.</strong>{' '}
-                Prominent logo placement on the README and this page. Acknowledgment in
-                major releases. Invitation to private architectural discussions on
-                protocol design &mdash; input welcome, no roadmap influence.
-              </li>
-            </ul>
-            <p className="mt-4 text-fd-foreground/90">
-              The only differentiation between individual and corporate tiers is
-              acknowledgment. No premium features. No roadmap influence. The same MIT
-              license, the same anti-spray-and-pray philosophy, the same open community.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
-              Ecosystem partners
+              Corporate sponsorship
             </h2>
             <p className="mt-3">
-              Two corporate sponsorship tiers exist on GitHub Sponsors. The $500 Corporate
-              Supporter tier and the $1,000 Ecosystem Partner tier each grant logo
-              placement on the project README and this page as public acknowledgment.
+              Nothing on GitHub Sponsors buys placement, acknowledgment, or access, at any
+              amount. Corporate logo sponsorship is handled directly instead: a small
+              number of slots, each with a link that carries its own tag from the first
+              day, and a monthly report of the clicks it actually produced rather than an
+              estimate.
             </p>
             <p className="mt-3">
-              If you represent a mission-aligned organization &mdash; an open-source program
+              If you represent a mission-aligned organization, an open-source program
               office, a developer-tooling company, or a hiring-side product that respects
-              the data contract &mdash; the easiest path is the GitHub Sponsors self-serve
-              tier. For custom enterprise arrangements or larger commitments, reach out
-              via{' '}
+              the data contract, write to{' '}
               <a
-                href="mailto:hi@career-ops.org"
+                href="mailto:sponsors@career-ops.org"
                 className="text-fd-foreground underline underline-offset-2"
               >
-                hi@career-ops.org
+                sponsors@career-ops.org
               </a>
               .
             </p>
-            <p className="mt-3 text-fd-muted-foreground text-sm italic">
+          </section>
+
+          {/* Clause 2.a of the signed agreement: logo, name, description and a
+              backlink, on this page. The link carries rel="sponsored" because it
+              is a paid placement and search engines require the label (2.d), and
+              the section is headed "Sponsors" because sponsored content is always
+              labelled as such. The logo file is committed here rather than
+              hotlinked from the core repo, so this page does not depend on
+              another repository staying reachable. No badge under the logo: this
+              is a sponsor row, not a founding slot, and the two are not the same
+              thing. If this page is ever redesigned, 2.e requires placement of
+              equivalent prominence. */}
+          <section>
+            <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+              Sponsors
+            </h2>
+            <p className="mt-3">
+              career-ops is free for candidates, forever. The companies below fund the
+              maintainer&rsquo;s time and keep it that way.
+            </p>
+
+            <a
+              href="https://serpapi.com/career-ops-org"
+              rel="sponsored noopener"
+              target="_blank"
+              className="mt-5 block rounded-lg border border-fd-foreground/10 bg-fd-card/40 p-6 no-underline transition-colors hover:border-fd-foreground/20"
+            >
+              <img
+                src="/sponsors/serpapi.svg"
+                alt="SerpApi"
+                width={1764}
+                height={439}
+                className="h-10 w-auto"
+              />
+              <p className="text-fd-foreground mt-4 text-base font-medium">SerpApi</p>
+              <p className="text-fd-muted-foreground mt-1 text-sm leading-relaxed">
+                Build a portfolio project with live search data. SerpApi gives developers
+                structured JSON/Markdown from Google Search, Maps, Shopping, and other
+                engines through a simple API call.
+              </p>
+            </a>
+
+            <blockquote className="border-fd-foreground/15 text-fd-muted-foreground mt-5 border-l-2 pl-4 text-sm leading-relaxed italic">
+              Sponsorship buys clearly labeled visibility, never influence: no amount of
+              money changes the roadmap or places anything in the product. Sponsors never
+              appear in evaluations, rankings or recommendations.
+            </blockquote>
+
+            <p className="mt-4 text-fd-muted-foreground text-sm italic">
               Logos appear here only when real sponsors back the project. We don&rsquo;t
               render placeholders to look bigger than we are.
             </p>
+          </section>
+
+          {/* Kept separate from the paid section on purpose. Tools given through
+              an open-source program are not sponsorship and must not read as a
+              logo slot someone bought: mixing the two would make a real sponsor's
+              placement look cheaper and a donated licence look purchased. Same
+              vocabulary as the rest of the page — what it funds, never who it
+              funds. */}
+          <section>
+            <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+              In-kind support
+            </h2>
+            <p className="mt-3">
+              Tooling provided to the maintainer through open source programs. It funds
+              time, not direction, like everything else on this page.
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-6">
+              {/* Deliberately unlinked. openai.com blocks automated checks, and the
+                  one reachable candidate (developers.openai.com/codex/open-source)
+                  documents Codex's open-source components, not the grant programme.
+                  A wrong link on the line that credits a benefactor is worse than
+                  none; name the programme and let the reader search it. */}
+              <li>
+                OpenAI, Codex for Open Source: six months of ChatGPT Pro, from
+                August 2026.
+              </li>
+            </ul>
           </section>
         </div>
 
@@ -173,7 +223,7 @@ export default function SustainPage() {
         </p>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-05-16">16 May 2026</time>
+          Last updated <time dateTime="2026-09-06">6 September 2026</time>
         </p>
       </article>
     </>
