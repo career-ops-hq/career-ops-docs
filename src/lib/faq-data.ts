@@ -50,7 +50,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: 'How do I avoid hitting token or rate limits during a batch run?',
     answer:
-      'Cap the run with `./batch/batch-runner.sh --limit 5` to inspect output quality before committing to a larger batch. If a run gets interrupted, use `--resume-paused` instead of restarting: it skips completed jobs so no tokens are wasted on work that already finished.',
+      'Cap the run with `./batch/batch-runner.sh --limit 5` to inspect output quality before committing to a larger batch. If a run gets interrupted, use `--resume-paused` instead of restarting: it skips completed jobs so no tokens are wasted on work that already finished. A `needs_confirmation` job is an artifact-free hold; `--resume-paused` does not resume it. Answer its question explicitly in the parent interactive session.',
   },
   {
     question: 'Skills are not loading on Windows — symlink error on install. What do I do?',

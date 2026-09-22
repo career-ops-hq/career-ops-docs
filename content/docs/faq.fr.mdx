@@ -52,7 +52,7 @@ Neuf, avec une prise en charge complète : Claude Code, Codex, OpenCode, Antigra
 
 ## Comment éviter d'atteindre les limites de tokens ou de débit pendant un run en batch ?
 
-Plafonnez le run avec `./batch/batch-runner.sh --limit 5` pour inspecter la qualité du résultat avant de lancer un lot plus important. Si un run est interrompu par une limite de débit ou une erreur réseau, ne repartez pas de zéro — utilisez `--resume-paused` pour ignorer les tâches déjà terminées, afin qu'aucun token ne soit gaspillé sur du travail déjà accompli.
+Plafonnez le run avec `./batch/batch-runner.sh --limit 5` pour inspecter la qualité du résultat avant de lancer un lot plus important. Si un run est interrompu par une limite de débit ou une erreur réseau, ne repartez pas de zéro — utilisez `--resume-paused` pour ignorer les tâches déjà terminées, afin qu'aucun token ne soit gaspillé sur du travail déjà accompli. Une tâche `needs_confirmation` est différente : elle n'a produit ni rapport, ni CV, ni brouillon de candidature, ni ligne du tracker, et `--resume-paused` ne la reprendra pas. Répondez explicitement à sa question dans la session interactive parente.
 
 ## Les skills ne se chargent pas sous Windows — erreur de symlink à l'installation
 

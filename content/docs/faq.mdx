@@ -57,7 +57,7 @@ Nine, first-class: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI
 
 ## How do I avoid hitting token or rate limits during a batch run?
 
-Cap the run with `./batch/batch-runner.sh --limit 5` to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use `--resume-paused` to skip already-completed jobs so no tokens are wasted on work that finished.
+Cap the run with `./batch/batch-runner.sh --limit 5` to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use `--resume-paused` to skip already-completed jobs so no tokens are wasted on work that finished. A `needs_confirmation` job is different: it produced no report, CV, application draft, or tracker row, and `--resume-paused` will not resume it. Answer its question explicitly in the parent interactive session.
 
 ## Skills aren't loading on Windows — symlink error on install
 

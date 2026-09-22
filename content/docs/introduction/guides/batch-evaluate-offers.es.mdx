@@ -92,6 +92,8 @@ Cuando estés listo, arranca el batch. Puedes procesar las ofertas de una en una
 
 Observa la terminal mientras corre el batch. Cada línea te indica qué oferta se está procesando y si terminó o falló.
 
+Si un worker delegado encuentra una oferta de agencia que requiere tu confirmación, se detiene antes de escribir un informe, CV, borrador de solicitud o fila del tracker y marca el trabajo como `needs_confirmation`. Responde a la pregunta mostrada en la sesión interactiva principal; esa sesión solo reanuda el trabajo retenido después de tu respuesta explícita. `--retry-failed` y `--resume-paused` no reanudan las retenciones por confirmación.
+
 ## Paso 4: Lee los resultados según van llegando
 
 No necesitas esperar a que el batch termine. Los resultados aparecen a medida que se completa cada oferta.

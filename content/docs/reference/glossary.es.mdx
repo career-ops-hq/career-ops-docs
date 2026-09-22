@@ -71,7 +71,7 @@ La página de empleo de una empresa, respaldada por un ATS, que career-ops puede
 
 ## Evaluación en batch
 
-Puntuar muchas ofertas guardadas en una sola ejecución en vez de una a una, con flags para mantener el control: `--limit` acota el tamaño del batch, `--dry-run` muestra una vista previa de lo que se procesaría y `--resume-paused` continúa una ejecución interrumpida sin volver a gastar tokens.
+Puntuar muchas ofertas guardadas en una sola ejecución en vez de una a una, con flags para mantener el control: `--limit` acota el tamaño del batch, `--dry-run` muestra una vista previa de lo que se procesaría y `--resume-paused` continúa una ejecución interrumpida sin volver a gastar tokens. Un trabajo `needs_confirmation` es una retención sin artefactos que solo reanuda la sesión interactiva principal tras una respuesta explícita; los flags de reintento y reanudación lo mantienen retenido.
 
 ## Local-first
 

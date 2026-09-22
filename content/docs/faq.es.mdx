@@ -52,7 +52,7 @@ Nueve, con soporte de primera clase: Claude Code, Codex, OpenCode, Antigravity C
 
 ## ¿Cómo evito toparme con límites de tokens o rate limits durante una ejecución en batch?
 
-Acota la ejecución con `./batch/batch-runner.sh --limit 5` para inspeccionar la calidad del output antes de lanzarte a un batch mayor. Si una ejecución se ve interrumpida por un rate limit o un error de red, no la reinicies desde cero — usa `--resume-paused` para saltar los trabajos ya completados y que no se desperdicien tokens en trabajo que ya terminó.
+Acota la ejecución con `./batch/batch-runner.sh --limit 5` para inspeccionar la calidad del output antes de lanzarte a un batch mayor. Si una ejecución se ve interrumpida por un rate limit o un error de red, no la reinicies desde cero — usa `--resume-paused` para saltar los trabajos ya completados y que no se desperdicien tokens en trabajo que ya terminó. Un trabajo `needs_confirmation` es distinto: no produjo ningún informe, CV, borrador de solicitud ni fila del tracker, y `--resume-paused` no lo reanudará. Responde explícitamente a su pregunta en la sesión interactiva principal.
 
 ## Las skills no cargan en Windows — error de symlink al instalar
 

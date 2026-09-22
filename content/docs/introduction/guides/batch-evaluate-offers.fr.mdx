@@ -92,6 +92,8 @@ Quand vous êtes prêt, démarrez le lot. Vous pouvez traiter une offre à la fo
 
 Surveillez le terminal pendant l'exécution du lot. Chaque ligne vous indique quelle offre est en cours de traitement et si elle s'est terminée ou a échoué.
 
+Si un worker délégué rencontre une offre d'agence qui exige votre confirmation, il s'arrête avant d'écrire un rapport, un CV, un brouillon de candidature ou une ligne du tracker, puis marque la tâche `needs_confirmation`. Répondez à la question affichée dans la session interactive parente ; cette session ne reprend la tâche suspendue qu'après votre réponse explicite. `--retry-failed` et `--resume-paused` ne reprennent pas les suspensions en attente de confirmation.
+
 ## Étape 4 : Consultez les résultats au fur et à mesure
 
 Vous n'avez pas besoin d'attendre la fin du lot. Les résultats apparaissent à mesure que chaque offre est traitée.

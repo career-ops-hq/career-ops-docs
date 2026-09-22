@@ -71,7 +71,7 @@ Un site carrières d'entreprise adossé à un ATS que career-ops peut scanner. V
 
 ## Évaluation par lot
 
-Noter de nombreuses offres sauvegardées en une seule exécution plutôt qu'une par une, avec des flags pour garder le contrôle : `--limit` plafonne la taille du lot, `--dry-run` prévisualise ce qui serait traité, et `--resume-paused` reprend une exécution interrompue sans dépenser de nouveau des tokens.
+Noter de nombreuses offres sauvegardées en une seule exécution plutôt qu'une par une, avec des flags pour garder le contrôle : `--limit` plafonne la taille du lot, `--dry-run` prévisualise ce qui serait traité, et `--resume-paused` reprend une exécution interrompue sans dépenser de nouveau des tokens. Une tâche `needs_confirmation` est une suspension sans artefact que seule la session interactive parente reprend après une réponse explicite ; les options de nouvelle tentative et de reprise la laissent suspendue.
 
 ## Local-first
 
