@@ -3,7 +3,7 @@ title: Qué es career-ops
 description: "career-ops es un sistema de búsqueda de empleo con IA, gratis y open source, que se ejecuta en local dentro del CLI de IA que ya usas: puntúa ofertas, adapta tu CV y hace seguimiento de tus candidaturas."
 seoTitle: "¿Qué es career-ops? El sistema de búsqueda de empleo con IA, open source y local-first"
 icon: CircleQuestionMark
-translationHash: d9bc36a25cdb29ac
+translationHash: ea516a99c8d615c5
 localized: true
 translatedFrom: /docs/introduction/what-is-career-ops
 ---
@@ -14,7 +14,7 @@ career-ops es un sistema de búsqueda de empleo open source que se ejecuta dentr
 
 ### Open source, en serio
 
-career-ops no tiene plan de pago, ni lista de espera, ni cuenta, ni telemetría. Clonas el repositorio, rellenas un archivo de configuración YAML, colocas tu CV en markdown y ejecutas el sistema en local con el CLI de IA que ya uses. Tu CV, tu perfil y tu historial de candidaturas nunca salen de tu máquina a menos que tú mismo los subas a algún sitio. El proyecto crece con las contribuciones de la comunidad, revisadas de forma abierta: cuando alguien añade un scraper de un portal de empresa, mejora la rúbrica de puntuación o corrige un fallo, esa mejora llega a todo el mundo en la siguiente versión. Ese es todo el modelo de negocio — no hay upsell, ni plan enterprise, ni venta de datos prevista. El sistema es MIT para siempre; aunque el maintainer deje de publicar, la rúbrica, los prompts y los scrapers siguen siendo tuyos para hacer fork, auditar y ejecutar.
+career-ops no tiene plan de pago, ni lista de espera, ni cuenta, ni telemetría. Clonas el repositorio y lo ejecutas en local con el CLI de IA que ya uses. Tu CV vive en markdown plano y tu configuración en YAML: archivos que son tuyos y que puedes editar cuando quieras. Durante la configuración no tienes que tocarlos, porque respondes en lenguaje natural y el agente los escribe por ti. Tu perfil y tu historial de candidaturas nunca salen de tu máquina a menos que tú mismo los subas a algún sitio. El proyecto crece con las contribuciones de la comunidad, revisadas de forma abierta: cuando alguien añade un scraper de un portal de empresa, mejora la rúbrica de puntuación o corrige un fallo, esa mejora llega a todo el mundo en la siguiente versión. Ese es todo el modelo de negocio — no hay upsell, ni plan enterprise, ni venta de datos prevista. El sistema es MIT para siempre; aunque el maintainer deje de publicar, la rúbrica, los prompts y los scrapers siguen siendo tuyos para hacer fork, auditar y ejecutar.
 
 <Callout title="¿Quieres contribuir?">
   Lee la [guía de contribución](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) antes de abrir un pull request. La versión corta: abre primero un issue para comentar el cambio y luego envía tu PR. Los maintainers revisan rápido.
@@ -22,7 +22,7 @@ career-ops no tiene plan de pago, ni lista de espera, ni cuenta, ni telemetría.
 
 ### Nativo de IA e independiente del proveedor
 
-career-ops no incluye su propio modelo de IA. Funciona como un conjunto de slash commands y archivos de prompt dentro del CLI de IA en el que ya confías: Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI o GitHub Copilot. La IA razona; career-ops aporta la estructura, la rúbrica de puntuación, los scrapers de portales de empresa y el contrato de datos que mantiene tus archivos como tuyos. Esta arquitectura significa que no quedas atado a la hoja de ruta ni a los precios de un solo proveedor: cuando sale un modelo mejor, cambias de CLI y career-ops sigue funcionando por encima sin cambios. La misma rúbrica — cinco dimensiones de puntuación más una nota global holística — produce un razonamiento comparable tanto si la apuntas a un modelo de Claude, OpenAI, Gemini o Qwen — elige el motor que encaje con tu coste, calidad y privacidad, y cámbialo libremente según evolucione el panorama.
+career-ops no incluye su propio modelo de IA. Funciona como un conjunto de slash commands y archivos de prompt dentro del CLI de IA en el que ya confías — Claude Code, Codex, OpenCode, Qwen, GitHub Copilot y [más](/es/docs/supported-clis). La IA razona; career-ops aporta la estructura, la rúbrica de puntuación, los scrapers de portales de empresa y el contrato de datos que mantiene tus archivos como tuyos. Esta arquitectura significa que no quedas atado a la hoja de ruta ni a los precios de un solo proveedor: cuando sale un modelo mejor, cambias de CLI y career-ops sigue funcionando por encima sin cambios. La misma rúbrica — cinco dimensiones de puntuación más una nota global holística — produce un razonamiento comparable tanto si la apuntas a un modelo de Claude, OpenAI, Gemini o Qwen — elige el motor que encaje con tu coste, calidad y privacidad, y cámbialo libremente según evolucione el panorama.
 
 ## Cuándo usar career-ops
 
