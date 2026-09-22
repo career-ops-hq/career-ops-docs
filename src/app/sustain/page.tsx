@@ -131,7 +131,55 @@ export default function SustainPage() {
               </a>
               .
             </p>
-            <p className="mt-3 text-fd-muted-foreground text-sm italic">
+          </section>
+
+          {/* Clause 2.a of the signed agreement: logo, name, description and a
+              backlink, on this page. The link carries rel="sponsored" because it
+              is a paid placement and search engines require the label (2.d), and
+              the section is headed "Sponsors" because sponsored content is always
+              labelled as such. The logo file is committed here rather than
+              hotlinked from the core repo, so this page does not depend on
+              another repository staying reachable. No badge under the logo: this
+              is a sponsor row, not a founding slot, and the two are not the same
+              thing. If this page is ever redesigned, 2.e requires placement of
+              equivalent prominence. */}
+          <section>
+            <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+              Sponsors
+            </h2>
+            <p className="mt-3">
+              career-ops is free for candidates, forever. The companies below fund the
+              maintainer&rsquo;s time and keep it that way.
+            </p>
+
+            <a
+              href="https://serpapi.com/career-ops-org"
+              rel="sponsored noopener"
+              target="_blank"
+              className="mt-5 block rounded-lg border border-fd-foreground/10 bg-fd-card/40 p-6 no-underline transition-colors hover:border-fd-foreground/20"
+            >
+              <img
+                src="/sponsors/serpapi.svg"
+                alt="SerpApi"
+                width={1764}
+                height={439}
+                className="h-10 w-auto"
+              />
+              <p className="text-fd-foreground mt-4 text-base font-medium">SerpApi</p>
+              <p className="text-fd-muted-foreground mt-1 text-sm leading-relaxed">
+                Build a portfolio project with live search data. SerpApi gives developers
+                structured JSON/Markdown from Google Search, Maps, Shopping, and other
+                engines through a simple API call.
+              </p>
+            </a>
+
+            <blockquote className="border-fd-foreground/15 text-fd-muted-foreground mt-5 border-l-2 pl-4 text-sm leading-relaxed italic">
+              Sponsorship buys clearly labeled visibility, never influence: no amount of
+              money changes the roadmap or places anything in the product. Sponsors never
+              appear in evaluations, rankings or recommendations.
+            </blockquote>
+
+            <p className="mt-4 text-fd-muted-foreground text-sm italic">
               Logos appear here only when real sponsors back the project. We don&rsquo;t
               render placeholders to look bigger than we are.
             </p>
