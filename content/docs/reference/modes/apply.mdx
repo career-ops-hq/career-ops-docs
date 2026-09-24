@@ -13,7 +13,7 @@ The `apply` mode reads an open application form (Greenhouse, Ashby, Lever), iden
 
 ## When to use it
 
-Open the JD and the application form side-by-side. Run apply once the form is loaded. The output is paste-ready, not a finished application — you stay in the loop for tone, facts and any field the portal layers on top. apply works best with Playwright in visible mode, where it reads the live page as you see it; without Playwright, paste the questions or share a screenshot and it drafts from that instead.
+Open the JD and the application form side-by-side. Run apply once the form is loaded. Answers with a confirmed field limit include `used/allowed` characters or words; check this status before pasting. `limit unknown` means the form limit was not confirmed, so verify it in the live field first. If an answer cannot fit without losing essential facts, revise it before pasting. The output is a draft, not a finished application — you stay in the loop for tone, facts and any field the portal layers on top. apply works best with Playwright in visible mode, where it reads the live page as you see it; without Playwright, paste the questions or share a screenshot and it drafts from that instead.
 
 ## What a run looks like
 
@@ -34,11 +34,13 @@ Responses for Notion — Applied AI Engineer
 
 1. Why this role?
    > Your agent-tooling team is where I want to apply the production
-   > AI pipelines I have shipped this year. (paste-ready)
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
 
 2. Tell us about a relevant project
    > Built and sold an AI-workflow company in 2025; the pipeline
-   > behind it is the same one I would bring here. (paste-ready)
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
 
 Notes: I filled text fields only. Tick the checkboxes, solve the
 captcha, and submit yourself.
@@ -52,7 +54,7 @@ apply does not submit forms or click buttons. It reads the questions and produce
 
 apply has been field-tested across roughly a dozen Playwright-driven applications, and a few portals break a run if you do not account for them:
 
-- **Ashby** deduplicates candidates by email per company, so a second application can silently merge into your first. If a report for that company already exists, apply suggests a `+tag` email alias.
+- **Ashby** deduplicates candidates by email per company, so a second application can silently merge into your first. If a report for that company already exists, apply suggests a `+tag` email alias. For Ashby, finish and submit in your ordinary system browser, then verify a success page or confirmation email before marking the application submitted.
 - **Lever** throws a captcha when a checkbox or radio button is clicked programmatically, so apply fills only text fields and hands you the rest to tick.
 - **Workday** ignores values set without real keystrokes, so apply types answers character by character and asks you to review the work-authorization dropdowns before you save.
 

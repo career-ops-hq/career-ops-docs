@@ -44,7 +44,7 @@ For example:
 /career-ops apply Anthropic
 ```
 
-career-ops finds the matching report in `reports/`, uses Playwright to open a browser window, and reads the form. It then generates an answer for every field — ready to copy and paste. You do not need to open the browser yourself.
+career-ops finds the matching report in `reports/`, uses Playwright to open a browser window, and reads the form. It then generates an answer for every field — ready to copy and paste. For Ashby, you will need your ordinary system browser to finish and submit the application.
 
 <Callout title="Note">
   If Playwright is not available, career-ops falls back to WebFetch to read the form. See [Set up Playwright](/docs/introduction/guides/set-up-playwright) if you want to enable the full browser-based experience.
@@ -64,7 +64,7 @@ career-ops finds the matching report in `reports/`, uses Playwright to open a br
 
 ## Fill in the form
 
-The system returns a numbered list of answers — one per form field — that mirrors the order of the form. Go through the list top to bottom and paste each answer into the corresponding field.
+The system returns a numbered list of answers — one per form field — that mirrors the order of the form. Go through the list top to bottom. For each free-text answer, check `used/allowed` characters or words against the live field before pasting. `limit unknown` means you must verify the limit in the form; if an answer cannot fit without losing essential facts, revise it before pasting.
 
 The output has two parts:
 
@@ -112,7 +112,7 @@ Each answer is built from a specific part of your evaluation report:
 
 ## Submit the application
 
-Review every answer, then submit the form yourself. career-ops does not click Submit.
+Review every answer, then submit the form yourself. For Ashby, finish and submit in your ordinary system browser, not the Playwright session. Verify a success page or confirmation email before telling career-ops the application was submitted.
 
 After submitting, confirm in the chat:
 

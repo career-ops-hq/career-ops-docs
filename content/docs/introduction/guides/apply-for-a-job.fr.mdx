@@ -47,7 +47,7 @@ Par exemple :
 /career-ops apply Anthropic
 ```
 
-career-ops trouve le rapport correspondant dans `reports/`, utilise Playwright pour ouvrir une fenêtre de navigateur et lit le formulaire. Il génère ensuite une réponse pour chaque champ — prête à copier-coller. Vous n'avez pas besoin d'ouvrir le navigateur vous-même.
+career-ops trouve le rapport correspondant dans `reports/`, utilise Playwright pour ouvrir une fenêtre de navigateur et lit le formulaire. Il génère ensuite une réponse pour chaque champ — prête à copier-coller. Pour Ashby, vous devrez utiliser votre navigateur habituel pour terminer et envoyer la candidature.
 
 <Callout title="Remarque">
   Si Playwright n'est pas disponible, career-ops se rabat sur WebFetch pour lire le formulaire. Consultez [Configurer Playwright](/docs/introduction/guides/set-up-playwright) si vous souhaitez activer l'expérience complète via le navigateur.
@@ -67,7 +67,7 @@ career-ops trouve le rapport correspondant dans `reports/`, utilise Playwright p
 
 ## Remplir le formulaire
 
-Le système renvoie une liste numérotée de réponses — une par champ du formulaire — qui suit l'ordre du formulaire. Parcourez la liste de haut en bas et collez chaque réponse dans le champ correspondant.
+Le système renvoie une liste numérotée de réponses — une par champ du formulaire — qui suit l'ordre du formulaire. Parcourez la liste de haut en bas. Avant de coller chaque réponse en texte libre, vérifiez les caractères ou mots `utilisés/autorisés` dans le champ réel. `limit unknown` indique que la limite doit être vérifiée dans le formulaire ; si une réponse ne tient pas sans perdre des faits essentiels, révisez-la avant de la coller.
 
 La sortie comporte deux parties :
 
@@ -115,7 +115,7 @@ Chaque réponse est construite à partir d'une partie précise de votre rapport 
 
 ## Envoyer la candidature
 
-Relisez chaque réponse, puis envoyez le formulaire vous-même. career-ops ne clique pas sur le bouton Submit.
+Relisez chaque réponse, puis envoyez le formulaire vous-même. Pour Ashby, terminez et envoyez la candidature dans votre navigateur habituel, pas depuis la session Playwright. Vérifiez la page de réussite ou l’e-mail de confirmation avant d’indiquer à career-ops que la candidature a été envoyée.
 
 Après l'envoi, confirmez dans le chat :
 
