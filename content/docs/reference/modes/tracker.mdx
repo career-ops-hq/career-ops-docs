@@ -55,7 +55,7 @@ node tracker.mjs export --out repaired.md --force  # write even when something w
 
 It preserves the layout it read, not just the values: your header row, columns career-ops does not map (`Location`, `Via`, `URL` or your own), the title, any preamble and trailing lines, and CRLF vs LF line endings. Extra columns come back in their own positions, though `query` cannot filter on them.
 
-Anything it cannot reproduce is named on stderr, and `--out` over an existing file refuses to write (exit code `1`, nothing written) until you re-run with `--force`:
+Anything it cannot reproduce is named on stderr. When that list is not empty, `--out` over an existing file refuses to write (exit code `1`, nothing written) until you re-run with `--force`; when it is empty, `--out` backs up the existing file and overwrites it. What gets reported:
 
 | Reported | Why it cannot be rebuilt |
 | --- | --- |

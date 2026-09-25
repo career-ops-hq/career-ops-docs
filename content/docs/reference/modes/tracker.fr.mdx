@@ -5,7 +5,7 @@ seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidatu
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: e628e938669001f5
+translationHash: b03887764d96ff28
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -58,7 +58,7 @@ node tracker.mjs export --out repaired.md --force  # write even when something w
 
 Il préserve la structure qu'il a lue, pas seulement les valeurs : votre ligne d'en-tête, les colonnes que career-ops ne mappe pas (`Location`, `Via`, `URL` ou les vôtres), le titre, les lignes avant et après le tableau, et les fins de ligne CRLF ou LF. Les colonnes supplémentaires reviennent à leur propre position, même si `query` ne peut pas filtrer dessus.
 
-Tout ce qu'il ne peut pas reproduire est signalé sur stderr, et `--out` sur un fichier existant refuse d'écrire (code de sortie `1`, rien n'est écrit) tant que vous ne relancez pas avec `--force` :
+Tout ce qu'il ne peut pas reproduire est signalé sur stderr. Si cette liste n'est pas vide, `--out` sur un fichier existant refuse d'écrire (code de sortie `1`, rien n'est écrit) tant que vous ne relancez pas avec `--force` ; si elle est vide, `--out` sauvegarde le fichier existant puis l'écrase. Ce qui est signalé :
 
 | Ce qui est signalé | Pourquoi cela ne peut pas être reconstruit |
 | --- | --- |
