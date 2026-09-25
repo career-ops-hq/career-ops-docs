@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { homeFaqSchemaEs } from '@/lib/schema';
 import { hreflangHome } from '@/lib/i18n-map';
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     languages: hreflangHome(),
   },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/es',
     siteName: 'career-ops',
