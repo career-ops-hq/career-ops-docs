@@ -17,9 +17,12 @@
 //      other things keep their own language: a Greek WIRED article cited as
 //      press coverage is rightly "el".
 //
-// Known issues are listed in KNOWN below, each with an owner and a reason.
-// They are printed on every run and do not fail it; anything else does. When
-// a known issue is fixed the script says so, so the list only shrinks.
+// Two escape hatches, both reviewed by search-ops, both narrow:
+//   ALLOWED — a deliberate exact substitution inside one claim; any other
+//             drift in that claim still fails.
+//   KNOWN   — a mismatch owned by someone else, printed on every run and not
+//             failing it. When it is fixed the script says so, so the list
+//             only shrinks. Empty since 26-sep; keep it that way.
 //
 // Usage: BASE=http://localhost:3999 node scripts/verify-schema-parity.mjs
 // Run against a `next start` server (the guard boots one first). Node
@@ -76,17 +79,20 @@ function* nodes(value) {
 // Pre-existing mismatches owned by someone other than this repo's agent.
 // Key: `${path} | ${claim}` exactly as the failure line prints it after the
 // path. Remove an entry the moment its owner resolves it.
-const KNOWN = {
-  '/manifesto | glossary definition of "CareerOps"':
-    'search-ops + venture-ops: manifesto page is frozen; the DefinedTerm text is not on the page',
-  '/manifesto | FAQ answer to "Who coined the term CareerOps?"':
-    'search-ops + venture-ops: manifesto page is frozen',
-  '/es/manifesto | FAQ answer to "¿Quién acuñó el término CareerOps?"':
-    'search-ops + venture-ops: manifesto page is frozen',
-  '/docs/reference/glossary | glossary definition of "CareerOps"':
-    'search-ops: schema definition differs from the glossary entry on the page',
-  '/methodology | DefinedTermSet':
-    'search-ops: the methodology graph carries ten DefinedTerms that the page does not show',
+const KNOWN = {};
+
+// Deliberate, exact differences between a schema claim and its page, ratified
+// by search-ops. Each entry swaps one exact schema string for the exact
+// visible string before comparing, so any OTHER drift in that claim still
+// fails. The manifesto says "on this page"; the schema travels without the
+// page, where "this page" means nothing, so it names the URL instead.
+const ALLOWED = {
+  '/manifesto | FAQ answer to "Who coined the term CareerOps?"': [
+    ['at career-ops.org/manifesto', 'on this page'],
+  ],
+  '/es/manifesto | FAQ answer to "¿Quién acuñó el término CareerOps?"': [
+    ['en career-ops.org/es/manifesto', 'en esta página'],
+  ],
 };
 
 const localeOf = (path) => (/^\/(es|fr)(\/|$)/.exec(path)?.[1] ?? 'en');
@@ -127,7 +133,13 @@ async function main() {
         }
         if (n['@type'] === 'Question') {
           checked++;
-          const answer = n.acceptedAnswer?.text ?? '';
+          let answer = n.acceptedAnswer?.text ?? '';
+          for (const [from, to] of ALLOWED[`${path} | FAQ answer to "${n.name}"`] ?? []) {
+            if (!answer.includes(from)) {
+              failures.push({ path, claim: `FAQ answer to "${n.name}"`, detail: `allowed substitution no longer applies: "${from}" is gone — update ALLOWED` });
+            }
+            answer = answer.replace(from, to);
+          }
           if (!page.includes(squash(n.name ?? ''))) {
             failures.push({ path, claim: `FAQ question not visible: "${n.name}"`, detail: '' });
           } else if (!page.includes(squash(answer))) {
@@ -156,14 +168,12 @@ async function main() {
     process.exit(1);
   }
   const keyOf = (f) => `${f.path} | ${f.claim}`;
-  const isKnown = (f) => KNOWN[keyOf(f)] || (f.path === '/methodology' && KNOWN['/methodology | DefinedTermSet'] && f.claim.startsWith('glossary definition'));
+  const isKnown = (f) => Boolean(KNOWN[keyOf(f)]);
   const known = failures.filter(isKnown);
   const fresh = failures.filter((f) => !isKnown(f));
 
   const seenKeys = new Set(failures.map(keyOf));
-  const resolved = Object.keys(KNOWN).filter(
-    (k) => k !== '/methodology | DefinedTermSet' ? !seenKeys.has(k) : !failures.some((f) => f.path === '/methodology' && f.claim.startsWith('glossary definition')),
-  );
+  const resolved = Object.keys(KNOWN).filter((k) => !seenKeys.has(k));
 
   if (known.length) {
     console.log(`known issues (${known.length}, not failing — owner in scripts/verify-schema-parity.mjs):`);
