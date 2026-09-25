@@ -16,6 +16,23 @@ const SITE_URL = 'https://career-ops.org';
 // uses its own crawl signal. (2026-07-24 audit, sitemap HIGH.)
 const gd = (relPath: string): Date | undefined => gitLastMod(relPath) ?? undefined;
 
+// A page's date is the newest of the files that actually make up what a reader
+// sees, not only its route file. The home's route file (page.tsx) had not
+// changed since 21 July while its text, which lives in home-dict.tsx, changed
+// on 22 September: the most edited page on the site was telling Google it was
+// two months stale. Same for the manifesto, whose signed text is its own file.
+const gdMax = (...relPaths: string[]): Date | undefined => {
+  const dates = relPaths
+    .map((p) => gitLastMod(p))
+    .filter((d): d is Date => d != null);
+  return dates.length ? new Date(Math.max(...dates.map((d) => d.getTime()))) : undefined;
+};
+const HOME_CONTENT = [
+  'src/app/(home)/home-dict.tsx',
+  'src/app/(home)/home-content.tsx',
+  'src/app/(home)/page.client.tsx',
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Real publication date of the newest career-ops release (the `web-*`
   // component train is not part of this page's series — see `isCore`).
@@ -28,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/`,
-      lastModified: gd('src/app/(home)/page.tsx'),
+      lastModified: gdMax('src/app/(home)/page.tsx', ...HOME_CONTENT),
     },
     {
       url: `${SITE_URL}/about`,
@@ -40,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/manifesto`,
-      lastModified: gd('src/app/manifesto/page.tsx'),
+      lastModified: gdMax('src/app/manifesto/page.tsx', 'src/lib/manifesto-text.ts'),
       alternates: {
         languages: {
           en: `${SITE_URL}/manifesto`,
@@ -136,12 +153,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   };
   entries.push({
     url: `${SITE_URL}/es`,
-    lastModified: new Date('2026-07-20'),
+    lastModified: gdMax('src/app/es/(home)/page.tsx', ...HOME_CONTENT),
     alternates: { languages: homeCluster },
   });
   entries.push({
     url: `${SITE_URL}/fr`,
-    lastModified: gd('src/app/fr/(home)/page.tsx'),
+    lastModified: gdMax('src/app/fr/(home)/page.tsx', ...HOME_CONTENT),
     alternates: { languages: homeCluster },
   });
 
@@ -149,7 +166,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // home), so it is listed explicitly with its bidirectional hreflang pair.
   entries.push({
     url: `${SITE_URL}/es/manifesto`,
-    lastModified: gd('src/app/es/manifesto/page.tsx'),
+    lastModified: gdMax('src/app/es/manifesto/page.tsx', 'src/lib/manifesto-text.ts'),
     alternates: {
       languages: {
         en: `${SITE_URL}/manifesto`,
