@@ -13,6 +13,7 @@ import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
 import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
 import { gitLastMod } from '@/lib/git-date';
+import { CLAUDE_CODE_FAQ } from '@/lib/claude-code-faq';
 import { FAQ_ENTRIES } from '@/lib/faq-data';
 import { GLOSSARY_TERMS } from '@/lib/glossary-data';
 
@@ -30,6 +31,18 @@ function extraSchemaFor(slug: string[] | undefined): object | null {
       '@type': 'FAQPage',
       '@id': 'https://career-ops.org/docs/faq#faq',
       mainEntity: FAQ_ENTRIES.map((e) => ({
+        '@type': 'Question',
+        name: e.question,
+        acceptedAnswer: { '@type': 'Answer', text: e.answer },
+      })),
+    };
+  }
+  if (key === 'claude-code') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': 'https://career-ops.org/docs/claude-code#faq',
+      mainEntity: CLAUDE_CODE_FAQ.map((e) => ({
         '@type': 'Question',
         name: e.question,
         acceptedAnswer: { '@type': 'Answer', text: e.answer },

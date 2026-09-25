@@ -1,0 +1,51 @@
+---
+title: AI job search with Claude Code
+seoTitle: "AI job search with Claude Code | career-ops"
+description: "Use Claude Code as an AI job search agent: career-ops scans job boards, scores listings against your CV and drafts your applications. You decide and send."
+icon: Bot
+---
+
+career-ops turns Claude Code into an AI job search agent that runs in your terminal. It scans company job boards, scores each listing against your CV, tailors your resume, and drafts cover letters and your application answers. It evaluates and drafts; you decide and send. It never applies in your name. It also runs in Codex, OpenCode and other AI coding CLIs.
+
+## How to run career-ops in Claude Code
+
+career-ops loads into Claude Code through the `CLAUDE.md` file in the project folder, so there is nothing extra to configure once it is installed. The [Quick Start](/docs) covers the installation.
+
+- **Interactive:** open the career-ops folder, run `claude`, then type `/career-ops`.
+- **Batch:** run it headless with `claude -p "prompt"`.
+
+## What it costs
+
+career-ops itself is free and MIT-licensed. Claude Code is not: it needs a paid Claude plan or an Anthropic API key.
+
+If `ANTHROPIC_API_KEY` is set in your environment, Claude Code bills per token even when you also pay for Claude Pro or Max. The [FAQ explains why and how to check](/docs/faq#i-pay-for-claude-pro-or-max-why-is-career-ops-billing-my-api-credits).
+
+If you would rather not pay for an engine at all, career-ops runs on free providers through OpenCode. See [Set up a free AI engine](/docs/free-ai-engine).
+
+## What it does, and what it leaves to you
+
+Each listing gets a global score from 1 to 5, built from five dimensions. Below 4.0/5, career-ops recommends against applying. For the listings worth pursuing it tailors your resume, drafts a cover letter and drafts answers to the application's open questions.
+
+Then it stops. You review what it drafted, edit it, and submit the application yourself. career-ops never submits an application for you.
+
+## Prefer another CLI?
+
+career-ops works the same way in Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent and GitHub Copilot CLI. See [Supported CLIs](/docs/supported-clis) for how each one loads it.
+
+## Where it came from
+
+Built by Santiago Fernández de Valderrama Aparicio for his own 2026 job search: 740 job listings evaluated → 68 applications → 12 interviews → 1 offer.
+
+## Frequently asked questions
+
+### Can Claude Code search for jobs for me?
+
+Yes, with career-ops. It scans company job boards, scores each listing against your CV and drafts the application material for the ones worth pursuing. You decide which applications to send.
+
+### Does it apply to jobs automatically?
+
+No. career-ops never submits an application in your name. It prepares everything up to the click, and you review and send each application yourself.
+
+### Do I need Claude Pro?
+
+To use Claude Code you need a paid Claude plan or an Anthropic API key. career-ops itself is free, and it also runs on free engines through OpenCode.
