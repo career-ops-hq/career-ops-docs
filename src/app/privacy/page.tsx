@@ -48,10 +48,11 @@ export default function PrivacyPage() {
 
         <Section title="1. Data Controller">
           <p>
+            The data controller for career-ops.org is{' '}
             <strong className="text-fd-foreground">
               Santiago Fernández de Valderrama Aparicio
             </strong>
-            , individual, based in Sevilla, Spain. Contact for any privacy matter:{' '}
+            , an individual based in Sevilla, Spain. Contact for any privacy matter:{' '}
             <a
               href="mailto:privacy@career-ops.org"
               className="text-fd-foreground underline underline-offset-2"
@@ -81,8 +82,8 @@ export default function PrivacyPage() {
             </li>
           </ul>
           <p className="mt-3">
-            We do not collect names, account passwords, payment details, or any profile data. The
-            website does not require accounts.
+            career-ops.org does not collect names, account passwords, payment details, or any
+            profile data, and does not require accounts.
           </p>
         </Section>
 
@@ -103,7 +104,7 @@ export default function PrivacyPage() {
             security-relevant communications. We do not send promotional content for third
             parties, do not run advertising campaigns, and do not profile or score subscribers.
           </p>
-          <p className="mt-3">Frequency target: 1–2 emails per month at most, often less.</p>
+          <p className="mt-3">The career-ops.org mailing list targets 1–2 emails per month at most, often less.</p>
         </Section>
 
         <Section title="5. Retention">
