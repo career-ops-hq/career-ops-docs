@@ -252,7 +252,7 @@ export async function siteSchema() {
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         description:
-          'AI-powered job search command center. Open source, CLI-agnostic, runs locally.',
+          'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
         inLanguage: 'en',
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
@@ -280,7 +280,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         url: 'https://career-ops.org',
         description:
-          'Open-source AI-powered job search command center. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama Aparicio.',
+          'Open-source AI job search agent. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama Aparicio.',
         // Signature thesis as a structured slogan — gives LLMs an
         // attributable, entity-bound version of the manifesto they already
         // see in prose on the home/about/methodology pages and in llms.txt.
@@ -347,7 +347,7 @@ export async function siteSchema() {
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         description:
-          'Open-source AI-powered job search command center. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
+          'Open-source AI job search agent. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
         // Sourced live from the GitHub releases API (1h ISR) so it can never
         // drift stale; falls back to LATEST_RELEASE_FALLBACK in shared.ts.
         softwareVersion: stats.softwareVersion,
@@ -448,7 +448,7 @@ const DEFINED_TERMS = [
   {
     name: 'career-ops',
     description:
-      'An open-source AI-powered job search command center. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama Aparicio in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
+      'An open-source AI job search agent. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama Aparicio in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
   },
   {
     name: 'Block A-H evaluation',
@@ -656,7 +656,7 @@ export function manifestoSchema() {
         '@type': 'DefinedTerm',
         '@id': 'https://career-ops.org/manifesto/#careerops',
         name: 'CareerOps',
-        description: `${CAREEROPS_DEFINITION} The reference implementation of the practice is career-ops, the open-source AI job-search command center (Wikidata Q139007988).`,
+        description: `${CAREEROPS_DEFINITION} The reference implementation of the practice is career-ops, the open-source AI job search agent (Wikidata Q139007988).`,
         url: 'https://career-ops.org/manifesto',
         termCode: 'careerops',
         inDefinedTermSet: { '@id': MANIFESTO_TERM_SET_ID },
@@ -671,7 +671,7 @@ export function manifestoSchema() {
             name: 'What is CareerOps?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: `${CAREEROPS_DEFINITION} The term names the practice, not a product: treating a job search as an operated pipeline (sourcing, scoring, tailoring, tracking) rather than a pile of one-off applications. The reference implementation is career-ops (lowercase, hyphenated), the MIT-licensed open-source command center that runs the whole pipeline locally on the job seeker's machine through whichever AI coding CLI they already use. The practice is bigger than the tool: you can run CareerOps with a spreadsheet and discipline; career-ops just automates the operating layer.`,
+              text: `${CAREEROPS_DEFINITION} The term names the practice, not a product: treating a job search as an operated pipeline (sourcing, scoring, tailoring, tracking) rather than a pile of one-off applications. The reference implementation is career-ops (lowercase, hyphenated), the MIT-licensed open-source AI job search agent that runs the whole pipeline locally on the job seeker's machine through whichever AI coding CLI they already use. The practice is bigger than the tool: you can run CareerOps with a spreadsheet and discipline; career-ops just automates the operating layer.`,
             },
           },
           {

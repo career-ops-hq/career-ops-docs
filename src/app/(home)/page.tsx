@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://career-ops.org',
     siteName: 'career-ops',
-    title: 'career-ops — open-source AI job search command center',
+    title: 'career-ops: open-source AI job search agent',
     description:
       'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
   },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@santifer',
     creator: '@santifer',
-    title: 'career-ops — open-source AI job search command center',
+    title: 'career-ops: open-source AI job search agent',
     description:
       'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
   },
