@@ -1,3 +1,4 @@
+import { getPageImage } from '@/lib/source';
 import { source } from '@/lib/source';
 import { DocsPageView } from '@/components/docs-page-view';
 import { docsHreflang, DOCS_LOCALES } from '@/lib/i18n-map';
@@ -55,6 +56,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     },
     robots: { index: true, follow: true },
     openGraph: {
+      images: getPageImage(page).url,
       type: 'article',
       url: esUrl,
       siteName: 'career-ops',

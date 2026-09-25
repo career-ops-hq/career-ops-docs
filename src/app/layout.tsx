@@ -8,6 +8,17 @@ import { CoMark } from '@/components/co-mark';
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 
+import type { Metadata } from 'next';
+
+// Every relative image URL in page metadata (the docs OG cards, among others)
+// is resolved against this. Without it Next falls back to whatever Vercel
+// exposes at build time: production happened to resolve to career-ops.org,
+// but that was an implicit dependency, and a local build resolved the same
+// cards to http://localhost:3000.
+export const metadata: Metadata = {
+  metadataBase: new URL('https://career-ops.org'),
+};
+
 // Social brand marks as inline SVG (the installed lucide-react 1.8.0
 // predates Lucide's brand-icon set; using canonical brand paths keeps
 // this self-contained and on-brand without a dependency bump).

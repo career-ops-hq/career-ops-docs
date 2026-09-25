@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { getChangelog } from '@/lib/releases';
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
     'Every career-ops release, in plain language: new modes, providers, fixes, and improvements. Sourced live from GitHub Releases — the project ships several times a week.',
   alternates: { canonical: 'https://career-ops.org/changelog' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/changelog',
     siteName: 'career-ops',

@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { sustainSchema } from '@/lib/schema';
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
     'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
   alternates: { canonical: 'https://career-ops.org/sustain' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/sustain',
     siteName: 'career-ops',
