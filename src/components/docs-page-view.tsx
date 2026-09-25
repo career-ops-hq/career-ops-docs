@@ -19,11 +19,15 @@ import { GLOSSARY_TERMS } from '@/lib/glossary-data';
 
 type DocsPageType = InferPageType<typeof source>;
 
-// Two docs pages carry an extra structured-data layer beyond
-// TechArticle: /docs/faq (FAQPage) and /docs/reference/glossary
-// (DefinedTermSet). Data lives in src/lib/*-data.ts, mirrored with the
-// MDX by convention — see the comment at the top of each data module.
-function extraSchemaFor(slug: string[] | undefined): object | null {
+// A few docs pages carry an extra structured-data layer beyond TechArticle:
+// /docs/faq and /docs/claude-code (FAQPage), /docs/free-ai-engine (HowTo) and
+// /docs/reference/glossary (DefinedTermSet). The data is English, so it is
+// emitted on English pages only. Spanish and French pages used to carry the
+// English graphs, with the English page's @id, where none of that text is
+// visible. Until the data is generated from each locale's own MDX, a
+// translated page gets no extra layer rather than a wrong one.
+function extraSchemaFor(slug: string[] | undefined, locale: string): object | null {
+  if (locale !== 'en') return null;
   const key = (slug ?? []).join('/');
   if (key === 'faq') {
     return {
@@ -113,7 +117,6 @@ const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le
 export function DocsPageView({ page }: { page: DocsPageType }) {
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
-  const extraSchema = extraSchemaFor(page.slugs);
 
   // Real authored date from git (build time). Only surfaced when git can
   // resolve it — we never assert a synthetic "Updated" date.
@@ -123,6 +126,7 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
   // in English, next to everything else in their own language. Both the date
   // format and the label follow the page's locale.
   const locale = (page.locale ?? 'en') as keyof typeof UPDATED_LABEL;
+  const extraSchema = extraSchemaFor(page.slugs, locale);
   const dateModifiedLabel = gitDate?.toLocaleDateString(DATE_LOCALE[locale] ?? 'en-US', {
     year: 'numeric',
     month: 'long',
@@ -148,6 +152,7 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
               title: page.data.title,
               description: page.data.description,
               dateModified,
+              inLanguage: locale,
             }),
           ),
         }}
