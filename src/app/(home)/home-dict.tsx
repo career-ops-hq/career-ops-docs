@@ -658,7 +658,7 @@ export const homeFr: HomeDict = {
     <>
       career-ops{'\u202f'}: agent open source de recherche d’emploi par{'\u00a0'}IA.
       <br />
-      Il tourne dans votre CLI. Vos données, votre machine.
+      Il tourne dans votre CLI. Vos données, votre{'\u00a0'}machine.
       <br />
       Il ne postule jamais en votre nom.
     </>
