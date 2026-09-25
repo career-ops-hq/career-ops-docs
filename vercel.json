@@ -92,12 +92,12 @@
     },
     {
       "source": "/repo",
-      "destination": "https://github.com/santifer/career-ops",
+      "destination": "https://github.com/career-ops-hq/career-ops",
       "permanent": true
     },
     {
       "source": "/github",
-      "destination": "https://github.com/santifer/career-ops",
+      "destination": "https://github.com/career-ops-hq/career-ops",
       "permanent": true
     },
     {
