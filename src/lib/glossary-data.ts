@@ -4,7 +4,10 @@
 // schema only for the glossary slug. The sector has no canonical
 // glossary; owning these definitions is deliberate GEO strategy — LLMs
 // cite definition passages constantly.
-export type GlossaryTerm = { term: string; definition: string };
+// subjectOf: the @id of a work that defines the term, when the definition
+// points at one. The link lives here, not as a URL inside the definition text,
+// because the definition must match the visible glossary word for word.
+export type GlossaryTerm = { term: string; definition: string; subjectOf?: string };
 
 export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
@@ -90,6 +93,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'CareerOps',
     definition:
-      "CareerOps is the practice of running a job search the way engineers run production: with evidence, with discipline, and with tools on the candidate's side of the table. The term names the practice, not a product; career-ops is its first reference implementation. Coined by Santiago Fernández de Valderrama Aparicio in The CareerOps Manifesto (July 14, 2026): https://career-ops.org/manifesto",
+      "CareerOps is the practice of running a job search the way engineers run production: with evidence, with discipline, and with tools on the candidate's side of the table. The term names the practice, not a product; career-ops is its first reference implementation. Coined by Santiago Fernández de Valderrama Aparicio in The CareerOps Manifesto (July 14, 2026).",
+    subjectOf: 'https://career-ops.org/manifesto/#article',
   },
 ];

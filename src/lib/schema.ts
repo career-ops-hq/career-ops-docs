@@ -255,7 +255,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: 'en',
+        inLanguage: ['en', 'es', 'fr'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -403,60 +403,21 @@ export async function siteSchema() {
   };
 }
 
-// Lexicon of canonical category terms. Each gets a DefinedTerm node so
-// LLMs and search engines can cite the definition by URL fragment. The
-// list is intentionally short — quality over quantity, no padding.
-const DEFINED_TERMS = [
-  {
-    name: 'score-gated apply',
-    description:
-      'An application workflow where every potential job is evaluated against an explicit rubric and only those above a threshold (4.0/5.0 in career-ops) are recommended for application. The opposite of spray-and-pray.',
-  },
-  {
-    name: 'AI-native job matching',
-    description:
-      'Job-search tooling whose primary reasoning engine is an LLM rather than keyword matching. Distinguished from "AI-augmented" tools that add a generative layer on top of legacy ranking systems.',
-  },
-  {
-    name: 'JD-resume distance',
-    description:
-      'The semantic gap between a job description and a candidate CV — measured by an LLM against an explicit rubric of skills, proof points, and archetype fit. Not a vector similarity score; an audited judgement with citations.',
-  },
-  {
-    name: 'agent-augmented job search',
-    description:
-      'A job search where an AI agent handles the repetitive analytical work — reading postings, comparing against the candidate profile, drafting tailored materials — while the human retains every commit decision (apply / reject / negotiate).',
-  },
-  {
-    name: 'transparent matching',
-    description:
-      'Match scoring whose rubric, prompts, and reasoning are publishable in clear so the candidate (and the recruiter) can audit why a score was produced. The implementation is open source and the evaluation cites specific evidence.',
-  },
-  {
-    name: 'asymmetric AI hiring',
-    description:
-      'The current hiring landscape, in which companies use AI to filter candidates at scale while candidates lack equivalent tooling. Career-ops exists to close that asymmetry — AI on the candidate side of the table.',
-  },
-  {
-    name: 'candidate-side AI augmentation',
-    description:
-      'Tooling owned by the candidate that helps them evaluate roles, tailor materials, and track applications — distinct from recruiter-side ATS and HR tooling. Local-first by design; no employer can see, access, or modify it.',
-  },
-  {
-    name: 'multi-LLM routing for evals',
-    description:
-      'Running the same evaluation prompt across multiple LLMs (Claude, Codex, OpenCode, Gemini, Qwen, Copilot) so the user can pick the model that fits their cost / quality / privacy profile. Career-ops is CLI-agnostic by design.',
-  },
-  {
-    name: 'career-ops',
-    description:
-      'An open-source AI job search agent. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama Aparicio in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
-  },
-  {
-    name: 'Block A-H evaluation',
-    description:
-      'The canonical career-ops evaluation prompt structure: an eight-section output (Block A through H) covering Role Summary, CV Match, Level Strategy, Comp & Demand, Personalisation Plan, Interview Prep, and Posting Legitimacy. Defined verbatim in modes/oferta.md (canonical Spanish; English translation in flight per issue #363).',
-  },
+// Category terms the methodology page is about, as article keywords. They
+// were also emitted as ten DefinedTerm nodes with definitions the page never
+// shows; search-ops removed those on 26-sep (structured data must describe
+// what is visible).
+const METHODOLOGY_KEYWORDS = [
+  'score-gated apply',
+  'AI-native job matching',
+  'JD-resume distance',
+  'agent-augmented job search',
+  'transparent matching',
+  'asymmetric AI hiring',
+  'candidate-side AI augmentation',
+  'multi-LLM routing for evals',
+  'career-ops',
+  'Block A-H evaluation',
 ];
 
 // /methodology — TechArticle authored by Person, plus FAQPage with 5–7
@@ -484,7 +445,7 @@ export function methodologySchema() {
         inLanguage: 'en',
         articleSection: 'Methodology',
         wordCount: 2000,
-        keywords: DEFINED_TERMS.map((t) => t.name),
+        keywords: METHODOLOGY_KEYWORDS,
         image: {
           '@type': 'ImageObject',
           url: 'https://career-ops.org/og-banner.jpg',
@@ -554,13 +515,6 @@ export function methodologySchema() {
           },
         ],
       },
-      ...DEFINED_TERMS.map((t) => ({
-        '@type': 'DefinedTerm',
-        '@id': `https://career-ops.org/methodology/#term-${t.name.replace(/\s+/g, '-')}`,
-        name: t.name,
-        description: t.description,
-        inDefinedTermSet: 'https://career-ops.org/methodology',
-      })),
       {
         '@type': 'BreadcrumbList',
         '@id': 'https://career-ops.org/methodology/#breadcrumbs',
@@ -658,7 +612,7 @@ export function manifestoSchema() {
         '@type': 'DefinedTerm',
         '@id': 'https://career-ops.org/manifesto/#careerops',
         name: 'CareerOps',
-        description: `${CAREEROPS_DEFINITION} The reference implementation of the practice is career-ops, the open-source AI job search agent (Wikidata Q139007988).`,
+        description: CAREEROPS_DEFINITION,
         url: 'https://career-ops.org/manifesto',
         termCode: 'careerops',
         inDefinedTermSet: { '@id': MANIFESTO_TERM_SET_ID },

@@ -99,6 +99,7 @@ function extraSchemaFor(slug: string[] | undefined, locale: string): object | nu
         description: t.definition,
         inDefinedTermSet:
           'https://career-ops.org/docs/reference/glossary#terms',
+        ...(t.subjectOf ? { subjectOf: { '@id': t.subjectOf } } : {}),
       })),
     };
   }
