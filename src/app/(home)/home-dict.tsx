@@ -79,9 +79,11 @@ export const homeEn: HomeDict = {
   ),
   heroH1: (
     <>
-      Open source AI-powered job search.
+      career-ops: open-source AI job search{'\u00a0'}agent.
       <br />
       Runs in your CLI. Your data, your machine.
+      <br />
+      It never applies in your name.
     </>
   ),
   runItNow: 'Run it now',
@@ -120,7 +122,7 @@ export const homeEn: HomeDict = {
   statsComment: 'stars · Open source · MIT',
   commandCenter: (
     <>
-      Turn any AI coding CLI into a full job search {brand('command center')}.
+      Turn any AI coding CLI into your {brand('AI job search agent')}.
     </>
   ),
   tryItOut: 'Try it out',

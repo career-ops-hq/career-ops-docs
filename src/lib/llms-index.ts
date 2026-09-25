@@ -43,7 +43,7 @@ function buildPreamble(
   const stat = (ok: boolean, line: string) => (ok ? `\n${line}` : '');
   return `# career-ops
 
-> AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
+> Open-source AI job search agent. CLI-agnostic, runs locally in your AI coding CLI. It never applies in your name.
 
 ## Canonical Identity
 
