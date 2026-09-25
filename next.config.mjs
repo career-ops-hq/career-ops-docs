@@ -164,6 +164,17 @@ const config = {
   },
   async headers() {
     return [
+      // Spanish and French routes declare their language over HTTP. The root
+      // layout hardcodes <html lang="en"> for every page (see src/app/es/layout.tsx
+      // for why that is not changed here), and Bing reads Content-Language.
+      {
+        source: '/:lang(es|fr)',
+        headers: [{ key: 'Content-Language', value: ':lang' }],
+      },
+      {
+        source: '/:lang(es|fr)/:path*',
+        headers: [{ key: 'Content-Language', value: ':lang' }],
+      },
       {
         source: '/:path*',
         headers: securityHeaders,
