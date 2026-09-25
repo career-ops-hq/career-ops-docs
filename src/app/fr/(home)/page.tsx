@@ -12,7 +12,7 @@ import { homeFr } from '../../(home)/home-dict';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
-  title: 'career-ops — recherche d’emploi par IA, open source et local-first',
+  title: 'career-ops\u202f: agent open source de recherche d’emploi par IA',
   description:
     'Système open source de recherche d’emploi par IA. Il tourne sur votre propre machine, dans l’assistant de codage IA que vous utilisez déjà. Il évalue les offres, adapte votre CV et suit vos candidatures. Sans compte, sans cloud, gratuit.',
   alternates: {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: 'https://career-ops.org/fr',
     siteName: 'career-ops',
     locale: 'fr_FR',
-    title: 'career-ops — recherche d’emploi par IA, open source et local-first',
+    title: 'career-ops\u202f: agent open source de recherche d’emploi par IA',
     description:
       'Système open source de recherche d’emploi par IA. Il tourne dans votre CLI. Vos données, votre machine.',
   },

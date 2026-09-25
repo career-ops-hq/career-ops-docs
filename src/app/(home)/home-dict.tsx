@@ -363,9 +363,11 @@ export const homeEs: HomeDict = {
   ),
   heroH1: (
     <>
-      Búsqueda de empleo con IA, open source.
+      career-ops: agente open source de búsqueda de empleo con{'\u00a0'}IA.
       <br />
       Se ejecuta en tu CLI. Tus datos, tu máquina.
+      <br />
+      Nunca envía una candidatura en tu nombre.
     </>
   ),
   runItNow: 'Empezar ahora',
@@ -410,8 +412,8 @@ export const homeEs: HomeDict = {
   statsComment: 'estrellas · Open source · MIT',
   commandCenter: (
     <>
-      Convierte cualquier CLI de IA en un {brand('centro de mando')} completo de
-      búsqueda de empleo.
+      Convierte cualquier CLI de IA para programar en tu{' '}
+      {brand('agente de búsqueda de empleo con IA')}.
     </>
   ),
   tryItOut: 'Pruébalo',
@@ -654,9 +656,11 @@ export const homeFr: HomeDict = {
   ),
   heroH1: (
     <>
-      Recherche d’emploi par IA, open source.
+      career-ops{'\u202f'}: agent open source de recherche d’emploi par{'\u00a0'}IA.
       <br />
-      Elle tourne dans votre CLI. Vos données, votre machine.
+      Il tourne dans votre CLI. Vos données, votre machine.
+      <br />
+      Il ne postule jamais en votre nom.
     </>
   ),
   runItNow: 'Commencer',
@@ -697,8 +701,8 @@ export const homeFr: HomeDict = {
   statsComment: 'étoiles · Open source · MIT',
   commandCenter: (
     <>
-      Transformez n’importe quel CLI d’IA en {brand('centre de commande')} complet
-      pour votre recherche d’emploi.
+      Transformez n’importe quel CLI de code IA en votre{' '}
+      {brand('agent de recherche d’emploi par IA')}.
     </>
   ),
   tryItOut: 'Essayez',
