@@ -114,13 +114,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // post-migration from the deleted /use-cases routes).
   for (const page of source.getPages('en')) {
     // page.url already includes the /docs prefix via baseUrl in source.ts.
-    // Reconstruct MDX path from slugs:
-    //   []                                 -> content/docs/index.mdx
-    //   ['intro', 'what-is-career-ops']    -> content/docs/intro/what-is-career-ops.mdx
-    const mdxRel =
-      page.slugs.length === 0
-        ? 'content/docs/index.mdx'
-        : `content/docs/${page.slugs.join('/')}.mdx`;
+    // The date comes from the page's REAL source file (page.path), never from a
+    // path rebuilt out of its slugs. Rebuilding guessed `reference/modes.mdx` for
+    // a folder index that lives at `reference/modes/index.mdx`, found no file,
+    // and silently dropped <lastmod> for that URL. docs-page-view already reads
+    // page.path, which is why the page showed a date the sitemap did not.
+    const mdxRel = `content/docs/${page.path}`;
 
     entries.push({
       url: `${SITE_URL}${page.url}`,
@@ -178,7 +177,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
     for (const loc of twins) cluster[loc] = `${SITE_URL}/${loc}${enPage.url}`;
     for (const loc of twins) {
-      const mdxRel = `content/docs/${enPage.slugs.join('/')}.${loc}.mdx`;
+      // Same rule as above: the twin's own source path. The rebuilt path turned
+      // the docs index into `content/docs/.es.mdx`, a file that cannot exist.
+      const mdxRel = `content/docs/${source.getPage(enPage.slugs, loc)!.path}`;
       entries.push({
         url: `${SITE_URL}/${loc}${enPage.url}`,
         lastModified: gd(mdxRel),
