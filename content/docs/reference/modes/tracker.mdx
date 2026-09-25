@@ -4,7 +4,7 @@ description: "Quick read of where every application stands. Useful as a daily ch
 seoTitle: "career-ops tracker mode — see where every job application stands"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-09-25"
 ---
 
 ## What it does
@@ -40,6 +40,37 @@ An application moves through a fixed set of states: Evaluated (report written, d
 ## Reading the lifetime numbers
 
 For cumulative figures — the full funnel, scanner totals, portal coverage, and follow-up compliance — the mode runs `node stats.mjs --summary` and presents its output verbatim. That command reads your local files and costs zero tokens, so the numbers are never recomputed by hand or estimated from memory. Use the chat summary above for a fast daily read, and the stats command when you want the running totals across the whole search.
+
+## Exporting a repaired copy
+
+Over hundreds of rows a markdown table picks up damage: mojibake placeholders, a score stranded in the status column, duplicate ids, stray pipes. `node tracker.mjs sync` finds and repairs these in its SQLite index, `data/applications.db`, without touching the markdown. `node tracker.mjs export` is how you adopt that repaired copy of your own tracker:
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+`export` never touches `data/applications.md` unless you pass it as `--out`.
+
+It preserves the layout it read, not just the values: your header row, columns career-ops does not map (`Location`, `Via`, `URL` or your own), the title, any preamble and trailing lines, and CRLF vs LF line endings. Extra columns come back in their own positions, though `query` cannot filter on them.
+
+Anything it cannot reproduce is named on stderr, and `--out` over an existing file refuses to write (exit code `1`, nothing written) until you re-run with `--force`:
+
+| Reported | Why it cannot be rebuilt |
+| --- | --- |
+| A cell outside the columns the header declares | The header has no column to put it in |
+| A line between the first and last table row, such as a heading or a second table's header | A single rebuilt table has nowhere to put it |
+| A row belonging to a later table, such as an `## Archive` section | It was indexed against the first table's header, so re-emitting it would move archived data into the active table |
+| A cell whose value had to be rewritten to survive as a cell (a stray `\|` comes back as `│`) | The value itself changed |
+
+No losses reported does not mean the output is byte-identical. `export` emits the repairs `sync` made, and some of them are silent: `aplicado` is a recognized alias for `Applied` in `templates/states.yml`, so `sync --check` reports no corruption and the export says `Applied` anyway. Column-aligned cells also come back single-spaced. Before adopting an export, diff it against the file it replaces:
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+The full command reference, including `sync`, `query` and `history`, is in the core repo's [scripts guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker).
 
 ## Gotchas
 
