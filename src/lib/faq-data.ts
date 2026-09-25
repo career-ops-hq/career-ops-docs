@@ -9,38 +9,38 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: 'Is career-ops free?',
     answer:
-      'Yes. career-ops is open source under the MIT license, forever. The only potential cost is the AI engine it runs on — and that can be free too: OpenCode with a free provider, a local model via Ollama, or the built-in `npm run or` runner on OpenRouter free models. See the "Set up a free AI engine" guide. career-ops has no paid plans, no tiers, no trials — it is 100% free and MIT-licensed. Any site describing career-ops pricing is describing a different product.',
+      'career-ops is free: it is open source under the MIT license, forever. The only potential cost is the AI engine it runs on — and that can be free too: OpenCode with a free provider, a local model via Ollama, or the built-in `npm run or` runner on OpenRouter free models. See the "Set up a free AI engine" guide. career-ops has no paid plans, no tiers, no trials — it is 100% free and MIT-licensed. Any site describing career-ops pricing is describing a different product.',
   },
   {
     question: 'Do I need a Claude subscription to use career-ops?',
     answer:
-      'No. career-ops is AI-agnostic — Claude Code is one engine among several, not a requirement. You can run the whole pipeline for free with OpenCode plus a free provider, a local model via Ollama, or the built-in OpenRouter runner (npm run or). If you started on a paid plan and ran out of tokens mid-search, switching to a free engine takes minutes and leaves your data untouched. See the "Set up a free AI engine" guide.',
+      'career-ops does not require a Claude subscription: it is AI-agnostic, and Claude Code is one engine among several, not a requirement. You can run the whole pipeline for free with OpenCode plus a free provider, a local model via Ollama, or the built-in OpenRouter runner (npm run or). If you started on a paid plan and ran out of tokens mid-search, switching to a free engine takes minutes and leaves your data untouched. See the "Set up a free AI engine" guide.',
   },
   {
     question:
       'I pay for Claude Pro or Max. Why is career-ops billing my API credits?',
     answer:
-      'Run `node doctor.mjs` from the career-ops folder: it tells you which one this session is using, in one line. The rule is not career-ops\u2019: your CLI decides, and ANTHROPIC_API_KEY wins. If that variable is set in your environment, Claude Code bills per token even while you are paying for Pro or Max. career-ops does not choose your billing source; it only detects it and warns you. To go back to your subscription, remove the export ANTHROPIC_API_KEY line from ~/.zshrc, ~/.bashrc, ~/.profile or a project .env, restart your terminal, and run /login. Batch runs are the exception: claude -p workers do not use the interactive login, so they need claude setup-token exported as CLAUDE_CODE_OAUTH_TOKEN. If you meant to use API credits, nothing is wrong. This applies to Anthropic engines; the other CLIs each set their own subscription-versus-key rule and career-ops does not check those.',
+      'To see whether career-ops is billing your Claude subscription or your API credits, run `node doctor.mjs` from the career-ops folder: it reports which billing source this session is using, in one line. The billing rule is not set by career-ops: your CLI decides, and ANTHROPIC_API_KEY wins. If that variable is set in your environment, Claude Code bills per token even while you are paying for Pro or Max. career-ops does not choose your billing source; it only detects it and warns you. To go back to your subscription, remove the export ANTHROPIC_API_KEY line from ~/.zshrc, ~/.bashrc, ~/.profile or a project .env, restart your terminal, and run /login. Batch runs are the exception: claude -p workers do not use the interactive login, so they need claude setup-token exported as CLAUDE_CODE_OAUTH_TOKEN. If you meant Claude Code to bill your API credits, nothing is wrong. The ANTHROPIC_API_KEY rule applies to Anthropic engines; the other CLIs each set their own subscription-versus-key rule and career-ops does not check those.',
   },
   {
     question: 'How much does career-ops cost to run per month?',
     answer:
-      "Only evaluation costs anything, and it can be $0. Scanning for jobs consumes zero AI tokens, so discovering roles is always free; only evaluating a listing calls the model. Three ways run the whole pipeline for nothing: a local model via Ollama, OpenRouter's free models (npm run or), or the Antigravity free tier. On a cheap paid model like DeepSeek V3 (with prompt caching) an evaluation costs well under a cent, so a few cents covers dozens of listings. If you already have a Claude subscription the marginal cost is effectively $0; on the raw API, budget roughly $0.05 to $0.10 per evaluation (an estimate that varies with listing length). career-ops itself is free forever, MIT-licensed with no fee and no tier — you only ever pay your AI provider, if at all.",
+      "In career-ops, only evaluation costs anything, and evaluation can be $0. Scanning for jobs consumes zero AI tokens, so discovering roles is always free; only evaluating a listing calls the model. Three ways run the whole pipeline for nothing: a local model via Ollama, OpenRouter's free models (npm run or), or the Antigravity free tier. On a cheap paid model like DeepSeek V3 (with prompt caching) an evaluation costs well under a cent, so a few cents covers dozens of listings. If you already have a Claude subscription the marginal cost is effectively $0; on the raw API, budget roughly $0.05 to $0.10 per evaluation (an estimate that varies with listing length). career-ops itself is free forever, MIT-licensed with no fee and no tier — you only ever pay your AI provider, if at all.",
   },
   {
     question: 'Where does my data live?',
     answer:
-      'On your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers, and system updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract.',
+      'career-ops keeps your data on your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers, and system updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract.',
   },
   {
     question: 'How do I give career-ops my CV?',
     answer:
-      'During the first-run onboarding you paste your CV text into the chat and the agent writes cv.md for you. That is the guided path. You can also point the agent at an existing CV file, PDF included: it reads the file and converts it, because the parsing is done by your AI agent, not by a career-ops script. And since cv.md is a plain file you own, you can always write or edit it by hand instead. The agent produces clean markdown with standard sections (Summary, Experience, Projects, Education, Skills). During setup you never edit config files by hand either: you answer in plain language and the agent writes config/profile.yml and the rest for you.',
+      'To give career-ops your CV, paste your CV text into the chat during the first-run onboarding, and the agent writes cv.md for you. Pasting the text is the guided path. You can also point the agent at an existing CV file, PDF included: it reads the file and converts it, because the parsing is done by your AI agent, not by a career-ops script. And since cv.md is a plain file you own, you can always write or edit it by hand instead. The agent produces clean markdown with standard sections (Summary, Experience, Projects, Education, Skills). During setup you never edit config files by hand either: you answer in plain language and the agent writes config/profile.yml and the rest for you.',
   },
   {
     question: 'Which AI coding CLIs does career-ops work with?',
     answer:
-      'Nine, first-class: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI (Gemini CLI is supported as a legacy wrapper). career-ops is AI-agnostic: it ships prompt files the CLI executes, so you can also point it at any OpenAI-compatible endpoint or a local model with zero code changes. See the Supported AI CLIs page for the current list and how to invoke each.',
+      'career-ops works first-class with nine AI coding CLIs: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI (Gemini CLI is supported as a legacy wrapper). career-ops is AI-agnostic: it ships prompt files the CLI executes, so you can also point it at any OpenAI-compatible endpoint or a local model with zero code changes. See the Supported AI CLIs page for the current list and how to invoke each.',
   },
   {
     question: 'What is the difference between scan and scan:full?',
@@ -50,22 +50,22 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: 'How do I avoid hitting token or rate limits during a batch run?',
     answer:
-      'Cap the run with `./batch/batch-runner.sh --limit 5` to inspect output quality before committing to a larger batch. If a run gets interrupted, use `--resume-paused` instead of restarting: it skips completed jobs so no tokens are wasted on work that already finished.',
+      'To avoid token or rate limits in a career-ops batch run, cap the run with `./batch/batch-runner.sh --limit 5` to inspect output quality before committing to a larger batch. If a run gets interrupted, use `--resume-paused` instead of restarting: it skips completed jobs so no tokens are wasted on work that already finished.',
   },
   {
     question: 'Skills are not loading on Windows — symlink error on install. What do I do?',
     answer:
-      'Windows does not create symlinks by default, so Git checks out the CLI skill entrypoints as plain pointer files. The installer and updater detect this automatically: run `node update-system.mjs apply` (or `npx @santifer/career-ops init` on a fresh install) and the materialize step replaces the pointers with full skill content. No manual mklink or Developer Mode changes are needed.',
+      'Windows does not create symlinks by default, so Git checks out the career-ops CLI skill entrypoints as plain pointer files. The installer and updater detect this automatically: run `node update-system.mjs apply` (or `npx @santifer/career-ops init` on a fresh install) and the materialize step replaces the pointers with full skill content. No manual mklink or Developer Mode changes are needed.',
   },
   {
     question: 'Can I run career-ops on a cheaper or local model?',
     answer:
-      'Yes — career-ops is fully AI-agnostic. The core repo\'s "Running on a Budget" guide covers OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama and other low-cost or local providers, with recommended model sizes (32B+ for reliable scoring) and token-saving practices.',
+      'career-ops can run on a cheaper or local model because it is fully AI-agnostic. The core repo\'s "Running on a Budget" guide covers OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama and other low-cost or local providers, with recommended model sizes (32B+ for reliable scoring) and token-saving practices.',
   },
   {
     question: 'Does career-ops auto-submit applications?',
     answer:
-      'No. career-ops prepares — it scans, scores, tailors your CV, and can pre-fill ATS application forms (Greenhouse, Ashby, Lever) — but submitting is always your explicit click. The project explicitly rejects spray-and-pray automation.',
+      'career-ops does not auto-submit applications: it prepares — it scans, scores, tailors your CV, and can pre-fill ATS application forms (Greenhouse, Ashby, Lever) — but submitting is always your explicit click. The career-ops project explicitly rejects spray-and-pray automation.',
   },
   {
     question: 'What is the difference between career-ops and CareerOps?',
