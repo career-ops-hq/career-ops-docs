@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
     'How career-ops.org handles personal data — applies only to the mailing list. GDPR-compliant, no tracking, minimal data.',
   alternates: { canonical: 'https://career-ops.org/privacy' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/privacy',
     siteName: 'career-ops',
