@@ -94,6 +94,9 @@ function extraSchemaFor(slug: string[] | undefined): object | null {
 // chrome, schema, and MDX rendering are identical. `page.path` resolves to the
 // locale's own file (.mdx or .es.mdx), so the git date and "edit on GitHub"
 // link point at the right source per language.
+const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr' } as const;
+const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le' } as const;
+
 export function DocsPageView({ page }: { page: DocsPageType }) {
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
@@ -103,7 +106,11 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
   // resolve it — we never assert a synthetic "Updated" date.
   const gitDate = gitLastMod(`content/docs/${page.path}`);
   const dateModified = gitDate?.toISOString();
-  const dateModifiedLabel = gitDate?.toLocaleDateString('en-US', {
+  // Localized: Spanish and French pages rendered "Updated September 25, 2026"
+  // in English, next to everything else in their own language. Both the date
+  // format and the label follow the page's locale.
+  const locale = (page.locale ?? 'en') as keyof typeof UPDATED_LABEL;
+  const dateModifiedLabel = gitDate?.toLocaleDateString(DATE_LOCALE[locale] ?? 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -148,7 +155,7 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
         />
         {dateModifiedLabel && (
           <span className="ml-auto text-xs text-fd-muted-foreground">
-            Updated{' '}
+            {UPDATED_LABEL[locale] ?? UPDATED_LABEL.en}{' '}
             <time dateTime={dateModified}>{dateModifiedLabel}</time>
           </span>
         )}
