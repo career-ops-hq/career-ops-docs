@@ -230,7 +230,7 @@ export const homeEn: HomeDict = {
       q: 'Does career-ops apply to jobs for me?',
       a: (
         <>
-          It prepares every application right up to the click: it scans roles,
+          career-ops prepares every application right up to the click: it scans roles,
           scores each against your CV, and tailors a resume. Then it hands the
           decision back to you. You review and send each one yourself. That is
           deliberate: mass auto-apply burns your standing with recruiters and ATS
@@ -267,7 +267,7 @@ export const homeEn: HomeDict = {
       q: 'Where does my data live?',
       a: (
         <>
-          On your own machine, in plain files you own: your CV, profile,
+          career-ops keeps your data on your own machine, in plain files you own: your CV, profile,
           pipeline, and reports are local Markdown and YAML. career-ops runs
           entirely locally through your AI CLI: no account, no telemetry, nothing
           uploaded to a career-ops server. System updates never touch your data
@@ -522,7 +522,7 @@ export const homeEs: HomeDict = {
       q: '¿career-ops aplica a las ofertas por mí?',
       a: (
         <>
-          Prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno
+          career-ops prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno
           contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú
           revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema
           tu reputación con los reclutadores y los ATS, así que career-ops te quita
@@ -553,7 +553,7 @@ export const homeEs: HomeDict = {
       q: '¿Dónde se guardan mis datos? ¿career-ops es privado?',
       a: (
         <>
-          En tu propia máquina, en archivos planos que son tuyos: tu CV, tu
+          career-ops guarda tus datos en tu propia máquina, en archivos planos que son tuyos: tu CV, tu
           perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops
           corre por completo en local a través de tu CLI de IA: sin cuenta, sin
           telemetría, sin nada subido a un servidor de career-ops. Las
@@ -814,7 +814,7 @@ export const homeFr: HomeDict = {
       q: 'career-ops postule-t-il à ma place ?',
       a: (
         <>
-          Il prépare chaque candidature jusqu’au clic : il parcourt les offres,
+          career-ops prépare chaque candidature jusqu’au clic : il parcourt les offres,
           note chacune face à votre CV et adapte un CV. Puis il vous rend la
           décision. Vous relisez et envoyez chaque candidature vous-même. C’est
           délibéré : la candidature automatique de masse abîme votre réputation
@@ -859,7 +859,7 @@ export const homeFr: HomeDict = {
       q: 'Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?',
       a: (
         <>
-          Sur votre propre machine, dans des fichiers en clair qui vous
+          career-ops garde vos données sur votre propre machine, dans des fichiers en clair qui vous
           appartiennent : votre CV, votre profil, votre pipeline et vos rapports
           sont du Markdown et du YAML locaux. career-ops tourne entièrement en
           local via votre CLI d’IA : pas de compte, pas de télémétrie, rien n’est

@@ -80,6 +80,13 @@ jobs:
           node scripts/verify-manifesto-date.mjs --probe
           node scripts/verify-manifesto-date.mjs
 
+      # The FAQPage schema must match the visible FAQ word for word (Google's
+      # rule). It is generated from the page; this fails if someone edited one
+      # side and not the other.
+      - name: FAQ schema parity
+        if: steps.scope.outputs.relevant == 'true'
+        run: node scripts/faq-from-mdx.mjs --check
+
       - uses: actions/setup-node@v4
         if: steps.scope.outputs.relevant == 'true'
         with:

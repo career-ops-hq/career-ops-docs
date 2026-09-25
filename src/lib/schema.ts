@@ -925,7 +925,7 @@ const HOME_FAQ_EN: HomeFaqQA[] = [
   },
   {
     q: 'Does career-ops apply to jobs for me?',
-    a: 'It prepares every application right up to the click: it scans roles, scores each against your CV, and tailors a resume. Then it hands the decision back to you. You review and send each one yourself. That is deliberate: mass auto-apply burns your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the choice yours.',
+    a: 'career-ops prepares every application right up to the click: it scans roles, scores each against your CV, and tailors a resume. Then it hands the decision back to you. You review and send each one yourself. That is deliberate: mass auto-apply burns your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the choice yours.',
   },
   {
     q: 'Is career-ops free? What is the business model?',
@@ -933,7 +933,7 @@ const HOME_FAQ_EN: HomeFaqQA[] = [
   },
   {
     q: 'Where does my data live?',
-    a: 'On your own machine, in plain files you own: your CV, profile, pipeline, and reports are local Markdown and YAML. career-ops runs entirely locally through your AI CLI: no account, no telemetry, nothing uploaded to a career-ops server. System updates never touch your data layer; that separation is the Data Contract. The only data that leaves your computer is whatever your chosen AI CLI sends to its own provider.',
+    a: 'career-ops keeps your data on your own machine, in plain files you own: your CV, profile, pipeline, and reports are local Markdown and YAML. career-ops runs entirely locally through your AI CLI: no account, no telemetry, nothing uploaded to a career-ops server. System updates never touch your data layer; that separation is the Data Contract. The only data that leaves your computer is whatever your chosen AI CLI sends to its own provider.',
   },
   {
     q: 'Who built career-ops?',
@@ -960,7 +960,7 @@ const HOME_FAQ_ES: HomeFaqQA[] = [
   },
   {
     q: '¿career-ops aplica a las ofertas por mí?',
-    a: 'Prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema tu reputación con los reclutadores y los ATS, así que career-ops te quita el trabajo tedioso, no el criterio.',
+    a: 'career-ops prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema tu reputación con los reclutadores y los ATS, así que career-ops te quita el trabajo tedioso, no el criterio.',
   },
   {
     q: '¿career-ops es gratis? ¿Cuál es el modelo de negocio?',
@@ -968,7 +968,7 @@ const HOME_FAQ_ES: HomeFaqQA[] = [
   },
   {
     q: '¿Dónde se guardan mis datos? ¿career-ops es privado?',
-    a: 'En tu propia máquina, en archivos planos que son tuyos: tu CV, tu perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops corre por completo en local a través de tu CLI de IA: sin cuenta, sin telemetría, sin nada subido a un servidor de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos; esa separación es el Data Contract. Lo único que sale de tu máquina es lo que tu CLI de IA envíe a su propio proveedor.',
+    a: 'career-ops guarda tus datos en tu propia máquina, en archivos planos que son tuyos: tu CV, tu perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops corre por completo en local a través de tu CLI de IA: sin cuenta, sin telemetría, sin nada subido a un servidor de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos; esa separación es el Data Contract. Lo único que sale de tu máquina es lo que tu CLI de IA envíe a su propio proveedor.',
   },
   {
     q: '¿Quién creó career-ops?',
@@ -1003,7 +1003,7 @@ const HOME_FAQ_FR: HomeFaqQA[] = [
   },
   {
     q: 'career-ops postule-t-il à ma place ?',
-    a: 'Il prépare chaque candidature jusqu’au clic : il parcourt les offres, note chacune face à votre CV et adapte un CV. Puis il vous rend la décision. Vous relisez et envoyez chaque candidature vous-même. C’est délibéré : la candidature automatique de masse abîme votre réputation auprès des recruteurs et des ATS ; career-ops vous enlève le travail fastidieux, pas le jugement.',
+    a: 'career-ops prépare chaque candidature jusqu’au clic : il parcourt les offres, note chacune face à votre CV et adapte un CV. Puis il vous rend la décision. Vous relisez et envoyez chaque candidature vous-même. C’est délibéré : la candidature automatique de masse abîme votre réputation auprès des recruteurs et des ATS ; career-ops vous enlève le travail fastidieux, pas le jugement.',
   },
   {
     q: 'Comment automatiser sa recherche d’emploi sans perdre le contrôle ?',
@@ -1015,7 +1015,7 @@ const HOME_FAQ_FR: HomeFaqQA[] = [
   },
   {
     q: 'Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?',
-    a: 'Sur votre propre machine, dans des fichiers en clair qui vous appartiennent : votre CV, votre profil, votre pipeline et vos rapports sont du Markdown et du YAML locaux. career-ops tourne entièrement en local via votre CLI d’IA : pas de compte, pas de télémétrie, rien n’est envoyé à un serveur career-ops. Les mises à jour du système ne touchent jamais votre couche de données ; cette séparation est le Data Contract. Les seules données qui quittent votre machine sont celles que votre CLI d’IA envoie à son propre fournisseur.',
+    a: 'career-ops garde vos données sur votre propre machine, dans des fichiers en clair qui vous appartiennent : votre CV, votre profil, votre pipeline et vos rapports sont du Markdown et du YAML locaux. career-ops tourne entièrement en local via votre CLI d’IA : pas de compte, pas de télémétrie, rien n’est envoyé à un serveur career-ops. Les mises à jour du système ne touchent jamais votre couche de données ; cette séparation est le Data Contract. Les seules données qui quittent votre machine sont celles que votre CLI d’IA envoie à son propre fournisseur.',
   },
   {
     q: 'Qui a créé career-ops ?',
