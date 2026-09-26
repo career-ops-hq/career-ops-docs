@@ -4,8 +4,8 @@ description: "Lecture rapide de l'état de chaque candidature. Utile comme point
 seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidature"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: eb25e59a2aa5c2a3
+lastModified: "2026-09-25"
+translationHash: b03887764d96ff28
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -43,6 +43,37 @@ Une candidature traverse un ensemble fixe d'états : Evaluated (rapport rédigé
 ## Lire les chiffres cumulés
 
 Pour les chiffres cumulés — le funnel complet, les totaux du scanner, la couverture des portails et le respect des relances — le mode exécute `node stats.mjs --summary` et présente sa sortie telle quelle. Cette commande lit vos fichiers locaux et ne coûte aucun token : les chiffres ne sont donc jamais recalculés à la main ni estimés de mémoire. Utilisez le résumé côté chat ci-dessus pour une lecture quotidienne rapide, et la commande de statistiques quand vous voulez les totaux cumulés sur l'ensemble de votre recherche.
+
+## Exporter une copie réparée
+
+Au fil de centaines de lignes, un tableau markdown s'abîme : placeholders de mojibake, score échoué dans la colonne de statut, ids en double, barres verticales parasites. `node tracker.mjs sync` les détecte et les répare dans son index SQLite, `data/applications.db`, sans toucher au markdown. `node tracker.mjs export` est la façon d'adopter cette copie réparée de votre propre tracker :
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+`export` ne touche jamais à `data/applications.md`, sauf si vous le passez en `--out`.
+
+Il préserve la structure qu'il a lue, pas seulement les valeurs : votre ligne d'en-tête, les colonnes que career-ops ne mappe pas (`Location`, `Via`, `URL` ou les vôtres), le titre, les lignes avant et après le tableau, et les fins de ligne CRLF ou LF. Les colonnes supplémentaires reviennent à leur propre position, même si `query` ne peut pas filtrer dessus.
+
+Tout ce qu'il ne peut pas reproduire est signalé sur stderr. Si cette liste n'est pas vide, `--out` sur un fichier existant refuse d'écrire (code de sortie `1`, rien n'est écrit) tant que vous ne relancez pas avec `--force` ; si elle est vide, `--out` sauvegarde le fichier existant puis l'écrase. Ce qui est signalé :
+
+| Ce qui est signalé | Pourquoi cela ne peut pas être reconstruit |
+| --- | --- |
+| Une cellule hors des colonnes déclarées par l'en-tête | L'en-tête n'a aucune colonne où la placer |
+| Une ligne entre la première et la dernière ligne du tableau, comme un titre ou l'en-tête d'un second tableau | Un unique tableau reconstruit n'a nulle part où la placer |
+| Une ligne appartenant à un tableau ultérieur, comme une section `## Archive` | Elle a été indexée selon l'en-tête du premier tableau : la réémettre déplacerait des données archivées dans le tableau actif |
+| Une cellule dont la valeur a dû être réécrite pour survivre en tant que cellule (un `\|` parasite revient sous la forme `│`) | La valeur elle-même a changé |
+
+L'absence de pertes signalées ne signifie pas que la sortie est identique octet pour octet. `export` émet les réparations effectuées par `sync`, et certaines sont silencieuses : `aplicado` est un alias reconnu de `Applied` dans `templates/states.yml`, donc `sync --check` ne signale aucune corruption et l'export écrit quand même `Applied`. Les cellules alignées en colonnes reviennent aussi avec un seul espace. Avant d'adopter un export, comparez-le au fichier qu'il remplace :
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+La référence complète de la commande, y compris `sync`, `query` et `history`, se trouve dans le [guide des scripts](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker) du dépôt principal.
 
 ## Pièges à connaître
 

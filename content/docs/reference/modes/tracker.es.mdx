@@ -4,8 +4,8 @@ description: "Lectura rápida del estado de cada candidatura. Útil como chequeo
 seoTitle: "Modo tracker de career-ops — consulta el estado de cada candidatura"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: eb25e59a2aa5c2a3
+lastModified: "2026-09-25"
+translationHash: b03887764d96ff28
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -43,6 +43,37 @@ Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escri
 ## Cómo leer las cifras acumuladas
 
 Para las cifras acumuladas — el funnel completo, los totales del scanner, la cobertura de portales y el cumplimiento de los seguimientos — el modo ejecuta `node stats.mjs --summary` y presenta su salida tal cual. Ese comando lee tus archivos locales y cuesta cero tokens, así que los números nunca se recalculan a mano ni se estiman de memoria. Usa el resumen en el chat de arriba para una lectura diaria rápida, y el comando de estadísticas cuando quieras los totales acumulados de toda la búsqueda.
+
+## Exportar una copia reparada
+
+Con cientos de filas, una tabla markdown acumula daños: marcadores de mojibake, una puntuación varada en la columna de estado, ids duplicados, barras verticales sueltas. `node tracker.mjs sync` los detecta y los repara en su índice SQLite, `data/applications.db`, sin tocar el markdown. `node tracker.mjs export` es la forma de adoptar esa copia reparada de tu propio tracker:
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+`export` nunca toca `data/applications.md` a menos que lo pases como `--out`.
+
+Conserva la estructura que leyó, no solo los valores: tu fila de encabezado, las columnas que career-ops no mapea (`Location`, `Via`, `URL` o las tuyas), el título, cualquier texto antes y después de la tabla, y los finales de línea CRLF o LF. Las columnas extra vuelven en su propia posición, aunque `query` no puede filtrar por ellas.
+
+Todo lo que no puede reproducir se nombra en stderr. Si esa lista no está vacía, `--out` sobre un archivo existente se niega a escribir (código de salida `1`, no se escribe nada) hasta que vuelvas a ejecutarlo con `--force`; si está vacía, `--out` hace una copia de seguridad del archivo existente y lo sobrescribe. Lo que se reporta:
+
+| Qué se reporta | Por qué no se puede reconstruir |
+| --- | --- |
+| Una celda fuera de las columnas que declara el encabezado | El encabezado no tiene ninguna columna donde ponerla |
+| Una línea entre la primera y la última fila de la tabla, como un título o el encabezado de una segunda tabla | Una única tabla reconstruida no tiene dónde ponerla |
+| Una fila que pertenece a una tabla posterior, como una sección `## Archive` | Se indexó con el encabezado de la primera tabla, así que volver a emitirla movería datos archivados a la tabla activa |
+| Una celda cuyo valor tuvo que reescribirse para sobrevivir como celda (una `\|` suelta vuelve como `│`) | El propio valor cambió |
+
+Que no se reporten pérdidas no significa que la salida sea idéntica byte a byte. `export` emite las reparaciones que hizo `sync`, y algunas son silenciosas: `aplicado` es un alias reconocido de `Applied` en `templates/states.yml`, así que `sync --check` no reporta ninguna corrupción y la exportación dice `Applied` de todos modos. Las celdas alineadas en columnas también vuelven con un solo espacio. Antes de adoptar una exportación, compárala con el archivo que va a sustituir:
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+La referencia completa del comando, incluidos `sync`, `query` y `history`, está en la [guía de scripts](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker) del repositorio principal.
 
 ## Cosas a tener en cuenta
 
