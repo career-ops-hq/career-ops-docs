@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: 5abe712784127777
+translationHash: 99afc6c513e239cf
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -108,6 +108,12 @@ Cada informe es un archivo con un nombre del tipo `042-company-name-2026-04-14.m
 **Entradas de una línea para el tracker** → `batch/tracker-additions/`
 
 Cada oferta deja también aquí un archivo con un resumen breve. Estos se añaden a tu tracker principal en el Paso 6.
+
+### Score Evidence
+
+El informe incluye **Score Evidence** después de Risk Summary. Abarca cinco dimensiones: ajuste del CV, alineación con North Star, remuneración, señales culturales y señales de alerta. Cada fila recoge un estado de evidencia (`supported`, `partial` o `unknown`), una fuente u observación concreta y una pregunta pendiente. La sección termina con un nivel de confianza en la evidencia (`High`, `Medium` o `Low`), su motivo y hasta tres prioridades de verificación.
+
+Este nivel describe la evidencia que respalda el Global Score; no es una probabilidad de contratación ni el nivel de legitimidad del anuncio del bloque G, y no modifica la puntuación numérica. Machine Summary conserva los cinco estados en `score_evidence`, el nivel en `confidence` y las prioridades en `confidence_gaps`. Si no quedan prioridades, usa `confidence_gaps: []`.
 
 ## Paso 5: Reintenta las ofertas fallidas
 

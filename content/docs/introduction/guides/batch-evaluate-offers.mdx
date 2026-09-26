@@ -106,6 +106,12 @@ Each report is a file named like `042-company-name-2026-04-14.md`. Open it to se
 
 Each offer also drops a short summary file here. These get added to your main tracker in Step 6.
 
+### Score Evidence
+
+The report includes **Score Evidence** after Risk Summary. It covers five dimensions: CV match, North Star alignment, compensation, cultural signals, and red flags. Each row records an evidence status (`supported`, `partial`, or `unknown`), a concrete source or observation, and an unresolved question. The section ends with an evidence-confidence tier (`High`, `Medium`, or `Low`), its reason, and up to three verification priorities.
+
+This tier describes the evidence behind the Global Score; it is neither a hiring probability nor Block G's posting-legitimacy tier, and it does not change the numeric score. Machine Summary preserves the five statuses in `score_evidence`, the tier in `confidence`, and priorities in `confidence_gaps`. With no remaining priorities, use `confidence_gaps: []`.
+
 ## Step 5: Retry any failed offers
 
 Sometimes a worker fails — for example, if a job posting URL stopped loading. Failed offers show up in the terminal with a short error message.

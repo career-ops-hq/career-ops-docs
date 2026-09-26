@@ -5,7 +5,7 @@ seoTitle: "Modo oferta de career-ops — puntúa una oferta de empleo antes de a
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: d08b59a5b205a387
+translationHash: 2c8254029bcffc23
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -54,6 +54,12 @@ Recurre a oferta para puntuar un único anuncio rápidamente sin comprometerte c
 - Si pasas una URL, primero se ejecuta una comprobación de liveness — una publicación caducada o con 404 se detiene antes del Bloque A, así que nunca gastas una ejecución en contenido fantasma.
 - La investigación de empresa y compensación está acotada a un máximo de cinco búsquedas web; esto es una evaluación, no una investigación en profundidad. Ejecuta `/career-ops deep` por separado cuando quieras la imagen más completa de la empresa.
 - El Bloque G devuelve uno de tres niveles — High Confidence, Proceed with Caution o Suspicious — de modo que los probables ghost jobs salen a la luz antes de que inviertas esfuerzo en la entrevista.
+
+## Score Evidence
+
+El informe incluye **Score Evidence** después de Risk Summary. Abarca cinco dimensiones: ajuste del CV, alineación con North Star, remuneración, señales culturales y señales de alerta. Cada fila recoge un estado de evidencia (`supported`, `partial` o `unknown`), una fuente u observación concreta y una pregunta pendiente. La sección termina con un nivel de confianza en la evidencia (`High`, `Medium` o `Low`), su motivo y hasta tres prioridades de verificación.
+
+Este nivel describe la evidencia que respalda el Global Score; no es una probabilidad de contratación ni el nivel de legitimidad del anuncio del bloque G, y no modifica la puntuación numérica. Machine Summary conserva los cinco estados en `score_evidence`, el nivel en `confidence` y las prioridades en `confidence_gaps`. Si no quedan prioridades, usa `confidence_gaps: []`.
 
 ## Relacionados
 
