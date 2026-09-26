@@ -3,7 +3,7 @@ title: Presentar una candidatura
 description: Usa career-ops para rellenar formularios de candidatura con respuestas adaptadas a tu perfil y al puesto que buscas.
 seoTitle: "Cómo presentar una candidatura con career-ops — redacta respuestas ATS y adapta tu CV"
 icon: FileInput
-translationHash: f2922090f40c99ec
+translationHash: "b9c05c932354420f"
 localized: true
 translatedFrom: /docs/introduction/guides/apply-for-a-job
 ---
@@ -47,7 +47,7 @@ Por ejemplo:
 /career-ops apply Anthropic
 ```
 
-career-ops localiza el informe correspondiente en `reports/`, usa Playwright para abrir una ventana del navegador y lee el formulario. Después genera una respuesta para cada campo — lista para copiar y pegar. No necesitas abrir el navegador tú mismo.
+career-ops localiza el informe correspondiente en `reports/`, usa Playwright para abrir una ventana del navegador y lee el formulario. Después redacta borradores para los campos de texto y de respuesta libre compatibles. Comprueba los límites de cada campo antes de pegar. Para Ashby, tendrás que usar tu navegador habitual para terminar y enviar la candidatura.
 
 <Callout title="Nota">
   Si Playwright no está disponible, career-ops recurre a WebFetch para leer el formulario. Consulta [Configurar Playwright](/es/docs/introduction/guides/set-up-playwright) si quieres activar la experiencia completa basada en navegador.
@@ -67,7 +67,7 @@ career-ops localiza el informe correspondiente en `reports/`, usa Playwright par
 
 ## Rellena el formulario
 
-El sistema devuelve una lista numerada de respuestas — una por campo del formulario — que refleja el orden del propio formulario. Recorre la lista de arriba abajo y pega cada respuesta en el campo correspondiente.
+El sistema devuelve una lista numerada de respuestas — una por campo del formulario — que refleja el orden del propio formulario. Recorre la lista de arriba abajo. Antes de pegar cada respuesta de texto libre, comprueba `usados/permitidos` caracteres o palabras frente al campo real. `limit unknown` indica que debes verificar el límite en el formulario; si una respuesta no cabe sin perder datos esenciales, revísala primero.
 
 La salida tiene dos partes:
 
@@ -115,7 +115,7 @@ Cada respuesta se construye a partir de una parte concreta de tu informe de eval
 
 ## Envía la candidatura
 
-Revisa todas las respuestas y envía el formulario tú mismo. career-ops no hace clic en Submit.
+Revisa todas las respuestas y envía el formulario tú mismo. Para Ashby, termina y envía en tu navegador habitual, no desde la sesión de Playwright. Comprueba la página de éxito o el correo de confirmación antes de indicar a career-ops que la candidatura se envió.
 
 Después de enviarla, confírmalo en el chat:
 
