@@ -24,12 +24,12 @@ No necesitas saber programar. Solo necesitas sentirte cómodo abriendo una termi
       <Step>
       ### Asistente de programación con IA
 
-      Instala **[Claude Code](https://claude.ai/code)**, **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)** o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — el asistente de programación con IA que ejecuta este sistema. career-ops funciona con todos ellos. Inicia sesión antes de continuar.
+      Instala **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)** o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — el asistente de programación con IA que ejecuta este sistema. career-ops funciona con todos ellos. Inicia sesión antes de continuar.
       </Step>
       <Step>
         ### Node.js 18+ (22.5+ recomendado)
 
-        Instala **[Node.js](https://nodejs.org)** — mínimo **18** (funciona, con una advertencia), **22.5+ recomendado** (habilita el índice SQLite del tracker). Ejecuta los scripts auxiliares y genera los PDFs. Comprueba tu versión con `node --version`. Si vas a usar Gemini CLI, esa integración necesita **Node 20 o posterior**.
+        Instala **[Node.js](https://nodejs.org)** — mínimo **18** (funciona, con una advertencia), **22.5+ recomendado** (habilita el índice SQLite del tracker). Ejecuta los scripts auxiliares y genera los PDFs. Comprueba tu versión con `node --version`.
       </Step>
       <Step>
         ### Git
@@ -83,15 +83,15 @@ npx playwright install chromium
 
 Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA que instalaste.
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
     ```
   </Tab>
-  <Tab value="Gemini CLI">
+  <Tab value="Antigravity CLI">
     ```bash title="Terminal"
-    gemini
+    agy
     ```
   </Tab>
   <Tab value="Codex">
@@ -134,17 +134,17 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
 
 ## Paso 3: Ejecuta tu primera evaluación
 
-Una vez que el agente te haya hecho el onboarding, estás listo para evaluar una oferta real. Copia la URL de cualquier anuncio de empleo y pégala en el chat. Con Claude Code, ponle delante el comando explícito; con los demás CLIs, pega la URL y pídele al agente que ejecute el auto-pipeline:
+Una vez que el agente te haya hecho el onboarding, estás listo para evaluar una oferta real. Copia la URL de cualquier anuncio de empleo y pégala en el chat. Con Claude Code o Antigravity CLI, ponle delante el comando explícito; con los demás CLIs, pega la URL y pídele al agente que ejecute el auto-pipeline:
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
-  <Tab value="Gemini CLI">
+  <Tab value="Antigravity CLI">
     ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
+    /career-ops https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="Codex">
