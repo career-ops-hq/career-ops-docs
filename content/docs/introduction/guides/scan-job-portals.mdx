@@ -223,7 +223,15 @@ Here is what each line means:
 </div>
 
 
-If **New offers added** is 0, your title filter may be too strict. Try adding a keyword to your `positive` list and run the scan again.
+If **New offers added** is 0, first look for this warning in the scan output:
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+It means that company's portal never answered successfully, so the zero does not prove its board is empty. The company is recorded as `unverified_zero` in `data/portal-health.tsv` and counts toward its failure streak. Check that portal before you change your filters.
+
+If there is no such warning, your title filter may be too strict. Try adding a keyword to your `positive` list and run the scan again.
 
 **Where new jobs go:** Each new offer is added as a line in `data/pipeline.md`. That is the list of jobs waiting to be evaluated.
 
