@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: 5abe712784127777
+translationHash: bfe0995812f5392c
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -91,6 +91,8 @@ Cuando estés listo, arranca el batch. Puedes procesar las ofertas de una en una
 ```
 
 Observa la terminal mientras corre el batch. Cada línea te indica qué oferta se está procesando y si terminó o falló.
+
+Si un worker delegado encuentra una oferta de agencia que requiere tu confirmación, se detiene antes de escribir un informe, CV, borrador de solicitud o fila del tracker y marca el trabajo como `needs_confirmation`. Responde a la pregunta mostrada en la sesión interactiva principal; esa sesión solo reanuda el trabajo retenido después de tu respuesta explícita. `--retry-failed` y `--resume-paused` no reanudan las retenciones por confirmación.
 
 ## Paso 4: Lee los resultados según van llegando
 

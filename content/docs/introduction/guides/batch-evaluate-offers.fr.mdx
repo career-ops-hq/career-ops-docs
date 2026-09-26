@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: 5abe712784127777
+translationHash: bfe0995812f5392c
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -91,6 +91,8 @@ Quand vous êtes prêt, démarrez le lot. Vous pouvez traiter une offre à la fo
 ```
 
 Surveillez le terminal pendant l'exécution du lot. Chaque ligne vous indique quelle offre est en cours de traitement et si elle s'est terminée ou a échoué.
+
+Si un worker délégué rencontre une offre d'agence qui exige votre confirmation, il s'arrête avant d'écrire un rapport, un CV, un brouillon de candidature ou une ligne du tracker, puis marque la tâche `needs_confirmation`. Répondez à la question affichée dans la session interactive parente ; cette session ne reprend la tâche suspendue qu'après votre réponse explicite. `--retry-failed` et `--resume-paused` ne reprennent pas les suspensions en attente de confirmation.
 
 ## Étape 4 : Consultez les résultats au fur et à mesure
 

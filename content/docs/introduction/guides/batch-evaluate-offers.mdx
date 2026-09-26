@@ -89,6 +89,8 @@ When you're ready, start the batch. You can run one offer at a time or several a
 
 Watch the terminal as the batch runs. Each line tells you which offer is being processed and whether it finished or failed.
 
+If a delegated worker finds an agency posting that needs your confirmation, it stops before writing a report, CV, application draft, or tracker row and marks the job `needs_confirmation`. Answer the displayed question in the parent interactive session; that session resumes the held posting only after your explicit answer. `--retry-failed` and `--resume-paused` do not resume confirmation holds.
+
 ## Step 4: Read results as they come in
 
 You don't need to wait for the batch to finish. Results appear as each offer completes.

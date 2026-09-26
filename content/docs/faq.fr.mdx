@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: 0dc5bb97795f8530
+translationHash: e946bac53c8573b6
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -52,7 +52,7 @@ career-ops fonctionne nativement avec dix CLI de codage IA : Claude Code, Cursor
 
 ## Comment éviter d'atteindre les limites de tokens ou de débit pendant un run en batch ?
 
-Plafonnez le run avec `./batch/batch-runner.sh --limit 5` pour inspecter la qualité du résultat avant de lancer un lot plus important. Si un run est interrompu par une limite de débit ou une erreur réseau, ne repartez pas de zéro — utilisez `--resume-paused` pour ignorer les tâches déjà terminées, afin qu'aucun token ne soit gaspillé sur du travail déjà accompli.
+Plafonnez le run avec `./batch/batch-runner.sh --limit 5` pour inspecter la qualité du résultat avant de lancer un lot plus important. Si un run est interrompu par une limite de débit ou une erreur réseau, ne repartez pas de zéro — utilisez `--resume-paused` pour ignorer les tâches déjà terminées, afin qu'aucun token ne soit gaspillé sur du travail déjà accompli. Une tâche `needs_confirmation` est différente : elle n'a produit ni rapport, ni CV, ni brouillon de candidature, ni ligne du tracker, et `--resume-paused` ne la reprendra pas. Répondez explicitement à sa question dans la session interactive parente.
 
 ## Les skills ne se chargent pas sous Windows — erreur de symlink à l'installation
 
