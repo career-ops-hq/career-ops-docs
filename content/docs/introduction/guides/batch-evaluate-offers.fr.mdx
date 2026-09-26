@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: 5abe712784127777
+translationHash: 99afc6c513e239cf
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -108,6 +108,12 @@ Chaque rapport est un fichier nommé par exemple `042-company-name-2026-04-14.md
 **Entrées de tracker en une ligne** → `batch/tracker-additions/`
 
 Chaque offre dépose également un court fichier de synthèse ici. Ces fichiers seront ajoutés à votre tracker principal à l'étape 6.
+
+### Score Evidence
+
+Le rapport inclut **Score Evidence** après Risk Summary. Cette section couvre cinq dimensions : adéquation du CV, alignement avec North Star, rémunération, signaux culturels et signaux d'alerte. Chaque ligne indique un état de preuve (`supported`, `partial` ou `unknown`), une source ou observation concrète et une question non résolue. La section se termine par un niveau de confiance dans les preuves (`High`, `Medium` ou `Low`), sa justification et jusqu'à trois priorités de vérification.
+
+Ce niveau décrit les preuves qui étayent le Global Score ; ce n'est ni une probabilité d'embauche ni le niveau de légitimité de l'annonce du bloc G, et il ne modifie pas la note numérique. Machine Summary conserve les cinq états dans `score_evidence`, le niveau dans `confidence` et les priorités dans `confidence_gaps`. Sans priorité restante, utilisez `confidence_gaps: []`.
 
 ## Étape 5 : Relancez les offres en échec
 
