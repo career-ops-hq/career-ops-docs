@@ -330,10 +330,9 @@ export const homeEn: HomeDict = {
       q: 'What AI tools does career-ops work with?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent, and GitHub Copilot CLI — nine first-class CLIs
-          (Gemini CLI is a
-          legacy wrapper). The same mode files run on all of them. Each user picks
+          career-ops works with Claude Code, Cursor, Codex, OpenCode, Antigravity
+          CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI —
+          ten first-class CLIs (Gemini CLI is a legacy wrapper). The same mode files run on all of them. Each user picks
           the CLI that fits their existing subscription and cost preferences —
           career-ops never locks you to one provider. A typical job search runs on
           Claude Pro at $20/month, but the choice is yours.
@@ -617,10 +616,9 @@ export const homeEs: HomeDict = {
       q: '¿Con qué herramientas de IA funciona career-ops?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent y GitHub Copilot CLI — nueve CLIs de primera clase
-          (Gemini CLI es un
-          wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
+          career-ops funciona con Claude Code, Cursor, Codex, OpenCode, Antigravity
+          CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI —
+          diez CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
           usuario elige el CLI que encaja con su suscripción y sus preferencias de
           coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de
           empleo típica corre con Claude Pro a 20 $/mes, pero la elección es tuya.
@@ -926,10 +924,10 @@ export const homeFr: HomeDict = {
       q: 'Avec quels outils d’IA career-ops fonctionne-t-il ?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent et GitHub Copilot CLI — neuf CLIs de premier plan
-          (Gemini CLI est
-          un wrapper legacy). Les mêmes fichiers de mode fonctionnent sur tous.
+          career-ops fonctionne avec Claude Code, Cursor, Codex, OpenCode,
+          Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub
+          Copilot CLI — dix CLIs de premier plan (Gemini CLI est un wrapper
+          legacy). Les mêmes fichiers de mode fonctionnent sur tous.
           Chacun choisit le CLI qui correspond à son abonnement et à ses
           préférences de coût — career-ops ne vous enferme jamais chez un seul
           fournisseur. Une recherche d’emploi typique tourne sur Claude Pro à

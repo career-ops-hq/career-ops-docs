@@ -349,7 +349,7 @@ export async function siteSchema() {
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         description:
-          'Open-source AI job search agent. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
+          'Open-source AI job search agent. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Cursor, Codex, OpenCode, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
         // Sourced live from the GitHub releases API (1h ISR) so it can never
         // drift stale; falls back to LATEST_RELEASE_FALLBACK in shared.ts.
         softwareVersion: stats.softwareVersion,
