@@ -9,12 +9,21 @@ type Options = {
   // renders the title in the narrow sidebar and the full home-style
   // branding wraps awkwardly.
   compact?: boolean;
-  // Accepted for backward-compat with the call sites; the language control is
-  // now the self-detecting <LanguageBar/>, which reads the locale from the URL.
+  // Picks the language of the brand suffix. The language control itself is
+  // the self-detecting <LanguageBar/>, which reads the locale from the URL.
   locale?: 'en' | 'es' | 'fr';
 };
 
-export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps {
+// Brand suffix next to the wordmark: the same category the home H1 names
+// ("open-source AI job search agent"), in each page's language. It used to
+// read "your career operations hub", in English on every locale.
+const TAGLINE = {
+  en: ', your AI job search agent',
+  es: ', tu agente de búsqueda de empleo con IA',
+  fr: ', votre agent de recherche d\u2019emploi par IA',
+} as const;
+
+export function baseOptions({ compact = false, locale = 'en' }: Options = {}): BaseLayoutProps {
   return {
     nav: {
       title: (
@@ -24,7 +33,7 @@ export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps 
             {appName}
             {!compact && (
               <span className="hidden md:inline text-brand">
-                {', your career operations hub'}
+                {TAGLINE[locale]}
               </span>
             )}
           </span>
