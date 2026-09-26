@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: 808b0df8eb835f33
+translationHash: e946bac53c8573b6
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -16,13 +16,13 @@ Les questions les plus courantes, réunies en un seul endroit. Pour tout ce qui 
 
 ## career-ops est-il vraiment gratuit et open source ?
 
-Oui. career-ops est open source sous licence MIT, pour toujours. Le seul coût potentiel est le moteur d'IA sur lequel il s'exécute — et celui-ci peut aussi être gratuit : OpenCode avec un fournisseur gratuit, un modèle local via Ollama, ou le runner intégré `npm run or` sur les modèles gratuits d'OpenRouter. Le guide [Configurer un moteur d'IA gratuit](/docs/free-ai-engine) détaille chacune de ces options.
+Oui. career-ops est open source sous licence MIT, pour toujours. Le seul coût potentiel est le moteur d'IA sur lequel il s'exécute — et celui-ci peut aussi être gratuit : OpenCode avec un fournisseur gratuit, un modèle local via Ollama, ou le runner intégré `npm run or` sur les modèles gratuits d'OpenRouter. Le guide [Configurer un moteur d'IA gratuit](/fr/docs/free-ai-engine) détaille chacune de ces options.
 
 career-ops n'a ni formule payante, ni paliers, ni période d'essai — il est 100 % gratuit et sous licence MIT. Tout site décrivant des tarifs pour career-ops décrit un autre produit.
 
 ## Ai-je besoin d'un abonnement Claude pour utiliser career-ops ?
 
-Non. career-ops est agnostique en matière d'IA — Claude Code est un moteur parmi d'autres, pas une exigence. Vous pouvez exécuter l'ensemble du pipeline gratuitement avec OpenCode et un fournisseur gratuit, un modèle local via Ollama, ou le runner OpenRouter intégré (`npm run or`). Si vous avez commencé avec une formule payante et épuisé vos tokens en pleine recherche, passer à un moteur gratuit prend quelques minutes et laisse vos données intactes — voir [Configurer un moteur d'IA gratuit](/docs/free-ai-engine).
+Non. career-ops est agnostique en matière d'IA — Claude Code est un moteur parmi d'autres, pas une exigence. Vous pouvez exécuter l'ensemble du pipeline gratuitement avec OpenCode et un fournisseur gratuit, un modèle local via Ollama, ou le runner OpenRouter intégré (`npm run or`). Si vous avez commencé avec une formule payante et épuisé vos tokens en pleine recherche, passer à un moteur gratuit prend quelques minutes et laisse vos données intactes — voir [Configurer un moteur d'IA gratuit](/fr/docs/free-ai-engine).
 
 ## Je paie Claude Pro ou Max. Pourquoi career-ops consomme-t-il mes crédits API ?
 
@@ -44,11 +44,11 @@ Sur votre machine, dans des fichiers en clair qui vous appartiennent — votre C
 
 ## Avec quels CLI de codage IA career-ops fonctionne-t-il ?
 
-Neuf, avec une prise en charge complète : Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub Copilot CLI (Gemini CLI est pris en charge via un wrapper legacy). career-ops est agnostique en matière d'IA : il fournit des fichiers de prompts que le CLI exécute, si bien que vous pouvez aussi le pointer vers n'importe quel endpoint compatible OpenAI ou un modèle local, sans modifier une seule ligne de code. Consultez [CLI d'IA pris en charge](/docs/supported-clis) pour la liste à jour et la façon d'invoquer chacun d'eux.
+Neuf, avec une prise en charge complète : Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub Copilot CLI (Gemini CLI est pris en charge via un wrapper legacy). career-ops est agnostique en matière d'IA : il fournit des fichiers de prompts que le CLI exécute, si bien que vous pouvez aussi le pointer vers n'importe quel endpoint compatible OpenAI ou un modèle local, sans modifier une seule ligne de code. Consultez [CLI d'IA pris en charge](/fr/docs/supported-clis) pour la liste à jour et la façon d'invoquer chacun d'eux.
 
 ## Quelle est la différence entre `scan` et `scan:full` ?
 
-`npm run scan` lit les entreprises que vous avez configurées dans `portals.yml` et interroge directement leurs API ATS ([Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby), [Lever](/docs/reference/portals/lever)), sans consommer aucun token LLM — c'est votre run de découverte habituel, quotidien ou hebdomadaire. `npm run scan:full` inverse la direction : il parcourt les annuaires publics d'entreprises des ATS et fait remonter les offres récentes qui correspondent à vos `title_filter` / `location_filter`, pour que vous repériez des postes chez des entreprises que vous n'avez pas ajoutées manuellement.
+`npm run scan` lit les entreprises que vous avez configurées dans `portals.yml` et interroge directement leurs API ATS ([Greenhouse](/fr/docs/reference/portals/greenhouse), [Ashby](/fr/docs/reference/portals/ashby), [Lever](/fr/docs/reference/portals/lever)), sans consommer aucun token LLM — c'est votre run de découverte habituel, quotidien ou hebdomadaire. `npm run scan:full` inverse la direction : il parcourt les annuaires publics d'entreprises des ATS et fait remonter les offres récentes qui correspondent à vos `title_filter` / `location_filter`, pour que vous repériez des postes chez des entreprises que vous n'avez pas ajoutées manuellement.
 
 ## Comment éviter d'atteindre les limites de tokens ou de débit pendant un run en batch ?
 

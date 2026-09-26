@@ -16,6 +16,23 @@ const SITE_URL = 'https://career-ops.org';
 // uses its own crawl signal. (2026-07-24 audit, sitemap HIGH.)
 const gd = (relPath: string): Date | undefined => gitLastMod(relPath) ?? undefined;
 
+// A page's date is the newest of the files that actually make up what a reader
+// sees, not only its route file. The home's route file (page.tsx) had not
+// changed since 21 July while its text, which lives in home-dict.tsx, changed
+// on 22 September: the most edited page on the site was telling Google it was
+// two months stale. Same for the manifesto, whose signed text is its own file.
+const gdMax = (...relPaths: string[]): Date | undefined => {
+  const dates = relPaths
+    .map((p) => gitLastMod(p))
+    .filter((d): d is Date => d != null);
+  return dates.length ? new Date(Math.max(...dates.map((d) => d.getTime()))) : undefined;
+};
+const HOME_CONTENT = [
+  'src/app/(home)/home-dict.tsx',
+  'src/app/(home)/home-content.tsx',
+  'src/app/(home)/page.client.tsx',
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Real publication date of the newest career-ops release (the `web-*`
   // component train is not part of this page's series — see `isCore`).
@@ -28,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/`,
-      lastModified: gd('src/app/(home)/page.tsx'),
+      lastModified: gdMax('src/app/(home)/page.tsx', ...HOME_CONTENT),
     },
     {
       url: `${SITE_URL}/about`,
@@ -40,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/manifesto`,
-      lastModified: gd('src/app/manifesto/page.tsx'),
+      lastModified: gdMax('src/app/manifesto/page.tsx', 'src/lib/manifesto-text.ts'),
       alternates: {
         languages: {
           en: `${SITE_URL}/manifesto`,
@@ -114,13 +131,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // post-migration from the deleted /use-cases routes).
   for (const page of source.getPages('en')) {
     // page.url already includes the /docs prefix via baseUrl in source.ts.
-    // Reconstruct MDX path from slugs:
-    //   []                                 -> content/docs/index.mdx
-    //   ['intro', 'what-is-career-ops']    -> content/docs/intro/what-is-career-ops.mdx
-    const mdxRel =
-      page.slugs.length === 0
-        ? 'content/docs/index.mdx'
-        : `content/docs/${page.slugs.join('/')}.mdx`;
+    // The date comes from the page's REAL source file (page.path), never from a
+    // path rebuilt out of its slugs. Rebuilding guessed `reference/modes.mdx` for
+    // a folder index that lives at `reference/modes/index.mdx`, found no file,
+    // and silently dropped <lastmod> for that URL. docs-page-view already reads
+    // page.path, which is why the page showed a date the sitemap did not.
+    const mdxRel = `content/docs/${page.path}`;
 
     entries.push({
       url: `${SITE_URL}${page.url}`,
@@ -137,12 +153,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   };
   entries.push({
     url: `${SITE_URL}/es`,
-    lastModified: new Date('2026-07-20'),
+    lastModified: gdMax('src/app/es/(home)/page.tsx', ...HOME_CONTENT),
     alternates: { languages: homeCluster },
   });
   entries.push({
     url: `${SITE_URL}/fr`,
-    lastModified: gd('src/app/fr/(home)/page.tsx'),
+    lastModified: gdMax('src/app/fr/(home)/page.tsx', ...HOME_CONTENT),
     alternates: { languages: homeCluster },
   });
 
@@ -150,7 +166,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // home), so it is listed explicitly with its bidirectional hreflang pair.
   entries.push({
     url: `${SITE_URL}/es/manifesto`,
-    lastModified: gd('src/app/es/manifesto/page.tsx'),
+    lastModified: gdMax('src/app/es/manifesto/page.tsx', 'src/lib/manifesto-text.ts'),
     alternates: {
       languages: {
         en: `${SITE_URL}/manifesto`,
@@ -178,7 +194,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
     for (const loc of twins) cluster[loc] = `${SITE_URL}/${loc}${enPage.url}`;
     for (const loc of twins) {
-      const mdxRel = `content/docs/${enPage.slugs.join('/')}.${loc}.mdx`;
+      // Same rule as above: the twin's own source path. The rebuilt path turned
+      // the docs index into `content/docs/.es.mdx`, a file that cannot exist.
+      const mdxRel = `content/docs/${source.getPage(enPage.slugs, loc)!.path}`;
       entries.push({
         url: `${SITE_URL}/${loc}${enPage.url}`,
         lastModified: gd(mdxRel),

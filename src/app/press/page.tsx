@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     'Official press kit for career-ops: boilerplate copy, key facts, logos, and media coverage. Open-source, MIT-licensed, local-first AI job-search tool by Santiago Fernández de Valderrama Aparicio.',
   alternates: { canonical: 'https://career-ops.org/press' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/press',
     siteName: 'career-ops',

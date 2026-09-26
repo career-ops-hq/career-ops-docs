@@ -80,6 +80,13 @@ jobs:
           node scripts/verify-manifesto-date.mjs --probe
           node scripts/verify-manifesto-date.mjs
 
+      # The FAQPage schema must match the visible FAQ word for word (Google's
+      # rule). It is generated from the page; this fails if someone edited one
+      # side and not the other.
+      - name: FAQ schema parity
+        if: steps.scope.outputs.relevant == 'true'
+        run: node scripts/faq-from-mdx.mjs --check
+
       - uses: actions/setup-node@v4
         if: steps.scope.outputs.relevant == 'true'
         with:
@@ -98,9 +105,12 @@ jobs:
             curl -sf http://localhost:3999/docs/faq >/dev/null && break
             sleep 2
           done
-          # Gate: bespoke agent-layer invariants. Its exit code is the job's.
+          # Gate: bespoke agent-layer invariants.
           BASE=http://localhost:3999 node scripts/verify-agent-layer.mjs
           GUARD_EXIT=$?
+          # Gate: every FAQ/glossary claim in the JSON-LD is visible on its
+          # page, and every page's own nodes declare the page's language.
+          BASE=http://localhost:3999 node scripts/verify-schema-parity.mjs || GUARD_EXIT=1
           # Informational: agentic-seo Discovery checks (never blocks).
           echo "--- agentic-seo (informational) ---"
           npx --yes agentic-seo --url http://localhost:3999 --checks robots-txt,llms-txt || true

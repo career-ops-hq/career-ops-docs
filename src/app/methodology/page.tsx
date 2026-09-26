@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
     'How career-ops scores job listings: the 4.0/5.0 threshold, the five dimensions, the canonical evaluation prompt, edge cases, and what we explicitly do not do. Radical transparency, no closed-form math.',
   alternates: { canonical: 'https://career-ops.org/methodology' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'article',
     url: 'https://career-ops.org/methodology',
     siteName: 'career-ops',

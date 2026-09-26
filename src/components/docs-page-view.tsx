@@ -13,16 +13,21 @@ import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { gitConfig } from '@/lib/shared';
 import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
 import { gitLastMod } from '@/lib/git-date';
+import { CLAUDE_CODE_FAQ } from '@/lib/claude-code-faq';
 import { FAQ_ENTRIES } from '@/lib/faq-data';
 import { GLOSSARY_TERMS } from '@/lib/glossary-data';
 
 type DocsPageType = InferPageType<typeof source>;
 
-// Two docs pages carry an extra structured-data layer beyond
-// TechArticle: /docs/faq (FAQPage) and /docs/reference/glossary
-// (DefinedTermSet). Data lives in src/lib/*-data.ts, mirrored with the
-// MDX by convention — see the comment at the top of each data module.
-function extraSchemaFor(slug: string[] | undefined): object | null {
+// A few docs pages carry an extra structured-data layer beyond TechArticle:
+// /docs/faq and /docs/claude-code (FAQPage), /docs/free-ai-engine (HowTo) and
+// /docs/reference/glossary (DefinedTermSet). The data is English, so it is
+// emitted on English pages only. Spanish and French pages used to carry the
+// English graphs, with the English page's @id, where none of that text is
+// visible. Until the data is generated from each locale's own MDX, a
+// translated page gets no extra layer rather than a wrong one.
+function extraSchemaFor(slug: string[] | undefined, locale: string): object | null {
+  if (locale !== 'en') return null;
   const key = (slug ?? []).join('/');
   if (key === 'faq') {
     return {
@@ -30,6 +35,18 @@ function extraSchemaFor(slug: string[] | undefined): object | null {
       '@type': 'FAQPage',
       '@id': 'https://career-ops.org/docs/faq#faq',
       mainEntity: FAQ_ENTRIES.map((e) => ({
+        '@type': 'Question',
+        name: e.question,
+        acceptedAnswer: { '@type': 'Answer', text: e.answer },
+      })),
+    };
+  }
+  if (key === 'claude-code') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': 'https://career-ops.org/docs/claude-code#faq',
+      mainEntity: CLAUDE_CODE_FAQ.map((e) => ({
         '@type': 'Question',
         name: e.question,
         acceptedAnswer: { '@type': 'Answer', text: e.answer },
@@ -82,6 +99,7 @@ function extraSchemaFor(slug: string[] | undefined): object | null {
         description: t.definition,
         inDefinedTermSet:
           'https://career-ops.org/docs/reference/glossary#terms',
+        ...(t.subjectOf ? { subjectOf: { '@id': t.subjectOf } } : {}),
       })),
     };
   }
@@ -94,16 +112,23 @@ function extraSchemaFor(slug: string[] | undefined): object | null {
 // chrome, schema, and MDX rendering are identical. `page.path` resolves to the
 // locale's own file (.mdx or .es.mdx), so the git date and "edit on GitHub"
 // link point at the right source per language.
+const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr' } as const;
+const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le' } as const;
+
 export function DocsPageView({ page }: { page: DocsPageType }) {
   const MDX = page.data.body;
   const markdownUrl = getPageMarkdownUrl(page).url;
-  const extraSchema = extraSchemaFor(page.slugs);
 
   // Real authored date from git (build time). Only surfaced when git can
   // resolve it — we never assert a synthetic "Updated" date.
   const gitDate = gitLastMod(`content/docs/${page.path}`);
   const dateModified = gitDate?.toISOString();
-  const dateModifiedLabel = gitDate?.toLocaleDateString('en-US', {
+  // Localized: Spanish and French pages rendered "Updated September 25, 2026"
+  // in English, next to everything else in their own language. Both the date
+  // format and the label follow the page's locale.
+  const locale = (page.locale ?? 'en') as keyof typeof UPDATED_LABEL;
+  const extraSchema = extraSchemaFor(page.slugs, locale);
+  const dateModifiedLabel = gitDate?.toLocaleDateString(DATE_LOCALE[locale] ?? 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -128,6 +153,7 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
               title: page.data.title,
               description: page.data.description,
               dateModified,
+              inLanguage: locale,
             }),
           ),
         }}
@@ -148,7 +174,7 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
         />
         {dateModifiedLabel && (
           <span className="ml-auto text-xs text-fd-muted-foreground">
-            Updated{' '}
+            {UPDATED_LABEL[locale] ?? UPDATED_LABEL.en}{' '}
             <time dateTime={dateModified}>{dateModifiedLabel}</time>
           </span>
         )}
