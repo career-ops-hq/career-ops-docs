@@ -118,3 +118,16 @@ export const STATS_FLOOR = {
 // at v1.15.0 while the project shipped through v1.31.0 — sixteen versions of
 // drift in a value whose entire job is to be a safe answer.
 export const LATEST_RELEASE_FALLBACK = 'career-ops-v1.31.0';
+
+// Default share image for pages without one of their own. In Next's metadata a
+// page that declares its own openGraph object replaces the layout's entirely,
+// images included, so every page that set a title and description for sharing
+// was silently shipping without a picture: /about, /sustain, the blog, the
+// Spanish and French homes. This is the same README banner the home card is
+// built from, served at a stable URL.
+export const DEFAULT_OG_IMAGE = {
+  url: 'https://career-ops.org/og-banner.jpg',
+  width: 2400,
+  height: 1339,
+  alt: 'career-ops — open-source AI job search',
+};

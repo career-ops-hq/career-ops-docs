@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
     'Applied AI Operator. Built career-ops after evaluating 740 listings. 16+ years building products. Currently Head of Applied AI at Zinkee. Featured in WIRED, Business Insider.',
   alternates: { canonical: 'https://career-ops.org/about' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'profile',
     url: 'https://career-ops.org/about',
     siteName: 'career-ops',

@@ -3,7 +3,7 @@ title: Démarrage rapide
 description: "Démarrez avec career-ops en cinq minutes : installez le système open source de recherche d'emploi par IA, ouvrez votre CLI d'IA et évaluez votre première offre. Aucune connaissance en code requise."
 seoTitle: "career-ops Démarrage rapide — installez et lancez votre premier scan d'offres par IA en quelques minutes"
 icon: Rocket
-translationHash: d61257fcec228488
+translationHash: 06214182e58f177b
 localized: true
 translatedFrom: /docs
 ---
@@ -24,12 +24,12 @@ Vous n'avez pas besoin de savoir coder. Il vous suffit d'être à l'aise pour ou
       <Step>
       ### Assistant de codage IA
 
-      Installez **[Claude Code](https://claude.ai/code)**, **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)** ou **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — l'assistant de codage IA qui fait tourner ce système. career-ops fonctionne avec tous. Connectez-vous avant de continuer.
+      Installez **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)** ou **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — l'assistant de codage IA qui fait tourner ce système. career-ops fonctionne avec tous. Connectez-vous avant de continuer.
       </Step>
       <Step>
         ### Node.js 18+ (22.5+ recommandé)
 
-        Installez **[Node.js](https://nodejs.org)** — minimum **18** (cela fonctionne, avec un avertissement), **22.5+ recommandé** (cela active l'index SQLite du tracker). Il exécute les scripts auxiliaires et génère les PDF. Vérifiez votre version avec `node --version`. Si vous comptez utiliser Gemini CLI, cette intégration nécessite **Node 20 ou ultérieur**.
+        Installez **[Node.js](https://nodejs.org)** — minimum **18** (cela fonctionne, avec un avertissement), **22.5+ recommandé** (cela active l'index SQLite du tracker). Il exécute les scripts auxiliaires et génère les PDF. Vérifiez votre version avec `node --version`.
       </Step>
       <Step>
         ### Git
@@ -83,15 +83,15 @@ npx playwright install chromium
 
 Depuis l'intérieur du dossier `career-ops`, lancez le CLI de codage IA que vous avez installé.
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
     ```
   </Tab>
-  <Tab value="Gemini CLI">
+  <Tab value="Antigravity CLI">
     ```bash title="Terminal"
-    gemini
+    agy
     ```
   </Tab>
   <Tab value="Codex">
@@ -134,37 +134,37 @@ Depuis l'intérieur du dossier `career-ops`, lancez le CLI de codage IA que vous
 
 ## Étape 3 : lancer votre première évaluation
 
-Une fois l'onboarding terminé, vous êtes prêt à évaluer une vraie offre d'emploi. Copiez l'URL de n'importe quelle annonce et collez-la dans le chat. Avec Claude Code, préfixez-la avec la commande explicite ; avec les autres CLI, collez l'URL et demandez à l'agent de lancer l'auto-pipeline :
+Une fois l'onboarding terminé, vous êtes prêt à évaluer une vraie offre d'emploi. Copiez l'URL de n'importe quelle annonce et collez-la dans le chat. Avec Claude Code ou Antigravity CLI, préfixez-la avec la commande explicite ; avec les autres CLI, collez l'URL et demandez à l'agent de lancer l'auto-pipeline :
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
-  <Tab value="Gemini CLI">
+  <Tab value="Antigravity CLI">
     ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    /career-ops https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="Codex">
     ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="Qwen Code">
     ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="OpenCode">
     ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>
@@ -212,7 +212,7 @@ L'ensemble du processus prend environ une à deux minutes. À la fin, career-ops
 
 Ouvrez le fichier de rapport dans `reports/`. Le nom du fichier suit le motif `{number}-{company}-{date}.md`. À l'intérieur, vous trouverez :
 
-- **Score** — un nombre de 0.0 à 5.0. En dessous de 4.0, l'offre n'est probablement pas très adaptée à votre profil.
+- **Score** — un nombre de 1 à 5. En dessous de 4.0, l'offre n'est probablement pas très adaptée à votre profil.
 - **Bloc A** — un résumé du poste en langage clair.
 - **Bloc B** — un tableau montrant comment votre CV répond à chaque exigence du poste, ainsi que les lacunes éventuelles.
 - **Bloc C** — une recommandation de stratégie pour vous positionner sur ce poste.

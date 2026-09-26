@@ -79,9 +79,11 @@ export const homeEn: HomeDict = {
   ),
   heroH1: (
     <>
-      Open source AI-powered job search.
+      career-ops: open-source AI job search{'\u00a0'}agent.
       <br />
       Runs in your CLI. Your data, your machine.
+      <br />
+      It never applies in your name.
     </>
   ),
   runItNow: 'Run it now',
@@ -120,7 +122,7 @@ export const homeEn: HomeDict = {
   statsComment: 'stars · Open source · MIT',
   commandCenter: (
     <>
-      Turn any AI coding CLI into a full job search {brand('command center')}.
+      Turn any AI coding CLI into your {brand('AI job search agent')}.
     </>
   ),
   tryItOut: 'Try it out',
@@ -228,7 +230,7 @@ export const homeEn: HomeDict = {
       q: 'Does career-ops apply to jobs for me?',
       a: (
         <>
-          It prepares every application right up to the click: it scans roles,
+          career-ops prepares every application right up to the click: it scans roles,
           scores each against your CV, and tailors a resume. Then it hands the
           decision back to you. You review and send each one yourself. That is
           deliberate: mass auto-apply burns your standing with recruiters and ATS
@@ -265,7 +267,7 @@ export const homeEn: HomeDict = {
       q: 'Where does my data live?',
       a: (
         <>
-          On your own machine, in plain files you own: your CV, profile,
+          career-ops keeps your data on your own machine, in plain files you own: your CV, profile,
           pipeline, and reports are local Markdown and YAML. career-ops runs
           entirely locally through your AI CLI: no account, no telemetry, nothing
           uploaded to a career-ops server. System updates never touch your data
@@ -328,10 +330,9 @@ export const homeEn: HomeDict = {
       q: 'What AI tools does career-ops work with?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent, and GitHub Copilot CLI — nine first-class CLIs
-          (Gemini CLI is a
-          legacy wrapper). The same mode files run on all of them. Each user picks
+          career-ops works with Claude Code, Cursor, Codex, OpenCode, Antigravity
+          CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI —
+          ten first-class CLIs (Gemini CLI is a legacy wrapper). The same mode files run on all of them. Each user picks
           the CLI that fits their existing subscription and cost preferences —
           career-ops never locks you to one provider. A typical job search runs on
           Claude Pro at $20/month, but the choice is yours.
@@ -361,9 +362,11 @@ export const homeEs: HomeDict = {
   ),
   heroH1: (
     <>
-      Búsqueda de empleo con IA, open source.
+      career-ops: agente open source de búsqueda de empleo con{'\u00a0'}IA.
       <br />
       Se ejecuta en tu CLI. Tus datos, tu máquina.
+      <br />
+      Nunca envía una candidatura en tu nombre.
     </>
   ),
   runItNow: 'Empezar ahora',
@@ -408,8 +411,8 @@ export const homeEs: HomeDict = {
   statsComment: 'estrellas · Open source · MIT',
   commandCenter: (
     <>
-      Convierte cualquier CLI de IA en un {brand('centro de mando')} completo de
-      búsqueda de empleo.
+      Convierte cualquier CLI de IA para programar en tu{' '}
+      {brand('agente de búsqueda de empleo con IA')}.
     </>
   ),
   tryItOut: 'Pruébalo',
@@ -518,7 +521,7 @@ export const homeEs: HomeDict = {
       q: '¿career-ops aplica a las ofertas por mí?',
       a: (
         <>
-          Prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno
+          career-ops prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno
           contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú
           revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema
           tu reputación con los reclutadores y los ATS, así que career-ops te quita
@@ -549,7 +552,7 @@ export const homeEs: HomeDict = {
       q: '¿Dónde se guardan mis datos? ¿career-ops es privado?',
       a: (
         <>
-          En tu propia máquina, en archivos planos que son tuyos: tu CV, tu
+          career-ops guarda tus datos en tu propia máquina, en archivos planos que son tuyos: tu CV, tu
           perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops
           corre por completo en local a través de tu CLI de IA: sin cuenta, sin
           telemetría, sin nada subido a un servidor de career-ops. Las
@@ -613,10 +616,9 @@ export const homeEs: HomeDict = {
       q: '¿Con qué herramientas de IA funciona career-ops?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent y GitHub Copilot CLI — nueve CLIs de primera clase
-          (Gemini CLI es un
-          wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
+          career-ops funciona con Claude Code, Cursor, Codex, OpenCode, Antigravity
+          CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI —
+          diez CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
           usuario elige el CLI que encaja con su suscripción y sus preferencias de
           coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de
           empleo típica corre con Claude Pro a 20 $/mes, pero la elección es tuya.
@@ -652,9 +654,11 @@ export const homeFr: HomeDict = {
   ),
   heroH1: (
     <>
-      Recherche d’emploi par IA, open source.
+      career-ops{'\u202f'}: agent open source de recherche d’emploi par{'\u00a0'}IA.
       <br />
-      Elle tourne dans votre CLI. Vos données, votre machine.
+      Il tourne dans votre CLI. Vos données, votre{'\u00a0'}machine.
+      <br />
+      Il ne postule jamais en votre nom.
     </>
   ),
   runItNow: 'Commencer',
@@ -695,8 +699,8 @@ export const homeFr: HomeDict = {
   statsComment: 'étoiles · Open source · MIT',
   commandCenter: (
     <>
-      Transformez n’importe quel CLI d’IA en {brand('centre de commande')} complet
-      pour votre recherche d’emploi.
+      Transformez n’importe quel CLI de code IA en votre{' '}
+      {brand('agent de recherche d’emploi par IA')}.
     </>
   ),
   tryItOut: 'Essayez',
@@ -808,7 +812,7 @@ export const homeFr: HomeDict = {
       q: 'career-ops postule-t-il à ma place ?',
       a: (
         <>
-          Il prépare chaque candidature jusqu’au clic : il parcourt les offres,
+          career-ops prépare chaque candidature jusqu’au clic : il parcourt les offres,
           note chacune face à votre CV et adapte un CV. Puis il vous rend la
           décision. Vous relisez et envoyez chaque candidature vous-même. C’est
           délibéré : la candidature automatique de masse abîme votre réputation
@@ -853,7 +857,7 @@ export const homeFr: HomeDict = {
       q: 'Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?',
       a: (
         <>
-          Sur votre propre machine, dans des fichiers en clair qui vous
+          career-ops garde vos données sur votre propre machine, dans des fichiers en clair qui vous
           appartiennent : votre CV, votre profil, votre pipeline et vos rapports
           sont du Markdown et du YAML locaux. career-ops tourne entièrement en
           local via votre CLI d’IA : pas de compte, pas de télémétrie, rien n’est
@@ -920,10 +924,10 @@ export const homeFr: HomeDict = {
       q: 'Avec quels outils d’IA career-ops fonctionne-t-il ?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent et GitHub Copilot CLI — neuf CLIs de premier plan
-          (Gemini CLI est
-          un wrapper legacy). Les mêmes fichiers de mode fonctionnent sur tous.
+          career-ops fonctionne avec Claude Code, Cursor, Codex, OpenCode,
+          Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub
+          Copilot CLI — dix CLIs de premier plan (Gemini CLI est un wrapper
+          legacy). Les mêmes fichiers de mode fonctionnent sur tous.
           Chacun choisit le CLI qui correspond à son abonnement et à ses
           préférences de coût — career-ops ne vous enferme jamais chez un seul
           fournisseur. Une recherche d’emploi typique tourne sur Claude Pro à

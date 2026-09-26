@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { blogSource } from '@/lib/blog-source';
@@ -40,6 +41,7 @@ export async function generateMetadata(
     description: data.summary || data.description,
     alternates: { canonical: `https://career-ops.org${page.url}` },
     openGraph: {
+      images: [DEFAULT_OG_IMAGE],
       type: 'article',
       url: `https://career-ops.org${page.url}`,
       siteName: 'career-ops',
@@ -48,7 +50,8 @@ export async function generateMetadata(
       publishedTime: data.date,
       modifiedTime: data.lastModified || data.date,
     },
-    twitter: { card: 'summary_large_image' },
+    twitter: {
+      images: [DEFAULT_OG_IMAGE.url], card: 'summary_large_image' },
     robots: { index: true, follow: true },
   };
 }

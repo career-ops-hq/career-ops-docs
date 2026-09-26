@@ -21,12 +21,12 @@ You do not need to know how to code. You only need to be comfortable opening a t
       <Step>
       ### AI coding assistant
 
-      Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)**, or **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — the AI coding assistant that runs this system. career-ops works with [nine CLIs first-class](/docs/supported-clis); install any one and log in before continuing.
+      Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)**, or **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — the AI coding assistant that runs this system. career-ops works with [ten CLIs first-class](/docs/supported-clis); install any one and log in before continuing.
       </Step>
       <Step>
         ### Node.js 18+ (22.5+ recommended)
 
-        Install **[Node.js](https://nodejs.org)** — minimum **18** (it works, with a warning), **22.5+ recommended** (it enables the SQLite tracker index). It runs the helper scripts and generates PDFs. Check your version with `node --version`. If you plan to use the Gemini CLI, that integration needs **Node 20 or newer**.
+        Install **[Node.js](https://nodejs.org)** — minimum **18** (it works, with a warning), **22.5+ recommended** (it enables the SQLite tracker index). It runs the helper scripts and generates PDFs. Check your version with `node --version`.
       </Step>
       <Step>
         ### Git
@@ -80,7 +80,7 @@ npx playwright install chromium
 
 From inside the `career-ops` folder, launch the AI coding CLI you installed.
 
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
@@ -106,9 +106,9 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
     copilot
     ```
   </Tab>
-  <Tab value="Gemini CLI">
+  <Tab value="Antigravity CLI">
     ```bash title="Terminal"
-    gemini
+    agy
     ```
   </Tab>
 </Tabs>
@@ -131,9 +131,9 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
 
 ## Step 3: Run your first evaluation
 
-Once the agent has onboarded you, you are ready to evaluate a real job posting. Copy the URL of any job ad and paste it into the chat. With Claude Code, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:
+Once the agent has onboarded you, you are ready to evaluate a real job posting. Copy the URL of any job ad and paste it into the chat. With Claude Code or Antigravity CLI, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:
 
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Gemini CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
@@ -159,9 +159,9 @@ Once the agent has onboarded you, you are ready to evaluate a real job posting. 
     Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
-  <Tab value="Gemini CLI">
+  <Tab value="Antigravity CLI">
     ```bash
-    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    /career-ops https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>
@@ -209,7 +209,7 @@ The whole process takes about one to two minutes. When it finishes, career-ops s
 
 Open the report file in `reports/`. The filename follows the pattern `{number}-{company}-{date}.md`. Inside, you will find:
 
-- **Score** — a number from 0.0 to 5.0. Anything below 4.0 means the job is probably not a strong fit.
+- **Score** — a number from 1 to 5. Anything below 4.0 means the job is probably not a strong fit.
 - **Block A** — a plain-English summary of the role.
 - **Block B** — a table showing how your CV matches each job requirement, plus any gaps.
 - **Block C** — a strategy recommendation for how to position yourself for this role.

@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { getChangelog } from '@/lib/releases';
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
     'Every career-ops release, in plain language: new modes, providers, fixes, and improvements. Sourced live from GitHub Releases — the project ships several times a week.',
   alternates: { canonical: 'https://career-ops.org/changelog' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/changelog',
     siteName: 'career-ops',
@@ -93,8 +95,9 @@ export default async function ChangelogPage() {
             Changelog
           </h1>
           <p className="mt-4 text-fd-muted-foreground">
-            Every release, in plain language. career-ops ships several times a
-            week; this page reads straight from{' '}
+            This changelog lists every career-ops release in plain language.
+            career-ops ships several times a week; the changelog reads straight
+            from{' '}
             <a
               href="https://github.com/career-ops-hq/career-ops/releases"
               rel="noreferrer noopener"
@@ -102,8 +105,8 @@ export default async function ChangelogPage() {
             >
               GitHub Releases
             </a>{' '}
-            and updates itself. Your data is never touched by an update — see
-            the{' '}
+            and updates itself. A career-ops update never touches your data —
+            see the{' '}
             <a
               href="/docs"
               className="text-fd-foreground underline underline-offset-2"
@@ -116,8 +119,8 @@ export default async function ChangelogPage() {
 
         {releases.length === 0 ? (
           <p className="text-fd-muted-foreground">
-            The release feed is momentarily unavailable. Browse the full
-            history on{' '}
+            The career-ops release feed is momentarily unavailable. Browse the
+            full career-ops release history on{' '}
             <a
               href="https://github.com/career-ops-hq/career-ops/releases"
               rel="noreferrer noopener"
