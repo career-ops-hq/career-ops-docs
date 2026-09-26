@@ -18,6 +18,8 @@ import { useChat, type UseChatHelpers } from '@ai-sdk/react';
 import { DefaultChatTransport, type Tool, type UIToolInvocation } from 'ai';
 import { Markdown } from '../markdown';
 import { Presence } from '@radix-ui/react-presence';
+import { usePathname } from 'next/navigation';
+import { useSearchContext } from 'fumadocs-ui/contexts/search';
 import type { ChatUIMessage, SearchTool } from '../../app/api/chat/route';
 
 const Context = createContext<{
@@ -433,20 +435,46 @@ export function AISearchPanelList({ className, style, ...props }: ComponentProps
         </div>
       ) : (
         <div className="flex flex-col px-3 gap-4">
-          {chat.error && (
-            <div className="p-2 bg-fd-secondary text-fd-secondary-foreground border rounded-lg">
-              <p className="text-xs text-fd-muted-foreground mb-1">
-                Request Failed: {chat.error.name}
-              </p>
-              <p className="text-sm">{chat.error.message}</p>
-            </div>
-          )}
           {messages.map((item) => (
             <Message key={item.id} message={item} />
           ))}
+          {chat.error && <AssistantUnavailable />}
         </div>
       )}
     </List>
+  );
+}
+
+// Shown for any failed request. Readers used to see the raw provider error
+// ("Request Failed: … API key is missing"); now they get a neutral line in
+// the page's language and a way into the regular docs search.
+const UNAVAILABLE = {
+  en: { text: 'The AI assistant isn\u2019t available right now.', action: 'Search the docs instead' },
+  es: { text: 'El asistente de IA no est\u00e1 disponible ahora mismo.', action: 'Buscar en la documentaci\u00f3n' },
+  fr: { text: 'L\u2019assistant IA n\u2019est pas disponible pour le moment.', action: 'Rechercher dans la documentation' },
+} as const;
+
+function AssistantUnavailable() {
+  const pathname = usePathname() ?? '';
+  const locale = (/^\/(es|fr)(\/|$)/.exec(pathname)?.[1] ?? 'en') as keyof typeof UNAVAILABLE;
+  const t = UNAVAILABLE[locale];
+  const { setOpenSearch } = useSearchContext();
+  const { setOpen } = useAISearchContext();
+
+  return (
+    <div className="p-2 bg-fd-secondary text-fd-secondary-foreground border rounded-lg">
+      <p className="text-sm">{t.text}</p>
+      <button
+        type="button"
+        className="mt-2 text-sm text-fd-foreground underline underline-offset-2"
+        onClick={() => {
+          setOpen(false);
+          setOpenSearch(true);
+        }}
+      >
+        {t.action}
+      </button>
+    </div>
   );
 }
 
