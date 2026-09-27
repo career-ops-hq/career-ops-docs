@@ -31,7 +31,7 @@ A STAR story is an interview answer told in four parts: Situation, Task, Action 
     Paste the job's URL or text after `/career-ops` for the full pipeline, or run `/career-ops oferta` for the evaluation alone. Either way, the evaluation drafts STAR+R stories for that job and adds the new ones to your bank.
   </Step>
   <Step title="Put the new stories in the matcher's shape">
-    The evaluation adds its stories as table rows, and the story matcher reads only the entry shape shown [below](#what-does-a-star-story-entry-look-like): a table row counts as no story at all. Ask career-ops to rewrite the new stories in `story-bank.md` into that shape, pasting the example into your request, then check with `npm run star -- --list`.
+    The evaluation adds its stories as table rows, and the story matcher reads only the entry shape shown [below](#what-does-a-star-story-entry-look-like): a table row counts as no story at all. Ask career-ops to rewrite the new stories in `story-bank.md` into that shape, pasting the example into your request, then check with `npm run star -- --list`. The mismatch is a known gap in the core, tracked in [issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514).
   </Step>
   <Step title="Match a question">
     Run `npm run star -- "<question>"` in a terminal to see the story that scores best against it.

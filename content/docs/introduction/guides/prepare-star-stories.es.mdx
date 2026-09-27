@@ -3,7 +3,7 @@ title: Prepara tus historias STAR a partir de tu CV
 description: "¿Te bloqueas con «Háblame de una vez que…»? career-ops redacta historias STAR a partir de tu CV mientras evalúas ofertas, y te deja ensayarlas antes de la ronda."
 seoTitle: "Cómo preparar historias STAR para entrevistas a partir de tu CV con career-ops"
 icon: NotebookPen
-translationHash: 4789c69b7014fbce
+translationHash: 16f27d9b3617f897
 localized: true
 translatedFrom: /docs/introduction/guides/prepare-star-stories
 ---
@@ -34,7 +34,7 @@ Una historia STAR es una respuesta de entrevista contada en cuatro partes: Situa
     Pega la URL o el texto de la oferta después de `/career-ops` para el pipeline completo, o ejecuta `/career-ops oferta` solo para la evaluación. En cualquier caso, la evaluación redacta borradores de historias STAR+R para esa oferta y añade las nuevas a tu banco.
   </Step>
   <Step title="Da a las historias nuevas el formato que lee el buscador">
-    La evaluación añade sus historias como filas de una tabla, y el buscador de historias solo lee el formato de entrada que se muestra [más abajo](#que-aspecto-tiene-una-entrada-de-historia-star). Una fila de tabla no cuenta como historia. Pídele a career-ops que reescriba las historias nuevas de `story-bank.md` en ese formato, pegando el ejemplo en tu petición. Después, comprueba el resultado con `npm run star -- --list`.
+    La evaluación añade sus historias como filas de una tabla, y el buscador de historias solo lee el formato de entrada que se muestra [más abajo](#que-aspecto-tiene-una-entrada-de-historia-star). Una fila de tabla no cuenta como historia. Pídele a career-ops que reescriba las historias nuevas de `story-bank.md` en ese formato, pegando el ejemplo en tu petición. Después, comprueba el resultado con `npm run star -- --list`. Este desajuste es un fallo conocido del core y está recogido en la [issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514).
   </Step>
   <Step title="Busca una historia para una pregunta">
     Ejecuta `npm run star -- "<pregunta>"` en una terminal para ver la historia que mejor puntúa para ella.
