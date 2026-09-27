@@ -3,7 +3,7 @@ title: Búsqueda de empleo con IA en Claude Code
 seoTitle: "Búsqueda de empleo con IA en Claude Code | career-ops"
 description: "Usa Claude Code como agente de búsqueda de empleo con IA: career-ops escanea portales de empleo, puntúa las ofertas según tu CV y prepara tus candidaturas. Tú editas, tú envías."
 icon: Bot
-translationHash: f7c9d2c5dcd5608f
+translationHash: 5c6ace9f770d838d
 localized: true
 translatedFrom: /docs/claude-code
 ---
@@ -12,7 +12,7 @@ Puedes llevar tu búsqueda de empleo con Claude: career-ops convierte a Claude C
 
 ## Cómo ejecutar career-ops en Claude Code
 
-career-ops se carga en Claude Code a través del archivo `CLAUDE.md` de la carpeta del proyecto. La [Guía rápida](/es/docs) explica la instalación. Hay un paso extra, una sola vez: añadir las herramientas de navegador de Playwright que confirman que una oferta sigue activa, con `/plugin install playwright@claude-plugins-official` dentro de Claude Code. La comprobación de arranque (`node doctor.mjs`) te avisa si faltan. Para los PDF y `scan --verify`, `npx playwright install chromium` descarga el navegador una vez.
+career-ops se carga en Claude Code a través del archivo `CLAUDE.md` de la carpeta del proyecto. La [Guía rápida](/es/docs) explica la instalación. Hay un paso extra, una sola vez: añadir las herramientas de navegador de Playwright que confirman que una oferta sigue activa, con `/plugin install playwright@claude-plugins-official` dentro de Claude Code. La comprobación de arranque (`node doctor.mjs`) te avisa si faltan. La instalación también descarga el navegador que se usa para los PDF y `scan --verify`; si ese paso se saltó, ejecuta `npx playwright install chromium`.
 
 - **Interactivo:** abre la carpeta de career-ops, ejecuta `claude` y escribe `/career-ops`.
 - **Por lotes:** ejecútalo en modo desatendido con `claude -p "prompt"`. El ejecutor por lotes arranca sus procesos sin herramientas de navegador, así que no pueden confirmar que una oferta siga activa, y el informe lo indica.

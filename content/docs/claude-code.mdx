@@ -9,7 +9,7 @@ You can run your job search with Claude: career-ops turns Claude Code into an AI
 
 ## How to run career-ops in Claude Code
 
-career-ops loads into Claude Code through the `CLAUDE.md` file in the project folder. The [Quick Start](/docs) covers the installation. One extra step, once: add the Playwright browser tools that confirm a listing is still live, with `/plugin install playwright@claude-plugins-official` inside Claude Code. The startup check (`node doctor.mjs`) warns you if they are missing. For PDFs and `scan --verify`, `npx playwright install chromium` downloads the browser once.
+career-ops loads into Claude Code through the `CLAUDE.md` file in the project folder. The [Quick Start](/docs) covers the installation. One extra step, once: add the Playwright browser tools that confirm a listing is still live, with `/plugin install playwright@claude-plugins-official` inside Claude Code. The startup check (`node doctor.mjs`) warns you if they are missing. The installation also downloads the browser used for PDFs and `scan --verify`; if that step was skipped, run `npx playwright install chromium`.
 
 - **Interactive:** open the career-ops folder, run `claude`, then type `/career-ops`.
 - **Batch:** run it headless with `claude -p "prompt"`. The batch runner starts its workers without browser tools, so they cannot confirm that a listing is still live, and the report says so.
