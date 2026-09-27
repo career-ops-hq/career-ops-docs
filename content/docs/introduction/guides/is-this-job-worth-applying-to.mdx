@@ -1,0 +1,164 @@
+---
+title: "Is this job worth applying to?"
+description: "Decide before you apply. career-ops scores a job posting from 1 to 5 against your CV and your targets, shows its reasoning, and leaves the call to you."
+seoTitle: "Is this job worth applying to? Decide before you apply with career-ops — a 1-5 score and its reasoning"
+icon: Scale
+---
+
+To find out whether a job is worth applying to, run `/career-ops oferta` and paste the posting before you apply. career-ops reads the job against your CV (resume) and your targets and returns a global score from 1 to 5, with its reasoning. Below 4.0, it recommends against applying unless you have a specific reason. It evaluates and drafts; you decide and send. It never applies in your name.
+
+## Decide before you apply
+
+career-ops is built around one decision: whether a posting deserves an application at all. Paste the job you were about to apply to tonight, and it tells you whether that night is worth it. It cannot tell you who will reply. It tells you how well the role fits your CV and what you want, before you spend the night on an application that may end in silence.
+
+career-ops is designed for quality, not quantity. It steers you toward fewer, better applications, and it says so plainly when a posting falls short. A result that says *do not apply* is the product doing its job.
+
+Fewer, better applications is also a matter of dignity on both sides of the table. Recruiters' time deserves respect. So does yours.
+
+> I built career-ops for my own 2026 job search. My funnel: 740 evaluated → 68 applied → 12 interviews → 1 offer. — Santiago Fernández de Valderrama Aparicio
+
+## How do I check a job before I apply?
+
+<Callout title="Before you start">
+  Install career-ops with the [Quick Start](/docs) and open it in one of the [Supported CLIs](/docs/supported-clis). Until you tell it who you are, evaluations score against the shipped profile, which targets AI roles: see [the first evaluations are rough](/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
+</Callout>
+
+career-ops has an evaluation-only mode for deciding first. Open your AI coding CLI in the career-ops folder, run the command below, and paste the job description or its URL:
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+The `oferta` mode runs the evaluation and writes the report, with no automatic PDF. If you paste a job straight into `/career-ops` instead, it runs the full pipeline, which also tailors a CV (a PDF by default) whatever the score. Use `oferta` when you want the verdict before anything else. If you then decide to apply, `/career-ops pdf` tailors your CV, and `/career-ops apply` drafts answers to the application form's questions for you to review and submit yourself.
+
+In Codex, slash commands are not guaranteed: name the mode in a prompt instead, for example `Run the career-ops oferta mode on this job: {URL}`.
+
+career-ops runs a few checks before it scores anything. When you give it a URL, it first confirms the posting is still live; a dead link stops the run before the evaluation, with no report and no CV. Pasted text cannot be checked that way, and the report notes it. If you keep your own do-not-apply list in `data/blacklist.md`, a listed company stops the run: career-ops quotes the reason you recorded and asks whether you still want the evaluation. If the posting looks like it came through an agency, it asks which agency before it writes anything.
+
+Research inside an evaluation is bounded. Pay and posting-legitimacy research together is capped at five web searches, and anything it cannot find is marked unavailable. For a deeper look at a company, run `/career-ops deep` separately.
+
+## How does career-ops decide the score?
+
+The career-ops score is a holistic judgment guided by five dimensions:
+
+| Dimension            | What it looks at                                                    |
+| -------------------- | ------------------------------------------------------------------- |
+| Match with CV        | How your skills, experience and proof points line up with the job   |
+| North Star alignment | How well the role fits the target roles in your profile             |
+| Comp                 | The pay the posting states, read against market research            |
+| Cultural signals     | Company culture, growth, stability and remote policy                |
+| Red flags            | Blockers and warnings, which pull the score down                    |
+
+The career-ops global score integrates the five dimensions into one number from 1 to 5, with no arithmetic formula. The report's sections are not averaged into it. The same score goes into the report header and your tracker.
+
+Culture fit cannot hide behind a strong CV match. If you set culture requirements in `config/profile.yml` and the posting's evidence contradicts them, the report names what is missing and caps the Cultural signals dimension. A role that scores 4.5 or above with a weak culture fit carries an explicit warning to verify before applying.
+
+career-ops checks work authorization against your profile. If a posting says nothing about sponsorship, the score does not drop. A generic "must be authorized to work in X" does not lower it either, when X is a country where you are authorized. An explicit no-sponsorship line, such as "no visa sponsorship" or "must have existing work authorization", for a role you cannot take from a country where you are authorized, is recorded as a hard blocker, and the report quotes the posting's exact words.
+
+## What does not change the score?
+
+The posting-legitimacy tier never changes the 1-5 score. The posting-legitimacy check (Block G in the report) looks at signals such as the posting's age, whether the apply button is still active, how specific the description is, recent layoff news, and whether the same role keeps being reposted. It returns one of three tiers: High Confidence, Proceed with Caution or Suspicious. It presents what it saw, never accuses anyone, notes the legitimate explanations for a concerning signal, and leaves the judgment to you. With no posting date and nothing else concerning, the default tier is Proceed with Caution, never Suspicious. The company research behind the check, such as news about a company's stability, can still inform the Cultural signals dimension.
+
+Requirement importance is labeled, not counted. The report lists the posting's significant requirements, up to 12 rows, and never drops a critical or high one to fit. For each, it marks how much it matters in this posting, from critical to low signal, and whether that comes from the posting's own wording, its structure, or a labeled estimate. Importance is filled in from the posting alone, before your CV is read, so that a requirement is not rated important just because you happen to be strong at it. Every critical or high requirement you miss or only partly meet comes with a specific interview risk and a plan to prepare for it. The importance labels do not move the 1-5 score.
+
+Your own history with a company is shown, not scored. If you applied there before and heard nothing back, or got a reply once and silence another time, the report adds one note saying so. That note is not a legitimacy signal and changes neither the score nor the tier. It is there so you can decide how much effort to invest.
+
+Your blacklist never changes any score: it is a gate that stops the run until you answer, and nothing is ever added to it for you.
+
+## What happens below 4.0?
+
+Below 4.0, career-ops recommends against applying unless you have a specific reason. You can override it, and it will say so.
+
+The 4.0 line is a recommendation. The decision stays with you, and so does every application: career-ops drafts the material, you review it, and you send it. At the other end of the scale, a posting that scores 4.5 or above also gets draft answers for its application form.
+
+## What does the evaluation give you?
+
+career-ops writes each evaluation to a report in `reports/` and adds a row to your tracker, `data/applications.md`, with the status Evaluated. The report header carries the score, the legitimacy tier and the work-authorization status, and a machine-readable summary sits under it. The main sections follow in order:
+
+- A) Role Summary
+- B) Match with CV
+- C) Level and Strategy
+- D) Comp and Demand
+- E) Customization Plan
+- F) Interview Plan
+- G) Posting Legitimacy
+- Risk Summary, which gathers the risk signals on one screen without re-scoring anything
+- H) Draft Application Answers, only when the score is 4.5 or above
+
+The posting itself is archived verbatim in the report (a very long one goes to a `jds/` file the report points to), so you keep the requirements after the job ad comes down. A first cover-letter draft is appended for you to finish with `/career-ops cover {slug}`.
+
+## A fictional example
+
+<Callout title="Fictional example">
+  Acme Freight, the role and the candidate below are invented. This is not a real evaluation and it is not based on one. It only shows how the reasoning reads.
+</Callout>
+
+In this invented example, Maya is a backend engineer who has told career-ops what she wants: product backend roles, a small team, remote work. She pastes the posting's URL for a Senior Platform Engineer at Acme Freight. Across the five dimensions, the reasoning runs like this:
+
+- **Match with CV:** strong on the core of the job, Go services and Postgres. One critical requirement, running Kubernetes in production, is only a partial match, so the report names the interview risk and a way to prepare for it.
+- **North Star alignment:** close to her targets, but the role leans toward infrastructure more than the product backend work she asked for.
+- **Comp:** the posting states no salary. The report says so, classifies the company type, rates how reliable public pay data is for that kind of company, and stops there.
+- **Cultural signals:** she asked for a small team; the posting describes a large platform organization with several layers of management. The report names that gap instead of letting the strong CV match hide it.
+- **Red flags:** nothing that blocks the application.
+
+**Score (fictional): 3.6/5.** Below 4.0, career-ops recommends against applying unless she has a specific reason.
+
+Separately, the legitimacy tier in this example is Proceed with Caution: the posting page shows no date and nothing else is concerning. The tier does not change the score.
+
+Maya has a reason the report cannot see: she knows the engineering manager, who has told her the team is being split into smaller squads. career-ops has already told her it recommends against applying. She goes ahead anyway; the call is hers. She reviews what career-ops drafted and sends the application herself.
+
+## The first evaluations are rough until you tell it who you are
+
+career-ops scores against the profile it has, and the shipped profile is not yours. The shipped profile's default target roles are all AI roles. Until you personalize `modes/_profile.md`, evaluations are scored against the template author's targeting, and running `node doctor.mjs` flags it.
+
+The first runs are rough. It does not know you yet. Talk to it: your CV, what you want, what you refuse. On first launch it asks for all of that in chat. To change the target roles, say so in plain words, for example "Change the archetypes to backend engineering roles". After any evaluation, tell it what it got wrong, such as "this score is too high" or "you missed my experience in X", and it updates your profile files.
+
+## Is the score right for you?
+
+career-ops does not assume its score predicts your results; it lets you check. Record what happened to each application with `/career-ops outcome`. Once you have outcomes, run:
+
+```bash
+node calibrate.mjs
+```
+
+The `calibrate` report asks one question: do your higher-scored applications turn into interviews and offers more often, for you? It is advisory. It never edits the scoring, the thresholds or your configuration, and nothing tunes itself automatically. It withholds any rate where the sample is too small and leaves out applications that are still in flight. If your results suggest the line sits in the wrong place for you, what the evidence can support is changing the score you personally apply at, or the roles you target. That call is yours.
+
+## Compare two offers beyond salary
+
+To compare two offers beyond salary, compare the roles with `/career-ops ofertas`, then read each offer letter with `/career-ops offer-prep`. The `ofertas` mode works from the job postings: none of its ten dimensions covers the terms of an offer letter you received, and it has no commute or quality-of-life dimension beyond remote quality.
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+The `ofertas` mode takes two or more postings: their text, their URLs, or roles you already evaluated in your tracker. It rates each role from 1 to 5 on ten dimensions and returns a ranking with a recommendation that takes time-to-offer into account.
+
+Salary, as estimated compensation, is one of the ten dimensions `ofertas` rates. The other nine are North Star alignment, CV match, level, growth trajectory, remote quality, company reputation, tech stack modernity, time-to-offer speed and cultural signals.
+
+Unlike the 1-5 evaluation score, which has no arithmetic formula, the `ofertas` comparison uses default weights, and North Star alignment counts most. The defaults lean toward senior AI roles: the level dimension rates staff-level roles highest, and the tech stack dimension rates cutting-edge AI and ML highest. If that is not your search, say what matters to you before you compare. Your scoring preferences live in your profile, `modes/_profile.md`, which the comparison reads.
+
+### Negotiate with your own numbers
+
+career-ops prepares you to negotiate from your own documents and your own numbers. The `offer-prep` mode reads your offer letter or contract with you and takes no view on whether the offer is low, fair or high: that call is yours. Paste the text or point it at the file:
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+`offer-prep` quotes each clause worth noting verbatim, explains it in plain English and tags it with neutral labels such as commonly negotiated or ask your lawyer. It closes with questions for your lawyer, items to raise with the employer (as questions, never demands), and a fixed note that it is not legal advice. It makes no web searches and reads English-language contracts only.
+
+`node salary-gap.mjs --summary` shows, per application, what you wanted, what the posting advertised and what you were actually offered. `node negotiation-roi.mjs --summary` drafts a talking point from an hours-saved claim whose number also appears in your `cv.md`, valued from a wage and frequency you supply: an estimate, not financial advice. `/career-ops offer-prep reply {company-slug}` drafts a reply email from your prep report; you send it yourself.
+
+## Frequently asked questions
+
+### Is there a tool that tells me which jobs are worth applying to based on my resume?
+
+career-ops is an open-source, MIT-licensed tool that reads a job posting against your CV (resume) and your targets before you apply. It returns a global score from 1 to 5 with its reasoning. Below 4.0, it recommends against applying unless you have a specific reason, and you can override that recommendation. career-ops never applies in your name: you review and send every application yourself.
+
+### Does a high score mean I will get an interview?
+
+A high career-ops score does not promise an interview. The score is a judgment of how well a posting fits your CV and your targets, not a forecast of interviews or offers. To see how the score tracks your own results, record outcomes as they happen and run the calibrate report, which is advisory and never changes the scoring.
+
+### How do I compare two job offers beyond salary?
+
+To compare two job offers beyond salary with career-ops, compare the roles with the ofertas mode, which rates each role on ten dimensions, of which salary is only one, and returns a ranking with a recommendation. None of those dimensions covers the terms of an offer letter, so read each letter with the offer-prep mode: it walks the clauses with you and lists questions for your lawyer and items to raise with the employer, without any verdict on the offer.
