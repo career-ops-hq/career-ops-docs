@@ -169,7 +169,7 @@ export const homeEn: HomeDict = {
   featScanBody: (
     <>
       Pre-configured scrapers check{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150+ job sources</a> on demand, Greenhouse, Ashby and Lever
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150+ job sources</a> on demand, Greenhouse, Ashby and Lever
       among them — zero API tokens spent. Run{' '}
       <code className="font-mono text-brand">/career-ops scan</code> and get a
       ranked list back in minutes.
@@ -459,7 +459,7 @@ export const homeEs: HomeDict = {
   featScanBody: (
     <>
       Scrapers preconfigurados revisan{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">más de 150 fuentes de empleo</a> bajo demanda, entre ellas
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">más de 150 fuentes de empleo</a> bajo demanda, entre ellas
       Greenhouse, Ashby y Lever — cero tokens de API. Ejecuta{' '}
       <code className="font-mono text-brand">/career-ops scan</code> y recibe una
       lista priorizada en minutos.
@@ -749,7 +749,7 @@ export const homeFr: HomeDict = {
   featScanBody: (
     <>
       Des scrapers préconfigurés parcourent{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">plus de 150 sources d’emploi</a> à la demande, dont
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">plus de 150 sources d’emploi</a> à la demande, dont
       Greenhouse, Ashby et Lever — zéro jeton d’API. Lancez{' '}
       <code className="font-mono text-brand">/career-ops scan</code> et recevez
       une liste priorisée en quelques minutes.

@@ -296,7 +296,7 @@ export default async function PressPage() {
             <a
               href="https://github.com/career-ops-hq/career-ops/releases/tag/manifesto-v1.0"
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               manifesto-v1.0

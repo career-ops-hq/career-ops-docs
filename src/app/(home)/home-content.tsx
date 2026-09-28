@@ -113,7 +113,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
             <a
               href="https://github.com/career-ops-hq/career-ops"
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener"
               className={cn(buttonVariants({ variant: 'secondary' }), 'max-sm:text-sm')}
             >
               {dict.viewSource}
@@ -306,7 +306,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         <div className="col-span-full mt-16 lg:mt-24 py-8 lg:py-10 flex flex-col items-center text-center gap-6">
           <div className="flex flex-col items-center gap-2 lg:gap-3">
             <h2 className={`${instrumentSerifRegular.className} tracking-tight text-4xl lg:text-5xl text-brand`}>
-              <a href="https://github.com/career-ops-hq/career-ops" target="_blank" rel="me noopener noreferrer" className="hover:text-brand-200 transition-colors">
+              <a href="https://github.com/career-ops-hq/career-ops" target="_blank" rel="me noopener" className="hover:text-brand-200 transition-colors">
                 {dict.openSourceTitle}
               </a>
             </h2>
@@ -331,7 +331,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               </a>
             ))}
           </div>
-          <a href="https://github.com/career-ops-hq/career-ops/graphs/contributors" target="_blank" rel="noreferrer noopener" className="text-sm text-fd-muted-foreground hover:text-fd-foreground hover:underline">
+          <a href="https://github.com/career-ops-hq/career-ops/graphs/contributors" target="_blank" rel="noopener" className="text-sm text-fd-muted-foreground hover:text-fd-foreground hover:underline">
             {dict.meetContributors}
           </a>
           <a href="https://warpchart.dev/r/career-ops-hq/career-ops?utm_source=career-ops.org" target="_blank" rel="noopener noreferrer" className="mt-4 w-full max-w-[800px]">

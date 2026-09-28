@@ -68,7 +68,7 @@ const PRESS = [
 // - rel="noreferrer noopener" for indices (Wikidata) where the entry is not
 //   self-edited.
 const LINKS: { label: string; href: string; rel: string }[] = [
-  { label: 'Personal site', href: 'https://santifer.io', rel: 'author noreferrer noopener' },
+  { label: 'Personal site', href: 'https://santifer.io', rel: 'author noopener' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/santifer', rel: 'me noreferrer noopener' },
   { label: 'GitHub', href: 'https://github.com/santifer', rel: 'me noreferrer noopener' },
   { label: 'X', href: 'https://x.com/santifer', rel: 'me noreferrer noopener' },
@@ -209,7 +209,7 @@ export default function AboutPage() {
             <a
               href="https://santifer.io/ai-agent-fleet"
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               the AI agent fleet playbook
@@ -223,7 +223,7 @@ export default function AboutPage() {
             <a
               href="https://santifer.io"
               target="_blank"
-              rel="author noreferrer noopener"
+              rel="author noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               santifer.io
@@ -275,7 +275,7 @@ export default function AboutPage() {
             . The canonical source repository is{' '}
             <a
               href="https://github.com/career-ops-hq/career-ops"
-              rel="me noreferrer noopener"
+              rel="me noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               github.com/career-ops-hq/career-ops
