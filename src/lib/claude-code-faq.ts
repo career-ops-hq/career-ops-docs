@@ -8,16 +8,16 @@ export const CLAUDE_CODE_FAQ: FaqEntry[] = [
   {
     question: 'Can Claude Code search for jobs for me?',
     answer:
-      'Yes, with career-ops. It scans company job boards, scores each listing against your CV and drafts the application material for the ones worth pursuing. You decide which applications to send.',
+      'Claude Code can run your job search with career-ops: it scans company job boards, scores each listing against your CV and drafts the application material for the ones worth pursuing. You decide which applications to send.',
   },
   {
     question: 'Does it apply to jobs automatically?',
     answer:
-      'No. career-ops never submits an application in your name. It prepares everything up to the click, and you review and send each application yourself.',
+      'No: career-ops never applies in your name. It drafts the material; you review, edit and send each application yourself.',
   },
   {
     question: 'Do I need Claude Pro?',
     answer:
-      'To use Claude Code you need a paid Claude plan or an Anthropic API key. career-ops itself is free, and it also runs on free engines through OpenCode.',
+      'Claude Code needs a paid Claude plan or an Anthropic API key. career-ops itself is free and MIT-licensed, and it also runs on free providers through OpenCode.',
   },
 ];
