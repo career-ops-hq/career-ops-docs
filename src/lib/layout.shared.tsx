@@ -1,8 +1,9 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, gitConfig } from './shared';
+import { appName } from './shared';
 import { CoMark } from '@/components/co-mark';
 import { LanguageBar } from '@/components/language-bar';
 import { instrumentSerifRegular } from './fonts';
+import { GitHubStar, starHeaderClass } from '@/components/github-star';
 
 type Options = {
   // Drops the brand suffix — used by the docs layout where Fumadocs
@@ -42,11 +43,22 @@ export function baseOptions({ compact = false, locale = 'en' }: Options = {}): B
       transparentMode: 'top',
       enabled: true,
     },
-    // Navbar GitHub icon → the FLAGSHIP repo (the 60K-star project the
-    // visitor came for), NOT gitConfig.repo: that one is the docs repo
-    // and exists only for the per-page "edit on GitHub" links.
-    githubUrl: `https://github.com/${gitConfig.user}/career-ops`,
     // Language button + browser-detection suggestion, both in the header.
-    links: [{ type: 'custom', secondary: true, children: <LanguageBar /> }],
+    // Then "Star on GitHub · N" to the FLAGSHIP repo, in the place Fumadocs'
+    // GitHub icon used to take (its `githubUrl` icon forces rel="noreferrer").
+    // The docs layouts are compact and put the same button in the sidebar
+    // footer instead, next to where the icon sat.
+    links: [
+      { type: 'custom', secondary: true, children: <LanguageBar /> },
+      ...(compact
+        ? []
+        : [
+            {
+              type: 'custom' as const,
+              secondary: true,
+              children: <GitHubStar placement="header" locale={locale} className={starHeaderClass} />,
+            },
+          ]),
+    ],
   };
 }

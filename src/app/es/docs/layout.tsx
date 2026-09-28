@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { source } from '@/lib/source';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { baseOptions } from '@/lib/layout.shared';
+import { DocsSidebarStarRow } from '@/components/github-star';
 import { AISearchLazy } from '@/components/ai/lazy';
 
 // Docs chrome for the Spanish subtree. The tree comes from the 'es' locale, so
@@ -13,6 +14,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       tree={source.getPageTree('es')}
       {...baseOptions({ compact: true, locale: 'es' })}
+      themeSwitch={{ enabled: false }}
+      sidebar={{ footer: <DocsSidebarStarRow locale="es" /> }}
     >
       <AISearchLazy />
       {children}

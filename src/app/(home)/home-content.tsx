@@ -9,6 +9,7 @@ import { SubscribeForm } from '@/components/subscribe-form';
 import { CopyableCommand } from '@/components/copyable-command';
 import { CompareRotator } from '@/components/compare-rotator';
 import { getProjectStats } from '@/lib/stats';
+import { GitHubStar } from '@/components/github-star';
 import type { HomeDict } from './home-dict';
 
 // One home trunk, rendered for every locale. Structure, widgets and
@@ -110,14 +111,12 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
                 className="cli-cursor inline-block h-[1em] w-[0.35em] bg-current align-middle"
               />
             </Link>
-            <a
-              href="https://github.com/career-ops-hq/career-ops"
-              target="_blank"
-              rel="noopener"
-              className={cn(buttonVariants({ variant: 'secondary' }), 'max-sm:text-sm')}
-            >
-              {dict.viewSource}
-            </a>
+            <GitHubStar
+              placement="hero"
+              locale={dict.locale}
+              short="mobile"
+              className={cn(buttonVariants({ variant: 'secondary' }), 'inline-flex items-center gap-2 max-sm:text-sm')}
+            />
           </div>
         </div>
       </div>
