@@ -1,6 +1,7 @@
 import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { homeFaqSchemaEs } from '@/lib/schema';
+import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
 import { HomeContent } from '../../(home)/home-content';
 import { homeEs } from '../../(home)/home-dict';
@@ -35,7 +36,7 @@ export default function HomePageEs() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchemaEs()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchemaEs(homeLastModified('es'))) }}
       />
       <HomeContent dict={homeEs} />
     </>

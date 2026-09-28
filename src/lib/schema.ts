@@ -863,30 +863,53 @@ type HomeFaqQA = { q: string; a: string };
 const faqFromDict = (dict: HomeDict): HomeFaqQA[] =>
   dict.faq.map(({ q, a }) => ({ q, a: nodeText(a) }));
 
-function homeFaqGraph(id: string, lang: string, entries: HomeFaqQA[]) {
+// The home's graph: a WebPage node that carries the page's real last-change
+// date (the same date as its sitemap lastmod, from src/lib/home-date.ts), and
+// the FAQPage of its visible FAQ. Before 28 September the home had no WebPage
+// node and no dateModified, only the dated nodes that describe press mentions
+// and a video, and Google showed one of those old dates on the home's snippet.
+function homeGraph(
+  pageUrl: string,
+  lang: string,
+  entries: HomeFaqQA[],
+  dateModified?: Date,
+) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    '@id': id,
-    inLanguage: lang,
-    mainEntity: entries.map((e) => ({
-      '@type': 'Question',
-      name: e.q,
-      acceptedAnswer: { '@type': 'Answer', text: e.a },
-    })),
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}/#webpage`,
+        url: pageUrl,
+        inLanguage: lang,
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        about: { '@id': 'https://career-ops.org/#software' },
+        ...(dateModified ? { dateModified: dateModified.toISOString() } : {}),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}/#faq`,
+        inLanguage: lang,
+        mainEntity: entries.map((e) => ({
+          '@type': 'Question',
+          name: e.q,
+          acceptedAnswer: { '@type': 'Answer', text: e.a },
+        })),
+      },
+    ],
   };
 }
 
-export function homeFaqSchema() {
-  return homeFaqGraph('https://career-ops.org/#faq', 'en', faqFromDict(homeEn));
+export function homeFaqSchema(dateModified?: Date) {
+  return homeGraph('https://career-ops.org', 'en', faqFromDict(homeEn), dateModified);
 }
 
-export function homeFaqSchemaEs() {
-  return homeFaqGraph('https://career-ops.org/es/#faq', 'es', faqFromDict(homeEs));
+export function homeFaqSchemaEs(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/es', 'es', faqFromDict(homeEs), dateModified);
 }
 
-export function homeFaqSchemaFr() {
-  return homeFaqGraph('https://career-ops.org/fr/#faq', 'fr', faqFromDict(homeFr));
+export function homeFaqSchemaFr(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/fr', 'fr', faqFromDict(homeFr), dateModified);
 }
 
 export function blogPostSchema(args: {

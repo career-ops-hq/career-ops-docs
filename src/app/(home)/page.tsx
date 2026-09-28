@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { homeFaqSchema } from '@/lib/schema';
+import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
 import { HomeContent } from './home-content';
 import { homeEn } from './home-dict';
@@ -39,7 +40,7 @@ export default function HomePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchema()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchema(homeLastModified('en'))) }}
       />
       <HomeContent dict={homeEn} />
     </>
