@@ -53,7 +53,7 @@ career-ops works first-class with ten AI coding CLIs: Claude Code, Cursor, Codex
 
 ## What is the difference between `scan` and `scan:full`?
 
-`npm run scan` reads the companies you configured in `portals.yml` and hits their ATS APIs ([Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby), [Lever](/docs/reference/portals/lever)) directly, consuming zero LLM tokens — that's your regular daily or weekly discovery run. `npm run scan:full` inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your `title_filter` / `location_filter`, so you catch roles from companies you haven't manually added.
+`npm run scan` reads the companies you configured in `portals.yml` and hits their ATS APIs (for example [Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby), [Lever](/docs/reference/portals/lever)) directly, consuming zero LLM tokens — that's your regular daily or weekly discovery run. `npm run scan:full` inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your `title_filter` / `location_filter`, so you catch roles from companies you haven't manually added.
 
 ## How do I avoid hitting token or rate limits during a batch run?
 
