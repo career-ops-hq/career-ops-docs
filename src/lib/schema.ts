@@ -725,7 +725,7 @@ export function sustainSchema() {
         description:
           'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
         inLanguage: 'en',
-        dateModified: '2026-09-29T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         significantLink: 'https://github.com/sponsors/santifer',
@@ -972,7 +972,10 @@ export function comparisonSchema(data: ComparisonData) {
         name: `career-ops vs ${data.competitor.name}`,
         description: data.intro,
         inLanguage: 'en',
-        dateModified: `${data.lastModified}T00:00:00Z`,
+        dateModified:
+          data.lastModified.length === 10
+            ? `${data.lastModified}T00:00:00Z`
+            : data.lastModified,
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         about: { '@id': 'https://career-ops.org/#software' },
         author: { '@id': PERSON_ID },
@@ -1043,7 +1046,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-09-29T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
@@ -1078,7 +1081,7 @@ export function pressSchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-09-29T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         // Reference the canonical DefinedTerm node on /manifesto — never
         // duplicate the definition here.
         mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },
