@@ -27,6 +27,8 @@ export type HomeDict = {
   // manifesto, not drop them into the English one.
   manifestoHref: string;
   featuredIn: string;
+  // Label for the Vercel Open Source Program badge, a separate group from the press.
+  memberOf: string;
   authorTagline: string;
   // Official localized rendering of the signature thesis, shown BELOW the
   // literal-English blockquote (which stays verbatim on every locale, it is the
@@ -92,6 +94,7 @@ export const homeEn: HomeDict = {
   docsHref: '/docs',
   manifestoHref: '/manifesto',
   featuredIn: 'Featured in',
+  memberOf: 'Member of',
   authorTagline: ', 16-year operator and Head of Applied AI',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
   readIt: 'Read it →',
@@ -375,6 +378,7 @@ export const homeEs: HomeDict = {
   docsHref: '/es/docs',
   manifestoHref: '/es/manifesto',
   featuredIn: 'Apareció en',
+  memberOf: 'Miembro de',
   authorTagline: ', 16 años como operador y Head of Applied AI',
   // Versión «yo» oficial del README.es (superficie personal = home). El
   // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo
@@ -667,6 +671,7 @@ export const homeFr: HomeDict = {
   docsHref: '/fr/docs',
   manifestoHref: '/manifesto',
   featuredIn: 'Vu dans',
+  memberOf: 'Membre de',
   authorTagline: ', 16 ans d’opérateur et Head of Applied AI',
   // No thesisTranslation for FR — the English thesis stands alone (venture-ops).
   nowSignedManifesto: <>Désormais un manifeste signé ·</>,

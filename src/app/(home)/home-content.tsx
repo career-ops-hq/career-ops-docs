@@ -121,30 +121,48 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         </div>
       </div>
 
-      {/* Press coverage */}
+      {/* Press coverage and program membership: one line on wide screens,
+          stacked by group below lg. Press (editorial coverage) and the Vercel
+          Open Source Program (in-kind support) stay visibly separate groups,
+          never one "featured in" row. Same grey treatment for all three marks. */}
       <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12 mt-12 lg:mt-16">
-        <p className="text-center text-xs uppercase tracking-[0.2em] text-fd-muted-foreground mb-6">
-          {dict.featuredIn}
-        </p>
-        <div className="flex flex-row flex-wrap items-center justify-center gap-10 md:gap-16">
-          <a
-            href={PRESS.wiredGR}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            aria-label="Featured in WIRED Greece"
-            className="opacity-55 hover:opacity-100 transition-opacity duration-300"
-          >
-            <Image src="/press/wired.svg" alt="WIRED" width={110} height={22} className="h-[22px] w-auto brightness-0 dark:invert" />
-          </a>
-          <a
-            href={PRESS.biEN}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            aria-label="Featured in Business Insider"
-            className="opacity-55 hover:opacity-100 transition-opacity duration-300"
-          >
-            <Image src="/press/business-insider.svg" alt="Business Insider" width={84} height={26} className="h-[26px] w-auto brightness-0 dark:invert" />
-          </a>
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-10">
+          <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-10">
+            <p className="text-xs uppercase tracking-[0.2em] text-fd-muted-foreground whitespace-nowrap">{dict.featuredIn}</p>
+            <div className="flex flex-row items-center gap-10">
+              <a
+                href={PRESS.wiredGR}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                aria-label="Featured in WIRED Greece"
+                className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+              >
+                <Image src="/press/wired.svg" alt="WIRED" width={110} height={22} className="h-[22px] w-auto brightness-0 dark:invert" />
+              </a>
+              <a
+                href={PRESS.biEN}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                aria-label="Featured in Business Insider"
+                className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+              >
+                <Image src="/press/business-insider.svg" alt="Business Insider" width={84} height={26} className="h-[26px] w-auto brightness-0 dark:invert" />
+              </a>
+            </div>
+          </div>
+          <div aria-hidden="true" className="hidden lg:block h-8 w-px bg-fd-border" />
+          <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-10">
+            <p className="text-xs uppercase tracking-[0.2em] text-fd-muted-foreground whitespace-nowrap">{dict.memberOf}</p>
+            <a
+              href="https://vercel.com/open-source-program"
+              target="_blank"
+              rel="noopener sponsored"
+              aria-label="Member of the Vercel Open Source Software Program 2026"
+              className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+            >
+              <Image src="/press/vercel-oss-2026.svg" alt="Vercel Open Source Software Program 2026" width={240} height={24} className="h-[24px] w-auto brightness-0 dark:invert" />
+            </a>
+          </div>
         </div>
       </div>
 
