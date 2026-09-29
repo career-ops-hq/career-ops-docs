@@ -102,7 +102,15 @@ jobs:
               if since is None or lm is None:
                   undated += lm is None
                   urls.append(loc); continue
-              if dt.datetime.fromisoformat(lm.group(1)) >= since:
+              lm_dt = dt.datetime.fromisoformat(lm.group(1))
+              # A post dated from frontmatter carries a date-only lastmod
+              # (midnight UTC), which is always earlier than the push that
+              # ships it. Compare those by day, or a new post is never announced.
+              # Side effect: it is re-announced on every push that same day.
+              if lm_dt.astimezone(dt.timezone.utc).time() == dt.time(0, 0):
+                  if lm_dt.date() >= since.astimezone(dt.timezone.utc).date():
+                      urls.append(loc)
+              elif lm_dt >= since:
                   urls.append(loc)
           print(f"changed since {since}: {len(urls)} URLs ({undated} undated, included)")
 

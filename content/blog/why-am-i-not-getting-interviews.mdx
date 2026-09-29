@@ -1,0 +1,116 @@
+---
+title: "Why am I not getting interviews? When applications go into silence"
+description: "Silence is not an answer when you get no interviews. What the US hiring data says, and three things you control: where you apply, who you write to, your numbers."
+date: "2026-10-01"
+lastModified: "2026-10-01"
+tags: ["ai-job-search", "job-market", "career-ops"]
+summary: "Silence is not an answer when you get no interviews. What the US hiring data says, and three things you control: where you apply, who you write to, your numbers."
+seoTitle: "Why am I not getting interviews?"
+faq:
+  - q: "Why am I not getting interviews even though I'm qualified?"
+    a: "Being qualified does not guarantee a reply. Silence after an application does not tell you why it went unanswered, and it is not a verdict on you. For context, a Cleveland Fed commentary finds the US hiring rate below its levels in the strong labor markets of the 2000s and 2010s expansions, and the BLS reported July 2026 hires equal to 3.2 percent of employment, little changed over the month. What you control is where you apply, who you write to, and what your own numbers show."
+  - q: "Will career-ops get me more interviews?"
+    a: "career-ops does not promise more interviews or replies. It has no telemetry, so there is no aggregate result to quote. Its author, Santiago Fernández de Valderrama Aparicio, publishes one funnel, his own search: one person in one market window, not a benchmark. What career-ops does is help you decide before you apply: below 4.0, it recommends against applying unless you have a specific reason, and the decision stays yours."
+  - q: "Does career-ops message recruiters for me?"
+    a: "No: career-ops does not message recruiters for you. The contacto mode looks for one person to write to about a specific posting and drafts a short note for that person. It never sends it: you decide whether to send it, when and where. career-ops never applies in your name either."
+---
+
+{/* FAQ below is mirrored in the `faq` frontmatter (FAQPage JSON-LD) — edit both together. The CI schema-parity gate checks every q and a verbatim. */}
+
+If your applications go into silence, it is not a verdict on you. A Cleveland Fed commentary finds the US hiring rate below its levels in the strong labor markets of the 2000s and 2010s, but no figure explains one unanswered application. career-ops helps you decide before you apply, find one person to write to, and read your own funnel.
+
+It evaluates and drafts; you decide and send. It never applies in your name.
+
+**On this page:** [Applications that go into silence](#applications-that-go-into-silence) · [Should I send more?](#should-i-send-more-applications) · [Which jobs deserve an application](#which-jobs-deserve-an-application) · [Who to write to before you apply](#who-should-i-write-to-before-i-apply) · [What is working](#how-do-i-know-what-is-working) · [My search, in numbers](#my-search-in-numbers) · [Tell it who you are](#tell-it-who-you-are) · [FAQ](#frequently-asked-questions)
+
+## Applications that go into silence
+
+You find a role that fits. You rework the CV, answer the form and send it. Then nothing: no rejection, no reply. If you are sending hundreds of applications, that silence adds up, and it starts to feel like an answer.
+
+It is not one. No reply is the absence of an answer. It does not tell you whether the role was filled, paused, reposted or never read.
+
+### Is it the job market?
+
+No figure can tell you whether the market explains one unanswered application; what the figures describe is the backdrop. In [The "Low-Hire, Low-Fire" Labor Market](https://www.clevelandfed.org/publications/economic-commentary/2026/ec-202617-the-low-hire-low-fire-labor-market), a Cleveland Fed Economic Commentary (2026-17, August 4, 2026), Bruce Fallick, a senior vice president at the Federal Reserve Bank of Cleveland, writes:
+
+> "The hiring rate has come down drastically from its elevated pandemic-recovery level and stands below its levels in the strong labor markets during the expansions in the 2000s and 2010s."
+
+The same commentary quotes Jerome Powell, at his April 29, 2026, press conference, describing "an unusual and uncomfortable kind of a balance where people who don't have jobs will have a hard time breaking in."
+
+For the monthly figures, the US Bureau of Labor Statistics reported in its [Job Openings and Labor Turnover Survey for July 2026](https://www.bls.gov/news.release/archives/jolts_09012026.htm), published September 1, 2026, that hires were "little changed at 5.1 million and 3.2 percent" (the hires rate is hires as a share of employment) and job openings were "little changed at 7.3 million." BLS calls the month "little changed"; the longer comparison is Fallick's.
+
+All of these are US figures. They describe the US market, not your application.
+
+## Should I send more applications?
+
+Sending more is the obvious move when nothing comes back, and it makes the silence worse in two ways. Every extra application is one more chance of silence to absorb. And each one gets less of you: less time to check whether the role fits, less to say about why this job and not the one before it.
+
+There is a person on the other side too. When someone does read what you send, an application for a role that does not fit asks for their time without giving them a reason to reply.
+
+career-ops is designed for quality, not quantity: genuine matches, never mass-application spam. Fewer, better applications are a matter of dignity on both sides of the table. Recruiters' time deserves respect. So does yours. That is also why it never applies in your name: sending is a decision, and it stays yours.
+
+## Which jobs deserve an application?
+
+Before the next application, check whether the role deserves one. Run `/career-ops oferta` (evaluation only) and paste the posting: career-ops scores it from 1 to 5 against your CV and your targets and explains why. Below 4.0, it recommends against applying unless you have a specific reason; you can apply anyway, and the decision is yours.
+
+For a batch of postings, ask it to triage them. Triage is a quick first pass that returns a verdict table (PASS, MARGINAL, FAIL or SKIP), and you decide which postings get a full evaluation. Nothing is filtered on your behalf. Triage works from a short brief of your profile, `modes/_brief.md`; without a filled-in brief, it falls back to a full evaluation.
+
+How the score is decided, what does not move it, and how to check it against your own results are covered in [Is this job worth applying to?](/docs/introduction/guides/is-this-job-worth-applying-to). The rule for scores [below 4.0](/docs/introduction/guides/is-this-job-worth-applying-to#what-happens-below-40) is there too.
+
+## Who should I write to before I apply?
+
+Before you send an application for a specific posting, `/career-ops contacto` can look for one person to write to. It searches in order: the hiring manager, then the assigned recruiter, then a peer on the team, and stops at the first person it can confirm. It uses at most three web searches, works without logging in, and never guesses a name. If it cannot confirm someone, it says so and moves to the next in the order.
+
+It then drafts one three-sentence note, adapted to that person:
+
+- **To a recruiter:** your fit for the role and the facts a screener checks, before they ask.
+- **To a hiring manager:** a challenge their team is facing and your strongest relevant result from your CV.
+- **To a peer:** a genuine reference to their work and what you are doing in the same space. It does not ask for a job.
+
+The note comes in English, with a Spanish version for a Spanish company. career-ops offers to save the contact to `data/contacts.tsv` and saves it only after you confirm. For a job-board chat or the first line of a cold email, the greeting variant writes one short opener, 150 characters by default, with no contact search.
+
+It finds the person and drafts the note. It never sends it: you decide whether to send it, when and where.
+
+## How do I know what is working?
+
+Your own numbers show it, once you track them. career-ops keeps your applications in a tracker file, `data/applications.md`, and reads it back to you in three ways. It counts the applications you track there, so the picture starts from what you log.
+
+**Compare your rates with third-party references.** In a terminal in your career-ops folder, `node funnel-velocity.mjs --summary` compares your own funnel rates with the reference ranges in [`templates/benchmarks.yml`](https://github.com/career-ops-hq/career-ops/blob/main/templates/benchmarks.yml). Those references are third-party: recruiter-industry and aggregated survey data, not peer-reviewed, mostly from the US, each shown with its year and labeled directional. Outside the US, copy the file to `config/benchmarks.yml` and localize it. The file calls them directional calibration references, not targets, and marks the two rate references as mass-application platform data. Below 20 applications sent, the report prints your rates next to the ranges, marked directional only, without saying whether you are above, within or below them. From 20 on, when a rate falls below a range, it points to one concrete next step, checking your follow-ups or reviewing your score threshold, and never gives a verdict about you.
+
+**See what is still waiting.** The same report lists the applications still marked Applied, with the days since you sent each, and flags the ones past an estimated first-response window. For those, `/career-ops followup` can draft a follow-up; after two with no reply, it suggests other options instead of a third. You decide whether and when to send it, and only the follow-ups you confirm sending are recorded.
+
+**Find the patterns.** Once at least 5 applications have actually been sent (Applied, Responded, Interview, Offer, Hired or Rejected; skipped and discarded rows do not count), `/career-ops patterns` reads your tracker and reports your funnel, score against outcome, which archetypes convert, the recurring blockers such as geo-restriction, stack mismatch, seniority or onsite roles, and its top recommendations. It suggests a minimum score only once at least three applications with a score have led somewhere (a reply, an interview, an offer or a hire) and at least one rejected application scored below all of them. A group of applications that are all still waiting is read as silence, not rejection. It changes your filters only if you agree.
+
+## My search, in numbers
+
+I built career-ops for my own job search in 2026, and I was its first user.
+
+> My funnel: 740 evaluated → 68 applied → 12 interviews → 1 offer. — Santiago Fernández de Valderrama Aparicio
+
+The decision I made most often was not to apply.
+
+This is one search, by one person, in one market window. It is not a benchmark, and it does not tell you what your numbers will be. The stage-by-stage table is in [the full data from my search](/blog/job-search-data-from-740-listings#the-headline-numbers), next to [what the reject pile contained](/blog/job-search-data-from-740-listings#what-the-91-reject-pile-contained). Looking back, I would run the patterns mode weekly, not twice over the whole search.
+
+## Tell it who you are
+
+The first runs are rough. It does not know you yet. Talk to it: your CV, what you want, what you refuse. Think of it as a recruiter's first week.
+
+On first launch, career-ops asks for all of that in chat. How to correct it as you go is in [the first evaluations are rough until you tell it who you are](/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
+
+## Frequently asked questions
+
+### Why am I not getting interviews even though I'm qualified?
+
+Being qualified does not guarantee a reply. Silence after an application does not tell you why it went unanswered, and it is not a verdict on you. For context, a Cleveland Fed commentary finds the US hiring rate below its levels in the strong labor markets of the 2000s and 2010s expansions, and the BLS reported July 2026 hires equal to 3.2 percent of employment, little changed over the month. What you control is where you apply, who you write to, and what your own numbers show.
+
+### Will career-ops get me more interviews?
+
+career-ops does not promise more interviews or replies. It has no telemetry, so there is no aggregate result to quote. Its author, Santiago Fernández de Valderrama Aparicio, publishes one funnel, his own search: one person in one market window, not a benchmark. What career-ops does is help you decide before you apply: below 4.0, it recommends against applying unless you have a specific reason, and the decision stays yours.
+
+### Does career-ops message recruiters for me?
+
+No: career-ops does not message recruiters for you. The contacto mode looks for one person to write to about a specific posting and drafts a short note for that person. It never sends it: you decide whether to send it, when and where. career-ops never applies in your name either.
+
+---
+
+*Start with the [Quick Start](/docs), or read [how career-ops decides whether a job is worth applying to](/docs/introduction/guides/is-this-job-worth-applying-to).*
