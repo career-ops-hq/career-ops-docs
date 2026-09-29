@@ -87,7 +87,6 @@ const PERSON_SAMEAS = [
   'https://www.crunchbase.com/person/santiago-fernandez-de-valderrama',
   'https://huggingface.co/santifer',
   'https://www.wikidata.org/wiki/Q138710224',
-  'https://santiferirepair.es',
   'https://www.facebook.com/santifer.io/',
   'https://www.producthunt.com/@santifer',
   'https://app.daily.dev/santifer',
@@ -757,7 +756,7 @@ export function sustainSchema() {
         description:
           'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
         inLanguage: 'en',
-        dateModified: '2026-05-16T00:00:00Z',
+        dateModified: '2026-10-03T00:00:00Z',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         significantLink: 'https://github.com/sponsors/santifer',

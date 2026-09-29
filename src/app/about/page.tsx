@@ -351,7 +351,7 @@ export default function AboutPage() {
               href="/sustain"
               className="text-fd-foreground underline underline-offset-2"
             >
-              sustaining the maintainer
+              sponsoring the project
             </Link>{' '}
             keeps the work moving.
           </p>
