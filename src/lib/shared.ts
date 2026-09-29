@@ -123,13 +123,13 @@ export const LATEST_RELEASE_FALLBACK = 'career-ops-v1.31.0';
 // page that declares its own openGraph object replaces the layout's entirely,
 // images included, so every page that set a title and description for sharing
 // was silently shipping without a picture: /about, /sustain, the blog. Since
-// 29-sep it is the English home card (src/lib/og-hero.tsx) exported to a JPEG
-// at a stable URL; the old README banner carried "You got the job. And it
-// didn't cost you a thing." in its pixels. Regenerate it if the hero line
-// changes. The homes (en, es, fr) render their own card.
+// 29-sep it is the English share card Santiago approved (the same one as the
+// repo's GitHub social preview), at a stable URL. The homes carry their own
+// card as opengraph-image.jpg in their route folders (en, es; fr uses the
+// English card until a natively reviewed French one exists).
 export const DEFAULT_OG_IMAGE = {
   url: 'https://career-ops.org/og-banner.jpg',
   width: 1200,
   height: 630,
-  alt: 'career-ops — They screen you. Now you screen them.',
+  alt: 'More applications. More silence. Stop guessing. Start choosing. career-ops, AI job search agent.',
 };
