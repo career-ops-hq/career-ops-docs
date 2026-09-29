@@ -157,7 +157,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               href="https://vercel.com/open-source-program"
               target="_blank"
               rel="noopener sponsored"
-              aria-label="Member of the Vercel Open Source Software Program 2026"
+              aria-label="Member of the Vercel Open Source Program, Summer 2026 cohort"
               className="opacity-55 hover:opacity-100 transition-opacity duration-300"
             >
               <Image src="/press/vercel-oss-2026.svg" alt="Vercel Open Source Software Program 2026" width={240} height={24} className="h-[24px] w-auto brightness-0 dark:invert" />
