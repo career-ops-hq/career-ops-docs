@@ -87,12 +87,14 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           width={1628}
           height={1044}
           sizes="(min-width: 1400px) 1050px, (min-width: 1024px) 75vw, 100vw"
-          className="absolute top-[58%] left-[25%] max-w-[1400px] rounded-xl block [animation:fade-in-delayed_700ms_ease_400ms_both] [mask-image:linear-gradient(to_right,transparent_0%,black_8%)]"
+          className="absolute top-[58%] max-md:top-[calc(58%+32px)] left-[25%] max-w-[1400px] rounded-xl block [animation:fade-in-delayed_700ms_ease_400ms_both] [mask-image:linear-gradient(to_right,transparent_0%,black_8%)]"
           priority
         />
         <div className="flex flex-col z-2 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
+          {/* The hero line. On phones a soft veil sits behind it: over the
+              orange halftone the grey drops to ~2.4:1 in the worst pixels. */}
           <p
-            className={`${instrumentSerifRegular.className} text-5xl mt-12 mb-6 leading-[1.05] xl:text-7xl xl:mb-8`}
+            className={`${instrumentSerifRegular.className} text-[44px] md:text-5xl mt-12 mb-6 leading-[1.05] [font-synthesis:none] xl:mb-8 ${dict.locale === 'fr' ? 'xl:text-[56px]' : 'xl:text-7xl'} max-md:relative max-md:isolate max-md:before:absolute max-md:before:-inset-x-6 max-md:before:-inset-y-4 max-md:before:-z-10 max-md:before:rounded-[2rem] max-md:before:bg-[radial-gradient(ellipse_at_center,var(--color-fd-background)_40%,transparent_78%)] max-md:before:opacity-80 max-md:before:content-['']`}
           >
             {dict.heroHook}
           </p>

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { instrumentSerif } from '@/lib/fonts';
 
 // Home copy dictionary — one trunk, text varies by language. The home
 // component renders IDENTICAL structure/widgets for every locale; only
@@ -76,14 +77,64 @@ export type HomeDict = {
 
 const brand = (t: ReactNode) => <span className="text-brand">{t}</span>;
 
-export const homeEn: HomeDict = {
-  heroHook: (
+// Hero line (decided by Santiago, 29-sep): the rival is the process, volume
+// and silence, never the companies. Same size and weight throughout; the
+// hierarchy comes only from colour, in three steps (venture-ops spec V6 +
+// V7a, ratios in consultas/tipografia-mensaje-2026-09-29): the pain in cool
+// grey, the turn ("Stop guessing") in olive, the action in full ink, with
+// one orange word. "silence" is set in the real Instrument Serif Italic
+// (font-synthesis is off on the parent, so a missing face stays upright
+// instead of being slanted by the browser). Each sentence is inline-block,
+// so the line only breaks between sentences: two lines on wide screens,
+// four on phones.
+const HOOK_PAIN = 'text-[#6b7280] dark:text-[#8a8f98]';
+const HOOK_TURN = 'text-[#59592a] dark:text-[#b7af7e]';
+const HOOK_ACTION = 'text-[#26261a] dark:text-[#e4e2d0]';
+const HOOK_ACCENT = 'text-[#a55212] dark:text-[#dd7627]';
+
+function heroLine(t: {
+  more: string;
+  silencePre: string;
+  silence: string;
+  silencePost: string;
+  stop: string;
+  startPre: string;
+  choose: string;
+  startPost: string;
+}): ReactNode {
+  return (
     <>
-      They screen you.
-      <br />
-      Now you screen {brand('them')}.
+      <span className={`block ${HOOK_PAIN}`}>
+        <span className="inline-block">{t.more}</span>{' '}
+        <span className="inline-block">
+          {t.silencePre}
+          <span className={instrumentSerif.className}>{t.silence}</span>
+          {t.silencePost}
+        </span>
+      </span>
+      <span className="block max-md:mt-[0.25em]">
+        <span className={`inline-block ${HOOK_TURN}`}>{t.stop}</span>{' '}
+        <span className={`inline-block ${HOOK_ACTION}`}>
+          {t.startPre}
+          <span className={HOOK_ACCENT}>{t.choose}</span>
+          {t.startPost}
+        </span>
+      </span>
     </>
-  ),
+  );
+}
+
+export const homeEn: HomeDict = {
+  heroHook: heroLine({
+    more: 'More applications.',
+    silencePre: 'More ',
+    silence: 'silence',
+    silencePost: '.',
+    stop: 'Stop guessing.',
+    startPre: 'Start ',
+    choose: 'choosing',
+    startPost: '.',
+  }),
   heroH1: (
     <>
       career-ops: open-source AI job search{'\u00a0'}agent.
@@ -363,13 +414,16 @@ export const homeEn: HomeDict = {
 };
 
 export const homeEs: HomeDict = {
-  heroHook: (
-    <>
-      Te filtran.
-      <br />
-      Ahora filtras {brand('tú')}.
-    </>
-  ),
+  heroHook: heroLine({
+    more: 'Más candidaturas.',
+    silencePre: 'Más ',
+    silence: 'silencio',
+    silencePost: '.',
+    stop: 'Deja de adivinar.',
+    startPre: 'Empieza a ',
+    choose: 'elegir',
+    startPost: '.',
+  }),
   heroH1: (
     <>
       career-ops: agente open source de búsqueda de empleo con{'\u00a0'}IA.
@@ -658,13 +712,18 @@ export const homeEs: HomeDict = {
 // (search-ops fanout-fr-2026-W30): the killer "career-ops postule-t-il à ma
 // place ?" and the privacy "Mes données restent-elles sur mon ordinateur ?".
 export const homeFr: HomeDict = {
-  heroHook: (
-    <>
-      On vous trie.
-      <br />
-      À {brand('vous')} de trier.
-    </>
-  ),
+  // FR pending native review (venture-ops): "Plus de silence" alone reads
+  // as "no more silence", hence "Encore plus de".
+  heroHook: heroLine({
+    more: 'Plus de candidatures.',
+    silencePre: 'Encore plus de\u00a0',
+    silence: 'silence',
+    silencePost: '.',
+    stop: 'Arrêtez de deviner.',
+    startPre: 'Commencez à\u00a0',
+    choose: 'choisir',
+    startPost: '.',
+  }),
   heroH1: (
     <>
       career-ops{'\u202f'}: agent open source de recherche d’emploi par{'\u00a0'}IA.
