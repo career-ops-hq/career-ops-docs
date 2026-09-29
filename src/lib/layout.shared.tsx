@@ -3,7 +3,7 @@ import { appName } from './shared';
 import { CoMark } from '@/components/co-mark';
 import { LanguageBar } from '@/components/language-bar';
 import { instrumentSerifRegular } from './fonts';
-import { GitHubStar, starHeaderClass } from '@/components/github-star';
+import { GitHubIconLink } from '@/components/github-icon-link';
 
 type Options = {
   // Drops the brand suffix — used by the docs layout where Fumadocs
@@ -44,21 +44,16 @@ export function baseOptions({ compact = false, locale = 'en' }: Options = {}): B
       enabled: true,
     },
     // Language button + browser-detection suggestion, both in the header.
-    // Then "Star on GitHub · N" to the FLAGSHIP repo, in the place Fumadocs'
-    // GitHub icon used to take (its `githubUrl` icon forces rel="noreferrer").
-    // The docs layouts are compact and put the same button in the sidebar
-    // footer instead, next to where the icon sat.
+    // Then the GitHub icon to the FLAGSHIP repo, where Fumadocs' `githubUrl`
+    // icon used to be and with the same look, as our own link so it does not
+    // carry rel="noreferrer". The "Star on GitHub" button lives in the hero
+    // and at the end of the Quick Start, not here. The docs layouts are
+    // compact and draw the icon in the sidebar row instead.
     links: [
-      { type: 'custom', secondary: true, children: <LanguageBar /> },
+      { type: 'custom', secondary: true, children: <LanguageBar compact={compact} /> },
       ...(compact
         ? []
-        : [
-            {
-              type: 'custom' as const,
-              secondary: true,
-              children: <GitHubStar placement="header" locale={locale} className={starHeaderClass} />,
-            },
-          ]),
+        : [{ type: 'custom' as const, secondary: true, children: <GitHubIconLink className="-mx-1" /> }]),
     ],
   };
 }
