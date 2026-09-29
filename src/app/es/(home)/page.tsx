@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
   title: 'career-ops: agente open source de búsqueda de empleo con IA',
   description:
-    'Sistema open source de búsqueda de empleo con IA. Se ejecuta en tu propia máquina, dentro del CLI de IA que ya usas. Evalúa ofertas, adapta tu CV y hace seguimiento de tus candidaturas. Sin cuenta, sin nube, gratis.',
+    'Sistema open source de búsqueda de empleo con IA. Se ejecuta en tu propia máquina, dentro del CLI de IA que ya usas. Evalúa ofertas, adapta tu CV y hace seguimiento de tus candidaturas. Sin cuenta, sin nube, open source.',
   alternates: {
     canonical: 'https://career-ops.org/es',
     languages: hreflangHome(),
