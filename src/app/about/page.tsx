@@ -8,7 +8,7 @@ import { aboutSchema } from '@/lib/schema';
 export const metadata: Metadata = {
   title: 'Santiago Fernández de Valderrama Aparicio · career-ops',
   description:
-    'Applied AI Operator. Built career-ops after evaluating 740 listings. 16+ years building products. Currently Head of Applied AI at Zinkee. Featured in WIRED, Business Insider.',
+    'Applied AI Operator. Built career-ops after evaluating 740 listings. 16+ years building products. Works on career-ops full time. Featured in WIRED, Business Insider.',
   alternates: { canonical: 'https://career-ops.org/about' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
@@ -88,11 +88,11 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Do you take feature requests?',
-    a: 'Yes — via GitHub issues and Discord. Triage is open. The pace is what one maintainer can sustain alongside a full-time role; release notes are honest about what shipped and what got cut.',
+    a: 'Yes — via GitHub issues and Discord. Triage is open. The pace is what one maintainer can sustain; release notes are honest about what shipped and what got cut.',
   },
   {
     q: 'Are you for hire?',
-    a: 'I am Head of Applied AI at Zinkee. I am not available for full-time roles. I occasionally take advisory engagements in the Applied AI / multi-agent space — reach me on email or LinkedIn if the fit is concrete.',
+    a: 'I work on career-ops full time. I occasionally take advisory engagements in the Applied AI / multi-agent space — reach me on email or LinkedIn if the fit is concrete.',
   },
   {
     q: 'Can I sponsor the project?',
@@ -130,7 +130,7 @@ export default function AboutPage() {
 
         {/* Bio — three short paragraphs focused on the creator role (not the
             full transversal persona which lives at santifer.io). Density vs
-            prose length traded toward facts: operator history, current role,
+            prose length traded toward facts: operator history, the job search,
             why career-ops exists. Manifesto blockquote sits between the
             history paragraph and the proof paragraph so the philosophy
             is anchored by both. */}
@@ -146,24 +146,15 @@ export default function AboutPage() {
               Santifer iRepair
             </a>{' '}
             in 2009, the largest mobile repair chain in southern Spain, automating it to 90%
-            self-service before selling in 2025. Now Head of Applied AI at{' '}
-            <a
-              href="https://zinkee.com"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
-            >
-              Zinkee
-            </a>{' '}
-            — designing the AI layer of an operations platform used by thousands of independent
-            shops across Spain.
+            self-service before selling in 2025.
           </p>
           <p>
             career-ops grew out of a personal job search in early 2026. After the exit, instead
             of spraying applications, he wrote a structured evaluator: five dimensions, a 1-5
             score, and a hard floor at 4.0 below which the system refuses to recommend applying.
             740 listings evaluated, 68 applications sent, 12 interview processes, one offer
-            signed. The funnel data lives at{' '}
+            signed: a Head of Applied AI role. Six months later he left that role to focus on
+            building career-ops full time. The funnel data lives at{' '}
             <Link
               href="/blog/job-search-data-from-740-listings"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
@@ -205,7 +196,7 @@ export default function AboutPage() {
             </a>
             , and is sustained as a sovereign-maintainer project: sponsorship funds maintenance, security fixes, releases, and documentation. The maintenance system
             itself — a fleet of Claude Code agents handling triage, tests, review briefs and
-            releases in about four hours a week — is documented end to end in{' '}
+            releases — is documented end to end in{' '}
             <a
               href="https://santifer.io/ai-agent-fleet"
               target="_blank"
@@ -411,7 +402,7 @@ export default function AboutPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-05-25">25 May 2026</time>
+          Last updated <time dateTime="2026-10-03">3 Oct 2026</time>
         </p>
       </article>
     </>

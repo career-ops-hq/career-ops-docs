@@ -313,8 +313,9 @@ export default async function PressPage() {
               Santiago Fernández de Valderrama Aparicio
             </strong>{' '}
             is an Applied AI Operator with 16+ years building and selling products. He founded
-            Santifer iRepair in 2009 and sold it in 2025; he is now Head of Applied AI at Zinkee.
-            He built career-ops during his own 2026 job search and open-sourced it under MIT. Full
+            Santifer iRepair in 2009 and sold it in 2025. He built career-ops during his own 2026
+            job search — it landed him a Head of Applied AI role — and open-sourced it under MIT.
+            Six months after landing that role, he left it to focus on building career-ops full time. Full
             bio, headshot, and entity links at{' '}
             <Link
               href="/about"
@@ -443,7 +444,7 @@ export default async function PressPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-07-15">15 Jul 2026</time>
+          Last updated <time dateTime="2026-10-03">3 Oct 2026</time>
         </p>
       </article>
     </>

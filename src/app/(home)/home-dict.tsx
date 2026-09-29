@@ -95,7 +95,7 @@ export const homeEn: HomeDict = {
   manifestoHref: '/manifesto',
   featuredIn: 'Featured in',
   memberOf: 'Member of',
-  authorTagline: ', 16-year operator and Head of Applied AI',
+  authorTagline: ', 16-year operator and creator of career-ops',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
   readIt: 'Read it →',
   whatIsHeading: (
@@ -289,11 +289,11 @@ export const homeEn: HomeDict = {
             Santiago Fernández de Valderrama Aparicio
           </a>{' '}
           — an Applied AI Operator with 16+ years building products, founder and
-          operator of a Spanish phone-repair business (2009–2025) before exiting,
-          and currently Head of Applied AI at Zinkee. He created career-ops in
-          early 2026 to manage his own AI-era job search — 740 listings
-          evaluated, one Head of AI role landed — and open-sourced it under MIT
-          once he no longer needed it.
+          operator of a Spanish phone-repair business (2009–2025) before exiting.
+          He created career-ops in early 2026 to manage his own AI-era job
+          search — 740 listings evaluated, one Head of Applied AI role landed —
+          and open-sourced it under MIT once he no longer needed it. Six months
+          after landing it, he left that role to focus on building career-ops full time.
         </>
       ),
     },
@@ -379,7 +379,7 @@ export const homeEs: HomeDict = {
   manifestoHref: '/es/manifesto',
   featuredIn: 'Apareció en',
   memberOf: 'Miembro de',
-  authorTagline: ', 16 años como operador y Head of Applied AI',
+  authorTagline: ', operador durante 16 años y creador de career-ops',
   // Versión «yo» oficial del README.es (superficie personal = home). El
   // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo
   // («descartarte») puede afinarse a «filtrar candidatos» — venture-ops lo cierra.
@@ -544,8 +544,8 @@ export const homeEs: HomeDict = {
           perfil y ejecutas el sistema en local con el CLI de IA que ya uses. La
           sostenibilidad viene del mecenazgo voluntario de la comunidad vía GitHub
           Sponsors — no de planes premium, funciones de pago ni datos. El
-          maintainer tiene otro trabajo remunerado; el patrocinio le permite
-          dedicarle más foco. Detalles en{' '}
+          patrocinio financia el mantenimiento, las correcciones de seguridad, la
+          publicación de nuevas versiones y la documentación. Detalles en{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>
@@ -577,11 +577,11 @@ export const homeEs: HomeDict = {
           </a>{' '}
           — un Applied AI Operator con más de 16 años construyendo productos,
           fundador y operador de un negocio español de reparación de móviles
-          (2009–2025) antes de su salida, y actualmente Head of Applied AI en
-          Zinkee. Creó career-ops a principios de 2026 para gestionar su propia
-          búsqueda de empleo en la era de la IA — 740 ofertas evaluadas, un puesto
-          de Head of AI conseguido — y lo publicó bajo licencia MIT cuando dejó de
-          necesitarlo.
+          (2009–2025) antes de su salida. Creó career-ops a principios de 2026
+          para gestionar su propia búsqueda de empleo en la era de la IA — 740
+          ofertas evaluadas, un puesto de Head of Applied AI conseguido — y lo
+          publicó bajo licencia MIT cuando ya no lo necesitaba. Seis meses después
+          de conseguirlo, dejó ese puesto para centrarse en construir career-ops a tiempo completo.
         </>
       ),
     },
@@ -672,7 +672,7 @@ export const homeFr: HomeDict = {
   manifestoHref: '/manifesto',
   featuredIn: 'Vu dans',
   memberOf: 'Membre de',
-  authorTagline: ', 16 ans d’opérateur et Head of Applied AI',
+  authorTagline: ', opérateur pendant 16 ans et créateur de career-ops',
   // No thesisTranslation for FR — the English thesis stands alone (venture-ops).
   nowSignedManifesto: <>Désormais un manifeste signé ·</>,
   readIt: 'À lire →',
@@ -849,9 +849,9 @@ export const homeFr: HomeDict = {
           le dépôt, configurez votre profil et lancez le système en local avec le
           CLI d’IA que vous utilisez déjà. La pérennité vient du mécénat
           volontaire de la communauté via GitHub Sponsors, pas d’offres premium,
-          de fonctionnalités payantes ou de données. Le mainteneur a un autre
-          travail rémunéré ; le parrainage lui permet de s’y consacrer davantage.
-          Détails sur{' '}
+          de fonctionnalités payantes ou de données. Le parrainage finance la
+          maintenance, les correctifs de sécurité, les nouvelles versions et la
+          documentation. Détails sur{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>
@@ -884,11 +884,12 @@ export const homeFr: HomeDict = {
           </a>{' '}
           — un Applied AI Operator avec plus de 16 ans à construire des produits,
           fondateur et exploitant d’une entreprise espagnole de réparation de
-          téléphones (2009–2025) avant sa revente, et actuellement Head of Applied
-          AI chez Zinkee. Il a créé career-ops début 2026 pour gérer sa propre
-          recherche d’emploi à l’ère de l’IA — 740 offres évaluées, un poste de
-          Head of AI décroché — et l’a publié sous licence MIT une fois qu’il
-          n’en avait plus besoin.
+          téléphones (2009–2025) avant sa revente. Il a créé career-ops début 2026
+          pour gérer sa propre recherche d’emploi à l’ère de l’IA — 740 offres
+          évaluées, un poste de Head of Applied AI décroché — et l’a publié sous
+          licence MIT une fois qu’il n’en avait plus besoin. Six mois après l’avoir
+          décroché, il a quitté ce poste pour se consacrer à plein temps au développement de
+          career-ops.
         </>
       ),
     },

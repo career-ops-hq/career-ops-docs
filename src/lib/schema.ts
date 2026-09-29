@@ -386,14 +386,7 @@ export async function siteSchema() {
         alternateName: ['Santiago Fernández de Valderrama', 'santifer', 'Santi'],
         url: 'https://santifer.io/about',
         image: 'https://santifer.io/foto-avatar.png',
-        jobTitle: 'Applied AI Operator',
-        worksFor: { '@type': 'Organization', name: 'Zinkee', url: 'https://zinkee.com' },
-        hasOccupation: {
-          '@type': 'Occupation',
-          name: 'Head of Applied AI',
-          occupationLocation: { '@type': 'Organization', name: 'Zinkee' },
-          skills: 'Applied AI, multi-agent orchestration, product strategy, open source maintenance',
-        },
+        jobTitle: 'Creator of career-ops',
         founderOf: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_PERSON_IDENTIFIER,
         sameAs: PERSON_SAMEAS,
@@ -1082,7 +1075,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-05-07T00:00:00Z',
+        dateModified: '2026-10-03T00:00:00Z',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
@@ -1117,7 +1110,7 @@ export function pressSchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-07-15T00:00:00Z',
+        dateModified: '2026-10-03T00:00:00Z',
         // Reference the canonical DefinedTerm node on /manifesto — never
         // duplicate the definition here.
         mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },
