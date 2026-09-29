@@ -92,7 +92,6 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         />
         <div className="flex flex-col z-2 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
           <p
-            aria-hidden="true"
             className={`${instrumentSerifRegular.className} text-5xl mt-12 mb-6 leading-[1.05] xl:text-7xl xl:mb-8`}
           >
             {dict.heroHook}
@@ -232,6 +231,13 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               <p className="text-base md:text-lg leading-[1.7] text-fd-foreground/90">
                 {dict.whatIsBody}
               </p>
+              {dict.worthApplyingLabel && dict.worthApplyingHref && (
+                <p className="mt-5">
+                  <Link href={dict.worthApplyingHref} className="text-sm font-medium text-brand-text hover:underline underline-offset-2">
+                    {dict.worthApplyingLabel}
+                  </Link>
+                </p>
+              )}
               <p className="font-mono text-xs text-fd-muted-foreground mt-8 tracking-wide">
                 <span className="text-fd-foreground/40">{'//'}</span>{' '}
                 <span className="mr-1">{formatK(stats.stars)}</span>{dict.statsComment}

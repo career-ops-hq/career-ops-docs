@@ -29,6 +29,10 @@ export type HomeDict = {
   featuredIn: string;
   // Label for the Vercel Open Source Program badge, a separate group from the press.
   memberOf: string;
+  // One line under the "What is career-ops?" text, to the guide on judging a
+  // job before applying. Absent where that guide has no translation (fr).
+  worthApplyingLabel?: string;
+  worthApplyingHref?: string;
   authorTagline: string;
   // Official localized rendering of the signature thesis, shown BELOW the
   // literal-English blockquote (which stays verbatim on every locale, it is the
@@ -75,9 +79,9 @@ const brand = (t: ReactNode) => <span className="text-brand">{t}</span>;
 export const homeEn: HomeDict = {
   heroHook: (
     <>
-      You got the job,
+      They screen you.
       <br />
-      and it didn&apos;t cost you a {brand('thing')}.
+      Now you screen {brand('them')}.
     </>
   ),
   heroH1: (
@@ -95,6 +99,8 @@ export const homeEn: HomeDict = {
   manifestoHref: '/manifesto',
   featuredIn: 'Featured in',
   memberOf: 'Member of',
+  worthApplyingLabel: 'How to tell if a job is worth applying to →',
+  worthApplyingHref: '/docs/introduction/guides/is-this-job-worth-applying-to',
   authorTagline: ', 16-year operator and creator of career-ops',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
   readIt: 'Read it →',
@@ -359,9 +365,9 @@ export const homeEn: HomeDict = {
 export const homeEs: HomeDict = {
   heroHook: (
     <>
-      Conseguiste el trabajo,
+      Te filtran.
       <br />
-      y no te costó {brand('nada')}.
+      Ahora filtras {brand('tú')}.
     </>
   ),
   heroH1: (
@@ -379,6 +385,8 @@ export const homeEs: HomeDict = {
   manifestoHref: '/es/manifesto',
   featuredIn: 'Apareció en',
   memberOf: 'Miembro de',
+  worthApplyingLabel: 'Cómo saber si una oferta merece tu candidatura →',
+  worthApplyingHref: '/es/docs/introduction/guides/is-this-job-worth-applying-to',
   authorTagline: ', operador durante 16 años y creador de career-ops',
   // Versión «yo» oficial del README.es (superficie personal = home). El
   // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo
@@ -652,9 +660,9 @@ export const homeEs: HomeDict = {
 export const homeFr: HomeDict = {
   heroHook: (
     <>
-      Vous avez décroché le poste,
+      On vous trie.
       <br />
-      et ça ne vous a {brand('rien')} coûté.
+      À {brand('vous')} de trier.
     </>
   ),
   heroH1: (
