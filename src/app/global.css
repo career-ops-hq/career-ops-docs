@@ -3,6 +3,9 @@
 @import 'fumadocs-ui/css/preset.css';
 
 @theme {
+  /* Code and terminal-like lines: Geist Mono (loaded in layout.tsx). */
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
   /* Brand — light mode */
   --color-brand: hsl(26, 73%, 51%);
   /* Text/icon color ON brand surfaces. White measured 3.13:1 on the
