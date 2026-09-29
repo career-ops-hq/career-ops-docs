@@ -34,10 +34,21 @@ const windowArg = args.includes('--window')
   : '30d';
 const dryRun = args.includes('--dry-run');
 
+// The team comes from `vercel link` (.vercel/project.json), not from the CLI's
+// current team: on 2026-09-29 the project moved to another Vercel team and
+// `-p` alone resolved against the old one (PROJECT_NOT_FOUND).
+const SCOPE = (() => {
+  try {
+    return JSON.parse(readFileSync(path.join(ROOT, '.vercel', 'project.json'), 'utf8')).orgId;
+  } catch {
+    return null;
+  }
+})();
+
 function metrics(extra = []) {
   const out = execFileSync(
     'vercel',
-    ['metrics', METRIC, '-p', PROJECT, '--since', windowArg, '-F', 'json', ...extra],
+    ['metrics', METRIC, '-p', PROJECT, ...(SCOPE ? ['--scope', SCOPE] : []), '--since', windowArg, '-F', 'json', ...extra],
     { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 },
   );
   return JSON.parse(out.slice(out.indexOf('{')));
