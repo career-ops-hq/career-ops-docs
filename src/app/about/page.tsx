@@ -402,7 +402,7 @@ export default function AboutPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-10-03">3 Oct 2026</time>
+          Last updated <time dateTime="2026-09-29">29 Sep 2026</time>
         </p>
       </article>
     </>

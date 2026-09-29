@@ -725,7 +725,7 @@ export function sustainSchema() {
         description:
           'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
         inLanguage: 'en',
-        dateModified: '2026-10-03T00:00:00Z',
+        dateModified: '2026-09-29T00:00:00Z',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         significantLink: 'https://github.com/sponsors/santifer',
@@ -1043,7 +1043,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-10-03T00:00:00Z',
+        dateModified: '2026-09-29T00:00:00Z',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
@@ -1078,7 +1078,7 @@ export function pressSchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-10-03T00:00:00Z',
+        dateModified: '2026-09-29T00:00:00Z',
         // Reference the canonical DefinedTerm node on /manifesto — never
         // duplicate the definition here.
         mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },
