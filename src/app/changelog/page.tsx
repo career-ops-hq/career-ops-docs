@@ -100,7 +100,7 @@ export default async function ChangelogPage() {
             from{' '}
             <a
               href="https://github.com/career-ops-hq/career-ops/releases"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="text-fd-foreground underline underline-offset-2"
             >
               GitHub Releases
@@ -123,7 +123,7 @@ export default async function ChangelogPage() {
             full career-ops release history on{' '}
             <a
               href="https://github.com/career-ops-hq/career-ops/releases"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="text-fd-foreground underline underline-offset-2"
             >
               GitHub Releases
@@ -140,7 +140,7 @@ export default async function ChangelogPage() {
                   >
                     <a
                       href={release.url}
-                      rel="noreferrer noopener"
+                      rel="noopener"
                       className="hover:underline underline-offset-4"
                     >
                       {release.version}

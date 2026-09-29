@@ -92,7 +92,7 @@ function stripJsx(md: string): string {
     .replace(/<summary>([\s\S]*?)<\/summary>/g, (_m, t) => `**${t.trim()}**`)
     .replace(/<Callout\b[^>]*?\btitle="([^"]*)"[^>]*>/g, '> **$1**')
     .replace(
-      /<\/?(?:div|Tabs|Steps|Accordions|Tab|Step|Accordion|Callout|details|Files?|Folder)\b[^>]*>/g,
+      /<\/?(?:div|Tabs|Steps|Accordions|Tab|Step|Accordion|Callout|details|Files?|Folder|StarOnGitHub)\b[^>]*>/g,
       '',
     );
 

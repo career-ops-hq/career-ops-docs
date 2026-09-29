@@ -51,7 +51,7 @@ export default function SustainPage() {
               &ldquo;auto-apply&rdquo; pull request with an explanation rather than silence.
               If career-ops saved you hours of spreadsheet work, surfaced a job interview,
               or just clarified what AI-augmented work looks like &mdash; and you have spare
-              income &mdash; sustaining the maintainer is how you keep that work moving.
+              income &mdash; sponsoring the project is how you keep that work moving.
               Same five-star rubric. Same anti-spray-and-pray philosophy. Same MIT license.
               Just more depth.
             </p>
@@ -225,7 +225,7 @@ export default function SustainPage() {
         </p>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-09-06">6 September 2026</time>
+          Last updated <time dateTime="2026-10-03">3 October 2026</time>
         </p>
       </article>
     </>

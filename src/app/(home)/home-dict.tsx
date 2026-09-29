@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { instrumentSerif } from '@/lib/fonts';
 
 // Home copy dictionary — one trunk, text varies by language. The home
 // component renders IDENTICAL structure/widgets for every locale; only
@@ -16,7 +17,8 @@ export type HomeDict = {
   heroHook: ReactNode;
   heroH1: ReactNode;
   runItNow: string;
-  viewSource: string;
+  // Page language, for the star button's click event (its label stays English).
+  locale: 'en' | 'es' | 'fr';
   // Locale-aware destination for the "get started" / docs CTAs: EN '/docs',
   // ES '/es/docs'. Keeps the Spanish home sending users into the Spanish docs
   // (which now has a translated landing) instead of dropping them into English.
@@ -26,6 +28,12 @@ export type HomeDict = {
   // manifesto, not drop them into the English one.
   manifestoHref: string;
   featuredIn: string;
+  // Label for the Vercel Open Source Program badge, a separate group from the press.
+  memberOf: string;
+  // One line under the "What is career-ops?" text, to the guide on judging a
+  // job before applying. Absent where that guide has no translation (fr).
+  worthApplyingLabel?: string;
+  worthApplyingHref?: string;
   authorTagline: string;
   // Official localized rendering of the signature thesis, shown BELOW the
   // literal-English blockquote (which stays verbatim on every locale, it is the
@@ -69,29 +77,83 @@ export type HomeDict = {
 
 const brand = (t: ReactNode) => <span className="text-brand">{t}</span>;
 
-export const homeEn: HomeDict = {
-  heroHook: (
+// Hero line (decided by Santiago, 29-sep): the rival is the process, volume
+// and silence, never the companies. Same size and weight throughout; the
+// hierarchy comes only from colour, in three steps (venture-ops spec V6 +
+// V7a, ratios in consultas/tipografia-mensaje-2026-09-29): the pain in cool
+// grey, the turn ("Stop guessing") in olive, the action in full ink, with
+// one orange word. "silence" is set in the real Instrument Serif Italic
+// (font-synthesis is off on the parent, so a missing face stays upright
+// instead of being slanted by the browser). Each sentence is inline-block,
+// so the line only breaks between sentences: two lines on wide screens,
+// four on phones.
+const HOOK_PAIN = 'text-[#6b7280] dark:text-[#8a8f98]';
+const HOOK_TURN = 'text-[#59592a] dark:text-[#b7af7e]';
+const HOOK_ACTION = 'text-[#26261a] dark:text-[#e4e2d0]';
+const HOOK_ACCENT = 'text-[#a55212] dark:text-[#dd7627]';
+
+function heroLine(t: {
+  more: string;
+  silencePre: string;
+  silence: string;
+  silencePost: string;
+  stop: string;
+  startPre: string;
+  choose: string;
+  startPost: string;
+}): ReactNode {
+  return (
     <>
-      You got the job,
-      <br />
-      and it didn&apos;t cost you a {brand('thing')}.
+      <span className={`block ${HOOK_PAIN}`}>
+        <span className="inline-block">{t.more}</span>{' '}
+        <span className="inline-block">
+          {t.silencePre}
+          <span className={instrumentSerif.className}>{t.silence}</span>
+          {t.silencePost}
+        </span>
+      </span>
+      <span className="block max-md:mt-[0.25em]">
+        <span className={`inline-block ${HOOK_TURN}`}>{t.stop}</span>{' '}
+        <span className={`inline-block ${HOOK_ACTION}`}>
+          {t.startPre}
+          <span className={HOOK_ACCENT}>{t.choose}</span>
+          {t.startPost}
+        </span>
+      </span>
     </>
-  ),
+  );
+}
+
+export const homeEn: HomeDict = {
+  heroHook: heroLine({
+    more: 'More applications.',
+    silencePre: 'More ',
+    silence: 'silence',
+    silencePost: '.',
+    stop: 'Stop guessing.',
+    startPre: 'Start ',
+    choose: 'choosing',
+    startPost: '.',
+  }),
   heroH1: (
     <>
       career-ops: open-source AI job search{'\u00a0'}agent.
       <br />
       Runs in your CLI. Your data, your machine.
       <br />
-      It never applies in your name.
+      It tailors your CV and drafts your answers.{' '}
+      <span className="inline-block">You press Submit.</span>
     </>
   ),
   runItNow: 'Run it now',
-  viewSource: 'View source',
+  locale: 'en',
   docsHref: '/docs',
   manifestoHref: '/manifesto',
   featuredIn: 'Featured in',
-  authorTagline: ', 16-year operator and Head of Applied AI',
+  memberOf: 'Member of',
+  worthApplyingLabel: 'How to tell if a job is worth applying to →',
+  worthApplyingHref: '/docs/introduction/guides/is-this-job-worth-applying-to',
+  authorTagline: ', 16-year operator and creator of career-ops',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
   readIt: 'Read it →',
   whatIsHeading: (
@@ -169,7 +231,7 @@ export const homeEn: HomeDict = {
   featScanBody: (
     <>
       Pre-configured scrapers check{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150+ job sources</a> on demand, Greenhouse, Ashby and Lever
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150+ job sources</a> on demand, Greenhouse, Ashby and Lever
       among them — zero API tokens spent. Run{' '}
       <code className="font-mono text-brand">/career-ops scan</code> and get a
       ranked list back in minutes.
@@ -285,11 +347,11 @@ export const homeEn: HomeDict = {
             Santiago Fernández de Valderrama Aparicio
           </a>{' '}
           — an Applied AI Operator with 16+ years building products, founder and
-          operator of a Spanish phone-repair business (2009–2025) before exiting,
-          and currently Head of Applied AI at Zinkee. He created career-ops in
-          early 2026 to manage his own AI-era job search — 740 listings
-          evaluated, one Head of AI role landed — and open-sourced it under MIT
-          once he no longer needed it.
+          operator of a Spanish phone-repair business (2009–2025) before exiting.
+          He created career-ops in early 2026 to manage his own AI-era job
+          search — 740 listings evaluated, one Head of Applied AI role landed —
+          and open-sourced it under MIT once he no longer needed it. Six months
+          after landing it, he left that role to focus on building career-ops full time.
         </>
       ),
     },
@@ -353,28 +415,35 @@ export const homeEn: HomeDict = {
 };
 
 export const homeEs: HomeDict = {
-  heroHook: (
-    <>
-      Conseguiste el trabajo,
-      <br />
-      y no te costó {brand('nada')}.
-    </>
-  ),
+  heroHook: heroLine({
+    more: 'Más candidaturas.',
+    silencePre: 'Más ',
+    silence: 'silencio',
+    silencePost: '.',
+    stop: 'Deja de adivinar.',
+    startPre: 'Empieza a ',
+    choose: 'elegir',
+    startPost: '.',
+  }),
   heroH1: (
     <>
       career-ops: agente open source de búsqueda de empleo con{'\u00a0'}IA.
       <br />
       Se ejecuta en tu CLI. Tus datos, tu máquina.
       <br />
-      Nunca envía una candidatura en tu nombre.
+      Adapta tu CV y redacta tus respuestas.{' '}
+      <span className="inline-block">Tú pulsas Enviar.</span>
     </>
   ),
   runItNow: 'Empezar ahora',
-  viewSource: 'Ver el código',
+  locale: 'es',
   docsHref: '/es/docs',
   manifestoHref: '/es/manifesto',
   featuredIn: 'Apareció en',
-  authorTagline: ', 16 años como operador y Head of Applied AI',
+  memberOf: 'Miembro de',
+  worthApplyingLabel: 'Cómo saber si una oferta merece tu candidatura →',
+  worthApplyingHref: '/es/docs/introduction/guides/is-this-job-worth-applying-to',
+  authorTagline: ', operador durante 16 años y creador de career-ops',
   // Versión «yo» oficial del README.es (superficie personal = home). El
   // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo
   // («descartarte») puede afinarse a «filtrar candidatos» — venture-ops lo cierra.
@@ -459,7 +528,7 @@ export const homeEs: HomeDict = {
   featScanBody: (
     <>
       Scrapers preconfigurados revisan{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">más de 150 fuentes de empleo</a> bajo demanda, entre ellas
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">más de 150 fuentes de empleo</a> bajo demanda, entre ellas
       Greenhouse, Ashby y Lever — cero tokens de API. Ejecuta{' '}
       <code className="font-mono text-brand">/career-ops scan</code> y recibe una
       lista priorizada en minutos.
@@ -539,8 +608,8 @@ export const homeEs: HomeDict = {
           perfil y ejecutas el sistema en local con el CLI de IA que ya uses. La
           sostenibilidad viene del mecenazgo voluntario de la comunidad vía GitHub
           Sponsors — no de planes premium, funciones de pago ni datos. El
-          maintainer tiene otro trabajo remunerado; el patrocinio le permite
-          dedicarle más foco. Detalles en{' '}
+          patrocinio financia el mantenimiento, las correcciones de seguridad, la
+          publicación de nuevas versiones y la documentación. Detalles en{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>
@@ -572,11 +641,11 @@ export const homeEs: HomeDict = {
           </a>{' '}
           — un Applied AI Operator con más de 16 años construyendo productos,
           fundador y operador de un negocio español de reparación de móviles
-          (2009–2025) antes de su salida, y actualmente Head of Applied AI en
-          Zinkee. Creó career-ops a principios de 2026 para gestionar su propia
-          búsqueda de empleo en la era de la IA — 740 ofertas evaluadas, un puesto
-          de Head of AI conseguido — y lo publicó bajo licencia MIT cuando dejó de
-          necesitarlo.
+          (2009–2025) antes de su salida. Creó career-ops a principios de 2026
+          para gestionar su propia búsqueda de empleo en la era de la IA — 740
+          ofertas evaluadas, un puesto de Head of Applied AI conseguido — y lo
+          publicó bajo licencia MIT cuando ya no lo necesitaba. Seis meses después
+          de conseguirlo, dejó ese puesto para centrarse en construir career-ops a tiempo completo.
         </>
       ),
     },
@@ -645,28 +714,35 @@ export const homeEs: HomeDict = {
 // (search-ops fanout-fr-2026-W30): the killer "career-ops postule-t-il à ma
 // place ?" and the privacy "Mes données restent-elles sur mon ordinateur ?".
 export const homeFr: HomeDict = {
-  heroHook: (
-    <>
-      Vous avez décroché le poste,
-      <br />
-      et ça ne vous a {brand('rien')} coûté.
-    </>
-  ),
+  // FR pending native review (venture-ops): "Plus de silence" alone reads
+  // as "no more silence", hence "Encore plus de".
+  heroHook: heroLine({
+    more: 'Plus de candidatures.',
+    silencePre: 'Encore plus de\u00a0',
+    silence: 'silence',
+    silencePost: '.',
+    stop: 'Arrêtez de deviner.',
+    startPre: 'Commencez à\u00a0',
+    choose: 'choisir',
+    startPost: '.',
+  }),
   heroH1: (
     <>
       career-ops{'\u202f'}: agent open source de recherche d’emploi par{'\u00a0'}IA.
       <br />
       Il tourne dans votre CLI. Vos données, votre{'\u00a0'}machine.
       <br />
-      Il ne postule jamais en votre nom.
+      Il adapte votre CV et rédige vos réponses.{' '}
+      <span className="inline-block">Vous cliquez sur Envoyer.</span>
     </>
   ),
   runItNow: 'Commencer',
-  viewSource: 'Voir le code',
+  locale: 'fr',
   docsHref: '/fr/docs',
   manifestoHref: '/manifesto',
   featuredIn: 'Vu dans',
-  authorTagline: ', 16 ans d’opérateur et Head of Applied AI',
+  memberOf: 'Membre de',
+  authorTagline: ', opérateur pendant 16 ans et créateur de career-ops',
   // No thesisTranslation for FR — the English thesis stands alone (venture-ops).
   nowSignedManifesto: <>Désormais un manifeste signé ·</>,
   readIt: 'À lire →',
@@ -749,7 +825,7 @@ export const homeFr: HomeDict = {
   featScanBody: (
     <>
       Des scrapers préconfigurés parcourent{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">plus de 150 sources d’emploi</a> à la demande, dont
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">plus de 150 sources d’emploi</a> à la demande, dont
       Greenhouse, Ashby et Lever — zéro jeton d’API. Lancez{' '}
       <code className="font-mono text-brand">/career-ops scan</code> et recevez
       une liste priorisée en quelques minutes.
@@ -843,9 +919,9 @@ export const homeFr: HomeDict = {
           le dépôt, configurez votre profil et lancez le système en local avec le
           CLI d’IA que vous utilisez déjà. La pérennité vient du mécénat
           volontaire de la communauté via GitHub Sponsors, pas d’offres premium,
-          de fonctionnalités payantes ou de données. Le mainteneur a un autre
-          travail rémunéré ; le parrainage lui permet de s’y consacrer davantage.
-          Détails sur{' '}
+          de fonctionnalités payantes ou de données. Le parrainage finance la
+          maintenance, les correctifs de sécurité, les nouvelles versions et la
+          documentation. Détails sur{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>
@@ -878,11 +954,12 @@ export const homeFr: HomeDict = {
           </a>{' '}
           — un Applied AI Operator avec plus de 16 ans à construire des produits,
           fondateur et exploitant d’une entreprise espagnole de réparation de
-          téléphones (2009–2025) avant sa revente, et actuellement Head of Applied
-          AI chez Zinkee. Il a créé career-ops début 2026 pour gérer sa propre
-          recherche d’emploi à l’ère de l’IA — 740 offres évaluées, un poste de
-          Head of AI décroché — et l’a publié sous licence MIT une fois qu’il
-          n’en avait plus besoin.
+          téléphones (2009–2025) avant sa revente. Il a créé career-ops début 2026
+          pour gérer sa propre recherche d’emploi à l’ère de l’IA — 740 offres
+          évaluées, un poste de Head of Applied AI décroché — et l’a publié sous
+          licence MIT une fois qu’il n’en avait plus besoin. Six mois après l’avoir
+          décroché, il a quitté ce poste pour se consacrer à plein temps au développement de
+          career-ops.
         </>
       ),
     },

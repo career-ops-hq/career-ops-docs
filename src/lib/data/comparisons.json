@@ -553,7 +553,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Browser extension that hijacks your active session. Resume and profile stored cloud-side."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-03",
       "heroImage": "/og/compare/career-ops-vs-lazyapply.jpg",
       "intro": "LazyApply is the explicit auto-apply tool — it physically clicks Easy Apply buttons on LinkedIn and Indeed for you, hundreds of times per day. career-ops is the opposite posture: filter aggressively, tailor every application, draft each portal form, and the candidate clicks submit. Two philosophies, very different outcomes.",
       "features": [
@@ -636,7 +636,7 @@
         },
         {
           "q": "What is the actual difference in outcome?",
-          "a": "Real numbers from the maintainer's own search in early 2026 using career-ops: 740 listings evaluated, 68 applications submitted (all tailored, all with pre-apply drafting), one offer accepted (Head of Applied AI at Zinkee). LazyApply at the Ultimate tier could have submitted 4,500+ applications in the same period with comparable outcomes for senior roles. The funnel shape is opposite."
+          "a": "Real numbers from the maintainer's own search in early 2026 using career-ops: 740 listings evaluated, 68 applications submitted (all tailored, all with pre-apply drafting), one offer accepted (a Head of Applied AI role). LazyApply at the Ultimate tier could have submitted 4,500+ applications in the same period with comparable outcomes for senior roles. The funnel shape is opposite."
         }
       ],
       "directAnswer": "LazyApply clicks Easy Apply buttons for you — hundreds of near-identical applications per day. career-ops explicitly rejects that model: it never auto-submits. It scores each listing against your profile first, tailors a CV for the ones worth pursuing, and leaves the final click to you. Volume automation versus decision automation is the entire difference."

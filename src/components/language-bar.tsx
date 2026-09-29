@@ -116,11 +116,13 @@ function detectLocale(): Code {
   return 'en';
 }
 
-// The banner speaks the TARGET language — the reader may not read the page's.
-const BANNER: Record<Code, { message: string; prefix: string }> = {
-  en: { message: 'This site is available in English', prefix: 'Switch to' },
-  es: { message: 'Este sitio está disponible en español', prefix: 'Cambiar a' },
-  fr: { message: 'Ce site est disponible en français', prefix: 'Passer en' },
+// The suggestion speaks the TARGET language — the reader may not read the
+// page's. The link says what it does ("View in English"); the question is the
+// optional lead-in, shown only where the header has room for it.
+const BANNER: Record<Code, { question: string; cta: string }> = {
+  en: { question: 'Prefer English?', cta: 'View in English' },
+  es: { question: '¿Prefieres español?', cta: 'Ver en español' },
+  fr: { question: 'Vous préférez le français ?', cta: 'Voir en français' },
 };
 
 /**
@@ -162,11 +164,12 @@ function useLanguageBanner(target: Code, mismatch: boolean) {
   return { showBanner: visible, dismiss, animate: visible && firstAppearance.current };
 }
 
-export function LanguageBar() {
+// `compact`: never show the sentence, only the switch link. The docs layouts
+// render the bar in the narrow sidebar, where the sentence could only wrap.
+export function LanguageBar({ compact = false }: { compact?: boolean }) {
   const pathname = usePathname() || '/';
   const current = localeOf(pathname);
   const base = baseOf(pathname);
-  const others = LOCALES.filter((l) => l.code !== current);
 
   // Client-only: don't render the detection banner during SSR (hydration).
   const [mounted, setMounted] = useState(false);
@@ -175,57 +178,67 @@ export function LanguageBar() {
   const mismatch = mounted && target !== current;
   const { showBanner, dismiss, animate } = useLanguageBanner(target, mismatch);
 
-  const CurrentFlag = FLAG[current];
   const TargetFlag = FLAG[target];
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className={compact ? 'flex flex-col items-start gap-2' : 'flex items-center gap-2'}>
       {mounted && showBanner && (
         <div
-          className={`flex items-center gap-2 text-sm${animate ? ' animate-in fade-in slide-in-from-right-2 duration-500' : ''}`}
+          // Between 1024 and 1100px the header has no room for it next to
+          // search, theme and the switcher, which stays available.
+          className={`inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full border border-brand/30 bg-brand/5 ps-3 pe-1.5 text-sm${compact ? '' : ' lg:max-[1099px]:hidden'}${animate ? ' animate-in fade-in slide-in-from-right-2 duration-500' : ''}`}
         >
-          <span className="hidden lg:inline text-fd-muted-foreground">
-            {BANNER[target].message}
+          <span className={compact ? 'hidden' : 'hidden xl:inline text-fd-muted-foreground'}>
+            {BANNER[target].question}
           </span>
           <Link
             href={localeUrl(base, target)}
             onClick={dismiss}
-            className="inline-flex items-center gap-1 font-medium text-brand hover:text-brand-200 transition-colors"
+            className="inline-flex items-center gap-1.5 font-medium text-brand-text hover:underline"
           >
-            {BANNER[target].prefix}
-            <TargetFlag className="w-3.5 h-3.5 mx-0.5" />
-            {LOCALES.find((l) => l.code === target)!.label}
+            <TargetFlag className="w-3.5 h-3.5" />
+            {BANNER[target].cta}
           </Link>
           <button
             onClick={dismiss}
             aria-label="Dismiss"
-            className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+            className="inline-flex size-5 items-center justify-center rounded-full text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-foreground transition-colors"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-3 h-3" />
           </button>
         </div>
       )}
-      {/* Switcher: current locale (highlighted) + a link per other locale. */}
-      <div className="inline-flex items-center gap-1 h-8 px-2 rounded-full border bg-fd-card text-sm">
-        <CurrentFlag className="w-3.5 h-3.5" />
-        <span className="font-medium text-fd-foreground">
-          {LOCALES.find((l) => l.code === current)!.label}
-        </span>
-        {others.map((l) => {
+      {/* Switcher: the three languages in a fixed order, the current one
+          highlighted as the selected segment (not a link). */}
+      <nav aria-label="Language" className="inline-flex h-8 items-center gap-0.5 rounded-full border bg-fd-card p-0.5 text-sm">
+        {LOCALES.map((l) => {
           const Flag = FLAG[l.code];
-          return (
+          const inner = (
+            <>
+              <Flag className="w-3.5 h-3.5" />
+              {l.label}
+            </>
+          );
+          return l.code === current ? (
+            <span
+              key={l.code}
+              aria-current="true"
+              className="inline-flex h-full items-center gap-1 rounded-full bg-fd-accent px-2 font-medium text-fd-foreground"
+            >
+              {inner}
+            </span>
+          ) : (
             <Link
               key={l.code}
               href={localeUrl(base, l.code)}
               aria-label={`Switch language to ${l.label}`}
-              className="inline-flex items-center gap-1 pl-1.5 ml-0.5 border-l border-fd-border text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+              className="inline-flex h-full items-center gap-1 rounded-full px-2 text-fd-muted-foreground hover:bg-fd-accent/60 hover:text-fd-foreground transition-colors"
             >
-              <Flag className="w-3.5 h-3.5" />
-              {l.label}
+              {inner}
             </Link>
           );
         })}
-      </div>
+      </nav>
     </div>
   );
 }

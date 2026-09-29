@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
 import { blogSource } from '@/lib/blog-source';
 import { gitLastMod } from '@/lib/git-date';
+import { homeLastModified } from '@/lib/home-date';
 import comparisonsData from '@/lib/data/comparisons.json';
 import { getChangelog } from '@/lib/releases';
 
@@ -27,11 +28,6 @@ const gdMax = (...relPaths: string[]): Date | undefined => {
     .filter((d): d is Date => d != null);
   return dates.length ? new Date(Math.max(...dates.map((d) => d.getTime()))) : undefined;
 };
-const HOME_CONTENT = [
-  'src/app/(home)/home-dict.tsx',
-  'src/app/(home)/home-content.tsx',
-  'src/app/(home)/page.client.tsx',
-];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Real publication date of the newest career-ops release (the `web-*`
@@ -45,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/`,
-      lastModified: gdMax('src/app/(home)/page.tsx', ...HOME_CONTENT),
+      lastModified: homeLastModified('en'),
     },
     {
       url: `${SITE_URL}/about`,
@@ -153,12 +149,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   };
   entries.push({
     url: `${SITE_URL}/es`,
-    lastModified: gdMax('src/app/es/(home)/page.tsx', ...HOME_CONTENT),
+    lastModified: homeLastModified('es'),
     alternates: { languages: homeCluster },
   });
   entries.push({
     url: `${SITE_URL}/fr`,
-    lastModified: gdMax('src/app/fr/(home)/page.tsx', ...HOME_CONTENT),
+    lastModified: homeLastModified('fr'),
     alternates: { languages: homeCluster },
   });
 
