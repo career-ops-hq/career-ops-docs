@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     url: 'https://career-ops.org/es',
     siteName: 'career-ops',
     locale: 'es_ES',
-    title: 'career-ops: agente open source de búsqueda de empleo con IA',
+    title: 'Más candidaturas. Más silencio. Deja de adivinar. Empieza a elegir. | career-ops',
     description:
       'Sistema open source de búsqueda de empleo con IA. Se ejecuta en tu CLI. Tus datos, tu máquina.',
   },
