@@ -55,6 +55,8 @@ const config = {
     // the file has to be traced into the bundle or the route 500s at runtime
     // while the build stays green.
     '/opengraph-image': ['./src/app/(home)/*.ttf'],
+    '/es/opengraph-image': ['./src/app/(home)/*.ttf'],
+    '/fr/opengraph-image': ['./src/app/(home)/*.ttf'],
     '/manifesto/s/[username]/opengraph-image': [
       './src/app/manifesto/s/[username]/*.ttf',
     ],

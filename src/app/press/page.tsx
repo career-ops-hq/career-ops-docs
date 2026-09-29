@@ -61,7 +61,7 @@ const PRESS = [
 
 // Downloadable brand assets. The "co" mark ships as a static SVG
 // (public/bimi-logo.svg) and a 180px PNG (the /apple-icon route). The
-// social banner is the 2400×1339 OG image. All same-origin so the
+// social banner is the 1200×630 OG image. All same-origin so the
 // download attribute works without CORS.
 const ASSETS = [
   {
@@ -77,7 +77,7 @@ const ASSETS = [
     download: 'career-ops-logo.png',
   },
   {
-    label: 'Social banner (JPG, 2400×1339)',
+    label: 'Social banner (JPG, 1200×630)',
     href: '/og-banner.jpg',
     note: 'Open Graph card. Use for article headers and link previews.',
     download: 'career-ops-banner.jpg',

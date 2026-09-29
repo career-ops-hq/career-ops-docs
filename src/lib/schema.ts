@@ -1099,8 +1099,8 @@ export function pressSchema() {
         url: 'https://career-ops.org/og-banner.jpg',
         caption: 'career-ops social banner',
         encodingFormat: 'image/jpeg',
-        width: '2400',
-        height: '1339',
+        width: '1200',
+        height: '630',
       },
       {
         '@type': 'BreadcrumbList',

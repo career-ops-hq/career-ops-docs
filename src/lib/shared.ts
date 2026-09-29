@@ -122,12 +122,14 @@ export const LATEST_RELEASE_FALLBACK = 'career-ops-v1.31.0';
 // Default share image for pages without one of their own. In Next's metadata a
 // page that declares its own openGraph object replaces the layout's entirely,
 // images included, so every page that set a title and description for sharing
-// was silently shipping without a picture: /about, /sustain, the blog, the
-// Spanish and French homes. This is the same README banner the home card is
-// built from, served at a stable URL.
+// was silently shipping without a picture: /about, /sustain, the blog. Since
+// 29-sep it is the English home card (src/lib/og-hero.tsx) exported to a JPEG
+// at a stable URL; the old README banner carried "You got the job. And it
+// didn't cost you a thing." in its pixels. Regenerate it if the hero line
+// changes. The homes (en, es, fr) render their own card.
 export const DEFAULT_OG_IMAGE = {
   url: 'https://career-ops.org/og-banner.jpg',
-  width: 2400,
-  height: 1339,
-  alt: 'career-ops — open-source AI job search',
+  width: 1200,
+  height: 630,
+  alt: 'career-ops — They screen you. Now you screen them.',
 };

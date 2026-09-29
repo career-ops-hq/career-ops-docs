@@ -5,8 +5,8 @@ export const runtime = 'nodejs';
 export const size = ogSize;
 // PNG keeps the serif crisp when LinkedIn / X / Slack re-compress the card.
 export const contentType = 'image/png';
-export const alt = ogAlt.en;
+export const alt = ogAlt.fr;
 
 export default function OG() {
-  return heroOgImage('en');
+  return heroOgImage('fr');
 }
