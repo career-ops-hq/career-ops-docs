@@ -128,29 +128,6 @@ const SOFTWARE_SUBJECT_OF = [
     ],
   },
   {
-    '@type': 'DiscussionForumPosting',
-    url: 'https://www.reddit.com/r/SideProject/comments/1rw1lg4/i_automated_my_job_search_with_ai_agents_516/',
-    headline:
-      'I automated my job search with AI agents — 516 evaluations, 66 applications, zero manual screening',
-    datePublished: '2026-03-17T09:17:59Z',
-    author: { '@id': PERSON_ID },
-    publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
-    interactionStatistic: [
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/LikeAction',
-        userInteractionCount: 575,
-        name: 'Reddit upvotes',
-      },
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/CommentAction',
-        userInteractionCount: 359,
-        name: 'Reddit comments',
-      },
-    ],
-  },
-  {
     '@type': 'Article',
     url: 'https://www.producthunt.com/products/santifer-io',
     headline: 'Career-Ops on Claude — Product Hunt launch (#7 Product of the Day)',
@@ -201,14 +178,6 @@ const PERSON_SUBJECT_OF = [
     inLanguage: 'ru',
     publisher: { '@type': 'Organization', name: 'SQB Consulting', url: 'https://sqbconsulting.uz' },
     isBasedOn: 'https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4',
-  },
-  {
-    '@type': 'NewsArticle',
-    url: 'https://www.simplenews.ai/news/career-ops-laid-off-engineers-ai-job-search-system-goes-viral-with-27k-stars-bxcp',
-    headline:
-      "Career-Ops: Laid-Off Engineer's AI Job Search System Goes Viral With 27K Stars",
-    datePublished: '2026-04-09T00:00:00Z',
-    publisher: { '@type': 'Organization', name: 'SimpleNews.ai', url: 'https://www.simplenews.ai' },
   },
   {
     '@type': 'NewsArticle',
