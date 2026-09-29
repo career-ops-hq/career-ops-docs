@@ -101,7 +101,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           {/* Dark mode: over the moving halftone the muted grey shimmered and read
               as blurry. A lighter warm tone plus a soft dark halo keeps the
               letters apart from the dots without touching the background. */}
-          <h1 className="mb-8 max-w-xl text-base font-normal text-fd-muted-foreground md:text-lg dark:text-[#d2cebb] dark:[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.85),0_0_16px_rgba(0,0,0,0.6)]">
+          <h1 className="mb-8 max-w-xl text-base font-normal text-fd-muted-foreground md:text-lg max-md:relative max-md:isolate max-md:before:absolute max-md:before:-inset-x-6 max-md:before:-inset-y-3 max-md:before:-z-10 max-md:before:rounded-[2rem] max-md:before:bg-[radial-gradient(ellipse_at_center,var(--color-fd-background)_45%,transparent_80%)] max-md:before:opacity-80 max-md:before:content-[''] dark:text-[#d2cebb] dark:[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.85),0_0_16px_rgba(0,0,0,0.6)]">
             {dict.heroH1}
           </h1>
           <div className="flex flex-row items-center gap-4 flex-wrap w-fit">

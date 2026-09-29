@@ -141,7 +141,8 @@ export const homeEn: HomeDict = {
       <br />
       Runs in your CLI. Your data, your machine.
       <br />
-      It never applies in your name.
+      It tailors your CV and drafts your answers.{' '}
+      <span className="inline-block">You press Submit.</span>
     </>
   ),
   runItNow: 'Run it now',
@@ -430,7 +431,8 @@ export const homeEs: HomeDict = {
       <br />
       Se ejecuta en tu CLI. Tus datos, tu máquina.
       <br />
-      Nunca envía una candidatura en tu nombre.
+      Adapta tu CV y redacta tus respuestas.{' '}
+      <span className="inline-block">Tú pulsas Enviar.</span>
     </>
   ),
   runItNow: 'Empezar ahora',
@@ -730,7 +732,8 @@ export const homeFr: HomeDict = {
       <br />
       Il tourne dans votre CLI. Vos données, votre{'\u00a0'}machine.
       <br />
-      Il ne postule jamais en votre nom.
+      Il adapte votre CV et rédige vos réponses.{' '}
+      <span className="inline-block">Vous cliquez sur Envoyer.</span>
     </>
   ),
   runItNow: 'Commencer',
