@@ -784,7 +784,7 @@ export const homeFr: HomeDict = {
       {brand('sans cloud')}, {brand('sans télémétrie')}, {brand('sans compte')}.
       Sous licence MIT et gratuit pour toujours ; le seul coût est le CLI d’IA
       que vous payez déjà. Créé par Santiago Fernández de Valderrama Aparicio
-      après une vraie recherche d’emploi en 2026 : 740 offres évaluées, 68
+      après une vraie recherche d’emploi en 2026 : 740 annonces évaluées, 68
       candidatures, 12 entretiens et une offre.
     </>
   ),
@@ -868,7 +868,7 @@ export const homeFr: HomeDict = {
       <a href="/about" rel="author" className="text-fd-foreground font-medium hover:underline">
         Santiago Fernández de Valderrama Aparicio
       </a>{' '}
-      après avoir évalué 740 offres d’emploi.
+      après avoir évalué 740 annonces.
       <br />
       La méthodologie de scoring complète est{' '}
       <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
@@ -973,7 +973,7 @@ export const homeFr: HomeDict = {
           — un Applied AI Operator avec plus de 16 ans à construire des produits,
           fondateur et exploitant d’une entreprise espagnole de réparation de
           téléphones (2009–2025) avant sa revente. Il a créé career-ops début 2026
-          pour gérer sa propre recherche d’emploi à l’ère de l’IA — 740 offres
+          pour gérer sa propre recherche d’emploi à l’ère de l’IA — 740 annonces
           évaluées, un poste de Head of Applied AI décroché — et l’a publié sous
           licence MIT une fois qu’il n’en avait plus besoin. Six mois après l’avoir
           décroché, il a quitté ce poste pour se consacrer à plein temps au développement de
