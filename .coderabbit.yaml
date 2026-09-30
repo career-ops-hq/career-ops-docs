@@ -1,6 +1,6 @@
 # CodeRabbit configuration for career-ops-docs (career-ops-hq).
 # The documentation site for career-ops: Next.js + Fumadocs, 95 MDX pages in
-# EN/ES/FR, deployed to career-ops.org. Modeled on the core repo's config
+# EN/ES/FR/DE, deployed to career-ops.org. Modeled on the core repo's config
 # (career-ops-hq/career-ops#3769, then #3772 for the incremental-review,
 # recipe and post-merge-report levers), adapted to what this repo actually is.
 # Docs: https://docs.coderabbit.ai/reference/configuration
@@ -65,7 +65,7 @@ reviews:
     - path: "next.config.mjs"
       instructions: "Routing and headers. The .md twins of every /docs page, the Accept: text/markdown negotiation for locale paths, the noindex on generated images and the security headers all live here as rewrites and header rules. Flag any change to the beforeFiles rewrites or to a header rule, and note that the proxy does NOT run for locale-prefixed paths, so locale negotiation must stay in this file."
     - path: "src/proxy.ts"
-      instructions: "Handles Accept: text/markdown for /docs only. It does not run for the homepage or for /es and /fr paths, on purpose. Flag any attempt to extend its matcher to cover those, and any .md interception moved here from next.config.mjs (it 404s under Next 16)."
+      instructions: "Handles Accept: text/markdown for /docs only. It does not run for the homepage or for /es, /fr and /de paths, on purpose. Flag any attempt to extend its matcher to cover those, and any .md interception moved here from next.config.mjs (it 404s under Next 16)."
     - path: "scripts/verify-agent-layer.mjs"
       instructions: "The agent-layer guard. Its checks are three-state on purpose: pass, fail, and could-not-check must all be distinguishable, and could-not-check fails. Flag any change that lets a check pass when it did not run, or that removes an invariant without explanation."
     - path: ".github/workflows/**"

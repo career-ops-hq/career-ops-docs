@@ -655,7 +655,7 @@ export const homeEs: HomeDict = {
           fundador y operador de un negocio español de reparación de móviles
           (2009–2025) antes de su salida. Creó career-ops a principios de 2026
           para gestionar su propia búsqueda de empleo en la era de la IA — 740
-          ofertas evaluadas, un puesto de Head of Applied AI conseguido — y lo
+          vacantes evaluadas, un puesto de Head of Applied AI conseguido — y lo
           publicó bajo licencia MIT cuando ya no lo necesitaba. Seis meses después
           de conseguirlo, dejó ese puesto para centrarse en construir career-ops a tiempo completo.
         </>
