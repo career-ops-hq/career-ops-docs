@@ -3,7 +3,7 @@ title: Configura Playwright
 description: Instala y configura Playwright para la automatización del navegador.
 seoTitle: "Configura Playwright para career-ops — scraping de ofertas y exportación del CV a PDF"
 icon: Globe
-translationHash: d900e7e8e58ee7f6
+translationHash: "8f6714fbb268918b"
 localized: true
 translatedFrom: /docs/introduction/guides/set-up-playwright
 ---
@@ -106,25 +106,27 @@ Para ver cómo el navegador se abre y rellena el formulario en directo, añade u
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
   <Tab value="Claude Code">
     ```bash
-    /career-ops apply {company_name} open up with playwright the browser and fill out the entire form
+    /career-ops apply {company_name} open the browser with Playwright, inspect the form, and draft answers
     ```
   </Tab>
   <Tab value="Codex">
     ```bash
-    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
     ```
   </Tab>
   <Tab value="OpenCode">
     ```bash
-    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
     ```
   </Tab>
   <Tab value="Qwen CLI">
     ```bash
-    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
     ```
   </Tab>
 </Tabs>
+
+Para Ashby, Playwright puede inspeccionar el formulario y ayudar a redactar respuestas, pero termina y envía la candidatura en tu navegador habitual. Comprueba la página de éxito o el correo de confirmación antes de marcarla como enviada.
 
 Sin esa instrucción, career-ops sigue usando Playwright y el MCP — simplemente opera en silencio en segundo plano.
 

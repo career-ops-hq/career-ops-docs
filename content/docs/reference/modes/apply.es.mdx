@@ -5,7 +5,7 @@ seoTitle: "Modo apply de career-ops — borradores automáticos de respuestas a 
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: 2b3d824399a29c66
+translationHash: "46cda1156304a2f1"
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -16,7 +16,7 @@ El modo `apply` lee un formulario de candidatura abierto (Greenhouse, Ashby, Lev
 
 ## Cuándo usarlo
 
-Abre la descripción del puesto y el formulario de candidatura en paralelo. Ejecuta apply cuando el formulario esté cargado. El resultado está listo para pegar, no es una candidatura terminada — tú sigues al mando del tono, los datos y cualquier campo extra que el portal añada por encima. apply funciona mejor con Playwright en modo visible, donde lee la página en vivo tal y como tú la ves; sin Playwright, pega las preguntas o comparte una captura de pantalla y redactará a partir de eso.
+Abre la descripción del puesto y el formulario de candidatura en paralelo. Ejecuta apply cuando el formulario esté cargado. Las respuestas con un límite confirmado muestran `usados/permitidos` caracteres o palabras; comprueba ese estado antes de pegarlas. `limit unknown` indica que no se confirmó el límite: verifícalo en el campo real. Si la respuesta no cabe sin perder datos esenciales, revísala antes de pegarla. El resultado es un borrador, no una candidatura terminada — tú sigues al mando del tono, los datos y cualquier campo extra que el portal añada por encima. apply funciona mejor con Playwright en modo visible, donde lee la página en vivo tal y como tú la ves; sin Playwright, pega las preguntas o comparte una captura de pantalla y redactará a partir de eso.
 
 ## Cómo es una ejecución
 
@@ -37,11 +37,13 @@ Responses for Notion — Applied AI Engineer
 
 1. Why this role?
    > Your agent-tooling team is where I want to apply the production
-   > AI pipelines I have shipped this year. (paste-ready)
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
 
 2. Tell us about a relevant project
    > Built and sold an AI-workflow company in 2025; the pipeline
-   > behind it is the same one I would bring here. (paste-ready)
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
 
 Notes: I filled text fields only. Tick the checkboxes, solve the
 captcha, and submit yourself.
@@ -55,7 +57,7 @@ apply no envía formularios ni pulsa botones. Lee las preguntas y produce borrad
 
 apply se ha probado en campo en cerca de una docena de candidaturas gestionadas con Playwright, y algunos portales rompen la ejecución si no los tienes en cuenta:
 
-- **Ashby** deduplica candidatos por email dentro de cada empresa, así que una segunda candidatura puede fusionarse silenciosamente con la primera. Si ya existe un informe para esa empresa, apply sugiere un alias de email con `+tag`.
+- **Ashby** deduplica candidatos por email dentro de cada empresa, así que una segunda candidatura puede fusionarse silenciosamente con la primera. Si ya existe un informe para esa empresa, apply sugiere un alias de email con `+tag`. Para Ashby, termina y envía la solicitud en tu navegador habitual y comprueba la página de éxito o el correo de confirmación antes de marcarla como enviada.
 - **Lever** lanza un captcha cuando una casilla o un botón de opción se marca de forma programática, así que apply rellena solo los campos de texto y te deja el resto para que lo marques tú.
 - **Workday** ignora los valores introducidos sin pulsaciones de teclado reales, así que apply escribe las respuestas carácter a carácter y te pide revisar los desplegables de autorización de trabajo antes de guardar.
 

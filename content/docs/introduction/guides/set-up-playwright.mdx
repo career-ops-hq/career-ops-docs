@@ -103,25 +103,27 @@ To watch the browser open and fill out the form live, add an instruction to the 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
   <Tab value="Claude Code">
     ```bash
-    /career-ops apply {company_name} open up with playwright the browser and fill out the entire form
+    /career-ops apply {company_name} open the browser with Playwright, inspect the form, and draft answers
     ```
   </Tab>
   <Tab value="Codex">
     ```bash
-    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
     ```
   </Tab>
   <Tab value="OpenCode">
     ```bash
-    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
     ```
   </Tab>
   <Tab value="Qwen CLI">
     ```bash
-    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
     ```
   </Tab>
 </Tabs>
+
+For Ashby, Playwright can inspect the form and help draft answers, but finish and submit in your ordinary system browser. Verify a success page or confirmation email before marking the application submitted.
 
 Without that instruction, career-ops still uses Playwright and the MCP — it just operates silently in the background.
 
