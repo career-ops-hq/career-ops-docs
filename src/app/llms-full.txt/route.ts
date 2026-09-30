@@ -136,5 +136,14 @@ export async function GET() {
     [identity, manifesto, ...scanned, ...blogPosts, ...comparisons, AUTHORITY_PAGES].join(
       '\n\n',
     ),
+    {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        // The whole English docs corpus as one text file: for agents, not for
+        // the search index, where it would duplicate every docs page. noindex
+        // is not disallow, so agents still fetch it (search-ops D4, 30-sep).
+        'X-Robots-Tag': 'noindex',
+      },
+    },
   );
 }

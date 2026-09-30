@@ -158,6 +158,16 @@ const config = {
       ],
     };
   },
+  async redirects() {
+    return [
+      // /index and /<anything>/index answered 200 with the same page as the
+      // clean URL (canonical pointed right, but a redirect is the strongest
+      // consolidation signal). 308 to the clean URL (search-ops D5, 30-sep).
+      // Paths ending in .md never match, so the markdown mirrors are safe.
+      { source: '/index', destination: '/', permanent: true },
+      { source: '/:path+/index', destination: '/:path+', permanent: true },
+    ];
+  },
   async headers() {
     return [
       // Spanish and French routes declare their language over HTTP. The root
