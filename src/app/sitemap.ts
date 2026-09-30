@@ -16,6 +16,11 @@ const SITE_URL = 'https://career-ops.org';
 // Google distrust and ignore lastmod site-wide. Omitting is honest; Google then
 // uses its own crawl signal. (2026-07-24 audit, sitemap HIGH.)
 const gd = (relPath: string): Date | undefined => gitLastMod(relPath) ?? undefined;
+// Hand-written dates are a day ("2026-09-29") or, when the hour matters, the
+// full timestamp of the deploy that shipped the change. Only a bare day gets
+// midnight: "T00:00:00Z" on a change that shipped at 17:08 claims a time
+// before it existed.
+const handDate = (s: string): Date => new Date(s.length === 10 ? `${s}T00:00:00Z` : s);
 
 // A page's date is the newest of the files that actually make up what a reader
 // sees, not only its route file. The home's route file (page.tsx) had not
@@ -100,7 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entries.push({
       url: `${SITE_URL}/compare/${c.slug}`,
       lastModified: c.lastModified
-        ? new Date(`${c.lastModified}T00:00:00Z`)
+        ? handDate(c.lastModified)
         : gd('src/lib/data/comparisons.json'),
     });
   }
@@ -117,7 +122,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entries.push({
       url: `${SITE_URL}${post.url}`,
       lastModified: lastMod
-        ? new Date(`${lastMod}T00:00:00Z`)
+        ? handDate(lastMod)
         : gd(mdxRel),
     });
   }

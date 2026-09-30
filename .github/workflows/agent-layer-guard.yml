@@ -111,6 +111,8 @@ jobs:
           # Gate: every FAQ/glossary claim in the JSON-LD is visible on its
           # page, and every page's own nodes declare the page's language.
           BASE=http://localhost:3999 node scripts/verify-schema-parity.mjs || GUARD_EXIT=1
+          # Gate: no sitemap lastmod, schema date or <time> later than the build.
+          BASE=http://localhost:3999 node scripts/verify-no-future-dates.mjs || GUARD_EXIT=1
           # Informational: agentic-seo Discovery checks (never blocks).
           echo "--- agentic-seo (informational) ---"
           npx --yes agentic-seo --url http://localhost:3999 --checks robots-txt,llms-txt || true
