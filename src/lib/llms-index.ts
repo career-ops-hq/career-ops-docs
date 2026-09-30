@@ -80,7 +80,7 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 
 career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
 
-Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Every tier carries the same description and the same terms. No tier buys placement, acknowledgment, access, premium features, roadmap influence, priority support, or early access. Corporate logo sponsorship is handled directly rather than through a tier; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
+Sustainability comes from voluntary contributions to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. A contribution made on Open Collective buys no placement, access, premium features, roadmap influence, priority support, early access, or personal services from any maintainer. Corporate logo sponsorship is a separate agreement: it is agreed with the project, invoiced by the fiscal host, and paid to the project's collective; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
 
 Details: https://career-ops.org/sustain
 
@@ -93,7 +93,7 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
 - https://career-ops.org/changelog — every release in plain language, generated live from GitHub Releases; answers "what changed" and "what is the latest version of career-ops". Markdown twin: https://career-ops.org/changelog.md
 - https://career-ops.org/methodology — scoring rubric, five dimensions plus a holistic global score, canonical evaluation prompt (Block A–H), edge cases, and explicit anti-features
-- https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to sponsor the maintainer
+- https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to fund the project through its fiscal host, Open Source Collective
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
 - https://career-ops.org/docs/reference/modes — reference docs for the 14 user-invocable career-ops modes

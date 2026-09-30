@@ -431,7 +431,7 @@ export function methodologySchema() {
             name: 'Is career-ops free? What is the business model?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. Sponsorship funds maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
+              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage through the project’s collective on Open Collective — not from premium tiers, paid features, or data. Funding is held by the project’s fiscal host, Open Source Collective, on a public ledger, and goes to maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
             },
           },
           {
@@ -707,10 +707,11 @@ export function manifestoSchemaEs() {
 }
 
 // /sustain — Path 3 Sovereign Maintainer page. Emits WebPage with
-// significantLink to GitHub Sponsors + BreadcrumbList. We deliberately
-// do NOT use DonateAction (Schema.org's donate-action semantics map to
-// 501(c)(3) charities, and Google's parser can flag misuse). career-ops
-// is individual maintainer + OSS, not a registered charity — neutral
+// significantLink to the project's collective on Open Collective +
+// BreadcrumbList. We deliberately do NOT use DonateAction (Schema.org's
+// donate-action semantics map to 501(c)(3) charities, and Google's parser
+// can flag misuse). career-ops is an OSS project fiscally hosted by Open
+// Source Collective, not a registered charity — neutral
 // `significantLink` + mainContentOfPage carry the funding signal
 // without the legal-tier mismatch.
 export function sustainSchema() {
@@ -723,15 +724,15 @@ export function sustainSchema() {
         url: 'https://career-ops.org/sustain',
         name: 'Sustain career-ops',
         description:
-          'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
+          'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
         inLanguage: 'en',
-        dateModified: '2026-09-29T17:08:40Z',
+        dateModified: '2026-09-30',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
-        significantLink: 'https://github.com/sponsors/santifer',
+        significantLink: 'https://opencollective.com/career-ops',
         mainContentOfPage: {
           '@type': 'WebPageElement',
-          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds maintenance, security fixes, releases, and documentation. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
+          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host, Open Source Collective, and goes to maintenance, security fixes, releases, and documentation. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
         },
       },
       {
@@ -1046,7 +1047,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-09-29T17:08:40Z',
+        dateModified: '2026-09-30',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {

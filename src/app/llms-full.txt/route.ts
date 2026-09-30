@@ -76,7 +76,7 @@ The full evaluation runs as Block A through H: A (role summary), B (CV match), C
 
 # Sustainability model (${SITE}/sustain)
 
-career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Nine tiers: seven individual ($1–$250) are identical statements of support; two corporate ($500 Corporate Supporter, $1,000 Ecosystem Partner) add logo placement on the README and /sustain — nothing else changes. No premium features, no roadmap influence, no priority support. Path 3 Sovereign Maintainer model.`;
+career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from voluntary contributions to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. Corporate logo sponsorship is agreed with the project, invoiced by the fiscal host and paid to the project's collective; it buys clearly labeled visibility on the README and /sustain, never influence. No premium features, no roadmap influence, no priority support, no personal services from any maintainer. Path 3 Sovereign Maintainer model.`;
 
 
 // The manifesto block. Until 2026-08-14 llms-full carried the definition
