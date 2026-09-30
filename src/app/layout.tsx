@@ -1,6 +1,6 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
-import { Inter } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
@@ -55,14 +55,21 @@ function XIcon() {
   );
 }
 
-const inter = Inter({
-  subsets: ['latin'],
+// Geist (Vercel, SIL OFL 1.1) for text and UI, Geist Mono for code and
+// terminal-like lines. Instrument Serif stays for display type (fonts.ts).
+// Self-hosted by next/font: no request to Google at runtime, no CLS.
+const geist = Geist({
+  subsets: ['latin', 'latin-ext'],
+});
+const geistMono = Geist_Mono({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-geist-mono',
 });
 
 export default async function Layout({ children }: LayoutProps<'/'>) {
   const schema = await siteSchema();
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" className={`${geist.className} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Brand entity disambiguation — added 2026-05-25 against the
             typosquat careerops.org (no hyphen). application-name + the
@@ -103,7 +110,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                   · Open source · MIT
                 </p>
               </div>
-              <nav className={`${inter.className} flex flex-row flex-wrap items-center gap-x-5 gap-y-2 text-sm`}>
+              <nav className={`${geist.className} flex flex-row flex-wrap items-center gap-x-5 gap-y-2 text-sm`}>
                 <FooterLocaleLink path="/docs">Docs</FooterLocaleLink>
                 <FooterLocaleLink path="/manifesto" locales={['es']}>
                   Manifesto
@@ -174,7 +181,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 impersonator (typosquat careerops.org no-hyphen, registered
                 2026-04-06) can verify they're on the real site. Mono font
                 + muted color reads as identification, not promotional. */}
-            <div className={`${inter.className} border-t border-fd-foreground/5 py-3 text-xs font-mono text-fd-muted-foreground/70 tracking-wide text-center`}>
+            <div className={`${geist.className} border-t border-fd-foreground/5 py-3 text-xs font-mono text-fd-muted-foreground/70 tracking-wide text-center`}>
               Official site: career-ops.org &middot; GitHub:{' '}
               <a
                 href="https://github.com/career-ops-hq/career-ops"
