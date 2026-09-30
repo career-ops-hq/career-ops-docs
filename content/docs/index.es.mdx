@@ -3,7 +3,7 @@ title: Guía rápida
 description: "Empieza con career-ops en cinco minutos: instala el sistema open source de búsqueda de empleo con IA, abre tu CLI de IA y evalúa tu primera oferta. Sin necesidad de programar."
 seoTitle: "career-ops Guía rápida — instala y ejecuta tu primer análisis de ofertas con IA en minutos"
 icon: Rocket
-translationHash: f0830293c1d38da8
+translationHash: f47491e03eab3b7c
 localized: true
 translatedFrom: /docs
 ---
@@ -50,7 +50,7 @@ Abre una terminal en la carpeta donde quieras que viva career-ops. La ruta recom
 npx @santifer/career-ops init
 ```
 
-Esto clona la última versión en `./career-ops`, instala las dependencias y crea la estructura del espacio de trabajo. También detecta qué CLI de IA tienes instalado y te dice con qué comando empezar. El comando es idempotente — ejecutarlo de nuevo nunca sobrescribe archivos que ya tengas.
+Esto clona la última versión en `./career-ops`, instala las dependencias y crea la estructura del espacio de trabajo. También detecta qué CLI de IA tienes instalado y te dice con qué comando empezar. Solo instala en una carpeta nueva: si `./career-ops` ya existe y no está vacía, el comando se detiene con un error y no cambia nada, así que ejecutarlo de nuevo no repara ni actualiza un espacio de trabajo existente.
 
 Entra en el espacio de trabajo cuando termine:
 
@@ -83,15 +83,10 @@ npx playwright install chromium
 
 Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA que instalaste.
 
-<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
-    ```
-  </Tab>
-  <Tab value="Antigravity CLI">
-    ```bash title="Terminal"
-    agy
     ```
   </Tab>
   <Tab value="Codex">
@@ -99,19 +94,24 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
     codex
     ```
   </Tab>
-  <Tab value="Qwen Code">
-    ```bash title="Terminal"
-    qwen
-    ```
-  </Tab>
   <Tab value="OpenCode">
     ```bash title="Terminal"
     opencode
     ```
   </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash title="Terminal"
     copilot
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash title="Terminal"
+    agy
     ```
   </Tab>
 </Tabs>
@@ -136,35 +136,35 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
 
 Una vez que el agente te haya hecho el onboarding, estás listo para evaluar una oferta real. Copia la URL de cualquier anuncio de empleo y pégala en el chat. Con Claude Code o Antigravity CLI, ponle delante el comando explícito; con los demás CLIs, pega la URL y pídele al agente que ejecute el auto-pipeline:
 
-<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
-  <Tab value="Antigravity CLI">
-    ```bash
-    /career-ops https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
   <Tab value="Codex">
     ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
-  <Tab value="Qwen Code">
-    ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="OpenCode">
     ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash
+    /career-ops https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>
@@ -188,7 +188,7 @@ Después de pegar la oferta, career-ops hace lo siguiente por su cuenta:
       </Step>
       <Step>
         ### Puntúa la oferta
-        Valora el puesto de 0 a 5 en varias dimensiones, como encaje del puesto, compensación y política de teletrabajo.
+        Valora el puesto de 1 a 5 en varias dimensiones, como encaje del puesto, compensación y política de teletrabajo.
       </Step>
       <Step>
         ### Escribe un informe

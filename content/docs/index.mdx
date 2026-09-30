@@ -47,7 +47,7 @@ Open a terminal in the folder where you want career-ops to live. The recommended
 npx @santifer/career-ops init
 ```
 
-This clones the latest release into `./career-ops`, installs dependencies, and scaffolds the workspace structure. It also detects which AI coding CLI you have installed and tells you the right command to start with. The command is idempotent — running it again never overwrites files you already have.
+This clones the latest release into `./career-ops`, installs dependencies, and scaffolds the workspace structure. It also detects which AI coding CLI you have installed and tells you the right command to start with. It only installs into a new folder: if `./career-ops` already exists and is not empty, the command stops with an error and changes nothing, so running it again will not repair or update an existing workspace.
 
 Move into the workspace when it finishes:
 
@@ -185,7 +185,7 @@ After you paste the job, career-ops does the following on its own:
       </Step>
       <Step>
         ### Scores the job
-        Rates the role from 0 to 5 across multiple dimensions, like role fit, compensation, and remote policy.
+        Rates the role from 1 to 5 across multiple dimensions, like role fit, compensation, and remote policy.
       </Step>
       <Step>
         ### Writes a report
