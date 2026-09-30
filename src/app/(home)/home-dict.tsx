@@ -27,9 +27,8 @@ export type HomeDict = {
   // reason as docsHref: the Spanish home must send readers to the Spanish
   // manifesto, not drop them into the English one.
   manifestoHref: string;
-  // Small link under the hero buttons, to the manifesto (whose rights include
-  // "You never pay"): the price answer where the decision is made. "for
-  // candidates" is the qualifier that keeps it from a bare "free".
+  // Small note under the hero buttons: the price answer where the decision is
+  // made. "for candidates" is the qualifier that keeps it from a bare "free".
   heroFreeNote: string;
   featuredIn: string;
   // Label for the Vercel Open Source Program badge, a separate group from the press.

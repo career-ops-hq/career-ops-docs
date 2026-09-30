@@ -122,18 +122,19 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               className={cn(buttonVariants({ variant: 'secondary' }), 'inline-flex items-center gap-2 max-sm:text-sm')}
             />
           </div>
-          {/* The price answer, right where the decision is made, linked to the
-              manifesto that backs it ("You never pay"). Microcopy: small and
-              secondary so it never competes with the buttons; short enough to
-              stay left of the terminal screenshot on desktop. On phones it sits
-              over the screenshot, so it gets a translucent backing instead of
-              the H1's radial veil (which smeared into a white band there). */}
-          <Link
-            href={dict.manifestoHref}
-            className="mt-4 w-fit whitespace-nowrap text-sm text-fd-muted-foreground underline decoration-fd-muted-foreground/40 underline-offset-4 hover:text-fd-foreground max-md:rounded-xl max-md:bg-fd-background/85 max-md:px-3 max-md:py-1.5 max-md:backdrop-blur-sm dark:text-[#d2cebb] dark:[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.85),0_0_16px_rgba(0,0,0,0.6)]"
-          >
-            {dict.heroFreeNote} →
-          </Link>
+          {/* The price answer, where the decision is made. Plain text on purpose:
+              an arrow or underline here reads as a third CTA, and the manifesto
+              is already linked from its own section ("Read it") and the footer.
+              Ink: --color-hero-note is tuned to the halftone's darkest possible
+              pixel (#ffa057 -> 4.9:1), so it cannot get lighter. Below xl the
+              line lands on dense dither or the terminal screenshot, so it needs
+              a caption-shaped backing in both themes (without it, 2.4:1 over
+              terminal text); 6px corners, never a pill, so it does not rhyme
+              with the rounded-full buttons. The dark halo is only needed at
+              xl+, where there is no backing. */}
+          <p className="mt-3 w-fit whitespace-nowrap text-sm text-hero-note max-md:text-[13px] max-xl:rounded-md max-xl:bg-fd-background/90 max-xl:px-2 max-xl:py-0.5 max-xl:backdrop-blur-sm md:max-xl:-ml-2 dark:xl:[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.85),0_0_16px_rgba(0,0,0,0.6)]">
+            {dict.heroFreeNote}
+          </p>
         </div>
       </div>
 
