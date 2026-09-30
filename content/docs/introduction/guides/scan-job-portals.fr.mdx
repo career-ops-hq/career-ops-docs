@@ -226,7 +226,15 @@ Voici ce que signifie chaque ligne :
 </div>
 
 
-Si **New offers added** est à 0, votre filtre de titres est peut-être trop strict. Essayez d'ajouter un mot-clé à votre liste `positive` et relancez le scan.
+Si **New offers added** est à 0, cherchez d'abord cet avertissement dans la sortie du scan :
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+Il signifie que le portail de cette entreprise n'a jamais répondu correctement : ce zéro ne prouve donc pas qu'il n'a aucune offre. L'entreprise est enregistrée comme `unverified_zero` dans `data/portal-health.tsv` et compte dans sa série d'échecs. Vérifiez ce portail avant de modifier vos filtres.
+
+Si cet avertissement n'apparaît pas, votre filtre de titres est peut-être trop strict. Essayez d'ajouter un mot-clé à votre liste `positive` et relancez le scan.
 
 **Où vont les nouvelles offres :** chaque nouvelle offre est ajoutée sous forme de ligne dans `data/pipeline.md`. C'est la liste des offres en attente d'évaluation.
 
