@@ -27,6 +27,9 @@ export type HomeDict = {
   // reason as docsHref: the Spanish home must send readers to the Spanish
   // manifesto, not drop them into the English one.
   manifestoHref: string;
+  // Small note under the hero buttons: the price answer where the decision is
+  // made. "for candidates" is the qualifier that keeps it from a bare "free".
+  heroFreeNote: string;
   featuredIn: string;
   // Label for the Vercel Open Source Program badge, a separate group from the press.
   memberOf: string;
@@ -149,6 +152,7 @@ export const homeEn: HomeDict = {
   locale: 'en',
   docsHref: '/docs',
   manifestoHref: '/manifesto',
+  heroFreeNote: 'Free for candidates, forever',
   featuredIn: 'Featured in',
   memberOf: 'Member of',
   worthApplyingLabel: 'How to tell if a job is worth applying to →',
@@ -439,6 +443,7 @@ export const homeEs: HomeDict = {
   locale: 'es',
   docsHref: '/es/docs',
   manifestoHref: '/es/manifesto',
+  heroFreeNote: 'Gratis para los candidatos, para siempre',
   featuredIn: 'Apareció en',
   memberOf: 'Miembro de',
   worthApplyingLabel: 'Cómo saber si una oferta merece tu candidatura →',
@@ -740,6 +745,8 @@ export const homeFr: HomeDict = {
   locale: 'fr',
   docsHref: '/fr/docs',
   manifestoHref: '/manifesto',
+  // Provisional, pending native review (venture-ops, 30-sep).
+  heroFreeNote: 'Gratuit pour les candidats, pour toujours',
   featuredIn: 'Vu dans',
   memberOf: 'Membre de',
   authorTagline: ', opérateur pendant 16 ans et créateur de career-ops',
