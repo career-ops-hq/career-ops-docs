@@ -99,15 +99,16 @@ const PERSON_SAMEAS = [
 // correlate ~3× more strongly with AI search citation than backlinks
 // (Ahrefs December 2025 study). Both posts encoded with upvote +
 // comment InteractionCounters so AI engines can read social proof.
-// Headlines preserved verbatim from the actual Reddit titles, even
-// where "offers" is technically the wrong noun (the Reddit title
-// cannot be edited post-publish; the post body carries the correction).
+// No headline on the r/ClaudeAI post: its title says "740+ offers", and
+// engines read a subjectOf headline as a claim about the entity, which
+// contradicts the canon (the 740 are listings, never offers). The title
+// cannot be edited and is not rewritten here; the node keeps @type, url,
+// date and author (search-ops, 30-sep; same rule as the headlines #127
+// dropped).
 const SOFTWARE_SUBJECT_OF = [
   {
     '@type': 'DiscussionForumPosting',
     url: 'https://www.reddit.com/r/ClaudeAI/comments/1sd2f37/i_built_an_ai_job_search_system_with_claude_code/',
-    headline:
-      'I built an AI job search system with Claude Code that scored 740+ offers and landed me a job. Just open sourced it.',
     datePublished: '2026-04-05T12:30:50Z',
     author: { '@id': PERSON_ID },
     publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
