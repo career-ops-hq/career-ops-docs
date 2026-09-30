@@ -483,7 +483,7 @@ export const homeEs: HomeDict = {
       {brand('sin nube')}, {brand('sin telemetría')}, {brand('sin cuenta')}. Con
       licencia MIT y gratis para siempre; el único coste es el CLI de IA que ya
       pagas. Lo creó Santiago Fernández de Valderrama Aparicio tras una búsqueda
-      de empleo real en 2026: 740 ofertas evaluadas, 68 candidaturas, 12
+      de empleo real en 2026: 740 vacantes evaluadas, 68 candidaturas, 12
       entrevistas y una oferta.
     </>
   ),
@@ -565,7 +565,7 @@ export const homeEs: HomeDict = {
       <a href="/about" rel="author" className="text-fd-foreground font-medium hover:underline">
         Santiago Fernández de Valderrama Aparicio
       </a>{' '}
-      tras evaluar 740 ofertas de empleo.
+      tras evaluar 740 vacantes.
       <br />
       La metodología de puntuación completa está{' '}
       <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
