@@ -92,7 +92,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Are you for hire?',
-    a: 'I work on career-ops full time. I occasionally take advisory engagements in the Applied AI / multi-agent space — reach me on email or LinkedIn if the fit is concrete.',
+    a: 'I work on career-ops full time.',
   },
   {
     q: 'Can I sponsor the project?',
@@ -372,7 +372,7 @@ export default function AboutPage() {
             hi@career-ops.org
           </a>
           <p className="mt-3 text-sm text-fd-muted-foreground">
-            For sponsorship, advisory, or anything that doesn&rsquo;t fit in a GitHub issue.
+            For sponsorship or anything that doesn&rsquo;t fit in a GitHub issue.
           </p>
           <ul className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2">
             {LINKS.map((link) => (

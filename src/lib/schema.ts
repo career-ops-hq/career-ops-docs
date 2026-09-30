@@ -431,7 +431,7 @@ export function methodologySchema() {
             name: 'Is career-ops free? What is the business model?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage through the project’s collective on Open Collective — not from premium tiers, paid features, or data. Funding is held by the project’s fiscal host, Open Source Collective, on a public ledger, and goes to maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
+              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from community contributions and corporate sponsorship through the project’s collective on Open Collective — not from premium tiers, paid features, or data. Funding is held by the project’s fiscal host, Open Source Collective, on a public ledger, and goes to maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
             },
           },
           {

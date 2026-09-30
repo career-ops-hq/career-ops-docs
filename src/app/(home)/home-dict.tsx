@@ -315,8 +315,9 @@ export const homeEn: HomeDict = {
           There is no paid tier, no waitlist, no account, no telemetry, and no
           premium features. You clone the repo, configure your profile, and run
           the system locally with whichever AI coding CLI you already use.
-          Sustainability comes from voluntary community patronage through the
-          project’s collective on Open Collective — not from premium tiers, paid
+          Sustainability comes from community contributions and corporate
+          sponsorship through the project’s collective on Open Collective — not
+          from premium tiers, paid
           features, or data. Funding is held by the project’s fiscal host, Open
           Source Collective, on a public ledger, and goes to maintenance, security
           fixes, releases, and documentation. See{' '}
@@ -608,9 +609,9 @@ export const homeEs: HomeDict = {
           comunidad. No hay plan de pago, ni lista de espera, ni cuenta, ni
           telemetría, ni funciones premium. Clonas el repositorio, configuras tu
           perfil y ejecutas el sistema en local con el CLI de IA que ya uses. La
-          sostenibilidad viene del mecenazgo voluntario de la comunidad a través del
-          colectivo del proyecto en Open Collective — no de planes premium, funciones
-          de pago ni datos. El dinero lo custodia el anfitrión fiscal del proyecto,
+          sostenibilidad viene de las aportaciones de la comunidad y del patrocinio de
+          empresas, a través del colectivo del proyecto en Open Collective, no de
+          planes premium, funciones de pago ni datos. El dinero lo custodia el anfitrión fiscal del proyecto,
           Open Source Collective, con cada aportación y cada gasto en un registro
           público, y se destina al mantenimiento, las correcciones de seguridad, la
           publicación de nuevas versiones y la documentación. Detalles en{' '}
@@ -921,10 +922,10 @@ export const homeFr: HomeDict = {
           la communauté. Pas d’offre payante, pas de liste d’attente, pas de
           compte, pas de télémétrie, pas de fonctionnalités premium. Vous clonez
           le dépôt, configurez votre profil et lancez le système en local avec le
-          CLI d’IA que vous utilisez déjà. La pérennité vient du mécénat
-          volontaire de la communauté via le collectif du projet sur Open
-          Collective, pas d’offres premium, de fonctionnalités payantes ou de
-          données. Les fonds sont détenus par l’hôte fiscal du projet, Open Source
+          CLI d’IA que vous utilisez déjà. La pérennité vient des contributions
+          de la communauté et du parrainage d’entreprises, via le collectif du
+          projet sur Open Collective, et non d’offres premium, de fonctionnalités
+          payantes ou de données. Les fonds sont détenus par l’hôte fiscal du projet, Open Source
           Collective, avec chaque contribution et chaque dépense dans un registre
           public, et financent la maintenance, les correctifs de sécurité, les
           nouvelles versions et la documentation. Détails sur{' '}

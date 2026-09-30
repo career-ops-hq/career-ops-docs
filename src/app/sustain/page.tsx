@@ -45,7 +45,7 @@ export default function SustainPage() {
               career-ops is free software, MIT-licensed forever. Every mode, every portal
               scraper, the five-dimension rubric, the Block A&ndash;H evaluation prompt &mdash;
               they cost nothing to install, and they never will. But sustained maintenance
-              is work: reading 250 community issues and writing thoughtful responses,
+              is work: reading hundreds of community issues and writing thoughtful responses,
               investigating the edge case in <code className="font-mono text-fd-foreground">/scan</code>{' '}
               that surfaces in 1 of 200 listings, refusing the next
               &ldquo;auto-apply&rdquo; pull request with an explanation rather than silence.
@@ -64,7 +64,8 @@ export default function SustainPage() {
               Contribute to the project&rsquo;s collective on Open Collective, once or on a
               recurring basis. Open Source Collective is its fiscal host: the money belongs
               to the project, and every contribution and expense is on a public ledger. If
-              you&rsquo;d rather not be named, Open Collective lets you contribute incognito.
+              you&rsquo;d rather not be named, Open Collective lets you contribute incognito:
+              the amount stays public, your name doesn&rsquo;t.
               No contribution gates a perk. That is deliberate. A contribution that buys
               something is a contribution that can be leaned on.
             </p>
@@ -153,8 +154,8 @@ export default function SustainPage() {
               Sponsors
             </h2>
             <p className="mt-3">
-              career-ops is permanently free for candidates. Candidates never pay, and are
-              never the product. Companies that sponsor it do so through the project&rsquo;s
+              career-ops is permanently free for candidates. Candidates never pay the
+              project, and are never the product. Companies that sponsor it do so through the project&rsquo;s
               fiscal host, Open Source Collective.
             </p>
 
