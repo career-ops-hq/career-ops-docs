@@ -41,6 +41,9 @@ export function baseOptions({ compact = false, locale = 'en' }: Options = {}): B
           </span>
         </span>
       ),
+      // The logo goes to the home of the page's own language. Fumadocs defaults
+      // to '/', which sent /es, /fr and /de readers back to the English home.
+      url: locale === 'en' ? '/' : `/${locale}`,
       transparentMode: 'top',
       enabled: true,
     },

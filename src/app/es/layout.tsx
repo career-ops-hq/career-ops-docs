@@ -18,6 +18,11 @@ import { LangSync } from '@/components/lang-sync';
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
+      {/* Bing reads <meta http-equiv="content-language"> BEFORE <html lang> and
+          before the HTTP header, and AI crawlers do not run the script below:
+          this is the language signal they see in the raw HTML. React 19 hoists
+          it into <head> (i18n SEO audit, 30-sep). */}
+      <meta httpEquiv="content-language" content="es" />
       <script dangerouslySetInnerHTML={{ __html: "document.documentElement.lang='es'" }} />
       <LangSync lang="es" />
       {children}

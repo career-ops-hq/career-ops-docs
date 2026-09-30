@@ -499,7 +499,7 @@ export const homeEs: HomeDict = {
     <>
       Necesita un CLI de IA como motor — ¿aún no tienes ninguno configurado?{' '}
       <a
-        href="/docs/free-ai-engine"
+        href="/es/docs/free-ai-engine"
         className="text-fd-foreground underline underline-offset-2"
       >
         Consigue uno gratis
@@ -1156,7 +1156,9 @@ export const homeDe: HomeDict = {
       Stellenanzeige und gibt sie dir zum Einfügen fertig zurück.
     </>
   ),
-  featApplyBody2: 'Du überarbeitest, du schickst ab. Der Assistent klickt nie für dich.',
+  // Canon string (search-ops doctrine §20): transcreated, not calqued — like
+  // the FR "à votre place", "an deiner Stelle" instead of "für dich".
+  featApplyBody2: 'Du bearbeitest, du schickst ab. Der Assistent klickt nie an deiner Stelle.',
   featApplyCta: 'So funktioniert apply',
   featScanTitle: '150+ Jobquellen. Null manuelle Suche.',
   featScanBody: (

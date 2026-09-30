@@ -752,19 +752,32 @@ export function sustainSchema() {
 // breadcrumb readable in SERP; deeper hierarchy would require a slug→title
 // lookup against the source tree, and Google only displays the last 2-3
 // items in breadcrumb rich results anyway.
+const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
+  en: { home: 'Home', docs: 'Docs' },
+  es: { home: 'Inicio', docs: 'Documentación' },
+  fr: { home: 'Accueil', docs: 'Documentation' },
+  de: { home: 'Startseite', docs: 'Dokumentation' },
+};
+
 export function docsBreadcrumbSchema(opts: {
   url: string;
   title?: string;
 }) {
-  const isDocsLanding = opts.url === '/docs' || opts.url === '/docs/';
+  // A translated page's trail stays in its language: /de/docs/faq is
+  // Startseite (/de) → Dokumentation (/de/docs) → FAQ. It used to point
+  // Home and Docs at the English pages (i18n SEO audit, 30-sep).
+  const loc = /^\/([a-z]{2})(?=\/docs)/.exec(opts.url)?.[1];
+  const prefix = loc ? `/${loc}` : '';
+  const names = BREADCRUMB_NAMES[loc ?? 'en'] ?? BREADCRUMB_NAMES.en;
+  const isDocsLanding = opts.url === `${prefix}/docs` || opts.url === `${prefix}/docs/`;
   const items: Array<{
     '@type': 'ListItem';
     position: number;
     name: string;
     item: string;
   }> = [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
-    { '@type': 'ListItem', position: 2, name: 'Docs', item: 'https://career-ops.org/docs' },
+    { '@type': 'ListItem', position: 1, name: names.home, item: `https://career-ops.org${prefix || '/'}` },
+    { '@type': 'ListItem', position: 2, name: names.docs, item: `https://career-ops.org${prefix}/docs` },
   ];
   if (!isDocsLanding && opts.title) {
     items.push({
