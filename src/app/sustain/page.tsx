@@ -6,7 +6,7 @@ import { sustainSchema } from '@/lib/schema';
 export const metadata: Metadata = {
   title: 'Sustain · career-ops',
   description:
-    'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
+    'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
   alternates: { canonical: 'https://career-ops.org/sustain' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     siteName: 'career-ops',
     title: 'Sustain · career-ops',
     description:
-      'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship buys time, not direction.',
+      'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
   },
   robots: { index: true, follow: true },
 };
@@ -35,7 +35,7 @@ export default function SustainPage() {
             career-ops is permanently free, MIT-licensed, and community-funded.
           </h1>
           <p className="mt-4 text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
-            Sponsorship funds maintenance, security fixes, releases, and documentation. It buys time, not direction.
+            Sponsorship funds the project through its fiscal host, Open Source Collective, and goes to maintenance, security fixes, releases, and documentation. It never buys direction.
           </p>
         </header>
 
@@ -44,16 +44,15 @@ export default function SustainPage() {
             <p>
               career-ops is free software, MIT-licensed forever. Every mode, every portal
               scraper, the five-dimension rubric, the Block A&ndash;H evaluation prompt &mdash;
-              they cost nothing to install, and they never will. But sustained craft costs
-              time. Time to read 250 community issues and write thoughtful responses. Time
-              to investigate the edge case in <code className="font-mono text-fd-foreground">/scan</code>{' '}
-              that surfaces in 1 of 200 listings. Time to refuse the next
+              they cost nothing to install, and they never will. But sustained maintenance
+              is work: reading hundreds of community issues and writing thoughtful responses,
+              investigating the edge case in <code className="font-mono text-fd-foreground">/scan</code>{' '}
+              that surfaces in 1 of 200 listings, refusing the next
               &ldquo;auto-apply&rdquo; pull request with an explanation rather than silence.
               If career-ops saved you hours of spreadsheet work, surfaced a job interview,
               or just clarified what AI-augmented work looks like &mdash; and you have spare
               income &mdash; sponsoring the project is how you keep that work moving.
               Same five-star rubric. Same anti-spray-and-pray philosophy. Same MIT license.
-              Just more depth.
             </p>
           </section>
 
@@ -62,19 +61,22 @@ export default function SustainPage() {
               How to sustain
             </h2>
             <p className="mt-3">
-              Become a sponsor on GitHub. Every tier carries the same description and
-              the same terms: each one is a statement of support, and none of them gates a
-              perk. That is deliberate. A tier that buys something is a tier that can be
-              leaned on.
+              Contribute to the project&rsquo;s collective on Open Collective, once or on a
+              recurring basis. Open Source Collective is its fiscal host: the money belongs
+              to the project, and every contribution and expense is on a public ledger. If
+              you&rsquo;d rather not be named, Open Collective lets you contribute incognito:
+              the amount stays public, your name doesn&rsquo;t.
+              No contribution gates a perk. That is deliberate. A contribution that buys
+              something is a contribution that can be leaned on.
             </p>
             <p className="mt-5">
               <a
-                href="https://github.com/sponsors/santifer"
+                href="https://opencollective.com/career-ops"
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex justify-center rounded-full bg-brand text-brand-foreground hover:bg-brand-200 font-medium tracking-tight transition-colors text-base px-8 py-3.5"
               >
-                Sponsor on GitHub &rarr;
+                Contribute on Open Collective &rarr;
               </a>
             </p>
           </section>
@@ -115,11 +117,13 @@ export default function SustainPage() {
               Corporate sponsorship
             </h2>
             <p className="mt-3">
-              Nothing on GitHub Sponsors buys placement, acknowledgment, or access, at any
-              amount. Corporate logo sponsorship is handled directly instead: a small
-              number of slots, each with a link that carries its own tag from the first
-              day, and a monthly report of the clicks it actually produced rather than an
-              estimate.
+              A contribution made on Open Collective buys no placement on this site or in the
+              README, and no access, at any amount. Corporate logo sponsorship is a separate
+              agreement: it is agreed with the project, invoiced by its fiscal host, Open
+              Source Collective, and paid to the project&rsquo;s collective. Slots are few, and
+              each comes with a tracked link and a monthly report of the reach the project
+              measures on its own channels. Visibility only: it buys no influence over the
+              roadmap and no personal services from any maintainer.
             </p>
             <p className="mt-3">
               If you represent a mission-aligned organization, an open-source program
@@ -150,8 +154,9 @@ export default function SustainPage() {
               Sponsors
             </h2>
             <p className="mt-3">
-              career-ops is free for candidates, forever. The companies below fund the
-              maintainer&rsquo;s time and keep it that way.
+              career-ops is permanently free for candidates. Candidates never pay the
+              project, and are never the product. Companies that sponsor it do so through the project&rsquo;s
+              fiscal host, Open Source Collective.
             </p>
 
             <a
@@ -198,8 +203,9 @@ export default function SustainPage() {
               In-kind support
             </h2>
             <p className="mt-3">
-              Tooling provided to the maintainer through open source programs. It funds
-              time, not direction, like everything else on this page.
+              Tooling provided to the maintainer through open source programs, for use on
+              the project. It comes with no say over direction, like everything else on this
+              page.
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6">
               {/* Deliberately unlinked. openai.com blocks automated checks, and the
@@ -225,7 +231,7 @@ export default function SustainPage() {
         </p>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-09-29">29 September 2026</time>
+          Last updated <time dateTime="2026-09-30">30 September 2026</time>
         </p>
       </article>
     </>

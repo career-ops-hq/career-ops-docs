@@ -92,11 +92,11 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Are you for hire?',
-    a: 'I work on career-ops full time. I occasionally take advisory engagements in the Applied AI / multi-agent space — reach me on email or LinkedIn if the fit is concrete.',
+    a: 'I work on career-ops full time.',
   },
   {
     q: 'Can I sponsor the project?',
-    a: 'Yes, via GitHub Sponsors. Every tier carries the same terms and none of them gates a perk: no premium features, no roadmap influence. Corporate logo sponsorship is handled directly rather than through a tier. The full model lives at /sustain.',
+    a: 'Yes, through the project’s collective on Open Collective, with Open Source Collective as its fiscal host. The money belongs to the project, every contribution and expense is on a public ledger, and no contribution gates a perk: no premium features, no roadmap influence. Corporate logo sponsorship is a separate agreement: companies write to sponsors@career-ops.org, and those sponsorships are invoiced by the fiscal host and paid to the project’s collective. The full model lives at /sustain.',
   },
 ];
 
@@ -372,7 +372,7 @@ export default function AboutPage() {
             hi@career-ops.org
           </a>
           <p className="mt-3 text-sm text-fd-muted-foreground">
-            For sponsorship, advisory, or anything that doesn&rsquo;t fit in a GitHub issue.
+            For sponsorship or anything that doesn&rsquo;t fit in a GitHub issue.
           </p>
           <ul className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2">
             {LINKS.map((link) => (
@@ -402,7 +402,7 @@ export default function AboutPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-09-29">29 Sep 2026</time>
+          Last updated <time dateTime="2026-09-30">30 Sep 2026</time>
         </p>
       </article>
     </>
