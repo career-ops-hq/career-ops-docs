@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: 5abe712784127777
+translationHash: e8af78155aeb84b8
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -104,6 +104,14 @@ Cada informe es un archivo con un nombre del tipo `042-company-name-2026-04-14.m
 - Cómo de bien encaja tu CV con la oferta
 - Un análisis salarial
 - Un plan sugerido de preparación de la entrevista
+
+Cada informe incluye también un **Resumen de riesgos**. La fila **Contrato de duración determinada** cita la formulación explícita de duración determinada de la oferta, muestra `✅ no se indica una duración determinada` cuando no aparece ninguna o utiliza `— no evaluado` cuando la descripción del puesto no estaba disponible. El campo correspondiente del resumen legible por máquina es `risk_summary.fixed_term`, con uno de estos valores exactos:
+
+| Valor | Significado |
+|-------|-------------|
+| `detected` | La oferta describe explícitamente un puesto de duración determinada |
+| `not_detected` | No se encontró ninguna formulación explícita de duración determinada |
+| `not_evaluated` | La descripción del puesto no estaba disponible para esta comprobación |
 
 **Entradas de una línea para el tracker** → `batch/tracker-additions/`
 
