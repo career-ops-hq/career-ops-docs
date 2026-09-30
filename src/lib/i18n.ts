@@ -25,7 +25,10 @@ export const i18n = defineI18n({
   // 'fr' added 2026-07-21 (French pilot). Same loader-only model: a page has a
   // French twin iff its .fr.mdx exists; /fr/docs/** is served by an explicit
   // Next route reusing the EN render. Grows page by page like 'es'.
-  languages: ['en', 'es', 'fr'],
+  // 'de' added 2026-09-30: Germany is the #4 country by pageviews and Google
+  // clicks and the first non-English-speaking market; full parity from day one
+  // (the index must be translated or /de/docs falls back to English).
+  languages: ['en', 'es', 'fr', 'de'],
   parser: 'dot',
   hideLocale: 'default-locale',
   fallbackLanguage: null,

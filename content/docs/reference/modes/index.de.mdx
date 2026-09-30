@@ -1,0 +1,46 @@
+---
+title: Modi
+description: "Die 14 career-ops-Modi zum direkten Aufruf: bewerten, anpassen, bewerben, nachverfolgen und vorbereiten. Jeder ist ein Markdown-Skill, der in jeder unterstützten KI-Coding-CLI läuft."
+seoTitle: "career-ops-Modi – die 14 Befehle für die Jobsuche (bewerten, anpassen, bewerben, nachverfolgen, vorbereiten)"
+icon: Layers
+translationHash: 72138505e510cd55
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## Die 14 Modi
+
+career-ops bringt **14 Modi mit, die du direkt aufrufen kannst**. Jeder ist ein Skill in reinem Markdown. Der Agent lädt ihn und führt ihn in der KI-Coding-CLI aus, die du ohnehin nutzt: Claude Code, Codex, OpenCode, Gemini CLI, Qwen oder GitHub Copilot. Du rufst einen Modus mit `/career-ops <mode>` auf, und jeder deckt eine Phase der Jobsuche ab. Du kannst eine Stellenanzeige anhand des Bewertungsrasters prüfen (fünf Dimensionen plus ein ganzheitlicher Gesamtscore), einen Lebenslauf anpassen, eine Bewerbung entwerfen, Ergebnisse nachverfolgen oder dich auf Vorstellungsgespräche vorbereiten. Laut dem [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) gehören Modi zur Systemebene (System Layer). Sie werden mit dem Tool aktualisiert und verändern nie deine `cv.md`, dein Profil oder deine Reports.
+
+## Bewerten
+
+Das ist die zentrale Bewertungsschleife. Du liest eine Stellenanzeige und bewertest sie anhand von fünf Dimensionen plus einem ganzheitlichen Gesamtscore, bevor du Aufwand hineinsteckst.
+
+- **[auto-pipeline](/de/docs/reference/modes/auto-pipeline)**: der Standardablauf. Füge die URL oder den Text einer Stellenbeschreibung ein. Der Modus führt die vollständige A–H-Bewertung durch, schreibt den Report, exportiert ein angepasstes PDF und legt einen Tracker-Eintrag an, ganz ohne manuelle Zwischenschritte.
+- **[pipeline](/de/docs/reference/modes/pipeline)**: führt auto-pipeline für jede URL aus, die in `data/pipeline.md` in der Warteschlange steht. So arbeitest du die Stellenanzeigen eines ganzen Tages in einer einzigen Sitzung ab.
+- **[oferta](/de/docs/reference/modes/oferta)**: die A–H-Bewertung einer einzelnen Stellenanzeige, wenn du nur die Bewertung brauchst und nicht die komplette Pipeline.
+- **[ofertas](/de/docs/reference/modes/ofertas)**: bringt zwei oder mehr konkurrierende Angebote in einer Entscheidungsmatrix in eine Rangfolge. Verglichen werden Vergütung, Passung, Entwicklungsmöglichkeiten und Warnsignale.
+- **[deep](/de/docs/reference/modes/deep)**: ein ausführliches Recherchedokument über ein Unternehmen, das du nicht gut kennst, bevor du dich dort bewirbst. Es behandelt Finanzierung, Führungsteam, Presse, Hinweise zur Vergütung und Warnsignale.
+
+## Anpassen & bewerben
+
+Mach aus einem Treffer mit hohem Score eine abgeschickte Bewerbung.
+
+- **[pdf](/de/docs/reference/modes/pdf)**: erzeugt per Playwright einen angepassten, ATS-tauglichen Lebenslauf als PDF, zugeschnitten auf eine bestimmte Stellenbeschreibung.
+- **[apply](/de/docs/reference/modes/apply)**: liest die Freitextfragen eines geöffneten Bewerbungsformulars und entwirft Antworten, die sich auf deinen Lebenslauf und die Stellenbeschreibung stützen.
+- **[contacto](/de/docs/reference/modes/contacto)**: findet LinkedIn-Kontakte, bei denen ein warmer Einstieg wahrscheinlich ist. Dann entwirft er eine kurze Kontaktnachricht, die auf die Rolle zugeschnitten ist.
+- **[followup](/de/docs/reference/modes/followup)**: markiert Bewerbungen und Vorstellungsgespräche, bei denen ein Follow-up überfällig ist, und entwirft die passenden Nachrichten.
+
+## Nachverfolgen & weiterentwickeln
+
+Behalte den Überblick über deine Suche und justiere sie mit der Zeit nach.
+
+- **[tracker](/de/docs/reference/modes/tracker)**: eine Statusübersicht im Chat über alle deine Bewerbungen, gruppiert nach Phase.
+- **[patterns](/de/docs/reference/modes/patterns)**: wertet deine abgelehnten und verworfenen Bewerbungen aus. So werden Muster bei der Auswahl deiner Zielstellen und blinde Flecken sichtbar.
+- **[interview-prep](/de/docs/reference/modes/interview-prep)**: Vorbereitungsunterlagen für jede Gesprächsrunde (Recruiter, Hiring Manager, technisches Gespräch mit Peers, Panel) mit wahrscheinlichen Fragen und STAR-Geschichten.
+- **[training](/de/docs/reference/modes/training)**: bewertet einen Kurs oder eine Zertifizierung. Maßstab sind die berufliche Richtung, die du angegeben hast, und die Opportunitätskosten.
+- **[project](/de/docs/reference/modes/project)**: bewertet eine Idee für ein Portfolio-Projekt. Maßstab sind deine Zielrollen und die Zeit, die die Umsetzung kosten würde.
+
+## Portale
+
+Die drei Portal-Scanner ohne Token-Verbrauch für Greenhouse, Ashby und Lever haben eine eigene [Portal-Referenz](/de/docs/reference/portals).

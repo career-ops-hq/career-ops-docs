@@ -1,0 +1,51 @@
+---
+title: contacto
+description: "Dein stärkster Hebel auf LinkedIn. Mit einem Firmennamen und dem Kontext deines Netzwerks findet contacto Kontakte, die wahrscheinlich warm sind (gemeinsame Kontakte, Kontakte 2. Grades), und entwirft eine kurze Kontaktnachricht, zugeschnitten auf die Stelle, auf die du dich bewirbst."
+seoTitle: "career-ops contacto-Modus — warme LinkedIn-Kontakte finden und Nachrichten entwerfen"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: ef2b573d6f41f444
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## Was der Modus macht
+
+Der Modus contacto liest den Firmennamen und den Kontext der Stellenanzeige. Dann schlägt er Ansprechpersonen vor, die er per WebSearch findet: den Hiring Manager, den zuständigen Recruiter, zwei oder drei künftige Teamkollegen und jemanden, der bekanntermaßen Vorstellungsgespräche führt. Er entwirft eine kurze Nachricht mit drei Sätzen und unter 300 Zeichen. Sie ist auf die Stelle zugeschnitten und darauf, wer der Kontakt ist.
+
+## Wann du ihn nutzt
+
+Nutze contacto, wenn du dich auf eine Stelle beworben hast und einen Weg zu einer Empfehlung finden willst. Du kannst ihn auch schon vor der Bewerbung nutzen, wenn dich eine warme Vorstellung am Bewerbungsstapel des Recruiters vorbeibringen könnte. Standardmäßig spielt contacto den LinkedIn-Hebel aus. Manche Plattformen haben ein hartes Zeichenlimit, etwa das Chatfenster einer Jobbörse, der Einstieg einer Cold-E-Mail oder 打招呼 bei BOSS Zhipin. Bitte dort um ein „greeting“. Dann schreibt contacto eine einzige ultrakurze Erstnachricht und sucht keine Kontakte.
+
+## So sieht ein Durchlauf aus
+
+Gib contacto eine Firma. Der Modus findet die Personen, bei denen sich eine Nachricht lohnt, und wählt die aus, die am meisten davon hätte, dass du dabei bist. Für genau diese Persona schreibt er dann eine Nachricht: Ein Recruiter liest, dass die harten Anforderungen erfüllt sind, ein Hiring Manager liest von Wirkung.
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## Stolperfallen
+
+Der Modus contacto liest LinkedIn nicht automatisiert aus, denn Scraping wurde in Issue #238 abgelehnt. Er arbeitet mit dem Kontext, den du lieferst: deinem Lebenslauf, deinen früheren Arbeitgebern und den gemeinsamen Kontakten, die du erwähnst. Dazu kommen öffentliche WebSearch-Ergebnisse. Der Agent hat keinen Zugriff auf dein privates LinkedIn-Netzwerk. Jede Nachricht bleibt unter dem LinkedIn-Limit von 300 Zeichen für Kontaktanfragen und enthält nie deine Telefonnummer.
+
+## Siehe auch
+
+- [deep](/de/docs/reference/modes/deep)
+- [interview-prep](/de/docs/reference/modes/interview-prep)

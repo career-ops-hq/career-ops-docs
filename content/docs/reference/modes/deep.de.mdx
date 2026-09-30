@@ -1,0 +1,52 @@
+---
+title: deep
+description: "Erstellt ein ausführliches Recherchedokument zu einem Unternehmen: Finanzierungshistorie, Führungsteam, aktuelle Presseberichte, Produktentwicklung, Hinweise auf Gehaltsbänder, Warnsignale. Nutze deep, bevor du dich bei einem Unternehmen ab Series B bewirbst, das du noch nicht gut kennst."
+seoTitle: "career-ops deep-Modus — gründliche Unternehmensrecherche vor der Bewerbung"
+icon: Search
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: cef52678d1e8b67a
+localized: true
+translatedFrom: /docs/reference/modes/deep
+---
+
+## Was er macht
+
+Der Modus `deep` erstellt einen strukturierten Recherche-Prompt für ein Unternehmen, das du gerade prüfst. Der Prompt ist nach sechs Achsen gegliedert: die KI-Strategie des Unternehmens, seine Schritte in den letzten sechs Monaten, seine Engineering-Kultur, die technischen Herausforderungen, vor denen es wahrscheinlich steht, seine Wettbewerber und was es von ihnen abhebt, und schließlich dein eigener Ansatzpunkt für die Bewerbung. Diesen Prompt fügst du in ein Recherche-Tool ein, etwa Perplexity, Claude oder ChatGPT. Zurück bekommst du ein Briefing, das du vor dem Vorstellungsgespräch lesen kannst. deep passt jede Achse an die konkrete Stelle und das konkrete Unternehmen an.
+
+## Wann du ihn einsetzt
+
+Nutze deep bei Bewerbungen an Unternehmen ab Series B, wenn dir die Stellenbeschreibung nicht genug verrät, um zu entscheiden, ob du dich bewirbst oder wie du ins Vorstellungsgespräch gehst. Die Achse zu deinem Ansatzpunkt greift auf deine cv.md und profile.yml zurück. Deshalb endet das Briefing mit dem, was genau du mitbringst, statt mit allgemeinen Fakten über das Unternehmen.
+
+## So sieht ein Durchlauf aus
+
+Nenn deep ein Unternehmen und eine Stelle, dann schreibt der Modus einen Recherche-Prompt, den du direkt einfügen kannst. Jede der sechs Achsen ist eine Checkliste mit Fragen, die das Recherche-Tool beantworten soll. Die letzte Achse bezieht die Ergebnisse dann wieder auf dich.
+
+```txt title="Example"
+> /career-ops deep notion
+
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
+```
+
+## Stolperfallen
+
+Das Briefing ist nur so gut wie die öffentlichen Informationen, die das Recherche-Tool findet. Bei Startups im Stealth-Modus kommt wenig heraus, und jedes Tool kann eine Finanzierungsrunde oder den Namen einer Führungskraft halluzinieren. Prüfe alles anhand von Primärquellen, bevor du eine folgenreiche Entscheidung darauf stützt.
+
+## Siehe auch
+
+- [oferta](/de/docs/reference/modes/oferta)
+- [contacto](/de/docs/reference/modes/contacto)
+- [interview-prep](/de/docs/reference/modes/interview-prep)

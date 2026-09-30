@@ -145,11 +145,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Localized homes (es, fr) — share the same hreflang cluster.
+  // Localized homes (es, fr, de) — share the same hreflang cluster.
   const homeCluster = {
     en: `${SITE_URL}/`,
     es: `${SITE_URL}/es`,
     fr: `${SITE_URL}/fr`,
+    de: `${SITE_URL}/de`,
     'x-default': `${SITE_URL}/`,
   };
   entries.push({
@@ -160,6 +161,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   entries.push({
     url: `${SITE_URL}/fr`,
     lastModified: homeLastModified('fr'),
+    alternates: { languages: homeCluster },
+  });
+  entries.push({
+    url: `${SITE_URL}/de`,
+    lastModified: homeLastModified('de'),
     alternates: { languages: homeCluster },
   });
 
@@ -177,12 +183,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   });
 
-  // Localized docs (es, fr) — SOURCE-DERIVED, no hand-kept map (search-ops drift
+  // Localized docs (es, fr, de) — SOURCE-DERIVED, no hand-kept map (search-ops drift
   // contract). A page has a twin iff getPage(slug, loc) resolves, which with
   // fallbackLanguage:null happens only for a real .<loc>.mdx (never an English
   // fallback). For each EN page we emit one entry per existing twin, and every
   // entry's hreflang cluster lists EN + all the twins that exist for that page.
-  const DOCS_LOCALES = ['es', 'fr'] as const;
+  const DOCS_LOCALES = ['es', 'fr', 'de'] as const;
   for (const enPage of source.getPages('en')) {
     const twins = DOCS_LOCALES.filter(
       (loc) => source.getPage(enPage.slugs, loc) != null,

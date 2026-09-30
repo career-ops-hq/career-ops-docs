@@ -12,18 +12,19 @@ import { X } from 'lucide-react';
 // own guidance). Detection is client-only; the banner never renders in SSR
 // (that caused a React #418 hydration mismatch on santifer.io).
 //
-// N-locale (en/es/fr, 2026-07-21): the switcher shows the current locale plus a
-// link per other locale (stateless, no dropdown). Each link resolves to the
+// N-locale (en/es/fr 2026-07-21, de 2026-09-30): the switcher shows the
+// current locale plus a link per other locale (stateless, no dropdown). Each link resolves to the
 // SAFE URL for that locale — docs go to /<loc>/docs (the route redirects an
 // untranslated slug to EN), the home to /<loc>, the manifesto to its twin when
-// one exists (es) or the locale home otherwise (fr has no manifesto yet), and
+// one exists (es) or the locale home otherwise (fr and de have none yet), and
 // any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es' | 'fr';
+type Code = 'en' | 'es' | 'fr' | 'de';
 const LOCALES: { code: Code; label: string }[] = [
   { code: 'en', label: 'EN' },
   { code: 'es', label: 'ES' },
   { code: 'fr', label: 'FR' },
+  { code: 'de', label: 'DE' },
 ];
 // Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
 const MANIFESTO_LOCALES: Code[] = ['es'];
@@ -67,16 +68,30 @@ function FlagFR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+function FlagDE({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
+      <clipPath id="flagCircleDE"><circle cx="8" cy="8" r="8" /></clipPath>
+      <g clipPath="url(#flagCircleDE)">
+        <rect y="0" width="16" height="6" fill="#000" />
+        <rect y="5" width="16" height="6" fill="#dd0000" />
+        <rect y="10" width="16" height="6" fill="#ffce00" />
+      </g>
+    </svg>
+  );
+}
 const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   en: FlagEN,
   es: FlagES,
   fr: FlagFR,
+  de: FlagDE,
 };
 
-/** Which locale is this path? (localized surfaces are prefixed /es or /fr.) */
+/** Which locale is this path? (localized surfaces are prefixed /es, /fr or /de.) */
 function localeOf(pathname: string): Code {
   if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
   if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
+  if (pathname === '/de' || pathname.startsWith('/de/')) return 'de';
   return 'en';
 }
 
@@ -84,7 +99,7 @@ function localeOf(pathname: string): Code {
 function baseOf(pathname: string): string {
   const loc = localeOf(pathname);
   if (loc === 'en') return pathname;
-  return pathname.slice(3) || '/'; // drop '/es' or '/fr'
+  return pathname.slice(3) || '/'; // drop '/es', '/fr' or '/de'
 }
 
 /** The URL for `target` locale of the page whose EN-relative path is `base`.
@@ -123,6 +138,7 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
   en: { question: 'Prefer English?', cta: 'View in English' },
   es: { question: '¿Prefieres español?', cta: 'Ver en español' },
   fr: { question: 'Vous préférez le français ?', cta: 'Voir en français' },
+  de: { question: 'Lieber auf Deutsch?', cta: 'Auf Deutsch ansehen' },
 };
 
 /**
@@ -184,11 +200,15 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
     <div className={compact ? 'flex flex-col items-start gap-2' : 'flex items-center gap-2'}>
       {mounted && showBanner && (
         <div
-          // Between 1024 and 1100px the header has no room for it next to
-          // search, theme and the switcher, which stays available.
-          className={`inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full border border-brand/30 bg-brand/5 ps-3 pe-1.5 text-sm${compact ? '' : ' lg:max-[1099px]:hidden'}${animate ? ' animate-in fade-in slide-in-from-right-2 duration-500' : ''}`}
+          // Below 1280px the desktop header has no room for it next to the
+          // localized tagline, search, theme and the four-language switcher
+          // (which stays available): measured 30-sep, the French tagline
+          // squeezed the theme toggle to 24px from 1100 to 1260px.
+          className={`inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full border border-brand/30 bg-brand/5 ps-3 pe-1.5 text-sm${compact ? '' : ' lg:max-[1279px]:hidden'}${animate ? ' animate-in fade-in slide-in-from-right-2 duration-500' : ''}`}
         >
-          <span className={compact ? 'hidden' : 'hidden xl:inline text-fd-muted-foreground'}>
+          {/* The lead-in question needs another ~150px: from 1280 to 1400px
+              it squeezed the theme toggle again on /fr and /de. */}
+          <span className={compact ? 'hidden' : 'hidden min-[1440px]:inline text-fd-muted-foreground'}>
             {BANNER[target].question}
           </span>
           <Link
@@ -208,14 +228,18 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
           </button>
         </div>
       )}
-      {/* Switcher: the three languages in a fixed order, the current one
+      {/* Switcher: the languages in a fixed order, the current one
           highlighted as the selected segment (not a link). */}
       <nav aria-label="Language" className="inline-flex h-8 items-center gap-0.5 rounded-full border bg-fd-card p-0.5 text-sm">
         {LOCALES.map((l) => {
           const Flag = FLAG[l.code];
+          // From 1024 to 1119px the desktop header is at its tightest: with
+          // four languages the long ES/FR taglines squeezed the theme toggle
+          // (measured 30-sep). The codes stay, the flags go; the code is what
+          // names the language anyway.
           const inner = (
             <>
-              <Flag className="w-3.5 h-3.5" />
+              <Flag className={compact ? 'w-3.5 h-3.5' : 'w-3.5 h-3.5 lg:max-[1119px]:hidden'} />
               {l.label}
             </>
           );

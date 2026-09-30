@@ -4,7 +4,7 @@
 //
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
-import { homeEn, homeEs, homeFr, type HomeDict } from '@/app/(home)/home-dict';
+import { homeEn, homeEs, homeFr, homeDe, type HomeDict } from '@/app/(home)/home-dict';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
@@ -223,7 +223,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr'],
+        inLanguage: ['en', 'es', 'fr', 'de'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -872,6 +872,10 @@ export function homeFaqSchemaEs(dateModified?: Date) {
 
 export function homeFaqSchemaFr(dateModified?: Date) {
   return homeGraph('https://career-ops.org/fr', 'fr', faqFromDict(homeFr), dateModified);
+}
+
+export function homeFaqSchemaDe(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/de', 'de', faqFromDict(homeDe), dateModified);
 }
 
 export function blogPostSchema(args: {
