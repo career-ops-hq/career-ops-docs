@@ -122,6 +122,23 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               className={cn(buttonVariants({ variant: 'secondary' }), 'inline-flex items-center gap-2 max-sm:text-sm')}
             />
           </div>
+          {/* The price answer, right where the decision is made. Microcopy: small
+              and secondary so it never competes with the buttons, with the same
+              dark halo and mobile veil as the H1 for contrast over the halftone.
+              Each phrase stays whole; on phones the manifesto link drops to its
+              own line instead of leaving a dangling separator. */}
+          <p className="mt-4 text-sm text-fd-muted-foreground max-md:relative max-md:isolate max-md:before:absolute max-md:before:-inset-x-6 max-md:before:-inset-y-2 max-md:before:-z-10 max-md:before:rounded-[2rem] max-md:before:bg-[radial-gradient(ellipse_at_center,var(--color-fd-background)_45%,transparent_80%)] max-md:before:opacity-80 max-md:before:content-[''] dark:text-[#d2cebb] dark:[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.85),0_0_16px_rgba(0,0,0,0.6)]">
+            <span className="whitespace-nowrap">{dict.heroFreeNote}</span>
+            <span aria-hidden="true"> · </span>
+            <span className="whitespace-nowrap">{dict.heroLicense}</span>
+            <span aria-hidden="true" className="max-sm:hidden"> · </span>
+            <Link
+              href={dict.manifestoHref}
+              className="whitespace-nowrap underline decoration-fd-muted-foreground/40 underline-offset-4 hover:text-fd-foreground max-sm:mt-1 max-sm:block max-sm:w-fit"
+            >
+              {dict.heroReadManifesto} →
+            </Link>
+          </p>
         </div>
       </div>
 
