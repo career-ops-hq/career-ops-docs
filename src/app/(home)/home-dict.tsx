@@ -34,7 +34,9 @@ export type HomeDict = {
   // Label for the Vercel Open Source Program badge, a separate group from the press.
   memberOf: string;
   // One line under the "What is career-ops?" text, to the guide on judging a
-  // job before applying. Absent where that guide has no translation (fr).
+  // job before applying. Optional: absent on a locale where that guide has no
+  // translation. (Until 30-sep that was fr; the /fr route redirects an
+  // untranslated slug to English, so the link is safe either way.)
   worthApplyingLabel?: string;
   worthApplyingHref?: string;
   authorTagline: string;
@@ -754,6 +756,8 @@ export const homeFr: HomeDict = {
   heroFreeNote: 'Gratuit pour les candidats, pour toujours',
   featuredIn: 'Vu dans',
   memberOf: 'Membre de',
+  worthApplyingLabel: 'Comment savoir si une offre mérite votre candidature →',
+  worthApplyingHref: '/fr/docs/introduction/guides/is-this-job-worth-applying-to',
   authorTagline: ', opérateur pendant 16 ans et créateur de career-ops',
   // No thesisTranslation for FR — the English thesis stands alone (venture-ops).
   nowSignedManifesto: <>Désormais un manifeste signé ·</>,
