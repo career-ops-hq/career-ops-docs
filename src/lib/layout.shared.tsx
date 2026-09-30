@@ -1,8 +1,9 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, gitConfig } from './shared';
+import { appName } from './shared';
 import { CoMark } from '@/components/co-mark';
 import { LanguageBar } from '@/components/language-bar';
 import { instrumentSerifRegular } from './fonts';
+import { GitHubIconLink } from '@/components/github-icon-link';
 
 type Options = {
   // Drops the brand suffix — used by the docs layout where Fumadocs
@@ -42,11 +43,17 @@ export function baseOptions({ compact = false, locale = 'en' }: Options = {}): B
       transparentMode: 'top',
       enabled: true,
     },
-    // Navbar GitHub icon → the FLAGSHIP repo (the 60K-star project the
-    // visitor came for), NOT gitConfig.repo: that one is the docs repo
-    // and exists only for the per-page "edit on GitHub" links.
-    githubUrl: `https://github.com/${gitConfig.user}/career-ops`,
     // Language button + browser-detection suggestion, both in the header.
-    links: [{ type: 'custom', secondary: true, children: <LanguageBar /> }],
+    // Then the GitHub icon to the FLAGSHIP repo, where Fumadocs' `githubUrl`
+    // icon used to be and with the same look, as our own link so it does not
+    // carry rel="noreferrer". The "Star on GitHub" button lives in the hero
+    // and at the end of the Quick Start, not here. The docs layouts are
+    // compact and draw the icon in the sidebar row instead.
+    links: [
+      { type: 'custom', secondary: true, children: <LanguageBar compact={compact} /> },
+      ...(compact
+        ? []
+        : [{ type: 'custom' as const, secondary: true, children: <GitHubIconLink className="-mx-1" /> }]),
+    ],
   };
 }

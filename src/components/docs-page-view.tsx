@@ -10,6 +10,7 @@ import {
 } from 'fumadocs-ui/layouts/docs/page';
 import { getMDXComponents } from '@/components/mdx';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { SiteLink } from '@/components/mdx-link';
 import { gitConfig } from '@/lib/shared';
 import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
 import { gitLastMod } from '@/lib/git-date';
@@ -183,7 +184,7 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
         <MDX
           components={getMDXComponents({
             // this allows you to link to other pages with relative file paths
-            a: createRelativeLink(source, page),
+            a: createRelativeLink(source, page, SiteLink),
           })}
         />
       </DocsBody>

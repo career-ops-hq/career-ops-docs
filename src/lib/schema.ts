@@ -87,7 +87,6 @@ const PERSON_SAMEAS = [
   'https://www.crunchbase.com/person/santiago-fernandez-de-valderrama',
   'https://huggingface.co/santifer',
   'https://www.wikidata.org/wiki/Q138710224',
-  'https://santiferirepair.es',
   'https://www.facebook.com/santifer.io/',
   'https://www.producthunt.com/@santifer',
   'https://app.daily.dev/santifer',
@@ -123,29 +122,6 @@ const SOFTWARE_SUBJECT_OF = [
         '@type': 'InteractionCounter',
         interactionType: 'https://schema.org/CommentAction',
         userInteractionCount: 249,
-        name: 'Reddit comments',
-      },
-    ],
-  },
-  {
-    '@type': 'DiscussionForumPosting',
-    url: 'https://www.reddit.com/r/SideProject/comments/1rw1lg4/i_automated_my_job_search_with_ai_agents_516/',
-    headline:
-      'I automated my job search with AI agents — 516 evaluations, 66 applications, zero manual screening',
-    datePublished: '2026-03-17T09:17:59Z',
-    author: { '@id': PERSON_ID },
-    publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
-    interactionStatistic: [
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/LikeAction',
-        userInteractionCount: 575,
-        name: 'Reddit upvotes',
-      },
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/CommentAction',
-        userInteractionCount: 359,
         name: 'Reddit comments',
       },
     ],
@@ -201,14 +177,6 @@ const PERSON_SUBJECT_OF = [
     inLanguage: 'ru',
     publisher: { '@type': 'Organization', name: 'SQB Consulting', url: 'https://sqbconsulting.uz' },
     isBasedOn: 'https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4',
-  },
-  {
-    '@type': 'NewsArticle',
-    url: 'https://www.simplenews.ai/news/career-ops-laid-off-engineers-ai-job-search-system-goes-viral-with-27k-stars-bxcp',
-    headline:
-      "Career-Ops: Laid-Off Engineer's AI Job Search System Goes Viral With 27K Stars",
-    datePublished: '2026-04-09T00:00:00Z',
-    publisher: { '@type': 'Organization', name: 'SimpleNews.ai', url: 'https://www.simplenews.ai' },
   },
   {
     '@type': 'NewsArticle',
@@ -386,14 +354,7 @@ export async function siteSchema() {
         alternateName: ['Santiago Fernández de Valderrama', 'santifer', 'Santi'],
         url: 'https://santifer.io/about',
         image: 'https://santifer.io/foto-avatar.png',
-        jobTitle: 'Applied AI Operator',
-        worksFor: { '@type': 'Organization', name: 'Zinkee', url: 'https://zinkee.com' },
-        hasOccupation: {
-          '@type': 'Occupation',
-          name: 'Head of Applied AI',
-          occupationLocation: { '@type': 'Organization', name: 'Zinkee' },
-          skills: 'Applied AI, multi-agent orchestration, product strategy, open source maintenance',
-        },
+        jobTitle: 'Creator of career-ops',
         founderOf: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_PERSON_IDENTIFIER,
         sameAs: PERSON_SAMEAS,
@@ -764,7 +725,7 @@ export function sustainSchema() {
         description:
           'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
         inLanguage: 'en',
-        dateModified: '2026-05-16T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         significantLink: 'https://github.com/sponsors/santifer',
@@ -863,30 +824,53 @@ type HomeFaqQA = { q: string; a: string };
 const faqFromDict = (dict: HomeDict): HomeFaqQA[] =>
   dict.faq.map(({ q, a }) => ({ q, a: nodeText(a) }));
 
-function homeFaqGraph(id: string, lang: string, entries: HomeFaqQA[]) {
+// The home's graph: a WebPage node that carries the page's real last-change
+// date (the same date as its sitemap lastmod, from src/lib/home-date.ts), and
+// the FAQPage of its visible FAQ. Before 28 September the home had no WebPage
+// node and no dateModified, only the dated nodes that describe press mentions
+// and a video, and Google showed one of those old dates on the home's snippet.
+function homeGraph(
+  pageUrl: string,
+  lang: string,
+  entries: HomeFaqQA[],
+  dateModified?: Date,
+) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    '@id': id,
-    inLanguage: lang,
-    mainEntity: entries.map((e) => ({
-      '@type': 'Question',
-      name: e.q,
-      acceptedAnswer: { '@type': 'Answer', text: e.a },
-    })),
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}/#webpage`,
+        url: pageUrl,
+        inLanguage: lang,
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        about: { '@id': 'https://career-ops.org/#software' },
+        ...(dateModified ? { dateModified: dateModified.toISOString() } : {}),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}/#faq`,
+        inLanguage: lang,
+        mainEntity: entries.map((e) => ({
+          '@type': 'Question',
+          name: e.q,
+          acceptedAnswer: { '@type': 'Answer', text: e.a },
+        })),
+      },
+    ],
   };
 }
 
-export function homeFaqSchema() {
-  return homeFaqGraph('https://career-ops.org/#faq', 'en', faqFromDict(homeEn));
+export function homeFaqSchema(dateModified?: Date) {
+  return homeGraph('https://career-ops.org', 'en', faqFromDict(homeEn), dateModified);
 }
 
-export function homeFaqSchemaEs() {
-  return homeFaqGraph('https://career-ops.org/es/#faq', 'es', faqFromDict(homeEs));
+export function homeFaqSchemaEs(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/es', 'es', faqFromDict(homeEs), dateModified);
 }
 
-export function homeFaqSchemaFr() {
-  return homeFaqGraph('https://career-ops.org/fr/#faq', 'fr', faqFromDict(homeFr));
+export function homeFaqSchemaFr(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/fr', 'fr', faqFromDict(homeFr), dateModified);
 }
 
 export function blogPostSchema(args: {
@@ -988,7 +972,10 @@ export function comparisonSchema(data: ComparisonData) {
         name: `career-ops vs ${data.competitor.name}`,
         description: data.intro,
         inLanguage: 'en',
-        dateModified: `${data.lastModified}T00:00:00Z`,
+        dateModified:
+          data.lastModified.length === 10
+            ? `${data.lastModified}T00:00:00Z`
+            : data.lastModified,
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         about: { '@id': 'https://career-ops.org/#software' },
         author: { '@id': PERSON_ID },
@@ -1059,7 +1046,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-05-07T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
@@ -1094,7 +1081,7 @@ export function pressSchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-07-15T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         // Reference the canonical DefinedTerm node on /manifesto — never
         // duplicate the definition here.
         mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },
@@ -1115,8 +1102,8 @@ export function pressSchema() {
         url: 'https://career-ops.org/og-banner.jpg',
         caption: 'career-ops social banner',
         encodingFormat: 'image/jpeg',
-        width: '2400',
-        height: '1339',
+        width: '1200',
+        height: '630',
       },
       {
         '@type': 'BreadcrumbList',

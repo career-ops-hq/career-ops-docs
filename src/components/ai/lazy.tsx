@@ -30,7 +30,17 @@ function ShellButton({ disabled = false }: { disabled?: boolean }) {
   );
 }
 
+// Off since 29-sep: the chat has no model key, so /api/chat answers 503 and
+// the button only led to an error. Flip to true when the chat is reactivated
+// (Santiago's decision; see the D2/D3 protections first). The route, the
+// panel and the ⌘/ shortcut code stay in place.
+const AI_CHAT_ENABLED = false;
+
 export function AISearchLazy() {
+  return AI_CHAT_ENABLED ? <AISearchLazyEnabled /> : null;
+}
+
+function AISearchLazyEnabled() {
   const [wanted, setWanted] = useState(false);
 
   useEffect(() => {

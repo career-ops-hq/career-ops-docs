@@ -135,7 +135,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <span className="flex items-center gap-3 ml-1">
                   <a
                     href="https://github.com/career-ops-hq/career-ops"
-                    rel="me noreferrer noopener"
+                    rel="me noopener"
                     aria-label="GitHub"
                     className="hover:text-fd-foreground transition-colors"
                   >
@@ -178,7 +178,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
               Official site: career-ops.org &middot; GitHub:{' '}
               <a
                 href="https://github.com/career-ops-hq/career-ops"
-                rel="me noreferrer noopener"
+                rel="me noopener"
                 className="hover:text-fd-foreground transition-colors"
               >
                 career-ops-hq/career-ops

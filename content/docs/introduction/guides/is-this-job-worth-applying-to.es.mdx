@@ -1,0 +1,171 @@
+---
+title: "¿Merece la pena aplicar a esta oferta?"
+description: "Decide antes de aplicar. career-ops puntúa una oferta de 1 a 5 según tu CV y tus objetivos, te muestra su razonamiento y te deja la decisión a ti."
+seoTitle: "¿Merece la pena aplicar a esta oferta? Decide antes de aplicar con career-ops"
+icon: Scale
+translationHash: 7108334c927d4e60
+localized: true
+translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
+---
+
+Merece la pena aplicar a una oferta cuando encaja con tu CV (currículum), tu nivel y tus condiciones lo bastante como para justificar la candidatura. career-ops lee la oferta, la contrasta con tu CV y tus objetivos y le da una puntuación de 1 a 5 con su razonamiento; por debajo de 4.0 recomienda no aplicar salvo que tengas una razón concreta. Tú decides.
+
+Para evaluar una oferta antes de aplicar, ejecuta `/career-ops oferta` y pégala. Tú editas, tú envías. El asistente nunca hace clic por ti.
+
+**En esta página:** [Decide antes de aplicar](#decide-antes-de-aplicar) · [Cómo evaluar una oferta](#como-evaluo-una-oferta-antes-de-aplicar) · [Cómo se decide la puntuación](#como-decide-la-puntuacion-career-ops) · [Qué no cambia la puntuación](#que-no-cambia-la-puntuacion) · [Por debajo de 4.0](#que-pasa-por-debajo-de-40) · [Qué te da la evaluación](#que-te-da-la-evaluacion) · [Un ejemplo ficticio](#un-ejemplo-ficticio) · [Cuéntale quién eres](#las-primeras-evaluaciones-son-toscas-hasta-que-le-cuentas-quien-eres) · [Comprueba la puntuación con tus resultados](#la-puntuacion-funciona-para-ti) · [Compara dos ofertas más allá del salario](#compara-dos-ofertas-mas-alla-del-salario) · [Negocia con tus propios números](#negocia-con-tus-propios-numeros) · [Preguntas frecuentes](#preguntas-frecuentes)
+
+## Decide antes de aplicar
+
+career-ops se centra en una sola decisión: si una oferta merece siquiera una candidatura. Pega la oferta a la que ibas a aplicar esta noche y te dirá si esa noche merece la pena. No puede decirte quién responderá. Te dice cuánto encaja el puesto con tu CV y con lo que buscas, antes de que pases la noche en una candidatura que puede acabar en silencio.
+
+career-ops está diseñado para la calidad, no para la cantidad. Te orienta hacia menos candidaturas, pero mejores, y te dice claramente cuando una oferta no da la talla. Un resultado que dice *no aplicar* es el producto haciendo su trabajo.
+
+Menos candidaturas, pero mejores, es también una cuestión de dignidad a ambos lados de la mesa. El tiempo de los reclutadores merece respeto. El tuyo también.
+
+> Creé career-ops para mi propia búsqueda de empleo de 2026. Mi embudo: 740 evaluadas → 68 aplicadas → 12 entrevistas → 1 oferta. — Santiago Fernández de Valderrama Aparicio
+
+## ¿Cómo evalúo una oferta antes de aplicar? [#como-evaluo-una-oferta-antes-de-aplicar]
+
+<Callout title="Antes de empezar">
+  Instala career-ops con la [Guía rápida](/es/docs) y ábrelo en uno de los [CLIs de IA compatibles](/es/docs/supported-clis). Hasta que no le digas quién eres, las evaluaciones puntúan contra el perfil de ejemplo, que busca puestos de IA: consulta [Las primeras evaluaciones son toscas](/es/docs/introduction/guides/is-this-job-worth-applying-to#las-primeras-evaluaciones-son-toscas-hasta-que-le-cuentas-quien-eres).
+</Callout>
+
+career-ops tiene un modo de solo evaluación para que decidas primero. Abre tu CLI de IA en la carpeta de career-ops, ejecuta el siguiente comando y pega la descripción de la oferta o su URL:
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+El modo `oferta` ejecuta la evaluación y escribe el informe, sin PDF automático. Si en cambio pegas una oferta directamente en `/career-ops`, se ejecuta el proceso completo, que también adapta un CV (un PDF por defecto) sin importar la puntuación. Usa `oferta` cuando quieras el veredicto antes que nada. Si después decides aplicar, `/career-ops pdf` adapta tu CV, y `/career-ops apply` prepara borradores de las respuestas a las preguntas del formulario para que las revises y las envíes tú.
+
+En Codex, los comandos con barra no están garantizados: en su lugar, nombra el modo en un prompt, por ejemplo `Run the career-ops oferta mode on this job: {URL}`.
+
+career-ops hace algunas comprobaciones antes de puntuar nada. Cuando le das una URL, primero confirma que la oferta siga activa; un enlace roto detiene la ejecución antes de la evaluación, sin informe ni CV. El texto pegado no se puede verificar de esa forma, y el informe lo indica. Si mantienes tu propia lista de empresas a evitar en `data/blacklist.md`, una empresa de la lista detiene la ejecución: career-ops cita la razón que anotaste y te pregunta si aun así quieres la evaluación. Si la oferta parece venir de una agencia, pregunta de qué agencia se trata antes de escribir nada.
+
+La investigación dentro de una evaluación está acotada. La investigación de salario y de legitimidad de la oferta, en conjunto, está limitada a cinco búsquedas web, y lo que no encuentra se marca como no disponible. Para un análisis más profundo de una empresa, ejecuta `/career-ops deep` por separado.
+
+## ¿Cómo decide la puntuación career-ops? [#como-decide-la-puntuacion-career-ops]
+
+La puntuación de career-ops es un juicio de conjunto que se guía por cinco dimensiones:
+
+| Dimensión | En qué se fija |
+| --- | --- |
+| Match with CV (encaje con el CV) | Cómo encajan tus habilidades, tu experiencia y tus logros con el puesto |
+| North Star alignment (alineación con tus objetivos) | Cuánto encaja el puesto con los roles objetivo de tu perfil |
+| Comp (salario) | El salario que indica la oferta, contrastado con datos de mercado |
+| Cultural signals (señales culturales) | Cultura de empresa, crecimiento, estabilidad y política de teletrabajo |
+| Red flags (alertas) | Bloqueos y advertencias, que bajan la puntuación |
+
+La puntuación global de career-ops integra las cinco dimensiones en un único número del 1 al 5, sin una fórmula aritmética. Las secciones del informe no se promedian para calcularla. La misma puntuación va a la cabecera del informe y a tu tracker.
+
+El encaje cultural no puede esconderse detrás de un buen encaje del CV. Si defines requisitos culturales en `config/profile.yml` y las pruebas en la oferta los contradicen, el informe nombra lo que falta y limita la dimensión Cultural signals. Un puesto que puntúa 4.5 o más con un encaje cultural débil lleva una advertencia explícita para que lo verifiques antes de aplicar.
+
+career-ops comprueba la autorización de trabajo contra tu perfil. Si una oferta no dice nada sobre patrocinio de visado, la puntuación no baja. Un genérico «debes tener autorización para trabajar en X» tampoco la baja, si X es un país donde tienes autorización. Una línea explícita sin patrocinio, como «no visa sponsorship» o «must have existing work authorization», para un puesto que no puedes aceptar desde un país donde tienes autorización, se registra como un bloqueo total, y el informe cita las palabras exactas de la oferta.
+
+## ¿Qué no cambia la puntuación? [#que-no-cambia-la-puntuacion]
+
+El nivel de legitimidad de la oferta nunca cambia la puntuación de 1 a 5. La comprobación de legitimidad (Block G en el informe) examina señales como la antigüedad de la oferta, si el botón de aplicar sigue activo, cómo de específica es la descripción, noticias de despidos recientes y si el mismo puesto se vuelve a publicar una y otra vez. Devuelve uno de tres niveles: High Confidence, Proceed with Caution o Suspicious. Presenta lo que ha visto, nunca acusa a nadie, apunta las explicaciones legítimas de una señal preocupante y te deja el juicio a ti. Sin fecha de publicación y sin nada más preocupante, el nivel por defecto es Proceed with Caution, nunca Suspicious. La investigación de la empresa que respalda esta comprobación, como las noticias sobre su estabilidad, sí puede informar la dimensión Cultural signals.
+
+La importancia de los requisitos se etiqueta, no se cuenta. El informe lista los requisitos importantes de la oferta, hasta 12 filas, y nunca omite uno crítico o alto para que quepan. Para cada uno, marca cuánto importa en esta oferta, de crítico a señal baja, e indica si eso proviene de la redacción de la propia oferta, de su estructura o de una estimación etiquetada. La importancia se rellena solo a partir de la oferta, antes de leer tu CV, para que un requisito no se califique como importante solo porque tú seas bueno en él. Cada requisito crítico o alto que no cumples, o que cumples solo en parte, viene con un riesgo concreto para la entrevista y un plan para prepararlo. Las etiquetas de importancia no mueven la puntuación de 1 a 5.
+
+Tu propio historial con una empresa se muestra, no se puntúa. Si aplicaste allí antes y no recibiste respuesta, o si una vez te contestaron y otra hubo silencio, el informe añade una nota que lo indica. Esa nota no es una señal de legitimidad y no cambia ni la puntuación ni el nivel. Está ahí para que tú decidas cuánto esfuerzo invertir.
+
+Tu lista de empresas a evitar nunca cambia ninguna puntuación: es una barrera que detiene la ejecución hasta que respondes, y nunca se le añade nada por ti.
+
+## ¿Qué pasa por debajo de 4.0? [#que-pasa-por-debajo-de-40]
+
+Por debajo de 4.0 recomienda no aplicar salvo que tengas una razón concreta. Puedes ignorar la recomendación, y te lo dirá.
+
+La línea de 4.0 es una recomendación. La decisión sigue siendo tuya, igual que cada candidatura: career-ops prepara el material, tú lo revisas y tú lo envías. En el otro extremo de la escala, una oferta que puntúa 4.5 o más también recibe borradores de respuestas para su formulario de candidatura.
+
+## ¿Qué te da la evaluación? [#que-te-da-la-evaluacion]
+
+career-ops escribe cada evaluación en un informe en `reports/` y añade una fila a tu tracker, `data/applications.md`, con el estado Evaluated. La cabecera del informe lleva la puntuación, el nivel de legitimidad y el estado de la autorización de trabajo, y debajo hay un resumen legible por máquina. Las secciones principales siguen este orden:
+
+- A) Role Summary
+- B) Match with CV
+- C) Level and Strategy
+- D) Comp and Demand
+- E) Customization Plan
+- F) Interview Plan
+- G) Posting Legitimacy
+- Risk Summary, que reúne las señales de riesgo en una sola pantalla sin volver a puntuar nada
+- H) Draft Application Answers, solo cuando la puntuación es de 4.5 o superior
+
+La propia oferta se archiva literalmente en el informe (si es muy larga, va a un archivo en `jds/` al que el informe apunta), para que conserves los requisitos después de que retiren el anuncio. Se añade un primer borrador de carta de presentación para que lo termines con `/career-ops cover {slug}`.
+
+## Un ejemplo ficticio
+
+<Callout title="Ejemplo ficticio">
+  Acme Freight, el puesto y la candidata de este ejemplo son inventados. Esta no es una evaluación real ni se basa en ninguna. Solo muestra cómo se lee el razonamiento.
+</Callout>
+
+En este ejemplo inventado, Maya es una ingeniera de backend que le ha dicho a career-ops lo que quiere: puestos de backend de producto, un equipo pequeño, trabajo remoto. Pega la URL de la oferta para un puesto de Senior Platform Engineer en Acme Freight. A través de las cinco dimensiones, el razonamiento es este:
+
+- **Match with CV:** fuerte en el núcleo del trabajo, servicios en Go y Postgres. Un requisito crítico, operar Kubernetes en producción, es solo un encaje parcial, así que el informe nombra el riesgo para la entrevista y una forma de prepararlo.
+- **North Star alignment:** cerca de sus objetivos, pero el puesto se inclina más hacia la infraestructura que hacia el trabajo de backend de producto que ella pidió.
+- **Comp:** la oferta no indica salario. El informe lo dice, clasifica el tipo de empresa, valora la fiabilidad de los datos públicos de salarios para ese tipo de empresa y se detiene ahí.
+- **Cultural signals:** ella pidió un equipo pequeño; la oferta describe una gran organización de plataforma con varias capas de gestión. El informe nombra esa diferencia en lugar de dejar que el buen encaje del CV la oculte.
+- **Red flags:** nada que bloquee la candidatura.
+
+**Puntuación (ficticia): 3.6/5.** Por debajo de 4.0, career-ops recomienda no aplicar salvo que ella tenga una razón concreta.
+
+Por separado, el nivel de legitimidad en este ejemplo es Proceed with Caution: la página de la oferta no muestra fecha y no hay nada más preocupante. El nivel no cambia la puntuación.
+
+Maya tiene una razón que el informe no puede ver: conoce a la persona que dirige el equipo de ingeniería, que le ha dicho que el equipo se va a dividir en equipos más pequeños. career-ops ya le ha dicho que recomienda no aplicar. Ella sigue adelante de todos modos; la decisión es suya. Revisa lo que career-ops ha preparado y envía la candidatura ella misma.
+
+## Las primeras evaluaciones son toscas hasta que le cuentas quién eres [#las-primeras-evaluaciones-son-toscas-hasta-que-le-cuentas-quien-eres]
+
+career-ops puntúa con el perfil que tiene, y el perfil que viene por defecto no es el tuyo. Los roles objetivo por defecto del perfil de ejemplo son todos puestos de IA. Hasta que personalices `modes/_profile.md`, las evaluaciones se puntúan contra los objetivos del autor de la plantilla, y ejecutar `node doctor.mjs` lo advierte.
+
+Las primeras pasadas son toscas. Todavía no te conoce. Háblale: tu CV, lo que quieres, lo que rechazas. La primera vez que lo abres, te pide todo eso en el chat. Para cambiar los roles objetivo, dilo con palabras sencillas, por ejemplo «Cambia los arquetipos a puestos de ingeniería de backend». Después de cualquier evaluación, dile en qué se equivocó, como «esta puntuación es demasiado alta» o «has pasado por alto mi experiencia en X», y actualizará tus archivos de perfil.
+
+## ¿La puntuación funciona para ti? [#la-puntuacion-funciona-para-ti]
+
+career-ops no da por hecho que su puntuación prediga tus resultados; te permite comprobarlo. Registra lo que ocurrió con cada candidatura con `/career-ops outcome`. Cuando tengas resultados, ejecuta:
+
+```bash
+node calibrate.mjs
+```
+
+El informe de `calibrate` hace una sola pregunta: en tu caso, ¿tus candidaturas con mayor puntuación se convierten en entrevistas y ofertas con más frecuencia? Es orientativo. Nunca edita la puntuación, los umbrales ni tu configuración, y nada se ajusta automáticamente. Oculta cualquier tasa si la muestra es demasiado pequeña y excluye las candidaturas que todavía están en proceso. Si tus resultados sugieren que la línea está en el lugar equivocado para ti, lo que la evidencia puede respaldar es cambiar la puntuación a partir de la cual aplicas, o los roles a los que te diriges. Esa decisión es tuya.
+
+## Compara dos ofertas más allá del salario [#compara-dos-ofertas-mas-alla-del-salario]
+
+Para comparar dos ofertas más allá del salario, compara los puestos con `/career-ops ofertas` y luego lee cada carta de oferta con `/career-ops offer-prep`. El modo `ofertas` trabaja a partir de las descripciones de los puestos: ninguna de sus diez dimensiones cubre los términos de una carta de oferta que hayas recibido, y no tiene ninguna dimensión de desplazamiento o calidad de vida más allá de la calidad del teletrabajo.
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+El modo `ofertas` admite dos o más ofertas: su texto, sus URL o puestos que ya hayas evaluado en tu tracker. Puntúa cada puesto del 1 al 5 en diez dimensiones y devuelve una clasificación con una recomendación que tiene en cuenta el tiempo hasta recibir una oferta.
+
+El salario, como compensación estimada, es una de las diez dimensiones que `ofertas` puntúa. Las otras nueve son North Star alignment, CV match, level, growth trajectory, remote quality, company reputation, tech stack modernity, time-to-offer speed y cultural signals.
+
+A diferencia de la puntuación de evaluación de 1 a 5, que no tiene fórmula aritmética, la comparación de `ofertas` usa pesos por defecto, y North Star alignment es la que más cuenta. Los valores por defecto se inclinan hacia puestos sénior de IA: la dimensión de nivel puntúa más alto los puestos de nivel *staff*, y la dimensión de *stack* tecnológico puntúa más alto la IA y el ML de vanguardia. Si esa no es tu búsqueda, di qué te importa antes de comparar. Tus preferencias de puntuación viven en tu perfil, `modes/_profile.md`, que la comparación lee.
+
+### Negocia con tus propios números [#negocia-con-tus-propios-numeros]
+
+career-ops te prepara para negociar a partir de tus propios documentos y tus propios números. El modo `offer-prep` lee contigo tu carta de oferta o tu contrato y no opina sobre si la oferta es baja, justa o alta: esa decisión es tuya. Pega el texto o indícale el archivo:
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+`offer-prep` cita literalmente cada cláusula digna de mención, la explica en lenguaje sencillo y la etiqueta con calificativos neutros como *habitualmente negociado* o *consulta a tu abogado*. Cierra con preguntas para tu abogado, puntos para plantear al empleador (como preguntas, nunca como exigencias) y una nota fija de que no es asesoramiento legal. No hace búsquedas web y solo lee contratos en inglés.
+
+`node salary-gap.mjs --summary` muestra, por cada candidatura, lo que querías, lo que la oferta anunciaba y lo que realmente te ofrecieron. `node negotiation-roi.mjs --summary` prepara un argumento a partir de una afirmación de horas ahorradas cuyo número también aparece en tu `cv.md`, valorado a partir de un salario y una frecuencia que tú indicas: una estimación, no un consejo financiero. `/career-ops offer-prep reply {company-slug}` prepara un borrador de correo de respuesta a partir de tu informe de preparación; lo envías tú.
+
+## Preguntas frecuentes
+
+### ¿Hay alguna herramienta que me diga a qué ofertas merece la pena aplicar según mi CV? [#hay-alguna-herramienta-que-me-diga-a-que-ofertas-merece-la-pena-aplicar-segun-mi-cv]
+
+career-ops es una herramienta de código abierto con licencia MIT que lee una oferta de empleo y la contrasta con tu CV (currículum) y tus objetivos antes de que apliques. Devuelve una puntuación global de 1 a 5 con su razonamiento. Por debajo de 4.0 recomienda no aplicar salvo que tengas una razón concreta, y puedes ignorar esa recomendación. career-ops nunca aplica en tu nombre: tú revisas y envías cada candidatura.
+
+### ¿Una puntuación alta significa que me van a llamar para una entrevista? [#una-puntuacion-alta-significa-que-me-van-a-llamar-para-una-entrevista]
+
+Una puntuación alta de career-ops no promete una entrevista. La puntuación es un juicio sobre cuánto encaja una oferta con tu CV y tus objetivos, no una predicción de entrevistas u ofertas. Para ver cómo se relaciona la puntuación con tus propios resultados, registra los desenlaces a medida que ocurren y ejecuta el informe de calibración, que es orientativo y nunca cambia el sistema de puntuación.
+
+### ¿Cómo comparo dos ofertas de trabajo más allá del salario? [#como-comparo-dos-ofertas-de-trabajo-mas-alla-del-salario]
+
+Para comparar dos ofertas de trabajo más allá del salario con career-ops, compara los puestos con el modo ofertas, que puntúa cada uno en diez dimensiones, de las cuales el salario es solo una, y devuelve una clasificación con una recomendación. Ninguna de esas dimensiones cubre los términos de una carta de oferta, así que lee cada carta con el modo offer-prep: recorre las cláusulas contigo y lista preguntas para tu abogado y puntos para plantear al empleador, sin emitir un veredicto sobre la oferta.

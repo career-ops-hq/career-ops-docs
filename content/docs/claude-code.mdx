@@ -5,14 +5,14 @@ description: "Use Claude Code as an AI job search agent: career-ops scans job bo
 icon: Bot
 ---
 
-career-ops turns Claude Code into an AI job search agent that runs in your terminal. It scans company job boards, scores each listing against your CV, tailors your resume, and drafts cover letters and your application answers. It evaluates and drafts; you decide and send. It never applies in your name. It also runs in Codex, OpenCode and other AI coding CLIs.
+You can run your job search with Claude: career-ops turns Claude Code into an AI job search agent that runs in your terminal. It scans company job boards, scores each listing against your CV, tailors your resume, and drafts cover letters and your application answers. It evaluates and drafts; you decide and send. It never applies in your name. It also runs in Codex, OpenCode and other AI coding CLIs.
 
 ## How to run career-ops in Claude Code
 
-career-ops loads into Claude Code through the `CLAUDE.md` file in the project folder, so there is nothing extra to configure once it is installed. The [Quick Start](/docs) covers the installation.
+career-ops loads into Claude Code through the `CLAUDE.md` file in the project folder. The [Quick Start](/docs) covers the installation. One extra step, once: add the Playwright browser tools that confirm a listing is still live, with `/plugin install playwright@claude-plugins-official` inside Claude Code. The startup check (`node doctor.mjs`) warns you if they are missing. The installation also downloads the browser used for PDFs and `scan --verify`; if that step was skipped, run `npx playwright install chromium`.
 
 - **Interactive:** open the career-ops folder, run `claude`, then type `/career-ops`.
-- **Batch:** run it headless with `claude -p "prompt"`.
+- **Batch:** run it headless with `claude -p "prompt"`. The batch runner starts its workers without browser tools, so they cannot confirm that a listing is still live, and the report says so.
 
 ## What it costs
 
@@ -24,28 +24,30 @@ If you would rather not pay for an engine at all, career-ops runs on free provid
 
 ## What it does, and what it leaves to you
 
-Each listing gets a global score from 1 to 5, built from five dimensions. Below 4.0/5, career-ops recommends against applying. For the listings worth pursuing it tailors your resume, drafts a cover letter and drafts answers to the application's open questions.
+Each listing gets a global score from 1 to 5: a holistic judgement guided by five dimensions, not a weighted formula. Below 4.0, it recommends against applying unless you have a specific reason. For the listings worth pursuing it tailors your resume, drafts a cover letter and drafts answers to the application's open questions.
 
-Then it stops. You review what it drafted, edit it, and submit the application yourself. career-ops never submits an application for you.
+Then it stops. You review what it drafted, edit it, and submit the application yourself. It never applies in your name.
+
+The first runs are rough. It does not know you yet. Talk to it: your CV, what you want, what you refuse.
 
 ## Prefer another CLI?
 
-career-ops works the same way in Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent and GitHub Copilot CLI. See [Supported CLIs](/docs/supported-clis) for how each one loads it.
+career-ops also runs in Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent and GitHub Copilot CLI. How you start it differs by CLI: see [Supported CLIs](/docs/supported-clis) for how each one loads it.
 
 ## Where it came from
 
-Built by Santiago Fernández de Valderrama Aparicio for his own 2026 job search: 740 job listings evaluated → 68 applications → 12 interviews → 1 offer.
+I built career-ops for my own 2026 job search. My funnel: 740 evaluated → 68 applied → 12 interviews → 1 offer. — Santiago Fernández de Valderrama Aparicio
 
 ## Frequently asked questions
 
 ### Can Claude Code search for jobs for me?
 
-Yes, with career-ops. It scans company job boards, scores each listing against your CV and drafts the application material for the ones worth pursuing. You decide which applications to send.
+Claude Code can run your job search with career-ops: it scans company job boards, scores each listing against your CV and drafts the application material for the ones worth pursuing. You decide which applications to send.
 
 ### Does it apply to jobs automatically?
 
-No. career-ops never submits an application in your name. It prepares everything up to the click, and you review and send each application yourself.
+No: career-ops never applies in your name. It drafts the material; you review, edit and send each application yourself.
 
 ### Do I need Claude Pro?
 
-To use Claude Code you need a paid Claude plan or an Anthropic API key. career-ops itself is free, and it also runs on free engines through OpenCode.
+Claude Code needs a paid Claude plan or an Anthropic API key. career-ops itself is free and MIT-licensed, and it also runs on free providers through OpenCode.
