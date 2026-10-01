@@ -5,7 +5,7 @@ seoTitle: "Modo pipeline de career-ops — evalúa en lote muchas ofertas de emp
 icon: GitBranch
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: 1e5c70f073c9c18b
+translationHash: 23454c517c41a1c1
 localized: true
 translatedFrom: /docs/reference/modes/pipeline
 ---
@@ -28,7 +28,7 @@ $ /career-ops pipeline
 Liveness sweep: 8 pending URLs
   6 live · 2 expired (moved to Processed, marked Discarded)
 
-Processing 6 live URLs (parallel workers)...
+Processing 6 live URLs (one at a time)...
 
 | # | Company | Role         | Score | PDF | Recommended action |
 |---|---------|--------------|-------|-----|--------------------|
@@ -45,7 +45,7 @@ Recurre a pipeline cuando hayas acumulado un backlog de ofertas durante el día 
 
 - La sección `## Pending` acepta cualquier formato: funciona con una URL pegada tal cual, o puedes añadir columnas `company`, `role`, `location` y `comp`, y el modo las lee todas.
 - El barrido de liveness se ejecuta antes del bucle por URL, de modo que una bandeja de entrada obsoleta con ocho URLs no cuesta ocho evaluaciones desperdiciadas.
-- Con tres o más URLs pendientes las procesa en paralelo, un worker por URL, en lugar de una a una.
+- La herramienta de extracción decide la concurrencia. Con el extractor de navegador por defecto (Playwright MCP) procesa las URLs una a una, porque si varios workers comparten una sesión de navegador pueden mezclarse y evaluar la vacante equivocada. Solo cuando todos los workers usan el extractor CLI aislado (`scan.extractor: cli`) o un método alternativo sin navegador, cada uno con su propio proceso y estado de sesión, tres o más URLs pueden procesarse en paralelo, un worker por URL.
 - Los PDFs solo se generan cuando una puntuación supera `auto_pdf_score_threshold` (3.0 por defecto); súbelo para omitir los PDFs de los roles marginales y generarlos bajo demanda más adelante con `/career-ops pdf`.
 
 ## Relacionado

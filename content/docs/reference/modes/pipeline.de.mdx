@@ -5,7 +5,7 @@ seoTitle: "career-ops pipeline-Modus — viele Stellenanzeigen in einem Rutsch b
 icon: GitBranch
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: 1e5c70f073c9c18b
+translationHash: 23454c517c41a1c1
 localized: true
 translatedFrom: /docs/reference/modes/pipeline
 ---
@@ -28,7 +28,7 @@ $ /career-ops pipeline
 Liveness sweep: 8 pending URLs
   6 live · 2 expired (moved to Processed, marked Discarded)
 
-Processing 6 live URLs (parallel workers)...
+Processing 6 live URLs (one at a time)...
 
 | # | Company | Role         | Score | PDF | Recommended action |
 |---|---------|--------------|-------|-----|--------------------|
@@ -45,7 +45,7 @@ Greif zu pipeline, wenn du im Laufe des Tages einen Stapel Stellenanzeigen gesam
 
 - Der Abschnitt `## Pending` akzeptiert jedes Format. Eine einfach eingefügte URL reicht, du kannst aber auch die Spalten `company`, `role`, `location` und `comp` ergänzen, und der Modus liest sie alle aus.
 - Die Liveness-Prüfung läuft vor der Schleife über die einzelnen URLs. Ein veralteter Eingang mit acht URLs kostet dich also nicht acht verschwendete Bewertungen.
-- Ab drei offenen URLs verarbeitet er sie parallel, mit einem Worker pro URL, statt eine nach der anderen.
+- Wie viele URLs er gleichzeitig verarbeitet, entscheidet das Extraktionswerkzeug. Mit dem Standard-Extraktor im Browser (Playwright MCP) verarbeitet er die URLs nacheinander, weil Worker, die sich eine Browsersitzung teilen, ihre Daten vermischen und die falsche Stellenanzeige bewerten können. Erst wenn jeder Worker den isolierten CLI-Extraktor (`scan.extractor: cli`) oder einen Fallback ohne Browser nutzt, jeweils mit eigenem Prozess und eigenem Sitzungszustand, können drei oder mehr URLs parallel laufen, mit einem Worker pro URL.
 - PDFs entstehen nur, wenn eine Bewertung den Schwellenwert `auto_pdf_score_threshold` erreicht (Standard: 3.0). Setz den Wert höher, wenn du für Stellen, die nur knapp passen, keine PDFs erzeugen willst. Bei Bedarf erstellst du sie später mit `/career-ops pdf`.
 
 ## Siehe auch

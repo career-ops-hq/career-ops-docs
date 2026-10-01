@@ -5,7 +5,7 @@ seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidatu
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: eb25e59a2aa5c2a3
+translationHash: 167746551bbaa8b0
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -30,15 +30,15 @@ Une exécution de tracker affiche le tableau complet des candidatures ainsi qu'u
 
 ```txt title="Example"
 # | Date       | Company   | Role              | Score | Status    | PDF | Report
-1 | 2026-06-14 | Anthropic | AI Engineer       |  87   | Interview | yes | yes
-2 | 2026-06-18 | Vercel    | Applied AI Eng    |  79   | Applied   | yes | yes
-3 | 2026-06-21 | Figma     | Product Eng, AI   |  72   | Evaluated | yes | yes
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
 
 Total: 3   Applied: 1   Interview: 1   Evaluated: 1
-Average score: 79   PDF generated: 100%   Report generated: 100%
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-Une candidature traverse un ensemble fixe d'états : Evaluated (rapport rédigé, décision en attente), Applied (vous avez postulé), Responded (l'entreprise a répondu mais pas encore d'entretien), Interview (un processus actif), puis un état terminal — Offer, Rejected, Discarded, ou SKIP pour les postes qui ne conviennent pas. Pour enregistrer un changement de statut, mettez à jour la ligne dans le tableau du tracker ou utilisez le dashboard TUI en Go.
+Une candidature traverse un ensemble fixe d'états : Evaluated (rapport rédigé, décision en attente), Applied (vous avez postulé), Responded (l'entreprise a répondu mais pas encore d'entretien), Interview (un processus actif), puis un état terminal — Offer, Rejected, Discarded, ou SKIP pour les postes qui ne conviennent pas. Pour enregistrer un changement de statut, demandez-le dans le chat ou lancez vous-même `node set-status.mjs <report#|company> <state>`, en ajoutant `--on YYYY-MM-DD` si le changement a eu lieu à une date antérieure. La commande rejette les états inconnus, verrouille le tracker pendant l'écriture et consigne la transition dans `data/status-log.tsv`, le journal que lisent les statistiques de funnel-velocity : utilisez-la plutôt que de modifier la ligne à la main.
 
 ## Lire les chiffres cumulés
 
@@ -46,7 +46,7 @@ Pour les chiffres cumulés — le funnel complet, les totaux du scanner, la couv
 
 ## Pièges à connaître
 
-tracker est en lecture seule. Les changements de statut se font par des touches explicites dans le dashboard TUI en Go ou par des modifications manuelles du frontmatter du rapport.
+Le statut se trouve dans la colonne Status du tracker (`data/applications.md`), pas dans le fichier du rapport. Le sélecteur de statut du dashboard TUI en Go met aussi à jour cette colonne, mais il ne consigne pas la transition dans `data/status-log.tsv` comme le fait `set-status.mjs`. funnel-velocity voit bien le nouveau statut, mais pas le moment où il a changé : le changement manque dans les temps par étape, et une ligne qui finit en Rejected perd les étapes par lesquelles elle est passée. Utilisez la commande pour tout changement que vous voulez voir dans ces chiffres.
 
 ## Pages liées
 

@@ -3,7 +3,7 @@ title: Eine kostenlose KI-Engine einrichten
 seoTitle: "career-ops kostenlos nutzen (ohne Claude-Abo) — OpenRouter, Ollama, lokale Modelle"
 description: career-ops für 0 $ nutzen — ohne Claude-Abo und ohne sonstigen kostenpflichtigen Plan. Kostenlose KI-Engines für career-ops — OpenCode mit einem kostenlosen Anbieter, ein lokales Modell über Ollama, jeder OpenAI-kompatible Endpoint oder der integrierte OpenRouter-Runner — und was du tust, wenn dir mitten in der Suche die Tokens ausgehen.
 icon: Sparkles
-translationHash: 6bbb5f7758c39aa8
+translationHash: 27392ae8d171293d
 localized: true
 translatedFrom: /docs/free-ai-engine
 ---
@@ -43,12 +43,11 @@ Die meisten fangen am besten mit OpenCode und einem kostenlosen Anbieter an. Die
         Registriere dich bei einem beliebigen Anbieter mit kostenlosem Kontingent und kopiere deinen API-Key. Beliebte kostenlose Optionen aus der Community sind **OpenRouter** (Modelle mit dem Tag `:free`), **Google AI Studio** (kostenloses Gemini-Kontingent) und OpenAI-kompatible Endpoints wie das kostenlose Kontingent von **Nvidia**. Im [Budget-Guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) findest du die aktuelle Liste der Modelle, die sich gut schlagen.
       </Step>
       <Step title="OpenCode damit verbinden">
-        Setz deinen Key und die Base-URL als Umgebungsvariablen und öffne OpenCode dann im career-ops-Ordner:
+        Öffne OpenCode im career-ops-Ordner:
         ```bash title="Terminal"
-        export OPENAI_API_BASE="https://openrouter.ai/api/v1"
-        export OPENAI_API_KEY="your_free_api_key_here"
         opencode
         ```
+        Führe in OpenCode `/connect` aus, wähle deinen Anbieter (zum Beispiel **OpenRouter**) und füge deinen Key ein. Führe danach `/models` aus und wähle ein kostenloses Modell, bei OpenRouter eines mit dem Tag `:free`. OpenCode ignoriert `OPENAI_API_BASE` und `OPENAI_BASE_URL`: Eingerichtet wird es über `/connect` und `/models`.
       </Step>
     </Steps>
   </div>

@@ -3,7 +3,7 @@ title: Démarrage rapide
 description: "Démarrez avec career-ops en cinq minutes : installez le système open source de recherche d'emploi par IA, ouvrez votre CLI d'IA et évaluez votre première offre. Aucune connaissance en code requise."
 seoTitle: "career-ops Démarrage rapide — installez et lancez votre premier scan d'offres par IA en quelques minutes"
 icon: Rocket
-translationHash: f0830293c1d38da8
+translationHash: d363142d21bc56d7
 localized: true
 translatedFrom: /docs
 ---
@@ -50,7 +50,7 @@ Ouvrez un terminal dans le dossier où vous voulez installer career-ops. La voie
 npx @santifer/career-ops init
 ```
 
-Cette commande clone la dernière release dans `./career-ops`, installe les dépendances et met en place la structure de l'espace de travail. Elle détecte aussi quel CLI de codage IA vous avez installé et vous indique la bonne commande pour démarrer. La commande est idempotente — la relancer n'écrase jamais les fichiers que vous avez déjà.
+Cette commande clone la dernière release dans `./career-ops`, installe les dépendances et met en place la structure de l'espace de travail. Elle détecte aussi quel CLI de codage IA vous avez installé et vous indique la bonne commande pour démarrer. Elle n'installe que dans un nouveau dossier : si `./career-ops` existe déjà et n'est pas vide, la commande s'arrête sur une erreur sans rien modifier ; la relancer ne répare donc ni ne met à jour un espace de travail existant.
 
 Une fois terminé, placez-vous dans l'espace de travail :
 
@@ -83,15 +83,10 @@ npx playwright install chromium
 
 Depuis l'intérieur du dossier `career-ops`, lancez le CLI de codage IA que vous avez installé.
 
-<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
-    ```
-  </Tab>
-  <Tab value="Antigravity CLI">
-    ```bash title="Terminal"
-    agy
     ```
   </Tab>
   <Tab value="Codex">
@@ -99,19 +94,24 @@ Depuis l'intérieur du dossier `career-ops`, lancez le CLI de codage IA que vous
     codex
     ```
   </Tab>
-  <Tab value="Qwen Code">
-    ```bash title="Terminal"
-    qwen
-    ```
-  </Tab>
   <Tab value="OpenCode">
     ```bash title="Terminal"
     opencode
     ```
   </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash title="Terminal"
     copilot
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash title="Terminal"
+    agy
     ```
   </Tab>
 </Tabs>
@@ -136,35 +136,35 @@ Depuis l'intérieur du dossier `career-ops`, lancez le CLI de codage IA que vous
 
 Une fois l'onboarding terminé, vous êtes prêt à évaluer une vraie offre d'emploi. Copiez l'URL de n'importe quelle annonce et collez-la dans le chat. Avec Claude Code ou Antigravity CLI, préfixez-la avec la commande explicite ; avec les autres CLI, collez l'URL et demandez à l'agent de lancer l'auto-pipeline :
 
-<Tabs items={["Claude Code", "Antigravity CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
-  <Tab value="Antigravity CLI">
-    ```bash
-    /career-ops https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
   <Tab value="Codex">
     ```bash
-    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
-  <Tab value="Qwen Code">
-    ```bash
-    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
+    Lancez la commande auto-pipeline avec l'URL de l'annonce : https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="OpenCode">
     ```bash
-    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
+    Lancez la commande auto-pipeline avec l'URL de l'annonce : https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Lancez la commande auto-pipeline avec l'URL de l'annonce : https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash
-    Lancez la commande auto-pipeline avec l'URL de l'offre : https://jobs.example.com/senior-engineer-ai
+    Lancez la commande auto-pipeline avec l'URL de l'annonce : https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash
+    /career-ops https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>
@@ -188,7 +188,7 @@ Une fois l'offre collée, career-ops fait tout ce qui suit de lui-même :
       </Step>
       <Step>
         ### Notation de l'offre
-        Il note le poste de 0 à 5 sur plusieurs dimensions, comme l'adéquation au rôle, la rémunération et la politique de télétravail.
+        Il note le poste de 1 à 5 sur plusieurs dimensions, comme l'adéquation au rôle, la rémunération et la politique de télétravail.
       </Step>
       <Step>
         ### Rédaction d'un rapport
@@ -220,7 +220,7 @@ Ouvrez le fichier de rapport dans `reports/`. Le nom du fichier suit le motif `{
 - **Bloc E** — des notes de personnalisation pour votre candidature.
 - **Bloc F** — une préparation à l'entretien avec des histoires STAR adaptées à cette offre.
 - **Bloc G** — légitimité de l'annonce : une vérification heuristique de signaux comme le fait que l'offre soit toujours ouverte ou republiée à répétition. Il rapporte ce qu'il trouve et vous laisse juger.
-- **Bloc H** — des brouillons de réponses pour le formulaire de candidature, rédigés uniquement lorsque le score dépasse 4.5.
+- **Bloc H** — des brouillons de réponses pour le formulaire de candidature, rédigés uniquement lorsque le score atteint au moins 4.5.
 
 Votre CV PDF sur mesure se trouve dans le dossier `output/`. Relisez-le avant de l'envoyer où que ce soit — career-ops ne soumet jamais rien sans votre accord.
 

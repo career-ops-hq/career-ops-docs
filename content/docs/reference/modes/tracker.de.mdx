@@ -5,7 +5,7 @@ seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: eb25e59a2aa5c2a3
+translationHash: 167746551bbaa8b0
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -30,15 +30,15 @@ Ein tracker-Durchlauf gibt die vollständige Bewerbungstabelle plus einen Statis
 
 ```txt title="Example"
 # | Date       | Company   | Role              | Score | Status    | PDF | Report
-1 | 2026-06-14 | Anthropic | AI Engineer       |  87   | Interview | yes | yes
-2 | 2026-06-18 | Vercel    | Applied AI Eng    |  79   | Applied   | yes | yes
-3 | 2026-06-21 | Figma     | Product Eng, AI   |  72   | Evaluated | yes | yes
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
 
 Total: 3   Applied: 1   Interview: 1   Evaluated: 1
-Average score: 79   PDF generated: 100%   Report generated: 100%
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded oder SKIP für Rollen, die nicht passen. Um eine Statusänderung festzuhalten, aktualisierst du die Zeile in der tracker-Tabelle oder nutzt das Go-TUI-Dashboard.
+Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded oder SKIP für Rollen, die nicht passen. Um eine Statusänderung festzuhalten, bittest du im Chat darum oder führst selbst `node set-status.mjs <report#|company> <state>` aus. Ist sie an einem früheren Tag passiert, ergänzt du `--on YYYY-MM-DD`. Der Befehl lehnt unbekannte Zustände ab, sperrt den Tracker, während er schreibt, und protokolliert den Übergang in `data/status-log.tsv`, dem Protokoll, aus dem die funnel-velocity-Statistiken lesen. Nutze ihn also, statt die Zeile von Hand zu bearbeiten.
 
 ## Die Gesamtzahlen lesen
 
@@ -46,7 +46,7 @@ Für kumulierte Werte – den vollständigen Funnel, die Scanner-Summen, die Por
 
 ## Stolperfallen
 
-tracker arbeitet rein lesend. Statusänderungen sind explizite Tastendrücke im Go-TUI-Dashboard oder manuelle Änderungen am Frontmatter des Berichts.
+Der Status steht in der Status-Spalte des Trackers (`data/applications.md`), nicht in der Berichtsdatei. Auch die Statusauswahl im Go-TUI-Dashboard aktualisiert diese Spalte, protokolliert den Übergang aber nicht in `data/status-log.tsv`, wie es `set-status.mjs` tut. funnel-velocity sieht dann zwar den neuen Status, aber nicht, wann er sich geändert hat: Die Änderung fehlt in den Zeiten pro Phase, und eine Zeile, die später in Rejected endet, verliert die Phasen, die sie durchlaufen hat. Nutze den Befehl für jede Änderung, die in diese Zahlen eingehen soll.
 
 ## Verwandte Seiten
 

@@ -5,7 +5,7 @@ seoTitle: "career-ops apply-Modus — Antworten auf ATS-Bewerbungsfragen automat
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: 2b3d824399a29c66
+translationHash: e00bf55bd395ea9c
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -49,14 +49,14 @@ captcha, and submit yourself.
 
 ## Stolperfallen
 
-apply schickt keine Formulare ab und klickt keine Buttons. Er liest die Fragen und liefert Antwortentwürfe im Chat. Das Absenden übernimmst du. Felder mit vorgegebenen Antworten (Dropdowns, Radiobuttons, Datei-Uploads) deckt er nicht ab. Stellt die Vorabprüfung (Preflight) fest, dass die Anzeige nicht mehr online ist, schreibt apply keinen finalen Text. Das geht nur, wenn du dich ausdrücklich darüber hinwegsetzt. Ein toter Link ist keine maßgeschneiderte Antwort wert.
+apply schickt die Bewerbung nie ab: Den letzten Klick auf Absenden machst immer du. Er liest jedes Feld des Formulars, nicht nur die Freitextfragen, also auch Dropdowns, Radiobuttons, Checkboxen und Upload-Felder. Er entwirft die Freitextantworten, schlägt für jedes Feld mit vorgegebenen Antworten einen Wert vor und markiert Fragen zur Arbeitserlaubnis, zum Gehalt und andere heikle Fragen, die dein Profil noch nicht beantwortet, damit du sie bestätigst, statt dass er rät. Mit Playwright kann er einige Felder direkt im Live-Formular ausfüllen; du prüfst alles und erledigst den Rest. Sobald die Antworten eingetragen sind, hält er den Text, die Auswahl und die verwendeten Dateien im Bericht fest. Stellt die Vorabprüfung (Preflight) fest, dass die Anzeige nicht mehr online ist, schreibt apply keinen finalen Text. Das geht nur, wenn du dich ausdrücklich darüber hinwegsetzt. Ein toter Link ist keine maßgeschneiderte Antwort wert.
 
 ## Bekannte ATS-Eigenheiten
 
 apply wurde bei rund einem Dutzend Bewerbungen mit Playwright in der Praxis getestet. Ein paar Portale lassen einen Durchlauf scheitern, wenn du ihre Eigenheiten nicht berücksichtigst:
 
 - **Ashby** erkennt doppelte Bewerbungen pro Unternehmen anhand der E-Mail-Adresse. Eine zweite Bewerbung kann deshalb stillschweigend mit deiner ersten zusammengeführt werden. Gibt es für dieses Unternehmen schon einen Bericht, schlägt apply einen E-Mail-Alias mit `+tag` vor.
-- **Lever** zeigt ein Captcha an, wenn eine Checkbox oder ein Radiobutton per Skript angeklickt wird. Deshalb füllt apply nur Textfelder aus, und den Rest kreuzt du selbst an.
+- **Lever** zeigt ein Captcha an, wenn eine Checkbox oder ein Radiobutton per Skript angeklickt wird. Deshalb füllt apply nur Textfelder und Dropdowns aus und überlässt dir das Ankreuzen der Checkboxen und Radiobuttons.
 - **Workday** ignoriert Werte, die ohne echte Tastenanschläge gesetzt werden. Deshalb tippt apply die Antworten Zeichen für Zeichen ein. Die Dropdowns zur Arbeitserlaubnis prüfst du selbst, bevor du speicherst.
 
 ## Siehe auch
