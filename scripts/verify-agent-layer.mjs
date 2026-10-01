@@ -14,7 +14,7 @@ const BASE = process.env.BASE || 'http://localhost:3999';
 
 /** Per-locale sample: the index, the entry page, and a nested one. */
 /** Non-default locales that must have full markdown parity with EN. */
-const LOCALES = ['es', 'fr'];
+const LOCALES = ['es', 'fr', 'de'];
 
 /** Per-locale sample: the index, the entry page, and a nested one. */
 const LOCALE_SAMPLE = ['docs', 'docs/introduction/what-is-career-ops', 'docs/faq'];

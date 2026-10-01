@@ -6,7 +6,7 @@
 // canonical non-translatables, and stamps the drift-tracking translationHash.
 //
 // Usage:
-//   node .i18n/translate.mjs [--lang es|fr] content/docs/reference/modes/pdf.mdx [more.mdx ...]
+//   node .i18n/translate.mjs [--lang es|fr|de] content/docs/reference/modes/pdf.mdx [more.mdx ...]
 //   (--lang defaults to es for back-compat; the output suffix follows the lang)
 //
 // It calls `claude -p` once per file (a headless one-shot), captures the
@@ -34,6 +34,13 @@ const LANGS = {
     suffix: 'fr',
     name: 'natural French (France), addressing the reader as "vous"',
   },
+  // DE added 2026-09-30: Germany is the #4 country by pageviews and Google
+  // clicks (after US, IN, CA) and the first non-English-speaking market.
+  // Informal "du" is the norm in German developer docs (GitHub, Docker).
+  de: {
+    suffix: 'de',
+    name: 'natural German (Germany), addressing the reader informally as "du" (lowercase, as in modern German developer documentation). Use German typographic quotes „…“ in prose. Job-search vocabulary: Stelle / Stellenanzeige (job listing), Bewerbung (application), Lebenslauf (CV — the file cv.md keeps its name), Anschreiben (cover letter), Vorstellungsgespräch (interview)',
+  },
 };
 
 /** content/docs/<rel>.mdx  ->  /docs/<rel>  (index -> parent, so /docs). */
@@ -51,7 +58,7 @@ RULES
 2. PRESERVE EXACTLY — never translate: fenced code blocks and their contents, inline \`code\`, shell commands, file names and paths (cv.md, DATA_CONTRACT.md, reports/, output/, config/profile.yml, data/applications.md, AGENTS.md, package names, npm/npx commands), and all URLs. In markdown links translate the visible text but keep the URL. In MDX component tags (<Tabs>, <Tab>, <Callout>, <Steps>, <Step>, <Accordions>, <Accordion>, <details>, <summary>, raw <div>…) keep the tag names and the identifier attributes (value="…", items order) unchanged; you MAY translate human-visible attribute text such as title="…". Keep heading levels and the overall MDX structure identical.
 3. NON-TRANSLATABLES — keep verbatim (this list is authoritative):
 ${GLOSSARY}
-   Also keep verbatim: the brand "career-ops" / "CareerOps", the name "Santiago Fernández de Valderrama Aparicio" (with Aparicio), mode ids (apply, scan, pipeline, auto-pipeline, oferta, ofertas, contacto, deep, followup, interview-prep, pdf, project, patterns, tracker), CLI names (Claude Code, Codex, OpenCode, Antigravity CLI, Grok, Qwen, Kimi, GitHub Copilot, Gemini CLI), portals (Greenhouse, Ashby, Lever, Wellfound), technical terms (MIT, ATS, CLI, Open Agent Skill Standard), and domains. Terms that are the de-facto standard in Spanish tech speech stay in English (open source, commit, pull request, script, tracker). NEVER use @ or x as inclusive-gender marks.
+   Also keep verbatim: the brand "career-ops" / "CareerOps", the name "Santiago Fernández de Valderrama Aparicio" (with Aparicio), mode ids (apply, scan, pipeline, auto-pipeline, oferta, ofertas, contacto, deep, followup, interview-prep, pdf, project, patterns, tracker), CLI names (Claude Code, Codex, OpenCode, Antigravity CLI, Grok, Qwen, Kimi, GitHub Copilot, Gemini CLI), portals (Greenhouse, Ashby, Lever, Wellfound), technical terms (MIT, ATS, CLI, Open Agent Skill Standard), and domains. Terms that are the de-facto standard in the target language's tech speech stay in English (open source, commit, pull request, script, tracker). NEVER use @ or x as inclusive-gender marks.
 4. CANONICAL FACTS — never alter: the funnel is 740 evaluated → 68 applied → 12 interviews → 1 offer (NEVER 631 or 122; those are prohibited). Scoring is FIVE dimensions plus a holistic global score (NEVER six). The signature thesis "Companies use AI to filter candidates. I just gave candidates AI to choose companies." stays in LITERAL ENGLISH — never translate or reword it.
 5. The result must be a valid .mdx beginning with a \`---\` frontmatter block.
 

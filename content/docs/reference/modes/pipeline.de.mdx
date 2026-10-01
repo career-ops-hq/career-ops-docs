@@ -1,0 +1,53 @@
+---
+title: pipeline
+description: "Liest die in data/pipeline.md vorgemerkten URLs und führt für jede davon die komplette auto-pipeline aus. Nutze diesen Modus, wenn du im Laufe des Tages zehn oder zwanzig Stellenanzeigen gesammelt hast und sie in einer einzigen Sitzung abarbeiten willst."
+seoTitle: "career-ops pipeline-Modus — viele Stellenanzeigen in einem Rutsch bewerten"
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 1e5c70f073c9c18b
+localized: true
+translatedFrom: /docs/reference/modes/pipeline
+---
+
+## Was er macht
+
+Der Modus pipeline geht die URLs in data/pipeline.md (eine pro Zeile) der Reihe nach durch und ruft für jede davon auto-pipeline auf. Für jede Stellenanzeige, die eine gültige Bewertung ergibt, entstehen ein Bericht, ein PDF und ein Tracker-Eintrag. Fehlgeschlagene Scrapes werden protokolliert und übersprungen.
+
+## Wann du ihn einsetzt
+
+Nutze pipeline, wenn sich bei dir URLs angestaut haben, die du abarbeiten willst. Trag sie in data/pipeline.md ein, ruf /career-ops pipeline auf und kümmere dich in der Zwischenzeit um etwas anderes.
+
+## So sieht ein Durchlauf aus
+
+Du trägst URLs in `data/pipeline.md` ein, und der Modus arbeitet den gesamten Eingang in einem Durchgang ab. Zuerst führt er eine Liveness-Prüfung durch, die keine Tokens kostet, und sortiert abgelaufene Anzeigen aus. Danach bewertet er jede verbleibende URL mit der vollständigen auto-pipeline und schließt mit einer Übersichtstabelle der Ergebnisse ab.
+
+```txt title="Pipeline run"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (parallel workers)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+
+Jede verarbeitete URL wandert in der Datei vom Abschnitt `## Pending` in den Abschnitt `## Processed`. So zeigt dir der Eingang jederzeit, was noch offen ist.
+
+## Wann er sich lohnt
+
+Greif zu pipeline, wenn du im Laufe des Tages einen Stapel Stellenanzeigen gesammelt hast und ihn in einer einzigen Sitzung abarbeiten willst. So geht der Modus mit der Warteschlange um:
+
+- Der Abschnitt `## Pending` akzeptiert jedes Format. Eine einfach eingefügte URL reicht, du kannst aber auch die Spalten `company`, `role`, `location` und `comp` ergänzen, und der Modus liest sie alle aus.
+- Die Liveness-Prüfung läuft vor der Schleife über die einzelnen URLs. Ein veralteter Eingang mit acht URLs kostet dich also nicht acht verschwendete Bewertungen.
+- Ab drei offenen URLs verarbeitet er sie parallel, mit einem Worker pro URL, statt eine nach der anderen.
+- PDFs entstehen nur, wenn eine Bewertung den Schwellenwert `auto_pdf_score_threshold` erreicht (Standard: 3.0). Setz den Wert höher, wenn du für Stellen, die nur knapp passen, keine PDFs erzeugen willst. Bei Bedarf erstellst du sie später mit `/career-ops pdf`.
+
+## Siehe auch
+
+- [auto-pipeline](/de/docs/reference/modes/auto-pipeline)

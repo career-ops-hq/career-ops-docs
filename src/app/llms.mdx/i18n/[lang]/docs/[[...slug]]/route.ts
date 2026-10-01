@@ -2,7 +2,7 @@ import { getLLMText, source } from '@/lib/source';
 import { i18n } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
 
-// Markdown mirror for the NON-DEFAULT locales (/es/docs/**, /fr/docs/**).
+// Markdown mirror for the NON-DEFAULT locales (/es/docs/**, /fr/docs/**, /de/docs/**).
 //
 // The EN mirror lives at /llms.mdx/docs/** and resolves pages without passing a
 // locale, which fumadocs defaults to `en` — that default is exactly why the 93
