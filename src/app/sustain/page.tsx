@@ -20,6 +20,38 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+// Three blocks, always in this order, so the scarcity at the top shows: the
+// founding tier first, then sponsors (the README row and this page), then
+// supporters (this page). A tier with nobody in it renders nothing; we don't
+// show empty slots to look bigger than we are. Every link is rel="sponsored".
+type SponsorEntry = {
+  name: string;
+  href: string;
+  logo: string;
+  width: number;
+  height: number;
+  blurb: string;
+};
+
+const SPONSOR_TIERS: { label: string; entries: SponsorEntry[] }[] = [
+  { label: 'Founding Sponsors', entries: [] },
+  {
+    label: 'Sponsors',
+    entries: [
+      {
+        name: 'SerpApi',
+        href: 'https://serpapi.com/career-ops-org',
+        logo: '/sponsors/serpapi.svg',
+        width: 1764,
+        height: 439,
+        blurb:
+          'Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.',
+      },
+    ],
+  },
+  { label: 'Supporters', entries: [] },
+];
+
 export default function SustainPage() {
   return (
     <>
@@ -66,8 +98,8 @@ export default function SustainPage() {
               to the project, and every contribution and expense is on a public ledger. If
               you&rsquo;d rather not be named, Open Collective lets you contribute incognito:
               the amount stays public, your name doesn&rsquo;t.
-              No contribution gates a perk. That is deliberate. A contribution that buys
-              something is a contribution that can be leaned on.
+              No contribution from a person gates a perk. That is deliberate. A contribution
+              that buys something is a contribution that can be leaned on.
             </p>
             <p className="mt-5">
               <a
@@ -117,13 +149,11 @@ export default function SustainPage() {
               Corporate sponsorship
             </h2>
             <p className="mt-3">
-              A contribution made on Open Collective buys no placement on this site or in the
-              README, and no access, at any amount. Corporate logo sponsorship is a separate
-              agreement: it is agreed with the project, invoiced by its fiscal host, Open
-              Source Collective, and paid to the project&rsquo;s collective. Slots are few, and
-              each comes with a tracked link and a monthly report of the reach the project
-              measures on its own channels. Visibility only: it buys no influence over the
-              roadmap and no personal services from any maintainer.
+              A contribution from a person buys no placement and no access, at any amount.
+              Companies have their own tiers, with public prices, on Open Collective;
+              placement starts after a quick fit check, and founding sponsorships are agreed
+              in writing and invoiced by the fiscal host. Visibility only: it buys no
+              influence over the roadmap and no personal services from any maintainer.
             </p>
             <p className="mt-3">
               If you represent a mission-aligned organization, an open-source program
@@ -156,29 +186,39 @@ export default function SustainPage() {
             <p className="mt-3">
               career-ops is permanently free for candidates. Candidates never pay the
               project, and are never the product. Companies that sponsor it do so through the project&rsquo;s
-              fiscal host, Open Source Collective.
+              fiscal host, Open Source Collective. Sponsors appear in the Sponsors row of the
+              README and on this page; Supporters, on this page. The README is where the
+              project is seen; this page is where it&rsquo;s explained.
             </p>
 
-            <a
-              href="https://serpapi.com/career-ops-org"
-              rel="sponsored noopener"
-              target="_blank"
-              className="mt-5 block rounded-lg border border-fd-foreground/10 bg-fd-card/40 p-6 no-underline transition-colors hover:border-fd-foreground/20"
-            >
-              <img
-                src="/sponsors/serpapi.svg"
-                alt="SerpApi"
-                width={1764}
-                height={439}
-                className="h-10 w-auto"
-              />
-              <p className="text-fd-foreground mt-4 text-base font-medium">SerpApi</p>
-              <p className="text-fd-muted-foreground mt-1 text-sm leading-relaxed">
-                Build a portfolio project with live search data. SerpApi gives developers
-                structured JSON/Markdown from Google Search, Maps, Shopping, and other
-                engines through a simple API call.
-              </p>
-            </a>
+            {SPONSOR_TIERS.filter((tier) => tier.entries.length > 0).map((tier) => (
+              <div key={tier.label} className="mt-6">
+                <h3 className="text-xs uppercase tracking-[0.2em] text-fd-muted-foreground">
+                  {tier.label}
+                </h3>
+                {tier.entries.map((entry) => (
+                  <a
+                    key={entry.name}
+                    href={entry.href}
+                    rel="sponsored noopener"
+                    target="_blank"
+                    className="mt-3 block rounded-lg border border-fd-foreground/10 bg-fd-card/40 p-6 no-underline transition-colors hover:border-fd-foreground/20"
+                  >
+                    <img
+                      src={entry.logo}
+                      alt={entry.name}
+                      width={entry.width}
+                      height={entry.height}
+                      className="h-10 w-auto"
+                    />
+                    <p className="text-fd-foreground mt-4 text-base font-medium">{entry.name}</p>
+                    <p className="text-fd-muted-foreground mt-1 text-sm leading-relaxed">
+                      {entry.blurb}
+                    </p>
+                  </a>
+                ))}
+              </div>
+            ))}
 
             <blockquote className="border-fd-foreground/15 text-fd-muted-foreground mt-5 border-l-2 pl-4 text-sm leading-relaxed italic">
               Sponsorship buys clearly labeled visibility, never influence: no amount of
@@ -231,7 +271,7 @@ export default function SustainPage() {
         </p>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-09-30">30 September 2026</time>
+          Last updated <time dateTime="2026-10-01">1 October 2026</time>
         </p>
       </article>
     </>
