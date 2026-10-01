@@ -733,7 +733,7 @@ export function sustainSchema() {
         significantLink: 'https://opencollective.com/career-ops',
         mainContentOfPage: {
           '@type': 'WebPageElement',
-          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host, Open Source Collective, and goes to maintenance, security fixes, releases, and documentation. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
+          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host, Open Source Collective, and goes to maintenance, security fixes, releases, and documentation. It never buys direction.',
         },
       },
       {
