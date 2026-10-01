@@ -109,11 +109,11 @@ const config = {
         // had no markdown twin at all. See the route header for why the locale
         // is an explicit path segment rather than an optional prefix.
         {
-          source: '/:lang(es|fr)/docs.md',
+          source: '/:lang(es|fr|de)/docs.md',
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr)/docs/:slug(.*).md',
+          source: '/:lang(es|fr|de)/docs/:slug(.*).md',
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
         },
         // Accept negotiation for the locale docs. NOT done in src/proxy.ts:
@@ -126,13 +126,13 @@ const config = {
         // These must stay AFTER the `.md` rules above, or `:slug(.*)` would
         // swallow `<url>.md` before the explicit markdown rewrite sees it.
         {
-          source: '/:lang(es|fr)/docs',
+          source: '/:lang(es|fr|de)/docs',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr)/docs/:slug(.*)',
+          source: '/:lang(es|fr|de)/docs/:slug(.*)',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
@@ -174,11 +174,11 @@ const config = {
       // layout hardcodes <html lang="en"> for every page (see src/app/es/layout.tsx
       // for why that is not changed here), and Bing reads Content-Language.
       {
-        source: '/:lang(es|fr)',
+        source: '/:lang(es|fr|de)',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {
-        source: '/:lang(es|fr)/:path*',
+        source: '/:lang(es|fr|de)/:path*',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {

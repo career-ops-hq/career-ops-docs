@@ -4,7 +4,7 @@
 //
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
-import { homeEn, homeEs, homeFr, type HomeDict } from '@/app/(home)/home-dict';
+import { homeEn, homeEs, homeFr, homeDe, type HomeDict } from '@/app/(home)/home-dict';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
@@ -99,15 +99,16 @@ const PERSON_SAMEAS = [
 // correlate ~3× more strongly with AI search citation than backlinks
 // (Ahrefs December 2025 study). Both posts encoded with upvote +
 // comment InteractionCounters so AI engines can read social proof.
-// Headlines preserved verbatim from the actual Reddit titles, even
-// where "offers" is technically the wrong noun (the Reddit title
-// cannot be edited post-publish; the post body carries the correction).
+// No headline on the r/ClaudeAI post: its title says "740+ offers", and
+// engines read a subjectOf headline as a claim about the entity, which
+// contradicts the canon (the 740 are listings, never offers). The title
+// cannot be edited and is not rewritten here; the node keeps @type, url,
+// date and author (search-ops, 30-sep; same rule as the headlines #127
+// dropped).
 const SOFTWARE_SUBJECT_OF = [
   {
     '@type': 'DiscussionForumPosting',
     url: 'https://www.reddit.com/r/ClaudeAI/comments/1sd2f37/i_built_an_ai_job_search_system_with_claude_code/',
-    headline:
-      'I built an AI job search system with Claude Code that scored 740+ offers and landed me a job. Just open sourced it.',
     datePublished: '2026-04-05T12:30:50Z',
     author: { '@id': PERSON_ID },
     publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
@@ -223,7 +224,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr'],
+        inLanguage: ['en', 'es', 'fr', 'de'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -752,19 +753,32 @@ export function sustainSchema() {
 // breadcrumb readable in SERP; deeper hierarchy would require a slug→title
 // lookup against the source tree, and Google only displays the last 2-3
 // items in breadcrumb rich results anyway.
+const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
+  en: { home: 'Home', docs: 'Docs' },
+  es: { home: 'Inicio', docs: 'Documentación' },
+  fr: { home: 'Accueil', docs: 'Documentation' },
+  de: { home: 'Startseite', docs: 'Dokumentation' },
+};
+
 export function docsBreadcrumbSchema(opts: {
   url: string;
   title?: string;
 }) {
-  const isDocsLanding = opts.url === '/docs' || opts.url === '/docs/';
+  // A translated page's trail stays in its language: /de/docs/faq is
+  // Startseite (/de) → Dokumentation (/de/docs) → FAQ. It used to point
+  // Home and Docs at the English pages (i18n SEO audit, 30-sep).
+  const loc = /^\/([a-z]{2})(?=\/docs)/.exec(opts.url)?.[1];
+  const prefix = loc ? `/${loc}` : '';
+  const names = BREADCRUMB_NAMES[loc ?? 'en'] ?? BREADCRUMB_NAMES.en;
+  const isDocsLanding = opts.url === `${prefix}/docs` || opts.url === `${prefix}/docs/`;
   const items: Array<{
     '@type': 'ListItem';
     position: number;
     name: string;
     item: string;
   }> = [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
-    { '@type': 'ListItem', position: 2, name: 'Docs', item: 'https://career-ops.org/docs' },
+    { '@type': 'ListItem', position: 1, name: names.home, item: `https://career-ops.org${prefix || '/'}` },
+    { '@type': 'ListItem', position: 2, name: names.docs, item: `https://career-ops.org${prefix}/docs` },
   ];
   if (!isDocsLanding && opts.title) {
     items.push({
@@ -872,6 +886,10 @@ export function homeFaqSchemaEs(dateModified?: Date) {
 
 export function homeFaqSchemaFr(dateModified?: Date) {
   return homeGraph('https://career-ops.org/fr', 'fr', faqFromDict(homeFr), dateModified);
+}
+
+export function homeFaqSchemaDe(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/de', 'de', faqFromDict(homeDe), dateModified);
 }
 
 export function blogPostSchema(args: {
