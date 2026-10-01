@@ -271,7 +271,7 @@ export default function SustainPage() {
         </p>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-09-30">30 September 2026</time>
+          Last updated <time dateTime="2026-10-01">1 October 2026</time>
         </p>
       </article>
     </>

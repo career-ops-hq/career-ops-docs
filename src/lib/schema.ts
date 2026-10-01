@@ -727,7 +727,7 @@ export function sustainSchema() {
         description:
           'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
         inLanguage: 'en',
-        dateModified: '2026-09-30',
+        dateModified: '2026-10-01',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         significantLink: 'https://opencollective.com/career-ops',
@@ -1065,7 +1065,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-09-30',
+        dateModified: '2026-10-01',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
