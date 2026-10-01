@@ -3,7 +3,7 @@ title: Jobportale scannen
 description: Richte den Portal-Scanner ein und starte ihn, um automatisch neue Stellenanzeigen zu finden.
 seoTitle: "Jobportale mit career-ops scannen – Greenhouse, Ashby, Lever, ohne Token-Verbrauch"
 icon: ScanEye
-translationHash: 9c8815f39b224028
+translationHash: e02cb2833eb23b85
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -152,7 +152,7 @@ npm run scan
 
 Führe das im Projektordner aus. Das Script liest `portals.yml`, fragt die API jedes Unternehmens direkt ab und schreibt neue Stellen in `data/pipeline.md`. Es verbraucht keine KI-Tokens und ist in etwa 30 Sekunden durch.
 
-Diese Option funktioniert nur bei Unternehmen, die Greenhouse, Ashby oder Lever nutzen. Unternehmen ohne eine dieser Plattformen werden übersprungen.
+Diese Option funktioniert bei jedem Unternehmen, dessen Karriereseite auf einer Plattform läuft, für die der Scanner einen eingebauten Provider hat: Greenhouse, Ashby und Lever sowie Dutzende weitere Bewerbermanagementsysteme (ATS) und Jobbörsen wie Workable, Workday und SmartRecruiters. Die vollständige Liste steht in [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Unternehmen ohne passenden Provider werden übersprungen, und der Scan meldet, wie viele es sind.
 
 **Ergebnisse vor dem Speichern ansehen:**
 
@@ -181,7 +181,7 @@ Ersetze `Anthropic` durch einen beliebigen Unternehmensnamen aus deiner `tracked
 Diese Variante ruft die Karriereseite jedes Unternehmens direkt mit einem Browser auf und funktioniert daher auch bei Unternehmen ohne öffentliche API. Außerdem führt sie die `search_queries` aus deiner `portals.yml` aus, um Stellen bei Unternehmen zu finden, die nicht auf deiner Beobachtungsliste stehen.
 
 Nimm diese Option, wenn:
-- ein Unternehmen auf deiner Liste weder Greenhouse noch Ashby noch Lever nutzt
+- ein Unternehmen auf deiner Liste eine Plattform nutzt, für die das Script keinen Provider hat, sodass der Script-Scan es überspringt
 - du neue Unternehmen entdecken und nicht nur bekannte prüfen willst
 - der Script-Scan etwas übersehen hat, das du erwartet hättest
 

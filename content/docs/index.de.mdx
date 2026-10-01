@@ -3,7 +3,7 @@ title: Schnellstart
 description: "Starte in fünf Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: f0830293c1d38da8
+translationHash: d363142d21bc56d7
 localized: true
 translatedFrom: /docs
 ---
@@ -50,7 +50,7 @@ Du musst nicht programmieren können. Du solltest nur ein Terminal öffnen und e
 npx @santifer/career-ops init
 ```
 
-Der Befehl klont das neueste Release nach `./career-ops`, installiert die Abhängigkeiten und legt die Workspace-Struktur an. Außerdem erkennt er, welche KI-Coding-CLI du installiert hast, und zeigt dir den passenden Befehl zum Starten. Der Befehl ist idempotent: Wenn du ihn noch einmal ausführst, überschreibt er keine Dateien, die du schon hast.
+Der Befehl klont das neueste Release nach `./career-ops`, installiert die Abhängigkeiten und legt die Workspace-Struktur an. Außerdem erkennt er, welche KI-Coding-CLI du installiert hast, und zeigt dir den passenden Befehl zum Starten. Er installiert nur in einen neuen Ordner: Wenn `./career-ops` schon existiert und nicht leer ist, bricht der Befehl mit einem Fehler ab und ändert nichts. Ein zweiter Aufruf repariert oder aktualisiert also keinen bestehenden Workspace.
 
 Wechsle danach in den Workspace:
 
@@ -188,7 +188,7 @@ Sobald du die Stelle eingefügt hast, erledigt career-ops Folgendes selbstständ
       </Step>
       <Step>
         ### Bewertet die Stelle
-        Bewertet die Rolle auf einer Skala von 0 bis 5 nach mehreren Dimensionen, zum Beispiel Passung zur Rolle, Vergütung und Remote-Regelung.
+        Bewertet die Rolle auf einer Skala von 1 bis 5 nach mehreren Dimensionen, zum Beispiel Passung zur Rolle, Vergütung und Remote-Regelung.
       </Step>
       <Step>
         ### Schreibt einen Bericht
@@ -220,7 +220,7 @@ Das Ganze dauert etwa ein bis zwei Minuten. Danach zeigt dir career-ops die Bewe
 - **Block E**: Hinweise, wie du deine Bewerbung persönlich zuschneidest.
 - **Block F**: Vorbereitung auf das Vorstellungsgespräch mit STAR-Geschichten, die auf diese Stelle zugeschnitten sind.
 - **Block G**: Seriosität der Anzeige. Eine heuristische Prüfung achtet auf Signale, etwa ob die Anzeige noch offen ist und ob sie immer wieder neu veröffentlicht wird. Der Block berichtet, was er findet, und überlässt das Urteil dir.
-- **Block H**: Antwortentwürfe für das Bewerbungsformular. Sie werden nur geschrieben, wenn die Bewertung über 4,5 liegt.
+- **Block H**: Antwortentwürfe für das Bewerbungsformular. Sie werden nur geschrieben, wenn die Bewertung bei 4,5 oder höher liegt.
 
 Deinen maßgeschneiderten Lebenslauf als PDF findest du im Ordner `output/`. Sieh ihn dir an, bevor du ihn verschickst. career-ops schickt nie etwas ohne deine Zustimmung ab.
 
