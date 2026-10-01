@@ -39,7 +39,7 @@ const LANGS = {
   // Informal "du" is the norm in German developer docs (GitHub, Docker).
   de: {
     suffix: 'de',
-    name: 'natural German (Germany), addressing the reader informally as "du" (lowercase, as in modern German developer documentation). Use German typographic quotes „…“ in prose. Job-search vocabulary: Stelle / Stellenanzeige (job listing), Bewerbung (application), Lebenslauf (CV — the file cv.md keeps its name), Anschreiben (cover letter), Vorstellungsgespräch (interview)',
+    name: 'natural German (Germany), addressing the reader informally as "du" (lowercase, as in modern German developer documentation). Use German typographic quotes „…“ in prose. Job-search vocabulary: Stelle / Stellenanzeige (job listing), Jobangebot (the final job offer; never a bare Angebot for a listing), Bewerbung (application), Bewerbungsunterlagen (the application documents), Lebenslauf (CV — the file cv.md keeps its name), Anschreiben (cover letter), Vorstellungsgespräch (interview), Einladungen zum Vorstellungsgespräch bekommen (to get interviews). Write KI, not AI, except in proper names. For whether a listing is trustworthy the native word is seriös; never promise to detect fraud. In titles and headings say STAR-Methode, not STAR-Geschichten (the body may say Geschichten). Phrase FAQ questions the way German readers search, not as calques of the English (search-ops native profile for German, 1 Oct 2026)',
   },
 };
 
