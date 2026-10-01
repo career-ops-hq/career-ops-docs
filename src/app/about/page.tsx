@@ -96,7 +96,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Can I sponsor the project?',
-    a: 'Yes, through the project’s collective on Open Collective, with Open Source Collective as its fiscal host. The money belongs to the project, every contribution and expense is on a public ledger, and no contribution gates a perk: no premium features, no roadmap influence. Corporate logo sponsorship is a separate agreement: companies write to sponsors@career-ops.org, and those sponsorships are invoiced by the fiscal host and paid to the project’s collective. The full model lives at /sustain.',
+    a: 'Yes, through the project’s collective on Open Collective, with Open Source Collective as its fiscal host. The money belongs to the project, every contribution and expense is on a public ledger, and no contribution from a person gates a perk: no premium features, no roadmap influence. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing (sponsors@career-ops.org) and invoiced by the fiscal host. The full model lives at /sustain.',
   },
 ];
 

@@ -66,8 +66,8 @@ export default function SustainPage() {
               to the project, and every contribution and expense is on a public ledger. If
               you&rsquo;d rather not be named, Open Collective lets you contribute incognito:
               the amount stays public, your name doesn&rsquo;t.
-              No contribution gates a perk. That is deliberate. A contribution that buys
-              something is a contribution that can be leaned on.
+              No contribution from a person gates a perk. That is deliberate. A contribution
+              that buys something is a contribution that can be leaned on.
             </p>
             <p className="mt-5">
               <a
@@ -117,13 +117,11 @@ export default function SustainPage() {
               Corporate sponsorship
             </h2>
             <p className="mt-3">
-              A contribution made on Open Collective buys no placement on this site or in the
-              README, and no access, at any amount. Corporate logo sponsorship is a separate
-              agreement: it is agreed with the project, invoiced by its fiscal host, Open
-              Source Collective, and paid to the project&rsquo;s collective. Slots are few, and
-              each comes with a tracked link and a monthly report of the reach the project
-              measures on its own channels. Visibility only: it buys no influence over the
-              roadmap and no personal services from any maintainer.
+              A contribution from a person buys no placement and no access, at any amount.
+              Companies have their own tiers, with public prices, on Open Collective;
+              placement starts after a quick fit check, and founding sponsorships are agreed
+              in writing and invoiced by the fiscal host. Visibility only: it buys no
+              influence over the roadmap and no personal services from any maintainer.
             </p>
             <p className="mt-3">
               If you represent a mission-aligned organization, an open-source program
