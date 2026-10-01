@@ -15,7 +15,7 @@
 //   - parity: the HTML cluster equals the sitemap cluster;
 //   - language signals: Content-Language header and <meta http-equiv> equal
 //     the URL's locale, og:locale starts with it, and <html lang> equals it
-//     (a WARNING until every locale has its own root layout, search-ops D1);
+//     (each locale has its own root layout since search-ops D1);
 //   - markdown negotiation on docs URLs: the Accept: text/markdown variant and
 //     the .md twin are markdown with X-Robots-Tag: noindex, and the negotiated
 //     variant carries Vary: Accept. Vary: Accept on the HTML variant is a
@@ -48,8 +48,9 @@ const BASE = (process.env.BASE || 'http://localhost:3999').replace(/\/$/, '');
 const DEFAULT_LOCALE = 'en';
 const CONCURRENCY = 8;
 
-// 'fail' once every locale has its own root layout (search-ops D1, from 6 Oct).
-const HTML_LANG_MODE = 'warn';
+// 'fail' since each locale has its own root layout (search-ops D1): the server
+// HTML carries the right <html lang>, so a wrong one is a regression.
+const HTML_LANG_MODE = 'fail';
 const HTML_VARY_MODE = 'warn';
 
 // English URLs removed on purpose (each with its 308 in next.config.mjs).
