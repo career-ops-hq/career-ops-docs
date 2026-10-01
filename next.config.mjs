@@ -171,6 +171,12 @@ const config = {
       // consolidation signal). 308 to the clean URL (search-ops D5, 30-sep).
       // Paths ending in .md never match, so the markdown mirrors are safe.
       { source: '/index', destination: '/', permanent: true },
+      // The English home's share card moved from (home)/ to (en)/(home)/ with the
+      // per-locale root layouts, and Next derives the image's file name from its
+      // route path: the same bytes now live at a new URL. Share cards cached by
+      // social networks and saved links keep working. If the home's route moves
+      // again, the hash changes and this target must follow it.
+      { source: '/opengraph-image-12gd74.jpg', destination: '/opengraph-image-czrkkh.jpg', permanent: true },
       { source: '/:path+/index', destination: '/:path+', permanent: true },
     ];
   },
