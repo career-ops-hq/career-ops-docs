@@ -56,12 +56,14 @@ const config = {
   // The personalized signature OG card reads its serif TTF from disk at
   // request time (undici fetch rejects file: URLs); whitelist it for
   // Vercel's file tracing so the lambda bundle includes it.
+  // Keys are picomatch route globs, so the brackets are escaped, and the
+  // opengraph route ends in a path hash since it lives in the (en) group.
   outputFileTracingIncludes: {
-    '/manifesto/s/[username]/opengraph-image': [
+    '/manifesto/s/\\[username\\]/opengraph-image*': [
       './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
     '/manifesto/sign-preview': ['./src/app/(en)/manifesto/s/[username]/*.ttf'],
-    '/manifesto/s/[username]/card-square': [
+    '/manifesto/s/\\[username\\]/card-square': [
       './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
   },
@@ -177,6 +179,16 @@ const config = {
       // social networks and saved links keep working. If the home's route moves
       // again, the hash changes and this target must follow it.
       { source: '/opengraph-image-12gd74.jpg', destination: '/opengraph-image-czrkkh.jpg', permanent: true },
+      // Same for every signatory's wide card: it is linked from cards already
+      // shared on X, LinkedIn and Discord, from the example card on /manifesto
+      // and /es/manifesto, and from the "Download your card: wide" link, all of
+      // which keep the stable /opengraph-image path and follow this 308.
+      // scripts/verify-i18n-seo.mjs fails if either old URL stops ending in an image.
+      {
+        source: '/manifesto/s/:username/opengraph-image',
+        destination: '/manifesto/s/:username/opengraph-image-1xn4ck',
+        permanent: true,
+      },
       { source: '/:path+/index', destination: '/:path+', permanent: true },
     ];
   },

@@ -44,12 +44,13 @@ export function gitLastMod(relPath: string): Date | null {
   if (repoIsShallow()) return null; // boundary-commit dates are not trustworthy
   try {
     // --follow keeps a moved file's history, and --diff-filter=r skips the
-    // commits where it was only renamed: moving every English route into the
+    // commits where it was only moved: moving every English route into the
     // (en) group (one root layout per locale, Oct 2026) would otherwise have
-    // reset each moved page's lastmod to the day of the move. The rename
-    // commit is skipped even if it also edited the file (R<100), so move
-    // files without editing them, and edit them in a separate change.
-    const iso = execSync(`git log -1 --follow --diff-filter=r --format=%cI -- "${relPath}"`, {
+    // reset each moved page's lastmod to the day of the move. -M100% counts
+    // only EXACT renames as moves. PRs land squashed, so a move and an edit of
+    // the same file end up in one commit; with a looser rename score that
+    // commit would be skipped and the edit would never reach the lastmod.
+    const iso = execSync(`git log -1 --follow -M100% --diff-filter=r --format=%cI -- "${relPath}"`, {
       cwd: REPO_ROOT,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'ignore'],
