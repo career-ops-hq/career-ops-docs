@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Check, ChevronDown, X } from 'lucide-react';
 
 // Language switcher + browser-detection suggestion, both living in the header.
@@ -241,28 +242,69 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
  * Disclosure-navigation dropdown (WAI-ARIA "disclosure navigation menu"): a
  * button that shows and hides a list of links. No role="menu", which would
  * promise arrow-key handling; Tab moves through the links. Closes on Escape
- * (focus returns to the button), on a click outside and on navigation.
+ * (focus returns to the button), on a click outside, on navigation, and on
+ * scroll or resize (a fixed-position menu would otherwise drift off its button).
+ *
+ * The open menu is portaled to <body> with position: fixed under the button.
+ * Fumadocs' mobile panel lives inside a Radix NavigationMenu viewport with
+ * overflow: hidden, which clipped an absolute dropdown; laying the list out
+ * in the panel's flow instead pushed the GitHub and theme buttons around
+ * (Santiago, 1-oct). A portal escapes every container the bar sits in: the
+ * desktop header, the docs sidebar and the mobile panel.
+ *
+ * A hidden copy of the links is always in the server HTML, so crawlers that
+ * do not run JS still see every language version.
  */
+const MENU_MIN_W = 192; // min-w-48
+
 function LanguageMenu({ current, base, compact }: { current: Code; base: string; compact: boolean }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ top: number; left?: number; right?: number } | null>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   useEffect(() => setOpen(false), [pathname]);
+
+  const place = useCallback(() => {
+    const r = btnRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const top = r.bottom + 6;
+    const vw = window.innerWidth;
+    // Open towards the side with room: from the button's left edge when the
+    // button sits in the left half (docs sidebar, mobile menu panel), from its
+    // right edge otherwise (desktop header). Either way, keep 8px inside the
+    // viewport: hung from the right edge in the mobile panel, it overflowed.
+    if (compact || r.left + r.width / 2 < vw / 2) {
+      setPos({ top, left: Math.max(8, Math.min(r.left, vw - MENU_MIN_W - 8)) });
+    } else {
+      setPos({ top, right: Math.max(8, vw - r.right) });
+    }
+  }, [compact]);
+
   useEffect(() => {
     if (!open) return;
+    const inside = (t: EventTarget | null) =>
+      !!t && (btnRef.current?.contains(t as Node) || menuRef.current?.contains(t as Node));
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (!inside(e.target)) setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
       setOpen(false);
-      ref.current?.querySelector<HTMLButtonElement>('button')?.focus();
+      btnRef.current?.focus();
+    };
+    const onMove = (e: Event) => {
+      if (!inside(e.target)) setOpen(false);
     };
     document.addEventListener('mousedown', onDown);
     document.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onMove);
+    window.addEventListener('scroll', onMove, true);
     return () => {
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onMove);
+      window.removeEventListener('scroll', onMove, true);
     };
   }, [open]);
 
@@ -272,14 +314,62 @@ function LanguageMenu({ current, base, compact }: { current: Code; base: string;
   // fixed id would be duplicated: useId keeps aria-controls unambiguous.
   const menuId = `language-menu-${useId().replace(/:/g, '')}`;
 
+  const list = (
+    <ul className="flex flex-col gap-0.5">
+      {LOCALES.map((l) => {
+        const Flag = FLAG[l.code];
+        const isCurrent = l.code === current;
+        const inner = (
+          <>
+            <Flag className="w-4 h-4 shrink-0" />
+            <span lang={l.code} className="flex-1">{l.name}</span>
+            {isCurrent ? (
+              <Check aria-hidden="true" className="w-4 h-4 text-brand-text" />
+            ) : (
+              <span className="text-xs text-fd-muted-foreground">{l.label}</span>
+            )}
+          </>
+        );
+        return (
+          <li key={l.code} data-locale={l.code}>
+            {isCurrent ? (
+              <span
+                aria-current="true"
+                className="flex items-center gap-2.5 rounded-lg bg-fd-accent px-2.5 py-2 font-medium text-fd-foreground"
+              >
+                {inner}
+              </span>
+            ) : (
+              // Full-strength text: the muted grey read as "disabled" in dark
+              // mode. The current language is marked by the check, the accent
+              // background and aria-current, not by dimming the others.
+              <Link
+                href={localeUrl(base, l.code)}
+                hrefLang={l.code}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-fd-foreground hover:bg-fd-accent transition-colors"
+              >
+                {inner}
+              </Link>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+
   return (
-    <div ref={ref} className="relative">
+    <div className="relative">
       <button
+        ref={btnRef}
         type="button"
         aria-expanded={open}
         aria-controls={menuId}
         aria-label={`Language: ${cur.name}`}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => {
+          if (!open) place();
+          setOpen((o) => !o);
+        }}
         className="inline-flex h-8 items-center gap-1.5 rounded-full border bg-fd-card ps-2.5 pe-2 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors"
       >
         <CurFlag className="w-3.5 h-3.5" />
@@ -289,51 +379,24 @@ function LanguageMenu({ current, base, compact }: { current: Code; base: string;
           className={`w-3.5 h-3.5 text-fd-muted-foreground transition-transform${open ? ' rotate-180' : ''}`}
         />
       </button>
-      <nav
-        id={menuId}
-        aria-label="Language"
-        // Below lg the header's links live in Fumadocs' mobile menu panel,
-        // which clips anything absolutely positioned: there the list opens in
-        // the flow of the panel instead of floating.
-        className={`${open ? '' : 'hidden '}absolute z-50 mt-1.5 ${compact ? 'start-0' : 'end-0 max-lg:static max-lg:shadow-none'} min-w-44 rounded-xl border bg-fd-popover/95 p-1.5 text-sm text-fd-popover-foreground shadow-lg backdrop-blur-lg`}
-      >
-        <ul className="flex flex-col gap-0.5">
-          {LOCALES.map((l) => {
-            const Flag = FLAG[l.code];
-            const inner = (
-              <>
-                <Flag className="w-3.5 h-3.5 shrink-0" />
-                <span lang={l.code} className="flex-1">{l.name}</span>
-                {l.code === current ? (
-                  <Check aria-hidden="true" className="w-3.5 h-3.5 text-brand-text" />
-                ) : (
-                  <span className="text-xs text-fd-muted-foreground">{l.label}</span>
-                )}
-              </>
-            );
-            return (
-              <li key={l.code} data-locale={l.code}>
-                {l.code === current ? (
-                  <span
-                    aria-current="true"
-                    className="flex items-center gap-2 rounded-lg bg-fd-accent px-2.5 py-1.5 font-medium text-fd-foreground"
-                  >
-                    {inner}
-                  </span>
-                ) : (
-                  <Link
-                    href={localeUrl(base, l.code)}
-                    hrefLang={l.code}
-                    className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-foreground transition-colors"
-                  >
-                    {inner}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+      {/* Server-rendered, never shown: the crawlable copy of the links. */}
+      <nav aria-label="Language" className="hidden">
+        {list}
       </nav>
+      {open &&
+        pos &&
+        createPortal(
+          <nav
+            ref={menuRef}
+            id={menuId}
+            aria-label="Language"
+            style={{ position: 'fixed', top: pos.top, left: pos.left, right: pos.right }}
+            className="z-[100] min-w-48 rounded-xl border bg-fd-popover p-1.5 text-sm text-fd-popover-foreground shadow-lg animate-in fade-in zoom-in-95 duration-100"
+          >
+            {list}
+          </nav>,
+          document.body,
+        )}
     </div>
   );
 }
