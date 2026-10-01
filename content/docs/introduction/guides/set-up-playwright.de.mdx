@@ -3,7 +3,7 @@ title: Playwright einrichten
 description: Installiere und konfiguriere Playwright für die Browser-Automatisierung.
 seoTitle: "Playwright für career-ops einrichten — Scraping von Stellenanzeigen und Lebenslauf-Export als PDF"
 icon: Globe
-translationHash: f5f0fe9c45cd1487
+translationHash: 3184130277fc0c1b
 localized: true
 translatedFrom: /docs/introduction/guides/set-up-playwright
 ---
@@ -58,30 +58,32 @@ Mit dem Playwright MCP kann Claude den Browser während des Schritts `/career-op
 
 ### MCP-Server registrieren
 
-Führe diesen Befehl in einem beliebigen Verzeichnis aus, um den Playwright MCP bei Claude Code zu registrieren:
+Führe diesen Befehl im Stammordner von career-ops aus, um den Playwright MCP bei Claude Code zu registrieren:
 
 ```bash title="Terminal"
-claude mcp add playwright npx @playwright/mcp@latest
+claude mcp add --scope project playwright -- npx @playwright/mcp@latest
 ```
 
-So läuft die Registrierung in einem einzigen Schritt, wie in der [Playwright-MCP-Dokumentation](https://playwright.dev/docs/getting-started-mcp) beschrieben. Der Befehl trägt den Server automatisch in deine Claude-Einstellungen ein.
+So läuft die Registrierung in einem einzigen Schritt, wie in der [Playwright-MCP-Dokumentation](https://playwright.dev/docs/getting-started-mcp) beschrieben, ergänzt um `--scope project`: Claude Code trägt den Server dann in die `.mcp.json` im Stammordner von career-ops ein, eine der Dateien, die `npm run doctor` prüft. Wenn du Claude Code dort das nächste Mal startest, gib den Server frei, sobald du gefragt wirst.
+
+Willst du ihn stattdessen in jedem Projekt nutzen, führe den Befehl mit `--scope user` aus. `npm run doctor` liest keine Server mit User-Scope und warnt dann, dass es den MCP nicht erkennt, obwohl Claude Code ihn lädt.
 
 ### Manuelle Konfiguration (Alternative)
 
-Wenn du lieber alles von Hand einrichtest, füge den folgenden Eintrag in `.claude/settings.local.json` im Stammordner von career-ops oder in deine globalen Claude-Einstellungen ein:
+Wenn du lieber alles von Hand einrichtest, füge den folgenden Eintrag in die `.mcp.json` im Stammordner von career-ops ein (leg die Datei an, falls es sie noch nicht gibt):
 
-```json title=".claude/settings.local.json"
+```json title=".mcp.json"
 {
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["y", "@playwright/mcp@latest"]
+      "args": ["-y", "@playwright/mcp@latest"]
     }
   }
 }
 ```
 
-Starte Claude Code nach dem Speichern der Datei neu. Danach kann career-ops in apply-Sitzungen `browser_navigate` und `browser_snapshot` verwenden.
+Starte Claude Code nach dem Speichern der Datei neu und gib den Server frei, sobald du gefragt wirst. Danach kann career-ops in apply-Sitzungen `browser_navigate` und `browser_snapshot` verwenden.
 
 ---
 
@@ -99,9 +101,9 @@ In der Ausgabe sollte bestätigt werden, dass Playwright, Chromium und der MCP-S
 
 ## Dem Browser beim Ausfüllen des Formulars zusehen
 
-Standardmäßig läuft Playwright im Headless-Modus: Es liest das Formular und füllt es im Hintergrund aus, ohne ein sichtbares Fenster zu öffnen.
+Der Playwright MCP öffnet standardmäßig ein sichtbares Browserfenster (die Einrichtung oben übergibt kein `--headless`). So siehst du jede Seite, die er liest, und jedes Feld, das er ausfüllt.
 
-Wenn du live zusehen willst, wie sich der Browser öffnet und das Formular ausfüllt, ergänze den apply-Befehl um eine Anweisung:
+Damit er die Bewerbung in diesem Fenster öffnet und das gesamte Formular ausfüllt, ergänze den apply-Befehl um eine Anweisung:
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
   <Tab value="Claude Code">
@@ -126,7 +128,7 @@ Wenn du live zusehen willst, wie sich der Browser öffnet und das Formular ausf�
   </Tab>
 </Tabs>
 
-Auch ohne diese Anweisung nutzt career-ops Playwright und den MCP. Es arbeitet dann nur unsichtbar im Hintergrund.
+Auch ohne diese Anweisung nutzt career-ops im selben sichtbaren Fenster Playwright und den MCP, um das Formular zu lesen und deine Antworten zu entwerfen.
 
 ## Wofür die einzelnen Komponenten da sind
 

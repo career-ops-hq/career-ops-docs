@@ -3,7 +3,7 @@ title: Scanner les portails d'emploi
 description: Configurez et lancez le scanner de portails pour trouver automatiquement de nouvelles offres d'emploi.
 seoTitle: "Scanner les portails d'emploi avec career-ops — Greenhouse, Ashby, Lever, zéro token"
 icon: ScanEye
-translationHash: 9c8815f39b224028
+translationHash: e02cb2833eb23b85
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -152,7 +152,7 @@ npm run scan
 
 Exécutez cette commande depuis le dossier du projet. Le script lit `portals.yml`, interroge directement l'API de chaque entreprise et écrit les nouvelles offres dans `data/pipeline.md`. Il n'utilise aucun token d'IA et s'exécute en environ 30 secondes.
 
-Cette option ne fonctionne que pour les entreprises qui utilisent Greenhouse, Ashby ou Lever. Les entreprises sans l'une de ces plateformes sont ignorées.
+Cette option fonctionne pour toute entreprise dont la page emploi repose sur une plateforme pour laquelle le scanner dispose d'un provider intégré : Greenhouse, Ashby et Lever, ainsi que des dizaines d'autres logiciels de recrutement (ATS) et sites d'emploi comme Workable, Workday et SmartRecruiters. La liste complète se trouve dans [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Les entreprises sans provider correspondant sont ignorées, et le scan indique combien il y en a.
 
 **Prévisualiser les résultats avant de les enregistrer :**
 
@@ -181,7 +181,7 @@ Ouvrez Claude Code dans le dossier du projet et tapez :
 Cette version visite directement la page emploi de chaque entreprise à l'aide d'un navigateur, elle fonctionne donc même pour les entreprises qui n'ont pas d'API publique. Elle exécute aussi les `search_queries` de votre `portals.yml` pour trouver des postes dans des entreprises absentes de votre liste suivie.
 
 Utilisez cette option quand :
-- Une entreprise de votre liste n'utilise pas Greenhouse, Ashby ou Lever
+- Une entreprise de votre liste utilise une plateforme pour laquelle le script n'a pas de provider, donc le scan par script l'ignore
 - Vous voulez découvrir de nouvelles entreprises, pas seulement vérifier celles que vous connaissez déjà
 - Le scan par script a manqué quelque chose que vous vous attendiez à voir
 

@@ -3,7 +3,7 @@ title: Configurer un moteur d'IA gratuit
 seoTitle: "Comment utiliser career-ops gratuitement (sans abonnement Claude) — OpenRouter, Ollama, modèles locaux"
 description: Utilisez career-ops pour 0 $ — sans abonnement Claude ni aucune offre payante. Les moteurs d'IA gratuits pour career-ops — OpenCode avec un fournisseur gratuit, un modèle local via Ollama, n'importe quel endpoint compatible OpenAI, ou le runner OpenRouter intégré — et que faire quand vous êtes à court de tokens en pleine recherche.
 icon: Sparkles
-translationHash: 6bbb5f7758c39aa8
+translationHash: 27392ae8d171293d
 localized: true
 translatedFrom: /docs/free-ai-engine
 ---
@@ -43,12 +43,11 @@ La plupart des gens devraient commencer par OpenCode et un fournisseur gratuit ;
         Inscrivez-vous chez n'importe quel fournisseur proposant une offre gratuite et copiez votre clé API. Les options gratuites populaires dans la communauté : **OpenRouter** (modèles tagués `:free`), **Google AI Studio** (offre gratuite Gemini), et les endpoints compatibles OpenAI comme l'offre gratuite de **Nvidia**. Le [guide budget](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) tient à jour la liste des modèles qui tiennent la route.
       </Step>
       <Step title="Connecter OpenCode au fournisseur">
-        Définissez votre clé et l'URL de base comme variables d'environnement, puis ouvrez OpenCode dans le dossier career-ops :
+        Ouvrez OpenCode dans le dossier career-ops :
         ```bash title="Terminal"
-        export OPENAI_API_BASE="https://openrouter.ai/api/v1"
-        export OPENAI_API_KEY="your_free_api_key_here"
         opencode
         ```
+        Dans OpenCode, lancez `/connect`, choisissez votre fournisseur (par exemple **OpenRouter**) et collez votre clé. Lancez ensuite `/models` et choisissez un modèle gratuit : sur OpenRouter, un modèle tagué `:free`. OpenCode ignore `OPENAI_API_BASE` et `OPENAI_BASE_URL` : ce sont `/connect` et `/models` qui le configurent.
       </Step>
     </Steps>
   </div>

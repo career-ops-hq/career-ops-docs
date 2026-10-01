@@ -40,12 +40,11 @@ Most people should start with OpenCode and a free provider; the other paths are 
         Sign up for any provider with a free tier and copy your API key. Popular free options the community uses: **OpenRouter** (models tagged `:free`), **Google AI Studio** (Gemini free tier), and OpenAI-compatible endpoints like **Nvidia's** free tier. The [budget guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) keeps the up-to-date list of models that hold up well.
       </Step>
       <Step title="Point OpenCode at it">
-        Set your key and base URL as environment variables, then open OpenCode inside the career-ops folder:
+        Open OpenCode inside the career-ops folder:
         ```bash title="Terminal"
-        export OPENAI_API_BASE="https://openrouter.ai/api/v1"
-        export OPENAI_API_KEY="your_free_api_key_here"
         opencode
         ```
+        Inside OpenCode, run `/connect`, choose your provider (for example **OpenRouter**) and paste your key. Then run `/models` and pick a free model — on OpenRouter, one tagged `:free`. OpenCode ignores `OPENAI_API_BASE` and `OPENAI_BASE_URL`; `/connect` and `/models` are what set it up.
       </Step>
     </Steps>
   </div>
