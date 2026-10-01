@@ -5,7 +5,7 @@ seoTitle: "career-ops Quick Start — install and run your first AI job scan in 
 icon: Rocket
 ---
 
-This guide takes you from zero to your first evaluated job in about five minutes. You will set up the workspace, open your AI coding assistant, let it onboard you conversationally, and then paste a job posting — career-ops gives you back a full report, a score, and a tailored PDF resume.
+This guide takes you from zero to your first evaluated job in about five minutes. You will set up the workspace, open your AI coding assistant, and paste a job posting. The agent completes any needed onboarding, then gives you a full report, a score, and a tailored PDF resume.
 
 ## What you need
 
@@ -113,12 +113,12 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
   </Tab>
 </Tabs>
 
-<Callout title="The agent will introduce itself">
-  The first time you launch your CLI inside the workspace, the career-ops agent runs a short onboarding conversation. It asks for your CV, the kinds of roles you are targeting, your compensation range, and your location preference. Nothing is edited by hand — you reply in plain language and the agent writes the config files for you. The session takes about two to three minutes.
+<Callout title="Onboarding starts when you need your profile">
+  Before your first job evaluation or another workflow that needs your profile, the career-ops agent checks your setup and runs a short onboarding conversation if needed. You can also ask it to run onboarding directly. It asks for your CV, the kinds of roles you are targeting, your compensation range, and your location preference. You reply in plain language and the agent writes the config files for you. The session takes about two to three minutes. Exploring the workspace, reviewing code, or diagnosing your setup does not start onboarding or create profile files.
 </Callout>
 
 <Callout title="One unrelated prompt you may see">
-  Some CLIs (Claude Code, for example) ask whether you trust the files in a new folder the first time you open it. That prompt comes from the CLI itself, not from career-ops — say yes to continue. The career-ops onboarding starts right after.
+  Some CLIs (Claude Code, for example) ask whether you trust the files in a new folder the first time you open it. That prompt comes from the CLI itself, not from career-ops — say yes to continue. Accepting it does not start career-ops onboarding.
 </Callout>
 
 <Callout type="warn" title="Paying for Claude Pro or Max? Check what this session is billing">
@@ -131,7 +131,7 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
 
 ## Step 3: Run your first evaluation
 
-Once the agent has onboarded you, you are ready to evaluate a real job posting. Copy the URL of any job ad and paste it into the chat. With Claude Code or Antigravity CLI, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:
+Copy the URL of any job ad and paste it into the chat. The agent will complete onboarding first if your profile is not ready. With Claude Code or Antigravity CLI, prefix it with the explicit command; with the other CLIs, paste the URL and ask the agent to run the auto-pipeline:
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
@@ -234,7 +234,7 @@ Now that your first evaluation is done, here are a few things you can explore:
 
 <Accordions>
   <Accordion title="The agent did not run the onboarding">
-    Make sure you launched your CLI from inside the `career-ops` folder (run `pwd` to check). Re-launch the CLI from the right path and tell the agent: *"please run the first-run onboarding."* It will start the conversation from scratch.
+    Automatic onboarding starts when you request a job evaluation or another workflow that needs your profile, and only if setup is incomplete. To start it directly, launch your CLI from inside the `career-ops` folder (run `pwd` to check) and tell the agent: *"please run the first-run onboarding."*
   </Accordion>
   <Accordion title="The report did not generate">
     Make sure `cv.md` exists in the root folder and has content in it. If the onboarding finished but `cv.md` is empty, ask the agent: *"my cv.md looks empty, can you help me fill it in?"*
