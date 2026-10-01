@@ -41,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const latestReleaseDate = releases[0]?.date;
   const changelogLastMod = latestReleaseDate
     ? new Date(`${latestReleaseDate}T00:00:00Z`)
-    : gd('src/app/changelog/page.tsx');
+    : gd('src/app/(en)/changelog/page.tsx');
 
   // One hreflang cluster per page, emitted on EVERY member, English included.
   // Until 30-sep the English home and the 34 English docs had no xhtml:link
@@ -75,15 +75,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/about`,
-      lastModified: gd('src/app/about/page.tsx'),
+      lastModified: gd('src/app/(en)/about/page.tsx'),
     },
     {
       url: `${SITE_URL}/methodology`,
-      lastModified: gd('src/app/methodology/page.tsx'),
+      lastModified: gd('src/app/(en)/methodology/page.tsx'),
     },
     {
       url: `${SITE_URL}/manifesto`,
-      lastModified: gdMax('src/app/manifesto/page.tsx', 'src/lib/manifesto-text.ts'),
+      lastModified: gdMax('src/app/(en)/manifesto/page.tsx', 'src/lib/manifesto-text.ts'),
       alternates: {
         languages: {
           en: `${SITE_URL}/manifesto`,
@@ -107,19 +107,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/press`,
-      lastModified: gd('src/app/press/page.tsx'),
+      lastModified: gd('src/app/(en)/press/page.tsx'),
     },
     {
       url: `${SITE_URL}/privacy`,
-      lastModified: gd('src/app/privacy/page.tsx'),
+      lastModified: gd('src/app/(en)/privacy/page.tsx'),
     },
     {
       url: `${SITE_URL}/sustain`,
-      lastModified: gd('src/app/sustain/page.tsx'),
+      lastModified: gd('src/app/(en)/sustain/page.tsx'),
     },
     {
       url: `${SITE_URL}/compare`,
-      lastModified: gd('src/app/compare/page.tsx'),
+      lastModified: gd('src/app/(en)/compare/page.tsx'),
     },
   ];
 
@@ -138,7 +138,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // /blog index + /blog/[slug] — auto-discovered from blogSource.
   entries.push({
     url: `${SITE_URL}/blog`,
-    lastModified: gd('src/app/blog/page.tsx'),
+    lastModified: gd('src/app/(en)/blog/page.tsx'),
   });
   for (const post of blogSource.getPages()) {
     const data = post.data as { date?: string; lastModified?: string };

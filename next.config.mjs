@@ -47,16 +47,22 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  // One root layout per locale ((en)/, es/, fr/, de/) leaves no single layout
+  // to render a 404 for URLs that match no route; src/app/global-not-found.tsx
+  // does it instead. Experimental in Next 16.3.
+  experimental: {
+    globalNotFound: true,
+  },
   // The personalized signature OG card reads its serif TTF from disk at
   // request time (undici fetch rejects file: URLs); whitelist it for
   // Vercel's file tracing so the lambda bundle includes it.
   outputFileTracingIncludes: {
     '/manifesto/s/[username]/opengraph-image': [
-      './src/app/manifesto/s/[username]/*.ttf',
+      './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
-    '/manifesto/sign-preview': ['./src/app/manifesto/s/[username]/*.ttf'],
+    '/manifesto/sign-preview': ['./src/app/(en)/manifesto/s/[username]/*.ttf'],
     '/manifesto/s/[username]/card-square': [
-      './src/app/manifesto/s/[username]/*.ttf',
+      './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
   },
   images: {
@@ -170,9 +176,8 @@ const config = {
   },
   async headers() {
     return [
-      // Spanish and French routes declare their language over HTTP. The root
-      // layout hardcodes <html lang="en"> for every page (see src/app/es/layout.tsx
-      // for why that is not changed here), and Bing reads Content-Language.
+      // Translated routes also declare their language over HTTP, which Bing
+      // reads. Their <html lang> comes from each locale's own root layout.
       {
         source: '/:lang(es|fr|de)',
         headers: [{ key: 'Content-Language', value: ':lang' }],

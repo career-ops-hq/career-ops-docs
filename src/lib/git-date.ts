@@ -43,7 +43,13 @@ function repoIsShallow(): boolean {
 export function gitLastMod(relPath: string): Date | null {
   if (repoIsShallow()) return null; // boundary-commit dates are not trustworthy
   try {
-    const iso = execSync(`git log -1 --format=%cI -- "${relPath}"`, {
+    // --follow keeps a moved file's history, and --diff-filter=r skips the
+    // commits where it was only renamed: moving every English route into the
+    // (en) group (one root layout per locale, Oct 2026) would otherwise have
+    // reset each moved page's lastmod to the day of the move. The rename
+    // commit is skipped even if it also edited the file (R<100), so move
+    // files without editing them, and edit them in a separate change.
+    const iso = execSync(`git log -1 --follow --diff-filter=r --format=%cI -- "${relPath}"`, {
       cwd: REPO_ROOT,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'ignore'],

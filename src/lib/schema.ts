@@ -4,7 +4,11 @@
 //
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
-import { homeEn, homeEs, homeFr, homeDe, type HomeDict } from '@/app/(home)/home-dict';
+import type { HomeDict } from '@/app/_home/home-dict';
+import { homeEn } from '@/app/_home/home-en';
+import { homeEs } from '@/app/_home/home-es';
+import { homeFr } from '@/app/_home/home-fr';
+import { homeDe } from '@/app/_home/home-de';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
@@ -830,7 +834,7 @@ export function docsTechArticleSchema(opts: {
 
 // /home — the visible home FAQ as a FAQPage JSON-LD graph (direct AEO play:
 // the questions buyers, journalists, and developers ask first). GENERATED
-// from the same dictionary the page renders (src/app/(home)/home-dict.tsx),
+// from the same dictionary the page renders (src/app/_home/home-<locale>.tsx),
 // one graph per locale. It used to be a hand-kept copy and drifted from the
 // page; Google requires the markup to match what the reader sees, and
 // scripts/verify-schema-parity.mjs now fails the build when it does not.
