@@ -20,6 +20,38 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+// Three blocks, always in this order, so the scarcity at the top shows: the
+// founding tier first, then sponsors (the README row and this page), then
+// supporters (this page). A tier with nobody in it renders nothing; we don't
+// show empty slots to look bigger than we are. Every link is rel="sponsored".
+type SponsorEntry = {
+  name: string;
+  href: string;
+  logo: string;
+  width: number;
+  height: number;
+  blurb: string;
+};
+
+const SPONSOR_TIERS: { label: string; entries: SponsorEntry[] }[] = [
+  { label: 'Founding Sponsors', entries: [] },
+  {
+    label: 'Sponsors',
+    entries: [
+      {
+        name: 'SerpApi',
+        href: 'https://serpapi.com/career-ops-org',
+        logo: '/sponsors/serpapi.svg',
+        width: 1764,
+        height: 439,
+        blurb:
+          'Build a portfolio project with live search data. SerpApi gives developers structured JSON/Markdown from Google Search, Maps, Shopping, and other engines through a simple API call.',
+      },
+    ],
+  },
+  { label: 'Supporters', entries: [] },
+];
+
 export default function SustainPage() {
   return (
     <>
@@ -154,29 +186,39 @@ export default function SustainPage() {
             <p className="mt-3">
               career-ops is permanently free for candidates. Candidates never pay the
               project, and are never the product. Companies that sponsor it do so through the project&rsquo;s
-              fiscal host, Open Source Collective.
+              fiscal host, Open Source Collective. Sponsors appear in the Sponsors row of the
+              README and on this page; Supporters, on this page. The README is where the
+              project is seen; this page is where it&rsquo;s explained.
             </p>
 
-            <a
-              href="https://serpapi.com/career-ops-org"
-              rel="sponsored noopener"
-              target="_blank"
-              className="mt-5 block rounded-lg border border-fd-foreground/10 bg-fd-card/40 p-6 no-underline transition-colors hover:border-fd-foreground/20"
-            >
-              <img
-                src="/sponsors/serpapi.svg"
-                alt="SerpApi"
-                width={1764}
-                height={439}
-                className="h-10 w-auto"
-              />
-              <p className="text-fd-foreground mt-4 text-base font-medium">SerpApi</p>
-              <p className="text-fd-muted-foreground mt-1 text-sm leading-relaxed">
-                Build a portfolio project with live search data. SerpApi gives developers
-                structured JSON/Markdown from Google Search, Maps, Shopping, and other
-                engines through a simple API call.
-              </p>
-            </a>
+            {SPONSOR_TIERS.filter((tier) => tier.entries.length > 0).map((tier) => (
+              <div key={tier.label} className="mt-6">
+                <h3 className="text-xs uppercase tracking-[0.2em] text-fd-muted-foreground">
+                  {tier.label}
+                </h3>
+                {tier.entries.map((entry) => (
+                  <a
+                    key={entry.name}
+                    href={entry.href}
+                    rel="sponsored noopener"
+                    target="_blank"
+                    className="mt-3 block rounded-lg border border-fd-foreground/10 bg-fd-card/40 p-6 no-underline transition-colors hover:border-fd-foreground/20"
+                  >
+                    <img
+                      src={entry.logo}
+                      alt={entry.name}
+                      width={entry.width}
+                      height={entry.height}
+                      className="h-10 w-auto"
+                    />
+                    <p className="text-fd-foreground mt-4 text-base font-medium">{entry.name}</p>
+                    <p className="text-fd-muted-foreground mt-1 text-sm leading-relaxed">
+                      {entry.blurb}
+                    </p>
+                  </a>
+                ))}
+              </div>
+            ))}
 
             <blockquote className="border-fd-foreground/15 text-fd-muted-foreground mt-5 border-l-2 pl-4 text-sm leading-relaxed italic">
               Sponsorship buys clearly labeled visibility, never influence: no amount of
