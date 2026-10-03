@@ -3,7 +3,7 @@ title: How to track job applications with a tracker you own
 seoTitle: "Open-source job application tracker: your data, no lock-in"
 description: "Track job applications in a plain-markdown file you own: local, versionable in git, no lock-in. How career-ops's tracker mode and Go dashboard read and write one file."
 date: "2026-07-22"
-lastModified: "2026-07-22"
+lastModified: "2026-09-25"
 tags: ["job-tracker", "open-source", "career-ops"]
 summary: The three ways people track a job search compared, and why an open-source tracker that keeps the data in a file you own beats a spreadsheet or a hosted app.
 faq:
@@ -39,7 +39,7 @@ A spreadsheet wins on ownership and loses on effort: every status change is a ma
 
 career-ops keeps your whole pipeline in one plain-markdown file, `data/applications.md`, one row per application. It is a table you can open in any editor, diff in git, and grep from the terminal. There is no database and no server: the file is the source of truth.
 
-The columns are fixed so the tooling and the dashboard agree on the shape:
+The *schema* is fixed: every tool understands the same nine fields, so the tooling and the dashboard agree on what a row means. The *layout* is not. Columns are read by their header name, not their position, so a tracker that carries a `Location`, `Via` or `URL` column, or one of your own, still reads correctly, with `Score` never shifted into `Status`. Extra columns are supported and kept. A row with the nine canonical columns looks like this:
 
 ```markdown
 | # | Date | Company | Role | Score | Status | PDF | Report | Notes |

@@ -4,8 +4,8 @@ description: "Schneller Überblick darüber, wo jede Bewerbung gerade steht. Nü
 seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 167746551bbaa8b0
+lastModified: "2026-09-25"
+translationHash: a9b56770e26e0957
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -43,6 +43,37 @@ Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht g
 ## Die Gesamtzahlen lesen
 
 Für kumulierte Werte – den vollständigen Funnel, die Scanner-Summen, die Portal-Abdeckung und die Einhaltung der Follow-ups – führt der Modus `node stats.mjs --summary` aus und gibt dessen Ausgabe unverändert wieder. Dieser Befehl liest deine lokalen Dateien und kostet null Tokens, deshalb werden die Zahlen nie von Hand neu berechnet oder aus dem Gedächtnis geschätzt. Nutze die Chat-Zusammenfassung oben für den schnellen täglichen Überblick und den stats-Befehl, wenn du die laufenden Summen über deine gesamte Suche sehen willst.
+
+## Eine reparierte Kopie exportieren
+
+Über Hunderte von Zeilen sammelt eine Markdown-Tabelle Schäden an: Mojibake-Platzhalter, ein Score, der in der Status-Spalte gestrandet ist, doppelte IDs, verirrte senkrechte Striche. `node tracker.mjs sync` findet und repariert diese Schäden in seinem SQLite-Index `data/applications.db`, ohne das Markdown anzufassen. Mit `node tracker.mjs export` übernimmst du diese reparierte Kopie deines eigenen Trackers:
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+`export` fasst `data/applications.md` nie an, es sei denn, du übergibst die Datei als `--out`.
+
+Der Befehl bewahrt die Struktur, die er gelesen hat, nicht nur die Werte: deine Kopfzeile, Spalten, die career-ops nicht zuordnet (`Location`, `Via`, `URL` oder deine eigenen), den Titel, alle Zeilen vor und nach der Tabelle sowie die Zeilenenden, CRLF oder LF. Zusätzliche Spalten kommen an ihrer eigenen Position zurück, auch wenn `query` nicht nach ihnen filtern kann.
+
+Alles, was er nicht reproduzieren kann, nennt er auf stderr. Ist diese Liste nicht leer, verweigert `--out` das Überschreiben einer vorhandenen Datei (Exit-Code `1`, nichts wird geschrieben), bis du den Befehl mit `--force` erneut ausführst. Ist sie leer, sichert `--out` die vorhandene Datei und überschreibt sie. Gemeldet wird:
+
+| Was gemeldet wird | Warum es sich nicht wiederherstellen lässt |
+| --- | --- |
+| Eine Zelle außerhalb der Spalten, die die Kopfzeile deklariert | Die Kopfzeile hat keine Spalte, in die sie gehört |
+| Eine Zeile zwischen der ersten und der letzten Tabellenzeile, etwa eine Überschrift oder die Kopfzeile einer zweiten Tabelle | Eine einzelne neu aufgebaute Tabelle hat keinen Platz dafür |
+| Eine Zeile, die zu einer späteren Tabelle gehört, etwa zu einem Abschnitt `## Archive` | Sie wurde mit der Kopfzeile der ersten Tabelle indexiert, ein erneutes Ausgeben würde archivierte Daten also in die aktive Tabelle verschieben |
+| Eine Zelle, deren Wert umgeschrieben werden musste, um als Zelle zu überleben (ein verirrter `\|` kommt als `│` zurück) | Der Wert selbst hat sich geändert |
+
+Dass keine Verluste gemeldet werden, heißt nicht, dass die Ausgabe Byte für Byte identisch ist. `export` gibt die Reparaturen aus, die `sync` vorgenommen hat, und manche davon geschehen still: `aplicado` ist in `templates/states.yml` ein anerkannter Alias für `Applied`, deshalb meldet `sync --check` keine Beschädigung, und der Export schreibt trotzdem `Applied`. Spaltenweise ausgerichtete Zellen kommen außerdem mit einfachen Leerzeichen zurück. Bevor du einen Export übernimmst, vergleiche ihn mit der Datei, die er ersetzen soll:
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+Die vollständige Befehlsreferenz, einschließlich `sync`, `query` und `history`, findest du im [Skript-Leitfaden](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker) des Haupt-Repositorys.
 
 ## Stolperfallen
 
