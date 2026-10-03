@@ -5,7 +5,7 @@ seoTitle: "Modo tracker de career-ops — consulta el estado de cada candidatura
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: b03887764d96ff28
+translationHash: a9b56770e26e0957
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -30,15 +30,15 @@ Una ejecución de tracker imprime la tabla completa de candidaturas más un bloq
 
 ```txt title="Example"
 # | Date       | Company   | Role              | Score | Status    | PDF | Report
-1 | 2026-06-14 | Anthropic | AI Engineer       |  87   | Interview | yes | yes
-2 | 2026-06-18 | Vercel    | Applied AI Eng    |  79   | Applied   | yes | yes
-3 | 2026-06-21 | Figma     | Product Eng, AI   |  72   | Evaluated | yes | yes
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
 
 Total: 3   Applied: 1   Interview: 1   Evaluated: 1
-Average score: 79   PDF generated: 100%   Report generated: 100%
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escrito, decisión pendiente), Applied (la has enviado), Responded (la empresa respondió pero aún sin entrevista), Interview (un proceso activo), y después un estado terminal de Offer, Rejected, Discarded o SKIP para los puestos que no encajan. Para registrar un cambio de estado, actualiza la fila en la tabla del tracker o usa el dashboard TUI en Go.
+Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escrito, decisión pendiente), Applied (la has enviado), Responded (la empresa respondió pero aún sin entrevista), Interview (un proceso activo), y después un estado terminal de Offer, Rejected, Discarded o SKIP para los puestos que no encajan. Para registrar un cambio de estado, pídelo en el chat o ejecuta tú mismo `node set-status.mjs <report#|company> <state>`, y añade `--on YYYY-MM-DD` si ocurrió en una fecha anterior. El comando rechaza los estados desconocidos, bloquea el tracker mientras escribe y registra la transición en `data/status-log.tsv`, el registro que leen las estadísticas de funnel-velocity, así que úsalo en lugar de editar la fila a mano.
 
 ## Cómo leer las cifras acumuladas
 
@@ -77,7 +77,7 @@ La referencia completa del comando, incluidos `sync`, `query` y `history`, está
 
 ## Cosas a tener en cuenta
 
-tracker es de solo lectura. Los cambios de estado son pulsaciones explícitas en el dashboard TUI en Go o ediciones manuales en el frontmatter del informe.
+El estado vive en la columna Status del tracker (`data/applications.md`), no en el archivo del informe. El selector de estado del dashboard TUI en Go también actualiza esa columna, pero no registra la transición en `data/status-log.tsv` como lo hace `set-status.mjs`. funnel-velocity sí ve el nuevo estado, pero no cuándo ocurrió: el cambio falta en los tiempos por etapa, y una fila que acaba en Rejected pierde las etapas por las que pasó. Usa el comando para cualquier cambio que quieras que esas cifras incluyan.
 
 ## Relacionados
 

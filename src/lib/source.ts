@@ -15,7 +15,12 @@ export const source = loader({
 });
 
 export function getPageImage(page: InferPageType<typeof source>) {
-  const segments = [...page.slugs, 'image.png'];
+  // The locale rides in the file name so English URLs stay exactly as they
+  // were (image.png) and Spanish and French get their own cards
+  // (image.es.png, image.fr.png) with their own titles.
+  const file =
+    page.locale && page.locale !== 'en' ? `image.${page.locale}.png` : 'image.png';
+  const segments = [...page.slugs, file];
 
   return {
     segments,
@@ -87,7 +92,7 @@ function stripJsx(md: string): string {
     .replace(/<summary>([\s\S]*?)<\/summary>/g, (_m, t) => `**${t.trim()}**`)
     .replace(/<Callout\b[^>]*?\btitle="([^"]*)"[^>]*>/g, '> **$1**')
     .replace(
-      /<\/?(?:div|Tabs|Steps|Accordions|Tab|Step|Accordion|Callout|details|Files?|Folder)\b[^>]*>/g,
+      /<\/?(?:div|Tabs|Steps|Accordions|Tab|Step|Accordion|Callout|details|Files?|Folder|StarOnGitHub)\b[^>]*>/g,
       '',
     );
 

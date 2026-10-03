@@ -8,12 +8,12 @@ icon: Terminal
 **career-ops runs on every major AI coding CLI — you are not locked into any single vendor.** Because career-ops ships prompt files that the CLI executes (it does not bundle its own model), you point it at whichever AI coding assistant you already use and it runs on top of that engine unchanged. When a better model ships, you switch CLIs and keep your pipeline, your data and your setup.
 
 <Callout title="Use what you already have">
-The best CLI for career-ops is the one you already pay for. If that is Claude Code, you're done. If you want to run for free, see [Set up a free AI engine](/docs/free-ai-engine).
+The best CLI for career-ops is the one you already pay for. If you already pay for Claude Code, career-ops needs no other setup. If you want to run for free, see [Set up a free AI engine](/docs/free-ai-engine).
 </Callout>
 
 ## Which CLIs are supported?
 
-career-ops works first-class with **Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI** — nine actively-maintained AI coding CLIs. (Gemini CLI is supported as a legacy wrapper, transitioned into Antigravity CLI.) The architecture is shared: a single canonical `AGENTS.md` drives the logic, and thin per-CLI entry files handle the invocation nuances of each tool.
+career-ops works first-class with **Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI** — ten actively-maintained AI coding CLIs. (Gemini CLI remains only as a legacy wrapper, transitioned into Antigravity CLI.) The career-ops architecture is shared across CLIs: a single canonical `AGENTS.md` drives the logic, and thin per-CLI entry files handle the invocation nuances of each tool.
 
 The **canonical, always-current list — with the exact command to invoke career-ops in each CLI — lives in the core repo** so it never drifts out of date:
 
@@ -21,8 +21,8 @@ The **canonical, always-current list — with the exact command to invoke career
 
 ## Which one should I choose?
 
-- **Already paying for Claude Code, Codex, or Copilot?** Use it. career-ops runs on top with zero extra setup — open the CLI inside the career-ops folder.
-- **Want to run at $0?** [OpenCode with a free provider, a local model via Ollama, or the built-in OpenRouter runner](/docs/free-ai-engine) all work.
-- **Care about a specific model or provider?** career-ops is model-agnostic — point any of these CLIs at any OpenAI-compatible endpoint or local model. Nothing in career-ops changes.
+- **If you already pay for Claude Code, Codex, or Copilot, use that CLI.** career-ops runs on top with zero extra setup — open the CLI inside the career-ops folder.
+- **To run career-ops at $0,** use [OpenCode with a free provider, a local model via Ollama, or the built-in OpenRouter runner](/docs/free-ai-engine).
+- **If you need a specific model or provider,** point any of these CLIs at any OpenAI-compatible endpoint or local model: career-ops is model-agnostic, and nothing in career-ops changes.
 
-Whatever you pick, the [14 modes](/docs/reference/modes) behave the same way — the CLI is the engine, career-ops is the structure on top.
+Whichever CLI you pick, the career-ops [14 modes](/docs/reference/modes) behave the same way — the CLI is the engine, career-ops is the structure on top.

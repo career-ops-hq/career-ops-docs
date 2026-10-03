@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { blogSource } from '@/lib/blog-source';
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
     'Long-form writing on AI-powered job search, Claude Code skill design, the open-source operator playbook, and what the data from 740+ listings actually says.',
   alternates: { canonical: 'https://career-ops.org/blog' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/blog',
     siteName: 'career-ops',

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { instrumentSerif } from '@/lib/fonts';
 
 // Home copy dictionary — one trunk, text varies by language. The home
 // component renders IDENTICAL structure/widgets for every locale; only
@@ -16,7 +17,8 @@ export type HomeDict = {
   heroHook: ReactNode;
   heroH1: ReactNode;
   runItNow: string;
-  viewSource: string;
+  // Page language, for the star button's click event (its label stays English).
+  locale: 'en' | 'es' | 'fr' | 'de';
   // Locale-aware destination for the "get started" / docs CTAs: EN '/docs',
   // ES '/es/docs'. Keeps the Spanish home sending users into the Spanish docs
   // (which now has a translated landing) instead of dropping them into English.
@@ -25,7 +27,18 @@ export type HomeDict = {
   // reason as docsHref: the Spanish home must send readers to the Spanish
   // manifesto, not drop them into the English one.
   manifestoHref: string;
+  // Small note under the hero buttons: the price answer where the decision is
+  // made. "for candidates" is the qualifier that keeps it from a bare "free".
+  heroFreeNote: string;
   featuredIn: string;
+  // Label for the Vercel Open Source Program badge, a separate group from the press.
+  memberOf: string;
+  // One line under the "What is career-ops?" text, to the guide on judging a
+  // job before applying. Optional: absent on a locale where that guide has no
+  // translation. (Until 30-sep that was fr; the /fr route redirects an
+  // untranslated slug to English, so the link is safe either way.)
+  worthApplyingLabel?: string;
+  worthApplyingHref?: string;
   authorTagline: string;
   // Official localized rendering of the signature thesis, shown BELOW the
   // literal-English blockquote (which stays verbatim on every locale, it is the
@@ -69,27 +82,84 @@ export type HomeDict = {
 
 const brand = (t: ReactNode) => <span className="text-brand">{t}</span>;
 
-export const homeEn: HomeDict = {
-  heroHook: (
+// Hero line (decided by Santiago, 29-sep): the rival is the process, volume
+// and silence, never the companies. Same size and weight throughout; the
+// hierarchy comes only from colour, in three steps (venture-ops spec V6 +
+// V7a, ratios in consultas/tipografia-mensaje-2026-09-29): the pain in cool
+// grey, the turn ("Stop guessing") in olive, the action in full ink, with
+// one orange word. "silence" is set in the real Instrument Serif Italic
+// (font-synthesis is off on the parent, so a missing face stays upright
+// instead of being slanted by the browser). Each sentence is inline-block,
+// so the line only breaks between sentences: two lines on wide screens,
+// four on phones.
+const HOOK_PAIN = 'text-[#6b7280] dark:text-[#8a8f98]';
+const HOOK_TURN = 'text-[#59592a] dark:text-[#b7af7e]';
+const HOOK_ACTION = 'text-[#26261a] dark:text-[#e4e2d0]';
+const HOOK_ACCENT = 'text-[#a55212] dark:text-[#dd7627]';
+
+function heroLine(t: {
+  more: string;
+  silencePre: string;
+  silence: string;
+  silencePost: string;
+  stop: string;
+  startPre: string;
+  choose: string;
+  startPost: string;
+}): ReactNode {
+  return (
     <>
-      You got the job,
-      <br />
-      and it didn&apos;t cost you a {brand('thing')}.
+      <span className={`block ${HOOK_PAIN}`}>
+        <span className="inline-block">{t.more}</span>{' '}
+        <span className="inline-block">
+          {t.silencePre}
+          <span className={instrumentSerif.className}>{t.silence}</span>
+          {t.silencePost}
+        </span>
+      </span>
+      <span className="block max-md:mt-[0.25em]">
+        <span className={`inline-block ${HOOK_TURN}`}>{t.stop}</span>{' '}
+        <span className={`inline-block ${HOOK_ACTION}`}>
+          {t.startPre}
+          <span className={HOOK_ACCENT}>{t.choose}</span>
+          {t.startPost}
+        </span>
+      </span>
     </>
-  ),
+  );
+}
+
+export const homeEn: HomeDict = {
+  heroHook: heroLine({
+    more: 'More applications.',
+    silencePre: 'More ',
+    silence: 'silence',
+    silencePost: '.',
+    stop: 'Stop guessing.',
+    startPre: 'Start ',
+    choose: 'choosing',
+    startPost: '.',
+  }),
   heroH1: (
     <>
-      Open source AI-powered job search.
+      career-ops: open-source AI job search{'\u00a0'}agent.
       <br />
       Runs in your CLI. Your data, your machine.
+      <br />
+      It tailors your CV and drafts your answers.{' '}
+      <span className="inline-block">You press Submit.</span>
     </>
   ),
   runItNow: 'Run it now',
-  viewSource: 'View source',
+  locale: 'en',
   docsHref: '/docs',
   manifestoHref: '/manifesto',
+  heroFreeNote: 'Free for candidates, forever',
   featuredIn: 'Featured in',
-  authorTagline: ', 16-year operator and Head of Applied AI',
+  memberOf: 'Member of',
+  worthApplyingLabel: 'How to tell if a job is worth applying to →',
+  worthApplyingHref: '/docs/introduction/guides/is-this-job-worth-applying-to',
+  authorTagline: ', 16-year operator and creator of career-ops',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
   readIt: 'Read it →',
   whatIsHeading: (
@@ -120,7 +190,7 @@ export const homeEn: HomeDict = {
   statsComment: 'stars · Open source · MIT',
   commandCenter: (
     <>
-      Turn any AI coding CLI into a full job search {brand('command center')}.
+      Turn any AI coding CLI into your {brand('AI job search agent')}.
     </>
   ),
   tryItOut: 'Try it out',
@@ -167,7 +237,7 @@ export const homeEn: HomeDict = {
   featScanBody: (
     <>
       Pre-configured scrapers check{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150+ job sources</a> on demand, Greenhouse, Ashby and Lever
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150+ job sources</a> on demand, Greenhouse, Ashby and Lever
       among them — zero API tokens spent. Run{' '}
       <code className="font-mono text-brand">/career-ops scan</code> and get a
       ranked list back in minutes.
@@ -228,7 +298,7 @@ export const homeEn: HomeDict = {
       q: 'Does career-ops apply to jobs for me?',
       a: (
         <>
-          It prepares every application right up to the click: it scans roles,
+          career-ops prepares every application right up to the click: it scans roles,
           scores each against your CV, and tailors a resume. Then it hands the
           decision back to you. You review and send each one yourself. That is
           deliberate: mass auto-apply burns your standing with recruiters and ATS
@@ -251,9 +321,12 @@ export const homeEn: HomeDict = {
           There is no paid tier, no waitlist, no account, no telemetry, and no
           premium features. You clone the repo, configure your profile, and run
           the system locally with whichever AI coding CLI you already use.
-          Sustainability comes from voluntary community patronage via GitHub
-          Sponsors — not from premium tiers, paid features, or data.
-          Sponsorship funds maintenance, security fixes, releases, and documentation. See{' '}
+          Sustainability comes from community contributions and corporate
+          sponsorship through the project’s collective on Open Collective — not
+          from premium tiers, paid
+          features, or data. Funding is held by the project’s fiscal host, Open
+          Source Collective, on a public ledger, and goes to maintenance, security
+          fixes, releases, and documentation. See{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>{' '}
@@ -265,7 +338,7 @@ export const homeEn: HomeDict = {
       q: 'Where does my data live?',
       a: (
         <>
-          On your own machine, in plain files you own: your CV, profile,
+          career-ops keeps your data on your own machine, in plain files you own: your CV, profile,
           pipeline, and reports are local Markdown and YAML. career-ops runs
           entirely locally through your AI CLI: no account, no telemetry, nothing
           uploaded to a career-ops server. System updates never touch your data
@@ -283,11 +356,11 @@ export const homeEn: HomeDict = {
             Santiago Fernández de Valderrama Aparicio
           </a>{' '}
           — an Applied AI Operator with 16+ years building products, founder and
-          operator of a Spanish phone-repair business (2009–2025) before exiting,
-          and currently Head of Applied AI at Zinkee. He created career-ops in
-          early 2026 to manage his own AI-era job search — 740 listings
-          evaluated, one Head of AI role landed — and open-sourced it under MIT
-          once he no longer needed it.
+          operator of a Spanish phone-repair business (2009–2025) before exiting.
+          He created career-ops in early 2026 to manage his own AI-era job
+          search — 740 listings evaluated, one Head of Applied AI role landed —
+          and open-sourced it under MIT once he no longer needed it. Six months
+          after landing it, he left that role to focus on building career-ops full time.
         </>
       ),
     },
@@ -328,10 +401,9 @@ export const homeEn: HomeDict = {
       q: 'What AI tools does career-ops work with?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent, and GitHub Copilot CLI — nine first-class CLIs
-          (Gemini CLI is a
-          legacy wrapper). The same mode files run on all of them. Each user picks
+          career-ops works with Claude Code, Cursor, Codex, OpenCode, Antigravity
+          CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI —
+          ten first-class CLIs (Gemini CLI is a legacy wrapper). The same mode files run on all of them. Each user picks
           the CLI that fits their existing subscription and cost preferences —
           career-ops never locks you to one provider. A typical job search runs on
           Claude Pro at $20/month, but the choice is yours.
@@ -352,26 +424,36 @@ export const homeEn: HomeDict = {
 };
 
 export const homeEs: HomeDict = {
-  heroHook: (
-    <>
-      Conseguiste el trabajo,
-      <br />
-      y no te costó {brand('nada')}.
-    </>
-  ),
+  heroHook: heroLine({
+    more: 'Más candidaturas.',
+    silencePre: 'Más ',
+    silence: 'silencio',
+    silencePost: '.',
+    stop: 'Deja de adivinar.',
+    startPre: 'Empieza a ',
+    choose: 'elegir',
+    startPost: '.',
+  }),
   heroH1: (
     <>
-      Búsqueda de empleo con IA, open source.
+      career-ops: agente open source de búsqueda de empleo con{'\u00a0'}IA.
       <br />
       Se ejecuta en tu CLI. Tus datos, tu máquina.
+      <br />
+      Adapta tu CV y redacta tus respuestas.{' '}
+      <span className="inline-block">Tú pulsas Enviar.</span>
     </>
   ),
   runItNow: 'Empezar ahora',
-  viewSource: 'Ver el código',
+  locale: 'es',
   docsHref: '/es/docs',
   manifestoHref: '/es/manifesto',
+  heroFreeNote: 'Gratis para los candidatos, para siempre',
   featuredIn: 'Apareció en',
-  authorTagline: ', 16 años como operador y Head of Applied AI',
+  memberOf: 'Miembro de',
+  worthApplyingLabel: 'Cómo saber si una oferta merece tu candidatura →',
+  worthApplyingHref: '/es/docs/introduction/guides/is-this-job-worth-applying-to',
+  authorTagline: ', operador durante 16 años y creador de career-ops',
   // Versión «yo» oficial del README.es (superficie personal = home). El
   // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo
   // («descartarte») puede afinarse a «filtrar candidatos» — venture-ops lo cierra.
@@ -401,15 +483,15 @@ export const homeEs: HomeDict = {
       {brand('sin nube')}, {brand('sin telemetría')}, {brand('sin cuenta')}. Con
       licencia MIT y gratis para siempre; el único coste es el CLI de IA que ya
       pagas. Lo creó Santiago Fernández de Valderrama Aparicio tras una búsqueda
-      de empleo real en 2026: 740 ofertas evaluadas, 68 candidaturas, 12
+      de empleo real en 2026: 740 vacantes evaluadas, 68 candidaturas, 12
       entrevistas y una oferta.
     </>
   ),
   statsComment: 'estrellas · Open source · MIT',
   commandCenter: (
     <>
-      Convierte cualquier CLI de IA en un {brand('centro de mando')} completo de
-      búsqueda de empleo.
+      Convierte cualquier CLI de IA para programar en tu{' '}
+      {brand('agente de búsqueda de empleo con IA')}.
     </>
   ),
   tryItOut: 'Pruébalo',
@@ -417,7 +499,7 @@ export const homeEs: HomeDict = {
     <>
       Necesita un CLI de IA como motor — ¿aún no tienes ninguno configurado?{' '}
       <a
-        href="/docs/free-ai-engine"
+        href="/es/docs/free-ai-engine"
         className="text-fd-foreground underline underline-offset-2"
       >
         Consigue uno gratis
@@ -456,7 +538,7 @@ export const homeEs: HomeDict = {
   featScanBody: (
     <>
       Scrapers preconfigurados revisan{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">más de 150 fuentes de empleo</a> bajo demanda, entre ellas
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">más de 150 fuentes de empleo</a> bajo demanda, entre ellas
       Greenhouse, Ashby y Lever — cero tokens de API. Ejecuta{' '}
       <code className="font-mono text-brand">/career-ops scan</code> y recibe una
       lista priorizada en minutos.
@@ -483,7 +565,7 @@ export const homeEs: HomeDict = {
       <a href="/about" rel="author" className="text-fd-foreground font-medium hover:underline">
         Santiago Fernández de Valderrama Aparicio
       </a>{' '}
-      tras evaluar 740 ofertas de empleo.
+      tras evaluar 740 vacantes.
       <br />
       La metodología de puntuación completa está{' '}
       <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
@@ -518,7 +600,7 @@ export const homeEs: HomeDict = {
       q: '¿career-ops aplica a las ofertas por mí?',
       a: (
         <>
-          Prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno
+          career-ops prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno
           contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú
           revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema
           tu reputación con los reclutadores y los ATS, así que career-ops te quita
@@ -534,10 +616,12 @@ export const homeEs: HomeDict = {
           comunidad. No hay plan de pago, ni lista de espera, ni cuenta, ni
           telemetría, ni funciones premium. Clonas el repositorio, configuras tu
           perfil y ejecutas el sistema en local con el CLI de IA que ya uses. La
-          sostenibilidad viene del mecenazgo voluntario de la comunidad vía GitHub
-          Sponsors — no de planes premium, funciones de pago ni datos. El
-          maintainer tiene otro trabajo remunerado; el patrocinio le permite
-          dedicarle más foco. Detalles en{' '}
+          sostenibilidad viene de las aportaciones de la comunidad y del patrocinio de
+          empresas, a través del colectivo del proyecto en Open Collective, no de
+          planes premium, funciones de pago ni datos. El dinero lo custodia el anfitrión fiscal del proyecto,
+          Open Source Collective, con cada aportación y cada gasto en un registro
+          público, y se destina al mantenimiento, las correcciones de seguridad, la
+          publicación de nuevas versiones y la documentación. Detalles en{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>
@@ -549,7 +633,7 @@ export const homeEs: HomeDict = {
       q: '¿Dónde se guardan mis datos? ¿career-ops es privado?',
       a: (
         <>
-          En tu propia máquina, en archivos planos que son tuyos: tu CV, tu
+          career-ops guarda tus datos en tu propia máquina, en archivos planos que son tuyos: tu CV, tu
           perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops
           corre por completo en local a través de tu CLI de IA: sin cuenta, sin
           telemetría, sin nada subido a un servidor de career-ops. Las
@@ -569,11 +653,11 @@ export const homeEs: HomeDict = {
           </a>{' '}
           — un Applied AI Operator con más de 16 años construyendo productos,
           fundador y operador de un negocio español de reparación de móviles
-          (2009–2025) antes de su salida, y actualmente Head of Applied AI en
-          Zinkee. Creó career-ops a principios de 2026 para gestionar su propia
-          búsqueda de empleo en la era de la IA — 740 ofertas evaluadas, un puesto
-          de Head of AI conseguido — y lo publicó bajo licencia MIT cuando dejó de
-          necesitarlo.
+          (2009–2025) antes de su salida. Creó career-ops a principios de 2026
+          para gestionar su propia búsqueda de empleo en la era de la IA — 740
+          vacantes evaluadas, un puesto de Head of Applied AI conseguido — y lo
+          publicó bajo licencia MIT cuando ya no lo necesitaba. Seis meses después
+          de conseguirlo, dejó ese puesto para centrarse en construir career-ops a tiempo completo.
         </>
       ),
     },
@@ -613,10 +697,9 @@ export const homeEs: HomeDict = {
       q: '¿Con qué herramientas de IA funciona career-ops?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent y GitHub Copilot CLI — nueve CLIs de primera clase
-          (Gemini CLI es un
-          wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
+          career-ops funciona con Claude Code, Cursor, Codex, OpenCode, Antigravity
+          CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI —
+          diez CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
           usuario elige el CLI que encaja con su suscripción y sus preferencias de
           coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de
           empleo típica corre con Claude Pro a 20 $/mes, pero la elección es tuya.
@@ -643,26 +726,39 @@ export const homeEs: HomeDict = {
 // (search-ops fanout-fr-2026-W30): the killer "career-ops postule-t-il à ma
 // place ?" and the privacy "Mes données restent-elles sur mon ordinateur ?".
 export const homeFr: HomeDict = {
-  heroHook: (
-    <>
-      Vous avez décroché le poste,
-      <br />
-      et ça ne vous a {brand('rien')} coûté.
-    </>
-  ),
+  // FR pending native review (venture-ops): "Plus de silence" alone reads
+  // as "no more silence", hence "Encore plus de".
+  heroHook: heroLine({
+    more: 'Plus de candidatures.',
+    silencePre: 'Encore plus de\u00a0',
+    silence: 'silence',
+    silencePost: '.',
+    stop: 'Arrêtez de deviner.',
+    startPre: 'Commencez à\u00a0',
+    choose: 'choisir',
+    startPost: '.',
+  }),
   heroH1: (
     <>
-      Recherche d’emploi par IA, open source.
+      career-ops{'\u202f'}: agent open source de recherche d’emploi par{'\u00a0'}IA.
       <br />
-      Elle tourne dans votre CLI. Vos données, votre machine.
+      Il tourne dans votre CLI. Vos données, votre{'\u00a0'}machine.
+      <br />
+      Il adapte votre CV et rédige vos réponses.{' '}
+      <span className="inline-block">Vous cliquez sur Envoyer.</span>
     </>
   ),
   runItNow: 'Commencer',
-  viewSource: 'Voir le code',
+  locale: 'fr',
   docsHref: '/fr/docs',
   manifestoHref: '/manifesto',
+  // Provisional, pending native review (venture-ops, 30-sep).
+  heroFreeNote: 'Gratuit pour les candidats, pour toujours',
   featuredIn: 'Vu dans',
-  authorTagline: ', 16 ans d’opérateur et Head of Applied AI',
+  memberOf: 'Membre de',
+  worthApplyingLabel: 'Comment savoir si une offre mérite votre candidature →',
+  worthApplyingHref: '/fr/docs/introduction/guides/is-this-job-worth-applying-to',
+  authorTagline: ', opérateur pendant 16 ans et créateur de career-ops',
   // No thesisTranslation for FR — the English thesis stands alone (venture-ops).
   nowSignedManifesto: <>Désormais un manifeste signé ·</>,
   readIt: 'À lire →',
@@ -688,15 +784,15 @@ export const homeFr: HomeDict = {
       {brand('sans cloud')}, {brand('sans télémétrie')}, {brand('sans compte')}.
       Sous licence MIT et gratuit pour toujours ; le seul coût est le CLI d’IA
       que vous payez déjà. Créé par Santiago Fernández de Valderrama Aparicio
-      après une vraie recherche d’emploi en 2026 : 740 offres évaluées, 68
+      après une vraie recherche d’emploi en 2026 : 740 annonces évaluées, 68
       candidatures, 12 entretiens et une offre.
     </>
   ),
   statsComment: 'étoiles · Open source · MIT',
   commandCenter: (
     <>
-      Transformez n’importe quel CLI d’IA en {brand('centre de commande')} complet
-      pour votre recherche d’emploi.
+      Transformez n’importe quel CLI de code IA en votre{' '}
+      {brand('agent de recherche d’emploi par IA')}.
     </>
   ),
   tryItOut: 'Essayez',
@@ -745,7 +841,7 @@ export const homeFr: HomeDict = {
   featScanBody: (
     <>
       Des scrapers préconfigurés parcourent{' '}
-      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noreferrer noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">plus de 150 sources d’emploi</a> à la demande, dont
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">plus de 150 sources d’emploi</a> à la demande, dont
       Greenhouse, Ashby et Lever — zéro jeton d’API. Lancez{' '}
       <code className="font-mono text-brand">/career-ops scan</code> et recevez
       une liste priorisée en quelques minutes.
@@ -772,7 +868,7 @@ export const homeFr: HomeDict = {
       <a href="/about" rel="author" className="text-fd-foreground font-medium hover:underline">
         Santiago Fernández de Valderrama Aparicio
       </a>{' '}
-      après avoir évalué 740 offres d’emploi.
+      après avoir évalué 740 annonces.
       <br />
       La méthodologie de scoring complète est{' '}
       <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
@@ -808,7 +904,7 @@ export const homeFr: HomeDict = {
       q: 'career-ops postule-t-il à ma place ?',
       a: (
         <>
-          Il prépare chaque candidature jusqu’au clic : il parcourt les offres,
+          career-ops prépare chaque candidature jusqu’au clic : il parcourt les offres,
           note chacune face à votre CV et adapte un CV. Puis il vous rend la
           décision. Vous relisez et envoyez chaque candidature vous-même. C’est
           délibéré : la candidature automatique de masse abîme votre réputation
@@ -837,11 +933,13 @@ export const homeFr: HomeDict = {
           la communauté. Pas d’offre payante, pas de liste d’attente, pas de
           compte, pas de télémétrie, pas de fonctionnalités premium. Vous clonez
           le dépôt, configurez votre profil et lancez le système en local avec le
-          CLI d’IA que vous utilisez déjà. La pérennité vient du mécénat
-          volontaire de la communauté via GitHub Sponsors, pas d’offres premium,
-          de fonctionnalités payantes ou de données. Le mainteneur a un autre
-          travail rémunéré ; le parrainage lui permet de s’y consacrer davantage.
-          Détails sur{' '}
+          CLI d’IA que vous utilisez déjà. La pérennité vient des contributions
+          de la communauté et du parrainage d’entreprises, via le collectif du
+          projet sur Open Collective, et non d’offres premium, de fonctionnalités
+          payantes ou de données. Les fonds sont détenus par l’hôte fiscal du projet, Open Source
+          Collective, avec chaque contribution et chaque dépense dans un registre
+          public, et financent la maintenance, les correctifs de sécurité, les
+          nouvelles versions et la documentation. Détails sur{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
           </a>
@@ -853,7 +951,7 @@ export const homeFr: HomeDict = {
       q: 'Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?',
       a: (
         <>
-          Sur votre propre machine, dans des fichiers en clair qui vous
+          career-ops garde vos données sur votre propre machine, dans des fichiers en clair qui vous
           appartiennent : votre CV, votre profil, votre pipeline et vos rapports
           sont du Markdown et du YAML locaux. career-ops tourne entièrement en
           local via votre CLI d’IA : pas de compte, pas de télémétrie, rien n’est
@@ -874,11 +972,12 @@ export const homeFr: HomeDict = {
           </a>{' '}
           — un Applied AI Operator avec plus de 16 ans à construire des produits,
           fondateur et exploitant d’une entreprise espagnole de réparation de
-          téléphones (2009–2025) avant sa revente, et actuellement Head of Applied
-          AI chez Zinkee. Il a créé career-ops début 2026 pour gérer sa propre
-          recherche d’emploi à l’ère de l’IA — 740 offres évaluées, un poste de
-          Head of AI décroché — et l’a publié sous licence MIT une fois qu’il
-          n’en avait plus besoin.
+          téléphones (2009–2025) avant sa revente. Il a créé career-ops début 2026
+          pour gérer sa propre recherche d’emploi à l’ère de l’IA — 740 annonces
+          évaluées, un poste de Head of Applied AI décroché — et l’a publié sous
+          licence MIT une fois qu’il n’en avait plus besoin. Six mois après l’avoir
+          décroché, il a quitté ce poste pour se consacrer à plein temps au développement de
+          career-ops.
         </>
       ),
     },
@@ -920,10 +1019,10 @@ export const homeFr: HomeDict = {
       q: 'Avec quels outils d’IA career-ops fonctionne-t-il ?',
       a: (
         <>
-          Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent et GitHub Copilot CLI — neuf CLIs de premier plan
-          (Gemini CLI est
-          un wrapper legacy). Les mêmes fichiers de mode fonctionnent sur tous.
+          career-ops fonctionne avec Claude Code, Cursor, Codex, OpenCode,
+          Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub
+          Copilot CLI — dix CLIs de premier plan (Gemini CLI est un wrapper
+          legacy). Les mêmes fichiers de mode fonctionnent sur tous.
           Chacun choisit le CLI qui correspond à son abonnement et à ses
           préférences de coût — career-ops ne vous enferme jamais chez un seul
           fournisseur. Une recherche d’emploi typique tourne sur Claude Pro à
@@ -940,6 +1039,332 @@ export const homeFr: HomeDict = {
       Annonces de versions et nouvelles occasionnelles.
       <br />
       Désabonnement à tout moment.
+    </>
+  ),
+};
+
+// German home (2026-09-30). Germany is the #4 country by pageviews and Google
+// clicks and the first non-English-speaking market. Same trunk, German copy,
+// informal "du" as in German developer docs. Like FR, the thesis stays in
+// LITERAL English with no thesisTranslation (no ratified German rendering).
+// FAQ questions are transcreated to German search intent rather than calqued:
+// "Bewirbt sich career-ops für mich?" (auto-apply, answered in the positive)
+// and "Datenschutz" in the privacy question, the word German readers search.
+// Pending native review, like the FR hero.
+export const homeDe: HomeDict = {
+  // "Funkstille" is the idiom for an employer who never answers.
+  heroHook: heroLine({
+    more: 'Mehr Bewerbungen.',
+    silencePre: 'Mehr ',
+    silence: 'Funkstille',
+    silencePost: '.',
+    stop: 'Nicht mehr raten.',
+    startPre: 'Selbst ',
+    choose: 'entscheiden',
+    startPost: '.',
+  }),
+  heroH1: (
+    <>
+      career-ops: Open-Source-KI-Agent für die{' '}Jobsuche.
+      <br />
+      Läuft in deiner CLI. Deine Daten, dein{' '}Rechner.
+      <br />
+      Passt deinen Lebenslauf an und entwirft deine Antworten.{' '}
+      <span className="inline-block">Du klickst auf Absenden.</span>
+    </>
+  ),
+  runItNow: 'Loslegen',
+  locale: 'de',
+  docsHref: '/de/docs',
+  manifestoHref: '/manifesto',
+  heroFreeNote: 'Für Jobsuchende kostenlos, für immer',
+  featuredIn: 'Bekannt aus',
+  memberOf: 'Mitglied im',
+  worthApplyingLabel: 'Woran du erkennst, ob sich eine Bewerbung lohnt →',
+  worthApplyingHref: '/de/docs/introduction/guides/is-this-job-worth-applying-to',
+  authorTagline: ', 16 Jahre lang Operator und Entwickler von career-ops',
+  // No thesisTranslation for DE — the English thesis stands alone, as in FR.
+  nowSignedManifesto: <>Jetzt ein unterzeichnetes Manifest ·</>,
+  readIt: 'Lesen →',
+  whatIsHeading: (
+    <>
+      <span className="text-landing-foreground dark:text-landing-foreground-dark">
+        Was ist
+      </span>{' '}
+      {brand('career-ops')}?
+    </>
+  ),
+  whatIsBody: (
+    <>
+      career-ops ist ein Open-Source-System für die Jobsuche mit KI, das lokal
+      auf deinem Rechner läuft, in jeder KI-Coding-CLI: Claude Code, OpenCode,
+      Codex, GitHub Copilot und weiteren. Es bewertet Stellenanzeigen anhand
+      deines Lebenslaufs mit einem Raster aus fünf Dimensionen plus einer
+      ganzheitlichen Gesamtnote von 1 bis 5, erstellt ATS-optimierte
+      PDF-Lebensläufe für jede Stelle, entwirft Antworten auf die offenen Fragen
+      in Formularen von Greenhouse, Ashby und Lever, durchsucht über 150
+      Jobquellen ohne Token-Verbrauch und verfolgt deine Pipeline in einem
+      Terminal-Dashboard, geschrieben in Go. Alles bleibt auf deinem Rechner:{' '}
+      {brand('keine Cloud')}, {brand('keine Telemetrie')}, {brand('kein Konto')}.
+      MIT-lizenziert und für immer kostenlos; du zahlst nur die KI-Coding-CLI,
+      die du ohnehin nutzt. Entwickelt von Santiago Fernández de Valderrama
+      Aparicio nach einer echten Jobsuche im Jahr 2026: 740 Stellenanzeigen, 68
+      Bewerbungen, 12 Vorstellungsgespräche und ein Jobangebot.
+    </>
+  ),
+  statsComment: 'Sterne · Open Source · MIT',
+  commandCenter: (
+    <>
+      Mach aus jeder KI-Coding-CLI deinen {brand('KI-Agenten für die Jobsuche')}.
+    </>
+  ),
+  tryItOut: 'Probier es aus',
+  runsCommand: (
+    <>
+      Braucht eine KI-Coding-CLI als Motor. Noch keine KI eingerichtet?{' '}
+      <a
+        href="/de/docs/free-ai-engine"
+        className="text-fd-foreground underline underline-offset-2"
+      >
+        Hol dir eine kostenlos
+      </a>
+      .
+    </>
+  ),
+  mechanism:
+    'Statt Bewerbungen von Hand in einer Tabelle zu verfolgen, bekommst du eine KI-Pipeline, die Portale durchsucht, zugeschnittene PDFs erstellt und alles für dich festhält.',
+  analogy: (
+    <>
+      &bdquo;Als hättest du einen Karrierecoach für deine Jobsuche, nur{' '}
+      {brand('ohne die Kosten')}.&ldquo;
+    </>
+  ),
+  featAgnosticTitle: 'KI-nativ und anbieterunabhängig',
+  featAgnosticBody: (
+    <>
+      Funktioniert mit jeder Coding-CLI: Claude Code, OpenCode, Codex, GitHub
+      Copilot und weiteren. Basiert auf dem Open Agent Skill Standard.
+    </>
+  ),
+  featApplyTitle: 'Entwirft die Antworten auf offene Fragen.',
+  featApplyBody1: (
+    <>
+      Formulare von Greenhouse, Ashby und Lever fragen &bdquo;Warum diese
+      Stelle?&ldquo; und &bdquo;Erzähl uns von einem Projekt.&ldquo;{' '}
+      <code className="font-mono text-brand">/career-ops apply</code> liest das
+      Formular, entwirft jede Antwort aus deinem Lebenslauf und der
+      Stellenanzeige und gibt sie dir zum Einfügen fertig zurück.
+    </>
+  ),
+  // Canon string (search-ops doctrine §20): transcreated, not calqued — like
+  // the FR "à votre place", "an deiner Stelle" instead of "für dich".
+  featApplyBody2: 'Du bearbeitest, du schickst ab. Der Assistent klickt nie an deiner Stelle.',
+  featApplyCta: 'So funktioniert apply',
+  featScanTitle: '150+ Jobquellen. Null manuelle Suche.',
+  featScanBody: (
+    <>
+      Vorkonfigurierte Scraper prüfen auf Abruf{' '}
+      <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">über 150 Jobquellen</a>, darunter
+      Greenhouse, Ashby und Lever, ohne einen einzigen API-Token zu verbrauchen.
+      Starte <code className="font-mono text-brand">/career-ops scan</code> und
+      du bekommst in wenigen Minuten eine sortierte Liste.
+    </>
+  ),
+  featScanCta: 'Alle Portale ansehen',
+  featCommunityTitle: 'Gemeinsam mit der Community gebaut.',
+  featCommunityBody: (
+    <>
+      career-ops wächst durch Pull Requests von Menschen, die gerade selbst auf
+      Jobsuche sind. Issues werden auf Discord sortiert, Fixes erscheinen in
+      derselben Woche. Du nutzt das Tool nicht nur, du bestimmst mit, was daraus
+      wird.
+    </>
+  ),
+  joinDiscord: (n) => `Komm zu ${n}+ Buildern auf Discord`,
+  openSourceTitle: '100 % Open Source.',
+  starsWord: 'Sterne',
+  forksWord: 'Forks',
+  repoOfDay: 'Nr. 1 Repo des Tages',
+  builtByDek: (
+    <>
+      Entwickelt von{' '}
+      <a href="/about" rel="author" className="text-fd-foreground font-medium hover:underline">
+        Santiago Fernández de Valderrama Aparicio
+      </a>
+      , nachdem er 740 Stellenanzeigen bewertet hatte.
+      <br />
+      Die vollständige Bewertungsmethodik ist{' '}
+      <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
+        veröffentlicht
+      </a>
+      .
+      <br />
+      Heute getragen von der Community.
+    </>
+  ),
+  meetContributors: 'Lerne die Mitwirkenden kennen →',
+  faqHeading: 'Häufige Fragen',
+  faq: [
+    {
+      q: 'Wie bewertet career-ops Stellenanzeigen?',
+      a: (
+        <>
+          career-ops nutzt eine LLM-Bewertung entlang eines Rasters aus fünf
+          Dimensionen: Passung, Ausrichtung auf dein Karriereziel, Vergütung,
+          kulturelle Signale und Warnsignale. Daraus entsteht eine ganzheitliche
+          Gesamtnote von 1 bis 5 mit Verweisen auf konkrete Zeilen deines
+          Lebenslaufs und Anforderungen der Stellenanzeige. Unter 4,0 rät der
+          Agent von einer Bewerbung ab. Keine starre Formel, kein Bewerben nach
+          dem Gießkannenprinzip. Das vollständige Raster ist veröffentlicht
+          unter{' '}
+          <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
+            career-ops.org/methodology
+          </a>
+          .
+        </>
+      ),
+    },
+    {
+      q: 'Bewirbt sich career-ops für mich?',
+      a: (
+        <>
+          career-ops bereitet jede Bewerbung bis zum letzten Klick vor: Es
+          durchsucht Stellen, bewertet jede anhand deines Lebenslaufs und passt
+          einen Lebenslauf an. Dann gibt es die Entscheidung an dich zurück. Du
+          prüfst und verschickst jede Bewerbung selbst. Das ist Absicht:
+          Massenhaftes automatisches Bewerben ruiniert deinen Ruf bei Recruitern
+          und ATS-Systemen. career-ops nimmt dir die Fleißarbeit ab, nicht die
+          Entscheidung.
+        </>
+      ),
+    },
+    {
+      q: 'Wie automatisiere ich meine Bewerbungen mit KI, ohne die Kontrolle zu verlieren?',
+      a: (
+        <>
+          career-ops automatisiert die wiederkehrende Arbeit: Es durchsucht
+          Stellen, bewertet sie anhand deines Lebenslaufs, passt deinen
+          Lebenslauf an und bereitet die Antworten vor. Das letzte Wort über
+          jede Bewerbung behältst du. Der Agent bereitet vor, du entscheidest:
+          Nichts wird ohne deinen ausdrücklichen Klick verschickt. Das ist das
+          Human-in-the-Loop-Prinzip: Du gewinnst Zeit, ohne die Kontrolle
+          abzugeben.
+        </>
+      ),
+    },
+    {
+      q: 'Ist career-ops kostenlos? Wie finanziert sich das Projekt?',
+      a: (
+        <>
+          career-ops ist dauerhaft kostenlos, MIT-lizenziert und von der
+          Community finanziert. Es gibt keinen kostenpflichtigen Tarif, keine
+          Warteliste, kein Konto, keine Telemetrie und keine Premium-Funktionen.
+          Du klonst das Repo, richtest dein Profil ein und startest das System
+          lokal mit der KI-Coding-CLI, die du ohnehin nutzt. Getragen wird das
+          Projekt von Beiträgen der Community und von Unternehmens-Sponsoring
+          über das Collective des Projekts auf Open Collective, nicht von
+          Premium-Tarifen, kostenpflichtigen Funktionen oder Daten. Die Mittel
+          verwaltet der Fiscal Host des Projekts, Open Source Collective, in
+          einem öffentlichen Kassenbuch; sie fließen in Wartung,
+          Sicherheitsfixes, Releases und Dokumentation. Details unter{' '}
+          <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
+            career-ops.org/sustain
+          </a>
+          .
+        </>
+      ),
+    },
+    {
+      q: 'Bleiben meine Daten auf meinem Rechner? Wie steht es um den Datenschutz?',
+      a: (
+        <>
+          career-ops speichert deine Daten auf deinem eigenen Rechner, in
+          einfachen Dateien, die dir gehören: Lebenslauf, Profil, Pipeline und
+          Berichte sind lokale Markdown- und YAML-Dateien. career-ops läuft
+          komplett lokal über deine KI-CLI: kein Konto, keine Telemetrie, nichts
+          wird auf einen career-ops-Server hochgeladen. System-Updates fassen
+          deine Datenebene nie an; diese Trennung ist der Data Contract. Die
+          einzigen Daten, die deinen Rechner verlassen, sind die, die deine
+          gewählte KI-CLI an ihren eigenen Anbieter schickt.
+        </>
+      ),
+    },
+    {
+      q: 'Wer hat career-ops entwickelt?',
+      a: (
+        <>
+          career-ops wurde von{' '}
+          <a href="/about" rel="author" className="text-fd-foreground hover:underline underline-offset-2">
+            Santiago Fernández de Valderrama Aparicio
+          </a>{' '}
+          entwickelt, einem Applied AI Operator mit über 16 Jahren Erfahrung im
+          Aufbau von Produkten. Bis zum Verkauf gründete und führte er ein
+          spanisches Unternehmen für Handyreparaturen (2009–2025). Er entwickelte
+          career-ops Anfang 2026, um seine eigene Jobsuche im KI-Zeitalter zu
+          organisieren: 740 Stellenanzeigen bewertet, eine Stelle als Head of
+          Applied AI bekommen. Als er es nicht mehr brauchte, veröffentlichte er
+          es unter MIT-Lizenz. Sechs Monate nach dem Einstieg verließ er diese
+          Stelle, um sich ganz auf career-ops zu konzentrieren.
+        </>
+      ),
+    },
+    {
+      q: 'Ist career-ops ein Claude-Code-Skill oder ein eigenständiges Tool?',
+      a: (
+        <>
+          career-ops ist CLI-unabhängig. Es funktioniert mit Claude Code,
+          OpenCode, Codex, GitHub Copilot und weiteren, also mit dem
+          KI-Coding-Agenten, für den du ohnehin zahlst. Die Skill-Dateien (
+          <code className="font-mono text-fd-foreground">modes/</code>) liegen
+          als einfache Markdown-Prompts im Repo; jeder Agent, der Skills laden
+          kann, kann sie aufrufen. Es gibt keine Abhängigkeit speziell von
+          Anthropic. Claude Code ist wegen seines Skill-Loaders die häufigste
+          Laufzeitumgebung, aber dieselben Modi laufen unverändert in den anderen
+          CLIs.
+        </>
+      ),
+    },
+    {
+      q: 'Was unterscheidet career-ops von Lebenslauf-Checkern und Tools für automatische Bewerbungen?',
+      a: (
+        <>
+          career-ops ist Open Source und MIT-lizenziert, läuft lokal auf deinem
+          eigenen Rechner über die KI-Coding-CLI, die du schon nutzt, und
+          veröffentlicht sein vollständiges Bewertungsraster. Bei jeder
+          Bewerbung entscheidet ein Mensch; es verschickt nie etwas von selbst.
+          Kein Konto, keine Telemetrie und kein Abo für career-ops selbst; die
+          einzigen laufenden Kosten sind die der KI-CLI, die du wählst. Ehrliche
+          Vergleiche mit konkreten Tools, Seite an Seite, findest du unter{' '}
+          <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
+            career-ops.org/compare
+          </a>
+          .
+        </>
+      ),
+    },
+    {
+      q: 'Mit welchen KI-Tools funktioniert career-ops?',
+      a: (
+        <>
+          career-ops funktioniert mit Claude Code, Cursor, Codex, OpenCode,
+          Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent und GitHub
+          Copilot CLI: zehn vollwertig unterstützte CLIs (Gemini CLI ist ein
+          Legacy-Wrapper). Dieselben Mode-Dateien laufen auf allen. Du wählst die
+          CLI, die zu deinem Abo und deinem Budget passt; career-ops bindet dich
+          nie an einen einzigen Anbieter. Eine typische Jobsuche läuft mit Claude
+          Pro für 20 $ im Monat, aber die Wahl liegt bei dir.
+        </>
+      ),
+    },
+  ],
+  finalCta: 'Bereit, Stellen zu filtern, statt gefiltert zu werden?',
+  yourTurn: 'Du bist dran',
+  followWhatWeShip: 'Oder verfolge, was wir ausliefern.',
+  releaseBlurb: (
+    <>
+      Release-Ankündigungen und gelegentliche Updates.
+      <br />
+      Jederzeit abbestellbar.
     </>
   ),
 };

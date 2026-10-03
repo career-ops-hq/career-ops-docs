@@ -5,7 +5,7 @@ seoTitle: "Mode pipeline de career-ops — évaluer en lot de nombreuses offres 
 icon: GitBranch
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: 1e5c70f073c9c18b
+translationHash: 23454c517c41a1c1
 localized: true
 translatedFrom: /docs/reference/modes/pipeline
 ---
@@ -28,7 +28,7 @@ $ /career-ops pipeline
 Liveness sweep: 8 pending URLs
   6 live · 2 expired (moved to Processed, marked Discarded)
 
-Processing 6 live URLs (parallel workers)...
+Processing 6 live URLs (one at a time)...
 
 | # | Company | Role         | Score | PDF | Recommended action |
 |---|---------|--------------|-------|-----|--------------------|
@@ -45,9 +45,9 @@ Recourez à pipeline lorsque vous avez accumulé un arriéré d'annonces au cour
 
 - La section `## Pending` accepte n'importe quel format — une URL collée telle quelle fonctionne, ou vous pouvez ajouter des colonnes `company`, `role`, `location` et `comp`, et le mode les lit toutes.
 - Le balayage de liveness s'exécute avant la boucle par URL, de sorte qu'une boîte de réception périmée de huit URL ne coûte pas huit évaluations gaspillées.
-- À partir de trois URL en attente, il les traite en parallèle, un worker par URL, plutôt qu'une à la fois.
+- C'est l'outil d'extraction qui détermine la concurrence. Avec l'extracteur navigateur par défaut (Playwright MCP), il traite les URL une à une, car des workers qui partagent une même session de navigateur peuvent se mélanger et évaluer la mauvaise annonce. Ce n'est que lorsque chaque worker utilise l'extracteur CLI isolé (`scan.extractor: cli`) ou une solution de repli sans navigateur, chacun avec son propre processus et son propre état de session, que trois URL ou plus peuvent être traitées en parallèle, un worker par URL.
 - Les PDF ne sont générés que lorsqu'un score dépasse `auto_pdf_score_threshold` (3.0 par défaut) ; augmentez ce seuil pour éviter les PDF des postes marginaux et les générer plus tard à la demande avec `/career-ops pdf`.
 
 ## Voir aussi
 
-- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [auto-pipeline](/fr/docs/reference/modes/auto-pipeline)

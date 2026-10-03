@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { blogSource } from '@/lib/blog-source';
@@ -5,6 +6,7 @@ import { getMDXComponents } from '@/components/mdx';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { blogPostSchema, faqPageSchema } from '@/lib/schema';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { SiteLink } from '@/components/mdx-link';
 
 type BlogFrontmatter = {
   title: string;
@@ -40,6 +42,7 @@ export async function generateMetadata(
     description: data.summary || data.description,
     alternates: { canonical: `https://career-ops.org${page.url}` },
     openGraph: {
+      images: [DEFAULT_OG_IMAGE],
       type: 'article',
       url: `https://career-ops.org${page.url}`,
       siteName: 'career-ops',
@@ -48,7 +51,8 @@ export async function generateMetadata(
       publishedTime: data.date,
       modifiedTime: data.lastModified || data.date,
     },
-    twitter: { card: 'summary_large_image' },
+    twitter: {
+      images: [DEFAULT_OG_IMAGE.url], card: 'summary_large_image' },
     robots: { index: true, follow: true },
   };
 }
@@ -124,7 +128,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
         <div className="prose prose-neutral dark:prose-invert max-w-none text-fd-foreground/90 leading-relaxed">
           <MDX
             components={getMDXComponents({
-              a: createRelativeLink(blogSource, page),
+              a: createRelativeLink(blogSource, page, SiteLink),
             })}
           />
         </div>

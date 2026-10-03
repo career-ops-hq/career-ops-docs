@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
     'How career-ops scores job listings: the 4.0/5.0 threshold, the five dimensions, the canonical evaluation prompt, edge cases, and what we explicitly do not do. Radical transparency, no closed-form math.',
   alternates: { canonical: 'https://career-ops.org/methodology' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'article',
     url: 'https://career-ops.org/methodology',
     siteName: 'career-ops',
@@ -107,7 +109,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/blob/main/AGENTS.md"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 AGENTS.md
@@ -122,7 +124,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/blob/main/modes/_shared.md"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 modes/_shared.md
@@ -220,7 +222,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/blob/main/modes/oferta.md"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 modes/oferta.md
@@ -230,7 +232,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/issues/363"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 issue #363
@@ -294,7 +296,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/blob/main/modes/oferta.md"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 modes/oferta.md
@@ -329,7 +331,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/issues/374"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 #374
@@ -338,7 +340,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/issues/373"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 #373
@@ -355,7 +357,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/issues/273"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 #273
@@ -370,7 +372,7 @@ export default function MethodologyPage() {
               <a
                 href="https://github.com/career-ops-hq/career-ops/blob/main/modes/_shared.md"
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 modes/_shared.md
@@ -408,7 +410,7 @@ export default function MethodologyPage() {
                 <a
                   href="https://github.com/career-ops-hq/career-ops/pull/235"
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   className="text-fd-foreground underline underline-offset-2"
                 >
                   PR #235
@@ -421,7 +423,7 @@ export default function MethodologyPage() {
                 <a
                   href="https://github.com/career-ops-hq/career-ops/issues/238"
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   className="text-fd-foreground underline underline-offset-2"
                 >
                   #238
@@ -435,7 +437,7 @@ export default function MethodologyPage() {
                 <a
                   href="https://github.com/career-ops-hq/career-ops/pull/561"
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   className="text-fd-foreground underline underline-offset-2"
                 >
                   PR #561
@@ -459,7 +461,7 @@ export default function MethodologyPage() {
                 <a
                   href="https://github.com/career-ops-hq/career-ops/issues/363"
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   className="text-fd-foreground underline underline-offset-2"
                 >
                   #363
@@ -471,7 +473,7 @@ export default function MethodologyPage() {
                 <a
                   href="https://github.com/career-ops-hq/career-ops/pull/561"
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   className="text-fd-foreground underline underline-offset-2"
                 >
                   #561
@@ -482,7 +484,7 @@ export default function MethodologyPage() {
                 <a
                   href="https://github.com/career-ops-hq/career-ops/issues/557"
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   className="text-fd-foreground underline underline-offset-2"
                 >
                   #557
@@ -493,7 +495,7 @@ export default function MethodologyPage() {
                 <a
                   href="https://github.com/career-ops-hq/career-ops/pull/572"
                   target="_blank"
-                  rel="noreferrer noopener"
+                  rel="noopener"
                   className="text-fd-foreground underline underline-offset-2"
                 >
                   #572
@@ -518,9 +520,11 @@ export default function MethodologyPage() {
               career-ops is permanently free, MIT-licensed, and community-funded. There is no
               paid tier, no waitlist, no account, no telemetry, and no premium features. You
               clone the repo, configure your profile, and run the system locally with
-              whichever AI coding CLI you already use. Sustainability comes from voluntary
-              community patronage via GitHub Sponsors &mdash; not from premium tiers, paid
-              features, or data. Sponsorship funds maintenance, security fixes, releases, and documentation. See{' '}
+              whichever AI coding CLI you already use. Sustainability comes from community
+              contributions and corporate sponsorship through the project&rsquo;s collective
+              on Open Collective &mdash; not from premium tiers, paid features, or data. Funding is held by the
+              project&rsquo;s fiscal host, Open Source Collective, on a public ledger, and goes
+              to maintenance, security fixes, releases, and documentation. See{' '}
               <a
                 href="/sustain"
                 className="text-fd-foreground underline underline-offset-2"
@@ -583,7 +587,7 @@ export default function MethodologyPage() {
           <a
             href="https://github.com/career-ops-hq/career-ops/blob/main/modes/_shared.md"
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="underline underline-offset-2"
           >
             modes/_shared.md
@@ -592,7 +596,7 @@ export default function MethodologyPage() {
           <a
             href="https://github.com/career-ops-hq/career-ops/blob/main/modes/oferta.md"
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="underline underline-offset-2"
           >
             modes/oferta.md
@@ -601,7 +605,7 @@ export default function MethodologyPage() {
           <a
             href="https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md"
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="underline underline-offset-2"
           >
             DATA_CONTRACT.md

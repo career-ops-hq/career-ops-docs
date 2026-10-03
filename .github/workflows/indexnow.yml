@@ -10,13 +10,31 @@ on:
 
 permissions:
   contents: read
+  deployments: read
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Vercel deploy
-        run: sleep 90
+      # Wait for THIS commit's production deployment, not a fixed delay. A sleep
+      # that ends before the deploy reads the previous sitemap, and the filter
+      # below would then drop every page this push changed. Vercel records the
+      # production deployment on GitHub when it is ready.
+      - name: Wait for this commit's production deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            id=$(gh api "repos/${{ github.repository }}/deployments?sha=${{ github.sha }}&environment=Production" --jq '.[0].id // empty')
+            if [ -n "$id" ]; then
+              state=$(gh api "repos/${{ github.repository }}/deployments/$id/statuses" --jq '.[0].state // empty')
+              echo "deploy $id: ${state:-pending}"
+              [ "$state" = "success" ] && exit 0
+              [ "$state" = "failure" -o "$state" = "error" ] && { echo "deploy failed; nothing to announce"; exit 1; }
+            fi
+            sleep 10
+          done
+          echo "timed out waiting for the production deploy of ${{ github.sha }}"; exit 1
 
       - name: Validate JSON-LD is live with expected shape
         shell: bash
@@ -54,7 +72,7 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
-          import json, re, urllib.request
+          import json, os, re, urllib.request
 
           KEY = "1befaf1616dd4dc08b51ecb5ec601059"
 
@@ -62,9 +80,35 @@ jobs:
           # out of sync as pages are added/removed (the old hardcoded list
           # had decayed to pinging only 4 of the 14 mode pages).
           sitemap = urllib.request.urlopen(
-              'https://career-ops.org/sitemap.xml', timeout=30
+              f'https://career-ops.org/sitemap.xml?deploy={os.environ["GITHUB_SHA"][:12]}',
+              timeout=30,
           ).read().decode()
-          urls = re.findall(r'<loc>\s*([^<\s]+)\s*</loc>', sitemap)
+
+          # Announce only what this push changed. Resubmitting all ~118 URLs on
+          # every push (five times on some afternoons) is the pattern IndexNow
+          # asks publishers to avoid. Every sitemap URL now carries a real git
+          # <lastmod>, so "changed in this push" is simply lastmod >= the oldest
+          # commit in it, with a small margin. Any doubt falls back to all.
+          import datetime as dt
+          ev = json.load(open(os.environ['GITHUB_EVENT_PATH']))
+          stamps = [c['timestamp'] for c in ev.get('commits') or [] if c.get('timestamp')]
+          since = (min(dt.datetime.fromisoformat(t) for t in stamps)
+                   - dt.timedelta(minutes=15)) if stamps else None
+
+          urls, undated = [], 0
+          for block in re.findall(r'<url>(.*?)</url>', sitemap, re.S):
+              loc = re.search(r'<loc>\s*([^<\s]+)\s*</loc>', block).group(1)
+              lm = re.search(r'<lastmod>\s*([^<\s]+)\s*</lastmod>', block)
+              if since is None or lm is None:
+                  undated += lm is None
+                  urls.append(loc); continue
+              if dt.datetime.fromisoformat(lm.group(1)) >= since:
+                  urls.append(loc)
+          print(f"changed since {since}: {len(urls)} URLs ({undated} undated, included)")
+
+          if not urls:
+              print("OK: nothing on the site changed in this push; no IndexNow ping")
+              raise SystemExit(0)
 
           # The two LLM surfaces are intentionally not in the sitemap; submit
           # them explicitly so AI crawlers re-fetch them on every deploy.
@@ -75,8 +119,6 @@ jobs:
               if extra not in urls:
                   urls.append(extra)
 
-          if not urls:
-              raise SystemExit('FAIL: no <loc> URLs parsed from sitemap.xml')
 
           payload = json.dumps({
               "host": "career-ops.org",

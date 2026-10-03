@@ -9,17 +9,21 @@ lastModified: "2026-05-18"
 
 ## What it does
 
-The ashby provider in providers/ashby.mjs makes HTTP requests to api.ashbyhq.com/posting-api/job-board/`{slug}` and parses the resulting JSON. The slug is the company's Ashby job board identifier (e.g. 'anthropic' for Anthropic).
+The ashby provider in providers/ashby.mjs makes HTTP requests to api.ashbyhq.com/posting-api/job-board/`{slug}` and parses the resulting JSON. The slug is the company's Ashby job board identifier (e.g. 'elevenlabs' for ElevenLabs). career-ops picks this provider from the entry's `careers_url` (`https://jobs.ashbyhq.com/<slug>`), or from an explicit `api:` field.
 
 ## When to use it
 
-Use Ashby scanning when targeting AI labs, infrastructure companies, and modern startups. Anthropic, Vercel, Replicate, and many YC companies use Ashby. About 40+ pre-configured slugs ship in templates/portals.example.yml.
+Use Ashby scanning when targeting AI labs, infrastructure companies, and modern startups. ElevenLabs, Deepgram, Sierra, Decagon and n8n are among the 40 Ashby boards pre-configured in templates/portals.example.yml.
 
 ## Example
 
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
 ```
-In your portals.yml: `- provider: ashby\n  slug: anthropic\n  careers_url: https://jobs.ashbyhq.com/anthropic` — then scan picks up active Anthropic roles.
-```
+
+The next scan then picks up ElevenLabs' active roles.
 
 ## What the scanner does
 
@@ -36,17 +40,17 @@ Filtered by title: 6 relevant
 Duplicates: 3 (already evaluated or in pipeline)
 New added to pipeline.md: 3
 
-  + Anthropic | Applied AI Engineer | ashby
-  + Replicate | Inference Engineer  | ashby
+  + ElevenLabs | Applied AI Engineer | ashby
+  + Deepgram   | Inference Engineer  | ashby
 ```
 
 ## How career-ops talks to Ashby
 
-career-ops queries Ashby's `ApiJobBoardWithTeams` GraphQL endpoint with your board slug and reads the `jobPostings` list straight from the JSON response. For each posting it pulls the title, an id used to build the public apply URL, the location name, the employment type, and a compensation summary when the board exposes one. Because this is a structured API call rather than page scraping, the scan is fast, stays inside rate limits, and spends no model tokens. Tokens are only spent later, during the evaluate step, when you decide a role is worth a closer look. Re-running the scan is safe: every URL is deduplicated against your scan history, your evaluated applications, and the current pipeline, so a role you have already seen is never added twice.
+career-ops calls Ashby's public posting API at `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` and reads the `jobs` list straight from the JSON response. For each job it takes the title, the public `jobUrl` as the apply link, the location (the primary location plus any secondary ones, with "Remote" added for remote roles), the plain-text description, the publish date, and an annualized salary range when the board publishes one. Because this is a structured API call rather than page scraping, the scan needs no browser and spends no model tokens. Ashby's public API is slow to answer, with a floor of about ten seconds per board, and it rate-limits repeated requests, so career-ops waits up to 30 seconds per board and retries with backoff. Tokens are only spent later, during the evaluate step, when you decide a role is worth a closer look. Re-running the scan is safe: every URL is deduplicated against your scan history, your evaluated applications, and the current pipeline, so a role you have already seen is never added twice.
 
 ## Gotchas
 
-Ashby's job board API returns full JD text directly, no follow-up request needed. Evaluation is slightly faster than for Greenhouse listings.
+Ashby's job board API returns full JD text directly, no follow-up request needed. Each board takes around ten seconds to answer, so a scan with many Ashby boards takes a little longer than the same number of Greenhouse or Lever boards.
 
 ## Related
 

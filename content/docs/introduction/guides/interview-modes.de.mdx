@@ -1,0 +1,66 @@
+---
+title: Auf Vorstellungsgespräche vorbereiten
+description: Nutze die Interview-Modi — planen, üben, nachbereiten —, um dich auf eine bestimmte Gesprächsrunde vorzubereiten, sie mit einem KI-Interviewer zu proben und jedes echte Vorstellungsgespräch in Erkenntnisse für das nächste zu verwandeln.
+seoTitle: "Vorbereitung auf Vorstellungsgespräche mit career-ops — Runde für Runde"
+icon: GraduationCap
+translationHash: f200ca2ca0715a2e
+localized: true
+translatedFrom: /docs/introduction/guides/interview-modes
+---
+
+Die Interview-Modi sind das System von career-ops zur Vorbereitung auf Vorstellungsgespräche. Es ist seit v1.16.0 enthalten. `interview/plan` erstellt einen zeitlich gegliederten Vorbereitungsplan für eine bestimmte Runde. `interview/practice` führt ein textbasiertes Probe-Interview durch und stellt dabei eine Frage nach der anderen. `interview/debrief` hält fest, was im Gespräch tatsächlich passiert ist, damit du in die nächste Runde besser vorbereitet gehst. Zusammen bilden die drei einen Kreislauf: planen, üben, Gespräch führen, nachbereiten, wiederholen. Dieser Kreislauf zahlt sich über den ganzen Bewerbungsprozess hinweg immer mehr aus.
+
+Sie ergänzen den älteren [`interview-prep`-Modus](/de/docs/reference/modes/interview-prep), der deine dauerhafte Grundlage aufbaut (Story-Bank, Fragen-Bank). Die drei neuen Modi konzentrieren sich jeweils auf eine *konkrete anstehende Runde*.
+
+<Callout title="Was du zuerst brauchst">
+Einen Workspace, in dem deine `cv.md` und `config/profile.yml` bereitliegen (der [Schnellstart](/de/docs) richtet beides ein). Die Modi lesen beide Dateien. So stützen sich jeder Plan und jedes Feedback auf deine echte Erfahrung und nicht auf allgemeine Tipps für Vorstellungsgespräche.
+</Callout>
+
+## Der Kreislauf auf einen Blick
+
+| Modus | Wann | Was du bekommst |
+| --- | --- | --- |
+| `interview/plan` | Sobald eine Runde terminiert ist | Einen zeitlich gegliederten Vorbereitungsplan, zugeschnitten auf die Stunden, die du tatsächlich hast |
+| `interview/practice` | Vor der Runde | Ein textbasiertes Probe-Interview mit strukturiertem Feedback zu jeder Antwort |
+| `interview/debrief` | Direkt nach dem echten Vorstellungsgespräch | Eine ehrliche Einschätzung pro Frage + eine aktualisierte Fragen-Bank |
+
+## Planen: aus einem Termin wird ein Zeitplan
+
+Gib `interview/plan` die Stellenbeschreibung sowie Datum und Uhrzeit des Vorstellungsgesprächs. Wenn du sie kennst, nenn auch die Art der Runde und die Person, die das Gespräch führt. Der Modus liest deinen Lebenslauf und dein Profil und prüft ehrlich, wie gut du zur Stelle passt. Er zeigt dir die Stärken, auf die du dich stützen kannst, und die Lücken, nach denen wahrscheinlich gefragt wird. Dann teilt er die dir verbleibenden Stunden in konkrete Vorbereitungsblöcke auf.
+
+```txt title="Example"
+/career-ops interview/plan
+
+→ Inputs: JD (pasted), interview Thursday 14:00, HM screen with Ana (Eng Manager)
+→ Fit assessment: 4 strengths to anchor · 2 gaps ranked by test likelihood
+→ Plan (9 hours available):
+   Block 1 — Lock your narrative (~1.5h): timeline, "why us", strongest proof point
+   Block 2 — Gap: event-driven architectures (~3h)
+   Block 3 — Behavioral stories, STAR+R (~2h)
+   Block 4 — Mock run + comp answer (~1.5h)
+```
+
+Der Plan richtet sich nach der Art der Runde. Für ein Screening mit dem Recruiter geht es um Organisatorisches und deine Geschichte, nicht um technische Details. Für ein fachliches Gespräch mit jemandem aus dem Team geht der Plan tief in die Kernkompetenz aus der Stellenbeschreibung. Gibt es schon eine Fragen-Bank aus einer früheren Runde, bekommt alles, womit du dich schwergetan hast, einen eigenen Block. Wie du tatsächlich abgeschnitten hast, zählt mehr als ein nur vermutetes Risiko.
+
+## Üben: eine Frage nach der anderen proben [#practice-rehearse-against-a-realistic-interviewer]
+
+`interview/practice` übernimmt die Rolle des Interviewers, auf Wunsch mit dem Namen und der Position, die du angibst. Er stellt eine Frage nach der anderen und bleibt dabei in seiner Rolle. Wo ein echter Interviewer genauer wissen wollen würde, fragt er ganz natürlich nach. Nach jeder Antwort bekommst du strukturiertes Feedback: was gut angekommen ist, was du kürzer und genauer sagen solltest, und eine stärkere Version deiner Antwort. Diese stützt sich auf deinen tatsächlichen Lebenslauf und deine Story-Bank.
+
+Der Modus behält außerdem die ganze Sitzung im Blick, so wie es ein Interviewer tun würde. Greifst du zweimal zur selben Geschichte, weist er dich darauf hin, dass du zu wenige Beispiele hast. Endet deine Antwort in einem Fachgebiet, das nicht zur Stelle passt, sagt er dir, worauf du sie besser hinauslaufen lässt.
+
+<Callout>
+Der Übungsmodus ist ehrlich, was seine eigenen Grenzen angeht. Vielleicht hast du noch keine Fragen-Bank oder keine Vorbereitungsnotizen für diese Stelle angelegt. Dann sagt er dir das und bietet an, zuerst `interview-prep` oder `interview/plan` auszuführen. So startet er nicht stillschweigend eine allgemeine Übungsrunde.
+</Callout>
+
+## Nachbereiten: keine Erkenntnis aus einem Vorstellungsgespräch geht verloren
+
+Führe `interview/debrief` direkt nach einem echten Vorstellungsgespräch aus, solange die Erinnerung frisch ist. Der Modus geht mit dir jede Frage durch, an die du dich erinnerst, und hält fest, wie der Interviewer reagiert hat. Dann schätzt er ehrlich ein, wie du bei jeder einzelnen Frage abgeschnitten hast. Danach sorgt er dafür, dass dir diese Erkenntnisse in den nächsten Runden weiterhelfen:
+
+- **Er aktualisiert die Fragen-Bank.** Jede Frage bekommt ✅ / 🟡 / 🔴, je nachdem, wie du tatsächlich abgeschnitten hast, nicht nach Bauchgefühl.
+- **Er schließt die Lücken.** Für jedes 🔴 erklärt er die richtige Antwort anhand eines ausgearbeiteten Beispiels. Außerdem verknüpft er sie mit einer Geschichte, die du schon hast.
+- **Er gewinnt neue Geschichten.** Vielleicht hast du im Gespräch etwas erzählt, das noch nicht in deiner Story-Bank steht. Dann bietet er an, daraus eine STAR+R-Geschichte zu machen, und fügt sie hinzu, wenn du zustimmst.
+- **Er sagt die nächste Runde voraus.** Wenn du das Format kennst, listet er Fragen auf, die wahrscheinlich kommen, jede mit `[inferred]` gekennzeichnet. Dafür berücksichtigt er die Rolle des Interviewers und das, was diese Runde schon abgedeckt hat.
+
+## Warum dieser Kreislauf funktioniert
+
+Normalerweise fängt die Vorbereitung auf Vorstellungsgespräche mit jeder Runde wieder bei null an. Mit den Interview-Modi baut jede Runde auf der vorigen auf. Was ein echter Interviewer tatsächlich gefragt hat, bekommt bei der Vorbereitung auf die nächste Runde die höchste Priorität. Das alles steht in einfachen Markdown-Dateien (`interview-prep/question-bank.md`, `story-bank.md`), die dir gehören und auf deinem Rechner liegen, wie alles andere in career-ops.

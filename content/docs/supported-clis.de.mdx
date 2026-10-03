@@ -1,0 +1,31 @@
+---
+title: Unterstützte KI-CLIs
+seoTitle: "Welche KI-CLI funktioniert mit career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
+description: "career-ops ist KI-agnostisch — es läuft auf jeder großen KI-Coding-CLI. So nutzt du den Assistenten, für den du ohnehin schon bezahlst, und bindest dich nie an einen einzigen Anbieter. Die vollständige, stets aktuelle Liste findest du im Core-Repo."
+icon: Terminal
+translationHash: c8c4656d58d67dbf
+localized: true
+translatedFrom: /docs/supported-clis
+---
+
+**career-ops läuft auf jeder großen KI-Coding-CLI — du bist an keinen einzelnen Anbieter gebunden.** career-ops liefert Prompt-Dateien mit, die die CLI ausführt, und bringt kein eigenes Modell mit. Deshalb nutzt du es mit dem KI-Coding-Assistenten, den du schon verwendest, und es läuft unverändert auf dieser Engine. Erscheint ein besseres Modell, wechselst du die CLI und behältst deine Pipeline, deine Daten und dein Setup.
+
+<Callout title="Nutze, was du schon hast">
+Die beste CLI für career-ops ist die, für die du schon bezahlst. Wenn du bereits für Claude Code bezahlst, musst du für career-ops nichts weiter einrichten. Wenn du career-ops kostenlos nutzen möchtest, sieh dir [Eine kostenlose KI-Engine einrichten](/de/docs/free-ai-engine) an.
+</Callout>
+
+## Welche CLIs werden unterstützt?
+
+career-ops funktioniert vollwertig mit **Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent und GitHub Copilot CLI** — zehn aktiv gepflegten KI-Coding-CLIs. (Gemini CLI gibt es nur noch als Legacy-Wrapper, es ist in Antigravity CLI aufgegangen.) Alle CLIs nutzen dieselbe Architektur von career-ops: Eine einzige kanonische `AGENTS.md` steuert die Logik, und schlanke Einstiegsdateien pro CLI regeln die Besonderheiten beim Aufruf des jeweiligen Tools.
+
+Die **kanonische, stets aktuelle Liste — mit dem genauen Befehl, mit dem du career-ops in jeder CLI aufrufst — liegt im Core-Repo**, damit sie nie veraltet:
+
+- [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — die vollständige Matrix der unterstützten CLIs und ihrer Einstiegsdateien, und wie du sie aufrufst (interaktiv und headless/Batch).
+
+## Welche sollte ich wählen?
+
+- **Wenn du schon für Claude Code, Codex oder Copilot bezahlst, nutze diese CLI.** career-ops läuft darauf ganz ohne zusätzliches Setup — öffne die CLI einfach im career-ops-Ordner.
+- **Wenn du career-ops für 0 $ betreiben willst,** nutze [OpenCode mit einem kostenlosen Anbieter, ein lokales Modell über Ollama oder den integrierten OpenRouter-Runner](/de/docs/free-ai-engine).
+- **Wenn du ein bestimmtes Modell oder einen bestimmten Anbieter brauchst,** verbinde eine dieser CLIs mit einem beliebigen OpenAI-kompatiblen Endpunkt oder einem lokalen Modell: career-ops ist modellagnostisch, und an career-ops selbst ändert sich nichts.
+
+Egal, welche CLI du wählst: Die [14 Modi](/de/docs/reference/modes) von career-ops funktionieren überall gleich — die CLI ist die Engine, career-ops ist die Struktur darüber.

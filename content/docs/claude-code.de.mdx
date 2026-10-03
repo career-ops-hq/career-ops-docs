@@ -1,0 +1,56 @@
+---
+title: KI-Jobsuche mit Claude Code
+seoTitle: "KI-Jobsuche mit Claude Code | career-ops"
+description: "Nutze Claude Code als KI-Agenten für die Jobsuche: career-ops durchsucht Karriereseiten, bewertet Stellenanzeigen anhand deines Lebenslaufs und entwirft deine Bewerbungen. Du entscheidest und schickst ab."
+icon: Bot
+translationHash: 5c6ace9f770d838d
+localized: true
+translatedFrom: /docs/claude-code
+---
+
+Du kannst deine Jobsuche mit Claude erledigen: career-ops macht aus Claude Code einen KI-Agenten für die Jobsuche, der in deinem Terminal läuft. Er durchsucht die Karriereseiten von Unternehmen, bewertet jede Stellenanzeige anhand deines Lebenslaufs und passt diesen für die Stelle an. Außerdem entwirft er Anschreiben sowie Antworten für deine Bewerbung. Er bewertet und entwirft; du entscheidest und schickst ab. Er bewirbt sich nie in deinem Namen. career-ops läuft auch in Codex, OpenCode und anderen KI-Coding-CLIs.
+
+## So startest du career-ops in Claude Code
+
+career-ops wird über die Datei `CLAUDE.md` im Projektordner in Claude Code geladen. Wie die Installation funktioniert, steht im [Schnellstart](/de/docs). Einmal brauchst du noch einen zusätzlichen Schritt: Installiere in Claude Code mit `/plugin install playwright@claude-plugins-official` die Playwright-Browser-Tools. Damit prüft career-ops, ob eine Stelle noch ausgeschrieben ist. Die Startprüfung (`node doctor.mjs`) warnt dich, wenn diese Tools fehlen. Bei der Installation wird außerdem der Browser heruntergeladen, der für PDFs und `scan --verify` gebraucht wird. Falls dieser Schritt übersprungen wurde, führe `npx playwright install chromium` aus.
+
+- **Interaktiv:** Öffne den career-ops-Ordner, führe `claude` aus und gib dann `/career-ops` ein.
+- **Batch:** Starte es headless mit `claude -p "prompt"`. Der Batch-Runner startet seine Worker ohne Browser-Tools. Sie können also nicht prüfen, ob eine Stelle noch ausgeschrieben ist, und der Bericht weist darauf hin.
+
+## Was es kostet
+
+career-ops selbst ist kostenlos und MIT-lizenziert. Für Claude Code gilt das nicht: Dafür brauchst du ein kostenpflichtiges Claude-Abo oder einen Anthropic-API-Key.
+
+Wenn in deiner Umgebung `ANTHROPIC_API_KEY` gesetzt ist, rechnet Claude Code pro Token ab. Das gilt auch dann, wenn du zusätzlich für Claude Pro oder Max zahlst. [In den FAQ steht, warum das so ist und wie du es prüfst](/de/docs/faq#ich-zahle-fuer-claude-pro-oder-max-warum-belastet-career-ops-meine-api-credits).
+
+Wenn du für die KI-Engine gar nichts bezahlen möchtest, läuft career-ops über OpenCode auch mit kostenlosen Anbietern. Siehe [Kostenlose KI-Engine einrichten](/de/docs/free-ai-engine).
+
+## Was es übernimmt – und was es dir überlässt
+
+Jede Stellenanzeige erhält eine Gesamtbewertung von 1 bis 5. Das ist ein ganzheitliches Urteil, das sich an fünf Dimensionen orientiert, keine gewichtete Formel. Unter 4,0 rät career-ops von einer Bewerbung ab, es sei denn, du hast einen konkreten Grund dafür. Bei den Stellen, die sich lohnen, passt es deinen Lebenslauf an, entwirft ein Anschreiben und formuliert Antworten auf die offenen Fragen der Bewerbung.
+
+Dann ist Schluss. Du prüfst die Entwürfe, überarbeitest sie und schickst die Bewerbung selbst ab. career-ops bewirbt sich nie in deinem Namen.
+
+Die ersten Durchläufe sind noch holprig. Der Agent kennt dich noch nicht. Sprich mit ihm: dein Lebenslauf, was du willst, was du ablehnst.
+
+## Lieber eine andere CLI?
+
+career-ops läuft auch in Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent und GitHub Copilot CLI. Wie du es startest, hängt von der CLI ab. Unter [Unterstützte CLIs](/de/docs/supported-clis) siehst du, wie jede davon career-ops lädt.
+
+## Wie es entstanden ist
+
+Ich habe career-ops für meine eigene Jobsuche 2026 gebaut. Mein Funnel: 740 bewertet → 68 beworben → 12 Vorstellungsgespräche → 1 Jobangebot. — Santiago Fernández de Valderrama Aparicio
+
+## Häufige Fragen
+
+### Kann Claude Code für mich nach Jobs suchen?
+
+Mit career-ops kann Claude Code deine Jobsuche übernehmen. Es durchsucht die Karriereseiten von Unternehmen und bewertet jede Stellenanzeige anhand deines Lebenslaufs. Für die Stellen, die sich lohnen, entwirft es die Bewerbungsunterlagen. Du entscheidest, welche Bewerbungen du abschickst.
+
+### Bewirbt es sich automatisch auf Stellen?
+
+Nein: career-ops bewirbt sich nie in deinem Namen. Es entwirft die Unterlagen. Du prüfst und überarbeitest jede Bewerbung und schickst sie selbst ab.
+
+### Brauche ich Claude Pro?
+
+Claude Code braucht ein kostenpflichtiges Claude-Abo oder einen Anthropic-API-Key. career-ops selbst ist kostenlos und MIT-lizenziert und läuft über OpenCode auch mit kostenlosen Anbietern.

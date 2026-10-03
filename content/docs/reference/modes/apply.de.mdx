@@ -1,0 +1,66 @@
+---
+title: apply
+description: "Live-Assistent für Bewerbungen. Liest die Freitextfragen in Formularen von Greenhouse, Ashby und Lever und entwirft Antworten auf Basis deines Lebenslaufs und der Stellenanzeige."
+seoTitle: "career-ops apply-Modus — Antworten auf ATS-Bewerbungsfragen automatisch entwerfen"
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-05-19"
+translationHash: e00bf55bd395ea9c
+localized: true
+translatedFrom: /docs/reference/modes/apply
+---
+
+## Was er macht
+
+Der Modus `apply` liest ein geöffnetes Bewerbungsformular (Greenhouse, Ashby, Lever) und erkennt die Freitextfragen, zum Beispiel „Warum diese Stelle?“, „Erzähl uns von einem Projekt“ oder „Was ist deine Gehaltsvorstellung?“. Dann entwirft er Antworten auf Basis deines Lebenslaufs und der Stellenanzeige. Du bearbeitest die Entwürfe direkt, kopierst sie ins Portal und schickst die Bewerbung ab.
+
+## Wann du ihn einsetzt
+
+Öffne die Stellenanzeige und das Bewerbungsformular nebeneinander. Starte apply, sobald das Formular geladen ist. Die Ausgabe kannst du direkt einfügen, eine fertige Bewerbung ist sie aber nicht. Du behältst die Kontrolle über Ton, Fakten und jedes Feld, das das Portal zusätzlich einblendet. apply funktioniert am besten mit Playwright im sichtbaren Modus. Dann liest er die Live-Seite genau so, wie du sie siehst. Ohne Playwright fügst du die Fragen ein oder teilst einen Screenshot, und apply entwirft die Antworten daraus.
+
+## So sieht ein Durchlauf aus
+
+Starte apply, während das Bewerbungsformular in Chrome geöffnet ist. Bevor der Modus auch nur eine Antwort schreibt, liest er den aktiven Tab und ordnet ihn dem Bericht zu, den du für diese Stelle schon erstellt hast. Er prüft, ob die Anzeige noch online ist, und durchsucht das Formular nach K.-o.-Fragen, die zu einer automatischen Absage führen könnten.
+
+```txt title="Example"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year. (paste-ready)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here. (paste-ready)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+
+## Stolperfallen
+
+apply schickt die Bewerbung nie ab: Den letzten Klick auf Absenden machst immer du. Er liest jedes Feld des Formulars, nicht nur die Freitextfragen, also auch Dropdowns, Radiobuttons, Checkboxen und Upload-Felder. Er entwirft die Freitextantworten, schlägt für jedes Feld mit vorgegebenen Antworten einen Wert vor und markiert Fragen zur Arbeitserlaubnis, zum Gehalt und andere heikle Fragen, die dein Profil noch nicht beantwortet, damit du sie bestätigst, statt dass er rät. Mit Playwright kann er einige Felder direkt im Live-Formular ausfüllen; du prüfst alles und erledigst den Rest. Sobald die Antworten eingetragen sind, hält er den Text, die Auswahl und die verwendeten Dateien im Bericht fest. Stellt die Vorabprüfung (Preflight) fest, dass die Anzeige nicht mehr online ist, schreibt apply keinen finalen Text. Das geht nur, wenn du dich ausdrücklich darüber hinwegsetzt. Ein toter Link ist keine maßgeschneiderte Antwort wert.
+
+## Bekannte ATS-Eigenheiten
+
+apply wurde bei rund einem Dutzend Bewerbungen mit Playwright in der Praxis getestet. Ein paar Portale lassen einen Durchlauf scheitern, wenn du ihre Eigenheiten nicht berücksichtigst:
+
+- **Ashby** erkennt doppelte Bewerbungen pro Unternehmen anhand der E-Mail-Adresse. Eine zweite Bewerbung kann deshalb stillschweigend mit deiner ersten zusammengeführt werden. Gibt es für dieses Unternehmen schon einen Bericht, schlägt apply einen E-Mail-Alias mit `+tag` vor.
+- **Lever** zeigt ein Captcha an, wenn eine Checkbox oder ein Radiobutton per Skript angeklickt wird. Deshalb füllt apply nur Textfelder und Dropdowns aus und überlässt dir das Ankreuzen der Checkboxen und Radiobuttons.
+- **Workday** ignoriert Werte, die ohne echte Tastenanschläge gesetzt werden. Deshalb tippt apply die Antworten Zeichen für Zeichen ein. Die Dropdowns zur Arbeitserlaubnis prüfst du selbst, bevor du speicherst.
+
+## Siehe auch
+
+- [auto-pipeline](/de/docs/reference/modes/auto-pipeline)
+- [pdf](/de/docs/reference/modes/pdf)
+- [tracker](/de/docs/reference/modes/tracker)

@@ -1,12 +1,23 @@
-import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
+import { LocaleRootProvider } from '@/components/locale-root-provider';
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
+
+import type { Metadata } from 'next';
+
+// Every relative image URL in page metadata (the docs OG cards, among others)
+// is resolved against this. Without it Next falls back to whatever Vercel
+// exposes at build time: production happened to resolve to career-ops.org,
+// but that was an implicit dependency, and a local build resolved the same
+// cards to http://localhost:3000.
+export const metadata: Metadata = {
+  metadataBase: new URL('https://career-ops.org'),
+};
 
 // Social brand marks as inline SVG (the installed lucide-react 1.8.0
 // predates Lucide's brand-icon set; using canonical brand paths keeps
@@ -74,7 +85,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-        <RootProvider>{children}</RootProvider>
+        <LocaleRootProvider>{children}</LocaleRootProvider>
         <footer className={`${instrumentSerifRegular.className} border-t text-lg text-fd-muted-foreground`}>
           <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12">
             <div className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
@@ -124,7 +135,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                 <span className="flex items-center gap-3 ml-1">
                   <a
                     href="https://github.com/career-ops-hq/career-ops"
-                    rel="me noreferrer noopener"
+                    rel="me noopener"
                     aria-label="GitHub"
                     className="hover:text-fd-foreground transition-colors"
                   >
@@ -167,7 +178,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
               Official site: career-ops.org &middot; GitHub:{' '}
               <a
                 href="https://github.com/career-ops-hq/career-ops"
-                rel="me noreferrer noopener"
+                rel="me noopener"
                 className="hover:text-fd-foreground transition-colors"
               >
                 career-ops-hq/career-ops

@@ -1,0 +1,13 @@
+---
+title: Portals
+description: "The applicant tracking systems career-ops scans through their public job-board APIs: Greenhouse, Ashby and Lever. No AI tokens are consumed during the scan itself."
+icon: Radar
+---
+
+career-ops scans these applicant tracking systems through their public job-board APIs, so the scan itself consumes no AI tokens. Each page covers what the scanner does, how career-ops talks to that system, and the gotchas worth knowing.
+
+- **[Greenhouse](/docs/reference/portals/greenhouse)** — career-ops hits Greenhouse's public boards API directly. No HTML scraping, no rate-limit risk, no AI tokens consumed during the scan itself.
+- **[Ashby](/docs/reference/portals/ashby)** — Ashby is the modern ATS choice for Series A–C startups in the AI and dev-tools space. career-ops hits the public job-board API directly.
+- **[Lever](/docs/reference/portals/lever)** — Lever is the established ATS for mid-market and growth-stage companies. career-ops hits Lever's public postings API directly.
+
+To run a scan across all of them, see [Scan job portals](/docs/introduction/guides/scan-job-portals).

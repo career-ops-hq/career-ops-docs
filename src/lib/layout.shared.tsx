@@ -1,20 +1,31 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, gitConfig } from './shared';
+import { appName } from './shared';
 import { CoMark } from '@/components/co-mark';
 import { LanguageBar } from '@/components/language-bar';
 import { instrumentSerifRegular } from './fonts';
+import { GitHubIconLink } from '@/components/github-icon-link';
 
 type Options = {
   // Drops the brand suffix — used by the docs layout where Fumadocs
   // renders the title in the narrow sidebar and the full home-style
   // branding wraps awkwardly.
   compact?: boolean;
-  // Accepted for backward-compat with the call sites; the language control is
-  // now the self-detecting <LanguageBar/>, which reads the locale from the URL.
-  locale?: 'en' | 'es' | 'fr';
+  // Picks the language of the brand suffix. The language control itself is
+  // the self-detecting <LanguageBar/>, which reads the locale from the URL.
+  locale?: 'en' | 'es' | 'fr' | 'de';
 };
 
-export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps {
+// Brand suffix next to the wordmark: the same category the home H1 names
+// ("open-source AI job search agent"), in each page's language. It used to
+// read "your career operations hub", in English on every locale.
+const TAGLINE = {
+  en: ', your AI job search agent',
+  es: ', tu agente de búsqueda de empleo con IA',
+  fr: ', votre agent de recherche d\u2019emploi par IA',
+  de: ', dein KI-Agent f\u00fcr die Jobsuche',
+} as const;
+
+export function baseOptions({ compact = false, locale = 'en' }: Options = {}): BaseLayoutProps {
   return {
     nav: {
       title: (
@@ -24,20 +35,29 @@ export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps 
             {appName}
             {!compact && (
               <span className="hidden md:inline text-brand">
-                {', your career operations hub'}
+                {TAGLINE[locale]}
               </span>
             )}
           </span>
         </span>
       ),
+      // The logo goes to the home of the page's own language. Fumadocs defaults
+      // to '/', which sent /es, /fr and /de readers back to the English home.
+      url: locale === 'en' ? '/' : `/${locale}`,
       transparentMode: 'top',
       enabled: true,
     },
-    // Navbar GitHub icon → the FLAGSHIP repo (the 60K-star project the
-    // visitor came for), NOT gitConfig.repo: that one is the docs repo
-    // and exists only for the per-page "edit on GitHub" links.
-    githubUrl: `https://github.com/${gitConfig.user}/career-ops`,
     // Language button + browser-detection suggestion, both in the header.
-    links: [{ type: 'custom', secondary: true, children: <LanguageBar /> }],
+    // Then the GitHub icon to the FLAGSHIP repo, where Fumadocs' `githubUrl`
+    // icon used to be and with the same look, as our own link so it does not
+    // carry rel="noreferrer". The "Star on GitHub" button lives in the hero
+    // and at the end of the Quick Start, not here. The docs layouts are
+    // compact and draw the icon in the sidebar row instead.
+    links: [
+      { type: 'custom', secondary: true, children: <LanguageBar compact={compact} /> },
+      ...(compact
+        ? []
+        : [{ type: 'custom' as const, secondary: true, children: <GitHubIconLink className="-mx-1" /> }]),
+    ],
   };
 }

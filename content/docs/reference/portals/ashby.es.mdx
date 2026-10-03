@@ -5,28 +5,32 @@ seoTitle: "Escanea ofertas de Ashby con career-ops — escaneo de portales ATS c
 icon: Sparkles
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: 013014c1d6d759e4
+translationHash: 8e0f69ac9571b6b9
 localized: true
 translatedFrom: /docs/reference/portals/ashby
 ---
 
 ## Qué hace
 
-El provider ashby de providers/ashby.mjs hace peticiones HTTP a api.ashbyhq.com/posting-api/job-board/`{slug}` y parsea el JSON resultante. El slug es el identificador del job board de Ashby de la empresa (p. ej. 'anthropic' para Anthropic).
+El provider ashby de providers/ashby.mjs hace peticiones HTTP a api.ashbyhq.com/posting-api/job-board/`{slug}` y parsea el JSON resultante. El slug es el identificador del job board de Ashby de la empresa (p. ej. 'elevenlabs' para ElevenLabs). career-ops elige este provider por el `careers_url` de la entrada (`https://jobs.ashbyhq.com/<slug>`) o por un campo `api:` explícito.
 
 ## Cuándo usarlo
 
-Usa el escaneo de Ashby cuando tengas en el punto de mira labs de IA, empresas de infraestructura y startups modernas. Anthropic, Vercel, Replicate y muchas empresas de YC usan Ashby. Más de 40 slugs preconfigurados vienen incluidos en templates/portals.example.yml.
+Usa el escaneo de Ashby cuando tengas en el punto de mira labs de IA, empresas de infraestructura y startups modernas. ElevenLabs, Deepgram, Sierra, Decagon y n8n están entre los 40 boards de Ashby preconfigurados en templates/portals.example.yml.
 
 ## Ejemplo
 
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
 ```
-In your portals.yml: `- provider: ashby\n  slug: anthropic\n  careers_url: https://jobs.ashbyhq.com/anthropic` — then scan picks up active Anthropic roles.
-```
+
+El siguiente escaneo recoge las vacantes activas de ElevenLabs.
 
 ## Qué hace el escáner
 
-El escáner lee tus slugs de Ashby habilitados en portals.yml, llama a la API pública del job board de Ashby para cada uno y fusiona las ofertas nuevas en tu pipeline sin navegador, sin login y sin gastar un solo token de LLM en la propia descarga. Una sola ejecución de `node scan.mjs` cubre a la vez tus boards de Ashby, Greenhouse y Lever, y después filtra los resultados por las palabras clave de título que hayas configurado.
+El escáner lee tus slugs de Ashby habilitados en portals.yml, llama a la API pública del job board de Ashby para cada uno y fusiona las vacantes nuevas en tu pipeline sin navegador, sin login y sin gastar un solo token de LLM en la propia descarga. Una sola ejecución de `node scan.mjs` cubre a la vez tus boards de Ashby, Greenhouse y Lever, y después filtra los resultados por las palabras clave de título que hayas configurado.
 
 ```bash title="Terminal"
 node scan.mjs
@@ -39,17 +43,17 @@ Filtered by title: 6 relevant
 Duplicates: 3 (already evaluated or in pipeline)
 New added to pipeline.md: 3
 
-  + Anthropic | Applied AI Engineer | ashby
-  + Replicate | Inference Engineer  | ashby
+  + ElevenLabs | Applied AI Engineer | ashby
+  + Deepgram   | Inference Engineer  | ashby
 ```
 
 ## Cómo se comunica career-ops con Ashby
 
-career-ops consulta el endpoint GraphQL `ApiJobBoardWithTeams` de Ashby con el slug de tu board y lee la lista `jobPostings` directamente de la respuesta JSON. De cada oferta extrae el título, un id que se usa para construir la URL pública de solicitud, el nombre de la ubicación, el tipo de empleo y un resumen de compensación cuando el board lo expone. Como se trata de una llamada estructurada a la API y no de scraping de páginas, el escaneo es rápido, se mantiene dentro de los límites de peticiones y no gasta tokens del modelo. Los tokens solo se gastan más tarde, durante el paso de evaluación, cuando decides que una oferta merece un vistazo más de cerca. Repetir el escaneo es seguro: cada URL se deduplica contra tu historial de escaneos, tus candidaturas ya evaluadas y el pipeline actual, de modo que una oferta que ya has visto nunca se añade dos veces.
+career-ops llama a la API pública de publicaciones de Ashby en `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` y lee la lista `jobs` directamente de la respuesta JSON. De cada vacante toma el título, el `jobUrl` público como enlace de solicitud, la ubicación (la principal más las secundarias que tenga, con "Remote" añadido si el puesto es remoto), la descripción en texto plano, la fecha de publicación y un rango salarial anualizado cuando el board lo publica. Como se trata de una llamada estructurada a la API y no de scraping de páginas, el escaneo no necesita navegador ni gasta tokens del modelo. La API pública de Ashby tarda en responder, con un mínimo de unos diez segundos por board, y limita las peticiones repetidas, así que career-ops espera hasta 30 segundos por board y reintenta con espera progresiva. Los tokens solo se gastan más tarde, durante el paso de evaluación, cuando decides que una vacante merece un vistazo más de cerca. Repetir el escaneo es seguro: cada URL se deduplica contra tu historial de escaneos, tus candidaturas ya evaluadas y el pipeline actual, de modo que una vacante que ya has visto nunca se añade dos veces.
 
 ## A tener en cuenta
 
-La API del job board de Ashby devuelve directamente el texto completo de la descripción del puesto, sin necesidad de una petición adicional. La evaluación es algo más rápida que con las ofertas de Greenhouse.
+La API del job board de Ashby devuelve directamente el texto completo de la descripción del puesto, sin necesidad de una petición adicional. Cada board tarda unos diez segundos en responder, así que un escaneo con muchos boards de Ashby tarda algo más que con el mismo número de boards de Greenhouse o Lever.
 
 ## Relacionado
 
