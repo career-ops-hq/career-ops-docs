@@ -11,7 +11,7 @@ icon: MonitorCheck
 
 Windows does not create symlinks by default, so a fresh Git checkout leaves the CLI skill entrypoints (`.claude/skills/`, `.opencode/skills/`, and so on) as plain pointer files instead of real symlinks — which is what causes the "skills aren't loading" error people hit on other tools.
 
-career-ops detects this automatically. Running the installer or updater — `npx @santifer/career-ops init` on a fresh install, or `node update-system.mjs apply` on an update — runs a `materializeSkillEntrypoints` step that replaces those pointer files with the full skill content. You do not need admin rights, Developer Mode, or any manual `mklink` command.
+career-ops detects this automatically. Running the installer or updater — `npx @santifer/career-ops init` on a fresh install, or `node update-system.mjs apply` on an update — runs a `materializeSkillEntrypoints` step that replaces those pointer files with the full skill content. From a linked Git worktree, `node update-system.mjs apply` makes this repair in your `main` checkout. Run `git merge main` in the worktree to pick it up; worktrees created afterwards already have it. You do not need admin rights, Developer Mode, or any manual `mklink` command.
 
 <Callout title="No minimum-OS requirement">
 career-ops does not require any particular Windows (or macOS) version. If Node runs, career-ops runs. Any claim of a minimum OS version you may have seen elsewhere is not accurate.
