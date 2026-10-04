@@ -3,7 +3,7 @@ title: FAQ
 description: Häufige Fragen zu career-ops — Kosten, Datenschutz, unterstützte KI-CLIs, scan vs. scan:full, Token-Limits, Einrichtung unter Windows und was career-ops niemals in deinem Namen tun wird.
 seoTitle: "career-ops FAQ — Kosten, Datenschutz, unterstützte CLIs, Windows und kostenloser Betrieb"
 icon: CircleQuestionMark
-translationHash: 319b1b1ccb1c2b42
+translationHash: ac90ab093a4d1020
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -44,7 +44,7 @@ Bei career-ops kostet nur die Bewertung etwas, und auch die kann 0 $ kosten. Das
 
 ## Wo liegen meine Daten?
 
-career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates rühren deine Datenschicht (`cv.md`, `config/`, `data/`, `reports/`, `output/`) nie an: Diese Trennung ist der **Data Contract**, und jedes Update hält sich daran.
+career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates erhalten nutzereigene Dateien in deiner Datenschicht (`cv.md`, `config/`, `data/`, `reports/`, `output/`). Der Updater darf nur die systemeigenen `.gitkeep`-Platzhalter in `data/`, `reports/` und `output/` erstellen oder ersetzen; andere Dateien dort verändert er nie. Diese Trennung ist der **Data Contract**, und jedes Update hält sich daran.
 
 ## Wie gebe ich career-ops meinen Lebenslauf?
 

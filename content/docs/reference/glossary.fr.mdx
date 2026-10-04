@@ -3,7 +3,7 @@ title: Glossaire
 description: Le vocabulaire de la recherche d'emploi assistée par IA, défini — ATS, le score global 1-5, Data Contract, spray-and-pray, liveness check, tailoring, scan zéro token, histoires STAR+R, et chaque terme utilisé par career-ops.
 seoTitle: "Glossaire career-ops — les termes de la recherche d'emploi assistée par IA, définis"
 icon: BookOpen
-translationHash: 3d0e7dc65eb36dbf
+translationHash: 121ce11415a80eb5
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -23,7 +23,7 @@ Le jugement holistique du LLM sur une offre d'emploi, selon cinq dimensions (cor
 
 ## Data Contract
 
-La promesse architecturale centrale de career-ops : la **couche système** (scripts, modes, templates) peut être mise à jour à tout moment, tandis que la **couche utilisateur** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — n'est jamais touchée par une mise à jour. Vos données survivent à toutes les versions.
+La promesse architecturale centrale de career-ops : la **couche système** (scripts, modes, templates) peut être mise à jour à tout moment, tandis que les mises à jour préservent les fichiers qui vous appartiennent dans la **couche utilisateur** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/`. Le programme de mise à jour peut uniquement créer ou remplacer les fichiers `.gitkeep` appartenant au système dans `data/`, `reports/` et `output/` ; il ne modifie jamais vos autres fichiers dans ces dossiers. Vos données survivent à toutes les versions.
 
 ## Spray-and-pray
 
