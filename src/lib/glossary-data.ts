@@ -23,7 +23,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Data Contract',
     definition:
-      "career-ops's core architectural promise: the system layer (scripts, modes, templates) is updatable at any time, while the user layer — cv.md, config/profile.yml, data/, reports/, output/ — is never touched by an update. Your data outlives every version.",
+      "career-ops's core architectural promise: the system layer (scripts, modes, templates) is updatable at any time, while updates preserve user-owned files in the user layer — cv.md, config/profile.yml, data/, reports/, output/. The updater may create or replace only the system-owned .gitkeep scaffolds in data/, reports/, and output/; it never modifies other user files there. Your data outlives every version.",
   },
   {
     term: 'Spray-and-pray',
