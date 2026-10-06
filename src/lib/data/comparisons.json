@@ -11,7 +11,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Resume and job description uploaded to Jobscan servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-06",
       "heroImage": "/og/compare/career-ops-vs-jobscan.jpg",
       "intro": "Jobscan is a polished ATS scanner with a low setup bar. career-ops is an end-to-end pipeline that runs on your machine. Different tools, different audiences. Here is the honest comparison.",
       "features": [
@@ -347,7 +347,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Profile, resume, and tracking data on Simplify servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-06",
       "heroImage": "/og/compare/career-ops-vs-simplify.jpg",
       "intro": "Simplify is the polished autofill extension that owns the tech-side job search in 2026 — over 1.5 million users, generous free tier, human-in-the-loop submission. career-ops is the local-first pipeline that runs through your AI CLI. Both reject mass auto-submission. The differences are everything else.",
       "features": [
@@ -651,7 +651,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Profile, CV, and tracking data on Loopcv servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-06",
       "heroImage": "/og/compare/career-ops-vs-loopcv.jpg",
       "intro": "Loopcv is the cleaner auto-apply player — fewer hallucinated wrong-role submissions than LazyApply, transparent volume caps, a real free tier. career-ops is the opposite philosophy: filter hard, tailor every application, draft each form, and the candidate submits. Both have audiences; the trade-offs are sharp.",
       "features": [
