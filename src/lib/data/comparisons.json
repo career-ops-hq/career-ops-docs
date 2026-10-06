@@ -47,7 +47,7 @@
         },
         {
           "name": "Setup",
-          "careerOps": "git clone + npm install + config. 10–15 minutes if you already have Node 18+.",
+          "careerOps": "git clone + npm install + config. 10–15 minutes if you already have Node 22.13+.",
           "competitor": "Sign up, paste resume. Two minutes."
         },
         {
@@ -80,7 +80,7 @@
         "headline": "Pick career-ops if you write code and want the full pipeline plus pre-apply form drafting. Pick Jobscan if you want a one-click ATS scan and zero setup.",
         "body": [
           "Jobscan does one thing well: tells you which keywords your resume is missing for a specific job description. Their UX is polished, their match score is easy to read, and you are productive in two minutes. The trade-offs are real: $50 a month, your data lives on their servers, and the algorithm is a black box.",
-          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent rubric of five scoring dimensions plus a holistic global score, tailor your CV per job, and — the part nobody else does — pre-apply: the apply mode reads the portal's form, drafts answers for every open-ended question from your profile and the JD, and hands them back for you to review and submit. That single feature saves 15-20 minutes per application, the slowest step in any serious search. The trade-offs are also real: you need Node 22.5+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
+          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent rubric of five scoring dimensions plus a holistic global score, tailor your CV per job, and — the part nobody else does — pre-apply: the apply mode reads the portal's form, drafts answers for every open-ended question from your profile and the JD, and hands them back for you to review and submit. That single feature saves 15-20 minutes per application, the slowest step in any serious search. The trade-offs are also real: you need Node 22.13+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
           "Different audiences, different price points, different philosophies. The pre-apply step is where career-ops materially leaves the rest behind."
         ]
       },
@@ -388,7 +388,7 @@
         },
         {
           "name": "Setup time",
-          "careerOps": "10-15 minutes (git clone + npm install + config) if you already have Node 18+.",
+          "careerOps": "10-15 minutes (git clone + npm install + config) if you already have Node 22.13+.",
           "competitor": "Two minutes — install extension, fill profile, done."
         },
         {
@@ -692,7 +692,7 @@
         },
         {
           "name": "Setup time",
-          "careerOps": "10-15 minutes if you already have Node 18+.",
+          "careerOps": "10-15 minutes if you already have Node 22.13+.",
           "competitor": "Five minutes — upload CV, configure loops, done."
         },
         {
