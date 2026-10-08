@@ -228,3 +228,10 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+/* Code and terminal-like lines: Geist Mono (loaded in layout.tsx). Set as a
+   plain, unlayered rule because Tailwind's theme layer already defines
+   --font-mono and a value inside @theme did not replace it. */
+:root {
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
