@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: a04086b59f7b0683
+translationHash: bd6ad5dba16a4729
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -56,7 +56,7 @@ career-ops fonctionne nativement avec dix CLI de codage IA : Claude Code, Cursor
 
 ## Quelle est la différence entre `scan` et `scan:full` ?
 
-`npm run scan` lit les entreprises que vous avez configurées dans `portals.yml` et interroge directement leurs API ATS ([Greenhouse](/fr/docs/reference/portals/greenhouse), [Ashby](/fr/docs/reference/portals/ashby), [Lever](/fr/docs/reference/portals/lever)), sans consommer aucun token LLM — c'est votre run de découverte habituel, quotidien ou hebdomadaire. `npm run scan:full` inverse la direction : il parcourt les annuaires publics d'entreprises des ATS et fait remonter les offres récentes qui correspondent à vos `title_filter` / `location_filter`, pour que vous repériez des postes chez des entreprises que vous n'avez pas ajoutées manuellement.
+`npm run scan` lit les entreprises que vous avez configurées dans `portals.yml` et récupère chacune via le fournisseur qui la reconnaît (par exemple [Greenhouse](/fr/docs/reference/portals/greenhouse), [Ashby](/fr/docs/reference/portals/ashby), [Lever](/fr/docs/reference/portals/lever)), sans consommer aucun token LLM — c'est votre run de découverte habituel, quotidien ou hebdomadaire. `npm run scan:full` inverse la direction : il parcourt les annuaires publics d'entreprises des ATS et fait remonter les offres récentes qui correspondent à vos `title_filter` / `location_filter`, pour que vous repériez des postes chez des entreprises que vous n'avez pas ajoutées manuellement.
 
 ## Comment éviter d'atteindre les limites de tokens ou de débit pendant un run en batch ?
 

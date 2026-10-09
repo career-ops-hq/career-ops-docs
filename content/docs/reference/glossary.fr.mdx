@@ -3,7 +3,7 @@ title: Glossaire
 description: Le vocabulaire de la recherche d'emploi assistée par IA, défini — ATS, le score global 1-5, Data Contract, spray-and-pray, liveness check, tailoring, scan zéro token, histoires STAR+R, et chaque terme utilisé par career-ops.
 seoTitle: "Glossaire career-ops — les termes de la recherche d'emploi assistée par IA, définis"
 icon: BookOpen
-translationHash: 9df84ae3dee60d86
+translationHash: 3be5be8be489ab85
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -47,7 +47,7 @@ Le workflow career-ops de bout en bout : scan des portails → évaluation des o
 
 ## Scan zéro token
 
-Une passe de découverte qui ne consomme aucun token de LLM : `scan.mjs` appelle directement les API des ATS (Greenhouse, Ashby, Lever) en HTTP — trouver de nouvelles offres est donc gratuit, quel que soit le moteur d'IA que vous utilisez.
+Une passe de découverte qui ne consomme aucun token de LLM : `scan.mjs` lit directement en HTTP les API des ATS, les flux des sites d'emploi et les pages carrières : trouver de nouvelles offres est donc gratuit, quel que soit le moteur d'IA que vous utilisez.
 
 ## Moteur d'IA
 

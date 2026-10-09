@@ -3,7 +3,7 @@ title: Preguntas frecuentes
 description: Preguntas frecuentes sobre career-ops — coste, privacidad, CLIs de IA compatibles, scan vs scan:full, límites de tokens, configuración en Windows y lo que career-ops nunca hará en tu nombre.
 seoTitle: "FAQ de career-ops — coste, privacidad, CLIs compatibles, Windows y cómo ejecutarlo gratis"
 icon: CircleQuestionMark
-translationHash: a04086b59f7b0683
+translationHash: bd6ad5dba16a4729
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -56,7 +56,7 @@ career-ops funciona con soporte de primera clase en diez CLIs de programación c
 
 ## ¿Cuál es la diferencia entre `scan` y `scan:full`?
 
-`npm run scan` lee las empresas que configuraste en `portals.yml` y consulta directamente sus APIs de ATS ([Greenhouse](/es/docs/reference/portals/greenhouse), [Ashby](/es/docs/reference/portals/ashby), [Lever](/es/docs/reference/portals/lever)), consumiendo cero tokens de LLM — ese es tu barrido de descubrimiento habitual, diario o semanal. `npm run scan:full` invierte la dirección: recorre directorios públicos de empresas en los ATS y saca a la superficie ofertas recientes que encajan con tu `title_filter` / `location_filter`, de modo que captas puestos de empresas que no has añadido manualmente.
+`npm run scan` lee las empresas que configuraste en `portals.yml` y obtiene cada una a través del proveedor que la reconoce (por ejemplo [Greenhouse](/es/docs/reference/portals/greenhouse), [Ashby](/es/docs/reference/portals/ashby), [Lever](/es/docs/reference/portals/lever)), consumiendo cero tokens de LLM — ese es tu barrido de descubrimiento habitual, diario o semanal. `npm run scan:full` invierte la dirección: recorre directorios públicos de empresas en los ATS y saca a la superficie ofertas recientes que encajan con tu `title_filter` / `location_filter`, de modo que captas puestos de empresas que no has añadido manualmente.
 
 ## ¿Cómo evito toparme con límites de tokens o rate limits durante una ejecución en batch?
 

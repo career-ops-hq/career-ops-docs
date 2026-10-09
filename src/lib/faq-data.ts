@@ -43,7 +43,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "What is the difference between scan and scan:full?",
     answer:
-      "npm run scan reads the companies you configured in portals.yml and hits their ATS APIs (Greenhouse, Ashby, Lever) directly, consuming zero LLM tokens — that's your regular daily or weekly discovery run. npm run scan:full inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your title_filter / location_filter, so you catch roles from companies you haven't manually added.",
+      "npm run scan reads the companies you configured in portals.yml and fetches each one through the provider that recognizes it (for example Greenhouse, Ashby, Lever), consuming zero LLM tokens — that's your regular daily or weekly discovery run. npm run scan:full inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your title_filter / location_filter, so you catch roles from companies you haven't manually added.",
   },
   {
     question: "How do I avoid hitting token or rate limits during a batch run?",
