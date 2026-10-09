@@ -3,7 +3,7 @@ title: Configura Playwright
 description: Instala y configura Playwright para la automatización del navegador.
 seoTitle: "Configura Playwright para career-ops — scraping de ofertas y exportación del CV a PDF"
 icon: Globe
-translationHash: d900e7e8e58ee7f6
+translationHash: 75cc0418a7dc7a28
 localized: true
 translatedFrom: /docs/introduction/guides/set-up-playwright
 ---
@@ -27,7 +27,7 @@ Esta guía recorre los tres pasos de configuración que dan a career-ops sus cap
 </div>
 
 <Callout title="Antes de empezar">
-  Completa la guía de [inicio rápido](/docs). Node.js 18 o posterior (22.5+ recomendado) debe estar instalado y debes estar dentro de la carpeta raíz de career-ops.
+  Completa la guía de [inicio rápido](/es/docs). Node.js 18 o posterior (22.5+ recomendado) debe estar instalado y debes estar dentro de la carpeta raíz de career-ops.
 </Callout>
 
 ---
@@ -58,30 +58,32 @@ El MCP de Playwright permite a Claude controlar el navegador directamente durant
 
 ### Registra el servidor MCP
 
-Ejecuta este comando desde cualquier ubicación para registrar el MCP de Playwright en Claude Code:
+Ejecuta este comando desde la carpeta raíz de career-ops para registrar el MCP de Playwright en Claude Code:
 
 ```bash title="Terminal"
-claude mcp add playwright npx @playwright/mcp@latest
+claude mcp add --scope project playwright -- npx @playwright/mcp@latest
 ```
 
-Este es el método de registro en un solo paso de la [documentación del MCP de Playwright](https://playwright.dev/docs/getting-started-mcp). Escribe la entrada del servidor en tu configuración de Claude automáticamente.
+Este es el método de registro en un solo paso de la [documentación del MCP de Playwright](https://playwright.dev/docs/getting-started-mcp), con `--scope project` añadido para que Claude Code escriba la entrada del servidor en `.mcp.json`, en la raíz de career-ops, uno de los archivos que revisa `npm run doctor`. La próxima vez que inicies Claude Code allí, aprueba el servidor cuando te lo pida.
+
+Para usarlo en todos tus proyectos, ejecuta el comando con `--scope user`. `npm run doctor` no lee los servidores de ámbito de usuario, así que avisará de que no detecta el MCP aunque Claude Code lo cargue.
 
 ### Configuración manual (alternativa)
 
-Si prefieres configurarlo a mano, añade la siguiente entrada a `.claude/settings.local.json` en la raíz de career-ops, o a tu configuración global de Claude:
+Si prefieres configurarlo a mano, añade la siguiente entrada a `.mcp.json` en la raíz de career-ops (crea el archivo si no existe):
 
-```json title=".claude/settings.local.json"
+```json title=".mcp.json"
 {
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["y", "@playwright/mcp@latest"]
+      "args": ["-y", "@playwright/mcp@latest"]
     }
   }
 }
 ```
 
-Reinicia Claude Code tras guardar el archivo. career-ops tendrá entonces acceso a `browser_navigate` y `browser_snapshot` durante las sesiones de apply.
+Reinicia Claude Code tras guardar el archivo y aprueba el servidor cuando te lo pida. career-ops tendrá entonces acceso a `browser_navigate` y `browser_snapshot` durante las sesiones de apply.
 
 ---
 
@@ -99,9 +101,9 @@ Busca la confirmación de que Playwright, Chromium y el servidor MCP están list
 
 ## Mira cómo el navegador rellena el formulario
 
-Por defecto, Playwright se ejecuta en modo headless: lee y rellena el formulario en segundo plano sin abrir una ventana visible.
+Por defecto, el MCP de Playwright abre una ventana visible del navegador (la configuración anterior no pasa `--headless`), así que puedes ver cada página que lee y cada campo que rellena.
 
-Para ver cómo el navegador se abre y rellena el formulario en directo, añade una instrucción al comando apply:
+Para que abra la solicitud en esa ventana y rellene el formulario completo, añade una instrucción al comando apply:
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
   <Tab value="Claude Code">
@@ -126,7 +128,9 @@ Para ver cómo el navegador se abre y rellena el formulario en directo, añade u
   </Tab>
 </Tabs>
 
-Sin esa instrucción, career-ops sigue usando Playwright y el MCP — simplemente opera en silencio en segundo plano.
+Para Ashby, Playwright puede inspeccionar el formulario y ayudar a redactar respuestas, pero termina y envía la candidatura en tu navegador habitual. Comprueba la página de éxito o el correo de confirmación antes de marcarla como enviada.
+
+Sin esa instrucción, career-ops sigue usando Playwright y el MCP para leer el formulario y redactar tus respuestas, en la misma ventana visible.
 
 ## Qué habilita cada componente
 

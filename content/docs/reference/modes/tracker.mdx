@@ -4,7 +4,7 @@ description: "Quick read of where every application stands. Useful as a daily ch
 seoTitle: "career-ops tracker mode — see where every job application stands"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-09-25"
 ---
 
 ## What it does
@@ -27,23 +27,54 @@ A tracker run prints the full applications table plus a statistics block in a si
 
 ```txt title="Example"
 # | Date       | Company   | Role              | Score | Status    | PDF | Report
-1 | 2026-06-14 | Anthropic | AI Engineer       |  87   | Interview | yes | yes
-2 | 2026-06-18 | Vercel    | Applied AI Eng    |  79   | Applied   | yes | yes
-3 | 2026-06-21 | Figma     | Product Eng, AI   |  72   | Evaluated | yes | yes
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
 
 Total: 3   Applied: 1   Interview: 1   Evaluated: 1
-Average score: 79   PDF generated: 100%   Report generated: 100%
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, update the row in the tracker table or use the Go TUI dashboard.
+An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, ask for it in the chat or run `node set-status.mjs <report#|company> <state>` yourself, adding `--on YYYY-MM-DD` when it happened on an earlier day. The command rejects unknown states, locks the tracker while it writes, and logs the transition in `data/status-log.tsv`, the ledger the funnel-velocity statistics read, so use it instead of hand-editing the row.
 
 ## Reading the lifetime numbers
 
 For cumulative figures — the full funnel, scanner totals, portal coverage, and follow-up compliance — the mode runs `node stats.mjs --summary` and presents its output verbatim. That command reads your local files and costs zero tokens, so the numbers are never recomputed by hand or estimated from memory. Use the chat summary above for a fast daily read, and the stats command when you want the running totals across the whole search.
 
+## Exporting a repaired copy
+
+Over hundreds of rows a markdown table picks up damage: mojibake placeholders, a score stranded in the status column, duplicate ids, stray pipes. `node tracker.mjs sync` finds and repairs these in its SQLite index, `data/applications.db`, without touching the markdown. `node tracker.mjs export` is how you adopt that repaired copy of your own tracker:
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+`export` never touches `data/applications.md` unless you pass it as `--out`.
+
+It preserves the layout it read, not just the values: your header row, columns career-ops does not map (`Location`, `Via`, `URL` or your own), the title, any preamble and trailing lines, and CRLF vs LF line endings. Extra columns come back in their own positions, though `query` cannot filter on them.
+
+Anything it cannot reproduce is named on stderr. When that list is not empty, `--out` over an existing file refuses to write (exit code `1`, nothing written) until you re-run with `--force`; when it is empty, `--out` backs up the existing file and overwrites it. What gets reported:
+
+| Reported | Why it cannot be rebuilt |
+| --- | --- |
+| A cell outside the columns the header declares | The header has no column to put it in |
+| A line between the first and last table row, such as a heading or a second table's header | A single rebuilt table has nowhere to put it |
+| A row belonging to a later table, such as an `## Archive` section | It was indexed against the first table's header, so re-emitting it would move archived data into the active table |
+| A cell whose value had to be rewritten to survive as a cell (a stray `\|` comes back as `│`) | The value itself changed |
+
+No losses reported does not mean the output is byte-identical. `export` emits the repairs `sync` made, and some of them are silent: `aplicado` is a recognized alias for `Applied` in `templates/states.yml`, so `sync --check` reports no corruption and the export says `Applied` anyway. Column-aligned cells also come back single-spaced. Before adopting an export, diff it against the file it replaces:
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+The full command reference, including `sync`, `query` and `history`, is in the core repo's [scripts guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker).
+
 ## Gotchas
 
-tracker is read-only. Status changes are explicit keystrokes in the Go TUI dashboard or manual edits to the report frontmatter.
+Status lives in the Status column of the tracker (`data/applications.md`), not in the report file. The Go TUI dashboard's status picker also updates that column, but it does not log the transition in `data/status-log.tsv` the way `set-status.mjs` does. funnel-velocity still sees the new status, but not when it happened: the change is missing from the stage-velocity timings, and a row that later ends in Rejected loses the stages it passed through. Use the command for any change you want those figures to include.
 
 ## Related
 

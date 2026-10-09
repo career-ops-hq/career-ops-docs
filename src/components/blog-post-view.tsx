@@ -18,8 +18,8 @@ export type BlogFrontmatter = {
 // Shared render for a blog post, used by /blog/[slug] (EN) and
 // /es/blog/[slug] (ES). Only the byline labels and the date locale vary.
 const LABELS = {
-  en: { by: 'By', updated: 'Updated', dateLocale: 'en-US' },
-  es: { by: 'Por', updated: 'Actualizado el', dateLocale: 'es' },
+  en: { by: 'By', role: 'creator of career-ops', updated: 'Updated', dateLocale: 'en-US' },
+  es: { by: 'Por', role: 'creador de career-ops', updated: 'Actualizado el', dateLocale: 'es' },
 } as const;
 
 export function BlogPostView({ page, locale }: { page: BlogPage; locale: 'en' | 'es' }) {
@@ -66,7 +66,7 @@ export function BlogPostView({ page, locale }: { page: BlogPage; locale: 'en' | 
             >
               Santiago Fernández de Valderrama Aparicio
             </a>
-            , Applied AI Operator ·{' '}
+            , {t.role} ·{' '}
             <time dateTime={data.date}>{formatDate(data.date)}</time>
             {data.lastModified && data.lastModified !== data.date && (
               <>

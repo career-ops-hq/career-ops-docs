@@ -43,12 +43,12 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "What is the difference between scan and scan:full?",
     answer:
-      "npm run scan reads the companies you configured in portals.yml and hits their ATS APIs (Greenhouse, Ashby, Lever) directly, consuming zero LLM tokens — that's your regular daily or weekly discovery run. npm run scan:full inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your title_filter / location_filter, so you catch roles from companies you haven't manually added.",
+      "npm run scan reads the companies you configured in portals.yml and fetches each one through the provider that recognizes it (for example Greenhouse, Ashby, Lever), consuming zero LLM tokens — that's your regular daily or weekly discovery run. npm run scan:full inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your title_filter / location_filter, so you catch roles from companies you haven't manually added.",
   },
   {
     question: "How do I avoid hitting token or rate limits during a batch run?",
     answer:
-      "To avoid token or rate limits in a career-ops batch run, cap the run with ./batch/batch-runner.sh --limit 5 to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use --resume-paused to skip already-completed jobs so no tokens are wasted on work that finished.",
+      "To avoid token or rate limits in a career-ops batch run, cap the run with ./batch/batch-runner.sh --limit 5 to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use --resume-paused to skip already-completed jobs so no tokens are wasted on work that finished. A needs_confirmation job produces no report, CV, application draft, or tracker row; --resume-paused does not resume it. Answer its question explicitly in the parent interactive session.",
   },
   {
     question: "Skills aren't loading on Windows — symlink error on install",

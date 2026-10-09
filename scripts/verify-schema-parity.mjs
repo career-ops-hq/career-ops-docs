@@ -13,7 +13,7 @@
 //      definition, appears verbatim in the page's visible text.
 //   2. Language: every JSON-LD node that describes THIS page (its url,
 //      @id or mainEntityOfPage is the page's URL) declares the page's own
-//      language, from its /es or /fr prefix, English otherwise. Nodes about
+//      language, from its /es, /fr or /de prefix, English otherwise. Nodes about
 //      other things keep their own language: a Greek WIRED article cited as
 //      press coverage is rightly "el".
 //
@@ -95,7 +95,7 @@ const ALLOWED = {
   ],
 };
 
-const localeOf = (path) => (/^\/(es|fr)(\/|$)/.exec(path)?.[1] ?? 'en');
+const localeOf = (path) => (/^\/(es|fr|de)(\/|$)/.exec(path)?.[1] ?? 'en');
 
 function firstMissingSentence(text, page) {
   const sentences = text.split(/(?<=[.!?:;])\s+/);
