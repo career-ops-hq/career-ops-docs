@@ -66,11 +66,7 @@ export function BlogPostView({ page, locale }: { page: BlogPage; locale: 'en' | 
             >
               Santiago Fernández de Valderrama Aparicio
             </a>
-<<<<<<<< HEAD:src/components/blog-post-view.tsx
             , {t.role} ·{' '}
-========
-            , creator of career-ops ·{' '}
->>>>>>>> origin/main:src/app/(en)/blog/[slug]/page.tsx
             <time dateTime={data.date}>{formatDate(data.date)}</time>
             {data.lastModified && data.lastModified !== data.date && (
               <>
