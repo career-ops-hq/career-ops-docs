@@ -43,7 +43,7 @@ For cumulative figures — the full funnel, scanner totals, portal coverage, and
 
 ## Exporting a repaired copy
 
-Over hundreds of rows a markdown table picks up damage: mojibake placeholders, a score stranded in the status column, duplicate ids, stray pipes. `node tracker.mjs sync` finds and repairs these in its SQLite index, `data/applications.db`, without touching the markdown. `node tracker.mjs export` is how you adopt that repaired copy of your own tracker:
+Over hundreds of rows a markdown table picks up damage: mojibake placeholders, a score stranded in the status column, duplicate ids, stray pipes. `node tracker.mjs sync` finds and repairs these in its SQLite index, `data/applications.db`, without touching the markdown. `tracker.mjs` needs Node 22.5 or later for that index; the markdown tracker keeps working without it. `node tracker.mjs export` is how you adopt that repaired copy of your own tracker:
 
 ```bash
 node tracker.mjs export                            # rebuilt table on stdout
