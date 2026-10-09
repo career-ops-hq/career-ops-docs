@@ -246,7 +246,7 @@ export function SignPreview({ locale = 'en' }: { locale?: Locale }) {
           <a
             href={signUrl}
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="rounded-lg px-5 py-2.5 text-sm font-medium"
             style={{
               backgroundColor: 'var(--color-fd-foreground)',

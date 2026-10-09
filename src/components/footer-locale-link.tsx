@@ -2,19 +2,19 @@
 
 import { usePathname } from 'next/navigation';
 
-// The global footer lives in the root layout (rendered on every page, EN, ES
-// and FR). A footer link for a page that HAS a localized twin must follow the
-// locale: on an /es or /fr surface it points at that language's version — but
+// The global footer lives in the root layout (rendered on every page, EN, ES,
+// FR and DE). A footer link for a page that HAS a localized twin must follow the
+// locale: on an /es, /fr or /de surface it points at that language's version — but
 // ONLY for the locales that actually have that page. `locales` lists them
-// (default: both es and fr have /docs; /manifesto passes just ['es']). If the
+// (default: es, fr and de all have /docs; /manifesto passes just ['es']). If the
 // current locale has no twin for this path, the link stays English so it never
 // 404s. The rest of the footer nav stays English until those pages are
 // translated (the "localize global chrome" follow-up, with <html lang> + labels).
-type Loc = 'es' | 'fr';
+type Loc = 'es' | 'fr' | 'de';
 
 export function FooterLocaleLink({
   path,
-  locales = ['es', 'fr'],
+  locales = ['es', 'fr', 'de'],
   children,
 }: {
   /** The EN path (e.g. '/docs', '/manifesto'). The twin is '/<loc>' + path. */
@@ -28,7 +28,9 @@ export function FooterLocaleLink({
     ? 'es'
     : pathname.startsWith('/fr')
       ? 'fr'
-      : 'en';
+      : pathname.startsWith('/de')
+        ? 'de'
+        : 'en';
   const href =
     current !== 'en' && locales.includes(current) ? `/${current}${path}` : path;
   return (

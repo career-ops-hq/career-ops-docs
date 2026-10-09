@@ -5,7 +5,7 @@ seoTitle: "Modo apply de career-ops — borradores automáticos de respuestas a 
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: "46cda1156304a2f1"
+translationHash: 72c62608efda3e89
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -51,14 +51,14 @@ captcha, and submit yourself.
 
 ## Advertencias
 
-apply no envía formularios ni pulsa botones. Lee las preguntas y produce borradores de respuesta en el chat. El paso de envío es tuyo. Los campos cerrados (desplegables, botones de opción, subida de archivos) quedan fuera del alcance. Si la comprobación preflight detecta que la publicación ha cerrado, apply se niega a redactar la versión final salvo que lo fuerces explícitamente — un enlace muerto no merece una respuesta a medida.
+apply nunca envía la candidatura: el clic final en Enviar siempre es tuyo. Lee todos los campos del formulario, no solo las preguntas abiertas — desplegables, botones de opción, casillas y campos de subida de archivos incluidos. Redacta las respuestas de texto libre, sugiere un valor para cada campo cerrado y marca las preguntas sobre autorización de trabajo, salario y otros temas sensibles que tu perfil aún no responde, para que las confirmes tú en lugar de adivinarlas por ti. Con Playwright puede rellenar algunos campos en el formulario en vivo; tú lo revisas todo y completas el resto. Cuando las respuestas están listas, guarda en el informe el texto, las selecciones y los archivos usados. Si la comprobación preflight detecta que la publicación ha cerrado, apply se niega a redactar la versión final salvo que lo fuerces explícitamente — un enlace muerto no merece una respuesta a medida.
 
 ## Peculiaridades conocidas de los ATS
 
 apply se ha probado en campo en cerca de una docena de candidaturas gestionadas con Playwright, y algunos portales rompen la ejecución si no los tienes en cuenta:
 
 - **Ashby** deduplica candidatos por email dentro de cada empresa, así que una segunda candidatura puede fusionarse silenciosamente con la primera. Si ya existe un informe para esa empresa, apply sugiere un alias de email con `+tag`. Para Ashby, termina y envía la solicitud en tu navegador habitual y comprueba la página de éxito o el correo de confirmación antes de marcarla como enviada.
-- **Lever** lanza un captcha cuando una casilla o un botón de opción se marca de forma programática, así que apply rellena solo los campos de texto y te deja el resto para que lo marques tú.
+- **Lever** lanza un captcha cuando una casilla o un botón de opción se marca de forma programática, así que apply rellena solo los campos de texto y los desplegables, y te deja las casillas y los botones de opción para que los marques tú.
 - **Workday** ignora los valores introducidos sin pulsaciones de teclado reales, así que apply escribe las respuestas carácter a carácter y te pide revisar los desplegables de autorización de trabajo antes de guardar.
 
 ## Relacionado

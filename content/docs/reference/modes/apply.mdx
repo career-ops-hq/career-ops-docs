@@ -48,14 +48,14 @@ captcha, and submit yourself.
 
 ## Gotchas
 
-apply does not submit forms or click buttons. It reads the questions and produces answer drafts in the chat. The submission step is yours. Closed-ended fields (dropdowns, radio buttons, file uploads) are out of scope. If the preflight finds the posting has closed, apply refuses to draft final copy unless you explicitly override it — a dead link is not worth a tailored answer.
+apply never submits the application: the final Submit click is always yours. It reads every field on the form, not just the open-ended questions — dropdowns, radio buttons, checkboxes and upload fields included. It drafts the free-text answers, suggests a value for each closed-ended field, and flags work-authorization, salary and other sensitive questions your profile does not already answer, for you to confirm rather than guessing. With Playwright it can fill some fields in the live form; you review everything and complete the rest. Once the answers are in, it records the text, the selections and the files used in the report. If the preflight finds the posting has closed, apply refuses to draft final copy unless you explicitly override it — a dead link is not worth a tailored answer.
 
 ## Known ATS quirks
 
 apply has been field-tested across roughly a dozen Playwright-driven applications, and a few portals break a run if you do not account for them:
 
 - **Ashby** deduplicates candidates by email per company, so a second application can silently merge into your first. If a report for that company already exists, apply suggests a `+tag` email alias. For Ashby, finish and submit in your ordinary system browser, then verify a success page or confirmation email before marking the application submitted.
-- **Lever** throws a captcha when a checkbox or radio button is clicked programmatically, so apply fills only text fields and hands you the rest to tick.
+- **Lever** throws a captcha when a checkbox or radio button is clicked programmatically, so apply fills only text fields and dropdowns and hands you the checkboxes and radio buttons to tick.
 - **Workday** ignores values set without real keystrokes, so apply types answers character by character and asks you to review the work-authorization dropdowns before you save.
 
 ## Related

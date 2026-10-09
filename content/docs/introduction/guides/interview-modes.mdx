@@ -5,7 +5,7 @@ seoTitle: "Interview prep with career-ops — round-by-round preparation"
 icon: GraduationCap
 ---
 
-The interview modes are career-ops's interview preparation system, shipped in v1.16.0: `interview/plan` builds a time-blocked prep plan for a specific round, `interview/practice` runs a realistic mock interview one question at a time, and `interview/debrief` captures what actually happened so the next round starts smarter. Together they form a loop — plan, practice, interview, debrief, repeat — that compounds across a hiring process.
+The interview modes are career-ops's interview preparation system, shipped in v1.16.0: `interview/plan` builds a time-blocked prep plan for a specific round, `interview/practice` runs a text mock interview one question at a time, and `interview/debrief` captures what actually happened so the next round starts smarter. Together they form a loop — plan, practice, interview, debrief, repeat — that compounds across a hiring process.
 
 They complement the older [`interview-prep` mode](/docs/reference/modes/interview-prep), which builds your durable foundation (story bank, question bank). The three focused modes are about a *specific upcoming round*.
 
@@ -18,7 +18,7 @@ A workspace with your `cv.md` and `config/profile.yml` in place (the [Quick Star
 | Mode | When | What you get |
 | --- | --- | --- |
 | `interview/plan` | The moment a round is scheduled | A time-blocked prep plan sized to the hours you actually have |
-| `interview/practice` | Before the round | A realistic mock interview with structured feedback per answer |
+| `interview/practice` | Before the round | A text mock interview with structured feedback per answer |
 | `interview/debrief` | Right after the real interview | An honest per-question assessment + an updated question bank |
 
 ## Plan: turn a date into a schedule
@@ -39,7 +39,7 @@ Give `interview/plan` the job description and the interview date and time, plus 
 
 The plan calibrates to the round: a recruiter screen gets logistics and narrative, not deep internals; a practitioner deep-dive gets depth in the core skill from the JD. If a question bank from a previous round exists, anything you struggled with gets a dedicated block — real performance data outranks inferred risk.
 
-## Practice: rehearse against a realistic interviewer
+## Practice: rehearse one question at a time [#practice-rehearse-against-a-realistic-interviewer]
 
 `interview/practice` plays the interviewer — by name and role if you provide them — and asks one question at a time, staying in character, with natural follow-ups when a real interviewer would push deeper. After each answer you get structured feedback: what landed, what to tighten, and a stronger version of your answer grounded in your actual CV and story bank.
 
@@ -55,8 +55,8 @@ Run `interview/debrief` right after a real interview, while memory is fresh. It 
 
 - **Updates the question bank** — each question marked ✅ / 🟡 / 🔴 based on real performance, not gut feeling.
 - **Closes the gaps** — for every 🔴, it explains the correct answer with a worked example and connects it to a story you already have.
-- **Extracts new stories** — if you told something in the room that isn't in your story bank yet, it builds it into a STAR+R story on the spot.
-- **Predicts the next round** — if you know the format, it forecasts likely questions from the interviewer's role and what this round already covered.
+- **Extracts new stories** — if you told something in the room that isn't in your story bank yet, it offers to build it into a STAR+R story and adds it if you say yes.
+- **Predicts the next round** — if you know the format, it lists likely questions, each labeled `[inferred]`, from the interviewer's role and what this round already covered.
 
 ## Why this loop works
 

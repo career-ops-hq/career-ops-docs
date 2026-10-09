@@ -19,7 +19,7 @@ Do not break these; if a task seems to require it, stop and explain in your repo
 - `/AGENTS.md` is a thin pointer to the core repo's `AGENTS.md`. It is never a copy.
 - `/llms.txt` carries exactly one English `# Docs` index with absolute `.md` links. Figures in it are dated (`as of YYYY-MM-DD`) and are omitted, never faked, when the live fetch fails.
 - The markdown mirrors contain no escaped HTML entities, no leaked JSX tags, no relative links.
-- The site is trilingual. A page `content/docs/x.mdx` may have `x.es.mdx` and `x.fr.mdx` beside it, each carrying `translationHash` of the English source. If you change English prose, either update the translations too or say in your report that they are now stale. Restamp with `node .i18n/hash.mjs <english-file>`.
+- The site has four languages. A page `content/docs/x.mdx` may have `x.es.mdx`, `x.fr.mdx` and `x.de.mdx` beside it, each carrying `translationHash` of the English source. If you change English prose, either update the translations too or say in your report that they are now stale. Restamp with `node .i18n/hash.mjs <english-file>`.
 
 ## Files you must not touch
 

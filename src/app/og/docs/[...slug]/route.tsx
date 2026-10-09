@@ -9,7 +9,7 @@ export const revalidate = false;
 export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...slug]'>) {
   const { slug } = await params;
   const file = slug.at(-1) ?? '';
-  const locale = /^image\.(es|fr)\.png$/.exec(file)?.[1];
+  const locale = /^image\.(es|fr|de)\.png$/.exec(file)?.[1];
   if (!locale && file !== 'image.png') notFound();
   const page = source.getPage(slug.slice(0, -1), locale);
   if (!page) notFound();
@@ -25,8 +25,8 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
 
 export function generateStaticParams() {
   // Spanish and French docs had no og:image at all: 62 pages shared with no
-  // card. They now get one each, in their own language.
-  return (['en', 'es', 'fr'] as const).flatMap((lang) =>
+  // card. They now get one each, in their own language (German too).
+  return (['en', 'es', 'fr', 'de'] as const).flatMap((lang) =>
     source.getPages(lang).map((page) => ({
       lang: page.locale,
       slug: getPageImage(page).segments,

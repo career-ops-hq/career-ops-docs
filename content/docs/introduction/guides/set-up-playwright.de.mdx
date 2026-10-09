@@ -1,0 +1,145 @@
+---
+title: Playwright einrichten
+description: Installiere und konfiguriere Playwright für die Browser-Automatisierung.
+seoTitle: "Playwright für career-ops einrichten — Scraping von Stellenanzeigen und Lebenslauf-Export als PDF"
+icon: Globe
+translationHash: 22562dc381322597
+localized: true
+translatedFrom: /docs/introduction/guides/set-up-playwright
+---
+
+Diese Anleitung führt dich durch drei Einrichtungsschritte, mit denen career-ops den Browser automatisieren kann:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Playwright-Paket installieren">
+        Installiere das Node-Paket von Playwright
+      </Step>
+      <Step title="Chromium herunterladen">
+        Lade den Chromium-Browser herunter, den Playwright steuert
+      </Step>
+      <Step title="Playwright MCP konfigurieren">
+        Konfiguriere den Playwright MCP, damit Claude während des apply-Schritts den Browser bedienen kann
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+<Callout title="Bevor du anfängst">
+  Arbeite zuerst die [Schnellstart](/de/docs)-Anleitung durch. Node.js 18 oder neuer (empfohlen: 22.5+) muss installiert sein, und du musst dich im Stammordner von career-ops befinden.
+</Callout>
+
+---
+
+## Playwright-Paket installieren
+
+Führe `npm install` im Stammordner von career-ops aus:
+
+```bash title="Terminal"
+npm install
+```
+
+Damit werden Playwright und alle anderen Abhängigkeiten installiert, die in `package.json` angegeben sind. Überspringe diesen Schritt, wenn du ihn bei der Ersteinrichtung schon ausgeführt hast.
+
+## Chromium herunterladen
+
+Playwright braucht eine eigene Chromium-Kopie, die es steuern kann. Der Installer lädt sie normalerweise direkt nach den Abhängigkeiten automatisch herunter. Falls `npm run doctor` meldet, dass sie fehlt, lade sie mit diesem Befehl herunter:
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+Diesen Schritt machst du nur einmal. Nach `npm`-Updates musst du ihn nicht wiederholen.
+
+## Playwright MCP konfigurieren
+
+Mit dem Playwright MCP kann Claude den Browser während des Schritts `/career-ops apply` direkt steuern: Er öffnet Bewerbungsformulare, liest die Feldbezeichnungen und schlägt Antworten vor.
+
+### MCP-Server registrieren
+
+Führe diesen Befehl im Stammordner von career-ops aus, um den Playwright MCP bei Claude Code zu registrieren:
+
+```bash title="Terminal"
+claude mcp add --scope project playwright -- npx @playwright/mcp@latest
+```
+
+So läuft die Registrierung in einem einzigen Schritt, wie in der [Playwright-MCP-Dokumentation](https://playwright.dev/docs/getting-started-mcp) beschrieben, ergänzt um `--scope project`: Claude Code trägt den Server dann in die `.mcp.json` im Stammordner von career-ops ein, eine der Dateien, die `npm run doctor` prüft. Wenn du Claude Code dort das nächste Mal startest, gib den Server frei, sobald du gefragt wirst.
+
+Willst du ihn stattdessen in jedem Projekt nutzen, führe den Befehl mit `--scope user` aus. `npm run doctor` liest keine Server mit User-Scope und warnt dann, dass es den MCP nicht erkennt, obwohl Claude Code ihn lädt.
+
+### Manuelle Konfiguration (Alternative)
+
+Wenn du lieber alles von Hand einrichtest, füge den folgenden Eintrag in die `.mcp.json` im Stammordner von career-ops ein (leg die Datei an, falls es sie noch nicht gibt):
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+Starte Claude Code nach dem Speichern der Datei neu und gib den Server frei, sobald du gefragt wirst. Danach kann career-ops in apply-Sitzungen `browser_navigate` und `browser_snapshot` verwenden.
+
+---
+
+## Einrichtung überprüfen
+
+Führe das doctor-Script aus, um zu prüfen, ob alle drei Komponenten vorhanden sind:
+
+```bash title="Terminal"
+npm run doctor
+```
+
+In der Ausgabe sollte bestätigt werden, dass Playwright, Chromium und der MCP-Server bereit sind. Wenn die Prüfung erfolgreich ist, ist die Einrichtung abgeschlossen.
+
+---
+
+## Dem Browser beim Ausfüllen des Formulars zusehen
+
+Der Playwright MCP öffnet standardmäßig ein sichtbares Browserfenster (die Einrichtung oben übergibt kein `--headless`). So siehst du jede Seite, die er liest, und jedes Feld, das er ausfüllt.
+
+Damit er die Bewerbung in diesem Fenster öffnet und das gesamte Formular ausfüllt, ergänze den apply-Befehl um eine Anweisung:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name} open the browser with Playwright, inspect the form, and draft answers
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window, inspect the form, and draft answers live.
+    ```
+  </Tab>
+</Tabs>
+
+Bei Ashby kann Playwright das Formular untersuchen und beim Entwerfen der Antworten helfen. Schließe die Bewerbung aber in deinem gewohnten System-Browser ab und sende sie dort ab. Prüfe die Erfolgsseite oder die Bestätigungs-E-Mail, bevor du sie als abgeschickt markierst.
+
+Auch ohne diese Anweisung nutzt career-ops im selben sichtbaren Fenster Playwright und den MCP, um das Formular zu lesen und deine Antworten zu entwerfen.
+
+## Wofür die einzelnen Komponenten da sind
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Komponente         | Zweck                                                                                                                                                       |
+    | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | Playwright-Paket   | Kernbibliothek, die die Browser-Automatisierung steuert                                                                                                     |
+    | Chromium           | Rendert Seiten, erzeugt PDFs in Druckqualität über `/career-ops pdf`, prüft, ob Stellenanzeigen noch online sind, und ermöglicht vollständige ATS-Scans |
+    | Playwright MCP     | Ermöglicht career-ops, sich während `/career-ops apply` durch Formulare zu bewegen und Antworten für die Felder vorzuschlagen                              |
+  </div>
+</div>

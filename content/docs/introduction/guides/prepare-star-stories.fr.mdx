@@ -1,0 +1,178 @@
+---
+title: Préparer vos histoires STAR à partir de votre CV
+description: "Vous bloquez sur « Parlez-moi d'une fois où vous… » ? career-ops rédige des histoires STAR à partir de votre CV pendant que vous évaluez des offres, et vous permet de les répéter avant le tour d'entretien."
+seoTitle: "Comment préparer des histoires STAR pour vos entretiens à partir de votre CV avec career-ops"
+icon: NotebookPen
+translationHash: 16f27d9b3617f897
+localized: true
+translatedFrom: /docs/introduction/guides/prepare-star-stories
+---
+
+Pour préparer des histoires STAR, rédigez chaque réponse en quatre temps (Situation, Tâche, Action et Résultat) et ajoutez-y une Réflexion sur ce que vous en avez retenu (STAR+R). career-ops les rédige à partir de l'expérience réelle décrite dans votre CV chaque fois que vous évaluez une offre. Vous vérifiez ensuite les chiffres, vous les modifiez et vous les répétez avant le tour d'entretien.
+
+Si vous bloquez sur « Parlez-moi d'une fois où vous… », voici la solution. career-ops enregistre les histoires dans une banque d'histoires, `interview-prep/story-bank.md`, une fois que vous avez créé ce fichier. Il trouve l'histoire qui obtient le meilleur score pour une question écrite et vous permet de vous entraîner lors d'un entretien blanc écrit.
+
+**Sur cette page :** [STAR+R](#what-is-a-star-story-and-what-does-the-r-add) · [Démarrer votre banque](#how-do-you-start-your-story-bank) · [D'où viennent les histoires](#where-do-your-stories-come-from) · [Où se trouve la banque](#where-does-the-story-bank-live) · [Le format d'une entrée](#what-does-a-star-story-entry-look-like) · [Des chiffres honnêtes](#how-do-you-keep-the-numbers-in-your-stories-honest) · [Trouver la bonne histoire](#how-do-you-find-the-right-story-for-a-written-question) · [Histoires et entreprise](#how-do-you-map-your-stories-to-a-companys-interviews) · [Répéter](#how-do-you-rehearse-your-stories-before-the-round) · [Après l'entretien](#what-happens-to-your-stories-after-the-interview) · [Commandes](#commands-at-a-glance) · [Questions fréquentes](#frequently-asked-questions)
+
+Cette page porte sur les histoires. Pour la boucle complète (plan, practice et debrief), consultez [Se préparer aux entretiens](/fr/docs/introduction/guides/interview-modes).
+
+<Callout title="Avant de commencer">
+  career-ops a besoin de votre `cv.md` et de votre `config/profile.yml`. Le [Démarrage rapide](/fr/docs) configure les deux. Les commandes slash se tapent dans votre session de CLI d'IA, et les commandes `npm` et `node` dans un terminal ouvert dans votre dossier career-ops. Si les commandes slash ne sont pas disponibles (Codex ne les garantit pas, par exemple), demandez le même mode par son nom.
+</Callout>
+
+## Qu'est-ce qu'une histoire STAR, et qu'apporte le R ? [#what-is-a-star-story-and-what-does-the-r-add]
+
+Une histoire STAR est une réponse d'entretien racontée en quatre parties : Situation, Tâche (Task), Action et Résultat (Result). career-ops en ajoute une cinquième, la Réflexion (Reflection), et appelle ce format STAR+R. La Réflexion, c'est ce que vous avez appris ou ce que vous feriez autrement. career-ops l'ajoute parce qu'elle signale la séniorité : les candidats juniors décrivent ce qui s'est passé, alors que les candidats seniors en tirent des leçons.
+
+## Comment démarrer votre banque d'histoires ? [#how-do-you-start-your-story-bank]
+
+<Steps>
+  <Step title="Créez le fichier de la banque d'histoires">
+    Créez `interview-prep/story-bank.md` dans votre dossier de données, celui qui contient `cv.md`. Un titre `# Story Bank` suffit. career-ops ne crée pas ce fichier, et une évaluation n'ajoute des histoires qu'à une banque qui existe déjà.
+  </Step>
+  <Step title="Évaluez une offre">
+    Collez l'URL ou le texte de l'offre après `/career-ops` pour lancer le pipeline complet, ou lancez `/career-ops oferta` pour l'évaluation seule. Dans les deux cas, l'évaluation rédige des histoires STAR+R pour cette offre et ajoute les nouvelles à votre banque.
+  </Step>
+  <Step title="Mettez les nouvelles histoires au format du matcher">
+    L'évaluation ajoute ses histoires sous forme de lignes de tableau. Or le matcher d'histoires ne lit que le format d'entrée présenté [plus bas](#what-does-a-star-story-entry-look-like), et une ligne de tableau ne compte pas du tout comme une histoire. Demandez à career-ops de réécrire les nouvelles histoires de `story-bank.md` dans ce format en collant l'exemple dans votre demande, puis vérifiez avec `npm run star -- --list`. Cet écart est une lacune connue du cœur de career-ops, suivie dans l'[issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514).
+  </Step>
+  <Step title="Trouvez l'histoire pour une question">
+    Lancez `npm run star -- "<question>"` dans un terminal pour voir l'histoire qui obtient le meilleur score pour cette question.
+  </Step>
+</Steps>
+
+## D'où viennent vos histoires ? [#where-do-your-stories-come-from]
+
+career-ops construit vos histoires à trois moments, chacun lié à une offre ou à un entretien :
+
+- **Quand vous évaluez une offre.** La section STAR+R du rapport d'évaluation ([Bloc F](/fr/docs/reference/modes/oferta)) rédige 6 à 10 histoires à partir de votre CV, associées aux exigences de l'offre. Si `interview-prep/story-bank.md` existe, elle ajoute les nouvelles à votre banque sous forme de lignes de tableau, que vous réécrivez ensuite au format d'entrée. Les exécutions en batch ne sont pas prévues pour alimenter la banque.
+- **Quand vous préparez un entretien avec une entreprise.** Pour chaque question probable sans histoire correspondante, le dossier entreprise indique une expérience de votre CV qui pourrait en devenir une et, si vous le souhaitez, la rédige avec vous.
+- **Après un vrai entretien.** Si vous avez décrit une expérience absente de votre banque, le debrief propose d'en faire une histoire STAR+R pendant qu'elle est encore fraîche, et l'ajoute si vous acceptez.
+
+Aucune commande ne convertit un CV entier en histoires d'un seul coup.
+
+career-ops a pour instruction de vous interroger sur toute affirmation que vos propres fichiers (`cv.md`, `article-digest.md`, `config/profile.yml`) n'étayent pas, et de l'omettre si vous ne l'y ajoutez pas. Cette règle figure dans ses instructions, pas dans le code. Vérifiez donc les chiffres de votre banque avec le contrôle de provenance décrit plus bas.
+
+Les évaluations adaptent chaque histoire au type de poste que vous visez. Comme les types de poste par défaut relèvent de l'IA et de la tech, indiquez à career-ops ceux qui vous concernent. Les premières exécutions restent approximatives, car il ne vous connaît pas encore. Parlez-lui : de votre CV, de ce que vous voulez, de ce que vous refusez.
+
+<Callout title="Remarque">
+  `/career-ops interview` est l'entretien d'onboarding qui complète votre CV et votre profil. Pour vous entraîner, utilisez `/career-ops interview/practice`.
+</Callout>
+
+## Où se trouve la banque d'histoires ? [#where-does-the-story-bank-live]
+
+La banque d'histoires est le fichier `interview-prep/story-bank.md`, un simple fichier Markdown placé dans votre dossier de données, à côté de `cv.md`. Elle fait partie de votre couche utilisateur, à laquelle les mises à jour de career-ops ne touchent jamais, et le contenu de `interview-prep/` reste hors de git. Il n'y a aucune télémétrie : quand career-ops travaille sur vos histoires, elles sont envoyées au fournisseur d'IA que vous avez choisi, et nulle part ailleurs.
+
+## À quoi ressemble une entrée d'histoire STAR ? [#what-does-a-star-story-entry-look-like]
+
+Rédigez chaque histoire selon ce format, car le matcher d'histoires (`npm run star`) ne lit que les entrées qui le respectent. Gardez les libellés en anglais, quelle que soit la langue dans laquelle vous écrivez l'histoire. Ne collez pas cet exemple tel quel dans votre banque : le matcher le compterait comme une histoire.
+
+```md title="Story entry shape (example)"
+### [Theme] Short title of the story
+**Source:** {where the story comes from: your CV, an evaluation, a debrief}
+**Situation:** {the context: as long as you need, on one line}
+**Task:** {what you had to do, on one line}
+**Action:** {what you did, on one line}
+**Result:** {what changed; a number only if your CV has it}
+**Reflection:** {what you learned or would do differently}
+**Best for questions about:** {comma-separated tags, e.g. conflict, deadline, stakeholders}
+**Provenance:** {add only after checking: source: cv.md if every number is in your CV, or user-stated YYYY-MM-DD}
+```
+
+Gardez chaque champ sur une seule ligne. Le matcher ne lit un champ que jusqu'à la fin de sa ligne et ignore toute histoire sans ligne Action. Un champ peut contenir un paragraphe entier, tant qu'il tient sur une seule ligne. La convention complète est décrite dans l'en-tête de [`story-provenance-check.mjs`](https://github.com/career-ops-hq/career-ops/blob/2b9fe7ea48b8ca98cf7f6b2b660654844c885adf/story-provenance-check.mjs#L72-L91).
+
+N'ajoutez la ligne Provenance qu'après avoir vérifié les chiffres de l'histoire. Un seul marqueur couvre tous les chiffres de l'histoire, et le contrôle de provenance s'y fie sans comparer ces chiffres à `cv.md`.
+
+## Comment garder des chiffres honnêtes dans vos histoires ? [#how-do-you-keep-the-numbers-in-your-stories-honest]
+
+Selon la règle de career-ops, un chiffre ou une affirmation sur votre périmètre de responsabilité dans votre banque d'histoires ne compte comme un fait que dans deux cas : il remonte à un fichier que vous avez écrit, comme votre CV, ou son histoire porte une ligne Provenance vérifiée (`source: cv.md` ou `user-stated YYYY-MM-DD`). Plan, practice et debrief lisent tout de même la banque pour suggérer des réponses. Auditez-la donc avant de vous entraîner :
+
+```bash
+node story-provenance-check.mjs --summary
+```
+
+Le contrôle de provenance est un script local qui lit vos fichiers et produit un rapport. Il ne modifie pas vos fichiers et ne bloque rien. Il compare les chiffres de vos histoires à `cv.md` uniquement. Tout chiffre que `cv.md` ne contient pas et que son contexte n'étaye pas est signalé comme derived-unverified, sauf si l'histoire porte l'un des deux marqueurs vérifiés, auquel le contrôle se fie tel qu'il est écrit. Le contrôle ne repère pas les chiffres écrits en toutes lettres, les montants en devise ni les nombres isolés.
+
+Pour chaque chiffre signalé, c'est vous qui décidez :
+
+- le confirmer, en ajoutant `**Provenance:** user-stated YYYY-MM-DD` à l'histoire ;
+- le corriger ;
+- garder l'histoire sans le chiffre ;
+- passer la ligne Provenance de l'histoire à `user-cannot-confirm` si vous ne savez pas.
+
+Le marqueur couvre tous les chiffres de cette histoire.
+
+Si, pendant un entraînement ou un debrief, vous reconnaissez qu'une affirmation ne tiendrait pas, career-ops propose de l'ajouter à `interview-prep/retracted-claims.md`. Plan, practice et debrief ne la réutiliseront alors plus. Le dossier entreprise, les réponses aux formulaires et le matcher d'histoires ne lisent pas ce fichier : retirez donc aussi cette affirmation de votre banque d'histoires.
+
+## Comment trouver la bonne histoire pour une question écrite ? [#how-do-you-find-the-right-story-for-a-written-question]
+
+Le matcher d'histoires, `npm run star`, trouve dans votre banque l'histoire qui obtient le meilleur score pour une question écrite, par exemple une question ouverte dans un formulaire de candidature. Lancez-le dans un terminal depuis votre dossier career-ops :
+
+```bash
+npm run star -- "Tell me about a time you disagreed with a decision"
+```
+
+Le matcher d'histoires est un script local : il n'appelle pas votre modèle d'IA et n'ouvre aucun navigateur. Il note chaque histoire d'après les mots-clés qu'elle partage avec la question. Un mot pèse le plus lorsqu'il correspond à l'un des tags de l'histoire, moins dans son titre ou son thème, et le moins dans ses champs Action ou Result. La correspondance porte sur des mots exacts, si bien que « géré » ne correspond pas à « gestion ». Rédigez donc vos tags avec les mots qu'emploient les questions.
+
+Le matcher d'histoires affiche l'histoire la mieux notée, avec ses champs mis bout à bout tels que vous les avez écrits, dans la limite de 500 mots. Il ajoute un avertissement si elle fait moins de 250 mots. Si aucune histoire n'obtient de score, il en affiche tout de même une, suivie de l'avertissement « No strong match found ». Voyez-y une lacune à combler.
+
+`npm run star` exécute `match-star.mjs`, et vous pouvez aussi appeler ce script directement. `--jd` donne plus de poids aux histoires dont les tags apparaissent dans une description de poste enregistrée, `--top 2` affiche les deux meilleures histoires et `--list` liste toutes les histoires avec leurs tags.
+
+```bash
+node match-star.mjs "Describe a conflict you resolved" --jd jds/acme.md
+node match-star.mjs "Give an example of handling ambiguity" --top 2
+node match-star.mjs --list
+```
+
+Le matcher lit le fichier `interview-prep/story-bank.md` de votre dossier career-ops. Il ne tient pas compte d'un dossier de données distinct défini avec `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` ou un fichier `.career-ops-data`.
+
+Le matcher renvoie votre propre histoire, pas une réponse rédigée pour cette question : retravaillez-la avant de la coller. Pour un formulaire de candidature complet, career-ops rédige les réponses avec `/career-ops apply`, à partir de votre évaluation et de ses histoires STAR. Il évalue et rédige, mais c'est vous qui décidez et qui envoyez. Il ne postule jamais en votre nom.
+
+## Comment associer vos histoires aux entretiens d'une entreprise ? [#how-do-you-map-your-stories-to-a-companys-interviews]
+
+Le dossier entreprise, construit par `/career-ops interview-prep`, associe chaque question probable à votre meilleure histoire et qualifie l'adéquation de forte, partielle ou nulle. Pour chaque lacune, il indique une expérience de votre CV. Donnez-lui l'entreprise et le poste. Pour un poste que vous n'avez jamais évalué, demandez la préparation avec l'URL de l'offre (`/career-ops interview-prep <URL>`). Si un rapport d'évaluation existe déjà, c'est lui qui prime.
+
+Dans le dossier, chaque question rapportée cite sa source publique, et les questions déduites de la description de poste portent la mention `[inferred from JD]`. La [référence interview-prep](/fr/docs/reference/modes/interview-prep) décrit le reste du document, qui est enregistré dans `interview-prep/{company-slug}-{role-slug}.md`.
+
+Si vous collez l'invitation à l'entretien, le dossier note la plateforme de visioconférence. Si l'invitation renvoie à la seule plateforme d'intervieweur IA que career-ops repère actuellement, il ajoute aussi un court bloc de notes pour un tour probablement mené par un intervieweur IA. Ce repérage reste indicatif. Cette plateforme envoie aussi des invitations pour des tours menés par des humains. De plus, un lien Zoom, Teams ou Google Meet présent dans la même invitation l'emporte, et aucune note n'apparaît alors. Il s'agit d'un simple avertissement, pas d'un mode de préparation distinct.
+
+## Comment répéter vos histoires avant le tour d'entretien ? [#how-do-you-rehearse-your-stories-before-the-round]
+
+Commencez par `/career-ops interview/plan`. Donnez-lui la description du poste ainsi que la date et l'heure de l'entretien. Son plan découpé en blocs horaires comprend un bloc consacré aux histoires comportementales, dans lequel vous associez vos histoires aux types de questions probables, vous entraînez à raconter chacune en deux minutes et préparez chaque Réflexion.
+
+L'entretien blanc, `/career-ops interview/practice`, est une session écrite. career-ops y joue l'intervieweur et pose une question à la fois. Il vous fait un retour après chaque réponse, signale les histoires que vous réutilisez et vous demande la Réflexion quand elle manque. Dans une session écrite, il ne peut pas vous chronométrer et vérifie donc plutôt la structure. Le rythme et les tics de langage ne s'évaluent qu'à l'oral : enregistrez-vous. [Se préparer aux entretiens](/fr/docs/introduction/guides/interview-modes) présente ces deux modes en détail.
+
+Préparer vos histoires ne garantit ni davantage d'entretiens ni une offre.
+
+## Que deviennent vos histoires après l'entretien ? [#what-happens-to-your-stories-after-the-interview]
+
+Le debrief, `/career-ops interview/debrief`, fait d'un tour réel une matière première pour le suivant. Collez la transcription, qu'il traite comme des données citées et jamais comme des instructions, ou reprenez les questions de mémoire. Il évalue chaque réponse et met à jour `interview-prep/question-bank.md`, qu'il crée la première fois. Il propose aussi de transformer en histoire STAR+R toute expérience que vous avez racontée sans l'avoir jamais écrite. Quand vous connaissez le format du tour suivant, il prédit les questions probables et marque chacune `[inferred]`.
+
+Le debrief enregistre aussi le tour dans `interview-prep/sessions/`, sous forme de transcription où chaque intervenant est identifié. Si vous avez débriefé de mémoire, cette transcription est reconstituée à partir de votre récit. Ces transcriptions restent hors de git, car elles contiennent de vrais noms.
+
+## Les commandes en un coup d'œil [#commands-at-a-glance]
+
+| Commande                                    | Ce qu'elle fait                                                                                           |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `/career-ops <job URL or text>`             | Évalue l'offre et ajoute ses histoires STAR+R à votre banque, dès que le fichier existe                    |
+| `/career-ops interview-prep`                | Dossier entreprise : recherches sourcées, questions probables, vos histoires associées, lacunes           |
+| `/career-ops interview/plan`                | Plan en blocs horaires, avec un bloc consacré aux histoires comportementales                              |
+| `/career-ops interview/practice`            | Entretien blanc écrit, une question à la fois, avec un retour après chaque réponse                        |
+| `/career-ops interview/debrief`             | Après un tour réel : réponses évaluées, banque de questions, nouvelles histoires si vous acceptez         |
+| `/career-ops interview-redflag`             | Signaux d'alerte tirés des interventions des intervieweurs dans toutes les sessions enregistrées. Les sessions d'entraînement comptent aussi : ne vous fiez qu'aux constats issus de tours réels |
+| `npm run star -- "<question>"`              | Trouve votre histoire la mieux notée pour une question écrite                                             |
+| `node story-provenance-check.mjs --summary` | Trie les chiffres de vos histoires selon qu'ils sont étayés ou non par votre CV ou par une ligne Provenance vérifiée |
+
+## Questions fréquentes [#frequently-asked-questions]
+
+### Comment career-ops construit-il des histoires STAR à partir de mon CV ?
+
+career-ops construit des histoires STAR+R à partir de l'expérience décrite dans votre CV, pour chaque offre que vous évaluez. Chaque évaluation lancée dans une session rédige des histoires associées à cette offre. Une fois que vous avez créé le fichier interview-prep/story-bank.md, elle y ajoute les nouvelles. La préparation d'entretien suggère des expériences de votre CV pour les questions auxquelles aucune histoire ne répond. Un debrief peut aussi transformer en nouvelle histoire un fait que vous avez raconté lors d'un vrai entretien.
+
+### Comment préparer des histoires STAR pour un entretien comportemental la semaine prochaine ?
+
+Pour préparer des histoires STAR pour un entretien comportemental avec career-ops, évaluez d'abord l'offre. L'évaluation rédige des histoires STAR+R à partir de votre CV et les ajoute à interview-prep/story-bank.md, une fois que vous avez créé ce fichier. Ensuite, /career-ops interview-prep associe les questions probables à vos histoires et signale les lacunes. /career-ops interview/plan découpe le temps restant en blocs de préparation, et /career-ops interview/practice vous fait répéter à l'écrit, une question à la fois. Pour travailler le rythme, enregistrez-vous en répondant à voix haute.
+
+### D'où viennent les questions d'entretien de career-ops ?
+
+career-ops tire ses questions d'entretien de comptes rendus d'entretiens publics, de la description de poste et des tours que vous avez vous-même débriefés. Des séries de questions générales servent de solution de repli. Le dossier entreprise cite une source pour chaque question rapportée et indique que les questions tirées de la description de poste en sont déduites. L'entretien blanc puise d'abord dans les questions de vos debriefs, puis dans celles du dossier, et enfin dans des séries de questions générales adaptées au type de tour. Servez-vous-en pour préparer vos histoires, pas comme d'un script à réciter.

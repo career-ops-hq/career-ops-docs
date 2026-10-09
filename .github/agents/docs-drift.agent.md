@@ -11,7 +11,7 @@ You are given a report of what changed in the core during the last window: modes
 
 For each verified change:
 
-1. Search `content/docs/` and `content/blog/` for the text that describes the old behavior. Include the `.es.mdx` and `.fr.mdx` siblings.
+1. Search `content/docs/` and `content/blog/` for the text that describes the old behavior. Include the `.es.mdx`, `.fr.mdx` and `.de.mdx` siblings.
 2. Edit the English page so it describes the behavior as shipped. Smallest diff. Do not rewrite surrounding prose.
 3. For each translated sibling: if you can make the same change confidently, make it and restamp its `translationHash` with `node .i18n/hash.mjs <english-file>`; if not, leave it untouched and list it under open questions as stale.
 4. Never touch `src/`, `.github/`, the manifesto pages, or `src/lib/shared.ts`. Never type a number about the project (stars, members, counts) into prose.

@@ -1,6 +1,6 @@
 # CodeRabbit configuration for career-ops-docs (career-ops-hq).
 # The documentation site for career-ops: Next.js + Fumadocs, 95 MDX pages in
-# EN/ES/FR, deployed to career-ops.org. Modeled on the core repo's config
+# EN/ES/FR/DE, deployed to career-ops.org. Modeled on the core repo's config
 # (career-ops-hq/career-ops#3769, then #3772 for the incremental-review,
 # recipe and post-merge-report levers), adapted to what this repo actually is.
 # Docs: https://docs.coderabbit.ai/reference/configuration
@@ -65,7 +65,7 @@ reviews:
     - path: "next.config.mjs"
       instructions: "Routing and headers. The .md twins of every /docs page, the Accept: text/markdown negotiation for locale paths, the noindex on generated images and the security headers all live here as rewrites and header rules. Flag any change to the beforeFiles rewrites or to a header rule, and note that the proxy does NOT run for locale-prefixed paths, so locale negotiation must stay in this file."
     - path: "src/proxy.ts"
-      instructions: "Handles Accept: text/markdown for /docs only. It does not run for the homepage or for /es and /fr paths, on purpose. Flag any attempt to extend its matcher to cover those, and any .md interception moved here from next.config.mjs (it 404s under Next 16)."
+      instructions: "Handles Accept: text/markdown for /docs only. It does not run for the homepage or for /es, /fr and /de paths, on purpose. Flag any attempt to extend its matcher to cover those, and any .md interception moved here from next.config.mjs (it 404s under Next 16)."
     - path: "scripts/verify-agent-layer.mjs"
       instructions: "The agent-layer guard. Its checks are three-state on purpose: pass, fail, and could-not-check must all be distinguishable, and could-not-check fails. Flag any change that lets a check pass when it did not run, or that removes an invariant without explanation."
     - path: ".github/workflows/**"
@@ -84,8 +84,8 @@ reviews:
       instructions: "The homepage, including the hero. Visual changes are the maintainer's decision and are not accepted from pull requests without prior discussion. Flag any change to layout, colors, backdrop, scrim or typography and say explicitly that it needs the maintainer's sign-off before review continues."
     - path: "content/**/*.mdx"
       instructions: "The guides. They describe what career-ops-hq/career-ops ships on main today, never what an open PR there proposes. Check commands, flags, script names and the A to H block letters against the core; flag drift. The scoring scale is named '1-5' (decimal thresholds like 4.0 are values and stay). The brand is 'career-ops' lowercase with a hyphen; 'CareerOps' names the practice. Flag hand-typed project numbers (stars, members): they belong to live fetches, not prose."
-    - path: "content/**/*.{es,fr}.mdx"
-      instructions: "Translations. Each carries translationHash of its English source. If the English sibling changes in the same PR, the hash must be restamped (node .i18n/hash.mjs <english-file>) or the PR must say the translation is now stale. Flag a changed English page whose es/fr siblings were neither updated nor declared stale. Non-translatables (command names, flags, file paths, the thesis line) must match the English exactly."
+    - path: "content/**/*.{es,fr,de}.mdx"
+      instructions: "Translations. Each carries translationHash of its English source. If the English sibling changes in the same PR, the hash must be restamped (node .i18n/hash.mjs <english-file>) or the PR must say the translation is now stale. Flag a changed English page whose es/fr/de siblings were neither updated nor declared stale. Non-translatables (command names, flags, file paths, the thesis line) must match the English exactly."
     - path: "CONTRIBUTING.md"
       instructions: "Public contributor rules. Flag anything that contradicts .github/copilot-instructions.md or the CODEOWNERS comment."
 
@@ -125,10 +125,10 @@ reviews:
     custom:
       - name: register-sitemap-entry
         enabled: true
-        instructions: "If this PR adds a new top-level static page (a new route directory under src/app/ with its own page.tsx, other than a page inside (home), docs, es, fr, compare/[slug], or an API route), add it to the entries array in src/app/sitemap.ts, following the existing pattern: url built from SITE_URL, and lastModified from gd('<path to the new page.tsx>') so it degrades to omitted rather than a fabricated date when git has no history for the file. A page invisible to the sitemap is invisible to crawlers even though it renders fine; that already happened once, to /sustain. Do not touch .github/workflows/indexnow.yml: it now derives its URL list from the live sitemap.xml at run time, so nothing there needs registering by hand. Change nothing else."
+        instructions: "If this PR adds a new top-level static page (a new route directory under src/app/ with its own page.tsx, other than a page inside (home), docs, es, fr, de, compare/[slug], or an API route), add it to the entries array in src/app/sitemap.ts, following the existing pattern: url built from SITE_URL, and lastModified from gd('<path to the new page.tsx>') so it degrades to omitted rather than a fabricated date when git has no history for the file. A page invisible to the sitemap is invisible to crawlers even though it renders fine; that already happened once, to /sustain. Do not touch .github/workflows/indexnow.yml: it now derives its URL list from the live sitemap.xml at run time, so nothing there needs registering by hand. Change nothing else."
       - name: sync-translation
         enabled: true
-        instructions: "For every content/docs/**/*.mdx page this PR changed in English, bring its .es.mdx and .fr.mdx siblings up to date: same heading structure, same order, same code fences and command output, translated prose. Never touch command names, CLI flags, file paths, or the manifesto/thesis strings imported from src/lib/shared.ts and src/lib/manifesto-text.ts — those are frozen and must read identically to the English source. Do NOT set or guess a translationHash value in the frontmatter: that field is a literal hash of the English body, computed only by running `node .i18n/hash.mjs <path to the English file>`, and writing a plausible-looking value there would make a stale translation look verified. Leave the existing translationHash untouched and note in your summary that it still needs restamping with that command. content/blog/**/*.mdx has no translated siblings; do not create any there. Change nothing else."
+        instructions: "For every content/docs/**/*.mdx page this PR changed in English, bring its .es.mdx, .fr.mdx and .de.mdx siblings up to date: same heading structure, same order, same code fences and command output, translated prose. Never touch command names, CLI flags, file paths, or the manifesto/thesis strings imported from src/lib/shared.ts and src/lib/manifesto-text.ts — those are frozen and must read identically to the English source. Do NOT set or guess a translationHash value in the frontmatter: that field is a literal hash of the English body, computed only by running `node .i18n/hash.mjs <path to the English file>`, and writing a plausible-looking value there would make a stale translation look verified. Leave the existing translationHash untouched and note in your summary that it still needs restamping with that command. content/blog/**/*.mdx has no translated siblings; do not create any there. Change nothing else."
 
   pre_merge_checks:
     # Frozen strings, hand-typed numbers and personal data carry policy, not
@@ -155,7 +155,7 @@ reviews:
         instructions: "Fail if the diff adds a star count, member count, contributor count or download count typed into prose or markdown. Those figures come from live fetches with an as-of date. A historical, dated fact (for example the founder's 740 listings evaluated) is fine."
       - name: "Translations restamped or declared stale"
         mode: warning
-        instructions: "Warn if an English content/**/*.mdx page changes and a sibling .es.mdx or .fr.mdx exists that was neither modified in this PR nor mentioned in the description as stale."
+        instructions: "Warn if an English content/**/*.mdx page changes and a sibling .es.mdx, .fr.mdx or .de.mdx exists that was neither modified in this PR nor mentioned in the description as stale."
       - name: "No personal data"
         mode: error
         instructions: "Fail if the diff contains real personal data: a person's real name paired with contact details, real emails, phone numbers, or a real CV. Sample data must use obvious placeholders."
@@ -177,7 +177,7 @@ reviews:
   post_merge_actions:
     - name: "translation drift report"
       enabled: true
-      prompt: "Only act if this merge changed an English page under content/docs/**/*.mdx (not a .es.mdx or .fr.mdx file itself, and not anything under content/blog/, which has no translated siblings). For each changed English page, check whether its .es.mdx and .fr.mdx siblings were modified in the same merge or declared stale in the PR description. List every one that was neither: name the file, the heading or section that now diverges from the English source, and a one-sentence description of what changed. If every English change in this merge had its translations updated or declared stale, reply with exactly: no translation drift. Post a text report in the result comment only. Do not open a pull request, do not create or edit issues, do not push commits, do not comment anywhere else."
+      prompt: "Only act if this merge changed an English page under content/docs/**/*.mdx (not a .es.mdx, .fr.mdx or .de.mdx file itself, and not anything under content/blog/, which has no translated siblings). For each changed English page, check whether its .es.mdx, .fr.mdx and .de.mdx siblings were modified in the same merge or declared stale in the PR description. List every one that was neither: name the file, the heading or section that now diverges from the English source, and a one-sentence description of what changed. If every English change in this merge had its translations updated or declared stale, reply with exactly: no translation drift. Post a text report in the result comment only. Do not open a pull request, do not create or edit issues, do not push commits, do not comment anywhere else."
 
   labeling_instructions:
     - label: "documentation"
