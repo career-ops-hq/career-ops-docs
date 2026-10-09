@@ -1,0 +1,82 @@
+---
+title: Glossar
+description: Das Vokabular einer KI-gestützten Jobsuche, klar definiert — ATS, der Gesamtscore von 1 bis 5, Data Contract, Spray-and-Pray, Liveness-Check, Tailoring, Zero-Token-Scan, STAR+R-Storys und jeder Begriff, den career-ops verwendet.
+seoTitle: "career-ops-Glossar — Begriffe der KI-gestützten Jobsuche, klar definiert"
+icon: BookOpen
+translationHash: 42dd2354eda40fc1
+localized: true
+translatedFrom: /docs/reference/glossary
+---
+
+{/* Mirrored with src/lib/glossary-data.ts (DefinedTermSet JSON-LD) — edit
+    both together. Definitions must stay verifiable against the core repo. */}
+
+Hier findest du jeden Begriff, den career-ops verwendet, an einem Ort definiert. Wenn es zu einem Begriff eine ausführlichere Referenz gibt, ist er dorthin verlinkt.
+
+## ATS (Applicant Tracking System)
+
+Mit dieser Software nehmen Unternehmen Bewerbungen entgegen, speichern und filtern sie. [Greenhouse](/de/docs/reference/portals/greenhouse), [Ashby](/de/docs/reference/portals/ashby) und [Lever](/de/docs/reference/portals/lever) sind gängige Beispiele. career-ops liest ihre öffentlichen Job-APIs aus, um offene Stellen zu finden. Es kann auch ihre Bewerbungsformulare vorausfüllen, schickt aber nie automatisch etwas ab.
+
+## Gesamtscore (1-5)
+
+Das ist die ganzheitliche Einschätzung einer Stellenanzeige durch das LLM. Sie berücksichtigt fünf Dimensionen (Passung, Übereinstimmung mit deinem Nordstern, Vergütung, kulturelle Signale, Red Flags) und ergibt einen Score von 1,0 bis 5,0. Ab 4,5 empfiehlt der Agent, dich sofort zu bewerben. Unter 4,0 rät er von einer Bewerbung ab. Eine feste Gewichtungsformel gibt es nicht: Der Score ist das Urteil des LLM anhand der Bewertungsrubrik, die du auf der [Methodik-Seite](https://career-ops.org/methodology) öffentlich einsehen kannst.
+
+## Data Contract
+
+Das ist das zentrale Architekturversprechen von career-ops. Die **Systemebene** (Scripts, Modi, Vorlagen) lässt sich jederzeit aktualisieren. Die **Nutzerebene** mit `cv.md`, `config/profile.yml`, `data/`, `reports/` und `output/` wird dagegen von keinem Update angetastet. Deine Daten überdauern jede Version.
+
+## Spray-and-Pray
+
+So heißt die Strategie der Massenbewerbung: Man schickt denselben Lebenslauf ohne gezielte Auswahl an Hunderte Stellen, ganz nach dem Gießkannenprinzip. career-ops lehnt das ausdrücklich ab. Die Pipeline bewertet die Stellenanzeigen zuerst und bringt sie in eine Rangfolge. So konzentriert sich deine Energie auf die wenigen Stellen, die sich wirklich lohnen.
+
+## Liveness-Check
+
+Mit dieser Heuristik prüft career-ops, ob eine Stellenanzeige noch offen ist, bevor du Zeit oder Tokens darauf verwendest. Das Signal ist nicht garantiert zuverlässig, denn abgelaufene Anzeigen bleiben manchmal noch eine Weile auf Jobbörsen stehen. Wenn die Heuristik danebenliegt, kannst du Anzeigen manuell markieren.
+
+## Tailoring
+
+Tailoring bedeutet, deinen Lebenslauf für eine bestimmte Stellenanzeige umzuschreiben. Du setzt andere Schwerpunkte, stellst passende Skills und Kennzahlen nach vorn und übernimmst das Vokabular der Stellenbeschreibung. Jede Aussage muss dabei wahrheitsgemäß zu deiner echten Erfahrung passen. career-ops erstellt für jede Bewerbung einen angepassten Lebenslauf als Markdown, den du bearbeiten kannst.
+
+## Modus
+
+Ein Modus ist ein fokussierter Workflow, der per Prompt definiert ist. career-ops liefert ihn als einfache Markdown-Datei aus, die deine KI-CLI ausführt: [scan, apply, tracker](/de/docs/reference/modes), [interview/practice](/de/docs/introduction/guides/interview-modes) und ein Dutzend weitere. Modi sind einsehbarer Text, kein undurchsichtiger Code.
+
+## Pipeline
+
+So heißt der durchgängige Workflow von career-ops: Portale scannen → Stellenanzeigen bewerten (1,0 bis 5,0) → Lebenslauf anpassen → bewerben → verfolgen → auf Vorstellungsgespräche vorbereiten. Jede Stufe ist ein Modus, den du einzeln oder als Batch ausführen kannst.
+
+## Zero-Token-Scan
+
+Bei diesem Suchlauf werden keine LLM-Tokens verbraucht. `scan.mjs` liest ATS-APIs, Feeds von Jobbörsen und Karriereseiten direkt per HTTP. Neue Stellenanzeigen zu finden kostet also nichts, egal welche KI-Engine du nutzt.
+
+## KI-Engine
+
+Das ist die KI-Coding-CLI, die die Prompts von career-ops ausführt, zum Beispiel Claude Code, OpenCode, Codex, GitHub Copilot CLI und [weitere unterstützte CLIs](/de/docs/supported-clis). Auch jeder OpenAI-kompatible Endpoint funktioniert. career-ops ist an keine bestimmte Engine gebunden und [läuft auch mit kostenlosen Engines](/de/docs/free-ai-engine).
+
+## Fragenbank
+
+In dieser lokalen Markdown-Datei (`interview-prep/question-bank.md`) sammelt career-ops echte Fragen aus Vorstellungsgesprächen und hält fest, wie du bei jeder abgeschnitten hast (✅/🟡/🔴). Der [Modus interview/debrief](/de/docs/introduction/guides/interview-modes) aktualisiert sie nach jedem echten Vorstellungsgespräch. So baut deine Vorbereitung von Runde zu Runde aufeinander auf.
+
+## STAR+R-Story
+
+Eine STAR+R-Story ist eine Geschichte für das Vorstellungsgespräch mit dieser Struktur: **S**ituation, **T**ask (Aufgabe), **A**ction (Handlung), **R**esult (Ergebnis) plus **R**eflection (Reflexion). career-ops nutzt dieses Format in seiner Story-Bank. Dadurch werden deine Antworten auf verhaltensbezogene Fragen konkret, mit Zahlen belegt und in mehreren Vorstellungsgesprächen wiederverwendbar.
+
+## Story-Bank
+
+Diese lokale Markdown-Datei (`interview-prep/story-bank.md`) enthält deine vorbereiteten STAR+R-Storys. In Übungssessions werden deine Antworten mit ihr abgeglichen. Debriefs ziehen neue Storys aus dem, was du in echten Vorstellungsgesprächen tatsächlich gesagt hast.
+
+## Portal
+
+Ein Portal ist die Karriereseite eines Unternehmens, die auf einem ATS läuft und von career-ops gescannt werden kann. Die Portale, die du verfolgst, stehen in `portals.yml`. Der Scanner liest bei jedem Lauf ihre öffentlichen APIs aus.
+
+## Batch-Bewertung
+
+Dabei werden viele gespeicherte Stellenanzeigen in einem Lauf bewertet statt einzeln. Mit Flags behältst du die Kontrolle: `--limit` begrenzt die Größe des Batches, `--dry-run` zeigt vorab, was verarbeitet würde, und `--resume-paused` setzt einen unterbrochenen Lauf fort, ohne erneut Tokens zu verbrauchen.
+
+## Local-first
+
+Das ist das Architekturprinzip von career-ops: Alles läuft auf deinem Rechner, also deine Daten, die Prompts, die Scripts und die KI-CLI. Es gibt kein gehostetes Backend und kein Konto, und du musst dich nirgends registrieren.
+
+## CareerOps
+
+CareerOps ist die Praxis, eine Jobsuche so zu führen, wie Engineers ein Produktivsystem betreiben: mit Belegen, mit Disziplin und mit Tools auf der Seite der Kandidaten. Der Begriff bezeichnet die Praxis, kein Produkt. career-ops ist ihre erste Referenzimplementierung. Geprägt hat ihn Santiago Fernández de Valderrama Aparicio im Manifest [The CareerOps Manifesto](https://career-ops.org/manifesto) (14. Juli 2026).

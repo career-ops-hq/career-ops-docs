@@ -6,6 +6,7 @@ import { getMDXComponents } from '@/components/mdx';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { blogPostSchema, faqPageSchema } from '@/lib/schema';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { SiteLink } from '@/components/mdx-link';
 
 type BlogFrontmatter = {
   title: string;
@@ -127,7 +128,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
         <div className="prose prose-neutral dark:prose-invert max-w-none text-fd-foreground/90 leading-relaxed">
           <MDX
             components={getMDXComponents({
-              a: createRelativeLink(blogSource, page),
+              a: createRelativeLink(blogSource, page, SiteLink),
             })}
           />
         </div>

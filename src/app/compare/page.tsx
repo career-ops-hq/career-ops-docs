@@ -61,7 +61,7 @@ export default function CompareIndexPage() {
         <a
           href="https://github.com/career-ops-hq/career-ops/discussions"
           className="text-fd-foreground underline underline-offset-2"
-          rel="noreferrer noopener"
+          rel="noopener"
         >
           Open a discussion
         </a>

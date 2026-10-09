@@ -8,7 +8,7 @@ import { aboutSchema } from '@/lib/schema';
 export const metadata: Metadata = {
   title: 'Santiago Fernández de Valderrama Aparicio · career-ops',
   description:
-    'Applied AI Operator. Built career-ops after evaluating 740 listings. 16+ years building products. Currently Head of Applied AI at Zinkee. Featured in WIRED, Business Insider.',
+    'Applied AI Operator. Built career-ops after evaluating 740 listings. 16+ years building products. Works on career-ops full time. Featured in WIRED, Business Insider.',
   alternates: { canonical: 'https://career-ops.org/about' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
@@ -68,7 +68,7 @@ const PRESS = [
 // - rel="noreferrer noopener" for indices (Wikidata) where the entry is not
 //   self-edited.
 const LINKS: { label: string; href: string; rel: string }[] = [
-  { label: 'Personal site', href: 'https://santifer.io', rel: 'author noreferrer noopener' },
+  { label: 'Personal site', href: 'https://santifer.io', rel: 'author noopener' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/santifer', rel: 'me noreferrer noopener' },
   { label: 'GitHub', href: 'https://github.com/santifer', rel: 'me noreferrer noopener' },
   { label: 'X', href: 'https://x.com/santifer', rel: 'me noreferrer noopener' },
@@ -88,15 +88,15 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Do you take feature requests?',
-    a: 'Yes — via GitHub issues and Discord. Triage is open. The pace is what one maintainer can sustain alongside a full-time role; release notes are honest about what shipped and what got cut.',
+    a: 'Yes — via GitHub issues and Discord. Triage is open. The pace is what one maintainer can sustain; release notes are honest about what shipped and what got cut.',
   },
   {
     q: 'Are you for hire?',
-    a: 'I am Head of Applied AI at Zinkee. I am not available for full-time roles. I occasionally take advisory engagements in the Applied AI / multi-agent space — reach me on email or LinkedIn if the fit is concrete.',
+    a: 'I work on career-ops full time.',
   },
   {
     q: 'Can I sponsor the project?',
-    a: 'Yes, via GitHub Sponsors. Every tier carries the same terms and none of them gates a perk: no premium features, no roadmap influence. Corporate logo sponsorship is handled directly rather than through a tier. The full model lives at /sustain.',
+    a: 'Yes, through the project’s collective on Open Collective, with Open Source Collective as its fiscal host. The money belongs to the project, every contribution and expense is on a public ledger, and no contribution from a person gates a perk: no premium features, no roadmap influence. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing (sponsors@career-ops.org) and invoiced by the fiscal host. A company tier buys clearly labeled visibility, never influence. The full model lives at /sustain.',
   },
 ];
 
@@ -130,7 +130,7 @@ export default function AboutPage() {
 
         {/* Bio — three short paragraphs focused on the creator role (not the
             full transversal persona which lives at santifer.io). Density vs
-            prose length traded toward facts: operator history, current role,
+            prose length traded toward facts: operator history, the job search,
             why career-ops exists. Manifesto blockquote sits between the
             history paragraph and the proof paragraph so the philosophy
             is anchored by both. */}
@@ -146,24 +146,15 @@ export default function AboutPage() {
               Santifer iRepair
             </a>{' '}
             in 2009, the largest mobile repair chain in southern Spain, automating it to 90%
-            self-service before selling in 2025. Now Head of Applied AI at{' '}
-            <a
-              href="https://zinkee.com"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
-            >
-              Zinkee
-            </a>{' '}
-            — designing the AI layer of an operations platform used by thousands of independent
-            shops across Spain.
+            self-service before selling in 2025.
           </p>
           <p>
             career-ops grew out of a personal job search in early 2026. After the exit, instead
             of spraying applications, he wrote a structured evaluator: five dimensions, a 1-5
             score, and a hard floor at 4.0 below which the system refuses to recommend applying.
             740 listings evaluated, 68 applications sent, 12 interview processes, one offer
-            signed. The funnel data lives at{' '}
+            signed: a Head of Applied AI role. Six months later he left that role to focus on
+            building career-ops full time. The funnel data lives at{' '}
             <Link
               href="/blog/job-search-data-from-740-listings"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
@@ -205,11 +196,11 @@ export default function AboutPage() {
             </a>
             , and is sustained as a sovereign-maintainer project: sponsorship funds maintenance, security fixes, releases, and documentation. The maintenance system
             itself — a fleet of Claude Code agents handling triage, tests, review briefs and
-            releases in about four hours a week — is documented end to end in{' '}
+            releases — is documented end to end in{' '}
             <a
               href="https://santifer.io/ai-agent-fleet"
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               the AI agent fleet playbook
@@ -223,7 +214,7 @@ export default function AboutPage() {
             <a
               href="https://santifer.io"
               target="_blank"
-              rel="author noreferrer noopener"
+              rel="author noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               santifer.io
@@ -275,7 +266,7 @@ export default function AboutPage() {
             . The canonical source repository is{' '}
             <a
               href="https://github.com/career-ops-hq/career-ops"
-              rel="me noreferrer noopener"
+              rel="me noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               github.com/career-ops-hq/career-ops
@@ -360,7 +351,7 @@ export default function AboutPage() {
               href="/sustain"
               className="text-fd-foreground underline underline-offset-2"
             >
-              sustaining the maintainer
+              sponsoring the project
             </Link>{' '}
             keeps the work moving.
           </p>
@@ -381,7 +372,7 @@ export default function AboutPage() {
             hi@career-ops.org
           </a>
           <p className="mt-3 text-sm text-fd-muted-foreground">
-            For sponsorship, advisory, or anything that doesn&rsquo;t fit in a GitHub issue.
+            For sponsorship or anything that doesn&rsquo;t fit in a GitHub issue.
           </p>
           <ul className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2">
             {LINKS.map((link) => (
@@ -411,7 +402,7 @@ export default function AboutPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-05-25">25 May 2026</time>
+          Last updated <time dateTime="2026-10-01">1 Oct 2026</time>
         </p>
       </article>
     </>

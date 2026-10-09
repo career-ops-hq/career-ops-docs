@@ -53,7 +53,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Zero-token scan',
     definition:
-      'A discovery run that consumes no LLM tokens: scan.mjs calls ATS APIs (Greenhouse, Ashby, Lever) directly over HTTP, so finding new listings is free regardless of which AI engine you use.',
+      'A discovery run that consumes no LLM tokens: scan.mjs reads ATS APIs, job-board feeds and career pages directly over HTTP, so finding new listings is free regardless of which AI engine you use.',
   },
   {
     term: 'AI engine',

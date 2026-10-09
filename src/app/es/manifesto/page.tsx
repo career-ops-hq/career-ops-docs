@@ -359,7 +359,7 @@ export default async function ManifestoPageEs() {
             <a
               href={SIGNATURES_GITHUB_URL}
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="text-fd-foreground underline underline-offset-2"
             >
               SIGNATURES.md
@@ -426,7 +426,7 @@ export default async function ManifestoPageEs() {
                           <a
                             href={sig.sourceUrl}
                             target="_blank"
-                            rel="noreferrer noopener"
+                            rel="noopener"
                             className="hover:text-fd-foreground hover:underline underline-offset-2"
                           >
                             fuente ↗
@@ -536,7 +536,7 @@ export default async function ManifestoPageEs() {
               <a
                 href={MANIFESTO_MD_URL}
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 MANIFESTO.md
@@ -545,7 +545,7 @@ export default async function ManifestoPageEs() {
               <a
                 href={RELEASE_TAG_URL}
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="text-fd-foreground underline underline-offset-2"
               >
                 manifesto-v1.0
@@ -570,7 +570,7 @@ export default async function ManifestoPageEs() {
           <a
             href={MANIFESTO_MD_URL}
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="underline underline-offset-2"
           >
             MANIFESTO.md
@@ -579,7 +579,7 @@ export default async function ManifestoPageEs() {
           <a
             href={RELEASE_TAG_URL}
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="underline underline-offset-2"
           >
             manifesto-v1.0

@@ -1,0 +1,61 @@
+---
+title: Ashby
+description: "Ashby ist das moderne ATS der Wahl für Startups von Series A bis C im Bereich KI und Dev-Tools. career-ops greift direkt auf die öffentliche Job-Board-API zu."
+seoTitle: "Ashby-Stellen mit career-ops scannen – ATS-Portal-Scan ohne Token-Verbrauch"
+icon: Sparkles
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 8e0f69ac9571b6b9
+localized: true
+translatedFrom: /docs/reference/portals/ashby
+---
+
+## Was es macht
+
+Der Ashby-Provider in providers/ashby.mjs sendet HTTP-Anfragen an api.ashbyhq.com/posting-api/job-board/`{slug}` und parst das zurückgelieferte JSON. Der Slug ist die Kennung des Ashby-Job-Boards des Unternehmens (z. B. 'elevenlabs' für ElevenLabs). career-ops wählt diesen Provider anhand der `careers_url` des Eintrags (`https://jobs.ashbyhq.com/<slug>`) oder eines ausdrücklichen `api:`-Felds.
+
+## Wann du es nutzt
+
+Nutze den Ashby-Scan, wenn du KI-Labs, Infrastrukturunternehmen und moderne Startups im Visier hast. ElevenLabs, Deepgram, Sierra, Decagon und n8n gehören zu den 40 Ashby-Boards, die in templates/portals.example.yml vorkonfiguriert sind.
+
+## Beispiel
+
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
+```
+
+Der nächste Scan übernimmt dann die offenen Stellen von ElevenLabs.
+
+## Was der Scanner macht
+
+Der Scanner liest die aktivierten Ashby-Slugs aus deiner portals.yml, ruft für jeden davon die öffentliche Job-Board-API von Ashby auf und übernimmt die neuen Stellen in deine Pipeline – ohne Browser, ohne Login und ohne dass für den Abruf selbst auch nur ein LLM-Token verbraucht wird. Ein einziger Lauf von `node scan.mjs` deckt deine Ashby-, Greenhouse- und Lever-Boards gemeinsam ab und filtert die Ergebnisse anschließend nach den Titel-Keywords, die du konfiguriert hast.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 41 total
+Filtered by title: 6 relevant
+Duplicates: 3 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + ElevenLabs | Applied AI Engineer | ashby
+  + Deepgram   | Inference Engineer  | ashby
+```
+
+## Wie career-ops mit Ashby kommuniziert
+
+career-ops ruft die öffentliche Posting-API von Ashby unter `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` auf und liest die Liste `jobs` direkt aus der JSON-Antwort. Aus jeder Stelle übernimmt es den Titel, die öffentliche `jobUrl` als Bewerbungslink, den Standort (den Hauptstandort plus eventuelle weitere, ergänzt um „Remote“ bei Remote-Stellen), die Beschreibung als reinen Text, das Veröffentlichungsdatum und – sofern das Board sie veröffentlicht – eine aufs Jahr gerechnete Gehaltsspanne. Weil es sich um einen strukturierten API-Aufruf statt um Page-Scraping handelt, braucht der Scan keinen Browser und verbraucht keine Modell-Tokens. Die öffentliche API von Ashby antwortet langsam, mit einer Untergrenze von etwa zehn Sekunden pro Board, und begrenzt wiederholte Anfragen. Deshalb wartet career-ops bis zu 30 Sekunden pro Board und versucht es mit wachsendem Abstand erneut. Tokens fallen erst später an, bei der Bewertung, wenn du entscheidest, dass sich ein genauerer Blick auf eine Stelle lohnt. Den Scan erneut auszuführen ist unbedenklich: Jede URL wird mit deiner Scan-Historie, deinen bereits bewerteten Bewerbungen und der aktuellen Pipeline abgeglichen und dedupliziert, sodass eine Stelle, die du schon gesehen hast, nie doppelt hinzugefügt wird.
+
+## Stolperfallen
+
+Die Job-Board-API von Ashby liefert den vollständigen Text der Stellenbeschreibung direkt mit, eine zusätzliche Anfrage ist nicht nötig. Jedes Board braucht etwa zehn Sekunden für die Antwort. Ein Scan mit vielen Ashby-Boards dauert deshalb etwas länger als einer mit gleich vielen Boards von Greenhouse oder Lever.
+
+## Siehe auch
+
+- [greenhouse](/de/docs/reference/portals/greenhouse)
+- [lever](/de/docs/reference/portals/lever)

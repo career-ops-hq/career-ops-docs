@@ -9,6 +9,7 @@ import { SubscribeForm } from '@/components/subscribe-form';
 import { CopyableCommand } from '@/components/copyable-command';
 import { CompareRotator } from '@/components/compare-rotator';
 import { getProjectStats } from '@/lib/stats';
+import { GitHubStar } from '@/components/github-star';
 import type { HomeDict } from './home-dict';
 
 // One home trunk, rendered for every locale. Structure, widgets and
@@ -86,17 +87,21 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
           width={1628}
           height={1044}
           sizes="(min-width: 1400px) 1050px, (min-width: 1024px) 75vw, 100vw"
-          className="absolute top-[58%] left-[25%] max-w-[1400px] rounded-xl block [animation:fade-in-delayed_700ms_ease_400ms_both] [mask-image:linear-gradient(to_right,transparent_0%,black_8%)]"
+          className="absolute top-[58%] max-md:top-[calc(58%+32px)] left-[25%] max-w-[1400px] rounded-xl block [animation:fade-in-delayed_700ms_ease_400ms_both] [mask-image:linear-gradient(to_right,transparent_0%,black_8%)]"
           priority
         />
         <div className="flex flex-col z-2 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
+          {/* The hero line. On phones a soft veil sits behind it: over the
+              orange halftone the grey drops to ~2.4:1 in the worst pixels. */}
           <p
-            aria-hidden="true"
-            className={`${instrumentSerifRegular.className} text-5xl mt-12 mb-6 leading-[1.05] xl:text-7xl xl:mb-8`}
+            className={`${instrumentSerifRegular.className} text-[44px] md:text-5xl mt-12 mb-6 leading-[1.05] [font-synthesis:none] xl:mb-8 ${dict.locale === 'fr' ? 'xl:text-[56px]' : 'xl:text-7xl'} max-md:relative max-md:isolate max-md:before:absolute max-md:before:-inset-x-6 max-md:before:-inset-y-4 max-md:before:-z-10 max-md:before:rounded-[2rem] max-md:before:bg-[radial-gradient(ellipse_at_center,var(--color-fd-background)_40%,transparent_78%)] max-md:before:opacity-80 max-md:before:content-['']`}
           >
             {dict.heroHook}
           </p>
-          <h1 className="mb-8 max-w-xl text-base font-normal text-fd-muted-foreground md:text-lg">
+          {/* Dark mode: over the moving halftone the muted grey shimmered and read
+              as blurry. A lighter warm tone plus a soft dark halo keeps the
+              letters apart from the dots without touching the background. */}
+          <h1 className="mb-8 max-w-xl text-base font-normal text-fd-muted-foreground md:text-lg max-md:relative max-md:isolate max-md:before:absolute max-md:before:-inset-x-6 max-md:before:-inset-y-3 max-md:before:-z-10 max-md:before:rounded-[2rem] max-md:before:bg-[radial-gradient(ellipse_at_center,var(--color-fd-background)_45%,transparent_80%)] max-md:before:opacity-80 max-md:before:content-[''] dark:text-[#d2cebb] dark:[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.85),0_0_16px_rgba(0,0,0,0.6)]">
             {dict.heroH1}
           </h1>
           <div className="flex flex-row items-center gap-4 flex-wrap w-fit">
@@ -110,42 +115,71 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
                 className="cli-cursor inline-block h-[1em] w-[0.35em] bg-current align-middle"
               />
             </Link>
-            <a
-              href="https://github.com/career-ops-hq/career-ops"
-              target="_blank"
-              rel="noreferrer noopener"
-              className={cn(buttonVariants({ variant: 'secondary' }), 'max-sm:text-sm')}
-            >
-              {dict.viewSource}
-            </a>
+            <GitHubStar
+              placement="hero"
+              locale={dict.locale}
+              short="mobile"
+              className={cn(buttonVariants({ variant: 'secondary' }), 'inline-flex items-center gap-2 max-sm:text-sm')}
+            />
           </div>
+          {/* The price answer, where the decision is made. Plain text on purpose:
+              an arrow or underline here reads as a third CTA, and the manifesto
+              is already linked from its own section ("Read it") and the footer.
+              Ink: --color-hero-note is tuned to the halftone's darkest possible
+              pixel (#ffa057 -> 4.9:1), so it cannot get lighter. Below xl the
+              line lands on dense dither or the terminal screenshot, so it needs
+              a caption-shaped backing in both themes (without it, 2.4:1 over
+              terminal text); 6px corners, never a pill, so it does not rhyme
+              with the rounded-full buttons. The dark halo is only needed at
+              xl+, where there is no backing. */}
+          <p className="mt-3 w-fit whitespace-nowrap text-sm text-hero-note max-md:text-[13px] max-xl:rounded-md max-xl:bg-fd-background/90 max-xl:px-2 max-xl:py-0.5 max-xl:backdrop-blur-sm md:max-xl:-ml-2 dark:xl:[text-shadow:0_0_1px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.85),0_0_16px_rgba(0,0,0,0.6)]">
+            {dict.heroFreeNote}
+          </p>
         </div>
       </div>
 
-      {/* Press coverage */}
+      {/* Press coverage and program membership: one line on wide screens,
+          stacked by group below lg. Press (editorial coverage) and the Vercel
+          Open Source Program (in-kind support) stay visibly separate groups,
+          never one "featured in" row. Same grey treatment for all three marks. */}
       <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12 mt-12 lg:mt-16">
-        <p className="text-center text-xs uppercase tracking-[0.2em] text-fd-muted-foreground mb-6">
-          {dict.featuredIn}
-        </p>
-        <div className="flex flex-row flex-wrap items-center justify-center gap-10 md:gap-16">
-          <a
-            href={PRESS.wiredGR}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            aria-label="Featured in WIRED Greece"
-            className="opacity-55 hover:opacity-100 transition-opacity duration-300"
-          >
-            <Image src="/press/wired.svg" alt="WIRED" width={110} height={22} className="h-[22px] w-auto brightness-0 dark:invert" />
-          </a>
-          <a
-            href={PRESS.biEN}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            aria-label="Featured in Business Insider"
-            className="opacity-55 hover:opacity-100 transition-opacity duration-300"
-          >
-            <Image src="/press/business-insider.svg" alt="Business Insider" width={84} height={26} className="h-[26px] w-auto brightness-0 dark:invert" />
-          </a>
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-10">
+          <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-10">
+            <p className="text-xs uppercase tracking-[0.2em] text-fd-muted-foreground whitespace-nowrap">{dict.featuredIn}</p>
+            <div className="flex flex-row items-center gap-10">
+              <a
+                href={PRESS.wiredGR}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                aria-label="Featured in WIRED Greece"
+                className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+              >
+                <Image src="/press/wired.svg" alt="WIRED" width={110} height={22} className="h-[22px] w-auto brightness-0 dark:invert" />
+              </a>
+              <a
+                href={PRESS.biEN}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                aria-label="Featured in Business Insider"
+                className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+              >
+                <Image src="/press/business-insider.svg" alt="Business Insider" width={84} height={26} className="h-[26px] w-auto brightness-0 dark:invert" />
+              </a>
+            </div>
+          </div>
+          <div aria-hidden="true" className="hidden lg:block h-8 w-px bg-fd-border" />
+          <div className="flex flex-col lg:flex-row items-center gap-5 lg:gap-10">
+            <p className="text-xs uppercase tracking-[0.2em] text-fd-muted-foreground whitespace-nowrap">{dict.memberOf}</p>
+            <a
+              href="https://vercel.com/open-source-program"
+              target="_blank"
+              rel="noopener sponsored"
+              aria-label="Member of the Vercel Open Source Program, Summer 2026 cohort"
+              className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+            >
+              <Image src="/press/vercel-oss-2026.svg" alt="Vercel Open Source Software Program 2026" width={240} height={24} className="h-[24px] w-auto brightness-0 dark:invert" />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -215,6 +249,13 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               <p className="text-base md:text-lg leading-[1.7] text-fd-foreground/90">
                 {dict.whatIsBody}
               </p>
+              {dict.worthApplyingLabel && dict.worthApplyingHref && (
+                <p className="mt-5">
+                  <Link href={dict.worthApplyingHref} className="text-sm font-medium text-brand-text hover:underline underline-offset-2">
+                    {dict.worthApplyingLabel}
+                  </Link>
+                </p>
+              )}
               <p className="font-mono text-xs text-fd-muted-foreground mt-8 tracking-wide">
                 <span className="text-fd-foreground/40">{'//'}</span>{' '}
                 <span className="mr-1">{formatK(stats.stars)}</span>{dict.statsComment}
@@ -306,7 +347,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         <div className="col-span-full mt-16 lg:mt-24 py-8 lg:py-10 flex flex-col items-center text-center gap-6">
           <div className="flex flex-col items-center gap-2 lg:gap-3">
             <h2 className={`${instrumentSerifRegular.className} tracking-tight text-4xl lg:text-5xl text-brand`}>
-              <a href="https://github.com/career-ops-hq/career-ops" target="_blank" rel="me noopener noreferrer" className="hover:text-brand-200 transition-colors">
+              <a href="https://github.com/career-ops-hq/career-ops" target="_blank" rel="me noopener" className="hover:text-brand-200 transition-colors">
                 {dict.openSourceTitle}
               </a>
             </h2>
@@ -331,7 +372,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               </a>
             ))}
           </div>
-          <a href="https://github.com/career-ops-hq/career-ops/graphs/contributors" target="_blank" rel="noreferrer noopener" className="text-sm text-fd-muted-foreground hover:text-fd-foreground hover:underline">
+          <a href="https://github.com/career-ops-hq/career-ops/graphs/contributors" target="_blank" rel="noopener" className="text-sm text-fd-muted-foreground hover:text-fd-foreground hover:underline">
             {dict.meetContributors}
           </a>
           <a href="https://warpchart.dev/r/career-ops-hq/career-ops?utm_source=career-ops.org" target="_blank" rel="noopener noreferrer" className="mt-4 w-full max-w-[800px]">

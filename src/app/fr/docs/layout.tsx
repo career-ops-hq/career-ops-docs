@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { source } from '@/lib/source';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { baseOptions } from '@/lib/layout.shared';
+import { DocsSidebarRow } from '@/components/github-star';
 import { AISearchLazy } from '@/components/ai/lazy';
 
 // Docs chrome for the French subtree (French pilot, 2026-07-21). The tree comes
@@ -13,6 +14,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       tree={source.getPageTree('fr')}
       {...baseOptions({ compact: true, locale: 'fr' })}
+      themeSwitch={{ enabled: false }}
+      sidebar={{ footer: <DocsSidebarRow /> }}
     >
       <AISearchLazy />
       {children}

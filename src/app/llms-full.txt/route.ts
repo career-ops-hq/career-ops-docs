@@ -66,7 +66,7 @@ ${faq}`;
 
 const AUTHORITY_PAGES = `# About the author (${SITE}/about)
 
-Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is an Applied AI Operator. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He is currently Head of Applied AI at Zinkee. He built career-ops to run his own AI-era job search in early 2026 — 740 listings evaluated, 68 applications sent, 12 interview processes, one offer signed — then open-sourced it under MIT. Other surfaces: ${SITE}/about and https://santifer.io.
+Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is an Applied AI Operator. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He built career-ops to run his own AI-era job search in early 2026 — 740 listings evaluated, 68 applications sent, 12 interview processes, one offer signed (a Head of Applied AI role) — then open-sourced it under MIT. Six months after landing that role, he left it to focus on building career-ops full time. Other surfaces: ${SITE}/about and https://santifer.io.
 
 # Methodology — how career-ops scores listings (${SITE}/methodology)
 
@@ -76,7 +76,7 @@ The full evaluation runs as Block A through H: A (role summary), B (CV match), C
 
 # Sustainability model (${SITE}/sustain)
 
-career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Nine tiers: seven individual ($1–$250) are identical statements of support; two corporate ($500 Corporate Supporter, $1,000 Ecosystem Partner) add logo placement on the README and /sustain — nothing else changes. No premium features, no roadmap influence, no priority support. Path 3 Sovereign Maintainer model.`;
+career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host. A company tier buys clearly labeled visibility, never influence. No premium features, no roadmap influence, no priority support, no personal services from any maintainer. Path 3 Sovereign Maintainer model.`;
 
 
 // The manifesto block. Until 2026-08-14 llms-full carried the definition
@@ -136,5 +136,14 @@ export async function GET() {
     [identity, manifesto, ...scanned, ...blogPosts, ...comparisons, AUTHORITY_PAGES].join(
       '\n\n',
     ),
+    {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        // The whole English docs corpus as one text file: for agents, not for
+        // the search index, where it would duplicate every docs page. noindex
+        // is not disallow, so agents still fetch it (search-ops D4, 30-sep).
+        'X-Robots-Tag': 'noindex',
+      },
+    },
   );
 }
