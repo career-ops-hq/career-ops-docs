@@ -43,17 +43,17 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "What is the difference between scan and scan:full?",
     answer:
-      "npm run scan reads the companies you configured in portals.yml and hits their ATS APIs (Greenhouse, Ashby, Lever) directly, consuming zero LLM tokens — that's your regular daily or weekly discovery run. npm run scan:full inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your title_filter / location_filter, so you catch roles from companies you haven't manually added.",
+      "npm run scan reads the companies you configured in portals.yml and fetches each one through the provider that recognizes it (for example Greenhouse, Ashby, Lever), consuming zero LLM tokens — that's your regular daily or weekly discovery run. npm run scan:full inverts the direction: it walks public ATS company directories and surfaces fresh postings that match your title_filter / location_filter, so you catch roles from companies you haven't manually added.",
   },
   {
     question: "How do I avoid hitting token or rate limits during a batch run?",
     answer:
-      "To avoid token or rate limits in a career-ops batch run, cap the run with ./batch/batch-runner.sh --limit 5 to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use --resume-paused to skip already-completed jobs so no tokens are wasted on work that finished.",
+      "To avoid token or rate limits in a career-ops batch run, cap the run with ./batch/batch-runner.sh --limit 5 to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use --resume-paused to skip already-completed jobs so no tokens are wasted on work that finished. A needs_confirmation job produces no report, CV, application draft, or tracker row; --resume-paused does not resume it. Answer its question explicitly in the parent interactive session.",
   },
   {
     question: "Skills aren't loading on Windows — symlink error on install",
     answer:
-      "Windows does not create symlinks by default, so Git checks out the career-ops CLI skill entrypoints as plain pointer files. The installer and updater detect this automatically: run node update-system.mjs apply (or npx @santifer/career-ops init on a fresh install) and the materialize step replaces the pointer files with the full skill content. From a linked Git worktree, apply makes this repair in your main checkout. Run git merge main in the worktree to pick it up; worktrees created afterwards already have it. No manual mklink or Developer Mode changes needed.",
+      "Windows does not create symlinks by default, so Git checks out the career-ops CLI skill entrypoints as plain pointer files. The installer and updater detect this automatically: run node update-system.mjs apply --confirm (or npx @santifer/career-ops init on a fresh install) and the materialize step replaces the pointer files with the full skill content. From a linked Git worktree, apply --confirm makes this repair in your main checkout. Run git merge main in the worktree to pick it up; worktrees created from the updated main already have it. No manual mklink or Developer Mode changes needed.",
   },
   {
     question: "Can I run career-ops on a cheaper or local model?",

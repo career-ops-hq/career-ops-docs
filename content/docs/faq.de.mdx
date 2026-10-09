@@ -3,7 +3,7 @@ title: FAQ
 description: Häufige Fragen zu career-ops — Kosten, Datenschutz, unterstützte KI-CLIs, scan vs. scan:full, Token-Limits, Einrichtung unter Windows und was career-ops niemals in deinem Namen tun wird.
 seoTitle: "career-ops FAQ — Kosten, Datenschutz, unterstützte CLIs, Windows und kostenloser Betrieb"
 icon: CircleQuestionMark
-translationHash: 319b1b1ccb1c2b42
+translationHash: fd94ada73bac3023
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -56,15 +56,15 @@ career-ops unterstützt zehn KI-Coding-CLIs vollwertig: Claude Code, Cursor, Cod
 
 ## Was ist der Unterschied zwischen `scan` und `scan:full`?
 
-`npm run scan` liest die Unternehmen, die du in `portals.yml` konfiguriert hast, und fragt deren ATS-APIs ([Greenhouse](/de/docs/reference/portals/greenhouse), [Ashby](/de/docs/reference/portals/ashby), [Lever](/de/docs/reference/portals/lever)) direkt ab, ohne ein einziges LLM-Token zu verbrauchen — das ist dein regelmäßiger täglicher oder wöchentlicher Suchlauf. `npm run scan:full` kehrt die Richtung um: Es durchläuft öffentliche Unternehmensverzeichnisse der ATS und fördert frische Stellenanzeigen zutage, die zu deinem `title_filter` / `location_filter` passen, sodass du auch Stellen bei Unternehmen findest, die du nicht manuell hinzugefügt hast.
+`npm run scan` liest die Unternehmen, die du in `portals.yml` konfiguriert hast, und ruft jedes über den Provider ab, der es erkennt (zum Beispiel [Greenhouse](/de/docs/reference/portals/greenhouse), [Ashby](/de/docs/reference/portals/ashby), [Lever](/de/docs/reference/portals/lever)), ohne ein einziges LLM-Token zu verbrauchen — das ist dein regelmäßiger täglicher oder wöchentlicher Suchlauf. `npm run scan:full` kehrt die Richtung um: Es durchläuft öffentliche Unternehmensverzeichnisse der ATS und fördert frische Stellenanzeigen zutage, die zu deinem `title_filter` / `location_filter` passen, sodass du auch Stellen bei Unternehmen findest, die du nicht manuell hinzugefügt hast.
 
 ## Wie vermeide ich Token- oder Rate-Limits bei einem Batch-Lauf?
 
-Damit du bei einem Batch-Lauf von career-ops nicht an Token- oder Rate-Limits stößt, begrenze den Lauf mit `./batch/batch-runner.sh --limit 5` und prüfe die Qualität der Ergebnisse, bevor du dich auf einen größeren Batch festlegst. Wird ein Lauf durch ein Rate-Limit oder einen Netzwerkfehler unterbrochen, fang nicht von vorn an — nutze `--resume-paused`, um bereits abgeschlossene Jobs zu überspringen, damit keine Tokens für Arbeit verschwendet werden, die schon erledigt ist.
+Damit du bei einem Batch-Lauf von career-ops nicht an Token- oder Rate-Limits stößt, begrenze den Lauf mit `./batch/batch-runner.sh --limit 5` und prüfe die Qualität der Ergebnisse, bevor du dich auf einen größeren Batch festlegst. Wird ein Lauf durch ein Rate-Limit oder einen Netzwerkfehler unterbrochen, fang nicht von vorn an — nutze `--resume-paused`, um bereits abgeschlossene Jobs zu überspringen, damit keine Tokens für Arbeit verschwendet werden, die schon erledigt ist. Ein Job mit `needs_confirmation` ist etwas anderes: Er hat weder Bericht noch Lebenslauf, Bewerbungsentwurf oder Tracker-Zeile erzeugt, und `--resume-paused` setzt ihn nicht fort. Beantworte seine Frage ausdrücklich in der übergeordneten interaktiven Sitzung.
 
 ## Skills werden unter Windows nicht geladen — Symlink-Fehler bei der Installation
 
-Windows legt standardmäßig keine Symlinks an, deshalb checkt Git die Skill-Einstiegspunkte von career-ops für die CLIs als einfache Verweisdateien aus. Installer und Updater erkennen das automatisch: Führe `node update-system.mjs apply` aus (oder `npx @santifer/career-ops init` bei einer Neuinstallation), und der Materialisierungsschritt ersetzt die Verweisdateien durch den vollständigen Skill-Inhalt. Du musst weder manuell `mklink` ausführen noch den Entwicklermodus ändern.
+Windows legt standardmäßig keine Symlinks an, deshalb checkt Git die Skill-Einstiegspunkte von career-ops für die CLIs als einfache Verweisdateien aus. Installer und Updater erkennen das automatisch: Führe `node update-system.mjs apply --confirm` aus (oder `npx @santifer/career-ops init` bei einer Neuinstallation), und der Materialisierungsschritt ersetzt die Verweisdateien durch den vollständigen Skill-Inhalt. Aus einem verknüpften Git-Worktree heraus führt `apply --confirm` diese Reparatur in deinem `main`-Checkout durch. Führe im Worktree `git merge main` aus, um sie zu übernehmen; Worktrees, die vom aktualisierten `main` aus erstellt werden, haben sie bereits. Du musst weder manuell `mklink` ausführen noch den Entwicklermodus ändern.
 
 ## Kann ich career-ops mit einem günstigeren oder lokalen Modell betreiben?
 

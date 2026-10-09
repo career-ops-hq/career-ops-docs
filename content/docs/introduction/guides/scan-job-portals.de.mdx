@@ -3,7 +3,7 @@ title: Jobportale scannen
 description: Richte den Portal-Scanner ein und starte ihn, um automatisch neue Stellenanzeigen zu finden.
 seoTitle: "Jobportale mit career-ops scannen – Greenhouse, Ashby, Lever, ohne Token-Verbrauch"
 icon: ScanEye
-translationHash: e02cb2833eb23b85
+translationHash: 1fb2c4a20e4d60c2
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -226,7 +226,15 @@ Das bedeuten die einzelnen Zeilen:
 </div>
 
 
-Steht bei **New offers added** eine 0, ist dein Titelfilter vielleicht zu streng. Füg deiner `positive`-Liste ein Keyword hinzu und starte den Scan erneut.
+Steht bei **New offers added** eine 0, such zuerst in der Scan-Ausgabe nach dieser Warnung:
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+Sie bedeutet, dass das Portal dieses Unternehmens nie erfolgreich geantwortet hat. Die Null beweist also nicht, dass es dort keine Stellen gibt. Das Unternehmen wird in `data/portal-health.tsv` als `unverified_zero` vermerkt und zählt für seine Fehlerserie. Prüf dieses Portal, bevor du deine Filter änderst.
+
+Erscheint keine solche Warnung, ist dein Titelfilter vielleicht zu streng. Füg deiner `positive`-Liste ein Keyword hinzu und starte den Scan erneut.
 
 **Wo neue Stellen landen:** Jede neue Stelle wird als Zeile in `data/pipeline.md` eingetragen. Das ist die Liste der Stellen, die auf ihre Bewertung warten.
 
