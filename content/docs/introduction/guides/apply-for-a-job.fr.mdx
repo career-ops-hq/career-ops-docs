@@ -3,7 +3,7 @@ title: Postuler à une offre d'emploi
 description: Utilisez career-ops pour remplir vos candidatures avec des réponses adaptées à votre profil et au poste visé.
 seoTitle: "Comment postuler à un emploi avec career-ops — rédigez vos réponses ATS, adaptez votre CV"
 icon: FileInput
-translationHash: f2922090f40c99ec
+translationHash: b2898c29e9c5e8e1
 localized: true
 translatedFrom: /docs/introduction/guides/apply-for-a-job
 ---
@@ -11,7 +11,7 @@ translatedFrom: /docs/introduction/guides/apply-for-a-job
 Ce guide vous montre comment utiliser `/career-ops apply` pour remplir un formulaire de candidature avec des réponses adaptées à votre profil, à vos points de preuve et au poste précis auquel vous postulez.
 
 <Callout title="Avant de commencer">
-  Assurez-vous d'avoir terminé le guide [Scanner les portails d'emploi](/docs/introduction/guides/scan-job-portals). La commande `apply` dépend d'un rapport d'évaluation existant. Si aucun rapport n'existe pour le poste, lancez d'abord le pipeline.
+  Assurez-vous d'avoir terminé le guide [Scanner les portails d'emploi](/fr/docs/introduction/guides/scan-job-portals). La commande `apply` dépend d'un rapport d'évaluation existant. Si aucun rapport n'existe pour le poste, lancez d'abord le pipeline.
 </Callout>
 
 ## Lancer la commande apply
@@ -50,7 +50,7 @@ Par exemple :
 career-ops trouve le rapport correspondant dans `reports/`, utilise Playwright pour ouvrir une fenêtre de navigateur et lit le formulaire. Il génère ensuite une réponse pour chaque champ — prête à copier-coller. Vous n'avez pas besoin d'ouvrir le navigateur vous-même.
 
 <Callout title="Remarque">
-  Si Playwright n'est pas disponible, career-ops se rabat sur WebFetch pour lire le formulaire. Consultez [Configurer Playwright](/docs/introduction/guides/set-up-playwright) si vous souhaitez activer l'expérience complète via le navigateur.
+  Si Playwright n'est pas disponible, career-ops se rabat sur WebFetch pour lire le formulaire. Consultez [Configurer Playwright](/fr/docs/introduction/guides/set-up-playwright) si vous souhaitez activer l'expérience complète via le navigateur.
 </Callout>
 
 **Si vous lancez la commande `/career-ops apply` sans arguments**, le système vous invite à fournir le contexte manuellement :
@@ -110,7 +110,7 @@ Chaque réponse est construite à partir d'une partie précise de votre rapport 
 </div>
 
 <Callout title="Champs d'upload">
-  Utilisez le fichier dans `output/` généré lors de la création du rapport. Si aucun PDF n'existe encore, lancez d'abord `/career-ops pdf`, puis revenez au formulaire. Consultez [Générer un PDF](/docs/reference/modes/pdf).
+  Utilisez le fichier dans `output/` généré lors de la création du rapport. Si aucun PDF n'existe encore, lancez d'abord `/career-ops pdf`, puis revenez au formulaire. Consultez le [mode pdf](/fr/docs/reference/modes/pdf).
 </Callout>
 
 ## Envoyer la candidature
@@ -130,7 +130,7 @@ career-ops va alors :
         Mettre à jour `data/applications.md` — en faisant passer le statut de `Evaluated` à `Applied`
       </Step>
       <Step title="Enregistrer les réponses dans le rapport">
-        Enregistrer les réponses finales dans la section G du rapport pour référence ultérieure
+        Enregistrer les réponses finales dans la section `## Application Answers` du rapport pour référence ultérieure
       </Step>
     </Steps>
   </div>

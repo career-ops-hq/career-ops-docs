@@ -36,11 +36,11 @@ import {
 } from './shared';
 
 const REPO_MANIFESTO_URL =
-  'https://github.com/santifer/career-ops/blob/main/MANIFESTO.md';
+  'https://github.com/career-ops-hq/career-ops/blob/main/MANIFESTO.md';
 const RELEASE_TAG_URL =
-  'https://github.com/santifer/career-ops/releases/tag/manifesto-v1.0';
+  'https://github.com/career-ops-hq/career-ops/releases/tag/manifesto-v1.0';
 const SIGNATURES_URL =
-  'https://github.com/santifer/career-ops/blob/main/SIGNATURES.md';
+  'https://github.com/career-ops-hq/career-ops/blob/main/SIGNATURES.md';
 
 /**
  * The English signed text, byte-verbatim with the core repo's MANIFESTO.md.

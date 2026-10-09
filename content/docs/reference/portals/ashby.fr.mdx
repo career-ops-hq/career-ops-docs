@@ -5,24 +5,28 @@ seoTitle: "Scanner les offres Ashby avec career-ops — scan de portail ATS zér
 icon: Sparkles
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: 013014c1d6d759e4
+translationHash: 8e0f69ac9571b6b9
 localized: true
 translatedFrom: /docs/reference/portals/ashby
 ---
 
 ## Ce qu'il fait
 
-Le provider ashby, situé dans providers/ashby.mjs, effectue des requêtes HTTP vers api.ashbyhq.com/posting-api/job-board/`{slug}` et analyse le JSON renvoyé. Le slug est l'identifiant du job board Ashby de l'entreprise (par exemple 'anthropic' pour Anthropic).
+Le provider ashby, situé dans providers/ashby.mjs, effectue des requêtes HTTP vers api.ashbyhq.com/posting-api/job-board/`{slug}` et analyse le JSON renvoyé. Le slug est l'identifiant du job board Ashby de l'entreprise (par exemple 'elevenlabs' pour ElevenLabs). career-ops choisit ce provider d'après le `careers_url` de l'entrée (`https://jobs.ashbyhq.com/<slug>`), ou d'après un champ `api:` explicite.
 
 ## Quand l'utiliser
 
-Utilisez le scan Ashby lorsque vous ciblez des labos d'IA, des entreprises d'infrastructure et des startups modernes. Anthropic, Vercel, Replicate et de nombreuses entreprises YC utilisent Ashby. Plus de 40 slugs préconfigurés sont fournis dans templates/portals.example.yml.
+Utilisez le scan Ashby lorsque vous ciblez des labos d'IA, des entreprises d'infrastructure et des startups modernes. ElevenLabs, Deepgram, Sierra, Decagon et n8n font partie des 40 boards Ashby préconfigurés dans templates/portals.example.yml.
 
 ## Exemple
 
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
 ```
-In your portals.yml: `- provider: ashby\n  slug: anthropic\n  careers_url: https://jobs.ashbyhq.com/anthropic` — then scan picks up active Anthropic roles.
-```
+
+Le scan suivant récupère alors les postes ouverts d'ElevenLabs.
 
 ## Ce que fait le scanner
 
@@ -39,19 +43,19 @@ Filtered by title: 6 relevant
 Duplicates: 3 (already evaluated or in pipeline)
 New added to pipeline.md: 3
 
-  + Anthropic | Applied AI Engineer | ashby
-  + Replicate | Inference Engineer  | ashby
+  + ElevenLabs | Applied AI Engineer | ashby
+  + Deepgram   | Inference Engineer  | ashby
 ```
 
 ## Comment career-ops communique avec Ashby
 
-career-ops interroge l'endpoint GraphQL `ApiJobBoardWithTeams` d'Ashby avec le slug de votre board et lit la liste `jobPostings` directement dans la réponse JSON. Pour chaque annonce, il récupère le titre, un id servant à construire l'URL publique de candidature, le nom de la localisation, le type de contrat et un résumé de la rémunération lorsque le board en expose un. Comme il s'agit d'un appel API structuré et non de scraping de pages, le scan est rapide, reste dans les limites de débit et ne consomme aucun token de modèle. Les tokens ne sont dépensés que plus tard, lors de l'étape evaluate, lorsque vous décidez qu'une offre mérite un examen plus attentif. Relancer le scan est sans risque : chaque URL est dédupliquée par rapport à votre historique de scan, vos candidatures évaluées et le pipeline en cours, si bien qu'une offre déjà vue n'est jamais ajoutée deux fois.
+career-ops appelle l'API publique de publication d'Ashby à l'adresse `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` et lit la liste `jobs` directement dans la réponse JSON. Pour chaque annonce, il récupère le titre, le `jobUrl` public comme lien de candidature, la localisation (la principale ainsi que les éventuelles localisations secondaires, avec « Remote » ajouté pour les postes en télétravail), la description en texte brut, la date de publication et une fourchette de salaire annualisée lorsque le board en publie une. Comme il s'agit d'un appel API structuré et non de scraping de pages, le scan n'a besoin d'aucun navigateur et ne consomme aucun token de modèle. L'API publique d'Ashby est lente à répondre, avec un plancher d'environ dix secondes par board, et limite les requêtes répétées : career-ops attend donc jusqu'à 30 secondes par board et relance avec un délai croissant. Les tokens ne sont dépensés que plus tard, lors de l'étape evaluate, lorsque vous décidez qu'une offre mérite un examen plus attentif. Relancer le scan est sans risque : chaque URL est dédupliquée par rapport à votre historique de scan, vos candidatures évaluées et le pipeline en cours, si bien qu'une offre déjà vue n'est jamais ajoutée deux fois.
 
 ## Pièges à connaître
 
-L'API de job board d'Ashby renvoie directement le texte complet de la fiche de poste, sans requête supplémentaire. L'évaluation est légèrement plus rapide que pour les annonces Greenhouse.
+L'API de job board d'Ashby renvoie directement le texte complet de la fiche de poste, sans requête supplémentaire. Chaque board met environ dix secondes à répondre : un scan avec beaucoup de boards Ashby prend donc un peu plus de temps qu'avec le même nombre de boards Greenhouse ou Lever.
 
 ## Voir aussi
 
-- [greenhouse](/docs/reference/portals/greenhouse)
-- [lever](/docs/reference/portals/lever)
+- [greenhouse](/fr/docs/reference/portals/greenhouse)
+- [lever](/fr/docs/reference/portals/lever)

@@ -1,0 +1,264 @@
+---
+title: Schnellstart
+description: "Starte in fünf Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
+seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
+icon: Rocket
+translationHash: d363142d21bc56d7
+localized: true
+translatedFrom: /docs
+---
+
+Mit dieser Anleitung kommst du in etwa fünf Minuten zu deiner ersten bewerteten Stelle. Du richtest den Workspace ein und öffnest deinen KI-Coding-Assistenten. Er richtet dich im Gespräch ein. Danach fügst du eine Stellenanzeige ein, und career-ops liefert dir einen vollständigen Bericht, eine Bewertung und einen maßgeschneiderten Lebenslauf als PDF.
+
+## Was du brauchst
+
+Du musst nicht programmieren können. Du solltest nur ein Terminal öffnen und einen Befehl ausführen können.
+
+<Callout title="Neu im Terminal?">
+  Wenn du noch nie mit einer Kommandozeile gearbeitet hast, ist das kein Problem. Lernen kannst du es aber an anderer Stelle besser als in dieser Anleitung. Am schnellsten geht es mit dem englischsprachigen Handbuch [Command Line for Beginners](https://www.freecodecamp.org/news/command-line-for-beginners/) von freeCodeCamp. Es erklärt alles, was du für diese Anleitung brauchst. Sobald du ein Terminal öffnen und einen Befehl ausführen kannst, komm zurück und mach mit Schritt 1 weiter.
+</Callout>
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+      ### KI-Coding-Assistent
+
+      Installiere **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** oder **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**. Das ist der KI-Coding-Assistent, der dieses System ausführt. career-ops unterstützt [zehn CLIs vollwertig](/de/docs/supported-clis). Installiere eine davon und melde dich an, bevor du weitermachst.
+      </Step>
+      <Step>
+        ### Node.js 18+ (22.5+ empfohlen)
+
+        Installiere **[Node.js](https://nodejs.org)**. Mindestens Version **18** ist nötig (sie läuft, zeigt aber eine Warnung), **22.5+ wird empfohlen** (sie aktiviert den SQLite-Index für den Tracker). Node.js führt die Hilfsskripte aus und erzeugt die PDFs. Deine Version prüfst du mit `node --version`.
+      </Step>
+      <Step>
+        ### Git
+
+        Installiere **[Git](https://git-scm.com/)**. Der Scaffolder nutzt es intern. Auf den meisten Computern ist es schon installiert. Zum Prüfen öffnest du ein Terminal und führst `git --version` aus.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## Schritt 1: Workspace einrichten
+
+Öffne ein Terminal in dem Ordner, in dem career-ops liegen soll. Der empfohlene Weg braucht nur einen Befehl. Darunter findest du einen Weg für Fortgeschrittene mit `git clone`. Wenn Node (18+) oder Git fehlen, startet `npx` nicht. Installiere dann zuerst beides (siehe Voraussetzungen oben).
+
+### Empfohlen: ein Befehl
+
+```bash title="Terminal"
+npx @santifer/career-ops init
+```
+
+Der Befehl klont das neueste Release nach `./career-ops`, installiert die Abhängigkeiten und legt die Workspace-Struktur an. Außerdem erkennt er, welche KI-Coding-CLI du installiert hast, und zeigt dir den passenden Befehl zum Starten. Er installiert nur in einen neuen Ordner: Wenn `./career-ops` schon existiert und nicht leer ist, bricht der Befehl mit einem Fehler ab und ändert nichts. Ein zweiter Aufruf repariert oder aktualisiert also keinen bestehenden Workspace.
+
+Wechsle danach in den Workspace:
+
+```bash title="Terminal"
+cd career-ops
+```
+
+<details>
+<summary>Für Fortgeschrittene: das Repository selbst klonen</summary>
+
+Nimm diesen Weg, wenn du einem bestimmten Branch folgen, etwas zum Projekt beitragen oder den Code prüfen willst, bevor du die Abhängigkeiten installierst.
+
+```bash title="Terminal"
+git clone https://github.com/career-ops-hq/career-ops.git
+cd career-ops
+npm install
+```
+
+</details>
+
+### Headless-Browser (einmalig)
+
+career-ops braucht ein headless Chromium für mehrere Aufgaben: Es rendert PDFs, prüft, ob Stellenanzeigen noch online sind, und führt vollständige ATS-Scans aus. Der Installer richtet es nach den Abhängigkeiten automatisch ein. Falls dieser Schritt auf deinem Rechner fehlgeschlagen ist, installiere es von Hand:
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+## Schritt 2: KI-Assistenten öffnen
+
+Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
+  <Tab value="Claude Code">
+    ```bash title="Terminal"
+    claude
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash title="Terminal"
+    codex
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash title="Terminal"
+    opencode
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash title="Terminal"
+    copilot
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash title="Terminal"
+    agy
+    ```
+  </Tab>
+</Tabs>
+
+<Callout title="Der Agent stellt sich vor">
+  Wenn du deine CLI zum ersten Mal im Workspace startest, führt der career-ops-Agent ein kurzes Onboarding-Gespräch mit dir. Er fragt nach deinem Lebenslauf, nach den Rollen, die du suchst, nach deiner Gehaltsspanne und nach deinen Wünschen zum Arbeitsort. Du bearbeitest nichts von Hand: Du antwortest in normaler Sprache, und der Agent schreibt die Konfigurationsdateien für dich. Das Ganze dauert etwa zwei bis drei Minuten.
+</Callout>
+
+<Callout title="Eine Abfrage, die nicht von career-ops kommt">
+  Manche CLIs, zum Beispiel Claude Code, fragen beim ersten Öffnen eines neuen Ordners, ob du den Dateien darin vertraust. Diese Abfrage kommt von der CLI selbst, nicht von career-ops. Bestätige sie, um weiterzumachen. Direkt danach beginnt das Onboarding von career-ops.
+</Callout>
+
+<Callout type="warn" title="Du zahlst für Claude Pro oder Max? Prüfe, worüber diese Sitzung abgerechnet wird">
+  Führe `node doctor.mjs` im Ordner `career-ops` aus, bevor du deine erste Bewertung startest. Das Skript zeigt dir in einer Zeile, worüber abgerechnet wird.
+
+  Wenn in deiner Umgebung `ANTHROPIC_API_KEY` gesetzt ist, **nutzt deine CLI diesen Key und rechnet pro Token ab, auch wenn du für Pro oder Max zahlst.** Diese Rangfolge legt Claude Code fest, nicht career-ops. Der Doctor erkennt sie nur und weist dich darauf hin. Wenn du stattdessen dein Abo nutzen willst, entferne die Zeile `export ANTHROPIC_API_KEY=...` aus `~/.zshrc`, `~/.bashrc`, `~/.profile` oder aus einer `.env` im Projekt. Starte dann dein Terminal neu und führe `/login` aus. Wenn du bewusst API-Guthaben nutzen wolltest, ist alles in Ordnung.
+
+  Die anderen CLIs legen jeweils selbst fest, ob sie das Abo oder einen Key verwenden. Das prüft career-ops nicht. Mehr dazu findest du in [den FAQ](/de/docs/faq).
+</Callout>
+
+## Schritt 3: Erste Bewertung ausführen
+
+Sobald das Onboarding fertig ist, kannst du eine echte Stellenanzeige bewerten. Kopiere die URL einer beliebigen Stellenanzeige und füge sie in den Chat ein. Mit Claude Code oder Antigravity CLI setzt du den Befehl davor. Bei den anderen CLIs fügst du die URL ein und bittest den Agenten, die auto-pipeline auszuführen:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash
+    /career-ops https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+</Tabs>
+
+Wenn du keine URL hast, füge stattdessen den vollständigen Text der Stellenbeschreibung in den Chat ein. Der Agent erkennt in beiden Fällen eine Stellenanzeige und führt automatisch die komplette Pipeline aus. Das ist die **auto-pipeline**.
+
+### Was danach passiert
+
+Sobald du die Stelle eingefügt hast, erledigt career-ops Folgendes selbstständig:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        ### Liest die Stellenbeschreibung
+        Erfasst die Rolle, die Anforderungen und die Vergütung.
+      </Step>
+      <Step>
+        ### Liest deinen Lebenslauf
+        Gleicht `cv.md` mit der Rolle ab und findet Übereinstimmungen und Lücken.
+      </Step>
+      <Step>
+        ### Bewertet die Stelle
+        Bewertet die Rolle auf einer Skala von 1 bis 5 nach mehreren Dimensionen, zum Beispiel Passung zur Rolle, Vergütung und Remote-Regelung.
+      </Step>
+      <Step>
+        ### Schreibt einen Bericht
+        Speichert eine ausführliche Auswertung im Ordner `reports/`.
+      </Step>
+      <Step>
+        ### Erstellt einen maßgeschneiderten Lebenslauf als PDF
+        Legt im Ordner `output/` eine Version deines Lebenslaufs ab, die auf genau diese Stelle zugeschnitten ist.
+      </Step>
+      <Step>
+        ### Trägt die Bewerbung in deinen Tracker ein
+        Fügt der Datei `data/applications.md` eine Zeile für die Bewerbung hinzu.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+Das Ganze dauert etwa ein bis zwei Minuten. Danach zeigt dir career-ops die Bewertung und eine Zusammenfassung des Berichts.
+
+## Deine Ergebnisse lesen
+
+Öffne die Berichtsdatei in `reports/`. Der Dateiname folgt dem Muster `{number}-{company}-{date}.md`. Darin findest du:
+
+- **Score**: eine Zahl von 1 bis 5. Alles unter 4,0 heißt, dass die Stelle wahrscheinlich nicht besonders gut passt.
+- **Block A**: eine Zusammenfassung der Rolle in einfacher Sprache.
+- **Block B**: eine Tabelle, die zeigt, wie gut dein Lebenslauf zu jeder Anforderung der Stelle passt und wo Lücken sind.
+- **Block C**: eine Empfehlung, wie du dich für diese Rolle positionierst.
+- **Block D**: eine Gehaltsrecherche, die das Angebot mit dem Marktniveau vergleicht.
+- **Block E**: Hinweise, wie du deine Bewerbung persönlich zuschneidest.
+- **Block F**: Vorbereitung auf das Vorstellungsgespräch mit STAR-Geschichten, die auf diese Stelle zugeschnitten sind.
+- **Block G**: Seriosität der Anzeige. Eine heuristische Prüfung achtet auf Signale, etwa ob die Anzeige noch offen ist und ob sie immer wieder neu veröffentlicht wird. Der Block berichtet, was er findet, und überlässt das Urteil dir.
+- **Block H**: Antwortentwürfe für das Bewerbungsformular. Sie werden nur geschrieben, wenn die Bewertung bei 4,5 oder höher liegt.
+
+Deinen maßgeschneiderten Lebenslauf als PDF findest du im Ordner `output/`. Sieh ihn dir an, bevor du ihn verschickst. career-ops schickt nie etwas ohne deine Zustimmung ab.
+
+## Wie es weitergeht
+
+Deine erste Bewertung ist fertig. Das kannst du als Nächstes ausprobieren:
+
+- **Verfeinere dein Profil.** Erzähl dem Agenten etwas Neues über dich, zum Beispiel: *„Hier noch mehr Kontext: Ich habe gerade X veröffentlicht.“* Er aktualisiert dein Profil, und künftige Bewertungen werden genauer.
+- **Bewerte weitere Stellen.** Füge weitere URLs oder Beschreibungen ein. Jede davon landet in deinem Tracker.
+- **Durchsuche Jobbörsen.** Gib `/career-ops scan` ein, um Dutzende vorkonfigurierte Karriereseiten von Unternehmen auf einmal zu durchsuchen.
+- **Vergleiche Angebote.** Wenn du mehrere Berichte hast, gib `/career-ops ofertas` ein und du bekommst einen Vergleich mit Rangfolge.
+
+## Fehlerbehebung
+
+<Accordions>
+  <Accordion title="Der Agent hat das Onboarding nicht gestartet">
+    Prüfe, ob du deine CLI im Ordner `career-ops` gestartet hast (das siehst du mit `pwd`). Starte die CLI im richtigen Pfad neu und sag dem Agenten: *„Bitte führe das Onboarding für den ersten Start aus.“* Er beginnt das Gespräch dann von vorn.
+  </Accordion>
+  <Accordion title="Der Bericht wurde nicht erstellt">
+    Prüfe, ob `cv.md` im Hauptordner liegt und Inhalt hat. Wenn das Onboarding fertig ist, `cv.md` aber leer ist, frag den Agenten: *„Meine cv.md sieht leer aus. Kannst du mir helfen, sie auszufüllen?“*
+  </Accordion>
+  <Accordion title="Das PDF wurde nicht erstellt">
+    Führe `npx playwright install chromium` noch einmal aus. Wenn das nicht hilft, prüfe mit `node --version`, ob du Node.js 18 oder neuer hast (22.5+ empfohlen).
+  </Accordion>
+  <Accordion title="Die Bewertung wirkt daneben">
+    Die ersten Bewertungen sind noch ungenau, weil das System dich noch nicht gut kennt. Sag deinem KI-Assistenten nach jeder Bewertung, was er falsch eingeschätzt hat. Zum Beispiel: *„Die Bewertung ist zu hoch. Ich habe keine Erfahrung mit Kubernetes.“* Er lernt daraus und passt seine Bewertungen an.
+  </Accordion>
+  <Accordion title="Etwas anderes funktioniert nicht">
+    Frag deinen KI-Assistenten direkt: *„Was stimmt mit meinem Setup nicht?“* Wenn er den Fehler nicht findet, führe `npm run doctor` aus. Das prüft dein ganzes Setup.
+  </Accordion>
+</Accordions>
+
+## Bug gefunden oder eine Frage?
+
+Wenn etwas nicht so funktioniert, wie es in dieser Anleitung steht, melde es bitte. Bug-Reports helfen allen, die nach dir kommen.
+
+- **Bug melden:** Eröffne ein Issue im [GitHub-Repository](https://github.com/career-ops-hq/career-ops/issues). Beschreibe, was du erwartet hast und was tatsächlich passiert ist, und füge die Fehlermeldungen ein, die du gesehen hast.
+- **Frage stellen:** Komm in die [Discord-Community](https://discord.gg/8pRpHETxa4). Dort bekommst du am schnellsten Hilfe von anderen Nutzern und vom Autor.
+- **Fix beitragen:** Wenn du das Problem selbst beheben kannst, lies [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md), bevor du einen Pull Request öffnest. Kurz gesagt: Eröffne zuerst ein Issue, um die Änderung zu besprechen, und reiche dann deinen PR ein.
+
+<StarOnGitHub locale="en" />

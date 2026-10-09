@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { homeFaqSchemaFr } from '@/lib/schema';
+import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
 import { HomeContent } from '../../(home)/home-content';
 import { homeFr } from '../../(home)/home-dict';
@@ -11,9 +12,9 @@ import { homeFr } from '../../(home)/home-dict';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
-  title: 'career-ops — recherche d’emploi par IA, open source et local-first',
+  title: 'career-ops\u202f: agent open source de recherche d’emploi par IA',
   description:
-    'Système open source de recherche d’emploi par IA. Il tourne sur votre propre machine, dans l’assistant de codage IA que vous utilisez déjà. Il évalue les offres, adapte votre CV et suit vos candidatures. Sans compte, sans cloud, gratuit.',
+    'Système open source de recherche d’emploi par IA. Il tourne sur votre propre machine, dans l’assistant de codage IA que vous utilisez déjà. Il évalue les offres, adapte votre CV et suit vos candidatures. Sans compte, sans cloud, open source.',
   alternates: {
     canonical: 'https://career-ops.org/fr',
     languages: hreflangHome(),
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     url: 'https://career-ops.org/fr',
     siteName: 'career-ops',
     locale: 'fr_FR',
-    title: 'career-ops — recherche d’emploi par IA, open source et local-first',
+    title: 'career-ops\u202f: agent open source de recherche d’emploi par IA',
     description:
       'Système open source de recherche d’emploi par IA. Il tourne dans votre CLI. Vos données, votre machine.',
   },
@@ -34,7 +35,7 @@ export default function HomePageFr() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchemaFr()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchemaFr(homeLastModified('fr'))) }}
       />
       <HomeContent dict={homeFr} />
     </>

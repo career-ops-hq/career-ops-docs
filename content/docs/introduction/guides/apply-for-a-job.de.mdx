@@ -1,0 +1,147 @@
+---
+title: Auf eine Stelle bewerben
+description: Nutze career-ops, um Bewerbungsformulare mit maßgeschneiderten Antworten auszufüllen, die auf deinem Profil und deiner Wunschrolle basieren.
+seoTitle: "Mit career-ops auf eine Stelle bewerben – ATS-Antworten entwerfen, Lebenslauf anpassen"
+icon: FileInput
+translationHash: b2898c29e9c5e8e1
+localized: true
+translatedFrom: /docs/introduction/guides/apply-for-a-job
+---
+
+Diese Anleitung zeigt dir, wie du mit `/career-ops apply` ein Bewerbungsformular ausfüllst. Die Antworten sind auf dein Profil, deine Belege und die konkrete Stelle zugeschnitten, auf die du dich bewirbst.
+
+<Callout title="Bevor du loslegst">
+  Stell sicher, dass du die Anleitung [Jobportale scannen](/de/docs/introduction/guides/scan-job-portals) abgeschlossen hast. Der Befehl `apply` setzt einen vorhandenen Evaluierungsbericht voraus. Gibt es für die Stelle noch keinen Bericht, führe zuerst die Pipeline aus.
+</Callout>
+
+## Den Befehl apply ausführen
+
+Öffne deine agentische CLI im Stammordner von career-ops und gib Folgendes ein:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name}
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+</Tabs>
+
+Zum Beispiel:
+
+```bash title="Claude Code"
+/career-ops apply Anthropic
+```
+
+career-ops sucht den passenden Bericht in `reports/`, öffnet mit Playwright ein Browserfenster und liest das Formular aus. Danach erzeugt es für jedes Feld eine Antwort, die du direkt kopieren und einfügen kannst. Den Browser musst du nicht selbst öffnen.
+
+<Callout title="Hinweis">
+  Falls Playwright nicht verfügbar ist, liest career-ops das Formular stattdessen mit WebFetch. Wenn du den vollen browserbasierten Ablauf nutzen möchtest, sieh dir [Playwright einrichten](/de/docs/introduction/guides/set-up-playwright) an.
+</Callout>
+
+**Wenn du den Befehl `/career-ops apply` ohne Argumente ausführst**, bittet dich das System, den Kontext selbst anzugeben:
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Option                        | So geht's                                                                                          |
+    | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+    | Screenshot teilen             | Mach einen Screenshot des Formulars und teile ihn im Chat. career-ops kann Bilder direkt lesen.    |
+    | Fragen einfügen               | Kopiere die Fragen aus dem Formular als Text und füge sie in den Chat ein.                         |
+    | Unternehmen und Stelle nennen | Gib den Namen des Unternehmens und die Stellenbezeichnung ein. career-ops sucht in `reports/` nach dem passenden Bericht. |
+    | Bewerbungs-URL teilen         | Füge die URL ein, dann öffnet career-ops das Formular.                                             |
+  </div>
+</div>
+
+## Das Formular ausfüllen
+
+Das System gibt dir eine nummerierte Liste mit einer Antwort pro Formularfeld zurück. Die Liste folgt der Reihenfolge des Formulars. Geh sie von oben nach unten durch und füge jede Antwort in das passende Feld ein.
+
+Die Ausgabe besteht aus zwei Teilen:
+
+**Antworten** – alle Felder des Formulars in ihrer Reihenfolge:
+
+```
+1. Name
+   Andres Urdaneta
+
+2. Email
+   andres@example.com
+
+...
+
+12. Cover Letter (optional)
+    I've spent 5+ years shipping production Rails applications...
+```
+
+Einfache Felder wie Name, E-Mail und Ja/Nein-Fragen kommen zuerst. Freitextfelder wie das Anschreiben stehen am Ende.
+
+**Wichtige Hinweise** („Key notes“) – ein kurzer Block nach den Antworten mit allem, was du vor dem Absenden wissen solltest:
+
+```
+Key notes:
+- No salary field — you'll negotiate at offer. Anchor to $160K–$175K at offer stage.
+- Add github.com/yourhandle to your resume PDF before uploading.
+- Cover letter is optional but the draft above is tight — worth including.
+```
+
+Jede Antwort stützt sich auf einen bestimmten Teil deines Evaluierungsberichts:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Feldtyp                               | Quelle                                                         |
+    | ------------------------------------- | -------------------------------------------------------------- |
+    | Anschreiben, „Warum diese Stelle?“    | Belege aus Block B + STAR-Geschichten aus Block F              |
+    | Kurze Freitextfragen                  | Der Beleg oder die Geschichte, die am besten zur Frage passt   |
+    | Dropdowns, Ja/Nein                    | Direkte Antworten aus deinem Profil                            |
+  </div>
+</div>
+
+<Callout title="Upload-Felder">
+  Nimm die Datei in `output/`, die zusammen mit dem Bericht erstellt wurde. Gibt es noch kein PDF, führe zuerst `/career-ops pdf` aus und geh dann zurück zum Formular. Mehr dazu unter [pdf-Modus](/de/docs/reference/modes/pdf).
+</Callout>
+
+## Die Bewerbung absenden
+
+Prüf alle Antworten und schick das Formular dann selbst ab. career-ops klickt nicht auf „Absenden“.
+
+Bestätige nach dem Absenden im Chat:
+
+> „Abgeschickt.“
+
+Daraufhin erledigt career-ops Folgendes:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Bewerbungsstatus aktualisieren">
+        Aktualisiert `data/applications.md` und setzt den Status von `Evaluated` auf `Applied`
+      </Step>
+      <Step title="Antworten im Bericht speichern">
+        Speichert die endgültigen Antworten im Abschnitt `## Application Answers` des Berichts, damit du später darauf zurückgreifen kannst
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## Wie es weitergeht
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Score              | Nächster Schritt                                                                                                                                                                                                  |
+    | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **4.0 oder höher** | Führe `/career-ops contacto` aus. career-ops sucht auf LinkedIn einen Hiring Manager oder ein Teammitglied und entwirft eine Kontaktnachricht. Wenn du sie verschickst, bevor deine Bewerbung gesichtet wird, fällst du eher auf. |
+    | **Jeder Score**    | Führe `/career-ops tracker` aus, um den aktuellen Stand aller Einträge in deiner Pipeline zu sehen.                                                                                                              |
+  </div>
+</div>

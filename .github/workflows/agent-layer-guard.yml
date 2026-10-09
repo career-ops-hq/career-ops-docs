@@ -21,8 +21,11 @@
 # So the workflow now runs on every pull request and decides scope inside the
 # job. Out of scope means the expensive steps are skipped and the check reports
 # green, which is a real verdict of "these invariants cannot have moved". The
-# scope list is the former `on.paths` list unchanged: every agent-layer surface
-# is a route under src/app/, so nothing in public/ can regress it.
+# scope list started as the former `on.paths` list: every agent-layer surface
+# is a route under src/app/, so nothing in public/ can regress it. Since 1 Oct
+# 2026 it also covers the dependency and root config files (package*.json,
+# source.config.ts, proxy.ts, tsconfig, postcss): a Next.js or Fumadocs bump can
+# break hreflang, headers and rewrites all at once without touching src/.
 name: Agent-layer guard
 
 on:
@@ -34,6 +37,11 @@ on:
 jobs:
   guard:
     runs-on: ubuntu-latest
+    # deployments: read lets the i18n guard ask which commit production runs
+    # (see "Is production an ancestor of this build?").
+    permissions:
+      contents: read
+      deployments: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -62,7 +70,7 @@ jobs:
           CHANGED=$(git diff --name-only "$RANGE")
           echo "changed files:"; echo "$CHANGED" | sed 's/^/  /'
 
-          if echo "$CHANGED" | grep -qE '^(src/|content/|next\.config\.mjs$|scripts/verify-agent-layer\.mjs$|\.github/workflows/agent-layer-guard\.yml$)'; then
+          if echo "$CHANGED" | grep -qE '^(src/|content/|next\.config\.mjs$|proxy\.ts$|source\.config\.ts$|package\.json$|package-lock\.json$|tsconfig\.json$|postcss\.config\.mjs$|scripts/verify-agent-layer\.mjs$|scripts/verify-i18n-seo\.mjs$|\.github/workflows/agent-layer-guard\.yml$)'; then
             echo "relevant=true" >> "$GITHUB_OUTPUT"
           else
             echo "nothing here can move the agent-layer invariants"
@@ -80,6 +88,20 @@ jobs:
           node scripts/verify-manifesto-date.mjs --probe
           node scripts/verify-manifesto-date.mjs
 
+      # The i18n SEO guard proves it can still fail before it is trusted: a
+      # correct in-memory site must pass and each of its sabotages must be
+      # caught. Builtins only, so it runs ahead of npm ci.
+      - name: i18n SEO guard selftest
+        if: steps.scope.outputs.relevant == 'true'
+        run: node scripts/verify-i18n-seo.mjs --selftest
+
+      # The FAQPage schema must match the visible FAQ word for word (Google's
+      # rule). It is generated from the page; this fails if someone edited one
+      # side and not the other.
+      - name: FAQ schema parity
+        if: steps.scope.outputs.relevant == 'true'
+        run: node scripts/faq-from-mdx.mjs --check
+
       - uses: actions/setup-node@v4
         if: steps.scope.outputs.relevant == 'true'
         with:
@@ -89,6 +111,28 @@ jobs:
         if: steps.scope.outputs.relevant == 'true'
       - run: npm run build
         if: steps.scope.outputs.relevant == 'true'
+      # The i18n guard counts an English URL that production has and this build
+      # lacks as a removal. That only holds if production's commit is in this
+      # build's history: if a sibling PR merged and deployed after this run
+      # checked out, production is ahead and its new pages are not removals.
+      # Unknown (API error) leaves PROD_IS_ANCESTOR unset and the guard compares.
+      - name: Is production an ancestor of this build?
+        if: steps.scope.outputs.relevant == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PROD_SHA=$(gh api "repos/${{ github.repository }}/deployments?environment=Production&per_page=1" --jq '.[0].sha' 2>/dev/null || true)
+          echo "production deploy: ${PROD_SHA:-unknown}"
+          if [ -n "$PROD_SHA" ] && git cat-file -e "$PROD_SHA^{commit}" 2>/dev/null; then
+            if git merge-base --is-ancestor "$PROD_SHA" HEAD; then
+              echo "PROD_IS_ANCESTOR=1" >> "$GITHUB_ENV"
+            else
+              echo "PROD_IS_ANCESTOR=0" >> "$GITHUB_ENV"
+            fi
+          elif [ -n "$PROD_SHA" ]; then
+            echo "PROD_IS_ANCESTOR=0" >> "$GITHUB_ENV"
+          fi
+
       - name: Boot server, run the guard (gate) + agentic-seo (informational)
         if: steps.scope.outputs.relevant == 'true'
         run: |
@@ -98,9 +142,19 @@ jobs:
             curl -sf http://localhost:3999/docs/faq >/dev/null && break
             sleep 2
           done
-          # Gate: bespoke agent-layer invariants. Its exit code is the job's.
+          # Gate: bespoke agent-layer invariants.
           BASE=http://localhost:3999 node scripts/verify-agent-layer.mjs
           GUARD_EXIT=$?
+          # Gate: every FAQ/glossary claim in the JSON-LD is visible on its
+          # page, and every page's own nodes declare the page's language.
+          BASE=http://localhost:3999 node scripts/verify-schema-parity.mjs || GUARD_EXIT=1
+          # Gate: no sitemap lastmod, schema date or <time> later than the build.
+          BASE=http://localhost:3999 node scripts/verify-no-future-dates.mjs || GUARD_EXIT=1
+          # Gate: hreflang clusters (self, x-default, reciprocity, sitemap/HTML
+          # parity), canonicals, language signals, markdown negotiation, /index
+          # 308s, and no English URL lost against production. Exit 3 (NOT RUN)
+          # fails too: nothing checked is never a pass.
+          BASE=http://localhost:3999 node scripts/verify-i18n-seo.mjs || GUARD_EXIT=1
           # Informational: agentic-seo Discovery checks (never blocks).
           echo "--- agentic-seo (informational) ---"
           npx --yes agentic-seo --url http://localhost:3999 --checks robots-txt,llms-txt || true

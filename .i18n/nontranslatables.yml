@@ -57,11 +57,37 @@ portals: [Greenhouse, Ashby, Lever, Wellfound]
 
 files: [DATA_CONTRACT.md, CONTRIBUTING.md]
 
-domains: [career-ops.org, santifer.io, "github.com/santifer/career-ops"]
+domains: [career-ops.org, santifer.io, "github.com/career-ops-hq/career-ops", "github.com/santifer/career-ops"]  # career-ops-hq es la ruta canónica; santifer/ sigue redirigiendo
 
 wikidata:
   software: Q139007988
   person: Q138710224
+
+# Canon por idioma (espejo de la §9 de search-ops/doctrine/i18n-nontranslatables.md,
+# skill /auditoria-idioma, verificado el 30-sep-2026). Regla: el término de ANUNCIO
+# (lo que se evalúa, 740) nunca coincide con el de OFERTA (lo que se consigue, 1).
+# La promesa HITL se transcrea, no se calca. null = aún no verificado en prod.
+canon_por_idioma:
+  en:
+    anuncio_oferta: "listings → offer"
+    embudo: "740 listings evaluated. 68 applied. 12 interviews. 1 offer."
+    hitl: ["It never applies in your name", "You press Submit."]
+    categoria: "open-source AI job search agent"
+  es:
+    anuncio_oferta: "vacantes → oferta"
+    embudo: "740 vacantes evaluadas"
+    hitl: null
+    categoria: null
+  fr:
+    anuncio_oferta: "annonces → offre"
+    embudo: "740 annonces évaluées"
+    hitl: ["…ne clique jamais à votre place"]
+    categoria: null
+  de:
+    anuncio_oferta: "Stellenanzeigen / bewertet → Jobangebot"
+    embudo: "740 bewertet → 68 beworben → 12 Vorstellungsgespräche → 1 Jobangebot"
+    hitl: ["career-ops bewirbt sich nie in deinem Namen"]
+    categoria: "KI-Agent für die Jobsuche"
 
 rules:
   general: >

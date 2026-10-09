@@ -118,3 +118,18 @@ export const STATS_FLOOR = {
 // at v1.15.0 while the project shipped through v1.31.0 — sixteen versions of
 // drift in a value whose entire job is to be a safe answer.
 export const LATEST_RELEASE_FALLBACK = 'career-ops-v1.31.0';
+
+// Default share image for pages without one of their own. In Next's metadata a
+// page that declares its own openGraph object replaces the layout's entirely,
+// images included, so every page that set a title and description for sharing
+// was silently shipping without a picture: /about, /sustain, the blog. Since
+// 29-sep it is the English share card Santiago approved (the same one as the
+// repo's GitHub social preview), at a stable URL. The homes carry their own
+// card as opengraph-image.jpg in their route folders (en, es; fr uses the
+// English card until a natively reviewed French one exists).
+export const DEFAULT_OG_IMAGE = {
+  url: 'https://career-ops.org/og-banner.jpg',
+  width: 1200,
+  height: 630,
+  alt: 'More applications. More silence. Stop guessing. Start choosing. career-ops, AI job search agent.',
+};

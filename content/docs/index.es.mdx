@@ -3,7 +3,7 @@ title: Guía rápida
 description: "Empieza con career-ops en cinco minutos: instala el sistema open source de búsqueda de empleo con IA, abre tu CLI de IA y evalúa tu primera oferta. Sin necesidad de programar."
 seoTitle: "career-ops Guía rápida — instala y ejecuta tu primer análisis de ofertas con IA en minutos"
 icon: Rocket
-translationHash: 06214182e58f177b
+translationHash: d363142d21bc56d7
 localized: true
 translatedFrom: /docs
 ---
@@ -24,12 +24,12 @@ No necesitas saber programar. Solo necesitas sentirte cómodo abriendo una termi
       <Step>
       ### Asistente de programación con IA
 
-      Instala **[Claude Code](https://claude.ai/code)**, **[Gemini CLI](https://github.com/google-gemini/gemini-cli)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)** o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — el asistente de programación con IA que ejecuta este sistema. career-ops funciona con todos ellos. Inicia sesión antes de continuar.
+      Instala **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[Qwen Code](https://qwen.ai/qwencode)**, **[OpenCode](https://opencode.ai/)** o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — el asistente de programación con IA que ejecuta este sistema. career-ops funciona con [diez CLI con soporte completo](/es/docs/supported-clis); instala cualquiera de ellas e inicia sesión antes de continuar.
       </Step>
       <Step>
         ### Node.js 18+ (22.5+ recomendado)
 
-        Instala **[Node.js](https://nodejs.org)** — mínimo **18** (funciona, con una advertencia), **22.5+ recomendado** (habilita el índice SQLite del tracker). Ejecuta los scripts auxiliares y genera los PDFs. Comprueba tu versión con `node --version`. Si vas a usar Gemini CLI, esa integración necesita **Node 20 o posterior**.
+        Instala **[Node.js](https://nodejs.org)** — mínimo **18** (funciona, con una advertencia), **22.5+ recomendado** (habilita el índice SQLite del tracker). Ejecuta los scripts auxiliares y genera los PDFs. Comprueba tu versión con `node --version`.
       </Step>
       <Step>
         ### Git
@@ -50,7 +50,7 @@ Abre una terminal en la carpeta donde quieras que viva career-ops. La ruta recom
 npx @santifer/career-ops init
 ```
 
-Esto clona la última versión en `./career-ops`, instala las dependencias y crea la estructura del espacio de trabajo. También detecta qué CLI de IA tienes instalado y te dice con qué comando empezar. El comando es idempotente — ejecutarlo de nuevo nunca sobrescribe archivos que ya tengas.
+Esto clona la última versión en `./career-ops`, instala las dependencias y crea la estructura del espacio de trabajo. También detecta qué CLI de IA tienes instalado y te dice con qué comando empezar. Solo instala en una carpeta nueva: si `./career-ops` ya existe y no está vacía, el comando se detiene con un error y no cambia nada, así que ejecutarlo de nuevo no repara ni actualiza un espacio de trabajo existente.
 
 Entra en el espacio de trabajo cuando termine:
 
@@ -83,15 +83,10 @@ npx playwright install chromium
 
 Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA que instalaste.
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
-    ```
-  </Tab>
-  <Tab value="Gemini CLI">
-    ```bash title="Terminal"
-    gemini
     ```
   </Tab>
   <Tab value="Codex">
@@ -99,19 +94,24 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
     codex
     ```
   </Tab>
-  <Tab value="Qwen Code">
-    ```bash title="Terminal"
-    qwen
-    ```
-  </Tab>
   <Tab value="OpenCode">
     ```bash title="Terminal"
     opencode
     ```
   </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash title="Terminal"
     copilot
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash title="Terminal"
+    agy
     ```
   </Tab>
 </Tabs>
@@ -134,37 +134,37 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
 
 ## Paso 3: Ejecuta tu primera evaluación
 
-Una vez que el agente te haya hecho el onboarding, estás listo para evaluar una oferta real. Copia la URL de cualquier anuncio de empleo y pégala en el chat. Con Claude Code, ponle delante el comando explícito; con los demás CLIs, pega la URL y pídele al agente que ejecute el auto-pipeline:
+Una vez que el agente te haya hecho el onboarding, estás listo para evaluar una oferta real. Copia la URL de cualquier anuncio de empleo y pégala en el chat. Con Claude Code o Antigravity CLI, ponle delante el comando explícito; con los demás CLIs, pega la URL y pídele al agente que ejecute el auto-pipeline:
 
-<Tabs items={["Claude Code", "Gemini CLI", "Codex", "Qwen Code", "OpenCode", "GitHub Copilot CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
-  <Tab value="Gemini CLI">
-    ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
   <Tab value="Codex">
     ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
-    ```
-  </Tab>
-  <Tab value="Qwen Code">
-    ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="OpenCode">
     ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
   <Tab value="GitHub Copilot CLI">
     ```bash
-    Ejecuta el comando auto-pipeline con la URL de la oferta: https://jobs.example.com/senior-engineer-ai
+    Ejecuta el comando auto-pipeline con la URL de la vacante: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash
+    /career-ops https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>
@@ -188,7 +188,7 @@ Después de pegar la oferta, career-ops hace lo siguiente por su cuenta:
       </Step>
       <Step>
         ### Puntúa la oferta
-        Valora el puesto de 0 a 5 en varias dimensiones, como encaje del puesto, compensación y política de teletrabajo.
+        Valora el puesto de 1 a 5 en varias dimensiones, como encaje del puesto, compensación y política de teletrabajo.
       </Step>
       <Step>
         ### Escribe un informe
@@ -219,8 +219,8 @@ Abre el archivo de informe en `reports/`. El nombre sigue el patrón `{número}-
 - **Block D** — investigación de compensación que compara la oferta con las tarifas de mercado.
 - **Block E** — notas de personalización para tu candidatura.
 - **Block F** — preparación de entrevista con historias STAR adaptadas a esta oferta.
-- **Block G** — legitimidad del anuncio: comprueba que la oferta es real y no una estafa ni un puesto fantasma.
-- **Block H** — borradores de respuesta para el formulario de candidatura, solo cuando la puntuación supera 4.5.
+- **Block G** — legitimidad del anuncio: una comprobación heurística de señales como si la oferta sigue abierta o si se vuelve a publicar una y otra vez. Informa de lo que encuentra y deja el juicio en tus manos.
+- **Block H** — borradores de respuesta para el formulario de candidatura, solo cuando la puntuación es 4.5 o más.
 
 Tu PDF de CV adaptado está en la carpeta `output/`. Revísalo antes de enviarlo a ningún sitio — career-ops nunca envía nada sin tu aprobación.
 
@@ -260,3 +260,5 @@ Si algo no funciona como dice esta guía, por favor repórtalo. Los reportes de 
 - **Reportar un fallo:** Abre un issue en el [repositorio de GitHub](https://github.com/career-ops-hq/career-ops/issues). Describe qué esperabas que pasara, qué pasó en realidad y pega cualquier mensaje de error que vieras.
 - **Hacer una pregunta:** Únete a la [comunidad de Discord](https://discord.gg/8pRpHETxa4). Es la forma más rápida de obtener ayuda de otros usuarios y del autor.
 - **Contribuir un arreglo:** Si sabes cómo arreglar el problema tú mismo, lee [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) antes de abrir un pull request. La versión corta: abre primero un issue para comentar el cambio y luego envía tu PR.
+
+<StarOnGitHub locale="es" />
