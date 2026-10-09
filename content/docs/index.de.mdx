@@ -3,7 +3,7 @@ title: Schnellstart
 description: "Starte in fünf Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: d363142d21bc56d7
+translationHash: 30ec94086b3a612c
 localized: true
 translatedFrom: /docs
 ---
@@ -24,7 +24,7 @@ Du musst nicht programmieren können. Du solltest nur ein Terminal öffnen und e
       <Step>
       ### KI-Coding-Assistent
 
-      Installiere **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** oder **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**. Das ist der KI-Coding-Assistent, der dieses System ausführt. career-ops unterstützt [zehn CLIs vollwertig](/de/docs/supported-clis). Installiere eine davon und melde dich an, bevor du weitermachst.
+      Installiere **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** oder **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**. Das ist der KI-Coding-Assistent, der dieses System ausführt. career-ops unterstützt [elf CLIs vollwertig](/de/docs/supported-clis). Installiere eine davon und melde dich an, bevor du weitermachst.
       </Step>
       <Step>
         ### Node.js 18+ (22.5+ empfohlen)
@@ -83,7 +83,7 @@ npx playwright install chromium
 
 Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
 
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
@@ -114,6 +114,11 @@ Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
     agy
     ```
   </Tab>
+  <Tab value="Pi">
+    ```bash title="Terminal"
+    pi
+    ```
+  </Tab>
 </Tabs>
 
 <Callout title="Der Agent stellt sich vor">
@@ -134,9 +139,9 @@ Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
 
 ## Schritt 3: Erste Bewertung ausführen
 
-Sobald das Onboarding fertig ist, kannst du eine echte Stellenanzeige bewerten. Kopiere die URL einer beliebigen Stellenanzeige und füge sie in den Chat ein. Mit Claude Code oder Antigravity CLI setzt du den Befehl davor. Bei den anderen CLIs fügst du die URL ein und bittest den Agenten, die auto-pipeline auszuführen:
+Sobald das Onboarding fertig ist, kannst du eine echte Stellenanzeige bewerten. Kopiere die URL einer beliebigen Stellenanzeige und füge sie in den Chat ein. Mit Claude Code, Antigravity CLI oder Pi setzt du den Befehl davor. Bei den anderen CLIs fügst du die URL ein und bittest den Agenten, die auto-pipeline auszuführen:
 
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
@@ -165,6 +170,11 @@ Sobald das Onboarding fertig ist, kannst du eine echte Stellenanzeige bewerten. 
   <Tab value="Antigravity CLI">
     ```bash
     /career-ops https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash
+    /skill:career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>

@@ -274,9 +274,9 @@ export const homeEs: HomeDict = {
       q: '¿Con qué herramientas de IA funciona career-ops?',
       a: (
         <>
-          career-ops funciona con Claude Code, Cursor, Codex, OpenCode, Antigravity
+          career-ops funciona con Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity
           CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI —
-          diez CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
+          once CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
           usuario elige el CLI que encaja con su suscripción y sus preferencias de
           coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de
           empleo típica corre con Claude Pro a 20 $/mes, pero la elección es tuya.
