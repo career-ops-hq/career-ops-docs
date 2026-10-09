@@ -53,7 +53,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "Skills aren't loading on Windows — symlink error on install",
     answer:
-      "Windows does not create symlinks by default, so Git checks out the career-ops CLI skill entrypoints as plain pointer files. The installer and updater detect this automatically: run node update-system.mjs apply (or npx @santifer/career-ops init on a fresh install) and the materialize step replaces the pointer files with the full skill content. No manual mklink or Developer Mode changes needed.",
+      "Windows does not create symlinks by default, so Git checks out the career-ops CLI skill entrypoints as plain pointer files. The installer and updater detect this automatically: run node update-system.mjs apply --confirm (or npx @santifer/career-ops init on a fresh install) and the materialize step replaces the pointer files with the full skill content. No manual mklink or Developer Mode changes needed.",
   },
   {
     question: "Can I run career-ops on a cheaper or local model?",
