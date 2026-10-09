@@ -3,7 +3,7 @@ title: FAQ
 description: Häufige Fragen zu career-ops — Kosten, Datenschutz, unterstützte KI-CLIs, scan vs. scan:full, Token-Limits, Einrichtung unter Windows und was career-ops niemals in deinem Namen tun wird.
 seoTitle: "career-ops FAQ — Kosten, Datenschutz, unterstützte CLIs, Windows und kostenloser Betrieb"
 icon: CircleQuestionMark
-translationHash: bd6ad5dba16a4729
+translationHash: cf9f3a2747689131
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -64,7 +64,7 @@ Damit du bei einem Batch-Lauf von career-ops nicht an Token- oder Rate-Limits st
 
 ## Skills werden unter Windows nicht geladen — Symlink-Fehler bei der Installation
 
-Windows legt standardmäßig keine Symlinks an, deshalb checkt Git die Skill-Einstiegspunkte von career-ops für die CLIs als einfache Verweisdateien aus. Installer und Updater erkennen das automatisch: Führe `node update-system.mjs apply` aus (oder `npx @santifer/career-ops init` bei einer Neuinstallation), und der Materialisierungsschritt ersetzt die Verweisdateien durch den vollständigen Skill-Inhalt. Du musst weder manuell `mklink` ausführen noch den Entwicklermodus ändern.
+Windows legt standardmäßig keine Symlinks an, deshalb checkt Git die Skill-Einstiegspunkte von career-ops für die CLIs als einfache Verweisdateien aus. Installer und Updater erkennen das automatisch: Führe `node update-system.mjs apply --confirm` aus (oder `npx @santifer/career-ops init` bei einer Neuinstallation), und der Materialisierungsschritt ersetzt die Verweisdateien durch den vollständigen Skill-Inhalt. Du musst weder manuell `mklink` ausführen noch den Entwicklermodus ändern.
 
 ## Kann ich career-ops mit einem günstigeren oder lokalen Modell betreiben?
 
