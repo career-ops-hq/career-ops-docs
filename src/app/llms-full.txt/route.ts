@@ -76,7 +76,7 @@ The full evaluation runs as Block A through H: A (role summary), B (CV match), C
 
 # Sustainability model (${SITE}/sustain)
 
-career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. Corporate logo sponsorship is agreed with the project, invoiced by the fiscal host and paid to the project's collective; it buys clearly labeled visibility on the README and /sustain, never influence. No premium features, no roadmap influence, no priority support, no personal services from any maintainer. Path 3 Sovereign Maintainer model.`;
+career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no waitlist, no account, no telemetry. Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host. A company tier buys clearly labeled visibility, never influence. No premium features, no roadmap influence, no priority support, no personal services from any maintainer. Path 3 Sovereign Maintainer model.`;
 
 
 // The manifesto block. Until 2026-08-14 llms-full carried the definition
