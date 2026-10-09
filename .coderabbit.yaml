@@ -11,7 +11,7 @@ reviews:
   profile: assertive
   request_changes_workflow: false   # humans decide; the review is a signal
   high_level_summary: true
-  high_level_summary_instructions: "Explain what changes for a reader of career-ops.org: which page, which guide, which language. Name if the PR touches the agent-facing layer (llms.txt, AGENTS.md, the .md mirrors), routing (next.config.mjs, src/proxy.ts), the schema (src/lib/schema.ts), or anything visual under src/app/(home)."
+  high_level_summary_instructions: "Explain what changes for a reader of career-ops.org: which page, which guide, which language. Name if the PR touches the agent-facing layer (llms.txt, AGENTS.md, the .md mirrors), routing (next.config.mjs, src/proxy.ts), the schema (src/lib/schema.ts), or anything visual on the homepage (src/app/(en)/(home), src/app/<locale>/(home) and the shared src/app/_home)."
   poem: false
   collapse_walkthrough: true
   sequence_diagrams: false
@@ -80,8 +80,10 @@ reviews:
       instructions: "Builds /llms.txt, the index AI assistants ingest. Every figure that moves (stars, members, release) must carry an as-of date and must be omitted, never faked, when its live fetch failed. Flag any hand-typed number, any figure without a date, and any relative link (all links must be absolute .md mirrors)."
     - path: "src/app/AGENTS.md/**"
       instructions: "A thin pointer to the core repo's AGENTS.md. It is never a copy. Flag any content that duplicates instructions from the core instead of linking to them."
-    - path: "src/app/(home)/**"
-      instructions: "The homepage, including the hero. Visual changes are the maintainer's decision and are not accepted from pull requests without prior discussion. Flag any change to layout, colors, backdrop, scrim or typography and say explicitly that it needs the maintainer's sign-off before review continues."
+    - path: "src/app/**/(home)/**"
+      instructions: "The homepage, including the hero (English under src/app/(en)/(home), each translation under src/app/<locale>/(home)). Visual changes are the maintainer's decision and are not accepted from pull requests without prior discussion. Flag any change to layout, colors, backdrop, scrim or typography and say explicitly that it needs the maintainer's sign-off before review continues."
+    - path: "src/app/_home/**"
+      instructions: "The homepage modules every language shares: the hero and page body (home-content.tsx, page.client.tsx), the copy type (home-dict.tsx) and each language's copy (home-<locale>.tsx). Visual changes are the maintainer's decision and are not accepted from pull requests without prior discussion. Flag any change to layout, colors, backdrop, scrim or typography and say explicitly that it needs the maintainer's sign-off before review continues."
     - path: "content/**/*.mdx"
       instructions: "The guides. They describe what career-ops-hq/career-ops ships on main today, never what an open PR there proposes. Check commands, flags, script names and the A to H block letters against the core; flag drift. The scoring scale is named '1-5' (decimal thresholds like 4.0 are values and stay). The brand is 'career-ops' lowercase with a hyphen; 'CareerOps' names the practice. Flag hand-typed project numbers (stars, members): they belong to live fetches, not prose."
     - path: "content/**/*.{es,fr,de}.mdx"
@@ -125,7 +127,7 @@ reviews:
     custom:
       - name: register-sitemap-entry
         enabled: true
-        instructions: "If this PR adds a new top-level static page (a new route directory under src/app/ with its own page.tsx, other than a page inside (home), docs, es, fr, de, compare/[slug], or an API route), add it to the entries array in src/app/sitemap.ts, following the existing pattern: url built from SITE_URL, and lastModified from gd('<path to the new page.tsx>') so it degrades to omitted rather than a fabricated date when git has no history for the file. A page invisible to the sitemap is invisible to crawlers even though it renders fine; that already happened once, to /sustain. Do not touch .github/workflows/indexnow.yml: it now derives its URL list from the live sitemap.xml at run time, so nothing there needs registering by hand. Change nothing else."
+        instructions: "If this PR adds a new top-level static page (a new route directory with its own page.tsx: English pages live under src/app/(en)/; not the home, docs, compare/[slug], a locale folder (es, fr, de) or an API route), add it to the entries array in src/app/sitemap.ts, following the existing pattern: url built from SITE_URL, and lastModified from gd('<path to the new page.tsx>') so it degrades to omitted rather than a fabricated date when git has no history for the file. A page invisible to the sitemap is invisible to crawlers even though it renders fine; that already happened once, to /sustain. Do not touch .github/workflows/indexnow.yml: it now derives its URL list from the live sitemap.xml at run time, so nothing there needs registering by hand. Change nothing else."
       - name: sync-translation
         enabled: true
         instructions: "For every content/docs/**/*.mdx page this PR changed in English, bring its .es.mdx, .fr.mdx and .de.mdx siblings up to date: same heading structure, same order, same code fences and command output, translated prose. Never touch command names, CLI flags, file paths, or the manifesto/thesis strings imported from src/lib/shared.ts and src/lib/manifesto-text.ts — those are frozen and must read identically to the English source. Do NOT set or guess a translationHash value in the frontmatter: that field is a literal hash of the English body, computed only by running `node .i18n/hash.mjs <path to the English file>`, and writing a plausible-looking value there would make a stale translation look verified. Leave the existing translationHash untouched and note in your summary that it still needs restamping with that command. content/blog/**/*.mdx has no translated siblings; do not create any there. Change nothing else."
@@ -161,7 +163,7 @@ reviews:
         instructions: "Fail if the diff contains real personal data: a person's real name paired with contact details, real emails, phone numbers, or a real CV. Sample data must use obvious placeholders."
       - name: "Visual change needs the maintainer"
         mode: warning
-        instructions: "Warn if the PR changes layout, colors, backdrop, scrim or typography under src/app/(home) or in global.css, unless the description says the maintainer asked for it."
+        instructions: "Warn if the PR changes layout, colors, backdrop, scrim or typography on the homepage (src/app/(en)/(home), src/app/<locale>/(home), src/app/_home) or in global.css, unless the description says the maintainer asked for it."
       - name: "Agent-operated PR disclosure"
         mode: warning
         instructions: "If the PR author is a coding agent (branch copilot/* or author app/copilot-swe-agent), warn unless the description contains the sections '## AI assistance' and '## Human review'."

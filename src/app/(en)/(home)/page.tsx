@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { homeFaqSchema } from '@/lib/schema';
 import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
-import { HomeContent } from './home-content';
-import { homeEn } from './home-dict';
+import { HomeContent } from '@/app/_home/home-content';
+import { homeEn } from '@/app/_home/home-en';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),

@@ -39,7 +39,7 @@ export default function MethodologyPage() {
             >
               Santiago Fernández de Valderrama Aparicio
             </a>
-            , Applied AI Operator · Last updated{' '}
+            , creator of career-ops · Last updated{' '}
             <time dateTime="2026-05-07">7 May 2026</time>
           </p>
           <h1
@@ -566,9 +566,9 @@ export default function MethodologyPage() {
               >
                 Santiago Fernández de Valderrama Aparicio
               </a>
-              , an Applied AI Operator with 16+ years building products. He created it to manage
-              his own AI-era job search in early 2026 — 740 listings evaluated, one Head of AI
-              role landed — and open-sourced it under MIT once he no longer needed it.
+              , who has spent 16+ years building products. He created it in early 2026 to manage
+              his own AI-era job search: 740 listings evaluated, one Head of Applied AI role
+              landed. He open-sourced it under MIT once he no longer needed it.
             </FaqItem>
 
             <FaqItem question="Does career-ops work with my ATS or job board?">

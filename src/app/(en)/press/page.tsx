@@ -312,10 +312,10 @@ export default async function PressPage() {
             <strong className="font-medium text-fd-foreground">
               Santiago Fernández de Valderrama Aparicio
             </strong>{' '}
-            is an Applied AI Operator with 16+ years building and selling products. He founded
-            Santifer iRepair in 2009 and sold it in 2025. He built career-ops during his own 2026
-            job search — it landed him a Head of Applied AI role — and open-sourced it under MIT.
-            Six months after landing that role, he left it to focus on building career-ops full time. Full
+            is the creator of career-ops and has spent 16+ years building and selling products. He
+            founded Santifer iRepair in 2009 and sold it in 2025. He built career-ops during his own
+            2026 job search, and it landed him a Head of Applied AI role. He then open-sourced the
+            project under MIT. Six months after landing that role, he left it to focus on building career-ops full time. Full
             bio, headshot, and entity links at{' '}
             <Link
               href="/about"

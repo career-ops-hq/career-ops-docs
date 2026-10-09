@@ -51,7 +51,7 @@ ${CANONICAL_IDENTITY}
 
 ## Author
 
-Built by Santiago Fernández de Valderrama Aparicio — Applied AI Operator. Bio at https://career-ops.org/about. Other surfaces at https://santifer.io.
+Santiago Fernández de Valderrama Aparicio is the creator of career-ops. Bio at https://career-ops.org/about. Other surfaces at https://santifer.io.
 
 ## Manifesto
 

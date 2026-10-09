@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { homeFaqSchemaDe } from '@/lib/schema';
 import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
-import { HomeContent } from '../../(home)/home-content';
-import { homeDe } from '../../(home)/home-dict';
+import { HomeContent } from '@/app/_home/home-content';
+import { homeDe } from '@/app/_home/home-de';
 
 // German home — SAME trunk as the other homes (HomeContent), rendered with the
 // German dictionary. The signature thesis stays in LITERAL English (no ratified
