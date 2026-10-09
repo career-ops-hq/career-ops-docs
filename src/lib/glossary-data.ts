@@ -18,7 +18,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Global score (1-5)',
     definition:
-      "The LLM's holistic judgement of a job listing across five dimensions (match, north-star alignment, comp, cultural signals, red flags), producing a score from 1.0 to 5.0. At 4.5+ the agent recommends applying immediately; below 4.0 it recommends against applying. There is no closed-form weighting formula: the score is the LLM's judgement given the rubric, which is public on the methodology page.",
+      "The LLM's holistic judgement of a job listing across five dimensions (match, north-star alignment, comp, cultural signals, red flags), producing a score from 1 to 5. At 4.5+ the agent recommends applying immediately; below 4.0 it recommends against applying. There is no closed-form weighting formula: the score is the LLM's judgement given the rubric, which is public on the methodology page.",
   },
   {
     term: 'Data Contract',
@@ -48,7 +48,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Pipeline',
     definition:
-      'The end-to-end career-ops workflow: scan portals → evaluate listings (1.0 to 5.0) → tailor CV → apply → track → prepare interviews. Each stage is a mode you can run independently or as a batch.',
+      'The end-to-end career-ops workflow: scan portals → evaluate listings (1-5) → tailor CV → apply → track → prepare interviews. Each stage is a mode you can run independently or as a batch.',
   },
   {
     term: 'Zero-token scan',

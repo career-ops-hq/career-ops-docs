@@ -52,7 +52,7 @@ export const homeEs: HomeDict = {
       ejecuta en local, en tu propia máquina, dentro de cualquier CLI de
       programación con IA — Claude Code, OpenCode, Codex, GitHub Copilot y más.
       Evalúa ofertas frente a tu CV con una rúbrica de cinco dimensiones más una
-      nota global holística, puntuando de 1.0 a 5.0, genera PDFs de CV
+      nota global holística, puntuando de 1 a 5, genera PDFs de CV
       optimizados para ATS y adaptados a cada puesto, redacta las respuestas
       abiertas de los formularios de Greenhouse, Ashby y Lever, rastrea más de
       150 fuentes de empleo sin gastar tokens y hace el seguimiento del

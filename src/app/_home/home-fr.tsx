@@ -57,7 +57,7 @@ export const homeFr: HomeDict = {
       tourne en local, sur votre propre machine, dans n’importe quel CLI de
       codage IA — Claude Code, OpenCode, Codex, GitHub Copilot et d’autres. Il
       évalue les offres face à votre CV avec une grille de cinq dimensions plus
-      une note globale, de 1.0 à 5.0, génère des CV PDF optimisés pour les ATS et
+      une note globale, de 1 à 5, génère des CV PDF optimisés pour les ATS et
       adaptés à chaque poste, rédige les réponses aux questions ouvertes des
       formulaires Greenhouse, Ashby et Lever, parcourt plus de 150 sources
       d’emploi sans consommer de jetons et suit votre pipeline dans un
