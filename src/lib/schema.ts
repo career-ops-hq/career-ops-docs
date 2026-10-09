@@ -903,6 +903,7 @@ export function blogPostSchema(args: {
   lastModified: string;
   tags: string[];
   image?: string;
+  inLanguage?: string;
 }) {
   // Google's Article rich result requires `image`; without it all three
   // posts were ineligible (2026-06-30 audit). Defaults to the site OG
@@ -925,7 +926,7 @@ export function blogPostSchema(args: {
       width: 1200,
       height: 630,
     },
-    inLanguage: 'en',
+    inLanguage: args.inLanguage ?? 'en',
     keywords: args.tags.join(', '),
     isPartOf: { '@id': 'https://career-ops.org/#website' },
     mainEntityOfPage: args.url,
@@ -939,11 +940,13 @@ export function blogPostSchema(args: {
 export function faqPageSchema(
   pageUrl: string,
   items: Array<{ q: string; a: string }>,
+  inLanguage?: string,
 ) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${pageUrl}#faq`,
+    ...(inLanguage ? { inLanguage } : {}),
     mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.q,

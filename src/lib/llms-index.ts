@@ -113,6 +113,7 @@ ${comparisonsData.comparisons
 - https://career-ops.org/blog/why-career-ops — the thesis behind the project, what it deliberately is not, and the asymmetry it addresses
 - https://career-ops.org/blog/the-complete-ai-job-search-guide — opinionated guide to AI-powered job search in 2026, four-phase pipeline, tool selection by user archetype
 - https://career-ops.org/blog/job-search-data-from-740-listings — real data from one real search: threshold ratios, tailoring delta, reject-pile patterns
+- https://career-ops.org/blog/why-am-i-not-getting-interviews — why applications go unanswered: what the US hiring data says, and what you control (where you apply, who you write to, your own funnel).
 
 ## Source of truth (core repo)
 

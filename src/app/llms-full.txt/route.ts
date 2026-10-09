@@ -120,7 +120,7 @@ export async function GET() {
   const scan = source.getPages('en').map(getLLMText);
   const scanned = await Promise.all(scan);
 
-  const blogPosts = await Promise.all(blogSource.getPages().map(blogLLMText));
+  const blogPosts = await Promise.all(blogSource.getPages('en').map(blogLLMText));
 
   const comparisons = comparisonsData.comparisons.map(compareLLMText);
 

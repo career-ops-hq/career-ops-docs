@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
-import { blogSource } from '@/lib/blog-source';
+import { blogSource, blogTwin, type BlogPage } from '@/lib/blog-source';
 import { gitLastMod } from '@/lib/git-date';
 import { homeLastModified } from '@/lib/home-date';
 import comparisonsData from '@/lib/data/comparisons.json';
@@ -140,16 +140,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${SITE_URL}/blog`,
     lastModified: gd('src/app/(en)/blog/page.tsx'),
   });
-  for (const post of blogSource.getPages()) {
-    const data = post.data as { date?: string; lastModified?: string };
+  // A post dates itself from its own frontmatter (git as the fallback). A
+  // post with a Spanish twin lists both URLs with the same hreflang cluster.
+  const postDate = (p: BlogPage) => {
+    const data = p.data as { date?: string; lastModified?: string };
     const lastMod = data.lastModified || data.date;
-    const mdxRel = `content/blog/${post.slugs.join('/')}.mdx`;
+    return lastMod ? handDate(lastMod) : gd(`content/blog/${p.path}`);
+  };
+  for (const post of blogSource.getPages('en')) {
+    const es = blogTwin(post, 'es');
+    const cluster = es
+      ? {
+          en: `${SITE_URL}${post.url}`,
+          es: `${SITE_URL}${es.url}`,
+          'x-default': `${SITE_URL}${post.url}`,
+        }
+      : undefined;
     entries.push({
       url: `${SITE_URL}${post.url}`,
-      lastModified: lastMod
-        ? handDate(lastMod)
-        : gd(mdxRel),
+      lastModified: postDate(post),
+      ...(cluster ? { alternates: { languages: cluster } } : {}),
     });
+    if (es && cluster) {
+      entries.push({
+        url: `${SITE_URL}${es.url}`,
+        lastModified: postDate(es),
+        alternates: { languages: cluster },
+      });
+    }
   }
 
   // /docs/** auto-discovered from Fumadocs source (includes

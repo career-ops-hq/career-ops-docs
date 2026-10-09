@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function BlogIndexPage() {
   const posts = blogSource
-    .getPages()
+    .getPages('en')
     .slice()
     .sort((a, b) => {
       const da = (a.data as { date?: string }).date ?? '';
