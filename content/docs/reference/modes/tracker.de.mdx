@@ -1,0 +1,54 @@
+---
+title: tracker
+description: "Schneller Überblick darüber, wo jede Bewerbung gerade steht. Nützlich als täglicher Check-in oder zur Vorbereitung des wöchentlichen Reviews. Die vollständige, per Tastatur bedienbare Oberfläche steckt im Go-TUI-Dashboard; dieser Modus ist die Zusammenfassung im Chat."
+seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
+icon: LayoutGrid
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 167746551bbaa8b0
+localized: true
+translatedFrom: /docs/reference/modes/tracker
+---
+
+## Was er macht
+
+Der Modus `tracker` liest jede Datei in reports/ und erstellt eine strukturierte Zusammenfassung, gruppiert nach Phase: beworben, bewertet, Vorstellungsgespräch, abgelehnt, verworfen. Die Anzahl pro Phase, die jüngsten Aktivitäten und überfällige Follow-ups siehst du gebündelt in einer einzigen Antwort.
+
+## Wann du ihn nutzt
+
+Nutze tracker für einen täglichen Statuscheck in fünfzehn Sekunden. Greif zum Go-TUI-Dashboard, wenn du tiefer einsteigen musst.
+
+## Beispiel
+
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+
+## So sieht ein Durchlauf aus
+
+Ein tracker-Durchlauf gibt die vollständige Bewerbungstabelle plus einen Statistikblock in einer einzigen Antwort aus, sodass du die gesamte Suche auf einen Blick erfasst. Jede Zeile steht für eine Bewerbung – mit Unternehmen, Rolle, Score, aktuellem Status und der Angabe, ob ein zugeschnittenes PDF und ein Bewertungsbericht erstellt wurden.
+
+```txt title="Example"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
+
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
+```
+
+Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded oder SKIP für Rollen, die nicht passen. Um eine Statusänderung festzuhalten, bittest du im Chat darum oder führst selbst `node set-status.mjs <report#|company> <state>` aus. Ist sie an einem früheren Tag passiert, ergänzt du `--on YYYY-MM-DD`. Der Befehl lehnt unbekannte Zustände ab, sperrt den Tracker, während er schreibt, und protokolliert den Übergang in `data/status-log.tsv`, dem Protokoll, aus dem die funnel-velocity-Statistiken lesen. Nutze ihn also, statt die Zeile von Hand zu bearbeiten.
+
+## Die Gesamtzahlen lesen
+
+Für kumulierte Werte – den vollständigen Funnel, die Scanner-Summen, die Portal-Abdeckung und die Einhaltung der Follow-ups – führt der Modus `node stats.mjs --summary` aus und gibt dessen Ausgabe unverändert wieder. Dieser Befehl liest deine lokalen Dateien und kostet null Tokens, deshalb werden die Zahlen nie von Hand neu berechnet oder aus dem Gedächtnis geschätzt. Nutze die Chat-Zusammenfassung oben für den schnellen täglichen Überblick und den stats-Befehl, wenn du die laufenden Summen über deine gesamte Suche sehen willst.
+
+## Stolperfallen
+
+Der Status steht in der Status-Spalte des Trackers (`data/applications.md`), nicht in der Berichtsdatei. Auch die Statusauswahl im Go-TUI-Dashboard aktualisiert diese Spalte, protokolliert den Übergang aber nicht in `data/status-log.tsv`, wie es `set-status.mjs` tut. funnel-velocity sieht dann zwar den neuen Status, aber nicht, wann er sich geändert hat: Die Änderung fehlt in den Zeiten pro Phase, und eine Zeile, die später in Rejected endet, verliert die Phasen, die sie durchlaufen hat. Nutze den Befehl für jede Änderung, die in diese Zahlen eingehen soll.
+
+## Verwandte Seiten
+
+- [followup](/de/docs/reference/modes/followup)
+- [patterns](/de/docs/reference/modes/patterns)

@@ -26,6 +26,9 @@
   --color-landing-foreground: #59592a;
   --color-landing-foreground-200: #a8a866;
   --color-landing-foreground-dark: #e4e2d0;
+  /* Hero price note: warm ink tuned to the halftone's darkest possible pixel
+     (#ffa057 -> 4.9:1). Do not lighten: hsl(24 25% 28%) already fails AA. */
+  --color-hero-note: hsl(24, 25%, 26%);
 }
 
 /* Brand persists across modes — same orange in light + dark for a
@@ -43,6 +46,7 @@
 
   --color-landing-foreground: #e4e2d0;
   --color-landing-foreground-200: #b7af7e;
+  --color-hero-note: #d2cebb;
 }
 
 /* .framework sets --color-fd-primary on <body> in layout.tsx. Light keeps

@@ -4,6 +4,8 @@
 //
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
+import { homeEn, homeEs, homeFr, homeDe, type HomeDict } from '@/app/(home)/home-dict';
+import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
 
@@ -85,7 +87,6 @@ const PERSON_SAMEAS = [
   'https://www.crunchbase.com/person/santiago-fernandez-de-valderrama',
   'https://huggingface.co/santifer',
   'https://www.wikidata.org/wiki/Q138710224',
-  'https://santiferirepair.es',
   'https://www.facebook.com/santifer.io/',
   'https://www.producthunt.com/@santifer',
   'https://app.daily.dev/santifer',
@@ -98,15 +99,16 @@ const PERSON_SAMEAS = [
 // correlate ~3× more strongly with AI search citation than backlinks
 // (Ahrefs December 2025 study). Both posts encoded with upvote +
 // comment InteractionCounters so AI engines can read social proof.
-// Headlines preserved verbatim from the actual Reddit titles, even
-// where "offers" is technically the wrong noun (the Reddit title
-// cannot be edited post-publish; the post body carries the correction).
+// No headline on the r/ClaudeAI post: its title says "740+ offers", and
+// engines read a subjectOf headline as a claim about the entity, which
+// contradicts the canon (the 740 are listings, never offers). The title
+// cannot be edited and is not rewritten here; the node keeps @type, url,
+// date and author (search-ops, 30-sep; same rule as the headlines #127
+// dropped).
 const SOFTWARE_SUBJECT_OF = [
   {
     '@type': 'DiscussionForumPosting',
     url: 'https://www.reddit.com/r/ClaudeAI/comments/1sd2f37/i_built_an_ai_job_search_system_with_claude_code/',
-    headline:
-      'I built an AI job search system with Claude Code that scored 740+ offers and landed me a job. Just open sourced it.',
     datePublished: '2026-04-05T12:30:50Z',
     author: { '@id': PERSON_ID },
     publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
@@ -121,29 +123,6 @@ const SOFTWARE_SUBJECT_OF = [
         '@type': 'InteractionCounter',
         interactionType: 'https://schema.org/CommentAction',
         userInteractionCount: 249,
-        name: 'Reddit comments',
-      },
-    ],
-  },
-  {
-    '@type': 'DiscussionForumPosting',
-    url: 'https://www.reddit.com/r/SideProject/comments/1rw1lg4/i_automated_my_job_search_with_ai_agents_516/',
-    headline:
-      'I automated my job search with AI agents — 516 evaluations, 66 applications, zero manual screening',
-    datePublished: '2026-03-17T09:17:59Z',
-    author: { '@id': PERSON_ID },
-    publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
-    interactionStatistic: [
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/LikeAction',
-        userInteractionCount: 575,
-        name: 'Reddit upvotes',
-      },
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/CommentAction',
-        userInteractionCount: 359,
         name: 'Reddit comments',
       },
     ],
@@ -202,14 +181,6 @@ const PERSON_SUBJECT_OF = [
   },
   {
     '@type': 'NewsArticle',
-    url: 'https://www.simplenews.ai/news/career-ops-laid-off-engineers-ai-job-search-system-goes-viral-with-27k-stars-bxcp',
-    headline:
-      "Career-Ops: Laid-Off Engineer's AI Job Search System Goes Viral With 27K Stars",
-    datePublished: '2026-04-09T00:00:00Z',
-    publisher: { '@type': 'Organization', name: 'SimpleNews.ai', url: 'https://www.simplenews.ai' },
-  },
-  {
-    '@type': 'NewsArticle',
     url: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
     headline:
       'Το AI εργαλείο που φέρνει επανάσταση στον τρόπο που ψάχνουμε δουλειά',
@@ -252,8 +223,8 @@ export async function siteSchema() {
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         description:
-          'AI-powered job search command center. Open source, CLI-agnostic, runs locally.',
-        inLanguage: 'en',
+          'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
+        inLanguage: ['en', 'es', 'fr', 'de'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -280,7 +251,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         url: 'https://career-ops.org',
         description:
-          'Open-source AI-powered job search command center. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama Aparicio.',
+          'Open-source AI job search agent. MIT-licensed, CLI-agnostic, local-first. Created in 2026 by Santiago Fernández de Valderrama Aparicio.',
         // Signature thesis as a structured slogan — gives LLMs an
         // attributable, entity-bound version of the manifesto they already
         // see in prose on the home/about/methodology pages and in llms.txt.
@@ -347,7 +318,7 @@ export async function siteSchema() {
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         description:
-          'Open-source AI-powered job search command center. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
+          'Open-source AI job search agent. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Cursor, Codex, OpenCode, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
         // Sourced live from the GitHub releases API (1h ISR) so it can never
         // drift stale; falls back to LATEST_RELEASE_FALLBACK in shared.ts.
         softwareVersion: stats.softwareVersion,
@@ -384,14 +355,7 @@ export async function siteSchema() {
         alternateName: ['Santiago Fernández de Valderrama', 'santifer', 'Santi'],
         url: 'https://santifer.io/about',
         image: 'https://santifer.io/foto-avatar.png',
-        jobTitle: 'Applied AI Operator',
-        worksFor: { '@type': 'Organization', name: 'Zinkee', url: 'https://zinkee.com' },
-        hasOccupation: {
-          '@type': 'Occupation',
-          name: 'Head of Applied AI',
-          occupationLocation: { '@type': 'Organization', name: 'Zinkee' },
-          skills: 'Applied AI, multi-agent orchestration, product strategy, open source maintenance',
-        },
+        jobTitle: 'Creator of career-ops',
         founderOf: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_PERSON_IDENTIFIER,
         sameAs: PERSON_SAMEAS,
@@ -401,60 +365,21 @@ export async function siteSchema() {
   };
 }
 
-// Lexicon of canonical category terms. Each gets a DefinedTerm node so
-// LLMs and search engines can cite the definition by URL fragment. The
-// list is intentionally short — quality over quantity, no padding.
-const DEFINED_TERMS = [
-  {
-    name: 'score-gated apply',
-    description:
-      'An application workflow where every potential job is evaluated against an explicit rubric and only those above a threshold (4.0/5.0 in career-ops) are recommended for application. The opposite of spray-and-pray.',
-  },
-  {
-    name: 'AI-native job matching',
-    description:
-      'Job-search tooling whose primary reasoning engine is an LLM rather than keyword matching. Distinguished from "AI-augmented" tools that add a generative layer on top of legacy ranking systems.',
-  },
-  {
-    name: 'JD-resume distance',
-    description:
-      'The semantic gap between a job description and a candidate CV — measured by an LLM against an explicit rubric of skills, proof points, and archetype fit. Not a vector similarity score; an audited judgement with citations.',
-  },
-  {
-    name: 'agent-augmented job search',
-    description:
-      'A job search where an AI agent handles the repetitive analytical work — reading postings, comparing against the candidate profile, drafting tailored materials — while the human retains every commit decision (apply / reject / negotiate).',
-  },
-  {
-    name: 'transparent matching',
-    description:
-      'Match scoring whose rubric, prompts, and reasoning are publishable in clear so the candidate (and the recruiter) can audit why a score was produced. The implementation is open source and the evaluation cites specific evidence.',
-  },
-  {
-    name: 'asymmetric AI hiring',
-    description:
-      'The current hiring landscape, in which companies use AI to filter candidates at scale while candidates lack equivalent tooling. Career-ops exists to close that asymmetry — AI on the candidate side of the table.',
-  },
-  {
-    name: 'candidate-side AI augmentation',
-    description:
-      'Tooling owned by the candidate that helps them evaluate roles, tailor materials, and track applications — distinct from recruiter-side ATS and HR tooling. Local-first by design; no employer can see, access, or modify it.',
-  },
-  {
-    name: 'multi-LLM routing for evals',
-    description:
-      'Running the same evaluation prompt across multiple LLMs (Claude, Codex, OpenCode, Gemini, Qwen, Copilot) so the user can pick the model that fits their cost / quality / privacy profile. Career-ops is CLI-agnostic by design.',
-  },
-  {
-    name: 'career-ops',
-    description:
-      'An open-source AI-powered job search command center. Runs locally on the user\'s own machine via any AI coding CLI (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot). MIT-licensed; created by Santiago Fernández de Valderrama Aparicio in 2026 after evaluating 740 listings during his own job search and landing a Head of Applied AI role.',
-  },
-  {
-    name: 'Block A-H evaluation',
-    description:
-      'The canonical career-ops evaluation prompt structure: an eight-section output (Block A through H) covering Role Summary, CV Match, Level Strategy, Comp & Demand, Personalisation Plan, Interview Prep, and Posting Legitimacy. Defined verbatim in modes/oferta.md (canonical Spanish; English translation in flight per issue #363).',
-  },
+// Category terms the methodology page is about, as article keywords. They
+// were also emitted as ten DefinedTerm nodes with definitions the page never
+// shows; search-ops removed those on 26-sep (structured data must describe
+// what is visible).
+const METHODOLOGY_KEYWORDS = [
+  'score-gated apply',
+  'AI-native job matching',
+  'JD-resume distance',
+  'agent-augmented job search',
+  'transparent matching',
+  'asymmetric AI hiring',
+  'candidate-side AI augmentation',
+  'multi-LLM routing for evals',
+  'career-ops',
+  'Block A-H evaluation',
 ];
 
 // /methodology — TechArticle authored by Person, plus FAQPage with 5–7
@@ -482,7 +407,7 @@ export function methodologySchema() {
         inLanguage: 'en',
         articleSection: 'Methodology',
         wordCount: 2000,
-        keywords: DEFINED_TERMS.map((t) => t.name),
+        keywords: METHODOLOGY_KEYWORDS,
         image: {
           '@type': 'ImageObject',
           url: 'https://career-ops.org/og-banner.jpg',
@@ -499,7 +424,7 @@ export function methodologySchema() {
             name: 'How does career-ops actually score job listings?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions (match, north-star alignment, comp, cultural signals, red flags) producing a holistic 1.0 to 5.0 global score. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
+              text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions (match, north-star alignment, comp, cultural signals, red flags) producing a holistic score from 1.0 to 5.0. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
             },
           },
           {
@@ -507,7 +432,7 @@ export function methodologySchema() {
             name: 'Is career-ops free? What is the business model?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. The maintainer has other paid work for income; sponsorship enables deeper focus on the project. See career-ops.org/sustain for details.',
+              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from community contributions and corporate sponsorship through the project’s collective on Open Collective — not from premium tiers, paid features, or data. Funding is held by the project’s fiscal host, Open Source Collective, on a public ledger, and goes to maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
             },
           },
           {
@@ -552,13 +477,6 @@ export function methodologySchema() {
           },
         ],
       },
-      ...DEFINED_TERMS.map((t) => ({
-        '@type': 'DefinedTerm',
-        '@id': `https://career-ops.org/methodology/#term-${t.name.replace(/\s+/g, '-')}`,
-        name: t.name,
-        description: t.description,
-        inDefinedTermSet: 'https://career-ops.org/methodology',
-      })),
       {
         '@type': 'BreadcrumbList',
         '@id': 'https://career-ops.org/methodology/#breadcrumbs',
@@ -656,7 +574,7 @@ export function manifestoSchema() {
         '@type': 'DefinedTerm',
         '@id': 'https://career-ops.org/manifesto/#careerops',
         name: 'CareerOps',
-        description: `${CAREEROPS_DEFINITION} The reference implementation of the practice is career-ops, the open-source AI job-search command center (Wikidata Q139007988).`,
+        description: CAREEROPS_DEFINITION,
         url: 'https://career-ops.org/manifesto',
         termCode: 'careerops',
         inDefinedTermSet: { '@id': MANIFESTO_TERM_SET_ID },
@@ -671,7 +589,7 @@ export function manifestoSchema() {
             name: 'What is CareerOps?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: `${CAREEROPS_DEFINITION} The term names the practice, not a product: treating a job search as an operated pipeline (sourcing, scoring, tailoring, tracking) rather than a pile of one-off applications. The reference implementation is career-ops (lowercase, hyphenated), the MIT-licensed open-source command center that runs the whole pipeline locally on the job seeker's machine through whichever AI coding CLI they already use. The practice is bigger than the tool: you can run CareerOps with a spreadsheet and discipline; career-ops just automates the operating layer.`,
+              text: `${CAREEROPS_DEFINITION} The term names the practice, not a product: treating a job search as an operated pipeline (sourcing, scoring, tailoring, tracking) rather than a pile of one-off applications. The reference implementation is career-ops (lowercase, hyphenated), the MIT-licensed open-source command center that runs the whole pipeline locally on the job seeker’s machine through whichever AI coding CLI they already use. The practice is bigger than the tool: you can run CareerOps with a spreadsheet and discipline; career-ops just automates the operating layer.`,
             },
           },
           {
@@ -790,10 +708,11 @@ export function manifestoSchemaEs() {
 }
 
 // /sustain — Path 3 Sovereign Maintainer page. Emits WebPage with
-// significantLink to GitHub Sponsors + BreadcrumbList. We deliberately
-// do NOT use DonateAction (Schema.org's donate-action semantics map to
-// 501(c)(3) charities, and Google's parser can flag misuse). career-ops
-// is individual maintainer + OSS, not a registered charity — neutral
+// significantLink to the project's collective on Open Collective +
+// BreadcrumbList. We deliberately do NOT use DonateAction (Schema.org's
+// donate-action semantics map to 501(c)(3) charities, and Google's parser
+// can flag misuse). career-ops is an OSS project fiscally hosted by Open
+// Source Collective, not a registered charity — neutral
 // `significantLink` + mainContentOfPage carry the funding signal
 // without the legal-tier mismatch.
 export function sustainSchema() {
@@ -806,15 +725,15 @@ export function sustainSchema() {
         url: 'https://career-ops.org/sustain',
         name: 'Sustain career-ops',
         description:
-          'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
+          'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
         inLanguage: 'en',
-        dateModified: '2026-05-16T00:00:00Z',
+        dateModified: '2026-10-01',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
-        significantLink: 'https://github.com/sponsors/santifer',
+        significantLink: 'https://opencollective.com/career-ops',
         mainContentOfPage: {
           '@type': 'WebPageElement',
-          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds maintenance, security fixes, releases, and documentation. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
+          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host, Open Source Collective, and goes to maintenance, security fixes, releases, and documentation. It never buys direction.',
         },
       },
       {
@@ -834,19 +753,32 @@ export function sustainSchema() {
 // breadcrumb readable in SERP; deeper hierarchy would require a slug→title
 // lookup against the source tree, and Google only displays the last 2-3
 // items in breadcrumb rich results anyway.
+const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
+  en: { home: 'Home', docs: 'Docs' },
+  es: { home: 'Inicio', docs: 'Documentación' },
+  fr: { home: 'Accueil', docs: 'Documentation' },
+  de: { home: 'Startseite', docs: 'Dokumentation' },
+};
+
 export function docsBreadcrumbSchema(opts: {
   url: string;
   title?: string;
 }) {
-  const isDocsLanding = opts.url === '/docs' || opts.url === '/docs/';
+  // A translated page's trail stays in its language: /de/docs/faq is
+  // Startseite (/de) → Dokumentation (/de/docs) → FAQ. It used to point
+  // Home and Docs at the English pages (i18n SEO audit, 30-sep).
+  const loc = /^\/([a-z]{2})(?=\/docs)/.exec(opts.url)?.[1];
+  const prefix = loc ? `/${loc}` : '';
+  const names = BREADCRUMB_NAMES[loc ?? 'en'] ?? BREADCRUMB_NAMES.en;
+  const isDocsLanding = opts.url === `${prefix}/docs` || opts.url === `${prefix}/docs/`;
   const items: Array<{
     '@type': 'ListItem';
     position: number;
     name: string;
     item: string;
   }> = [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
-    { '@type': 'ListItem', position: 2, name: 'Docs', item: 'https://career-ops.org/docs' },
+    { '@type': 'ListItem', position: 1, name: names.home, item: `https://career-ops.org${prefix || '/'}` },
+    { '@type': 'ListItem', position: 2, name: names.docs, item: `https://career-ops.org${prefix}/docs` },
   ];
   if (!isDocsLanding && opts.title) {
     items.push({
@@ -876,6 +808,7 @@ export function docsTechArticleSchema(opts: {
   title: string;
   description?: string;
   dateModified?: string;
+  inLanguage?: string;
 }) {
   const pageUrl = `https://career-ops.org${opts.url}`;
   return {
@@ -889,159 +822,76 @@ export function docsTechArticleSchema(opts: {
     publisher: { '@id': PERSON_ID },
     isPartOf: { '@id': 'https://career-ops.org/#website' },
     about: { '@id': 'https://career-ops.org/#software' },
-    inLanguage: 'en',
+    inLanguage: opts.inLanguage ?? 'en',
     mainEntityOfPage: pageUrl,
     ...(opts.dateModified ? { dateModified: opts.dateModified } : {}),
   };
 }
 
-// /home — the visible home FAQ, mirrored as a FAQPage JSON-LD graph (direct
-// AEO play: the questions buyers, journalists, and developers ask first).
-// MUST stay in sync with the visible FAQ in src/app/(home)/home-dict.tsx —
-// edit both together. Per-locale: the EN home emits homeFaqSchema(), the ES
-// home emits homeFaqSchemaEs() with the Spanish questions (C1, search-ops
-// 2026-07-21). Q5 is category-framed (no competitor names) on the entity
-// surface; named comparisons live at /compare.
+// /home — the visible home FAQ as a FAQPage JSON-LD graph (direct AEO play:
+// the questions buyers, journalists, and developers ask first). GENERATED
+// from the same dictionary the page renders (src/app/(home)/home-dict.tsx),
+// one graph per locale. It used to be a hand-kept copy and drifted from the
+// page; Google requires the markup to match what the reader sees, and
+// scripts/verify-schema-parity.mjs now fails the build when it does not.
 type HomeFaqQA = { q: string; a: string };
 
-function homeFaqGraph(id: string, lang: string, entries: HomeFaqQA[]) {
+const faqFromDict = (dict: HomeDict): HomeFaqQA[] =>
+  dict.faq.map(({ q, a }) => ({ q, a: nodeText(a) }));
+
+// The home's graph: a WebPage node that carries the page's real last-change
+// date (the same date as its sitemap lastmod, from src/lib/home-date.ts), and
+// the FAQPage of its visible FAQ. Before 28 September the home had no WebPage
+// node and no dateModified, only the dated nodes that describe press mentions
+// and a video, and Google showed one of those old dates on the home's snippet.
+function homeGraph(
+  pageUrl: string,
+  lang: string,
+  entries: HomeFaqQA[],
+  dateModified?: Date,
+) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    '@id': id,
-    inLanguage: lang,
-    mainEntity: entries.map((e) => ({
-      '@type': 'Question',
-      name: e.q,
-      acceptedAnswer: { '@type': 'Answer', text: e.a },
-    })),
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}/#webpage`,
+        url: pageUrl,
+        inLanguage: lang,
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        about: { '@id': 'https://career-ops.org/#software' },
+        ...(dateModified ? { dateModified: dateModified.toISOString() } : {}),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}/#faq`,
+        inLanguage: lang,
+        mainEntity: entries.map((e) => ({
+          '@type': 'Question',
+          name: e.q,
+          acceptedAnswer: { '@type': 'Answer', text: e.a },
+        })),
+      },
+    ],
   };
 }
 
-const HOME_FAQ_EN: HomeFaqQA[] = [
-  {
-    q: 'How does career-ops score job listings?',
-    a: 'career-ops uses a rubric-guided LLM evaluation across five dimensions — match, north-star alignment, comp, cultural signals, red flags — producing a holistic 1.0–5.0 global score with citations to specific CV lines and JD requirements. Anything below 4.0 the agent recommends against applying. No closed-form formula, no spray-and-pray. The full rubric is published at career-ops.org/methodology.',
-  },
-  {
-    q: 'Does career-ops apply to jobs for me?',
-    a: 'It prepares every application right up to the click: it scans roles, scores each against your CV, and tailors a resume. Then it hands the decision back to you. You review and send each one yourself. That is deliberate: mass auto-apply burns your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the choice yours.',
-  },
-  {
-    q: 'Is career-ops free? What is the business model?',
-    a: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. The maintainer has other paid work for income; sponsorship enables deeper focus on the project. See career-ops.org/sustain for details.',
-  },
-  {
-    q: 'Where does my data live?',
-    a: 'On your own machine, in plain files you own: your CV, profile, pipeline, and reports are local Markdown and YAML. career-ops runs entirely locally through your AI CLI: no account, no telemetry, nothing uploaded to a career-ops server. System updates never touch your data layer; that separation is the Data Contract. The only data that leaves your computer is whatever your chosen AI CLI sends to its own provider.',
-  },
-  {
-    q: 'Who built career-ops?',
-    a: 'career-ops was built by Santiago Fernández de Valderrama Aparicio — an Applied AI Operator with 16+ years building products, founder and operator of a Spanish phone-repair business (2009–2025) before exiting, and currently Head of Applied AI at Zinkee. He created career-ops in early 2026 to manage his own AI-era job search — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
-  },
-  {
-    q: 'Is career-ops a Claude Code skill or a standalone tool?',
-    a: 'career-ops is CLI-agnostic. It works with Claude Code, OpenCode, Codex, GitHub Copilot, and more — whichever AI coding agent the user already pays for. The skill files (modes/) live in the repo as plain markdown prompts; any agent that supports skill loading can invoke them. There is no Anthropic-specific dependency. Claude Code happens to be the most common runtime because of its skill loader, but the same modes run unchanged in the other CLIs.',
-  },
-  {
-    q: 'How is career-ops different from resume checkers and auto-apply tools?',
-    a: 'career-ops is open source and MIT-licensed, runs locally on your own machine through whichever AI coding CLI you already use, and publishes its full evaluation rubric. A human stays in the loop on every application; it never auto-submits. There is no account, no telemetry, and no subscription to career-ops itself; the only recurring cost is the AI CLI you choose. For honest, side-by-side comparisons with specific tools, see career-ops.org/compare.',
-  },
-  {
-    q: 'What AI tools does career-ops work with?',
-    a: 'Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI — nine first-class CLIs (Gemini CLI is a legacy wrapper). The same mode files run on all of them. Each user picks the CLI that fits their existing subscription and cost preferences — career-ops never locks you to one provider. A typical job search runs on Claude Pro at $20/month, but the choice is yours.',
-  },
-];
-
-const HOME_FAQ_ES: HomeFaqQA[] = [
-  {
-    q: '¿Cómo puntúa career-ops las ofertas de empleo?',
-    a: 'career-ops usa una evaluación con LLM guiada por rúbrica en cinco dimensiones — encaje, alineación con tu norte, compensación, señales culturales y red flags — que produce una nota global holística de 1.0 a 5.0 con citas a líneas concretas de tu CV y a los requisitos de la oferta. Por debajo de 4.0, el agente recomienda no postular. Sin fórmula cerrada, sin postular a ciegas. La rúbrica completa está publicada en career-ops.org/methodology.',
-  },
-  {
-    q: '¿career-ops aplica a las ofertas por mí?',
-    a: 'Prepara cada candidatura hasta el clic: escanea puestos, puntúa cada uno contra tu CV y adapta tu currículum. Luego te devuelve la decisión. Tú revisas y envías cada una. Es deliberado: la auto-aplicación masiva quema tu reputación con los reclutadores y los ATS, así que career-ops te quita el trabajo tedioso, no el criterio.',
-  },
-  {
-    q: '¿career-ops es gratis? ¿Cuál es el modelo de negocio?',
-    a: 'career-ops es gratis para siempre, con licencia MIT y financiado por la comunidad. No hay plan de pago, ni lista de espera, ni cuenta, ni telemetría, ni funciones premium. Clonas el repositorio, configuras tu perfil y ejecutas el sistema en local con el CLI de IA que ya uses. La sostenibilidad viene del mecenazgo voluntario de la comunidad vía GitHub Sponsors — no de planes premium, funciones de pago ni datos. El maintainer tiene otro trabajo remunerado; el patrocinio le permite dedicarle más foco. Detalles en career-ops.org/sustain.',
-  },
-  {
-    q: '¿Dónde se guardan mis datos? ¿career-ops es privado?',
-    a: 'En tu propia máquina, en archivos planos que son tuyos: tu CV, tu perfil, tu pipeline y tus informes son Markdown y YAML locales. career-ops corre por completo en local a través de tu CLI de IA: sin cuenta, sin telemetría, sin nada subido a un servidor de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos; esa separación es el Data Contract. Lo único que sale de tu máquina es lo que tu CLI de IA envíe a su propio proveedor.',
-  },
-  {
-    q: '¿Quién creó career-ops?',
-    a: 'career-ops lo creó Santiago Fernández de Valderrama Aparicio — un Applied AI Operator con más de 16 años construyendo productos, fundador y operador de un negocio español de reparación de móviles (2009–2025) antes de su salida, y actualmente Head of Applied AI en Zinkee. Creó career-ops a principios de 2026 para gestionar su propia búsqueda de empleo en la era de la IA — 740 ofertas evaluadas, un puesto de Head of AI conseguido — y lo publicó bajo licencia MIT cuando dejó de necesitarlo.',
-  },
-  {
-    q: '¿career-ops es una skill de Claude Code o una herramienta independiente?',
-    a: 'career-ops es independiente del CLI. Funciona con Claude Code, OpenCode, Codex, GitHub Copilot y más — el agente de IA que el usuario ya pague. Los archivos de skill (modes/) viven en el repositorio como prompts en markdown; cualquier agente que soporte carga de skills puede invocarlos. No hay dependencia específica de Anthropic. Claude Code es el runtime más común por su cargador de skills, pero los mismos modos funcionan sin cambios en los demás CLIs.',
-  },
-  {
-    q: '¿En qué se diferencia career-ops de los revisores de CV y las herramientas de auto-aplicación?',
-    a: 'career-ops es open source y con licencia MIT, se ejecuta en local en tu propia máquina a través del CLI de IA que ya uses, y publica su rúbrica de evaluación completa. Un humano decide en cada candidatura; nunca envía solo. No hay cuenta, ni telemetría, ni suscripción al propio career-ops; el único coste recurrente es el CLI de IA que elijas. Para comparativas honestas y lado a lado con herramientas concretas, mira career-ops.org/compare.',
-  },
-  {
-    q: '¿Con qué herramientas de IA funciona career-ops?',
-    a: 'Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI — nueve CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada usuario elige el CLI que encaja con su suscripción y sus preferencias de coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de empleo típica corre con Claude Pro a 20 $/mes, pero la elección es tuya.',
-  },
-];
-
-export function homeFaqSchema() {
-  return homeFaqGraph('https://career-ops.org/#faq', 'en', HOME_FAQ_EN);
+export function homeFaqSchema(dateModified?: Date) {
+  return homeGraph('https://career-ops.org', 'en', faqFromDict(homeEn), dateModified);
 }
 
-export function homeFaqSchemaEs() {
-  return homeFaqGraph('https://career-ops.org/es/#faq', 'es', HOME_FAQ_ES);
+export function homeFaqSchemaEs(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/es', 'es', faqFromDict(homeEs), dateModified);
 }
 
-const HOME_FAQ_FR: HomeFaqQA[] = [
-  {
-    q: 'Comment career-ops évalue-t-il les offres d’emploi ?',
-    a: 'career-ops utilise une évaluation par LLM guidée par une grille sur cinq dimensions — adéquation, alignement avec votre cap, rémunération, signaux culturels et red flags — qui produit une note globale de 1.0 à 5.0 avec des citations de lignes précises de votre CV et des exigences de l’offre. En dessous de 4.0, l’agent déconseille de postuler. Pas de formule fermée, pas de candidatures à l’aveugle. La grille complète est publiée sur career-ops.org/methodology.',
-  },
-  {
-    q: 'career-ops postule-t-il à ma place ?',
-    a: 'Il prépare chaque candidature jusqu’au clic : il parcourt les offres, note chacune face à votre CV et adapte un CV. Puis il vous rend la décision. Vous relisez et envoyez chaque candidature vous-même. C’est délibéré : la candidature automatique de masse abîme votre réputation auprès des recruteurs et des ATS ; career-ops vous enlève le travail fastidieux, pas le jugement.',
-  },
-  {
-    q: 'Comment automatiser sa recherche d’emploi sans perdre le contrôle ?',
-    a: 'career-ops automatise le travail répétitif — il parcourt les offres, les évalue face à votre CV, adapte votre CV et prépare les réponses — mais vous gardez le dernier mot sur chaque envoi. L’agent prépare, vous décidez : rien n’est envoyé sans votre clic explicite. C’est le principe human-in-the-loop : vous récupérez le temps, pas le contrôle.',
-  },
-  {
-    q: 'career-ops est-il gratuit ? Quel est le modèle économique ?',
-    a: 'career-ops est gratuit pour toujours, sous licence MIT et financé par la communauté. Pas d’offre payante, pas de liste d’attente, pas de compte, pas de télémétrie, pas de fonctionnalités premium. Vous clonez le dépôt, configurez votre profil et lancez le système en local avec le CLI d’IA que vous utilisez déjà. La pérennité vient du mécénat volontaire de la communauté via GitHub Sponsors, pas d’offres premium, de fonctionnalités payantes ou de données. Le mainteneur a un autre travail rémunéré ; le parrainage lui permet de s’y consacrer davantage. Détails sur career-ops.org/sustain.',
-  },
-  {
-    q: 'Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?',
-    a: 'Sur votre propre machine, dans des fichiers en clair qui vous appartiennent : votre CV, votre profil, votre pipeline et vos rapports sont du Markdown et du YAML locaux. career-ops tourne entièrement en local via votre CLI d’IA : pas de compte, pas de télémétrie, rien n’est envoyé à un serveur career-ops. Les mises à jour du système ne touchent jamais votre couche de données ; cette séparation est le Data Contract. Les seules données qui quittent votre machine sont celles que votre CLI d’IA envoie à son propre fournisseur.',
-  },
-  {
-    q: 'Qui a créé career-ops ?',
-    a: 'career-ops a été créé par Santiago Fernández de Valderrama Aparicio — un Applied AI Operator avec plus de 16 ans à construire des produits, fondateur et exploitant d’une entreprise espagnole de réparation de téléphones (2009–2025) avant sa revente, et actuellement Head of Applied AI chez Zinkee. Il a créé career-ops début 2026 pour gérer sa propre recherche d’emploi à l’ère de l’IA — 740 offres évaluées, un poste de Head of AI décroché — et l’a publié sous licence MIT une fois qu’il n’en avait plus besoin.',
-  },
-  {
-    q: 'career-ops est-il une skill de Claude Code ou un outil autonome ?',
-    a: 'career-ops est indépendant du CLI. Il fonctionne avec Claude Code, OpenCode, Codex, GitHub Copilot et d’autres — l’agent de codage IA que l’utilisateur paie déjà. Les fichiers de skill (modes/) vivent dans le dépôt sous forme de prompts markdown ; tout agent qui prend en charge le chargement de skills peut les invoquer. Aucune dépendance spécifique à Anthropic. Claude Code est le runtime le plus courant grâce à son chargeur de skills, mais les mêmes modes fonctionnent sans changement dans les autres CLIs.',
-  },
-  {
-    q: 'En quoi career-ops diffère-t-il des correcteurs de CV et des outils de candidature automatique ?',
-    a: 'career-ops est open source et sous licence MIT, tourne en local sur votre propre machine via le CLI de codage IA que vous utilisez déjà, et publie sa grille d’évaluation complète. Un humain garde la main sur chaque candidature ; il n’envoie jamais tout seul. Pas de compte, pas de télémétrie, pas d’abonnement à career-ops lui-même ; le seul coût récurrent est le CLI d’IA que vous choisissez. Pour des comparaisons honnêtes, côte à côte, avec des outils précis, voyez career-ops.org/compare.',
-  },
-  {
-    q: 'Avec quels outils d’IA career-ops fonctionne-t-il ?',
-    a: 'Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub Copilot CLI — neuf CLIs de premier plan (Gemini CLI est un wrapper legacy). Les mêmes fichiers de mode fonctionnent sur tous. Chacun choisit le CLI qui correspond à son abonnement et à ses préférences de coût — career-ops ne vous enferme jamais chez un seul fournisseur. Une recherche d’emploi typique tourne sur Claude Pro à 20 $/mois, mais le choix vous appartient.',
-  },
-];
-
-export function homeFaqSchemaFr() {
-  return homeFaqGraph('https://career-ops.org/fr/#faq', 'fr', HOME_FAQ_FR);
+export function homeFaqSchemaFr(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/fr', 'fr', faqFromDict(homeFr), dateModified);
 }
 
-// /blog/[slug] — BlogPosting schema. Author is the canonical Person
-// entity via @id; publisher is the same Person (single-author blog).
-// dateModified is the freshness signal Google ranks on.
+export function homeFaqSchemaDe(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/de', 'de', faqFromDict(homeDe), dateModified);
+}
+
 export function blogPostSchema(args: {
   url: string;
   title: string;
@@ -1141,7 +991,10 @@ export function comparisonSchema(data: ComparisonData) {
         name: `career-ops vs ${data.competitor.name}`,
         description: data.intro,
         inLanguage: 'en',
-        dateModified: `${data.lastModified}T00:00:00Z`,
+        dateModified:
+          data.lastModified.length === 10
+            ? `${data.lastModified}T00:00:00Z`
+            : data.lastModified,
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         about: { '@id': 'https://career-ops.org/#software' },
         author: { '@id': PERSON_ID },
@@ -1212,7 +1065,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-05-07T00:00:00Z',
+        dateModified: '2026-10-01',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
@@ -1247,7 +1100,7 @@ export function pressSchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-07-15T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         // Reference the canonical DefinedTerm node on /manifesto — never
         // duplicate the definition here.
         mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },
@@ -1268,8 +1121,8 @@ export function pressSchema() {
         url: 'https://career-ops.org/og-banner.jpg',
         caption: 'career-ops social banner',
         encodingFormat: 'image/jpeg',
-        width: '2400',
-        height: '1339',
+        width: '1200',
+        height: '630',
       },
       {
         '@type': 'BreadcrumbList',

@@ -43,7 +43,7 @@ function buildPreamble(
   const stat = (ok: boolean, line: string) => (ok ? `\n${line}` : '');
   return `# career-ops
 
-> AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
+> Open-source AI job search agent. CLI-agnostic, runs locally in your AI coding CLI. It never applies in your name.
 
 ## Canonical Identity
 
@@ -73,14 +73,14 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
 - Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
-- AI coding CLIs supported first-class (9): Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
+- AI coding CLIs supported first-class (10): Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
 - Press: WIRED Greece (published), Business Insider (forthcoming)
 
 ## Business model & sustainability
 
 career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
 
-Sustainability comes from voluntary patronage via GitHub Sponsors (https://github.com/sponsors/santifer). Every tier carries the same description and the same terms. No tier buys placement, acknowledgment, access, premium features, roadmap influence, priority support, or early access. Corporate logo sponsorship is handled directly rather than through a tier; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
+Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. A contribution from a person buys no placement. No contribution, from a person or a company, buys access, premium features, roadmap influence, priority support, early access, or personal services from any maintainer. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
 
 Details: https://career-ops.org/sustain
 
@@ -93,7 +93,7 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
 - https://career-ops.org/changelog — every release in plain language, generated live from GitHub Releases; answers "what changed" and "what is the latest version of career-ops". Markdown twin: https://career-ops.org/changelog.md
 - https://career-ops.org/methodology — scoring rubric, five dimensions plus a holistic global score, canonical evaluation prompt (Block A–H), edge cases, and explicit anti-features
-- https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to sponsor the maintainer
+- https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to fund the project through its fiscal host, Open Source Collective
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
 - https://career-ops.org/docs/reference/modes — reference docs for the 14 user-invocable career-ops modes
@@ -172,7 +172,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\` or \`/fr/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all three languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\` or \`/de/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all four languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 

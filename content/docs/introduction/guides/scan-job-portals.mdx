@@ -149,7 +149,7 @@ npm run scan
 
 Run this from the project folder. The script reads `portals.yml`, hits each company's API directly, and writes any new jobs to `data/pipeline.md`. It uses no AI tokens and runs in about 30 seconds.
 
-This option only works for companies that use Greenhouse, Ashby, or Lever. Companies without one of those platforms are skipped.
+This option works for any company whose job page runs on a platform the scanner has a built-in provider for: Greenhouse, Ashby, and Lever, plus dozens of other applicant tracking systems and job boards such as Workable, Workday, and SmartRecruiters. The full list is in [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Companies with no matching provider are skipped, and the scan reports how many.
 
 **Preview results before saving them:**
 
@@ -178,7 +178,7 @@ Open Claude Code in the project folder and type:
 This version visits each company's job page directly using a browser, so it works even for companies that do not have a public API. It also runs the `search_queries` from your `portals.yml` to find roles at companies not in your tracked list.
 
 Use this option when:
-- A company in your list does not use Greenhouse, Ashby, or Lever
+- A company in your list uses a platform the script has no provider for, so the script scan skips it
 - You want to discover new companies, not just check known ones
 - The script scan missed something you expected to see
 

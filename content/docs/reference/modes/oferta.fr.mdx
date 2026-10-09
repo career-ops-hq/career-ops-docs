@@ -1,18 +1,18 @@
 ---
 title: oferta
-description: "Exécute l'évaluation A–H sur une seule annonce. Saute la génération du PDF et l'écriture dans le tracker. À utiliser quand vous n'avez besoin que de la décision de scoring, et pas du pipeline complet."
+description: "Exécute l'évaluation A–H sur une seule annonce. Saute la génération du PDF, mais inscrit l'évaluation dans le tracker. À utiliser quand vous n'avez besoin que de la décision de scoring, et pas du pipeline complet."
 seoTitle: "Mode oferta de career-ops — noter une offre d'emploi avant de postuler"
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: d08b59a5b205a387
+translationHash: d7123fc94d5cddaf
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## Ce que fait ce mode
 
-Le mode oferta lit une seule fiche de poste (URL ou texte collé), la note selon la grille — cinq dimensions plus un score global holistique — avec des preuves citées à l'appui, puis rédige le rapport d'évaluation. Pas de PDF, pas d'entrée dans le tracker. Rapide et peu coûteux.
+Le mode oferta lit une seule fiche de poste (URL ou texte collé), la note selon la grille — cinq dimensions plus un score global holistique — avec des preuves citées à l'appui, puis rédige le rapport d'évaluation. Pas de PDF, mais une ligne est ajoutée au tracker avec le statut Evaluated. Rapide et peu coûteux.
 
 ## Quand l'utiliser
 
@@ -20,7 +20,7 @@ Utilisez oferta pour trancher rapidement le cas d'une annonce limite. Si le scor
 
 ## À quoi ressemble une exécution
 
-Vous confiez une annonce au mode et il renvoie l'évaluation en sept blocs — les blocs A à F, plus un bloc G de lecture de légitimité — avec un score et un raisonnement sourcé. Collez directement le texte de la fiche de poste, ou passez une URL : le mode confirme alors d'abord que l'annonce est toujours en ligne, pour qu'un lien mort ne consomme jamais une évaluation complète.
+Vous confiez une annonce au mode et il renvoie l'évaluation en sept blocs — les blocs A à F, plus un bloc G de lecture de légitimité, ainsi que des brouillons de réponses en bloc H lorsque le score atteint au moins 4.5 — avec un score et un raisonnement sourcé. Collez directement le texte de la fiche de poste, ou passez une URL : le mode confirme alors d'abord que l'annonce est toujours en ligne, pour qu'un lien mort ne consomme jamais une évaluation complète.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -57,6 +57,6 @@ Recourez à oferta pour noter rapidement une seule annonce sans vous engager dan
 
 ## Pages liées
 
-- [auto-pipeline](/docs/reference/modes/auto-pipeline)
-- [ofertas](/docs/reference/modes/ofertas)
-- [pdf](/docs/reference/modes/pdf)
+- [auto-pipeline](/fr/docs/reference/modes/auto-pipeline)
+- [ofertas](/fr/docs/reference/modes/ofertas)
+- [pdf](/fr/docs/reference/modes/pdf)

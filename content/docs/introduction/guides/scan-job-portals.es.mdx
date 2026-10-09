@@ -3,7 +3,7 @@ title: Escanea portales de empleo
 description: Configura y ejecuta el escáner de portales para encontrar nuevas ofertas de empleo automáticamente.
 seoTitle: "Escanea portales de empleo con career-ops — Greenhouse, Ashby, Lever, cero tokens"
 icon: ScanEye
-translationHash: 13f18941c14fa8c0
+translationHash: e02cb2833eb23b85
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -11,7 +11,7 @@ translatedFrom: /docs/introduction/guides/scan-job-portals
 Esta guía explica cómo configurar `portals.yml` y ejecutar el escáner de portales para encontrar nuevas ofertas de empleo automáticamente.
 
 <Callout title="Antes de empezar">
-  Asegúrate de haber completado la guía de [Inicio rápido](/docs). Necesitas tener `cv.md` y `modes/_profile.md` en su sitio para que el escaneo sea útil.
+  Asegúrate de haber completado la guía de [Inicio rápido](/es/docs). Necesitas tener `cv.md` y `modes/_profile.md` en su sitio para que el escaneo sea útil.
 </Callout>
 
 ## Configura portals.yml
@@ -152,7 +152,7 @@ npm run scan
 
 Ejecútalo desde la carpeta del proyecto. El script lee `portals.yml`, consulta la API de cada empresa directamente y escribe las ofertas nuevas en `data/pipeline.md`. No consume tokens de IA y tarda unos 30 segundos.
 
-Esta opción solo funciona con empresas que usan Greenhouse, Ashby o Lever. Las empresas sin una de esas plataformas se omiten.
+Esta opción funciona con cualquier empresa cuya página de empleo use una plataforma para la que el escáner tiene un provider integrado: Greenhouse, Ashby y Lever, además de decenas de otros sistemas de seguimiento de candidatos (ATS) y portales de empleo como Workable, Workday y SmartRecruiters. La lista completa está en [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Las empresas sin un provider compatible se omiten, y el escaneo indica cuántas son.
 
 **Previsualiza los resultados antes de guardarlos:**
 
@@ -181,7 +181,7 @@ Abre Claude Code en la carpeta del proyecto y escribe:
 Esta versión visita la página de empleo de cada empresa directamente usando un navegador, así que funciona incluso con empresas que no tienen API pública. También ejecuta las `search_queries` de tu `portals.yml` para encontrar puestos en empresas que no están en tu lista de seguimiento.
 
 Usa esta opción cuando:
-- Una empresa de tu lista no usa Greenhouse, Ashby ni Lever
+- Una empresa de tu lista usa una plataforma para la que el script no tiene provider, así que el escaneo con el script la omite
 - Quieres descubrir empresas nuevas, no solo comprobar las conocidas
 - El escaneo con el script pasó por alto algo que esperabas ver
 

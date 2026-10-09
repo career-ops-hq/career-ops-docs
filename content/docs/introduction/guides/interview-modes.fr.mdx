@@ -3,17 +3,17 @@ title: Se préparer aux entretiens
 description: Utilisez les modes interview — plan, practice, debrief — pour préparer un tour d'entretien précis, le répéter avec un intervieweur IA et transformer chaque entretien réel en enseignements pour le suivant.
 seoTitle: "Préparation aux entretiens avec career-ops — une préparation tour par tour"
 icon: GraduationCap
-translationHash: 684f86b0ae8151c2
+translationHash: f200ca2ca0715a2e
 localized: true
 translatedFrom: /docs/introduction/guides/interview-modes
 ---
 
-Les modes interview constituent le système de préparation aux entretiens de career-ops, livré dans la v1.16.0 : `interview/plan` construit un plan de préparation découpé en blocs horaires pour un tour précis, `interview/practice` mène un entretien blanc réaliste, une question à la fois, et `interview/debrief` consigne ce qui s'est réellement passé pour que le tour suivant démarre plus intelligemment. Ensemble, ils forment une boucle — planifier, s'entraîner, passer l'entretien, débriefer, recommencer — dont les effets se cumulent tout au long d'un processus de recrutement.
+Les modes interview constituent le système de préparation aux entretiens de career-ops, livré dans la v1.16.0 : `interview/plan` construit un plan de préparation découpé en blocs horaires pour un tour précis, `interview/practice` mène un entretien blanc écrit, une question à la fois, et `interview/debrief` consigne ce qui s'est réellement passé pour que le tour suivant démarre plus intelligemment. Ensemble, ils forment une boucle — planifier, s'entraîner, passer l'entretien, débriefer, recommencer — dont les effets se cumulent tout au long d'un processus de recrutement.
 
-Ils complètent le [mode `interview-prep`](/docs/reference/modes/interview-prep), plus ancien, qui construit votre socle durable (banque d'histoires, banque de questions). Les trois modes ciblés, eux, portent sur un *tour précis à venir*.
+Ils complètent le [mode `interview-prep`](/fr/docs/reference/modes/interview-prep), plus ancien, qui construit votre socle durable (banque d'histoires, banque de questions). Les trois modes ciblés, eux, portent sur un *tour précis à venir*.
 
 <Callout title="Ce qu'il vous faut d'abord">
-Un espace de travail avec votre `cv.md` et votre `config/profile.yml` en place (le [Démarrage rapide](/docs) configure les deux). Les modes les lisent pour ancrer chaque plan et chaque retour dans votre expérience réelle — pas dans des conseils d'entretien génériques.
+Un espace de travail avec votre `cv.md` et votre `config/profile.yml` en place (le [Démarrage rapide](/fr/docs) configure les deux). Les modes les lisent pour ancrer chaque plan et chaque retour dans votre expérience réelle — pas dans des conseils d'entretien génériques.
 </Callout>
 
 ## La boucle en un coup d'œil
@@ -21,7 +21,7 @@ Un espace de travail avec votre `cv.md` et votre `config/profile.yml` en place (
 | Mode | Quand | Ce que vous obtenez |
 | --- | --- | --- |
 | `interview/plan` | Dès qu'un tour est programmé | Un plan de préparation en blocs horaires, dimensionné selon les heures dont vous disposez réellement |
-| `interview/practice` | Avant le tour | Un entretien blanc réaliste avec un retour structuré pour chaque réponse |
+| `interview/practice` | Avant le tour | Un entretien blanc écrit avec un retour structuré pour chaque réponse |
 | `interview/debrief` | Juste après l'entretien réel | Une évaluation honnête question par question + une banque de questions mise à jour |
 
 ## Plan : transformer une date en planning
@@ -42,7 +42,7 @@ Donnez à `interview/plan` la description du poste ainsi que la date et l'heure 
 
 Le plan se calibre selon le tour : un échange de présélection avec un recruteur reçoit de la logistique et du récit, pas des détails techniques pointus ; un entretien approfondi avec un praticien reçoit de la profondeur sur la compétence centrale de la fiche de poste. Si une banque de questions issue d'un tour précédent existe, tout ce qui vous a posé problème reçoit un bloc dédié — les données de performance réelles priment sur le risque supposé.
 
-## Practice : répéter face à un intervieweur réaliste
+## Practice : répéter une question à la fois [#practice--répéter-face-à-un-intervieweur-réaliste]
 
 `interview/practice` joue le rôle de l'intervieweur — avec son nom et sa fonction si vous les fournissez — et pose une question à la fois, sans sortir de son personnage, avec des relances naturelles là où un véritable intervieweur creuserait. Après chaque réponse, vous recevez un retour structuré : ce qui a fait mouche, ce qu'il faut resserrer, et une version plus solide de votre réponse, ancrée dans votre CV réel et votre banque d'histoires.
 
@@ -58,8 +58,8 @@ Lancez `interview/debrief` juste après un entretien réel, tant que votre mémo
 
 - **Il met à jour la banque de questions** — chaque question est marquée ✅ / 🟡 / 🔴 selon votre performance réelle, pas au ressenti.
 - **Il comble les lacunes** — pour chaque 🔴, il explique la bonne réponse avec un exemple détaillé et la relie à une histoire que vous possédez déjà.
-- **Il extrait de nouvelles histoires** — si vous avez raconté en entretien quelque chose qui ne figure pas encore dans votre banque d'histoires, il en fait sur-le-champ une histoire au format STAR+R.
-- **Il anticipe le tour suivant** — si vous en connaissez le format, il prédit les questions probables à partir de la fonction de l'intervieweur et de ce que ce tour a déjà couvert.
+- **Il extrait de nouvelles histoires** — si vous avez raconté en entretien quelque chose qui ne figure pas encore dans votre banque d'histoires, il propose d'en faire une histoire au format STAR+R et l'ajoute si vous acceptez.
+- **Il anticipe le tour suivant** — si vous en connaissez le format, il liste les questions probables, chacune marquée `[inferred]`, à partir de la fonction de l'intervieweur et de ce que ce tour a déjà couvert.
 
 ## Pourquoi cette boucle fonctionne
 

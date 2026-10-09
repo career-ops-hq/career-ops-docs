@@ -1,0 +1,52 @@
+---
+title: pdf
+description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnittenen PDF-Lebenslauf und rendert dafür Markdown mit Playwright über ein schlichtes typografisches Template. Das Ergebnis ist strukturell einfach – keine Tabellen, keine Spalten, keine Grafiken – und damit genau das, was ATS-Parser zuverlässig verarbeiten."
+seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebenslauf erstellen"
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: beb822061e860203
+localized: true
+translatedFrom: /docs/reference/modes/pdf
+---
+
+## Was er macht
+
+Der pdf-Modus liest deine Master-Datei cv.md und den Kontext der Stellenbeschreibung. Dann passt er den Lebenslauf an: Er formuliert Stichpunkte um, ordnet Abschnitte neu und baut die wichtigsten Keywords ein. Anschließend exportiert er ihn mit Playwright als PDF. Dafür nutzt er ein CSS-Template, das die Konventionen von ATS-Parsern einhält. Das Ergebnis kannst du direkt hochladen.
+
+## Wann du ihn einsetzt
+
+Nutze pdf, wenn du die Stellenanzeige schon bewertet und dich für eine Bewerbung entschieden hast. Du bekommst dann nur das zugeschnittene PDF, ohne dass die Bewertung noch einmal läuft.
+
+## So sieht ein Durchlauf aus
+
+Du gibst dem Modus eine Stellenanzeige, die du schon bewertet hast. Er erzeugt daraus ein zugeschnittenes, ATS-taugliches PDF, ohne sie erneut zu bewerten. Er zieht 15–20 Keywords aus der Stellenbeschreibung und wählt das Papierformat nach dem Standort des Unternehmens. Deine Zusammenfassung schreibt er passend zur Rolle um und ordnet die Stichpunkte neu. Zum Schluss rendert er das HTML als PDF und meldet dir, wie viele der Keywords abgedeckt sind.
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+
+Das Layout bleibt einspaltig, mit Standard-Abschnittsüberschriften und markierbarem Text. Genau diese Struktur lesen ATS-Parser sauber aus. Die Keywords werden in echte Erfolge eingearbeitet und nie erfunden.
+
+## Wann du darauf zurückgreifst
+
+Greif zu pdf, wenn du dich für eine Bewerbung entschieden hast und nur den zugeschnittenen Lebenslauf willst, ohne den Bewertungsschritt. Ein paar Dinge solltest du wissen:
+
+- Das Papierformat richtet sich automatisch nach dem Standort des Unternehmens: `letter` für Stellen in den USA und Kanada, `a4` überall sonst.
+- Beim Einbauen der Keywords bleibt der Modus bei der Wahrheit. Er beschreibt deine echte Erfahrung mit den Begriffen aus der Stellenbeschreibung, fügt aber nie eine Fähigkeit hinzu, die du nicht hast.
+- Für den DACH-Raum und große Teile Kontinentaleuropas kannst du ein Foto einbinden, indem du `candidate.photo` in `config/profile.yml` setzt. Lässt du das Feld leer, sieht der Lebenslauf ohne Foto pixelgenau gleich aus. Für die USA, Großbritannien und Märkte, in denen zuerst ein ATS filtert, ist das die sicherere Standardeinstellung.
+
+## Stolperfallen
+
+Playwright muss lokal installiert sein. Auf minimalen Linux-Installationen ohne Systemschriftarten kann das Build-Script fehlschlagen. Mit `npm run doctor` findest du die Ursache.
+
+## Siehe auch
+
+- [auto-pipeline](/de/docs/reference/modes/auto-pipeline)

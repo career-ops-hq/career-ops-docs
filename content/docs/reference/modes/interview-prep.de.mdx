@@ -1,0 +1,74 @@
+---
+title: interview-prep
+description: "career-ops interview-prep erstellt ein Dossier für dein Vorstellungsgespräch, zugeschnitten auf Unternehmen und Stelle und danach gegliedert, wer mit im Raum sitzt: Recruiter, Hiring Manager, Fachkollegen oder ein Panel. Du bekommst wahrscheinliche Fragen, Gesprächspunkte und STAR-Geschichten aus deinem eigenen Profil."
+seoTitle: "career-ops interview-prep — Vorbereitung auf Vorstellungsgespräche, zugeschnitten aufs Unternehmen, Runde für Runde"
+icon: GraduationCap
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 089e79a9cad42ea5
+localized: true
+translatedFrom: /docs/reference/modes/interview-prep
+---
+
+career-ops **interview-prep** macht aus einem angesetzten Vorstellungsgespräch ein Dossier, mit dem du arbeiten kannst. Du nennst ein Unternehmen und eine Stelle. Du kannst ihm auch die Stellenanzeige für eine Stelle geben, die du nie formell bewertet hast. Dann recherchiert interview-prep den Bewerbungsprozess und ordnet jede Runde danach ein, wer sie führt: Recruiter-Screening, Hiring Manager, fachliches Gespräch mit Teamkollegen oder Panel. Für jede Runde entwirft es die Fragen, die dort wahrscheinlich kommen, jeweils mit einem Antwortentwurf aus deinem eigenen Werdegang. Jede Frage stammt entweder aus öffentlichen Erfahrungsberichten zu Vorstellungsgesprächen, die per Websuche gefunden wurden (zum Beispiel auf Glassdoor oder Blind), oder sie trägt die Markierung `[inferred from JD]`. Das Ergebnis ist ein gespeichertes Vorbereitungsdokument, kein Chat.
+
+## Was er macht
+
+interview-prep liest den Unternehmenskontext (idealerweise schon über `deep` oder `oferta` angereichert), die Stellenbeschreibung und dein Profil. Daraus erstellt es ein Vorbereitungsdokument für die Runden, die der Prozess des Unternehmens laut Berichten umfasst. Das Dokument enthält typische Fragemuster je nach Gesprächspartner, Gesprächspunkte speziell zu deinem Werdegang und vorformulierte STAR-Geschichten, die du im Gespräch spontan anpassen kannst. Gibt es für die Stelle schon einen Bewertungsbericht, ist dieser Bericht maßgeblich. Übergibst du eine URL zu einer Stelle, die du nie bewertet hast, holt sich interview-prep die Stellenbeschreibung selbst. Dabei versucht es zuerst die strukturierte ATS-API, dann Playwright und zuletzt einen Headless-Fallback. Ist die Anzeige schon geschlossen, bittet es dich, ihren Text einzufügen.
+
+## Wann du ihn einsetzt
+
+Führe interview-prep aus, sobald eine Runde im Kalender steht. Es entsteht ein einziges Dokument mit einem Abschnitt für jede Art von Gesprächspartner im Prozess:
+
+- Der Abschnitt zum Recruiter-Screening bereitet dich auf die Gehaltsverhandlung vor.
+- Der Abschnitt zum Hiring Manager behandelt, wie gut du zur Stelle passt.
+- Der Abschnitt zum fachlichen Gespräch mit Teamkollegen behandelt Architektur und Coding.
+- Der Abschnitt zum Panel behandelt Führungssignale.
+
+career-ops ist außerdem angewiesen, den Modus auszuführen, wenn eine Stelle mit einer Bewertung von 4.0 oder höher in deinem Tracker auf `Interview` wechselt.
+
+interview-prep ist der **Recherche**-Schritt: Es liefert das Dossier, das du vor dem Gespräch durcharbeitest. Die interaktiven Interview-Übungen `plan`, `practice` und `debrief` sind ein anderer Modus. Mit ihnen probst du live, und nach einer Runde wertest du sie damit aus. Beide greifen ineinander: Ein Debrief fließt in das Material ein, das interview-prep beim nächsten Mal liest. Mehr zu diesen Übungen findest du im [Leitfaden zu den Interview-Modi](/de/docs/introduction/guides/interview-modes).
+
+## So sieht ein Durchlauf aus
+
+Du nennst Unternehmen und Stelle, und der Modus liefert einen Interview-Intel-Bericht. Der Bericht behandelt die Runden, die der Prozess des Unternehmens laut Berichten umfasst. Der Modus recherchiert den Prozess und ordnet jede Runde nach Gesprächspartner ein: Recruiter-Screening, Hiring Manager, fachliches Gespräch mit Teamkollegen oder Panel. Dann entwirft er wahrscheinliche Fragen. Jede Frage bekommt eine Quellenangabe oder die Markierung `[inferred from JD]`.
+
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
+```
+
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
+```
+
+Der Bericht ordnet außerdem jeder wahrscheinlichen Frage passende Geschichten aus deiner `story-bank.md` zu. Wo du noch keine Geschichte vorbereitet hast, markiert er die Lücke.
+
+## Wann du darauf zurückgreifst
+
+Greif zu interview-prep, sobald eine Runde angesetzt ist und du statt allgemeiner Ratschläge ein Dokument willst, mit dem du arbeiten kannst. Ein paar Dinge machen das Ergebnis präziser:
+
+- Führe vorher `oferta` oder `deep` für das Unternehmen aus. Die Vorbereitung liest aus dem Bewertungsbericht den Archetyp, die Lücken und die passenden Belege aus deinem Profil. Je mehr Kontext, desto konkreter die Fragen.
+- Füge die Namen der Interviewer oder den Zeitplan ein, wenn du sie hast. Bei einem Panel erstellt der Modus eine Einschätzung zu jedem einzelnen Interviewer. Für jeden Termin entwirft er eine passende Abschlussfrage.
+- Hast du für die Stelle schon eine Gehaltsvorstellung genannt, fließt sie in den Abschnitt zum Recruiter-Screening ein. career-ops liest die Zahl, die du genannt hast. So beruht die Vorbereitung auf die Gehaltsverhandlung auf dem, was du tatsächlich gesagt hast, und nicht auf einer Vermutung.
+- Achte auf die Markierungen. Fragen mit Quelle verweisen auf den Erfahrungsbericht, aus dem sie stammen. Abgeleitete Fragen tragen `[inferred from JD]`. Sieh abgeleitete Fragen als wahrscheinlich an, nicht als Fragen, die dir garantiert gestellt werden.
+
+## Siehe auch
+
+- [deep](/de/docs/reference/modes/deep)
+- [contacto](/de/docs/reference/modes/contacto)
+- [oferta](/de/docs/reference/modes/oferta)

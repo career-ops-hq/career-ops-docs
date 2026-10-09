@@ -51,10 +51,6 @@ const config = {
   // request time (undici fetch rejects file: URLs); whitelist it for
   // Vercel's file tracing so the lambda bundle includes it.
   outputFileTracingIncludes: {
-    // The home OG route reads its font from disk rather than fetching it, so
-    // the file has to be traced into the bundle or the route 500s at runtime
-    // while the build stays green.
-    '/opengraph-image': ['./src/app/(home)/*.ttf'],
     '/manifesto/s/[username]/opengraph-image': [
       './src/app/manifesto/s/[username]/*.ttf',
     ],
@@ -113,11 +109,11 @@ const config = {
         // had no markdown twin at all. See the route header for why the locale
         // is an explicit path segment rather than an optional prefix.
         {
-          source: '/:lang(es|fr)/docs.md',
+          source: '/:lang(es|fr|de)/docs.md',
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr)/docs/:slug(.*).md',
+          source: '/:lang(es|fr|de)/docs/:slug(.*).md',
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
         },
         // Accept negotiation for the locale docs. NOT done in src/proxy.ts:
@@ -130,13 +126,13 @@ const config = {
         // These must stay AFTER the `.md` rules above, or `:slug(.*)` would
         // swallow `<url>.md` before the explicit markdown rewrite sees it.
         {
-          source: '/:lang(es|fr)/docs',
+          source: '/:lang(es|fr|de)/docs',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr)/docs/:slug(.*)',
+          source: '/:lang(es|fr|de)/docs/:slug(.*)',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
@@ -162,8 +158,29 @@ const config = {
       ],
     };
   },
+  async redirects() {
+    return [
+      // /index and /<anything>/index answered 200 with the same page as the
+      // clean URL (canonical pointed right, but a redirect is the strongest
+      // consolidation signal). 308 to the clean URL (search-ops D5, 30-sep).
+      // Paths ending in .md never match, so the markdown mirrors are safe.
+      { source: '/index', destination: '/', permanent: true },
+      { source: '/:path+/index', destination: '/:path+', permanent: true },
+    ];
+  },
   async headers() {
     return [
+      // Spanish and French routes declare their language over HTTP. The root
+      // layout hardcodes <html lang="en"> for every page (see src/app/es/layout.tsx
+      // for why that is not changed here), and Bing reads Content-Language.
+      {
+        source: '/:lang(es|fr|de)',
+        headers: [{ key: 'Content-Language', value: ':lang' }],
+      },
+      {
+        source: '/:lang(es|fr|de)/:path*',
+        headers: [{ key: 'Content-Language', value: ':lang' }],
+      },
       {
         source: '/:path*',
         headers: securityHeaders,

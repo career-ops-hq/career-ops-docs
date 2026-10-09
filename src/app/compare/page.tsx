@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import comparisonsData from '@/lib/data/comparisons.json';
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
     'Honest comparisons between career-ops and other AI job search tools. Open source local vs SaaS cloud, MIT vs proprietary, free vs $50-200/mo. No fake ratings, no pasivo-agresivo framing.',
   alternates: { canonical: 'https://career-ops.org/compare' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/compare',
     siteName: 'career-ops',
@@ -59,7 +61,7 @@ export default function CompareIndexPage() {
         <a
           href="https://github.com/career-ops-hq/career-ops/discussions"
           className="text-fd-foreground underline underline-offset-2"
-          rel="noreferrer noopener"
+          rel="noopener"
         >
           Open a discussion
         </a>

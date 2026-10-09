@@ -5,7 +5,7 @@ seoTitle: "Mode apply de career-ops — brouillons automatiques de réponses aux
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: 2b3d824399a29c66
+translationHash: e00bf55bd395ea9c
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -49,18 +49,18 @@ captcha, and submit yourself.
 
 ## Pièges à connaître
 
-apply n'envoie pas les formulaires et ne clique sur aucun bouton. Il lit les questions et produit des brouillons de réponses dans le chat. L'étape d'envoi vous revient. Les champs fermés (listes déroulantes, boutons radio, envois de fichiers) sont hors périmètre. Si la vérification préalable détecte que l'annonce est fermée, apply refuse de rédiger un texte final à moins que vous ne l'y forciez explicitement — un lien mort ne vaut pas une réponse sur mesure.
+apply n'envoie jamais la candidature : le clic final sur Envoyer vous revient toujours. Il lit tous les champs du formulaire, pas seulement les questions ouvertes — listes déroulantes, boutons radio, cases à cocher et champs d'envoi de fichiers compris. Il rédige les réponses en texte libre, propose une valeur pour chaque champ fermé et signale les questions d'autorisation de travail, de salaire et autres sujets sensibles auxquelles votre profil ne répond pas encore, pour que vous les confirmiez plutôt que de les deviner lui-même. Avec Playwright, il peut remplir certains champs directement dans le formulaire ; vous vérifiez l'ensemble et complétez le reste. Une fois les réponses saisies, il enregistre dans le rapport le texte, les sélections et les fichiers utilisés. Si la vérification préalable détecte que l'annonce est fermée, apply refuse de rédiger un texte final à moins que vous ne l'y forciez explicitement — un lien mort ne vaut pas une réponse sur mesure.
 
 ## Particularités connues des ATS
 
 apply a été éprouvé sur le terrain à travers une douzaine de candidatures pilotées par Playwright, et quelques portails font échouer une exécution si vous n'en tenez pas compte :
 
 - **Ashby** déduplique les candidats par adresse e-mail au sein de chaque entreprise : une seconde candidature peut donc fusionner silencieusement avec la première. Si un rapport existe déjà pour cette entreprise, apply vous suggère un alias e-mail `+tag`.
-- **Lever** déclenche un captcha lorsqu'une case à cocher ou un bouton radio est cliqué de façon programmatique : apply ne remplit donc que les champs texte et vous laisse cocher le reste.
+- **Lever** déclenche un captcha lorsqu'une case à cocher ou un bouton radio est cliqué de façon programmatique : apply ne remplit donc que les champs texte et les listes déroulantes, et vous laisse cocher les cases et les boutons radio.
 - **Workday** ignore les valeurs saisies sans véritables frappes clavier : apply tape donc les réponses caractère par caractère et vous demande de vérifier les listes déroulantes d'autorisation de travail avant d'enregistrer.
 
 ## Pages liées
 
-- [auto-pipeline](/docs/reference/modes/auto-pipeline)
-- [pdf](/docs/reference/modes/pdf)
-- [tracker](/docs/reference/modes/tracker)
+- [auto-pipeline](/fr/docs/reference/modes/auto-pipeline)
+- [pdf](/fr/docs/reference/modes/pdf)
+- [tracker](/fr/docs/reference/modes/tracker)

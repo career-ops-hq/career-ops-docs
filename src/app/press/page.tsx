@@ -1,3 +1,4 @@
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     'Official press kit for career-ops: boilerplate copy, key facts, logos, and media coverage. Open-source, MIT-licensed, local-first AI job-search tool by Santiago Fernández de Valderrama Aparicio.',
   alternates: { canonical: 'https://career-ops.org/press' },
   openGraph: {
+    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/press',
     siteName: 'career-ops',
@@ -59,7 +61,7 @@ const PRESS = [
 
 // Downloadable brand assets. The "co" mark ships as a static SVG
 // (public/bimi-logo.svg) and a 180px PNG (the /apple-icon route). The
-// social banner is the 2400×1339 OG image. All same-origin so the
+// social banner is the 1200×630 OG image. All same-origin so the
 // download attribute works without CORS.
 const ASSETS = [
   {
@@ -75,7 +77,7 @@ const ASSETS = [
     download: 'career-ops-logo.png',
   },
   {
-    label: 'Social banner (JPG, 2400×1339)',
+    label: 'Social banner (JPG, 1200×630)',
     href: '/og-banner.jpg',
     note: 'Open Graph card. Use for article headers and link previews.',
     download: 'career-ops-banner.jpg',
@@ -294,7 +296,7 @@ export default async function PressPage() {
             <a
               href="https://github.com/career-ops-hq/career-ops/releases/tag/manifesto-v1.0"
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
             >
               manifesto-v1.0
@@ -311,8 +313,9 @@ export default async function PressPage() {
               Santiago Fernández de Valderrama Aparicio
             </strong>{' '}
             is an Applied AI Operator with 16+ years building and selling products. He founded
-            Santifer iRepair in 2009 and sold it in 2025; he is now Head of Applied AI at Zinkee.
-            He built career-ops during his own 2026 job search and open-sourced it under MIT. Full
+            Santifer iRepair in 2009 and sold it in 2025. He built career-ops during his own 2026
+            job search — it landed him a Head of Applied AI role — and open-sourced it under MIT.
+            Six months after landing that role, he left it to focus on building career-ops full time. Full
             bio, headshot, and entity links at{' '}
             <Link
               href="/about"
@@ -441,7 +444,7 @@ export default async function PressPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-07-15">15 Jul 2026</time>
+          Last updated <time dateTime="2026-09-29">29 Sep 2026</time>
         </p>
       </article>
     </>

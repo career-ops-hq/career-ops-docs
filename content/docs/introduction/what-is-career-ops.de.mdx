@@ -1,0 +1,42 @@
+---
+title: Was ist career-ops
+description: "career-ops ist ein kostenloses Open-Source-System für die KI-gestützte Jobsuche, das lokal in der KI-CLI läuft, die du bereits nutzt. Es bewertet Stellen, passt deinen Lebenslauf an und verfolgt deine Bewerbungen."
+seoTitle: "Was ist career-ops? Das lokale Open-Source-System für die KI-gestützte Jobsuche"
+icon: CircleQuestionMark
+date: 2026-04-20
+lastModified: 2026-05-12
+translationHash: 713b62ec28d7c08c
+localized: true
+translatedFrom: /docs/introduction/what-is-career-ops
+---
+
+career-ops ist ein Open-Source-System für die Jobsuche, das in deinem KI-Coding-Assistenten läuft. Du gibst ihm die URL einer Stellenanzeige oder den reinen Text. Es liest die Beschreibung und bewertet die Stelle anhand deines Werdegangs in fünf Dimensionen plus einem ganzheitlichen Gesamtscore. Dann erstellt es einen maßgeschneiderten Lebenslauf als PDF, der konkrete Zeilen aus deinem ursprünglichen Lebenslauf zitiert, und protokolliert alles in einem lokalen Bewerbungs-Tracker. Das alles erledigt ein einziger Befehl, ohne Tabellen, ohne Konto und ohne dass deine Daten deinen Rechner verlassen. career-ops wurde von [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) entwickelt, um Anfang 2026 eine echte Jobsuche im KI-Zeitalter zu organisieren. Er hat 740 Stellenanzeigen anhand eines klar definierten Bewertungsrasters geprüft und am Ende eine Stelle als Head of Applied AI bekommen. Als er es nicht mehr brauchte, hat er es unter MIT als Open Source veröffentlicht. So können alle, die strukturiert nach einem Job suchen, dasselbe System kostenlos nutzen, auf dem eigenen Rechner und mit dem KI-Modell, für das sie ohnehin schon bezahlen. Sechs Monate nachdem er diese Stelle angetreten hatte, hat er sie wieder aufgegeben, um sich in Vollzeit dem Aufbau von career-ops zu widmen.
+
+## Philosophie
+
+### Open Source, ernst gemeint
+
+career-ops hat keine kostenpflichtige Stufe, keine Warteliste, kein Konto und keine Telemetrie. Du klonst das Repo und führst es lokal mit der KI-Coding-CLI aus, die du ohnehin schon nutzt. Dein Lebenslauf liegt als reines Markdown vor, deine Konfiguration als YAML. Das sind Dateien, die dir gehören und die du jederzeit bearbeiten kannst. Bei der Einrichtung musst du sie nicht einmal anfassen: Du antwortest in ganz normaler Sprache und der Agent schreibt sie für dich. Dein Profil und deine Bewerbungshistorie verlassen deinen Rechner nie, es sei denn, du pushst sie selbst irgendwohin. Das Projekt wächst durch Beiträge aus der Community, die öffentlich geprüft werden. Wenn jemand einen Scraper für ein Unternehmensportal hinzufügt, das Bewertungsraster verbessert oder einen Bug behebt, bekommen alle diese Verbesserung mit dem nächsten Release. Das ist das ganze Geschäftsmodell. Es gibt kein Upselling und keine Enterprise-Stufe, und ein Verkauf von Daten ist nicht geplant. Das System steht für immer unter der MIT-Lizenz. Selbst wenn der Maintainer keine Releases mehr veröffentlicht, bleiben das Bewertungsraster, die Prompts und die Scraper deine. Du kannst sie forken, prüfen und selbst ausführen.
+
+<Callout title="Möchtest du beitragen?">
+  Lies den [Leitfaden für Beiträge](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md), bevor du einen Pull Request öffnest. Kurz gesagt: Eröffne zuerst ein Issue, um die Änderung zu besprechen, und reiche danach deinen PR ein. Die Maintainer prüfen zügig.
+</Callout>
+
+### KI-nativ und anbieterunabhängig
+
+career-ops bringt kein eigenes KI-Modell mit. Es läuft als Sammlung von Slash-Befehlen und Prompt-Dateien in der KI-Coding-CLI, der du bereits vertraust: Claude Code, Codex, OpenCode, Qwen, GitHub Copilot und [weitere](/de/docs/supported-clis). Die KI übernimmt das Denken. career-ops liefert die Struktur, das Bewertungsraster, die Scraper für Unternehmensportale und den Datenvertrag, der dafür sorgt, dass deine Dateien deine bleiben. Durch diese Architektur bist du nicht an die Roadmap oder die Preise eines einzelnen Anbieters gebunden. Wenn ein besseres Modell erscheint, wechselst du deine CLI, und career-ops läuft unverändert darauf weiter. Dasselbe Raster aus fünf Bewertungsdimensionen plus einem ganzheitlichen Gesamtscore liefert vergleichbare Begründungen, egal ob du es auf ein Modell von Claude, OpenAI, Gemini oder Qwen ansetzt. Wähl die Engine, die zu deinen Anforderungen an Kosten, Qualität und Datenschutz passt, und wechsle frei, wenn sich die Landschaft weiterentwickelt.
+
+## Wann du career-ops nutzen solltest
+
+career-ops ist das richtige Werkzeug, wenn du aktiv und strukturiert nach einem Job suchst und nicht nur nebenbei stöberst. Am besten passt es zu Menschen, auf die Folgendes zutrifft:
+
+- Sie haben einen Lebenslauf, mit dem sie zufrieden sind, und wollen ihn für jede Bewerbung anpassen, ohne ihn jedes Mal von Hand umzuschreiben.
+- Sie haben mehrere Bewerbungen im Blick und wollen dafür einen zentralen Ort statt einer ausufernden Tabelle.
+- Sie wollen sich nur auf Stellen bewerben, die wirklich passen, statt auf alles, was irgendwie relevant klingt.
+- Sie kommen mit Befehlen im Terminal zurecht, auch wenn sie beruflich nicht programmieren.
+
+Wenn du nur ein oder zwei Bewerbungen verschickst und dann fertig bist, brauchst du career-ops wahrscheinlich nicht. Die Einrichtung dauert etwa fünfzehn Minuten: Du klonst das Repo, konfigurierst dein Profil und fügst deinen Lebenslauf hinzu. Diese Zeit lohnt sich erst, wenn du mehr als eine Handvoll Stellen bewertest.
+
+## Was career-ops nicht ist
+
+career-ops bewirbt sich nicht für dich. Das System analysiert, bewertet, erstellt und protokolliert. Ob du eine Bewerbung abschickst, entscheidest aber immer du selbst, und bei jedem Schritt siehst du die Begründung des Agenten. Ohne deine ausdrückliche Zustimmung geht nichts raus. career-ops ist außerdem kein Lebenslauf-Baukasten und kein LinkedIn-Optimierer. Du bringst den Lebenslauf mit, den du schon hast, und das System sorgt dafür, dass jede Version davon auf die Stelle zugeschnitten ist, die gerade vor dir liegt. Es ist eine Pipeline, keine Content-Fabrik. Der Systemcode wird mit jedem Release aktualisiert, deine Nutzerdaten werden nie überschrieben. Diese Grenze legt die DATA_CONTRACT.md im Repository verbindlich fest. Dein Lebenslauf, dein Profil und deine Bewerbungshistorie sind unantastbar. career-ops liest sie, aber es schreibt nie stillschweigend um oder löscht, was du dort abgelegt hast, in keinem Release.
