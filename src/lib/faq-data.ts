@@ -38,7 +38,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "Which AI coding CLIs does career-ops work with?",
     answer:
-      "career-ops works first-class with nine AI coding CLIs: Claude Code, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI (Gemini CLI is supported as a legacy wrapper). career-ops is AI-agnostic: it ships prompt files the CLI executes, so you can also point it at any OpenAI-compatible endpoint or a local model with zero code changes. See Supported AI CLIs for the current list and how to invoke each.",
+      "career-ops works first-class with ten AI coding CLIs: Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI (Gemini CLI remains only as a legacy wrapper). career-ops is AI-agnostic: it ships prompt files the CLI executes, so you can also point it at any OpenAI-compatible endpoint or a local model with zero code changes. See Supported AI CLIs for the current list and how to invoke each.",
   },
   {
     question: "What is the difference between scan and scan:full?",

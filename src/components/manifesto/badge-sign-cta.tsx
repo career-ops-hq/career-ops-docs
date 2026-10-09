@@ -35,7 +35,7 @@ export function BadgeSignCta({
     <a
       href={signUrl}
       target="_blank"
-      rel="noreferrer noopener"
+      rel="noopener"
       onClick={onClick}
       className="mt-5 inline-block w-full sm:w-auto rounded-lg px-6 py-3 text-sm font-medium"
       style={{ backgroundColor: '#f4ede4', color: '#14100c' }}

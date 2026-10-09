@@ -1,0 +1,57 @@
+---
+title: training
+description: "Solltest du diesen ML-Systems-Kurs für 4.000 $ belegen? Die Coursera-Spezialisierung? Die teure AWS-Zertifizierung? Der training-Modus bewertet eine Lerninvestition anhand der beruflichen Richtung, die du angegeben hast, und zeigt dir, was dir die investierte Zeit und das investierte Geld tatsächlich bringen."
+seoTitle: "career-ops training-Modus — lohnt sich dieser Kurs oder diese Zertifizierung?"
+icon: BookOpen
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: f9ba1d91483777d9
+localized: true
+translatedFrom: /docs/reference/modes/training
+---
+
+## Was er macht
+
+Der Modus `training` liest die Details des Kurses oder der Zertifizierung (Lehrplan, Zeitaufwand, Kosten) und den North-Star-Abschnitt aus config/profile.yml. Dann bewertet er die Investition in drei Dimensionen: wie gut sie eine Kompetenzlücke schließt, welchen Signalwert sie für deine Zielrollen hat und welche Opportunitätskosten sie verursacht.
+
+## Wann du ihn nutzt
+
+Nutze training, wenn dich ein Lernangebot reizt, du aber unsicher bist, ob es dich wirklich in die Richtung bringt, die du dir vorgenommen hast. Besonders nützlich ist der Modus bei teuren Zertifizierungen und Bootcamps.
+
+## Beispiel
+
+```
+`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
+```
+
+## So sieht ein Durchlauf aus
+
+Ein training-Durchlauf bewertet einen Kurs oder eine Zertifizierung in sechs Dimensionen und liefert eines von drei Urteilen. So siehst du, was dir Zeit und Geld bringen, bevor du dich festlegst. Du gibst ihm das Angebot mit Lehrplan, Anzahl der Wochen, Stunden pro Woche und Kosten, und er bewertet es anhand der beruflichen Richtung, die du angegeben hast.
+
+```txt title="Example"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+
+Zum Urteil DO gehört ein Plan über vier bis zwölf Wochen mit wöchentlichen Ergebnissen und einem Scoreboard. Das Urteil DON'T DO nennt eine bessere Alternative und begründet sie. DO WITH TIMEBOX begrenzt die Anzahl der Wochen und kürzt den Plan auf das Wesentliche. Dieses Urteil bekommen meist Kurse, die nützlich, aber aufgebläht sind.
+
+## Was am besten abschneidet
+
+Der Modus gewichtet Angebote, die Glaubwürdigkeit in produktionsreifer KI aufbauen, höher als generische Nachweise. Nach Priorität geordnet heißt das: LLM-Evaluation und -Testing, Observability und Monitoring, Abwägungen zwischen Kosten und Zuverlässigkeit, KI-Governance und -Sicherheit sowie Enterprise-KI-Architektur. Ein Kurs, an dessen Ende ein vorzeigbares Artefakt steht, etwa ein Eval-Harness oder ein überwachtes Deployment, schneidet besser ab als einer, der nur mit einem Zertifikat endet. Denn das Artefakt kann ein Hiring Manager tatsächlich sehen.
+
+## Stolpersteine
+
+Der Modus ist auf den North Star ausgerichtet, den du angegeben hast. Wenn du den North-Star-Abschnitt in config/profile.yml nicht sorgfältig ausgefüllt hast, bleibt die Bewertung oberflächlich.
+
+## Verwandte Seiten
+
+- [project](/de/docs/reference/modes/project)

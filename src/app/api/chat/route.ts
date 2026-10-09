@@ -87,6 +87,13 @@ export const PATCH = methodNotAllowed;
 export const DELETE = methodNotAllowed;
 
 export async function POST(req: Request, ctx: RouteContext<"/api/chat">) {
+  // No model credentials configured: answer with a clean 503 instead of
+  // calling the provider and streaming its internal error to the reader.
+  // The panel shows a neutral, localized message for any failure.
+  if (!process.env.OPENROUTER_API_KEY) {
+    return Response.json({ error: 'assistant_unavailable' }, { status: 503 });
+  }
+
   const reqJson = await req.json();
 
   const result = streamText({

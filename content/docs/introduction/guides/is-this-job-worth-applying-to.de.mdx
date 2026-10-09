@@ -1,0 +1,195 @@
+---
+title: "Lohnt sich eine Bewerbung auf diese Stelle?"
+description: "Entscheide, bevor du dich bewirbst. career-ops bewertet eine Stellenanzeige mit 1 bis 5 anhand deines Lebenslaufs und deiner Ziele, zeigt seine Begründung und überlässt dir die Entscheidung."
+seoTitle: "Lohnt sich eine Bewerbung auf diese Stelle? Mit career-ops vor der Bewerbung entscheiden – ein Score von 1 bis 5 mit Begründung"
+icon: Scale
+translationHash: 7108334c927d4e60
+localized: true
+translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
+---
+
+Eine Bewerbung auf eine Stelle lohnt sich, wenn die Stelle gut genug zu deinem Lebenslauf (CV), deinem Level und deinen Bedingungen passt, um den Aufwand zu rechtfertigen. career-ops gleicht die Stellenanzeige mit deinem Lebenslauf und deinen Zielen ab und vergibt einen Score von 1 bis 5, samt Begründung. Unter 4,0 rät es von einer Bewerbung ab, es sei denn, du hast einen konkreten Grund. Die Entscheidung triffst du.
+
+Um eine Stellenanzeige vor der Bewerbung zu prüfen, führe `/career-ops oferta` aus und füge sie ein. career-ops bewertet und entwirft, du entscheidest und schickst ab. Es bewirbt sich nie in deinem Namen.
+
+**Auf dieser Seite:** [Vor der Bewerbung entscheiden](#vor-der-bewerbung-entscheiden) · [Eine gute Stellenanzeige erkennen](#woran-erkenne-ich-eine-gute-stellenanzeige-bevor-ich-mich-bewerbe) · [Wie der Score entsteht](#wie-legt-career-ops-den-score-fest) · [Was den Score nicht verändert](#was-veraendert-den-score-nicht) · [Unter 4,0](#was-passiert-unter-40) · [Was dir die Bewertung liefert](#was-liefert-dir-die-bewertung) · [Ein fiktives Beispiel](#ein-fiktives-beispiel) · [Sag ihm, wer du bist](#die-ersten-bewertungen-sind-grob-bis-du-ihm-sagst-wer-du-bist) · [Den Score an deinen Ergebnissen prüfen](#passt-der-score-zu-dir) · [Zwei Angebote über das Gehalt hinaus vergleichen](#zwei-angebote-ueber-das-gehalt-hinaus-vergleichen) · [Mit deinen eigenen Zahlen verhandeln](#mit-deinen-eigenen-zahlen-verhandeln) · [FAQ](#haeufig-gestellte-fragen)
+
+## Vor der Bewerbung entscheiden [#vor-der-bewerbung-entscheiden]
+
+career-ops ist um eine einzige Entscheidung herum gebaut: ob eine Stellenanzeige überhaupt eine Bewerbung verdient. Füge die Stelle ein, auf die du dich heute Abend bewerben wolltest, und es sagt dir, ob sich dieser Abend lohnt. Wer dir antworten wird, kann es dir nicht sagen. Es sagt dir aber, wie gut die Rolle zu deinem Lebenslauf und zu deinen Wünschen passt. Das erfährst du, bevor du den Abend mit einer Bewerbung verbringst, auf die vielleicht nur Schweigen folgt.
+
+career-ops setzt auf Qualität statt Quantität. Es lenkt dich zu weniger, dafür besseren Bewerbungen und sagt klar, wenn eine Stellenanzeige nicht überzeugt. Lautet ein Ergebnis *nicht bewerben*, dann macht das Produkt genau seinen Job.
+
+Weniger, dafür bessere Bewerbungen sind auch eine Frage der Würde auf beiden Seiten des Tisches. Die Zeit von Recruitern verdient Respekt. Deine auch.
+
+> Ich habe career-ops für meine eigene Jobsuche 2026 gebaut. Mein Funnel: 740 bewertet → 68 beworben → 12 Vorstellungsgespräche → 1 Jobangebot. — Santiago Fernández de Valderrama Aparicio
+
+## Woran erkenne ich eine gute Stellenanzeige, bevor ich mich bewerbe? [#woran-erkenne-ich-eine-gute-stellenanzeige-bevor-ich-mich-bewerbe]
+
+<Callout title="Bevor du loslegst">
+  Installiere career-ops mit dem [Quick Start](/de/docs) und öffne es in einer der [unterstützten CLIs](/de/docs/supported-clis). Solange du ihm nicht gesagt hast, wer du bist, werden Bewertungen am mitgelieferten Profil gemessen, das auf KI-Rollen ausgerichtet ist. Mehr dazu unter [Die ersten Bewertungen sind grob](/de/docs/introduction/guides/is-this-job-worth-applying-to#die-ersten-bewertungen-sind-grob-bis-du-ihm-sagst-wer-du-bist).
+</Callout>
+
+Damit du zuerst entscheiden kannst, hat career-ops einen reinen Bewertungsmodus. Öffne deine KI-Coding-CLI im career-ops-Ordner, führe den folgenden Befehl aus und füge die Stellenbeschreibung oder ihre URL ein:
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+Der Modus `oferta` führt die Bewertung durch und schreibt den Bericht, ohne automatisches PDF. Fügst du eine Stelle stattdessen direkt in `/career-ops` ein, läuft die komplette Pipeline. Sie passt unabhängig vom Score auch einen Lebenslauf an (standardmäßig als PDF). Nutze `oferta`, wenn du vor allem anderen das Urteil willst. Entscheidest du dich danach für eine Bewerbung, passt `/career-ops pdf` deinen Lebenslauf an. `/career-ops apply` entwirft Antworten auf die Fragen des Bewerbungsformulars, die du prüfst und selbst abschickst.
+
+In Codex funktionieren Slash-Commands nicht garantiert. Nenne den Modus stattdessen in einem Prompt, zum Beispiel `Run the career-ops oferta mode on this job: {URL}`.
+
+Bevor career-ops irgendetwas bewertet, führt es ein paar Prüfungen durch. Gibst du ihm eine URL, prüft es zuerst, ob die Stellenanzeige noch online ist. Ein toter Link stoppt den Lauf vor der Bewertung, ohne Bericht und ohne Lebenslauf. Eingefügter Text lässt sich so nicht prüfen, und der Bericht vermerkt das. Vielleicht führst du in `data/blacklist.md` eine eigene Liste von Unternehmen, bei denen du dich nicht bewerben willst. Dann stoppt ein gelistetes Unternehmen den Lauf: career-ops zitiert den Grund, den du notiert hast, und fragt, ob du die Bewertung trotzdem willst. Sieht die Stellenanzeige so aus, als käme sie über eine Agentur, fragt es nach der Agentur, bevor es irgendetwas schreibt.
+
+Die Recherche innerhalb einer Bewertung ist begrenzt. Für Gehalt und Legitimität der Stellenanzeige zusammen sind höchstens fünf Websuchen erlaubt. Was es dabei nicht findet, wird als nicht verfügbar markiert. Für einen tieferen Blick auf ein Unternehmen führe separat `/career-ops deep` aus.
+
+## Wie legt career-ops den Score fest? [#wie-legt-career-ops-den-score-fest]
+
+Der Score von career-ops ist ein ganzheitliches Urteil, das sich an fünf Dimensionen orientiert:
+
+| Dimension                                          | Worauf sie schaut                                                          |
+| -------------------------------------------------- | -------------------------------------------------------------------------- |
+| Übereinstimmung mit dem Lebenslauf (Match with CV) | Wie gut deine Skills, deine Erfahrung und deine Belege zur Stelle passen   |
+| North-Star-Ausrichtung (North Star alignment)      | Wie gut die Rolle zu den Zielrollen in deinem Profil passt                 |
+| Vergütung (Comp)                                   | Die in der Stellenanzeige genannte Bezahlung, abgeglichen mit Marktdaten   |
+| Kultursignale (Cultural signals)                   | Unternehmenskultur, Wachstum, Stabilität und Remote-Regelung               |
+| Red Flags                                          | Blocker und Warnungen, die den Score nach unten ziehen                     |
+
+Der Gesamtscore von career-ops fasst die fünf Dimensionen ohne arithmetische Formel zu einer Zahl von 1 bis 5 zusammen. Er ist kein Durchschnitt der Berichtsabschnitte. Derselbe Score steht im Kopf des Berichts und in deinem Tracker.
+
+Der Kultur-Fit kann sich nicht hinter einer starken Übereinstimmung mit dem Lebenslauf verstecken. Legst du in `config/profile.yml` Anforderungen an die Kultur fest und spricht die Stellenanzeige dagegen, benennt der Bericht, was fehlt. Außerdem deckelt er die Dimension Kultursignale. Erreicht eine Rolle trotz schwachem Kultur-Fit 4,5 oder mehr, bekommt sie eine ausdrückliche Warnung: Überprüfe das vor der Bewerbung.
+
+career-ops gleicht die Arbeitserlaubnis mit deinem Profil ab. Sagt eine Stellenanzeige nichts über Visa-Sponsoring, sinkt der Score nicht. Auch ein allgemeines „must be authorized to work in X“ senkt ihn nicht, wenn du in X arbeiten darfst. Anders ist es bei einem ausdrücklichen Ausschluss von Sponsoring wie „no visa sponsorship“ oder „must have existing work authorization“. Kannst du die Rolle aus keinem Land annehmen, in dem du arbeiten darfst, wird das als harter Blocker erfasst. Der Bericht zitiert dann den genauen Wortlaut der Stellenanzeige.
+
+## Was verändert den Score nicht? [#was-veraendert-den-score-nicht]
+
+Die Legitimitätsstufe der Stellenanzeige verändert nie den Score von 1 bis 5. Die Legitimitätsprüfung (Block G im Bericht) achtet auf verschiedene Signale:
+
+- das Alter der Anzeige
+- ob der Bewerben-Button noch aktiv ist
+- wie konkret die Beschreibung ist
+- aktuelle Meldungen über Entlassungen
+- ob dieselbe Rolle immer wieder neu ausgeschrieben wird
+
+Sie liefert eine von drei Stufen: High Confidence (hohes Vertrauen), Proceed with Caution (mit Vorsicht fortfahren) oder Suspicious (verdächtig). Sie zeigt, was sie gesehen hat, beschuldigt nie jemanden und nennt legitime Erklärungen für ein bedenkliches Signal. Das Urteil überlässt sie dir. Fehlt nur das Veröffentlichungsdatum, ist die Standardstufe Proceed with Caution, nie Suspicious. Die Unternehmensrecherche hinter der Prüfung kann trotzdem in die Dimension Kultursignale einfließen, etwa Meldungen zur Stabilität eines Unternehmens.
+
+Die Wichtigkeit von Anforderungen wird gekennzeichnet, nicht verrechnet. Der Bericht listet bis zu 12 wesentliche Anforderungen der Stellenanzeige auf. Er lässt dabei nie eine kritische oder hohe Anforderung weg, nur damit die Liste passt. Für jede Anforderung markiert er, wie viel sie in dieser Stellenanzeige zählt, von kritisch bis schwaches Signal. Außerdem zeigt er, woher diese Einstufung kommt: aus dem Wortlaut der Anzeige, aus ihrem Aufbau oder aus einer gekennzeichneten Schätzung. Die Wichtigkeit wird allein anhand der Stellenanzeige eingetragen, bevor dein Lebenslauf gelesen wird. So gilt eine Anforderung nicht nur deshalb als wichtig, weil du zufällig darin stark bist. Erfüllst du eine kritische oder hohe Anforderung nicht oder nur teilweise, nennt der Bericht ein konkretes Risiko fürs Vorstellungsgespräch. Dazu gibt es einen Plan, wie du dich darauf vorbereitest. Die Wichtigkeitslabels bewegen den Score von 1 bis 5 nicht.
+
+Deine eigene Vorgeschichte mit einem Unternehmen wird angezeigt, aber nicht bewertet. Vielleicht hast du dich dort schon einmal beworben und nie etwas gehört. Oder du hast einmal eine Antwort bekommen und ein anderes Mal nur Schweigen. Dann ergänzt der Bericht einen Hinweis dazu. Dieser Hinweis ist kein Legitimitätssignal und ändert weder den Score noch die Stufe. Er soll dir helfen zu entscheiden, wie viel Aufwand du investierst.
+
+Deine Blacklist verändert nie einen Score. Sie ist eine Schranke, die den Lauf anhält, bis du antwortest. career-ops trägt dort nie selbst etwas für dich ein.
+
+## Was passiert unter 4,0? [#was-passiert-unter-40]
+
+Unter 4,0 rät career-ops von einer Bewerbung ab, es sei denn, du hast einen konkreten Grund. Du kannst dich darüber hinwegsetzen, und career-ops sagt dir das offen.
+
+Die Grenze bei 4,0 ist eine Empfehlung. Die Entscheidung bleibt bei dir, genauso wie jede Bewerbung: career-ops entwirft das Material, du prüfst es und schickst es ab. Am anderen Ende der Skala bekommt eine Stellenanzeige mit 4,5 oder mehr zusätzlich Antwortentwürfe für ihr Bewerbungsformular.
+
+## Was liefert dir die Bewertung? [#was-liefert-dir-die-bewertung]
+
+career-ops schreibt jede Bewertung in einen Bericht unter `reports/`. In deinem Tracker `data/applications.md` fügt es eine Zeile mit dem Status Evaluated hinzu. Im Kopf des Berichts stehen der Score, die Legitimitätsstufe und der Status der Arbeitserlaubnis. Darunter folgt eine maschinenlesbare Zusammenfassung. Die Hauptabschnitte kommen in dieser Reihenfolge:
+
+- A) Role Summary (Zusammenfassung der Rolle)
+- B) Match with CV (Übereinstimmung mit dem Lebenslauf)
+- C) Level and Strategy (Level und Strategie)
+- D) Comp and Demand (Vergütung und Nachfrage)
+- E) Customization Plan (Anpassungsplan)
+- F) Interview Plan (Plan fürs Vorstellungsgespräch)
+- G) Posting Legitimacy (Legitimität der Stellenanzeige)
+- Risk Summary (Risikoübersicht): bündelt die Risikosignale auf einem Bildschirm, ohne etwas neu zu bewerten
+- H) Draft Application Answers (Antwortentwürfe für die Bewerbung), nur bei einem Score von 4,5 oder mehr
+
+Die Stellenanzeige selbst wird wortgetreu im Bericht archiviert. Eine sehr lange Anzeige landet in einer Datei unter `jds/`, auf die der Bericht verweist. So bleiben dir die Anforderungen erhalten, auch wenn die Anzeige offline geht. Angehängt ist ein erster Entwurf für das Anschreiben, den du mit `/career-ops cover {slug}` fertigstellst.
+
+## Ein fiktives Beispiel [#ein-fiktives-beispiel]
+
+<Callout title="Fiktives Beispiel">
+  Acme Freight, die Rolle und die Kandidatin unten sind erfunden. Das ist keine echte Bewertung und basiert auch auf keiner. Es zeigt nur, wie sich die Begründung liest.
+</Callout>
+
+In diesem erfundenen Beispiel ist Maya Backend-Engineerin. Sie hat career-ops gesagt, was sie will: Backend-Rollen im Produktbereich, ein kleines Team und Remote-Arbeit. Sie fügt die URL einer Stellenanzeige als Senior Platform Engineer bei Acme Freight ein. Über die fünf Dimensionen hinweg sieht die Begründung so aus:
+
+- **Übereinstimmung mit dem Lebenslauf:** Beim Kern der Stelle, Go-Services und Postgres, ist sie stark. Eine kritische Anforderung erfüllt sie nur teilweise: Kubernetes im Produktivbetrieb. Deshalb nennt der Bericht das Risiko fürs Vorstellungsgespräch und einen Weg, sich darauf vorzubereiten.
+- **North-Star-Ausrichtung:** Die Rolle liegt nah an ihren Zielen. Sie geht aber stärker in Richtung Infrastruktur als die Backend-Arbeit am Produkt, die sie sich gewünscht hat.
+- **Vergütung:** Die Stellenanzeige nennt kein Gehalt. Der Bericht vermerkt das und ordnet den Unternehmenstyp ein. Dann bewertet er, wie verlässlich öffentliche Gehaltsdaten für diese Art von Unternehmen sind, und belässt es dabei.
+- **Kultursignale:** Sie wollte ein kleines Team. Die Stellenanzeige beschreibt aber eine große Plattform-Organisation mit mehreren Managementebenen. Der Bericht benennt diese Lücke, statt sie hinter der starken Übereinstimmung mit dem Lebenslauf zu verstecken.
+- **Red Flags:** nichts, was die Bewerbung blockiert.
+
+**Score (fiktiv): 3,6/5.** Unter 4,0 rät career-ops von einer Bewerbung ab, es sei denn, sie hat einen konkreten Grund.
+
+Unabhängig davon ist die Legitimitätsstufe in diesem Beispiel Proceed with Caution. Die Seite der Stellenanzeige zeigt kein Datum, sonst ist nichts auffällig. Die Stufe verändert den Score nicht.
+
+Maya hat einen Grund, den der Bericht nicht sehen kann. Sie kennt die Engineering-Leitung, und die hat ihr erzählt, dass das Team in kleinere Squads aufgeteilt wird. career-ops hat ihr bereits gesagt, dass es von einer Bewerbung abrät. Sie bewirbt sich trotzdem, denn die Entscheidung liegt bei ihr. Sie prüft, was career-ops entworfen hat, und schickt die Bewerbung selbst ab.
+
+## Die ersten Bewertungen sind grob, bis du ihm sagst, wer du bist [#die-ersten-bewertungen-sind-grob-bis-du-ihm-sagst-wer-du-bist]
+
+career-ops bewertet anhand des Profils, das es hat, und das mitgelieferte Profil ist nicht deins. Seine Standard-Zielrollen sind allesamt KI-Rollen. Solange du `modes/_profile.md` nicht personalisierst, werden Bewertungen an der Zielausrichtung der Vorlage gemessen. `node doctor.mjs` weist dich darauf hin.
+
+Die ersten Durchläufe sind grob, denn es kennt dich noch nicht. Rede mit ihm: über deinen Lebenslauf, über das, was du willst, und über das, was du ablehnst. Beim ersten Start fragt es all das im Chat ab. Um die Zielrollen zu ändern, sag es in einfachen Worten, zum Beispiel „Ändere die Archetypen auf Backend-Engineering-Rollen“. Sag ihm nach jeder Bewertung, was es falsch eingeschätzt hat. Das kann „dieser Score ist zu hoch“ sein oder „du hast meine Erfahrung in X übersehen“. Es aktualisiert dann deine Profildateien.
+
+## Passt der Score zu dir? [#passt-der-score-zu-dir]
+
+career-ops geht nicht davon aus, dass sein Score deine Ergebnisse vorhersagt. Du kannst das selbst überprüfen. Halte mit `/career-ops outcome` fest, was aus jeder Bewerbung geworden ist. Sobald du Ergebnisse hast, führe Folgendes aus:
+
+```bash
+node calibrate.mjs
+```
+
+Der `calibrate`-Bericht stellt eine einzige Frage: Führen deine höher bewerteten Bewerbungen bei dir häufiger zu Vorstellungsgesprächen und Angeboten? Er ist rein beratend. Er ändert nie die Bewertung, die Schwellenwerte oder deine Konfiguration, und nichts justiert sich automatisch nach. Ist die Stichprobe zu klein, zeigt er keine Quote an. Bewerbungen, die noch laufen, lässt er außen vor. Vielleicht deuten deine Ergebnisse darauf hin, dass die Grenze für dich an der falschen Stelle liegt. Dann rechtfertigen die Daten höchstens zwei Änderungen: den Score, ab dem du dich persönlich bewirbst, oder die Rollen, die du anpeilst. Diese Entscheidung liegt bei dir.
+
+## Zwei Angebote über das Gehalt hinaus vergleichen [#zwei-angebote-ueber-das-gehalt-hinaus-vergleichen]
+
+Um zwei Angebote über das Gehalt hinaus zu vergleichen, vergleiche zuerst die Rollen mit `/career-ops ofertas`. Lies danach jedes Angebotsschreiben mit `/career-ops offer-prep`. Der Modus `ofertas` arbeitet nur mit den Stellenanzeigen. Keine seiner zehn Dimensionen deckt die Konditionen eines Angebotsschreibens ab, das du erhalten hast. Abgesehen von der Remote-Qualität gibt es auch keine Dimension für Pendelweg oder Lebensqualität.
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+Der Modus `ofertas` braucht zwei oder mehr Stellenanzeigen. Du kannst ihren Text, ihre URLs oder Rollen angeben, die du in deinem Tracker schon bewertet hast. Er bewertet jede Rolle in zehn Dimensionen mit 1 bis 5. Daraus erstellt er ein Ranking mit einer Empfehlung, die auch die Zeit bis zum Angebot berücksichtigt.
+
+Das Gehalt ist als geschätzte Vergütung eine der zehn Dimensionen, die `ofertas` bewertet. Die anderen neun sind:
+
+- North-Star-Ausrichtung
+- Übereinstimmung mit dem Lebenslauf
+- Level
+- Entwicklungsperspektive
+- Remote-Qualität
+- Ruf des Unternehmens
+- Modernität des Tech-Stacks
+- Tempo bis zum Angebot
+- Kultursignale
+
+Der Bewertungsscore von 1 bis 5 kommt ohne arithmetische Formel aus. Der Vergleich mit `ofertas` nutzt dagegen Standardgewichtungen, und die North-Star-Ausrichtung zählt am meisten. Die Standardwerte sind auf Senior-KI-Rollen ausgerichtet. Die Level-Dimension bewertet Rollen auf Staff-Level am höchsten, die Tech-Stack-Dimension modernste KI und ML. Wenn das nicht zu deiner Suche passt, sag vor dem Vergleich, was dir wichtig ist. Deine Bewertungspräferenzen stehen in deinem Profil `modes/_profile.md`, das der Vergleich ausliest.
+
+### Mit deinen eigenen Zahlen verhandeln [#mit-deinen-eigenen-zahlen-verhandeln]
+
+career-ops bereitet dich darauf vor, auf Grundlage deiner eigenen Dokumente und Zahlen zu verhandeln. Der Modus `offer-prep` liest dein Angebotsschreiben oder deinen Vertrag gemeinsam mit dir. Ob das Angebot niedrig, fair oder hoch ist, bewertet er nicht: Das entscheidest du. Füge den Text ein oder verweise auf die Datei:
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+`offer-prep` zitiert jede nennenswerte Klausel wörtlich und erklärt sie in einfachen Worten. Dazu versieht er sie mit neutralen Labels wie „commonly negotiated“ (wird oft verhandelt) oder „ask your lawyer“ (frag deinen Anwalt). Am Ende stehen drei Dinge:
+
+- Fragen an deinen Anwalt
+- Punkte, die du beim Arbeitgeber ansprechen kannst (als Fragen, nie als Forderungen)
+- ein fester Hinweis, dass es sich nicht um Rechtsberatung handelt
+
+Er führt keine Websuchen durch und liest nur englischsprachige Verträge.
+
+`node salary-gap.mjs --summary` zeigt pro Bewerbung, was du wolltest, was die Stellenanzeige ausgeschrieben hat und was dir tatsächlich angeboten wurde. `node negotiation-roi.mjs --summary` entwirft ein Argument für die Verhandlung. Es stützt sich auf eine Aussage über eingesparte Stunden, deren Zahl auch in deiner `cv.md` steht. Den Wert berechnet es aus einem Lohnsatz und einer Häufigkeit, die du selbst angibst. Das ist eine Schätzung, keine Finanzberatung. `/career-ops offer-prep reply {company-slug}` entwirft aus deinem Vorbereitungsbericht eine Antwort-E-Mail, die du selbst abschickst.
+
+## Häufig gestellte Fragen [#haeufig-gestellte-fragen]
+
+### Gibt es ein Tool, das mir anhand meines Lebenslaufs sagt, bei welchen Stellen sich eine Bewerbung lohnt?
+
+career-ops ist ein Open-Source-Tool unter MIT-Lizenz, das eine Stellenanzeige vor deiner Bewerbung mit deinem Lebenslauf (CV) und deinen Zielen abgleicht. Es liefert einen Gesamtscore von 1 bis 5 mit Begründung. Unter 4,0 rät es von einer Bewerbung ab, es sei denn, du hast einen konkreten Grund. Du kannst dich über diese Empfehlung hinwegsetzen. career-ops bewirbt sich nie in deinem Namen: Du prüfst jede Bewerbung und schickst sie selbst ab.
+
+### Bedeutet ein hoher Score, dass ich zum Vorstellungsgespräch eingeladen werde?
+
+Ein hoher Score von career-ops verspricht kein Vorstellungsgespräch. Der Score beurteilt, wie gut eine Stellenanzeige zu deinem Lebenslauf und deinen Zielen passt. Er ist keine Prognose für Vorstellungsgespräche oder Angebote. Ob der Score zu deinen eigenen Ergebnissen passt, siehst du so: Halte die Ergebnisse fest, sobald sie eintreten, und führe den calibrate-Bericht aus. Er ist rein beratend und verändert die Bewertung nie.
+
+### Wie vergleiche ich zwei Jobangebote über das Gehalt hinaus?
+
+Um mit career-ops zwei Jobangebote über das Gehalt hinaus zu vergleichen, vergleiche die Rollen zuerst mit dem Modus ofertas. Er bewertet jede Rolle in zehn Dimensionen, von denen das Gehalt nur eine ist, und liefert ein Ranking mit einer Empfehlung. Keine dieser Dimensionen deckt die Konditionen eines Angebotsschreibens ab. Lies deshalb jedes Schreiben mit dem Modus offer-prep. Er geht die Klauseln mit dir durch und listet Fragen an deinen Anwalt auf. Dazu kommen Punkte, die du beim Arbeitgeber ansprechen kannst. Ein Urteil über das Angebot fällt er nicht.

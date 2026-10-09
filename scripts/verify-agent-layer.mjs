@@ -14,13 +14,15 @@ const BASE = process.env.BASE || 'http://localhost:3999';
 
 /** Per-locale sample: the index, the entry page, and a nested one. */
 /** Non-default locales that must have full markdown parity with EN. */
-const LOCALES = ['es', 'fr'];
+const LOCALES = ['es', 'fr', 'de'];
 
 /** Per-locale sample: the index, the entry page, and a nested one. */
 const LOCALE_SAMPLE = ['docs', 'docs/introduction/what-is-career-ops', 'docs/faq'];
 
 /** A representative sample; if these hold the exporter/proxy are healthy. */
 const DOC_SAMPLE = [
+  // The Quick Start carries the StarOnGitHub button; its mirror must drop it.
+  'docs',
   'docs/faq',
   'docs/free-ai-engine',
   'docs/introduction/guides/apply-for-a-job',
@@ -265,7 +267,7 @@ async function main() {
     // 5d. Mirror body cleanliness.
     const b = md.body;
     if (/&#x[0-9a-fA-F]+;|&#\d+;/.test(b)) fail(`/${slug}.md contains escaped entities`);
-    if (/<(div|Tabs?|Steps?|Accordions?|Callout|details|summary)[\s>]/.test(b))
+    if (/<(div|Tabs?|Steps?|Accordions?|Callout|details|summary|StarOnGitHub)[\s/>]/.test(b))
       fail(`/${slug}.md contains leaked JSX tags`);
     // Relative links (root-relative, not anchors/absolute) should not survive.
     if (/\]\(\/(?!\/)[^)]*\)/.test(b)) fail(`/${slug}.md contains relative links`);

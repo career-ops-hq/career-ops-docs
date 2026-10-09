@@ -1,0 +1,52 @@
+---
+title: auto-pipeline
+description: "Standardablauf, wenn du die URL oder den Rohtext einer Stellenanzeige einfügst. Führt die A–H-Bewertung aus, erstellt den Bericht, exportiert ein zugeschnittenes PDF und schreibt einen Tracker-Eintrag, ohne dass du zwischen den Schritten eingreifen musst."
+seoTitle: "career-ops auto-pipeline — eine Stelle bewerten und Lebenslauf + Tracker aus einer einzigen URL erstellen"
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: a103f3feac73a799
+localized: true
+translatedFrom: /docs/reference/modes/auto-pipeline
+---
+
+## Was der Modus macht
+
+career-ops ruft auto-pipeline immer dann auf, wenn du die URL einer Stellenbeschreibung oder eingefügten Text in den Prompt gibst. Der Modus liest die Stellenanzeige und bewertet sie nach dem Bewertungsschema, das aus fünf Dimensionen und einer ganzheitlichen Gesamtbewertung besteht. Dann schreibt er die Bewertung nach reports/, erzeugt über Playwright das zugeschnittene PDF und aktualisiert den Tracker-Eintrag. Das alles passiert in einem einzigen Durchlauf des Agenten.
+
+## Wann du ihn nutzt
+
+Nutze auto-pipeline, wenn die komplette Pipeline automatisch ausgeführt werden soll. Das ist der Standardmodus für neue Stellenanzeigen, die in deine Suche kommen.
+
+## So sieht ein Durchlauf aus
+
+Füge eine Stellen-URL ohne Unterbefehl ein, und auto-pipeline führt die gesamte Kette von Anfang bis Ende aus. Der Modus extrahiert die Beschreibung, prüft, ob die Anzeige noch online ist, und bewertet sie. Danach speichert er den Bericht, exportiert ein zugeschnittenes PDF und trägt die Stelle in deinen Tracker ein.
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+
+## Gut zu wissen
+
+- Füge eine URL ein, und auto-pipeline übernimmt die Extraktion für dich. Bei Single-Page-Portalen wie Lever, Ashby, Greenhouse und Workday kommt zuerst Playwright zum Einsatz. Bei statischen Seiten folgt WebFetch, und als letzter Ausweg bleibt WebSearch.
+- Vor der Bewertung prüft der Modus, ob die Anzeige noch online ist. Ist der Link tot oder die Seite nur eine leere Hülle mit dem Hinweis „Stelle besetzt“, bricht er an dieser Stelle ab und bewertet keine Phantominhalte. Stammt der Eintrag aus `data/pipeline.md`, markiert er diese Zeile als geschlossen.
+- Entwürfe für Antworten im Bewerbungsformular entstehen nur ab einer Bewertung von 4,5. So verbrauchen schlecht passende Stellen keine Tokens für Texte, die du ohnehin nicht abschickst.
+
+## Stolperfallen
+
+Wenn du nur die Bewertung ohne das PDF willst (schneller und günstiger), ruf stattdessen `/career-ops oferta` auf. auto-pipeline verbraucht mehr Tokens, weil dieser Modus die komplette Kette durchläuft.
+
+## Siehe auch
+
+- [pipeline](/de/docs/reference/modes/pipeline)
+- [oferta](/de/docs/reference/modes/oferta)
+- [pdf](/de/docs/reference/modes/pdf)
+- [tracker](/de/docs/reference/modes/tracker)

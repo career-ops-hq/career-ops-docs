@@ -1,0 +1,52 @@
+---
+title: patterns
+description: "Liest deine abgelehnten und verworfenen Bewerbungen und deckt Muster auf: Stellenbeschreibungen, die hoch bewertet werden, aber nie zum Erfolg führen, Archetypen, die nicht zu dir passen, und Probleme mit der Gehaltsspanne. Das Ergebnis ist ein Kalibrierungssignal für deinen Zielfilter."
+seoTitle: "career-ops patterns-Modus — finde heraus, warum deine Bewerbungen ins Leere laufen"
+icon: TrendingDown
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 392fb9e40a5ff463
+localized: true
+translatedFrom: /docs/reference/modes/patterns
+---
+
+## Was er macht
+
+Der Modus `patterns` liest jeden Bericht mit dem Status Rejected oder Discarded und sucht nach Gemeinsamkeiten wie Branche, Unternehmensgröße, Senioritätsstufe oder bestimmten Schlüsselwörtern. Daraus erstellt er eine strukturierte Analyse, die zeigt, was bei deiner Zielausrichtung funktioniert und was nicht.
+
+## Wann du ihn einsetzt
+
+Starte patterns nach jeweils 20–30 Absagen, um neu zu kalibrieren. Der Modus deckt blinde Flecken in deinem Profil auf. So schickst du deine Bewerbungen nicht immer wieder in dieselben Sackgassen.
+
+## So sieht ein Durchlauf aus
+
+Du startest den Modus, nachdem sich einige Ergebnisse angesammelt haben. Er liefert dir einen datierten Bericht zur Musteranalyse und eine kurze Zusammenfassung der drei wichtigsten Erkenntnisse. Im Hintergrund lässt er `analyze-patterns.mjs` über deinen Tracker und deine Berichte laufen. Danach bekommst du einen Conversion-Funnel, eine Tabelle, die Score und Ergebnis gegenüberstellt, die häufigsten Hindernisse und eine empfohlene Score-Untergrenze.
+
+```bash title="Terminal"
+/career-ops patterns
+```
+
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+
+Full report: reports/pattern-analysis-2026-05-18.md
+```
+
+Nach der Zusammenfassung bietet der Modus an, die Erkenntnisse direkt umzusetzen. Er kann die Filter in `portals.yml` aktualisieren, eine Score-Schwelle festlegen oder neu gewichten, welche Archetypen du ins Visier nimmst.
+
+## Wann er sich lohnt
+
+Greif zu patterns, sobald genug Bewerbungen über die Bewertung hinausgekommen sind, damit die Ergebnisse etwas aussagen. Die feste Grenze liegt bei fünf Einträgen mit einem Status jenseits von „Evaluated“, also Applied, Responded, Interview, Offer, Rejected oder Discarded. Hast du weniger, bricht der Modus ab und bittet dich, mit mehr Daten wiederzukommen. Je mehr Ergebnisse du hast, desto schärfer werden die Muster. Nach einem Monat, in dem du dich regelmäßig beworben hast, lohnt er sich richtig.
+
+- Wenn du Transkripte deiner Vorstellungsgespräche in `interview-prep/sessions/` aufbewahrst, liefert der Modus zusätzlich ein Signal für deine Zielausrichtung. Er zeigt, wo sich deine flüssigsten und konkretesten Antworten häufen. So merkst du, wenn der Rollentyp, in dem du am stärksten bist, nicht der ist, auf den du dich ständig bewirbst.
+- Der Bericht nennt nie den Namen einer echten Person aus dem Gespräch oder eines echten Unternehmens aus diesen Sitzungen. Er fasst nur Kompetenz-Cluster zusammen. Auch wenn du den Bericht committest, bleibt also alles privat.
+
+## Siehe auch
+
+- [tracker](/de/docs/reference/modes/tracker)
+- [followup](/de/docs/reference/modes/followup)

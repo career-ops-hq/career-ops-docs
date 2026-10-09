@@ -4,7 +4,7 @@ description: "Generates a tailored PDF resume against a specific JD using Playwr
 seoTitle: "career-ops pdf mode — generate an ATS-friendly tailored resume"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-10-06"
 ---
 
 ## What it does
@@ -43,6 +43,8 @@ Reach for pdf when you've decided to apply and want only the tailored resume, sk
 ## Gotchas
 
 Requires Playwright installed locally. The build script may fail on minimal Linux installs missing system fonts. Run `npm run doctor` to diagnose.
+
+PDF generation stops when your Work Experience entries are not newest-first, and the error quotes the dates of the role that starts later than the one above it. Put the roles back in reverse-chronological order and rerun: tailor a CV through the summary and the bullets, not by moving roles. If you deliberately want another order, pass `--allow-nonchronological` to `generate-pdf.mjs` and it renders with a warning instead. With `--batch`, only the out-of-order CV fails and the rest still render.
 
 ## Related
 

@@ -163,3 +163,12 @@ export async function getProjectStats(): Promise<ProjectStats> {
     },
   };
 }
+
+// Compact star count for the "Star on GitHub" button: floored to one decimal,
+// so 72,979 reads "72.9K" and never "73K". Rounding up would publish a count
+// the repo has not reached. Callers show it only when `live.stars` is true;
+// the floor is a hand-set minimum, not a count worth printing on a button.
+export function formatStarsCompact(n: number): string {
+  if (n < 1000) return String(n);
+  return `${Math.floor(n / 100) / 10}K`;
+}
