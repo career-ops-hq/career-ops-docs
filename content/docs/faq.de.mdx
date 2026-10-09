@@ -3,7 +3,7 @@ title: FAQ
 description: Häufige Fragen zu career-ops — Kosten, Datenschutz, unterstützte KI-CLIs, scan vs. scan:full, Token-Limits, Einrichtung unter Windows und was career-ops niemals in deinem Namen tun wird.
 seoTitle: "career-ops FAQ — Kosten, Datenschutz, unterstützte CLIs, Windows und kostenloser Betrieb"
 icon: CircleQuestionMark
-translationHash: fd94ada73bac3023
+translationHash: fb78c2f12a7baec9
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -64,7 +64,7 @@ Damit du bei einem Batch-Lauf von career-ops nicht an Token- oder Rate-Limits st
 
 ## Skills werden unter Windows nicht geladen — Symlink-Fehler bei der Installation
 
-Windows legt standardmäßig keine Symlinks an, deshalb checkt Git die Skill-Einstiegspunkte von career-ops für die CLIs als einfache Verweisdateien aus. Installer und Updater erkennen das automatisch: Führe `node update-system.mjs apply --confirm` aus (oder `npx @santifer/career-ops init` bei einer Neuinstallation), und der Materialisierungsschritt ersetzt die Verweisdateien durch den vollständigen Skill-Inhalt. Aus einem verknüpften Git-Worktree heraus führt `apply --confirm` diese Reparatur in deinem `main`-Checkout durch. Führe im Worktree `git merge main` aus, um sie zu übernehmen; Worktrees, die vom aktualisierten `main` aus erstellt werden, haben sie bereits. Du musst weder manuell `mklink` ausführen noch den Entwicklermodus ändern.
+Windows legt standardmäßig keine Symlinks an, deshalb checkt Git die Skill-Einstiegspunkte von career-ops für die CLIs als einfache Verweisdateien aus. Installer und Updater erkennen das automatisch: Führe `node update-system.mjs apply --confirm` aus (oder `npx @santifer/career-ops init` bei einer Neuinstallation), und der Materialisierungsschritt ersetzt die Verweisdateien durch den vollständigen Skill-Inhalt. Aus einem verknüpften Git-Worktree heraus führt `apply --confirm` diese Reparatur in deinem `main`-Checkout durch. Führe im Worktree `git merge main` aus, um sie zu übernehmen; Worktrees, die vom aktualisierten `main` aus erstellt werden, haben sie bereits. Ist `CAREER_OPS_UPDATE_IN_WORKTREE=1` gesetzt, repariert `apply` stattdessen nur den Branch dieses Worktrees, und `main` bleibt unrepariert. Du musst weder manuell `mklink` ausführen noch den Entwicklermodus ändern.
 
 ## Kann ich career-ops mit einem günstigeren oder lokalen Modell betreiben?
 

@@ -3,7 +3,7 @@ title: career-ops sous Windows
 seoTitle: "career-ops fonctionne-t-il sous Windows ? Oui — pleinement, l'installeur s'occupe de la configuration"
 description: "career-ops fonctionne pleinement sous Windows. La seule particularité de la plateforme — les liens symboliques — est gérée automatiquement par l'installeur : pas de mode administrateur, pas de mklink, et aucune version minimale d'OS requise."
 icon: MonitorCheck
-translationHash: cb8e91803f377369
+translationHash: e3486e8615e2cdac
 localized: true
 translatedFrom: /docs/windows
 ---
@@ -14,7 +14,7 @@ translatedFrom: /docs/windows
 
 Windows ne crée pas de liens symboliques par défaut : un checkout Git tout frais laisse donc les points d'entrée des skills CLI (`.claude/skills/`, `.opencode/skills/`, etc.) sous forme de simples fichiers pointeurs au lieu de véritables liens symboliques — c'est ce qui provoque l'erreur « skills aren't loading » que l'on rencontre avec d'autres outils.
 
-career-ops le détecte automatiquement. L'exécution de l'installeur ou de l'outil de mise à jour — `npx @santifer/career-ops init` lors d'une nouvelle installation, ou `node update-system.mjs apply --confirm` lors d'une mise à jour — lance une étape `materializeSkillEntrypoints` qui remplace ces fichiers pointeurs par le contenu complet des skills. Depuis un worktree Git lié, `node update-system.mjs apply --confirm` effectue cette réparation dans votre checkout de `main`. Lancez `git merge main` dans le worktree pour la récupérer ; les worktrees créés à partir du `main` mis à jour l'ont déjà. Vous n'avez besoin ni de droits administrateur, ni du mode développeur, ni d'aucune commande `mklink` manuelle.
+career-ops le détecte automatiquement. L'exécution de l'installeur ou de l'outil de mise à jour — `npx @santifer/career-ops init` lors d'une nouvelle installation, ou `node update-system.mjs apply --confirm` lors d'une mise à jour — lance une étape `materializeSkillEntrypoints` qui remplace ces fichiers pointeurs par le contenu complet des skills. Depuis un worktree Git lié, `node update-system.mjs apply --confirm` effectue cette réparation dans votre checkout de `main`. Lancez `git merge main` dans le worktree pour la récupérer ; les worktrees créés à partir du `main` mis à jour l'ont déjà. Avec `CAREER_OPS_UPDATE_IN_WORKTREE=1` défini, `apply` ne répare que la branche de ce worktree, et `main` reste non réparé. Vous n'avez besoin ni de droits administrateur, ni du mode développeur, ni d'aucune commande `mklink` manuelle.
 
 <Callout title="Aucune version minimale d'OS requise">
 career-ops n'exige aucune version particulière de Windows (ni de macOS). Si Node fonctionne, career-ops fonctionne. Toute mention d'une version minimale d'OS que vous auriez pu voir ailleurs est inexacte.
