@@ -13,11 +13,17 @@ The best CLI for career-ops is the one you already pay for. If you already pay f
 
 ## Which CLIs are supported?
 
-career-ops works first-class with **Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI** — ten actively-maintained AI coding CLIs. (Gemini CLI remains only as a legacy wrapper, transitioned into Antigravity CLI.) The career-ops architecture is shared across CLIs: a single canonical `AGENTS.md` drives the logic, and thin per-CLI entry files handle the invocation nuances of each tool.
+career-ops works first-class with **Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, and GitHub Copilot CLI** — eleven actively-maintained AI coding CLIs. (Gemini CLI remains only as a legacy wrapper, transitioned into Antigravity CLI.) The career-ops architecture is shared across CLIs: a single canonical `AGENTS.md` drives the logic, and thin per-CLI entry files handle the invocation nuances of each tool.
 
 The **canonical, always-current list — with the exact command to invoke career-ops in each CLI — lives in the core repo** so it never drifts out of date:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — the full matrix of supported CLIs, entry files, and how to invoke them (interactive and headless/batch).
+
+## Pi
+
+Pi needs no wrapper file. It reads `AGENTS.md` from the career-ops folder and finds the shared skill on its own, so you start `pi` in that folder and call career-ops with `/skill:career-ops`, followed by the mode you want. For a single unattended run, use `pi -p "your prompt"`.
+
+Some Pi builds ask you to trust a project before they load its skills. If `/skill:career-ops` is not available, run `/trust` once in the folder and then restart `pi`: the trust decision only applies to Pi sessions started afterwards. To install Pi, follow [Pi's own instructions](https://github.com/earendil-works/pi).
 
 ## Which one should I choose?
 
