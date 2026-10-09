@@ -3,7 +3,7 @@ title: FAQ
 description: Häufige Fragen zu career-ops — Kosten, Datenschutz, unterstützte KI-CLIs, scan vs. scan:full, Token-Limits, Einrichtung unter Windows und was career-ops niemals in deinem Namen tun wird.
 seoTitle: "career-ops FAQ — Kosten, Datenschutz, unterstützte CLIs, Windows und kostenloser Betrieb"
 icon: CircleQuestionMark
-translationHash: 8a1e9e9a3d12f962
+translationHash: bd6ad5dba16a4729
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -60,7 +60,7 @@ career-ops unterstützt zehn KI-Coding-CLIs vollwertig: Claude Code, Cursor, Cod
 
 ## Wie vermeide ich Token- oder Rate-Limits bei einem Batch-Lauf?
 
-Damit du bei einem Batch-Lauf von career-ops nicht an Token- oder Rate-Limits stößt, begrenze den Lauf mit `./batch/batch-runner.sh --limit 5` und prüfe die Qualität der Ergebnisse, bevor du dich auf einen größeren Batch festlegst. Wird ein Lauf durch ein Rate-Limit oder einen Netzwerkfehler unterbrochen, fang nicht von vorn an — nutze `--resume-paused`, um bereits abgeschlossene Jobs zu überspringen, damit keine Tokens für Arbeit verschwendet werden, die schon erledigt ist.
+Damit du bei einem Batch-Lauf von career-ops nicht an Token- oder Rate-Limits stößt, begrenze den Lauf mit `./batch/batch-runner.sh --limit 5` und prüfe die Qualität der Ergebnisse, bevor du dich auf einen größeren Batch festlegst. Wird ein Lauf durch ein Rate-Limit oder einen Netzwerkfehler unterbrochen, fang nicht von vorn an — nutze `--resume-paused`, um bereits abgeschlossene Jobs zu überspringen, damit keine Tokens für Arbeit verschwendet werden, die schon erledigt ist. Ein Job mit `needs_confirmation` ist etwas anderes: Er hat weder Bericht noch Lebenslauf, Bewerbungsentwurf oder Tracker-Zeile erzeugt, und `--resume-paused` setzt ihn nicht fort. Beantworte seine Frage ausdrücklich in der übergeordneten interaktiven Sitzung.
 
 ## Skills werden unter Windows nicht geladen — Symlink-Fehler bei der Installation
 

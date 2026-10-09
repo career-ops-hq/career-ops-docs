@@ -48,7 +48,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "How do I avoid hitting token or rate limits during a batch run?",
     answer:
-      "To avoid token or rate limits in a career-ops batch run, cap the run with ./batch/batch-runner.sh --limit 5 to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use --resume-paused to skip already-completed jobs so no tokens are wasted on work that finished.",
+      "To avoid token or rate limits in a career-ops batch run, cap the run with ./batch/batch-runner.sh --limit 5 to inspect output quality before committing to a larger batch. If a run gets interrupted by a rate limit or network error, don't restart from scratch — use --resume-paused to skip already-completed jobs so no tokens are wasted on work that finished. A needs_confirmation job produces no report, CV, application draft, or tracker row; --resume-paused does not resume it. Answer its question explicitly in the parent interactive session.",
   },
   {
     question: "Skills aren't loading on Windows — symlink error on install",
