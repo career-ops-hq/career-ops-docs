@@ -103,7 +103,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
             >
               Santiago Fernández de Valderrama Aparicio
             </a>
-            , Applied AI Operator ·{' '}
+            , creator of career-ops ·{' '}
             <time dateTime={data.date}>{formatDate(data.date)}</time>
             {data.lastModified && data.lastModified !== data.date && (
               <>

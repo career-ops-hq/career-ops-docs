@@ -254,14 +254,14 @@ export const homeDe: HomeDict = {
           <a href="/about" rel="author" className="text-fd-foreground hover:underline underline-offset-2">
             Santiago Fernández de Valderrama Aparicio
           </a>{' '}
-          entwickelt, einem Applied AI Operator mit über 16 Jahren Erfahrung im
-          Aufbau von Produkten. Bis zum Verkauf gründete und führte er ein
-          spanisches Unternehmen für Handyreparaturen (2009–2025). Er entwickelte
-          career-ops Anfang 2026, um seine eigene Jobsuche im KI-Zeitalter zu
-          organisieren: 740 Stellenanzeigen bewertet, eine Stelle als Head of
-          Applied AI bekommen. Als er es nicht mehr brauchte, veröffentlichte er
-          es unter MIT-Lizenz. Sechs Monate nach dem Einstieg verließ er diese
-          Stelle, um sich ganz auf career-ops zu konzentrieren.
+          entwickelt, der auf über 16 Jahre Erfahrung im Aufbau von Produkten
+          zurückblickt. Er gründete 2009 ein spanisches Unternehmen für Handyreparaturen
+          und führte es bis zum Verkauf im Jahr 2025. Er entwickelte career-ops Anfang
+          2026, um seine eigene Jobsuche im KI-Zeitalter zu organisieren: 740
+          Stellenanzeigen bewertet, eine Stelle als Head of Applied AI bekommen. Als er
+          es nicht mehr brauchte, veröffentlichte er es unter MIT-Lizenz. Sechs Monate
+          nach dem Einstieg verließ er diese Stelle, um sich ganz auf career-ops zu
+          konzentrieren.
         </>
       ),
     },

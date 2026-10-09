@@ -250,14 +250,14 @@ export const homeFr: HomeDict = {
           career-ops a été créé par{' '}
           <a href="/about" rel="author" className="text-fd-foreground hover:underline underline-offset-2">
             Santiago Fernández de Valderrama Aparicio
-          </a>{' '}
-          — un Applied AI Operator avec plus de 16 ans à construire des produits,
-          fondateur et exploitant d’une entreprise espagnole de réparation de
-          téléphones (2009–2025) avant sa revente. Il a créé career-ops début 2026
-          pour gérer sa propre recherche d’emploi à l’ère de l’IA — 740 annonces
-          évaluées, un poste de Head of Applied AI décroché — et l’a publié sous
-          licence MIT une fois qu’il n’en avait plus besoin. Six mois après l’avoir
-          décroché, il a quitté ce poste pour se consacrer à plein temps au développement de
+          </a>
+          , qui construit des produits depuis plus de 16 ans. Il a fondé et dirigé une
+          entreprise espagnole de réparation de téléphones de 2009 jusqu’à sa revente en
+          2025. Début 2026, il a conçu career-ops pour gérer sa propre recherche
+          d’emploi à l’ère de l’IA et l’a publié sous licence MIT une fois qu’il n’en
+          avait plus besoin. Il s’en était déjà servi pour évaluer 740 annonces et avait
+          obtenu un poste de Head of Applied AI. Six mois après l’avoir décroché, il a
+          quitté ce poste pour se consacrer à plein temps au développement de
           career-ops.
         </>
       ),

@@ -225,13 +225,13 @@ export const homeEn: HomeDict = {
           career-ops was built by{' '}
           <a href="/about" rel="author" className="text-fd-foreground hover:underline underline-offset-2">
             Santiago Fernández de Valderrama Aparicio
-          </a>{' '}
-          — an Applied AI Operator with 16+ years building products, founder and
-          operator of a Spanish phone-repair business (2009–2025) before exiting.
-          He created career-ops in early 2026 to manage his own AI-era job
-          search — 740 listings evaluated, one Head of Applied AI role landed —
-          and open-sourced it under MIT once he no longer needed it. Six months
-          after landing it, he left that role to focus on building career-ops full time.
+          </a>
+          , who has spent 16+ years building products. He founded and ran a Spanish
+          phone-repair business from 2009 until he sold it in 2025. In early 2026 he
+          created career-ops to manage his own AI-era job search and open-sourced it
+          under MIT once he no longer needed it. By then he had evaluated 740 listings
+          with it and landed a Head of Applied AI role. Six months after landing it, he
+          left that role to focus on building career-ops full time.
         </>
       ),
     },

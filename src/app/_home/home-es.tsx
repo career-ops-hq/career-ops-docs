@@ -227,14 +227,14 @@ export const homeEs: HomeDict = {
           career-ops lo creó{' '}
           <a href="/about" rel="author" className="text-fd-foreground hover:underline underline-offset-2">
             Santiago Fernández de Valderrama Aparicio
-          </a>{' '}
-          — un Applied AI Operator con más de 16 años construyendo productos,
-          fundador y operador de un negocio español de reparación de móviles
-          (2009–2025) antes de su salida. Creó career-ops a principios de 2026
-          para gestionar su propia búsqueda de empleo en la era de la IA — 740
-          vacantes evaluadas, un puesto de Head of Applied AI conseguido — y lo
-          publicó bajo licencia MIT cuando ya no lo necesitaba. Seis meses después
-          de conseguirlo, dejó ese puesto para centrarse en construir career-ops a tiempo completo.
+          </a>
+          , que lleva más de 16 años construyendo productos. Fundó y dirigió un negocio
+          de reparación de móviles en España desde 2009 hasta que lo vendió en 2025. A
+          principios de 2026 desarrolló career-ops para gestionar su propia búsqueda de
+          empleo en la era de la IA y lo publicó bajo licencia MIT cuando ya no lo
+          necesitaba. Para entonces ya había evaluado 740 vacantes con él y conseguido
+          un puesto de Head of Applied AI. Seis meses después de conseguirlo, dejó ese
+          puesto para centrarse en construir career-ops a tiempo completo.
         </>
       ),
     },

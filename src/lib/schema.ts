@@ -360,7 +360,6 @@ export async function siteSchema() {
         url: 'https://santifer.io/about',
         image: 'https://santifer.io/foto-avatar.png',
         jobTitle: 'Creator of career-ops',
-        founderOf: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_PERSON_IDENTIFIER,
         sameAs: PERSON_SAMEAS,
         subjectOf: PERSON_SUBJECT_OF,
@@ -468,7 +467,7 @@ export function methodologySchema() {
             name: 'Who built career-ops? Why?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops was built by Santiago Fernández de Valderrama Aparicio, an Applied AI Operator with 16+ years building products. He created it to manage his own AI-era job search in early 2026 — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
+              text: 'career-ops was built by Santiago Fernández de Valderrama Aparicio, who has spent 16+ years building products. He created it in early 2026 to manage his own AI-era job search: 740 listings evaluated, one Head of Applied AI role landed. He open-sourced it under MIT once he no longer needed it.',
             },
           },
           {
@@ -1066,10 +1065,10 @@ export function aboutSchema() {
         url: 'https://career-ops.org/about',
         name: 'Santiago Fernández de Valderrama Aparicio',
         description:
-          'Applied AI Operator. Built career-ops after evaluating 740 listings.',
+          'Creator of career-ops. Used it to evaluate 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-10-01',
+        dateModified: '2026-10-09',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
