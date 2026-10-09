@@ -1,10 +1,11 @@
-import './global.css';
+import '@/app/global.css';
+import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
-import { LocaleRootProvider } from '@/components/locale-root-provider';
+import { LocaleRootProvider, type SiteLocale } from '@/components/locale-root-provider';
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 
@@ -15,7 +16,7 @@ import type { Metadata } from 'next';
 // exposes at build time: production happened to resolve to career-ops.org,
 // but that was an implicit dependency, and a local build resolved the same
 // cards to http://localhost:3000.
-export const metadata: Metadata = {
+export const rootMetadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
 };
 
@@ -59,11 +60,21 @@ const inter = Inter({
   subsets: ['latin'],
 });
 
-export default async function Layout({ children }: LayoutProps<'/'>) {
+// The document shell every root layout renders: (en)/layout.tsx for English
+// and es/, fr/ and de/layout.tsx for each translation. One root layout per
+// locale is what lets the server render <html lang> right for every page
+// (search-ops D1): with a single root layout it was "en" everywhere and a
+// script corrected it in the browser, which crawlers that read raw HTML never
+// saw.
+export async function RootShell({ locale, children }: { locale: SiteLocale; children: ReactNode }) {
   const schema = await siteSchema();
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang={locale} className={inter.className} suppressHydrationWarning>
       <head>
+        {/* Bing reads <meta http-equiv="content-language"> before <html lang>
+            and the HTTP header; it is also the signal search-ops' i18n_check
+            requires on every translated page (i18n SEO audit, 30-sep). */}
+        {locale !== 'en' && <meta httpEquiv="content-language" content={locale} />}
         {/* Brand entity disambiguation — added 2026-05-25 against the
             typosquat careerops.org (no hyphen). application-name + the
             iOS variant tell browsers and entity reconcilers that the
@@ -85,7 +96,7 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-        <LocaleRootProvider>{children}</LocaleRootProvider>
+        <LocaleRootProvider locale={locale}>{children}</LocaleRootProvider>
         <footer className={`${instrumentSerifRegular.className} border-t text-lg text-fd-muted-foreground`}>
           <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12">
             <div className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">

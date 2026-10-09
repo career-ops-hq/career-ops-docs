@@ -29,7 +29,7 @@ export async function GET(
     readFile(
       join(
         process.cwd(),
-        'src/app/manifesto/s/[username]/InstrumentSerif-Regular.ttf',
+        'src/app/(en)/manifesto/s/[username]/InstrumentSerif-Regular.ttf',
       ),
     ),
   ]);

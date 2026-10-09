@@ -8,7 +8,7 @@ import { aboutSchema } from '@/lib/schema';
 export const metadata: Metadata = {
   title: 'Santiago Fernández de Valderrama Aparicio · career-ops',
   description:
-    'Applied AI Operator. Built career-ops after evaluating 740 listings. 16+ years building products. Works on career-ops full time. Featured in WIRED, Business Insider.',
+    'Creator of career-ops. Used it to evaluate 740 listings. 16+ years building products. Works on career-ops full time. Featured in WIRED Greece, Business Insider.',
   alternates: { canonical: 'https://career-ops.org/about' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: 'career-ops',
     title: 'Santiago Fernández de Valderrama Aparicio · career-ops',
     description:
-      'Applied AI Operator. Built career-ops after evaluating 740 listings. Featured in WIRED, Business Insider.',
+      'Creator of career-ops. Used it to evaluate 740 listings. Featured in WIRED Greece, Business Insider.',
   },
   robots: { index: true, follow: true },
 };
@@ -88,7 +88,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Do you take feature requests?',
-    a: 'Yes — via GitHub issues and Discord. Triage is open. The pace is what one maintainer can sustain; release notes are honest about what shipped and what got cut.',
+    a: 'Yes, via GitHub issues and Discord. Triage is open. The pace is what one maintainer can sustain; release notes are honest about what shipped and what got cut.',
   },
   {
     q: 'Are you for hire?',
@@ -124,7 +124,7 @@ export default function AboutPage() {
             Santiago Fernández de Valderrama Aparicio
           </h1>
           <p className="mt-2 text-fd-muted-foreground text-base">
-            Applied AI Operator · creator of career-ops
+            Creator of career-ops
           </p>
         </header>
 
@@ -195,8 +195,8 @@ export default function AboutPage() {
               WIRED Greece
             </a>
             , and is sustained as a sovereign-maintainer project: sponsorship funds maintenance, security fixes, releases, and documentation. The maintenance system
-            itself — a fleet of Claude Code agents handling triage, tests, review briefs and
-            releases — is documented end to end in{' '}
+            itself is a fleet of Claude Code agents that handles triage, tests, review briefs and
+            releases. It is documented end to end in{' '}
             <a
               href="https://santifer.io/ai-agent-fleet"
               target="_blank"
@@ -402,7 +402,7 @@ export default function AboutPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-10-01">1 Oct 2026</time>
+          Last updated <time dateTime="2026-10-09">9 Oct 2026</time>
         </p>
       </article>
     </>

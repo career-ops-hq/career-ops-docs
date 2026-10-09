@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { homeFaqSchemaEs } from '@/lib/schema';
 import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
-import { HomeContent } from '../../(home)/home-content';
-import { homeEs } from '../../(home)/home-dict';
+import { HomeContent } from '@/app/_home/home-content';
+import { homeEs } from '@/app/_home/home-es';
 
 // Spanish home — SAME trunk as the English home (HomeContent), rendered
 // with the Spanish dictionary. One component, one dict per locale: no

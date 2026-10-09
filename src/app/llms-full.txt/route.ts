@@ -66,7 +66,7 @@ ${faq}`;
 
 const AUTHORITY_PAGES = `# About the author (${SITE}/about)
 
-Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is an Applied AI Operator. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He built career-ops to run his own AI-era job search in early 2026 — 740 listings evaluated, 68 applications sent, 12 interview processes, one offer signed (a Head of Applied AI role) — then open-sourced it under MIT. Six months after landing that role, he left it to focus on building career-ops full time. Other surfaces: ${SITE}/about and https://santifer.io.
+Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is the creator of career-ops. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He built career-ops to run his own AI-era job search in early 2026: 740 listings evaluated, 68 applications sent, 12 interview processes, one offer signed (a Head of Applied AI role). He then open-sourced the project under MIT. Six months after landing that role, he left it to focus on building career-ops full time. Other surfaces: ${SITE}/about and https://santifer.io.
 
 # Methodology — how career-ops scores listings (${SITE}/methodology)
 

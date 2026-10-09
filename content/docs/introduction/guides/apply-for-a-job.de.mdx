@@ -3,7 +3,7 @@ title: Auf eine Stelle bewerben
 description: Nutze career-ops, um Bewerbungsformulare mit maßgeschneiderten Antworten auszufüllen, die auf deinem Profil und deiner Wunschrolle basieren.
 seoTitle: "Mit career-ops auf eine Stelle bewerben – ATS-Antworten entwerfen, Lebenslauf anpassen"
 icon: FileInput
-translationHash: b2898c29e9c5e8e1
+translationHash: a44945dad5047331
 localized: true
 translatedFrom: /docs/introduction/guides/apply-for-a-job
 ---
@@ -47,7 +47,7 @@ Zum Beispiel:
 /career-ops apply Anthropic
 ```
 
-career-ops sucht den passenden Bericht in `reports/`, öffnet mit Playwright ein Browserfenster und liest das Formular aus. Danach erzeugt es für jedes Feld eine Antwort, die du direkt kopieren und einfügen kannst. Den Browser musst du nicht selbst öffnen.
+career-ops sucht den passenden Bericht in `reports/`, öffnet mit Playwright ein Browserfenster und liest das Formular aus. Danach entwirft es Antworten für unterstützte Text- und Freitextfelder. Prüfe vor dem Einfügen deren Feldlimits. Für Ashby brauchst du deinen gewohnten System-Browser, um die Bewerbung abzuschließen und abzusenden.
 
 <Callout title="Hinweis">
   Falls Playwright nicht verfügbar ist, liest career-ops das Formular stattdessen mit WebFetch. Wenn du den vollen browserbasierten Ablauf nutzen möchtest, sieh dir [Playwright einrichten](/de/docs/introduction/guides/set-up-playwright) an.
@@ -67,7 +67,7 @@ career-ops sucht den passenden Bericht in `reports/`, öffnet mit Playwright ein
 
 ## Das Formular ausfüllen
 
-Das System gibt dir eine nummerierte Liste mit einer Antwort pro Formularfeld zurück. Die Liste folgt der Reihenfolge des Formulars. Geh sie von oben nach unten durch und füge jede Antwort in das passende Feld ein.
+Das System gibt dir eine nummerierte Liste mit einer Antwort pro Formularfeld zurück. Die Liste folgt der Reihenfolge des Formulars. Geh sie von oben nach unten durch. Prüfe bei jeder Freitextantwort vor dem Einfügen die Angabe `used/allowed` (Zeichen oder Wörter) gegen das Live-Feld. `limit unknown` heißt, dass du das Limit selbst im Formular prüfen musst. Passt eine Antwort nicht, ohne wesentliche Fakten zu verlieren, überarbeite sie vor dem Einfügen.
 
 Die Ausgabe besteht aus zwei Teilen:
 
@@ -115,7 +115,7 @@ Jede Antwort stützt sich auf einen bestimmten Teil deines Evaluierungsberichts:
 
 ## Die Bewerbung absenden
 
-Prüf alle Antworten und schick das Formular dann selbst ab. career-ops klickt nicht auf „Absenden“.
+Prüf alle Antworten und schick das Formular dann selbst ab. career-ops klickt nicht auf „Absenden“. Bei Ashby schließt du die Bewerbung in deinem gewohnten System-Browser ab und sendest sie dort ab, nicht in der Playwright-Sitzung. Prüfe die Erfolgsseite oder die Bestätigungs-E-Mail, bevor du career-ops mitteilst, dass die Bewerbung abgeschickt wurde.
 
 Bestätige nach dem Absenden im Chat:
 
