@@ -3,7 +3,7 @@ title: Preguntas frecuentes
 description: Preguntas frecuentes sobre career-ops — coste, privacidad, CLIs de IA compatibles, scan vs scan:full, límites de tokens, configuración en Windows y lo que career-ops nunca hará en tu nombre.
 seoTitle: "FAQ de career-ops — coste, privacidad, CLIs compatibles, Windows y cómo ejecutarlo gratis"
 icon: CircleQuestionMark
-translationHash: cf9f3a2747689131
+translationHash: fb78c2f12a7baec9
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -64,7 +64,7 @@ Para evitar límites de tokens o rate limits en una ejecución en batch de caree
 
 ## Las skills no cargan en Windows — error de symlink al instalar
 
-Windows no crea symlinks por defecto, así que al hacer checkout Git deja los puntos de entrada de las skills de career-ops para el CLI como simples archivos puntero. El instalador y el actualizador lo detectan automáticamente: ejecuta `node update-system.mjs apply --confirm` (o `npx @santifer/career-ops init` en una instalación nueva) y el paso de materialización sustituye los archivos puntero por el contenido completo de cada skill. No hace falta ningún `mklink` manual ni activar el Modo de desarrollador.
+Windows no crea symlinks por defecto, así que al hacer checkout Git deja los puntos de entrada de las skills de career-ops para el CLI como simples archivos puntero. El instalador y el actualizador lo detectan automáticamente: ejecuta `node update-system.mjs apply --confirm` (o `npx @santifer/career-ops init` en una instalación nueva) y el paso de materialización sustituye los archivos puntero por el contenido completo de cada skill. Desde un worktree de Git enlazado, `apply --confirm` hace esta reparación en tu checkout de `main`. Ejecuta `git merge main` en el worktree para incorporarla; los worktrees creados a partir del `main` actualizado ya la tienen. Con `CAREER_OPS_UPDATE_IN_WORKTREE=1` definido, `apply` repara solo la rama de ese worktree y `main` se queda sin reparar. No hace falta ningún `mklink` manual ni activar el Modo de desarrollador.
 
 ## ¿Puedo ejecutar career-ops con un modelo más barato o local?
 
