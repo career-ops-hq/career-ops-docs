@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: 5d257109cb8f4ae0
+translationHash: d7a6ccee0dc73e47
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -91,6 +91,8 @@ Wenn du so weit bist, starte den Batch. Du kannst die Angebote einzeln nacheinan
 ```
 
 Behalte das Terminal im Blick, während der Batch läuft. Jede Zeile zeigt dir, welches Angebot gerade verarbeitet wird und ob es fertig geworden oder fehlgeschlagen ist.
+
+Findet ein delegierter Worker eine Anzeige einer Personalvermittlung, die deine Bestätigung braucht, hält er an, bevor er einen Bericht, einen Lebenslauf, einen Bewerbungsentwurf oder eine Tracker-Zeile schreibt, und markiert den Job als `needs_confirmation`. Beantworte die angezeigte Frage in der übergeordneten interaktiven Sitzung; erst nach deiner ausdrücklichen Antwort setzt diese Sitzung die angehaltene Anzeige fort. `--retry-failed` und `--resume-paused` setzen solche Bestätigungsstopps nicht fort.
 
 ## Schritt 4: Lies die Ergebnisse, sobald sie eintreffen
 
