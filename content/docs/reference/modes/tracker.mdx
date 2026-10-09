@@ -27,15 +27,15 @@ A tracker run prints the full applications table plus a statistics block in a si
 
 ```txt title="Example"
 # | Date       | Company   | Role              | Score | Status    | PDF | Report
-1 | 2026-06-14 | Anthropic | AI Engineer       |  87   | Interview | yes | yes
-2 | 2026-06-18 | Vercel    | Applied AI Eng    |  79   | Applied   | yes | yes
-3 | 2026-06-21 | Figma     | Product Eng, AI   |  72   | Evaluated | yes | yes
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
 
 Total: 3   Applied: 1   Interview: 1   Evaluated: 1
-Average score: 79   PDF generated: 100%   Report generated: 100%
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, update the row in the tracker table or use the Go TUI dashboard.
+An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, ask for it in the chat or run `node set-status.mjs <report#|company> <state>` yourself, adding `--on YYYY-MM-DD` when it happened on an earlier day. The command rejects unknown states, locks the tracker while it writes, and logs the transition in `data/status-log.tsv`, the ledger the funnel-velocity statistics read, so use it instead of hand-editing the row.
 
 ## Reading the lifetime numbers
 
@@ -43,7 +43,7 @@ For cumulative figures — the full funnel, scanner totals, portal coverage, and
 
 ## Gotchas
 
-tracker is read-only. Status changes are explicit keystrokes in the Go TUI dashboard or manual edits to the report frontmatter.
+Status lives in the Status column of the tracker (`data/applications.md`), not in the report file. The Go TUI dashboard's status picker also updates that column, but it does not log the transition in `data/status-log.tsv` the way `set-status.mjs` does. funnel-velocity still sees the new status, but not when it happened: the change is missing from the stage-velocity timings, and a row that later ends in Rejected loses the stages it passed through. Use the command for any change you want those figures to include.
 
 ## Related
 

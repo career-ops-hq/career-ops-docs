@@ -4,7 +4,7 @@
 //
 // `siteSchema()` runs in the root layout (every page). Per-page builders
 // (`aboutSchema()`, etc.) emit additional graphs scoped to that route.
-import { homeEn, homeEs, homeFr, type HomeDict } from '@/app/(home)/home-dict';
+import { homeEn, homeEs, homeFr, homeDe, type HomeDict } from '@/app/(home)/home-dict';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
@@ -87,7 +87,6 @@ const PERSON_SAMEAS = [
   'https://www.crunchbase.com/person/santiago-fernandez-de-valderrama',
   'https://huggingface.co/santifer',
   'https://www.wikidata.org/wiki/Q138710224',
-  'https://santiferirepair.es',
   'https://www.facebook.com/santifer.io/',
   'https://www.producthunt.com/@santifer',
   'https://app.daily.dev/santifer',
@@ -100,15 +99,16 @@ const PERSON_SAMEAS = [
 // correlate ~3× more strongly with AI search citation than backlinks
 // (Ahrefs December 2025 study). Both posts encoded with upvote +
 // comment InteractionCounters so AI engines can read social proof.
-// Headlines preserved verbatim from the actual Reddit titles, even
-// where "offers" is technically the wrong noun (the Reddit title
-// cannot be edited post-publish; the post body carries the correction).
+// No headline on the r/ClaudeAI post: its title says "740+ offers", and
+// engines read a subjectOf headline as a claim about the entity, which
+// contradicts the canon (the 740 are listings, never offers). The title
+// cannot be edited and is not rewritten here; the node keeps @type, url,
+// date and author (search-ops, 30-sep; same rule as the headlines #127
+// dropped).
 const SOFTWARE_SUBJECT_OF = [
   {
     '@type': 'DiscussionForumPosting',
     url: 'https://www.reddit.com/r/ClaudeAI/comments/1sd2f37/i_built_an_ai_job_search_system_with_claude_code/',
-    headline:
-      'I built an AI job search system with Claude Code that scored 740+ offers and landed me a job. Just open sourced it.',
     datePublished: '2026-04-05T12:30:50Z',
     author: { '@id': PERSON_ID },
     publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
@@ -123,29 +123,6 @@ const SOFTWARE_SUBJECT_OF = [
         '@type': 'InteractionCounter',
         interactionType: 'https://schema.org/CommentAction',
         userInteractionCount: 249,
-        name: 'Reddit comments',
-      },
-    ],
-  },
-  {
-    '@type': 'DiscussionForumPosting',
-    url: 'https://www.reddit.com/r/SideProject/comments/1rw1lg4/i_automated_my_job_search_with_ai_agents_516/',
-    headline:
-      'I automated my job search with AI agents — 516 evaluations, 66 applications, zero manual screening',
-    datePublished: '2026-03-17T09:17:59Z',
-    author: { '@id': PERSON_ID },
-    publisher: { '@type': 'Organization', name: 'Reddit', url: 'https://www.reddit.com' },
-    interactionStatistic: [
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/LikeAction',
-        userInteractionCount: 575,
-        name: 'Reddit upvotes',
-      },
-      {
-        '@type': 'InteractionCounter',
-        interactionType: 'https://schema.org/CommentAction',
-        userInteractionCount: 359,
         name: 'Reddit comments',
       },
     ],
@@ -204,14 +181,6 @@ const PERSON_SUBJECT_OF = [
   },
   {
     '@type': 'NewsArticle',
-    url: 'https://www.simplenews.ai/news/career-ops-laid-off-engineers-ai-job-search-system-goes-viral-with-27k-stars-bxcp',
-    headline:
-      "Career-Ops: Laid-Off Engineer's AI Job Search System Goes Viral With 27K Stars",
-    datePublished: '2026-04-09T00:00:00Z',
-    publisher: { '@type': 'Organization', name: 'SimpleNews.ai', url: 'https://www.simplenews.ai' },
-  },
-  {
-    '@type': 'NewsArticle',
     url: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
     headline:
       'Το AI εργαλείο που φέρνει επανάσταση στον τρόπο που ψάχνουμε δουλειά',
@@ -255,7 +224,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr'],
+        inLanguage: ['en', 'es', 'fr', 'de'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -349,7 +318,7 @@ export async function siteSchema() {
         name: 'career-ops',
         alternateName: ALTERNATE_NAMES,
         description:
-          'Open-source AI job search agent. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Codex, OpenCode, Gemini CLI, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
+          'Open-source AI job search agent. Runs locally through whichever AI coding CLI the user already pays for (Claude Code, Cursor, Codex, OpenCode, Qwen, Copilot, Kimi). Fourteen modes covering scan, evaluate, tailor, apply, track, and interview prep. MIT-licensed.',
         // Sourced live from the GitHub releases API (1h ISR) so it can never
         // drift stale; falls back to LATEST_RELEASE_FALLBACK in shared.ts.
         softwareVersion: stats.softwareVersion,
@@ -386,14 +355,7 @@ export async function siteSchema() {
         alternateName: ['Santiago Fernández de Valderrama', 'santifer', 'Santi'],
         url: 'https://santifer.io/about',
         image: 'https://santifer.io/foto-avatar.png',
-        jobTitle: 'Applied AI Operator',
-        worksFor: { '@type': 'Organization', name: 'Zinkee', url: 'https://zinkee.com' },
-        hasOccupation: {
-          '@type': 'Occupation',
-          name: 'Head of Applied AI',
-          occupationLocation: { '@type': 'Organization', name: 'Zinkee' },
-          skills: 'Applied AI, multi-agent orchestration, product strategy, open source maintenance',
-        },
+        jobTitle: 'Creator of career-ops',
         founderOf: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_PERSON_IDENTIFIER,
         sameAs: PERSON_SAMEAS,
@@ -470,7 +432,7 @@ export function methodologySchema() {
             name: 'Is career-ops free? What is the business model?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from voluntary community patronage via GitHub Sponsors — not from premium tiers, paid features, or data. Sponsorship funds maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
+              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from community contributions and corporate sponsorship through the project’s collective on Open Collective — not from premium tiers, paid features, or data. Funding is held by the project’s fiscal host, Open Source Collective, on a public ledger, and goes to maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
             },
           },
           {
@@ -746,10 +708,11 @@ export function manifestoSchemaEs() {
 }
 
 // /sustain — Path 3 Sovereign Maintainer page. Emits WebPage with
-// significantLink to GitHub Sponsors + BreadcrumbList. We deliberately
-// do NOT use DonateAction (Schema.org's donate-action semantics map to
-// 501(c)(3) charities, and Google's parser can flag misuse). career-ops
-// is individual maintainer + OSS, not a registered charity — neutral
+// significantLink to the project's collective on Open Collective +
+// BreadcrumbList. We deliberately do NOT use DonateAction (Schema.org's
+// donate-action semantics map to 501(c)(3) charities, and Google's parser
+// can flag misuse). career-ops is an OSS project fiscally hosted by Open
+// Source Collective, not a registered charity — neutral
 // `significantLink` + mainContentOfPage carry the funding signal
 // without the legal-tier mismatch.
 export function sustainSchema() {
@@ -762,15 +725,15 @@ export function sustainSchema() {
         url: 'https://career-ops.org/sustain',
         name: 'Sustain career-ops',
         description:
-          'career-ops is permanently free, MIT-licensed, and community-funded. Path 3 Sovereign Maintainer model — sponsorship buys time, not direction.',
+          'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
         inLanguage: 'en',
-        dateModified: '2026-05-16T00:00:00Z',
+        dateModified: '2026-10-01',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
-        significantLink: 'https://github.com/sponsors/santifer',
+        significantLink: 'https://opencollective.com/career-ops',
         mainContentOfPage: {
           '@type': 'WebPageElement',
-          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds maintenance, security fixes, releases, and documentation. Sustainability comes from voluntary patronage — not premium tiers, paid features, or data.',
+          text: 'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host, Open Source Collective, and goes to maintenance, security fixes, releases, and documentation. It never buys direction.',
         },
       },
       {
@@ -790,19 +753,32 @@ export function sustainSchema() {
 // breadcrumb readable in SERP; deeper hierarchy would require a slug→title
 // lookup against the source tree, and Google only displays the last 2-3
 // items in breadcrumb rich results anyway.
+const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
+  en: { home: 'Home', docs: 'Docs' },
+  es: { home: 'Inicio', docs: 'Documentación' },
+  fr: { home: 'Accueil', docs: 'Documentation' },
+  de: { home: 'Startseite', docs: 'Dokumentation' },
+};
+
 export function docsBreadcrumbSchema(opts: {
   url: string;
   title?: string;
 }) {
-  const isDocsLanding = opts.url === '/docs' || opts.url === '/docs/';
+  // A translated page's trail stays in its language: /de/docs/faq is
+  // Startseite (/de) → Dokumentation (/de/docs) → FAQ. It used to point
+  // Home and Docs at the English pages (i18n SEO audit, 30-sep).
+  const loc = /^\/([a-z]{2})(?=\/docs)/.exec(opts.url)?.[1];
+  const prefix = loc ? `/${loc}` : '';
+  const names = BREADCRUMB_NAMES[loc ?? 'en'] ?? BREADCRUMB_NAMES.en;
+  const isDocsLanding = opts.url === `${prefix}/docs` || opts.url === `${prefix}/docs/`;
   const items: Array<{
     '@type': 'ListItem';
     position: number;
     name: string;
     item: string;
   }> = [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://career-ops.org/' },
-    { '@type': 'ListItem', position: 2, name: 'Docs', item: 'https://career-ops.org/docs' },
+    { '@type': 'ListItem', position: 1, name: names.home, item: `https://career-ops.org${prefix || '/'}` },
+    { '@type': 'ListItem', position: 2, name: names.docs, item: `https://career-ops.org${prefix}/docs` },
   ];
   if (!isDocsLanding && opts.title) {
     items.push({
@@ -863,30 +839,57 @@ type HomeFaqQA = { q: string; a: string };
 const faqFromDict = (dict: HomeDict): HomeFaqQA[] =>
   dict.faq.map(({ q, a }) => ({ q, a: nodeText(a) }));
 
-function homeFaqGraph(id: string, lang: string, entries: HomeFaqQA[]) {
+// The home's graph: a WebPage node that carries the page's real last-change
+// date (the same date as its sitemap lastmod, from src/lib/home-date.ts), and
+// the FAQPage of its visible FAQ. Before 28 September the home had no WebPage
+// node and no dateModified, only the dated nodes that describe press mentions
+// and a video, and Google showed one of those old dates on the home's snippet.
+function homeGraph(
+  pageUrl: string,
+  lang: string,
+  entries: HomeFaqQA[],
+  dateModified?: Date,
+) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    '@id': id,
-    inLanguage: lang,
-    mainEntity: entries.map((e) => ({
-      '@type': 'Question',
-      name: e.q,
-      acceptedAnswer: { '@type': 'Answer', text: e.a },
-    })),
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}/#webpage`,
+        url: pageUrl,
+        inLanguage: lang,
+        isPartOf: { '@id': 'https://career-ops.org/#website' },
+        about: { '@id': 'https://career-ops.org/#software' },
+        ...(dateModified ? { dateModified: dateModified.toISOString() } : {}),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}/#faq`,
+        inLanguage: lang,
+        mainEntity: entries.map((e) => ({
+          '@type': 'Question',
+          name: e.q,
+          acceptedAnswer: { '@type': 'Answer', text: e.a },
+        })),
+      },
+    ],
   };
 }
 
-export function homeFaqSchema() {
-  return homeFaqGraph('https://career-ops.org/#faq', 'en', faqFromDict(homeEn));
+export function homeFaqSchema(dateModified?: Date) {
+  return homeGraph('https://career-ops.org', 'en', faqFromDict(homeEn), dateModified);
 }
 
-export function homeFaqSchemaEs() {
-  return homeFaqGraph('https://career-ops.org/es/#faq', 'es', faqFromDict(homeEs));
+export function homeFaqSchemaEs(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/es', 'es', faqFromDict(homeEs), dateModified);
 }
 
-export function homeFaqSchemaFr() {
-  return homeFaqGraph('https://career-ops.org/fr/#faq', 'fr', faqFromDict(homeFr));
+export function homeFaqSchemaFr(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/fr', 'fr', faqFromDict(homeFr), dateModified);
+}
+
+export function homeFaqSchemaDe(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/de', 'de', faqFromDict(homeDe), dateModified);
 }
 
 export function blogPostSchema(args: {
@@ -988,7 +991,10 @@ export function comparisonSchema(data: ComparisonData) {
         name: `career-ops vs ${data.competitor.name}`,
         description: data.intro,
         inLanguage: 'en',
-        dateModified: `${data.lastModified}T00:00:00Z`,
+        dateModified:
+          data.lastModified.length === 10
+            ? `${data.lastModified}T00:00:00Z`
+            : data.lastModified,
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         about: { '@id': 'https://career-ops.org/#software' },
         author: { '@id': PERSON_ID },
@@ -1059,7 +1065,7 @@ export function aboutSchema() {
           'Applied AI Operator. Built career-ops after evaluating 740 listings.',
         inLanguage: 'en',
         mainEntity: { '@id': PERSON_ID },
-        dateModified: '2026-05-07T00:00:00Z',
+        dateModified: '2026-10-01',
         isPartOf: { '@id': 'https://career-ops.org/#website' },
       },
       {
@@ -1094,7 +1100,7 @@ export function pressSchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-07-15T00:00:00Z',
+        dateModified: '2026-09-29T17:08:40Z',
         // Reference the canonical DefinedTerm node on /manifesto — never
         // duplicate the definition here.
         mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },
@@ -1115,8 +1121,8 @@ export function pressSchema() {
         url: 'https://career-ops.org/og-banner.jpg',
         caption: 'career-ops social banner',
         encodingFormat: 'image/jpeg',
-        width: '2400',
-        height: '1339',
+        width: '1200',
+        height: '630',
       },
       {
         '@type': 'BreadcrumbList',

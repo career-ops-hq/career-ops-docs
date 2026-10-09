@@ -2,8 +2,9 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { X } from 'lucide-react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Check, ChevronDown, X } from 'lucide-react';
 
 // Language switcher + browser-detection suggestion, both living in the header.
 // Ported from santifer.io's pattern (cv-santiago): suggest, never auto-redirect
@@ -12,18 +13,23 @@ import { X } from 'lucide-react';
 // own guidance). Detection is client-only; the banner never renders in SSR
 // (that caused a React #418 hydration mismatch on santifer.io).
 //
-// N-locale (en/es/fr, 2026-07-21): the switcher shows the current locale plus a
-// link per other locale (stateless, no dropdown). Each link resolves to the
+// N-locale (en/es/fr 2026-07-21, de 2026-09-30). Since 30-sep the switcher is
+// a dropdown: one button with the current language, a menu with every
+// language by its native name (four inline pills no longer fit, and each new
+// language would add ~55px to the header). The menu's links are ALWAYS in the
+// DOM, only hidden while closed, so the server HTML still links every language
+// version for crawlers that do not run JS. Each link resolves to the
 // SAFE URL for that locale — docs go to /<loc>/docs (the route redirects an
 // untranslated slug to EN), the home to /<loc>, the manifesto to its twin when
-// one exists (es) or the locale home otherwise (fr has no manifesto yet), and
+// one exists (es) or the locale home otherwise (fr and de have none yet), and
 // any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es' | 'fr';
-const LOCALES: { code: Code; label: string }[] = [
-  { code: 'en', label: 'EN' },
-  { code: 'es', label: 'ES' },
-  { code: 'fr', label: 'FR' },
+type Code = 'en' | 'es' | 'fr' | 'de';
+const LOCALES: { code: Code; label: string; name: string }[] = [
+  { code: 'en', label: 'EN', name: 'English' },
+  { code: 'es', label: 'ES', name: 'Español' },
+  { code: 'fr', label: 'FR', name: 'Français' },
+  { code: 'de', label: 'DE', name: 'Deutsch' },
 ];
 // Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
 const MANIFESTO_LOCALES: Code[] = ['es'];
@@ -67,16 +73,30 @@ function FlagFR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+function FlagDE({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
+      <clipPath id="flagCircleDE"><circle cx="8" cy="8" r="8" /></clipPath>
+      <g clipPath="url(#flagCircleDE)">
+        <rect y="0" width="16" height="6" fill="#000" />
+        <rect y="5" width="16" height="6" fill="#dd0000" />
+        <rect y="10" width="16" height="6" fill="#ffce00" />
+      </g>
+    </svg>
+  );
+}
 const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   en: FlagEN,
   es: FlagES,
   fr: FlagFR,
+  de: FlagDE,
 };
 
-/** Which locale is this path? (localized surfaces are prefixed /es or /fr.) */
+/** Which locale is this path? (localized surfaces are prefixed /es, /fr or /de.) */
 function localeOf(pathname: string): Code {
   if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
   if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
+  if (pathname === '/de' || pathname.startsWith('/de/')) return 'de';
   return 'en';
 }
 
@@ -84,7 +104,7 @@ function localeOf(pathname: string): Code {
 function baseOf(pathname: string): string {
   const loc = localeOf(pathname);
   if (loc === 'en') return pathname;
-  return pathname.slice(3) || '/'; // drop '/es' or '/fr'
+  return pathname.slice(3) || '/'; // drop '/es', '/fr' or '/de'
 }
 
 /** The URL for `target` locale of the page whose EN-relative path is `base`.
@@ -116,11 +136,14 @@ function detectLocale(): Code {
   return 'en';
 }
 
-// The banner speaks the TARGET language — the reader may not read the page's.
-const BANNER: Record<Code, { message: string; prefix: string }> = {
-  en: { message: 'This site is available in English', prefix: 'Switch to' },
-  es: { message: 'Este sitio está disponible en español', prefix: 'Cambiar a' },
-  fr: { message: 'Ce site est disponible en français', prefix: 'Passer en' },
+// The suggestion speaks the TARGET language — the reader may not read the
+// page's. The link says what it does ("View in English"); the question is the
+// optional lead-in, shown only where the header has room for it.
+const BANNER: Record<Code, { question: string; cta: string }> = {
+  en: { question: 'Prefer English?', cta: 'View in English' },
+  es: { question: '¿Prefieres español?', cta: 'Ver en español' },
+  fr: { question: 'Vous préférez le français ?', cta: 'Voir en français' },
+  de: { question: 'Lieber auf Deutsch?', cta: 'Auf Deutsch ansehen' },
 };
 
 /**
@@ -162,11 +185,12 @@ function useLanguageBanner(target: Code, mismatch: boolean) {
   return { showBanner: visible, dismiss, animate: visible && firstAppearance.current };
 }
 
-export function LanguageBar() {
+// `compact`: never show the sentence, only the switch link. The docs layouts
+// render the bar in the narrow sidebar, where the sentence could only wrap.
+export function LanguageBar({ compact = false }: { compact?: boolean }) {
   const pathname = usePathname() || '/';
   const current = localeOf(pathname);
   const base = baseOf(pathname);
-  const others = LOCALES.filter((l) => l.code !== current);
 
   // Client-only: don't render the detection banner during SSR (hydration).
   const [mounted, setMounted] = useState(false);
@@ -175,57 +199,204 @@ export function LanguageBar() {
   const mismatch = mounted && target !== current;
   const { showBanner, dismiss, animate } = useLanguageBanner(target, mismatch);
 
-  const CurrentFlag = FLAG[current];
   const TargetFlag = FLAG[target];
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className={compact ? 'flex flex-col items-start gap-2' : 'flex items-center gap-2'}>
       {mounted && showBanner && (
         <div
-          className={`flex items-center gap-2 text-sm${animate ? ' animate-in fade-in slide-in-from-right-2 duration-500' : ''}`}
+          // Measured 30-sep with the dropdown (four languages, 16px steps):
+          // the tightest header is /fr, whose long tagline needs 1136px for
+          // the banner and 1264px for banner + question. Below that the theme
+          // toggle gets squeezed, so the banner shows from 1152px and the
+          // question from 1280px (xl). Re-measure when a language is added:
+          // .claude/skills/nuevo-idioma/kit/medir-cabecera.js.
+          className={`inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full border border-brand/30 bg-brand/5 ps-3 pe-1.5 text-sm${compact ? '' : ' lg:max-[1151px]:hidden'}${animate ? ' animate-in fade-in slide-in-from-right-2 duration-500' : ''}`}
         >
-          <span className="hidden lg:inline text-fd-muted-foreground">
-            {BANNER[target].message}
+          <span data-banner-question className={compact ? 'hidden' : 'hidden xl:inline text-fd-muted-foreground'}>
+            {BANNER[target].question}
           </span>
           <Link
             href={localeUrl(base, target)}
             onClick={dismiss}
-            className="inline-flex items-center gap-1 font-medium text-brand hover:text-brand-200 transition-colors"
+            className="inline-flex items-center gap-1.5 font-medium text-brand-text hover:underline"
           >
-            {BANNER[target].prefix}
-            <TargetFlag className="w-3.5 h-3.5 mx-0.5" />
-            {LOCALES.find((l) => l.code === target)!.label}
+            <TargetFlag className="w-3.5 h-3.5" />
+            {BANNER[target].cta}
           </Link>
           <button
             onClick={dismiss}
             aria-label="Dismiss"
-            className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+            className="inline-flex size-5 items-center justify-center rounded-full text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-foreground transition-colors"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-3 h-3" />
           </button>
         </div>
       )}
-      {/* Switcher: current locale (highlighted) + a link per other locale. */}
-      <div className="inline-flex items-center gap-1 h-8 px-2 rounded-full border bg-fd-card text-sm">
-        <CurrentFlag className="w-3.5 h-3.5" />
-        <span className="font-medium text-fd-foreground">
-          {LOCALES.find((l) => l.code === current)!.label}
-        </span>
-        {others.map((l) => {
-          const Flag = FLAG[l.code];
-          return (
-            <Link
-              key={l.code}
-              href={localeUrl(base, l.code)}
-              aria-label={`Switch language to ${l.label}`}
-              className="inline-flex items-center gap-1 pl-1.5 ml-0.5 border-l border-fd-border text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-            >
-              <Flag className="w-3.5 h-3.5" />
-              {l.label}
-            </Link>
-          );
-        })}
-      </div>
+      <LanguageMenu current={current} base={base} compact={compact} />
+    </div>
+  );
+}
+
+/**
+ * Disclosure-navigation dropdown (WAI-ARIA "disclosure navigation menu"): a
+ * button that shows and hides a list of links. No role="menu", which would
+ * promise arrow-key handling; Tab moves through the links. Closes on Escape
+ * (focus returns to the button), on a click outside, on navigation, and on
+ * scroll or resize (a fixed-position menu would otherwise drift off its button).
+ *
+ * The open menu is portaled to <body> with position: fixed under the button.
+ * Fumadocs' mobile panel lives inside a Radix NavigationMenu viewport with
+ * overflow: hidden, which clipped an absolute dropdown; laying the list out
+ * in the panel's flow instead pushed the GitHub and theme buttons around
+ * (Santiago, 1-oct). A portal escapes every container the bar sits in: the
+ * desktop header, the docs sidebar and the mobile panel.
+ *
+ * A hidden copy of the links is always in the server HTML, so crawlers that
+ * do not run JS still see every language version.
+ */
+const MENU_MIN_W = 192; // min-w-48
+
+function LanguageMenu({ current, base, compact }: { current: Code; base: string; compact: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState<{ top: number; left?: number; right?: number } | null>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
+  useEffect(() => setOpen(false), [pathname]);
+
+  const place = useCallback(() => {
+    const r = btnRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const top = r.bottom + 6;
+    const vw = window.innerWidth;
+    // Open towards the side with room: from the button's left edge when the
+    // button sits in the left half (docs sidebar, mobile menu panel), from its
+    // right edge otherwise (desktop header). Either way, keep 8px inside the
+    // viewport: hung from the right edge in the mobile panel, it overflowed.
+    if (compact || r.left + r.width / 2 < vw / 2) {
+      setPos({ top, left: Math.max(8, Math.min(r.left, vw - MENU_MIN_W - 8)) });
+    } else {
+      setPos({ top, right: Math.max(8, vw - r.right) });
+    }
+  }, [compact]);
+
+  useEffect(() => {
+    if (!open) return;
+    const inside = (t: EventTarget | null) =>
+      !!t && (btnRef.current?.contains(t as Node) || menuRef.current?.contains(t as Node));
+    const onDown = (e: MouseEvent) => {
+      if (!inside(e.target)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      setOpen(false);
+      btnRef.current?.focus();
+    };
+    const onMove = (e: Event) => {
+      if (!inside(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onMove);
+    window.addEventListener('scroll', onMove, true);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onMove);
+      window.removeEventListener('scroll', onMove, true);
+    };
+  }, [open]);
+
+  const cur = LOCALES.find((l) => l.code === current) ?? LOCALES[0];
+  const CurFlag = FLAG[cur.code];
+  // The bar renders twice (desktop header and the mobile menu panel), so a
+  // fixed id would be duplicated: useId keeps aria-controls unambiguous.
+  const menuId = `language-menu-${useId().replace(/:/g, '')}`;
+
+  const list = (
+    <ul className="flex flex-col gap-0.5">
+      {LOCALES.map((l) => {
+        const Flag = FLAG[l.code];
+        const isCurrent = l.code === current;
+        const inner = (
+          <>
+            <Flag className="w-4 h-4 shrink-0" />
+            <span lang={l.code} className="flex-1">{l.name}</span>
+            {isCurrent ? (
+              <Check aria-hidden="true" className="w-4 h-4 text-brand-text" />
+            ) : (
+              <span className="text-xs text-fd-muted-foreground">{l.label}</span>
+            )}
+          </>
+        );
+        return (
+          <li key={l.code} data-locale={l.code}>
+            {isCurrent ? (
+              <span
+                aria-current="true"
+                className="flex items-center gap-2.5 rounded-lg bg-fd-accent px-2.5 py-2 font-medium text-fd-foreground"
+              >
+                {inner}
+              </span>
+            ) : (
+              // Full-strength text: the muted grey read as "disabled" in dark
+              // mode. The current language is marked by the check, the accent
+              // background and aria-current, not by dimming the others.
+              <Link
+                href={localeUrl(base, l.code)}
+                hrefLang={l.code}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-fd-foreground hover:bg-fd-accent transition-colors"
+              >
+                {inner}
+              </Link>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+
+  return (
+    <div className="relative">
+      <button
+        ref={btnRef}
+        type="button"
+        aria-expanded={open}
+        aria-controls={menuId}
+        aria-label={`Language: ${cur.name}`}
+        onClick={() => {
+          if (!open) place();
+          setOpen((o) => !o);
+        }}
+        className="inline-flex h-8 items-center gap-1.5 rounded-full border bg-fd-card ps-2.5 pe-2 text-sm font-medium text-fd-foreground hover:bg-fd-accent transition-colors"
+      >
+        <CurFlag className="w-3.5 h-3.5" />
+        {cur.label}
+        <ChevronDown
+          aria-hidden="true"
+          className={`w-3.5 h-3.5 text-fd-muted-foreground transition-transform${open ? ' rotate-180' : ''}`}
+        />
+      </button>
+      {/* Server-rendered, never shown: the crawlable copy of the links. */}
+      <nav aria-label="Language" className="hidden">
+        {list}
+      </nav>
+      {open &&
+        pos &&
+        createPortal(
+          <nav
+            ref={menuRef}
+            id={menuId}
+            aria-label="Language"
+            style={{ position: 'fixed', top: pos.top, left: pos.left, right: pos.right }}
+            className="z-[100] min-w-48 rounded-xl border bg-fd-popover p-1.5 text-sm text-fd-popover-foreground shadow-lg animate-in fade-in zoom-in-95 duration-100"
+          >
+            {list}
+          </nav>,
+          document.body,
+        )}
     </div>
   );
 }

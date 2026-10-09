@@ -1,0 +1,62 @@
+---
+title: oferta
+description: "Führt die A–H-Bewertung für eine einzelne Stellenanzeige aus und trägt sie in deinen Tracker ein, ohne ein PDF zu erzeugen. Nutze oferta, wenn du nur die Bewertung als Entscheidungsgrundlage brauchst und nicht die komplette Pipeline."
+seoTitle: "career-ops oferta-Modus — eine einzelne Stellenanzeige bewerten, bevor du dich bewirbst"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: d7123fc94d5cddaf
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## Was er macht
+
+Der Modus oferta liest eine einzelne Stellenbeschreibung, entweder als URL oder als eingefügten Text. Er bewertet sie nach dem Bewertungsschema, das aus fünf Dimensionen und einer ganzheitlichen Gesamtbewertung besteht, und belegt jede Einschätzung mit Zitaten aus der Anzeige. Danach schreibt er den Bewertungsbericht. Ein PDF erzeugt er nicht, aber er legt im Tracker eine Zeile mit dem Status Evaluated an. Das geht schnell und kostet wenig.
+
+## Wann du ihn einsetzt
+
+Nutze oferta, wenn du bei einer Stellenanzeige unschlüssig bist und sie schnell einordnen willst. Liegt die Bewertung über 4,0 und du entscheidest dich für eine Bewerbung, wechselst du zu auto-pipeline oder zum Modus apply.
+
+## So sieht ein Durchlauf aus
+
+Du gibst dem Modus eine Stellenanzeige und bekommst die Bewertung in sieben Blöcken zurück, mit Score und belegter Begründung. Die Blöcke A bis F bilden den Kern, Block G schätzt ein, ob die Anzeige echt ist. Liegt die Bewertung bei 4,5 oder höher, kommen in Block H noch Antwortentwürfe hinzu. Du kannst den Text der Stellenbeschreibung direkt einfügen oder eine URL übergeben. Bei einer URL prüft der Modus zuerst, ob die Anzeige noch online ist. So verbraucht ein toter Link nie eine komplette Bewertung.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+
+Die Blöcke B bis F behandeln fünf Themen. Sie gleichen die Stelle mit deinem Lebenslauf ab und zeigen Lücken auf. Sie entwickeln eine Strategie für die Einstufung und prüfen Vergütung und Nachfrage. Dazu kommen ein Plan, wie du deine Unterlagen anpasst, und STAR+R-Geschichten für das Vorstellungsgespräch, die auf die Anforderungen der Stelle zugeschnitten sind.
+
+## Wann du zu oferta greifst
+
+Greif zu oferta, wenn du eine einzelne Stellenanzeige schnell bewerten willst, ohne gleich die komplette Pipeline zu starten. Gut zu wissen:
+
+- Übergibst du eine URL, läuft zuerst ein Liveness-Check. Ist die Anzeige abgelaufen oder liefert die Seite einen 404-Fehler, bricht der Modus vor Block A ab. So verschwendest du nie einen Durchlauf für Phantominhalte.
+- Die Recherche zu Unternehmen und Vergütung ist auf höchstens fünf Websuchen begrenzt. Das hier ist eine Bewertung, keine Tiefenrecherche. Führ `/career-ops deep` separat aus, wenn du ein vollständigeres Bild vom Unternehmen willst.
+- Block G liefert eine von drei Stufen: High Confidence, Proceed with Caution oder Suspicious. So fallen wahrscheinliche Ghost Jobs auf, bevor du Zeit und Mühe in die Vorbereitung auf ein Vorstellungsgespräch steckst.
+
+## Siehe auch
+
+- [auto-pipeline](/de/docs/reference/modes/auto-pipeline)
+- [ofertas](/de/docs/reference/modes/ofertas)
+- [pdf](/de/docs/reference/modes/pdf)

@@ -1,18 +1,18 @@
 ---
 title: oferta
-description: "Ejecuta la evaluación A–H sobre un único anuncio. Omite la generación de PDF y la escritura en el tracker. Úsalo cuando solo necesitas la decisión de puntuación y no el pipeline completo."
+description: "Ejecuta la evaluación A–H sobre un único anuncio. Omite la generación de PDF, pero registra la evaluación en el tracker. Úsalo cuando solo necesitas la decisión de puntuación y no el pipeline completo."
 seoTitle: "Modo oferta de career-ops — puntúa una oferta de empleo antes de aplicar"
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: 2c8254029bcffc23
+translationHash: ca88e3e489375de0
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## Qué hace
 
-El modo oferta lee una única JD (URL o texto pegado), la puntúa contra la rúbrica — cinco dimensiones más una puntuación global holística — con evidencia citada, y escribe el informe de evaluación. Sin PDF, sin entrada en el tracker. Rápido y barato.
+El modo oferta lee una única JD (URL o texto pegado), la puntúa contra la rúbrica — cinco dimensiones más una puntuación global holística — con evidencia citada, y escribe el informe de evaluación. Sin PDF, pero añade una fila al tracker con el estado Evaluated. Rápido y barato.
 
 ## Cuándo usarlo
 
@@ -20,7 +20,7 @@ Usa oferta para hacer un triaje rápido de un anuncio dudoso. Si la puntuación 
 
 ## Cómo es una ejecución
 
-Le pasas al modo un anuncio y devuelve la evaluación de siete bloques — los Bloques A a F más una lectura de legitimidad en el Bloque G — con puntuación y razonamiento citado. Pega el texto de la JD directamente, o pasa una URL y el modo confirma primero que la publicación sigue activa, de modo que un enlace muerto nunca quema una evaluación completa.
+Le pasas al modo un anuncio y devuelve la evaluación de siete bloques — los Bloques A a F más una lectura de legitimidad en el Bloque G, y además borradores de respuestas en el Bloque H cuando la puntuación es de 4.5 o más — con puntuación y razonamiento citado. Pega el texto de la JD directamente, o pasa una URL y el modo confirma primero que la publicación sigue activa, de modo que un enlace muerto nunca quema una evaluación completa.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021

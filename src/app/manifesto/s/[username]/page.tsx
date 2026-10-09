@@ -130,7 +130,7 @@ export default async function SignatureSharePage({
           <a
             href={signOnGitHubUrl()}
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="inline-block rounded-lg px-5 py-2.5 text-sm font-medium"
             style={{
               backgroundColor: 'var(--color-fd-foreground)',
@@ -186,7 +186,7 @@ export default async function SignatureSharePage({
           <a
             href={SIGNATURES_GITHUB_URL}
             target="_blank"
-            rel="noreferrer noopener"
+            rel="noopener"
             className="underline underline-offset-2"
           >
             career-ops repository
@@ -198,7 +198,7 @@ export default async function SignatureSharePage({
               <a
                 href={sig.sourceUrl}
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
                 className="underline underline-offset-2"
               >
                 {sourceLabel}
@@ -391,7 +391,7 @@ export default async function SignatureSharePage({
         <a
           href={SIGNATURES_GITHUB_URL}
           target="_blank"
-          rel="noreferrer noopener"
+          rel="noopener"
           className="underline underline-offset-2"
         >
           full ledger ↗
@@ -407,7 +407,7 @@ export default async function SignatureSharePage({
             <a
               href={sig.sourceUrl}
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener"
               className="underline underline-offset-2"
             >
               {sourceLabel}

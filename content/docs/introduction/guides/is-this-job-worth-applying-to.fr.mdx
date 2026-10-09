@@ -1,0 +1,171 @@
+---
+title: "Vaut-il la peine de postuler à cette offre ?"
+description: "Décidez avant de postuler. career-ops note une annonce de 1 à 5 au regard de votre CV et de vos objectifs, vous montre son raisonnement et vous laisse trancher."
+seoTitle: "Vaut-il la peine de postuler à cette offre ? Décidez avant de postuler avec career-ops — une note de 1 à 5 et son raisonnement"
+icon: Scale
+translationHash: 7108334c927d4e60
+localized: true
+translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
+---
+
+Une offre vaut une candidature quand elle correspond suffisamment à votre CV, à votre niveau et à vos conditions pour la justifier. career-ops lit l'annonce au regard de votre CV et de vos objectifs et lui attribue une note de 1 à 5, avec son raisonnement. En dessous de 4.0, il déconseille de postuler, sauf si vous avez une raison précise. C'est vous qui décidez.
+
+Pour vérifier une annonce avant de postuler, lancez `/career-ops oferta` et collez-la. Il évalue et rédige des brouillons ; vous décidez et vous envoyez. Il ne postule jamais en votre nom.
+
+**Sur cette page :** [Décidez avant de postuler](#decide-before-you-apply) · [Vérifier une offre](#how-do-i-check-a-job-before-i-apply) · [Comment la note est décidée](#how-does-career-ops-decide-the-score) · [Ce qui ne change pas la note](#what-does-not-change-the-score) · [En dessous de 4.0](#what-happens-below-40) · [Ce que vous apporte l'évaluation](#what-does-the-evaluation-give-you) · [Un exemple fictif](#a-fictional-example) · [Dites-lui qui vous êtes](#the-first-evaluations-are-rough-until-you-tell-it-who-you-are) · [Confrontez la note à vos résultats](#is-the-score-right-for-you) · [Comparez deux offres au-delà du salaire](#compare-two-offers-beyond-salary) · [Négociez avec vos propres chiffres](#negotiate-with-your-own-numbers) · [FAQ](#frequently-asked-questions)
+
+## Décidez avant de postuler [#decide-before-you-apply]
+
+career-ops est construit autour d'une seule décision : une annonce mérite-t-elle seulement une candidature ? Collez l'offre à laquelle vous alliez postuler ce soir, et il vous dit si cette soirée en vaut la peine. Il ne peut pas vous dire qui vous répondra. Il vous dit à quel point le poste correspond à votre CV et à ce que vous cherchez, avant que vous passiez la soirée sur une candidature qui risque de rester sans réponse.
+
+career-ops est conçu pour la qualité, pas pour la quantité. Il vous oriente vers moins de candidatures, mais de meilleures, et il le dit franchement quand une annonce ne tient pas la route. Un résultat qui dit *ne postulez pas*, c'est le produit qui fait son travail.
+
+Moins de candidatures, mais de meilleures : c'est aussi une question de dignité, des deux côtés de la table. Le temps des recruteurs mérite le respect. Le vôtre aussi.
+
+> J'ai créé career-ops pour ma propre recherche d'emploi en 2026. Mon entonnoir : 740 annonces évaluées → 68 candidatures → 12 entretiens → 1 offre. — Santiago Fernández de Valderrama Aparicio
+
+## Comment vérifier une offre avant de postuler ? [#how-do-i-check-a-job-before-i-apply]
+
+<Callout title="Avant de commencer">
+  Installez career-ops avec le [guide de démarrage rapide](/fr/docs) et ouvrez-le dans l'un des [CLI pris en charge](/fr/docs/supported-clis). Tant que vous ne lui avez pas dit qui vous êtes, les évaluations notent par rapport au profil fourni par défaut, qui cible des postes en IA : voir [les premières évaluations sont approximatives](/fr/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
+</Callout>
+
+career-ops dispose d'un mode d'évaluation seule, pour décider d'abord. Ouvrez votre CLI d'IA dans le dossier career-ops, lancez la commande ci-dessous et collez la description du poste ou son URL :
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+Le mode `oferta` exécute l'évaluation et rédige le rapport, sans PDF automatique. Si vous collez plutôt une offre directement dans `/career-ops`, il exécute le pipeline complet, qui adapte aussi un CV (un PDF par défaut), quelle que soit la note. Utilisez `oferta` quand vous voulez le verdict avant tout le reste. Si vous décidez ensuite de postuler, `/career-ops pdf` adapte votre CV, et `/career-ops apply` rédige des brouillons de réponses aux questions du formulaire de candidature, que vous relisez et envoyez vous-même.
+
+Dans Codex, les commandes slash ne sont pas garanties : nommez plutôt le mode dans un prompt, par exemple `Run the career-ops oferta mode on this job: {URL}`.
+
+career-ops effectue quelques vérifications avant de noter quoi que ce soit. Quand vous lui donnez une URL, il confirme d'abord que l'annonce est toujours en ligne. Un lien mort arrête l'exécution avant l'évaluation, sans rapport ni CV. Un texte collé ne peut pas être vérifié de cette façon, et le rapport le signale. Si vous tenez votre propre liste d'entreprises à éviter dans `data/blacklist.md`, une entreprise qui y figure arrête l'exécution : career-ops cite la raison que vous avez notée et vous demande si vous voulez quand même l'évaluation. Si l'annonce semble passer par une agence, il vous demande laquelle avant d'écrire quoi que ce soit.
+
+Les recherches menées pendant une évaluation sont limitées. Celles sur la rémunération et sur la légitimité de l'annonce sont plafonnées, ensemble, à cinq recherches web, et tout ce qu'il ne trouve pas est marqué comme non disponible. Pour étudier une entreprise plus en profondeur, lancez `/career-ops deep` séparément.
+
+## Comment career-ops décide-t-il de la note ? [#how-does-career-ops-decide-the-score]
+
+La note de career-ops est un jugement d'ensemble, guidé par cinq dimensions :
+
+| Dimension                                        | Ce qu'elle examine                                                                                   |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Match with CV (adéquation au CV)                 | La façon dont vos compétences, votre expérience et vos réalisations concrètes correspondent au poste |
+| North Star alignment (alignement avec votre cap) | Dans quelle mesure le poste correspond aux postes cibles de votre profil                             |
+| Comp (rémunération)                              | La rémunération indiquée dans l'annonce, confrontée aux données du marché                            |
+| Cultural signals (signaux culturels)             | Culture d'entreprise, croissance, stabilité et politique de télétravail                              |
+| Red flags (signaux d'alerte)                     | Points bloquants et avertissements, qui font baisser la note                                         |
+
+La note globale de career-ops intègre les cinq dimensions en un seul chiffre de 1 à 5, sans formule arithmétique. Ce n'est pas une moyenne des sections du rapport. La même note figure dans l'en-tête du rapport et dans votre tracker.
+
+L'adéquation culturelle ne peut pas se cacher derrière une forte adéquation au CV. Si vous définissez des exigences culturelles dans `config/profile.yml` et que les éléments de l'annonce les contredisent, le rapport nomme ce qui manque et plafonne la dimension Cultural signals. Un poste noté 4.5 ou plus avec une faible adéquation culturelle porte un avertissement explicite : à vérifier avant de postuler.
+
+career-ops vérifie l'autorisation de travail au regard de votre profil. Si une annonce ne dit rien du parrainage de visa, la note ne baisse pas. Une mention générique du type « doit être autorisé à travailler en X » ne la fait pas baisser non plus, lorsque X est un pays où vous êtes autorisé à travailler. Une mention explicite d'absence de parrainage, comme « no visa sponsorship » ou « must have existing work authorization », pour un poste que vous ne pouvez pas occuper depuis un pays où vous êtes autorisé à travailler, est enregistrée comme un point bloquant absolu, et le rapport cite mot pour mot les termes de l'annonce.
+
+## Qu'est-ce qui ne change pas la note ? [#what-does-not-change-the-score]
+
+Le niveau de légitimité de l'annonce ne change jamais la note de 1 à 5. La vérification de légitimité (Block G dans le rapport) examine des signaux comme l'ancienneté de l'annonce, l'état du bouton de candidature (encore actif ou non), la précision de la description, d'éventuels licenciements récents dans l'actualité et la republication répétée du même poste. Elle renvoie l'un de trois niveaux : High Confidence, Proceed with Caution ou Suspicious. Elle présente ce qu'elle a observé, n'accuse jamais personne, relève les explications légitimes d'un signal inquiétant et vous laisse juger. Sans date de publication et sans autre élément inquiétant, le niveau par défaut est Proceed with Caution, jamais Suspicious. Les recherches sur l'entreprise qui alimentent cette vérification, comme des actualités sur sa stabilité, peuvent toutefois éclairer la dimension Cultural signals.
+
+L'importance des exigences est étiquetée, pas comptabilisée. Le rapport liste les exigences significatives de l'annonce, jusqu'à 12 lignes, et n'en écarte jamais une critique ou élevée pour tenir dans la limite. Pour chacune, il indique son poids dans cette annonce, de critique à signal faible, et précise si cela vient de la formulation même de l'annonce, de sa structure ou d'une estimation signalée comme telle. L'importance est déterminée à partir de l'annonce seule, avant la lecture de votre CV, pour qu'une exigence ne soit pas jugée importante simplement parce que vous y excellez. Chaque exigence critique ou élevée que vous ne remplissez pas, ou seulement en partie, s'accompagne d'un risque précis pour l'entretien et d'un plan pour vous y préparer. Les étiquettes d'importance ne font pas bouger la note de 1 à 5.
+
+Votre propre historique avec une entreprise est affiché, pas noté. Si vous y avez déjà postulé sans jamais recevoir de réponse, ou si l'on vous a répondu une fois et pas une autre, le rapport ajoute une remarque qui le signale. Cette remarque n'est pas un signal de légitimité et ne change ni la note ni le niveau. Elle est là pour vous aider à décider de l'effort à y consacrer.
+
+Votre liste d'entreprises à éviter ne change jamais aucune note : c'est un garde-fou qui arrête l'exécution jusqu'à votre réponse, et rien n'y est jamais ajouté à votre place.
+
+## Que se passe-t-il en dessous de 4.0 ? [#what-happens-below-40]
+
+En dessous de 4.0, career-ops déconseille de postuler, sauf si vous avez une raison précise. Vous pouvez passer outre, et il le signalera.
+
+Le seuil de 4.0 est une recommandation. La décision vous appartient, tout comme chaque candidature : career-ops rédige les documents, vous les relisez et vous les envoyez. À l'autre bout de l'échelle, une annonce notée 4.5 ou plus reçoit aussi des brouillons de réponses pour son formulaire de candidature.
+
+## Que vous apporte l'évaluation ? [#what-does-the-evaluation-give-you]
+
+career-ops écrit chaque évaluation dans un rapport, dans `reports/`, et ajoute une ligne à votre tracker, `data/applications.md`, avec le statut Evaluated. L'en-tête du rapport indique la note, le niveau de légitimité et le statut de l'autorisation de travail, suivis d'un résumé lisible par machine. Les sections principales suivent dans cet ordre :
+
+- A) Role Summary
+- B) Match with CV
+- C) Level and Strategy
+- D) Comp and Demand
+- E) Customization Plan
+- F) Interview Plan
+- G) Posting Legitimacy
+- Risk Summary, qui rassemble les signaux de risque sur un seul écran sans rien renoter
+- H) Draft Application Answers, uniquement quand la note est de 4.5 ou plus
+
+L'annonce elle-même est archivée mot pour mot dans le rapport (une annonce très longue va dans un fichier `jds/` vers lequel pointe le rapport), si bien que vous conservez les exigences une fois l'annonce retirée. Un premier brouillon de lettre de motivation est ajouté à la suite, que vous finalisez avec `/career-ops cover {slug}`.
+
+## Un exemple fictif [#a-fictional-example]
+
+<Callout title="Exemple fictif">
+  Acme Freight, le poste et la candidate ci-dessous sont inventés. Il ne s'agit pas d'une vraie évaluation, et elle ne s'inspire d'aucune. Elle montre seulement comment se lit le raisonnement.
+</Callout>
+
+Dans cet exemple inventé, Maya est ingénieure backend et a dit à career-ops ce qu'elle veut : des postes de backend produit, une petite équipe, du télétravail. Elle colle l'URL de l'annonce d'un poste de Senior Platform Engineer chez Acme Freight. Sur les cinq dimensions, le raisonnement se déroule ainsi :
+
+- **Match with CV :** solide sur le cœur du poste, des services en Go et Postgres. Une exigence critique, faire tourner Kubernetes en production, n'est que partiellement couverte ; le rapport nomme donc le risque pour l'entretien et une façon de s'y préparer.
+- **North Star alignment :** proche de ses objectifs, mais le poste penche davantage vers l'infrastructure que vers le travail de backend produit qu'elle a demandé.
+- **Comp :** l'annonce n'indique aucun salaire. Le rapport le dit, classe le type d'entreprise, évalue la fiabilité des données publiques de rémunération pour ce type d'entreprise, et s'arrête là.
+- **Cultural signals :** elle a demandé une petite équipe ; l'annonce décrit une grande organisation plateforme avec plusieurs niveaux de management. Le rapport nomme cet écart au lieu de laisser la forte adéquation au CV le masquer.
+- **Red flags :** rien qui bloque la candidature.
+
+**Note (fictive) : 3.6/5.** En dessous de 4.0, career-ops déconseille de postuler, sauf si elle a une raison précise.
+
+Par ailleurs, le niveau de légitimité dans cet exemple est Proceed with Caution : la page de l'annonce n'affiche aucune date et rien d'autre n'est inquiétant. Le niveau ne change pas la note.
+
+Maya a une raison que le rapport ne peut pas voir : elle connaît la personne qui dirige l'équipe d'ingénierie, qui lui a confié que l'équipe allait être scindée en plus petites équipes. career-ops lui a déjà dit qu'il déconseillait de postuler. Elle y va quand même ; la décision lui appartient. Elle relit ce que career-ops a rédigé et envoie la candidature elle-même.
+
+## Les premières évaluations sont approximatives tant que vous ne lui avez pas dit qui vous êtes [#the-first-evaluations-are-rough-until-you-tell-it-who-you-are]
+
+career-ops note à partir du profil dont il dispose, et le profil fourni n'est pas le vôtre. Les postes cibles par défaut du profil fourni sont tous des postes en IA. Tant que vous n'avez pas personnalisé `modes/_profile.md`, les évaluations sont notées selon le ciblage de l'auteur du modèle, et `node doctor.mjs` le signale quand vous le lancez.
+
+Les premiers passages sont approximatifs. Il ne vous connaît pas encore. Parlez-lui : votre CV, ce que vous voulez, ce que vous refusez. Au premier lancement, il vous demande tout cela dans le chat. Pour changer les postes cibles, dites-le simplement, par exemple « Remplace les archétypes par des postes d'ingénierie backend ». Après chaque évaluation, dites-lui ce qu'il a mal jugé, par exemple « cette note est trop élevée » ou « tu as oublié mon expérience en X », et il met à jour vos fichiers de profil.
+
+## La note est-elle juste pour vous ? [#is-the-score-right-for-you]
+
+career-ops ne suppose pas que sa note prédit vos résultats ; il vous permet de le vérifier. Enregistrez ce qu'il est advenu de chaque candidature avec `/career-ops outcome`. Une fois que vous avez des résultats, lancez :
+
+```bash
+node calibrate.mjs
+```
+
+Le rapport `calibrate` pose une seule question : dans votre cas, vos candidatures les mieux notées débouchent-elles plus souvent sur des entretiens et des offres ? Il est indicatif. Il ne modifie jamais la notation, les seuils ni votre configuration, et rien ne s'ajuste tout seul. Il n'affiche aucun taux lorsque l'échantillon est trop petit et exclut les candidatures encore en cours. Si vos résultats suggèrent que le seuil est mal placé pour vous, ce que les données permettent de justifier, c'est de changer la note à partir de laquelle vous postulez personnellement, ou les postes que vous ciblez. Cette décision vous appartient.
+
+## Comparez deux offres au-delà du salaire [#compare-two-offers-beyond-salary]
+
+Pour comparer deux offres au-delà du salaire, comparez les postes avec `/career-ops ofertas`, puis lisez chaque lettre d'offre avec `/career-ops offer-prep`. Le mode `ofertas` travaille à partir des annonces : aucune de ses dix dimensions ne couvre les conditions d'une lettre d'offre que vous avez reçue, et il n'a aucune dimension liée aux trajets ou à la qualité de vie en dehors de la qualité du télétravail.
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+Le mode `ofertas` prend deux annonces ou plus : leur texte, leurs URL, ou des postes déjà évalués dans votre tracker. Il note chaque poste de 1 à 5 sur dix dimensions et renvoie un classement assorti d'une recommandation qui tient compte du délai avant d'obtenir une offre.
+
+Le salaire, sous forme de rémunération estimée, est l'une des dix dimensions que `ofertas` note. Les neuf autres sont North Star alignment, CV match, level, growth trajectory, remote quality, company reputation, tech stack modernity, time-to-offer speed et cultural signals.
+
+Contrairement à la note d'évaluation de 1 à 5, qui n'a pas de formule arithmétique, la comparaison `ofertas` utilise des pondérations par défaut, et North Star alignment pèse le plus. Les valeurs par défaut favorisent les postes seniors en IA : la dimension du niveau note le plus haut les postes de niveau staff, et celle de la stack technique note le plus haut l'IA et le ML de pointe. Si ce n'est pas votre recherche, dites ce qui compte pour vous avant de comparer. Vos préférences de notation se trouvent dans votre profil, `modes/_profile.md`, que la comparaison lit.
+
+### Négociez avec vos propres chiffres [#negotiate-with-your-own-numbers]
+
+career-ops vous prépare à négocier à partir de vos propres documents et de vos propres chiffres. Le mode `offer-prep` lit avec vous votre lettre d'offre ou votre contrat, sans se prononcer sur le fait que l'offre soit basse, correcte ou élevée : c'est à vous d'en juger. Collez le texte ou indiquez-lui le fichier :
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+`offer-prep` cite mot pour mot chaque clause digne d'attention, l'explique en termes simples et lui attribue des étiquettes neutres comme *souvent négocié* ou *à demander à votre avocat*. Il se termine par des questions pour votre avocat, des points à soulever auprès de l'employeur (sous forme de questions, jamais d'exigences) et une mention fixe précisant qu'il ne s'agit pas d'un conseil juridique. Il n'effectue aucune recherche web et ne lit que des contrats rédigés en anglais.
+
+`node salary-gap.mjs --summary` montre, pour chaque candidature, ce que vous vouliez, ce que l'annonce affichait et ce qu'on vous a réellement proposé. `node negotiation-roi.mjs --summary` rédige un argument à partir d'un nombre d'heures économisées que vous revendiquez, à condition que ce chiffre figure aussi dans votre `cv.md`, et le valorise selon un salaire et une fréquence que vous fournissez : une estimation, pas un conseil financier. `/career-ops offer-prep reply {company-slug}` rédige un brouillon d'e-mail de réponse à partir de votre rapport de préparation ; c'est vous qui l'envoyez.
+
+## Questions fréquentes [#frequently-asked-questions]
+
+### Existe-t-il un outil qui me dit à quelles offres il vaut la peine de postuler d'après mon CV ?
+
+career-ops est un outil open source sous licence MIT qui lit une annonce au regard de votre CV et de vos objectifs avant que vous postuliez. Il renvoie une note globale de 1 à 5 avec son raisonnement. En dessous de 4.0, il déconseille de postuler, sauf si vous avez une raison précise, et vous pouvez passer outre cette recommandation. career-ops ne postule jamais en votre nom : vous relisez et envoyez vous-même chaque candidature.
+
+### Une note élevée signifie-t-elle que j'obtiendrai un entretien ?
+
+Une note élevée de career-ops ne garantit pas un entretien. La note est un jugement sur l'adéquation d'une annonce avec votre CV et vos objectifs, pas une prévision d'entretiens ou d'offres. Pour voir comment la note suit vos propres résultats, enregistrez les issues au fur et à mesure et lancez le rapport calibrate, qui est indicatif et ne modifie jamais la notation.
+
+### Comment comparer deux offres d'emploi au-delà du salaire ?
+
+Pour comparer deux offres d'emploi au-delà du salaire avec career-ops, comparez les postes avec le mode ofertas. Il note chaque poste sur dix dimensions, dont le salaire n'est qu'une seule, et renvoie un classement assorti d'une recommandation. Aucune de ces dimensions ne couvre les conditions d'une lettre d'offre ; lisez donc chaque lettre avec le mode offer-prep. Il en parcourt les clauses avec vous et liste des questions pour votre avocat et des points à soulever auprès de l'employeur, sans rendre aucun verdict sur l'offre.

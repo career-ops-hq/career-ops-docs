@@ -1,6 +1,6 @@
 ---
 title: oferta
-description: "Runs the A–H evaluation against one listing. Skips PDF generation and tracker write-back. Use it when you only need the scoring decision and not the full pipeline."
+description: "Runs the A–H evaluation against one listing and records it in your tracker, without generating a PDF. Use it when you only need the scoring decision and not the full pipeline."
 seoTitle: "career-ops oferta mode — score a single job listing before you apply"
 icon: Target
 date: "2026-05-18"
@@ -9,7 +9,7 @@ lastModified: "2026-05-18"
 
 ## What it does
 
-oferta mode reads a single JD (URL or pasted text), scores it against the rubric — five dimensions plus a holistic global score — with cited evidence, and writes the evaluation report. No PDF, no tracker entry. Fast and cheap.
+oferta mode reads a single JD (URL or pasted text), scores it against the rubric — five dimensions plus a holistic global score — with cited evidence, and writes the evaluation report. No PDF, but it adds a tracker row with the status Evaluated. Fast and cheap.
 
 ## When to use it
 
@@ -17,7 +17,7 @@ Use oferta to triage a borderline listing quickly. If the score clears 4.0 and y
 
 ## What a run looks like
 
-You hand the mode one listing and it returns the eight-block evaluation — Blocks A through F, a Block G legitimacy read, and Block H draft answers when the score clears 4.5 — with a score and cited reasoning. Paste JD text directly, or pass a URL and the mode first confirms the posting is still live so a dead link never burns a full evaluation.
+You hand the mode one listing and it returns the seven-block evaluation — Blocks A through F and a Block G legitimacy read, plus Block H draft answers when the score is 4.5 or higher — with a score and cited reasoning. Paste JD text directly, or pass a URL and the mode first confirms the posting is still live so a dead link never burns a full evaluation.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021

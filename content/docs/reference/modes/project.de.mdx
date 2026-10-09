@@ -1,0 +1,61 @@
+---
+title: project
+description: "Builder sammeln Ideen schneller, als sie sie umsetzen können. Der project-Modus bewertet eine Idee für ein Portfolio-Projekt anhand deiner Zielrollen, deines bestehenden Portfolios und des Zeitaufwands und zeigt dir, ob sich der Bau lohnt."
+seoTitle: "career-ops project-Modus — ein Portfolio-Projekt an deinen Zielrollen messen"
+icon: Lightbulb
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 87b86e456dd18f90
+localized: true
+translatedFrom: /docs/reference/modes/project
+---
+
+## Was er macht
+
+Der project-Modus liest die Beschreibung deiner Projektidee, deine Ziel-Archetypen aus config/profile.yml und den Kontext deines bestehenden Portfolios. Dann bewertet er das Projekt in drei Dimensionen: wie viel Signal es für deine Zielrollen sendet, wie stark es sich von deinem bestehenden Portfolio abhebt und wie lange es geschätzt dauert, bis du es vorzeigen kannst.
+
+## Wann du ihn einsetzt
+
+Setz project ein, wenn du drei oder vier Ideen für Nebenprojekte hast und die eine auswählen willst, die deine Jobsuche tatsächlich voranbringt. Für Nebenprojekte ist er das, was der oferta-Modus für Stellenanzeigen ist.
+
+## Beispiel
+
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+
+## So sieht ein Durchlauf aus
+
+Ein project-Durchlauf liefert eine Einschätzung der Legitimität, eine gewichtete Bewertung über sechs Dimensionen und ein eindeutiges Urteil. Du gibst dem Modus eine Idee, und er bewertet sie so, wie ein Hiring Manager sie in deinem Portfolio lesen würde. Ob der Code kompiliert, beurteilt er dabei nicht.
+
+```txt title="Beispiel"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+
+Das Urteil lautet immer auf eine von drei Optionen: BUILD mit wöchentlichen Meilensteinen, SKIP mit einem Vorschlag, was du stattdessen tun solltest, oder PIVOT TO. Dann schlägt der Modus eine Alternative vor, die für die Rollen, auf die du dich bewerben willst, mehr Signal sendet. Die sechs Dimensionen sind gewichtet. Deshalb kann ein Projekt, das sich gut vorführen lässt und saubere Metriken liefert, eine originellere Idee ohne sichtbaren Nutzen überholen.
+
+## Das Paket fürs Vorstellungsgespräch
+
+Zu jedem freigegebenen Projekt gehört ein Paket fürs Vorstellungsgespräch. Was du am Ende vorweist, ist nämlich die Geschichte und nicht das Repository. Das Paket besteht aus drei Teilen: einem One-Pager zu Produkt, Architektur, Metriken und Evaluationsplan, einer Demo (entweder als Live-URL oder als zweiminütiger aufgezeichneter Walkthrough) und einem Postmortem. Darin hältst du fest, was funktioniert hat, was nicht und wie du gegengesteuert hast. Ein fertiges Projekt ohne Geschichte dazu bringt eine Jobsuche selten voran. Ein bescheidenes Projekt mit einer klaren Geschichte über abgewogene Trade-offs schafft das dagegen oft. Der 80/20-Plan trägt dem Rechnung: In Woche eins entsteht das MVP mit seiner Kernmetrik, in Woche zwei kommen der Feinschliff und das Paket selbst dazu.
+
+## Stolperfallen
+
+Der Modus prüft nicht, ob das Projekt technisch machbar ist, sondern nur, welches Signal es für deine Karriere sendet. Mach dafür einen eigenen technischen Scoping-Durchgang.
+
+## Siehe auch
+
+- [training](/de/docs/reference/modes/training)
