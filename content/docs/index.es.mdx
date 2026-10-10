@@ -3,12 +3,12 @@ title: Guía rápida
 description: "Empieza con career-ops en cinco minutos: instala el sistema open source de búsqueda de empleo con IA, abre tu CLI de IA y evalúa tu primera oferta. Sin necesidad de programar."
 seoTitle: "career-ops Guía rápida — instala y ejecuta tu primer análisis de ofertas con IA en minutos"
 icon: Rocket
-translationHash: d363142d21bc56d7
+translationHash: 44e44ec058558a8f
 localized: true
 translatedFrom: /docs
 ---
 
-Esta guía te lleva de cero a tu primera oferta evaluada en unos cinco minutos. Configurarás el espacio de trabajo, abrirás tu asistente de programación con IA, dejarás que te haga el onboarding conversando contigo, y luego pegarás una oferta de empleo — career-ops te devuelve un informe completo, una nota y un PDF de CV adaptado.
+Esta guía te lleva de cero a tu primera oferta evaluada en unos cinco minutos. Configurarás el espacio de trabajo, abrirás tu asistente de programación con IA y pegarás una oferta de empleo. El agente completa el onboarding que haga falta y después te devuelve un informe completo, una nota y un PDF de CV adaptado.
 
 ## Lo que necesitas
 
@@ -116,12 +116,12 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
   </Tab>
 </Tabs>
 
-<Callout title="El agente se presentará">
-  La primera vez que lances tu CLI dentro del espacio de trabajo, el agente de career-ops ejecuta una breve conversación de onboarding. Te pregunta por tu CV, el tipo de puestos que buscas, tu rango salarial y tu preferencia de ubicación. Nada se edita a mano — respondes en lenguaje natural y el agente escribe los archivos de configuración por ti. La sesión dura unos dos o tres minutos.
+<Callout title="El onboarding empieza cuando hace falta tu perfil">
+  Antes de tu primera evaluación de una oferta, o de cualquier otro flujo que necesite tu perfil, el agente de career-ops comprueba tu configuración y, si hace falta, ejecuta una breve conversación de onboarding. También puedes pedirle directamente que haga el onboarding. Te pregunta por tu CV, el tipo de puestos que buscas, tu rango salarial y tu preferencia de ubicación. Respondes en lenguaje natural y el agente escribe los archivos de configuración por ti. La sesión dura unos dos o tres minutos. Explorar el espacio de trabajo, revisar código o diagnosticar tu instalación no inicia el onboarding ni crea archivos de perfil.
 </Callout>
 
 <Callout title="Un aviso no relacionado que puede que veas">
-  Algunos CLIs (Claude Code, por ejemplo) preguntan si confías en los archivos de una carpeta nueva la primera vez que la abres. Ese aviso viene del propio CLI, no de career-ops — di que sí para continuar. El onboarding de career-ops empieza justo después.
+  Algunos CLIs (Claude Code, por ejemplo) preguntan si confías en los archivos de una carpeta nueva la primera vez que la abres. Ese aviso viene del propio CLI, no de career-ops. Di que sí para continuar. Aceptarlo no inicia el onboarding de career-ops.
 </Callout>
 
 <Callout type="warn" title="¿Pagas Claude Pro o Max? Comprueba qué está facturando esta sesión">
@@ -134,7 +134,7 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
 
 ## Paso 3: Ejecuta tu primera evaluación
 
-Una vez que el agente te haya hecho el onboarding, estás listo para evaluar una oferta real. Copia la URL de cualquier anuncio de empleo y pégala en el chat. Con Claude Code o Antigravity CLI, ponle delante el comando explícito; con los demás CLIs, pega la URL y pídele al agente que ejecute el auto-pipeline:
+Copia la URL de cualquier anuncio de empleo y pégala en el chat. Si tu perfil aún no está listo, el agente completará primero el onboarding. Con Claude Code o Antigravity CLI, ponle delante el comando explícito; con los demás CLIs, pega la URL y pídele al agente que ejecute el auto-pipeline:
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
@@ -237,7 +237,7 @@ Ahora que tu primera evaluación está hecha, aquí tienes algunas cosas que pue
 
 <Accordions>
   <Accordion title="El agente no ejecutó el onboarding">
-    Asegúrate de que lanzaste tu CLI desde dentro de la carpeta `career-ops` (ejecuta `pwd` para comprobarlo). Relanza el CLI desde la ruta correcta y dile al agente: *«por favor, ejecuta el onboarding de primera vez».* Empezará la conversación desde cero.
+    El onboarding automático empieza cuando pides evaluar una oferta u otro flujo que necesite tu perfil, y solo si la configuración está incompleta. Para iniciarlo directamente, lanza tu CLI desde dentro de la carpeta `career-ops` (ejecuta `pwd` para comprobarlo) y dile al agente: *«por favor, ejecuta el onboarding de primera vez».*
   </Accordion>
   <Accordion title="El informe no se generó">
     Asegúrate de que `cv.md` existe en la carpeta raíz y tiene contenido. Si el onboarding terminó pero `cv.md` está vacío, pídele al agente: *«mi cv.md parece vacío, ¿puedes ayudarme a rellenarlo?»*
