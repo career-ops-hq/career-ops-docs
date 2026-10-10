@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: cf9f3a2747689131
+translationHash: c305b7c1bd0071a5
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -44,7 +44,7 @@ Dans career-ops, seule l'évaluation coûte quelque chose, et l'évaluation peut
 
 ## Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?
 
-career-ops conserve vos données sur votre machine, dans des fichiers en clair qui vous appartiennent — votre CV, votre profil, votre pipeline et vos rapports sont des fichiers Markdown/YAML locaux. Rien ne s'exécute sur des serveurs career-ops. Les mises à jour du système ne touchent jamais votre couche de données (`cv.md`, `config/`, `data/`, `reports/`, `output/`) : cette séparation est le **Data Contract**, et chaque mise à jour la respecte.
+career-ops conserve vos données sur votre machine, dans des fichiers en clair qui vous appartiennent — votre CV, votre profil, votre pipeline et vos rapports sont des fichiers Markdown/YAML locaux. Rien ne s'exécute sur des serveurs career-ops. Les mises à jour du système préservent les fichiers qui vous appartiennent dans votre couche de données (`cv.md`, `config/`, `data/`, `reports/`, `output/`). Le programme de mise à jour peut uniquement créer ou remplacer les fichiers `.gitkeep` appartenant au système dans `data/`, `reports/` et `output/` ; il ne modifie jamais vos autres fichiers dans ces dossiers. Cette séparation est le **Data Contract**, et chaque mise à jour la respecte.
 
 ## Comment importer mon CV dans career-ops ?
 

@@ -28,7 +28,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "Where does my data live?",
     answer:
-      "career-ops keeps your data on your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers. System updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract, and every update honors it.",
+      "career-ops keeps your data on your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers. System updates preserve user-owned files in your data layer (cv.md, config/, data/, reports/, output/). The updater may create or replace only the system-owned .gitkeep scaffolds in data/, reports/, and output/; it never modifies your other files there. That separation is the Data Contract, and every update honors it.",
   },
   {
     question: "How do I give career-ops my CV?",
