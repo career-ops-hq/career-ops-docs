@@ -4,8 +4,8 @@ description: "Genera un CV en PDF adaptado a una JD concreta usando Playwright p
 seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 37b75011f73efd6e
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -43,6 +43,25 @@ Recurre a pdf cuando has decidido aplicar y solo quieres el CV adaptado, saltán
 - La inyección de keywords se basa en la verdad. El modo reformula experiencia real con el vocabulario exacto de la JD, pero nunca añade una habilidad que no tienes.
 - Para DACH y buena parte de la Europa continental puedes optar por incluir foto configurando `candidate.photo` en `config/profile.yml`; déjalo vacío y el CV se renderiza píxel a píxel idéntico pero sin ella, que es la opción por defecto más segura para EE. UU., Reino Unido y mercados ATS-first.
 
+## Una copia legible por ATS con `--ats`
+
+Algunos formularios de candidatura nunca leen tu PDF tal como lo diseñaste: te piden pegar el CV en campos de texto, o analizan el archivo subido y rellenan el formulario con lo que logran extraer. Añade `--ats` y el modo pdf renderiza una segunda copia del mismo CV adaptado, pensada para los parsers. Pegas desde la copia ATS y adjuntas el PDF con estilo.
+
+```bash title="Terminal"
+/career-ops pdf acme --ats
+
+PDF:  output/cv-jane-doe-acme-2026-05-18.pdf
+ATS:  output/cv-jane-doe-acme-ats.html
+```
+
+- Está desactivado por defecto. Pasa `--ats` para una sola ejecución, o actívalo para todas con una regla propia en tu `modes/_custom.md`.
+- Es el mismo CV, no una segunda pasada de adaptación. La copia se construye a partir del contenido adaptado ya terminado, una vez listo el PDF con estilo. El único cambio es que tus competencias clave pasan a una línea `Skills` separada por comas: en el layout con estilo son etiquetas separadas solo por espaciado, bajo una cabecera que los parsers no reconocen, así que un parser tiende a descartar el bloque entero. No se añade nada y no se reformula nada.
+- Se señalan tres cosas y nunca se corrigen automáticamente: el nombre de un empleador dentro de un cargo (`employer-in-role`), un paréntesis dentro del nombre de una empresa (`parenthetical-in-company`) y más de un rango de fechas en un mismo puesto (`multiple-date-ranges`). El agente te muestra cada hallazgo y tú decides. La corrección que elijas se hace en el contenido adaptado, y ambas copias se reconstruyen a partir de él.
+- La copia ATS pasa por su cuenta la misma verificación de hechos que el CV con estilo, así que una afirmación que se eliminó del CV con estilo no puede sobrevivir en la copia.
+- El archivo siempre se escribe en `output/` con el sufijo `-ats`. Es algo que pegas, no algo que adjuntas, así que no cuenta como el PDF de la candidatura: la columna PDF de tu tracker sigue apuntando al PDF con estilo.
+- Por defecto no hay PDF de la copia ATS, porque copias el texto directamente del HTML. Pídelo si un formulario necesita un archivo para subir; se renderiza aparte y nunca reemplaza al PDF con estilo.
+- Un problema en la pasada ATS nunca toca el HTML ni el PDF con estilo que ya tienes.
+
 ## Posibles problemas
 
 Requiere Playwright instalado en local. El script de build puede fallar en instalaciones Linux mínimas sin fuentes del sistema. Ejecuta `npm run doctor` para diagnosticar.
@@ -52,3 +71,4 @@ La generación del PDF se detiene si los puestos de tu experiencia laboral no va
 ## Relacionado
 
 - [auto-pipeline](/es/docs/reference/modes/auto-pipeline)
+- [apply](/es/docs/reference/modes/apply)
