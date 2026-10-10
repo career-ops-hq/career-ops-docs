@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: cf9f3a2747689131
+translationHash: af70c70da79f2fad
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -45,6 +45,12 @@ Dans career-ops, seule l'évaluation coûte quelque chose, et l'évaluation peut
 ## Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?
 
 career-ops conserve vos données sur votre machine, dans des fichiers en clair qui vous appartiennent — votre CV, votre profil, votre pipeline et vos rapports sont des fichiers Markdown/YAML locaux. Rien ne s'exécute sur des serveurs career-ops. Les mises à jour du système ne touchent jamais votre couche de données (`cv.md`, `config/`, `data/`, `reports/`, `output/`) : cette séparation est le **Data Contract**, et chaque mise à jour la respecte.
+
+## Mon agent travaille dans un worktree Git. Où une mise à jour de career-ops s'applique-t-elle ?
+
+Une mise à jour de career-ops lancée depuis un worktree Git lié s'applique sur `main`, dans le checkout où `main` est extrait, et non sur la branche du worktree. Des agents comme Claude Code peuvent exécuter chaque session dans un worktree lié, sur une branche jetable. Quand `node update-system.mjs` y est lancé, `check`, `apply`, `rollback` et `dismiss` se relancent dans le checkout de `main` : la mise à jour est donc committée sur `main`, et les worktrees créés à partir du `main` mis à jour l'ont déjà. Pour mettre ensuite à jour le worktree dans lequel vous êtes, lancez `git merge main` (ou `git rebase main`) à l'intérieur.
+
+Si aucun checkout n'a `main` extrait, ou si le checkout de `main` contient des modifications non committées sur des fichiers suivis, `apply` et `rollback` refusent sans rien modifier et vous indiquent quoi corriger. Pour mettre à jour la branche du worktree lui-même, définissez `CAREER_OPS_UPDATE_IN_WORKTREE=1`. Lancer l'outil de mise à jour depuis votre checkout principal fonctionne exactement comme avant. Ce comportement arrive dans les versions de career-ops postérieures à la v1.35.0 ; le détail complet se trouve dans [docs/SCRIPTS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md) du dépôt principal.
 
 ## Comment importer mon CV dans career-ops ?
 

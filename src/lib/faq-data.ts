@@ -31,6 +31,11 @@ export const FAQ_ENTRIES: FaqEntry[] = [
       "career-ops keeps your data on your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers. System updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract, and every update honors it.",
   },
   {
+    question: "My agent runs in a git worktree. Where does a career-ops update land?",
+    answer:
+      "A career-ops update started from a linked git worktree lands on main, in the checkout that has main checked out, not on the worktree's branch. Agents such as Claude Code can run each session in a linked worktree on a throwaway branch. When node update-system.mjs runs there, check, apply, rollback and dismiss re-run themselves in the main checkout, so the update is committed to main and worktrees created from the updated main already have it. To bring the worktree you are in up to date afterwards, run git merge main (or git rebase main) inside it. If no checkout has main checked out, or the main checkout has uncommitted changes to tracked files, apply and rollback refuse without changing anything and tell you what to fix. To update the worktree's own branch instead, set CAREER_OPS_UPDATE_IN_WORKTREE=1. Running the updater from your main checkout works exactly as before. This ships in career-ops releases after v1.35.0; the full behavior is in the core repo's docs/SCRIPTS.md.",
+  },
+  {
     question: "How do I give career-ops my CV?",
     answer:
       "To give career-ops your CV, paste your CV text into the chat during the first-run onboarding, and the agent writes cv.md for you. Pasting the text is the guided path. You can also point the agent at an existing CV file, PDF included: it reads the file and converts it, because the parsing is done by your AI agent, not by a career-ops script. And since cv.md is a plain file you own, you can always write or edit it by hand instead. The agent produces clean markdown with standard sections (Summary, Experience, Projects, Education, Skills). During setup you never edit config files by hand either: you answer in plain language and the agent writes config/profile.yml and the rest for you.",

@@ -3,7 +3,7 @@ title: Preguntas frecuentes
 description: Preguntas frecuentes sobre career-ops — coste, privacidad, CLIs de IA compatibles, scan vs scan:full, límites de tokens, configuración en Windows y lo que career-ops nunca hará en tu nombre.
 seoTitle: "FAQ de career-ops — coste, privacidad, CLIs compatibles, Windows y cómo ejecutarlo gratis"
 icon: CircleQuestionMark
-translationHash: cf9f3a2747689131
+translationHash: af70c70da79f2fad
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -45,6 +45,12 @@ En career-ops, solo la evaluación cuesta algo, y la evaluación puede costar 0 
 ## ¿Dónde se guardan mis datos? ¿career-ops es privado?
 
 career-ops guarda tus datos en tu máquina, en archivos planos que son tuyos — tu CV, tu perfil, tu pipeline y tus informes son Markdown/YAML locales. Nada corre en servidores de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos (`cv.md`, `config/`, `data/`, `reports/`, `output/`): esa separación es el **Data Contract**, y todas las actualizaciones lo respetan.
+
+## Mi agente trabaja en un worktree de Git. ¿Dónde se aplica una actualización de career-ops?
+
+Una actualización de career-ops lanzada desde un worktree de Git enlazado se aplica en `main`, en el checkout que tiene `main` activo, no en la rama del worktree. Agentes como Claude Code pueden ejecutar cada sesión en un worktree enlazado sobre una rama desechable. Cuando `node update-system.mjs` se ejecuta ahí, `check`, `apply`, `rollback` y `dismiss` se vuelven a ejecutar en el checkout de `main`, así que la actualización queda confirmada en `main` y los worktrees creados a partir del `main` actualizado ya la tienen. Para poner al día después el worktree en el que estás, ejecuta `git merge main` (o `git rebase main`) dentro de él.
+
+Si ningún checkout tiene `main` activo, o el checkout de `main` tiene cambios sin confirmar en archivos versionados, `apply` y `rollback` se niegan sin cambiar nada y te dicen qué corregir. Para actualizar la rama del propio worktree, define `CAREER_OPS_UPDATE_IN_WORKTREE=1`. Ejecutar el actualizador desde tu checkout principal funciona exactamente igual que antes. Esto llega en las versiones de career-ops posteriores a la v1.35.0; el comportamiento completo está en [docs/SCRIPTS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md) del repo core.
 
 ## ¿Cómo le doy mi CV a career-ops?
 
