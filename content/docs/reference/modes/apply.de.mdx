@@ -5,7 +5,7 @@ seoTitle: "career-ops apply-Modus — Antworten auf ATS-Bewerbungsfragen automat
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: e00bf55bd395ea9c
+translationHash: 72c62608efda3e89
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -16,7 +16,7 @@ Der Modus `apply` liest ein geöffnetes Bewerbungsformular (Greenhouse, Ashby, L
 
 ## Wann du ihn einsetzt
 
-Öffne die Stellenanzeige und das Bewerbungsformular nebeneinander. Starte apply, sobald das Formular geladen ist. Die Ausgabe kannst du direkt einfügen, eine fertige Bewerbung ist sie aber nicht. Du behältst die Kontrolle über Ton, Fakten und jedes Feld, das das Portal zusätzlich einblendet. apply funktioniert am besten mit Playwright im sichtbaren Modus. Dann liest er die Live-Seite genau so, wie du sie siehst. Ohne Playwright fügst du die Fragen ein oder teilst einen Screenshot, und apply entwirft die Antworten daraus.
+Öffne die Stellenanzeige und das Bewerbungsformular nebeneinander. Starte apply, sobald das Formular geladen ist. Antworten mit bestätigtem Feldlimit enthalten `used/allowed` (Zeichen oder Wörter); prüfe diese Angabe vor dem Einfügen. `limit unknown` heißt, dass das Formularlimit nicht bestätigt wurde, prüfe es also zuerst im Live-Feld. Passt eine Antwort nicht, ohne wesentliche Fakten zu verlieren, überarbeite sie vor dem Einfügen. Die Ausgabe ist ein Entwurf, keine fertige Bewerbung. Du behältst die Kontrolle über Ton, Fakten und jedes Feld, das das Portal zusätzlich einblendet. apply funktioniert am besten mit Playwright im sichtbaren Modus. Dann liest er die Live-Seite genau so, wie du sie siehst. Ohne Playwright fügst du die Fragen ein oder teilst einen Screenshot, und apply entwirft die Antworten daraus.
 
 ## So sieht ein Durchlauf aus
 
@@ -37,11 +37,13 @@ Responses for Notion — Applied AI Engineer
 
 1. Why this role?
    > Your agent-tooling team is where I want to apply the production
-   > AI pipelines I have shipped this year. (paste-ready)
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
 
 2. Tell us about a relevant project
    > Built and sold an AI-workflow company in 2025; the pipeline
-   > behind it is the same one I would bring here. (paste-ready)
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
 
 Notes: I filled text fields only. Tick the checkboxes, solve the
 captcha, and submit yourself.
@@ -55,7 +57,7 @@ apply schickt die Bewerbung nie ab: Den letzten Klick auf Absenden machst immer 
 
 apply wurde bei rund einem Dutzend Bewerbungen mit Playwright in der Praxis getestet. Ein paar Portale lassen einen Durchlauf scheitern, wenn du ihre Eigenheiten nicht berücksichtigst:
 
-- **Ashby** erkennt doppelte Bewerbungen pro Unternehmen anhand der E-Mail-Adresse. Eine zweite Bewerbung kann deshalb stillschweigend mit deiner ersten zusammengeführt werden. Gibt es für dieses Unternehmen schon einen Bericht, schlägt apply einen E-Mail-Alias mit `+tag` vor.
+- **Ashby** erkennt doppelte Bewerbungen pro Unternehmen anhand der E-Mail-Adresse. Eine zweite Bewerbung kann deshalb stillschweigend mit deiner ersten zusammengeführt werden. Gibt es für dieses Unternehmen schon einen Bericht, schlägt apply einen E-Mail-Alias mit `+tag` vor. Bei Ashby schließt du die Bewerbung in deinem gewohnten System-Browser ab und sendest sie dort ab. Prüfe die Erfolgsseite oder die Bestätigungs-E-Mail, bevor du sie als abgeschickt markierst.
 - **Lever** zeigt ein Captcha an, wenn eine Checkbox oder ein Radiobutton per Skript angeklickt wird. Deshalb füllt apply nur Textfelder und Dropdowns aus und überlässt dir das Ankreuzen der Checkboxen und Radiobuttons.
 - **Workday** ignoriert Werte, die ohne echte Tastenanschläge gesetzt werden. Deshalb tippt apply die Antworten Zeichen für Zeichen ein. Die Dropdowns zur Arbeitserlaubnis prüfst du selbst, bevor du speicherst.
 

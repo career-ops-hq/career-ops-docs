@@ -37,7 +37,7 @@ export async function GET(req: Request) {
     readFile(
       join(
         process.cwd(),
-        'src/app/manifesto/s/[username]/InstrumentSerif-Regular.ttf',
+        'src/app/(en)/manifesto/s/[username]/InstrumentSerif-Regular.ttf',
       ),
     ),
     // Probe the public avatar; nonexistent users get a card without one

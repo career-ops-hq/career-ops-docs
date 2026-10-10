@@ -5,7 +5,7 @@ seoTitle: "Mode oferta de career-ops — noter une offre d'emploi avant de postu
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: ca88e3e489375de0
+translationHash: 359504e9cbeb24ea
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -59,7 +59,7 @@ Recourez à oferta pour noter rapidement une seule annonce sans vous engager dan
 
 Le rapport inclut **Score Evidence** après Risk Summary. Cette section couvre cinq dimensions : adéquation du CV, alignement avec North Star, rémunération, signaux culturels et signaux d'alerte. Chaque ligne indique un état de preuve (`supported`, `partial` ou `unknown`), une source ou observation concrète et une question non résolue. La section se termine par un niveau de confiance dans les preuves (`High`, `Medium` ou `Low`), sa justification et jusqu'à trois priorités de vérification.
 
-Ce niveau décrit les preuves qui étayent le Global Score ; ce n'est ni une probabilité d'embauche ni le niveau de légitimité de l'annonce du bloc G, et il ne modifie pas la note numérique. Machine Summary conserve les cinq états dans `score_evidence`, le niveau dans `confidence` et les priorités dans `confidence_gaps`. Sans priorité restante, utilisez `confidence_gaps: []`.
+Ce niveau décrit les preuves qui étayent le Global Score ; ce n'est ni une probabilité d'embauche ni le niveau de légitimité de l'annonce du bloc G, et il ne modifie pas la note numérique. Machine Summary conserve les cinq états dans `score_evidence`, le niveau dans `confidence` et les priorités dans `confidence_gaps`. Lorsqu'il ne reste aucune priorité, `confidence_gaps` est une liste vide.
 
 ## Pages liées
 

@@ -53,7 +53,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Zero-token scan',
     definition:
-      'A discovery run that consumes no LLM tokens: scan.mjs calls ATS APIs (Greenhouse, Ashby, Lever) directly over HTTP, so finding new listings is free regardless of which AI engine you use.',
+      'A discovery run that consumes no LLM tokens: scan.mjs reads ATS APIs, job-board feeds and career pages directly over HTTP, so finding new listings is free regardless of which AI engine you use.',
   },
   {
     term: 'AI engine',
@@ -83,7 +83,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
     term: 'Batch evaluate',
     definition:
-      'Scoring many saved listings in one run instead of one at a time, with flags to keep control: --limit caps the batch size, --dry-run previews what would be processed, and --resume-paused continues an interrupted run without re-spending tokens.',
+      'Scoring many saved listings in one run instead of one at a time, with flags to keep control: --limit caps the batch size, --dry-run previews what would be processed, and --resume-paused continues an interrupted run without re-spending tokens. A needs_confirmation job is an artifact-free hold that only the parent interactive session resumes after an explicit answer; retry and paused-resume flags leave it held.',
   },
   {
     term: 'Local-first',

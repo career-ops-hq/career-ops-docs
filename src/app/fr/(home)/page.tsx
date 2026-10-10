@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { homeFaqSchemaFr } from '@/lib/schema';
 import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
-import { HomeContent } from '../../(home)/home-content';
-import { homeFr } from '../../(home)/home-dict';
+import { HomeContent } from '@/app/_home/home-content';
+import { homeFr } from '@/app/_home/home-fr';
 
 // French home — SAME trunk as the English/Spanish homes (HomeContent), rendered
 // with the French dictionary. The signature thesis stays in LITERAL English

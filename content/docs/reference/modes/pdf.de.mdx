@@ -4,8 +4,8 @@ description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnitte
 seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebenslauf erstellen"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: beb822061e860203
+lastModified: "2026-10-06"
+translationHash: 16914eae2d8e7aa4
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -46,6 +46,8 @@ Greif zu pdf, wenn du dich für eine Bewerbung entschieden hast und nur den zuge
 ## Stolperfallen
 
 Playwright muss lokal installiert sein. Auf minimalen Linux-Installationen ohne Systemschriftarten kann das Build-Script fehlschlagen. Mit `npm run doctor` findest du die Ursache.
+
+Die PDF-Erstellung bricht ab, wenn die Stellen in deiner Berufserfahrung nicht mit der neuesten beginnen; die Fehlermeldung nennt die Daten der Stelle, die später beginnt als die darüber. Bring die Stellen wieder in umgekehrt chronologische Reihenfolge und starte neu: Angepasst wird ein CV über Zusammenfassung und Stichpunkte, nicht durch Verschieben von Stellen. Willst du bewusst eine andere Reihenfolge, übergib `--allow-nonchronological` an `generate-pdf.mjs`; dann gibt es nur eine Warnung. Mit `--batch` schlägt nur der falsch sortierte CV fehl, die übrigen werden trotzdem erstellt.
 
 ## Siehe auch
 

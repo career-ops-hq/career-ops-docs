@@ -3,7 +3,7 @@ title: Preguntas frecuentes
 description: Preguntas frecuentes sobre career-ops — coste, privacidad, CLIs de IA compatibles, scan vs scan:full, límites de tokens, configuración en Windows y lo que career-ops nunca hará en tu nombre.
 seoTitle: "FAQ de career-ops — coste, privacidad, CLIs compatibles, Windows y cómo ejecutarlo gratis"
 icon: CircleQuestionMark
-translationHash: 319b1b1ccb1c2b42
+translationHash: cf9f3a2747689131
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -56,15 +56,15 @@ career-ops funciona con soporte de primera clase en diez CLIs de programación c
 
 ## ¿Cuál es la diferencia entre `scan` y `scan:full`?
 
-`npm run scan` lee las empresas que configuraste en `portals.yml` y consulta directamente sus APIs de ATS ([Greenhouse](/es/docs/reference/portals/greenhouse), [Ashby](/es/docs/reference/portals/ashby), [Lever](/es/docs/reference/portals/lever)), consumiendo cero tokens de LLM — ese es tu barrido de descubrimiento habitual, diario o semanal. `npm run scan:full` invierte la dirección: recorre directorios públicos de empresas en los ATS y saca a la superficie ofertas recientes que encajan con tu `title_filter` / `location_filter`, de modo que captas puestos de empresas que no has añadido manualmente.
+`npm run scan` lee las empresas que configuraste en `portals.yml` y obtiene cada una a través del proveedor que la reconoce (por ejemplo [Greenhouse](/es/docs/reference/portals/greenhouse), [Ashby](/es/docs/reference/portals/ashby), [Lever](/es/docs/reference/portals/lever)), consumiendo cero tokens de LLM — ese es tu barrido de descubrimiento habitual, diario o semanal. `npm run scan:full` invierte la dirección: recorre directorios públicos de empresas en los ATS y saca a la superficie ofertas recientes que encajan con tu `title_filter` / `location_filter`, de modo que captas puestos de empresas que no has añadido manualmente.
 
 ## ¿Cómo evito toparme con límites de tokens o rate limits durante una ejecución en batch?
 
-Para evitar límites de tokens o rate limits en una ejecución en batch de career-ops, acota la ejecución con `./batch/batch-runner.sh --limit 5` para inspeccionar la calidad del output antes de lanzarte a un batch mayor. Si una ejecución se ve interrumpida por un rate limit o un error de red, no la reinicies desde cero — usa `--resume-paused` para saltar los trabajos ya completados y que no se desperdicien tokens en trabajo que ya terminó.
+Para evitar límites de tokens o rate limits en una ejecución en batch de career-ops, acota la ejecución con `./batch/batch-runner.sh --limit 5` para inspeccionar la calidad del output antes de lanzarte a un batch mayor. Si una ejecución se ve interrumpida por un rate limit o un error de red, no la reinicies desde cero — usa `--resume-paused` para saltar los trabajos ya completados y que no se desperdicien tokens en trabajo que ya terminó. Un trabajo `needs_confirmation` es distinto: no produjo ningún informe, CV, borrador de solicitud ni fila del tracker, y `--resume-paused` no lo reanudará. Responde explícitamente a su pregunta en la sesión interactiva principal.
 
 ## Las skills no cargan en Windows — error de symlink al instalar
 
-Windows no crea symlinks por defecto, así que al hacer checkout Git deja los puntos de entrada de las skills de career-ops para el CLI como simples archivos puntero. El instalador y el actualizador lo detectan automáticamente: ejecuta `node update-system.mjs apply` (o `npx @santifer/career-ops init` en una instalación nueva) y el paso de materialización sustituye los archivos puntero por el contenido completo de cada skill. No hace falta ningún `mklink` manual ni activar el Modo de desarrollador.
+Windows no crea symlinks por defecto, así que al hacer checkout Git deja los puntos de entrada de las skills de career-ops para el CLI como simples archivos puntero. El instalador y el actualizador lo detectan automáticamente: ejecuta `node update-system.mjs apply --confirm` (o `npx @santifer/career-ops init` en una instalación nueva) y el paso de materialización sustituye los archivos puntero por el contenido completo de cada skill. No hace falta ningún `mklink` manual ni activar el Modo de desarrollador.
 
 ## ¿Puedo ejecutar career-ops con un modelo más barato o local?
 

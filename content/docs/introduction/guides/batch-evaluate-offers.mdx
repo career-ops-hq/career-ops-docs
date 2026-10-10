@@ -89,6 +89,8 @@ When you're ready, start the batch. You can run one offer at a time or several a
 
 Watch the terminal as the batch runs. Each line tells you which offer is being processed and whether it finished or failed.
 
+If a delegated worker finds an agency posting that needs your confirmation, it stops before writing a report, CV, application draft, or tracker row and marks the job `needs_confirmation`. Answer the displayed question in the parent interactive session; that session resumes the held posting only after your explicit answer. `--retry-failed` and `--resume-paused` do not resume confirmation holds.
+
 ## Step 4: Read results as they come in
 
 You don't need to wait for the batch to finish. Results appear as each offer completes.
@@ -102,15 +104,15 @@ Each report is a file named like `042-company-name-2026-04-14.md`. Open it to se
 - Salary research
 - A suggested interview prep plan
 
-**One-line tracker entries** → `batch/tracker-additions/`
+**Tracker entries** → `batch/tracker-additions/`
 
-Each offer also drops a short summary file here. These get added to your main tracker in Step 6.
+Each offer also drops a short summary file here: a header row of column labels and one row of values. These get added to your main tracker in Step 6.
 
 ### Score Evidence
 
 The report includes **Score Evidence** after Risk Summary. It covers five dimensions: CV match, North Star alignment, compensation, cultural signals, and red flags. Each row records an evidence status (`supported`, `partial`, or `unknown`), a concrete source or observation, and an unresolved question. The section ends with an evidence-confidence tier (`High`, `Medium`, or `Low`), its reason, and up to three verification priorities.
 
-This tier describes the evidence behind the Global Score; it is neither a hiring probability nor Block G's posting-legitimacy tier, and it does not change the numeric score. Machine Summary preserves the five statuses in `score_evidence`, the tier in `confidence`, and priorities in `confidence_gaps`. With no remaining priorities, use `confidence_gaps: []`.
+This tier describes the evidence behind the Global Score; it is neither a hiring probability nor Block G's posting-legitimacy tier, and it does not change the numeric score. Machine Summary preserves the five statuses in `score_evidence`, the tier in `confidence`, and priorities in `confidence_gaps`. When there are no priorities left, `confidence_gaps` is an empty list.
 
 ## Step 5: Retry any failed offers
 

@@ -5,7 +5,7 @@ seoTitle: "Modo oferta de career-ops — puntúa una oferta de empleo antes de a
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: ca88e3e489375de0
+translationHash: 359504e9cbeb24ea
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -59,7 +59,7 @@ Recurre a oferta para puntuar un único anuncio rápidamente sin comprometerte c
 
 El informe incluye **Score Evidence** después de Risk Summary. Abarca cinco dimensiones: ajuste del CV, alineación con North Star, remuneración, señales culturales y señales de alerta. Cada fila recoge un estado de evidencia (`supported`, `partial` o `unknown`), una fuente u observación concreta y una pregunta pendiente. La sección termina con un nivel de confianza en la evidencia (`High`, `Medium` o `Low`), su motivo y hasta tres prioridades de verificación.
 
-Este nivel describe la evidencia que respalda el Global Score; no es una probabilidad de contratación ni el nivel de legitimidad del anuncio del bloque G, y no modifica la puntuación numérica. Machine Summary conserva los cinco estados en `score_evidence`, el nivel en `confidence` y las prioridades en `confidence_gaps`. Si no quedan prioridades, usa `confidence_gaps: []`.
+Este nivel describe la evidencia que respalda el Global Score; no es una probabilidad de contratación ni el nivel de legitimidad del anuncio del bloque G, y no modifica la puntuación numérica. Machine Summary conserva los cinco estados en `score_evidence`, el nivel en `confidence` y las prioridades en `confidence_gaps`. Cuando no quedan prioridades, `confidence_gaps` es una lista vacía.
 
 ## Relacionados
 
