@@ -4,8 +4,8 @@ description: "Genera un CV en PDF adaptado a una JD concreta usando Playwright p
 seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 7e011e82adef33f0
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -42,6 +42,42 @@ Recurre a pdf cuando has decidido aplicar y solo quieres el CV adaptado, saltán
 - El tamaño de papel sigue automáticamente la ubicación de la empresa: `letter` para puestos en EE. UU. y Canadá, `a4` en el resto del mundo.
 - La inyección de keywords se basa en la verdad. El modo reformula experiencia real con el vocabulario exacto de la JD, pero nunca añade una habilidad que no tienes.
 - Para DACH y buena parte de la Europa continental puedes optar por incluir foto configurando `candidate.photo` en `config/profile.yml`; déjalo vacío y el CV se renderiza píxel a píxel idéntico pero sin ella, que es la opción por defecto más segura para EE. UU., Reino Unido y mercados ATS-first.
+
+## Comprueba cómo lo leerá un ATS
+
+El modo `ats` responde a una pregunta distinta a la de pdf: ¿leerá bien este CV el parser de un sistema de seguimiento de candidatos? Ejecuta `/career-ops ats`. Trabaja en dos etapas, porque la lectura se decide en dos lugares.
+
+| Etapa | Script | Lee | Devuelve |
+| ----- | ------ | --- | -------- |
+| Antes de generar el HTML | `ats-payload.mjs` | Los datos del CV adaptado que pdf está a punto de renderizar | Los mismos datos con una corrección aplicada, más hallazgos para ti |
+| Después de generar el HTML | `verify-ats.mjs` | El HTML generado en `output/` | Una puntuación de 0 a 100, una nota en letra y una lista de problemas |
+
+### Antes del HTML: una corrección y tres hallazgos
+
+La corrección: tus competencias pasan a la sección Skills como una sola línea separada por comas. El CV con estilo dibuja las competencias como etiquetas separadas solo por espacio, así que un parser que lee el texto las junta. Además van bajo "Core Competencies", un encabezado que los parsers no reconocen, por lo que a menudo se descarta el bloque entero. "Skills" sí se reconoce. El cambio no inventa nada, y ejecutarlo dos veces no cambia nada.
+
+Los tres hallazgos se informan y nunca se aplican, ni por el script ni por el agente:
+
+- `employer-in-role`: el nombre de un empleador dentro del título de un puesto, habitual en consultoría y en agencias. El parser lo registra como un empleador que nunca tuviste.
+- `parenthetical-in-company`: una empresa escrita como `Globex (Cloud Platform Division)`. El parser conserva el paréntesis como parte del nombre del empleador, así que una búsqueda por el empleador no te encuentra.
+- `multiple-date-ranges`: dos rangos de fechas en una misma entrada. Dos etapas en un mismo empleador se leen como una.
+
+Cada uno necesita una decisión que es tuya: si ese texto es un empleador, dónde debe ir el detalle, qué bullets pertenecen a cada etapa. El agente te muestra el hallazgo y te deja la decisión. Si eliges un cambio, se escribe en `cv.md` o en `config/profile.yml` después de que lo confirmes.
+
+### Después del HTML: la puntuación
+
+`verify-ats.mjs` revisa la estructura del HTML generado: texto seleccionable, encabezados de sección estándar, un email de contacto en el cuerpo, una sola columna sin tablas de maquetación, ningún texto dentro de imágenes, fuentes estándar, codificación UTF-8 declarada y ningún texto oculto. Aprueba con 70 o más y sin ningún problema crítico. Para puntuar un CV que ya generaste, ejecútalo tú:
+
+```bash title="Terminal"
+node verify-ats.mjs output/cv-jane-doe-acme.html
+node verify-ats.mjs output/cv-jane-doe-acme.html --keywords "python,kubernetes,rag"
+```
+
+`--keywords` añade una línea de cobertura de keywords y nunca cambia la puntuación.
+
+Una puntuación limpia no significa que la primera etapa sobrara. Un CV de prueba con el problema de las competencias obtuvo 97 sobre 100, nota A, sin ningún problema, y obtuvo exactamente lo mismo después de la corrección. La puntuación lee la estructura del documento que recibe. No puede ver que los datos que hay detrás se leerán mal.
+
+Los dos scripts son orientativos. Funcionan sin un modelo de IA y sin conexión de red, nunca modifican `cv.md` ni tu perfil, y nunca bloquean la generación del PDF. Ninguno se ejecuta en un `/career-ops pdf` normal.
 
 ## Posibles problemas
 

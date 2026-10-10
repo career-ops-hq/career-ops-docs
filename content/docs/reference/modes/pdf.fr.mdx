@@ -4,8 +4,8 @@ description: "Génère un CV PDF adapté à une JD précise en utilisant Playwri
 seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 7e011e82adef33f0
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -42,6 +42,42 @@ Recourez à pdf lorsque vous avez décidé de postuler et que vous souhaitez uni
 - Le format de papier suit automatiquement la localisation de l'entreprise : `letter` pour les postes aux États-Unis et au Canada, `a4` partout ailleurs.
 - L'injection de mots-clés repose sur la vérité. Le mode reformule une expérience réelle dans le vocabulaire exact de la JD, mais n'ajoute jamais une compétence que vous ne possédez pas.
 - Pour la région DACH et une grande partie de l'Europe continentale, vous pouvez opter pour une photo en renseignant `candidate.photo` dans `config/profile.yml` ; laissez ce champ vide et le CV s'affiche à l'identique, au pixel près, sans photo — le choix par défaut le plus sûr pour les États-Unis, le Royaume-Uni et les marchés centrés sur les ATS.
+
+## Vérifier comment un ATS le lira
+
+Le mode `ats` répond à une autre question que pdf : le parseur d'un logiciel de suivi des candidatures lira-t-il correctement ce CV ? Exécutez `/career-ops ats`. Il procède en deux étapes, car la lecture se joue à deux endroits.
+
+| Étape | Script | Lit | Renvoie |
+| ----- | ------ | --- | ------- |
+| Avant la génération du HTML | `ats-payload.mjs` | Les données du CV personnalisé que pdf s'apprête à rendre | Les mêmes données avec une correction appliquée, plus des constats pour vous |
+| Après la génération du HTML | `verify-ats.mjs` | Le HTML généré dans `output/` | Un score de 0 à 100, une note en lettre et une liste de problèmes |
+
+### Avant le HTML : une correction, trois constats
+
+La correction : vos compétences clés passent dans la section Skills sous la forme d'une seule ligne séparée par des virgules. Le CV mis en forme affiche ces compétences comme des étiquettes séparées seulement par un espacement, si bien qu'un parseur qui lit le texte les colle les unes aux autres. Elles figurent en outre sous « Core Competencies », un titre que les parseurs ne reconnaissent pas, et le bloc entier est donc souvent écarté. « Skills » est reconnu. Ce déplacement n'invente rien, et l'exécuter deux fois ne change rien.
+
+Les trois constats sont signalés et jamais appliqués, ni par le script ni par l'agent :
+
+- `employer-in-role` : le nom d'un employeur dans l'intitulé d'un poste, fréquent dans le conseil et en agence. Le parseur l'enregistre comme un employeur que vous n'avez jamais eu.
+- `parenthetical-in-company` : une entreprise écrite `Globex (Cloud Platform Division)`. Le parseur conserve la parenthèse dans le nom de l'employeur, et une recherche sur l'employeur ne vous trouve donc pas.
+- `multiple-date-ranges` : deux périodes dans une même entrée. Deux passages chez un même employeur sont lus comme un seul.
+
+Chacun demande une décision qui vous appartient : ce texte est-il un employeur, où le détail doit-il aller, quelles puces relèvent de quel passage. L'agent vous montre le constat et vous laisse décider. Si vous choisissez une modification, elle est écrite dans `cv.md` ou dans `config/profile.yml` après votre confirmation.
+
+### Après le HTML : le score
+
+`verify-ats.mjs` vérifie la structure du HTML généré : du texte sélectionnable, des titres de section standard, un e-mail de contact dans le corps, une seule colonne sans tableaux de mise en page, aucun texte dans des images, des polices standard, un encodage UTF-8 déclaré et aucun texte masqué. Le contrôle est réussi à partir de 70, sans aucun problème critique. Pour noter un CV que vous avez déjà généré, lancez-le vous-même :
+
+```bash title="Terminal"
+node verify-ats.mjs output/cv-jane-doe-acme.html
+node verify-ats.mjs output/cv-jane-doe-acme.html --keywords "python,kubernetes,rag"
+```
+
+`--keywords` ajoute une ligne de couverture des mots-clés et ne modifie jamais le score.
+
+Un score sans défaut ne signifie pas que la première étape était inutile. Un CV de test présentant le problème des compétences a obtenu 97 sur 100, note A, sans aucun problème, et a obtenu exactement le même résultat après la correction. Le score lit la structure du document qu'il reçoit. Il ne peut pas voir que les données qui se trouvent derrière seront mal lues.
+
+Les deux scripts sont indicatifs. Ils fonctionnent sans modèle d'IA et sans connexion réseau, ne modifient jamais `cv.md` ni votre profil, et ne bloquent jamais la génération du PDF. Aucun des deux ne s'exécute lors d'un simple `/career-ops pdf`.
 
 ## Pièges à connaître
 

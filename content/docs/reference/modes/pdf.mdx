@@ -4,7 +4,7 @@ description: "Generates a tailored PDF resume against a specific JD using Playwr
 seoTitle: "career-ops pdf mode — generate an ATS-friendly tailored resume"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
+lastModified: "2026-10-09"
 ---
 
 ## What it does
@@ -39,6 +39,42 @@ Reach for pdf when you've decided to apply and want only the tailored resume, sk
 - Paper size follows the company's location automatically: `letter` for US and Canada roles, `a4` everywhere else.
 - Keyword injection is truth-based. The mode rewords real experience into the JD's exact vocabulary but never adds a skill you do not have.
 - For DACH and much of continental Europe you can opt into a photo by setting `candidate.photo` in `config/profile.yml`; leave it empty and the CV renders pixel-for-pixel identical without one, which is the safer default for US, UK, and ATS-first markets.
+
+## Check how an ATS will read it
+
+The `ats` mode answers a different question from pdf: will an applicant tracking system's parser read this CV correctly? Run `/career-ops ats`. It works in two stages, because parsing is decided in two places.
+
+| Stage | Script | Reads | Returns |
+| ----- | ------ | ----- | ------- |
+| Before the HTML is built | `ats-payload.mjs` | The tailored CV data that pdf is about to render | The same data with one fix applied, plus findings for you |
+| After the HTML is built | `verify-ats.mjs` | The generated HTML in `output/` | A score from 0 to 100, a letter grade and a list of issues |
+
+### Before the HTML: one fix, three findings
+
+The fix: your competencies move into the Skills section as one comma-separated line. The styled CV draws competencies as tags with only spacing between them, so a parser reading the text runs them together. They also sit under "Core Competencies", a heading parsers do not recognize, so the whole block is often dropped. "Skills" is recognized. The move invents nothing, and running it twice changes nothing.
+
+The three findings are reported and never applied, by the script or by the agent:
+
+- `employer-in-role`: an employer name inside a job title, common in consulting and agency work. A parser records it as an employer you never had.
+- `parenthetical-in-company`: a company written as `Globex (Cloud Platform Division)`. The parser keeps the parenthetical as part of the employer name, so a search for the employer does not find you.
+- `multiple-date-ranges`: two date ranges in one entry. Two stints at one employer parse as one.
+
+Each one needs a decision that is yours: whether that text is an employer, where the detail should go, which bullets belong to which stint. The agent shows you the finding and leaves the decision to you. If you choose a change, it is written to `cv.md` or `config/profile.yml` after you confirm it.
+
+### After the HTML: the score
+
+`verify-ats.mjs` checks the structure of the generated HTML: selectable text, standard section headings, a contact email in the body, a single column with no layout tables, no text inside images, standard fonts, a declared UTF-8 encoding, and no hidden text. It passes at 70 or above with no critical issue. To score a CV you already generated, run it yourself:
+
+```bash title="Terminal"
+node verify-ats.mjs output/cv-jane-doe-acme.html
+node verify-ats.mjs output/cv-jane-doe-acme.html --keywords "python,kubernetes,rag"
+```
+
+`--keywords` adds a keyword-coverage line and never changes the score.
+
+A clean score does not mean the first stage was unnecessary. A test CV with the competencies problem scored 97 out of 100, grade A, with zero issues, and scored exactly the same after the fix. The score reads the structure of the document it is given. It cannot see that the data behind it will parse wrong.
+
+Both scripts are advisory. They run without an AI model or a network connection, never change `cv.md` or your profile, and never block PDF generation. Neither one runs during a plain `/career-ops pdf`.
 
 ## Gotchas
 
