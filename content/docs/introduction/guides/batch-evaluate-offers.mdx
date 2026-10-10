@@ -147,6 +147,8 @@ This script:
 node merge-tracker.mjs --dry-run
 ```
 
+If a summary file is malformed, the script skips it: it prints a `Skipping` warning that names the file and the problem, and adds no row for that offer. The preview prints the same warnings, so you can catch one before anything is archived.
+
 ## What to do next
 
 Open **`data/applications.md`** to see all your evaluations in one table. From there you can:

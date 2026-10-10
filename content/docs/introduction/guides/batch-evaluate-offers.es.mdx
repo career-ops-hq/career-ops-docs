@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: d7a6ccee0dc73e47
+translationHash: ee84e9227a63d238
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -149,6 +149,8 @@ Este script:
 ```bash title="Terminal"
 node merge-tracker.mjs --dry-run
 ```
+
+Si un archivo de resumen está mal formado, el script lo omite: muestra un aviso `Skipping` que nombra el archivo y el problema, y no añade ninguna fila para esa oferta. La previsualización muestra los mismos avisos, así que puedes detectar uno antes de que se archive nada.
 
 ## Qué hacer a continuación
 
