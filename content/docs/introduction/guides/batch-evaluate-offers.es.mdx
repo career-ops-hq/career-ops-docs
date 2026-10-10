@@ -150,6 +150,28 @@ Este script:
 node merge-tracker.mjs --dry-run
 ```
 
+### Enlaces cortos en la columna URL
+
+En `data/applications.md`, la columna URL muestra cada oferta como un enlace corto con el nombre del portal o del sitio — por ejemplo `[ashby](https://jobs.ashbyhq.com/…)` — en lugar de la dirección completa, para que el resto de la tabla siga siendo legible. La detección de duplicados sigue usando la dirección completa que hay detrás del enlace.
+
+Las URLs que ya tienes en el tracker pasan al formato corto la próxima vez que una fusión reescriba su fila. Para convertir todo el tracker de una vez, previsualiza primero:
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls --dry-run
+```
+
+Y después aplícalo:
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls
+```
+
+Volver a ejecutarlo es siempre seguro, y se conserva cualquier etiqueta que hayas escrito tú.
+
+- **¿Aún no tienes columna URL?** Ejecuta `node merge-tracker.mjs --backfill-urls` en su lugar. Añade la columna, la rellena a partir de tus informes y escribe directamente los enlaces cortos.
+- **Algunas URLs se quedan como están.** Una URL que contiene `|`, una barra invertida, un tabulador o un paréntesis sin cerrar se conserva como dirección completa, porque un enlace la alteraría.
+- **Las filas descuadradas se omiten.** Si una fila tiene un número de celdas distinto al de la cabecera — normalmente por un `|` dentro de una URL —, el comando no la toca e indica su línea para que la corrijas a mano.
+
 ## Qué hacer a continuación
 
 Abre **`data/applications.md`** para ver todas tus evaluaciones en una sola tabla. Desde ahí puedes:

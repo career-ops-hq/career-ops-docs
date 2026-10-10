@@ -147,6 +147,28 @@ This script:
 node merge-tracker.mjs --dry-run
 ```
 
+### Short links in the URL column
+
+In `data/applications.md`, the URL column shows each posting as a short link labeled with the job board or site — for example `[ashby](https://jobs.ashbyhq.com/…)` — instead of the full address, so the rest of the table stays readable. Duplicate checks still use the full address behind the link.
+
+URLs already in your tracker switch to the short form the next time a merge rewrites their row. To convert the whole tracker at once, preview first:
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls --dry-run
+```
+
+Then apply it:
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls
+```
+
+Running it again is always safe, and any label you wrote yourself is kept.
+
+- **No URL column yet?** Run `node merge-tracker.mjs --backfill-urls` instead. It adds the column, fills it from your reports, and writes the short links directly.
+- **Some URLs stay plain.** A URL containing `|`, a backslash, a tab, or an unmatched parenthesis is kept as the full address, because a link would change it.
+- **Rows that don't line up are skipped.** If a row has a different number of cells than the header — usually because of a `|` inside a URL — the command leaves it untouched and names its line so you can fix it by hand.
+
 ## What to do next
 
 Open **`data/applications.md`** to see all your evaluations in one table. From there you can:
