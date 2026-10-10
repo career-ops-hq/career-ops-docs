@@ -106,7 +106,7 @@ Each report is a file named like `042-company-name-2026-04-14.md`. Open it to se
 
 **Tracker entries** → `batch/tracker-additions/`
 
-Each offer also drops a short summary file here: a header row of column labels and one row of values. These get added to your main tracker in Step 6.
+Each offer also drops a short summary file here: a header row of column labels and one row of values, including the posting's `url`. These get added to your main tracker in Step 6.
 
 ## Step 5: Retry any failed offers
 
@@ -137,7 +137,7 @@ node merge-tracker.mjs
 This script:
 
 1. Reads the summary files from `batch/tracker-additions/`
-2. Checks for duplicates so you never get two rows for the same offer
+2. Checks for duplicates, matching on the posting URL first, so you never get two rows for the same offer
 3. Adds new entries to your applications tracker
 4. Archives the processed files into `batch/tracker-additions/merged/`
 
