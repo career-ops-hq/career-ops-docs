@@ -96,7 +96,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Wo liegen meine Daten?",
       answer:
-        "career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates erhalten nutzereigene Dateien in deiner Datenschicht (cv.md, config/, data/, reports/, output/). Der Updater darf nur die systemeigenen .gitkeep-Platzhalter in data/, reports/ und output/ erstellen oder ersetzen; andere Dateien dort verändert er nie. Diese Trennung ist der Data Contract, und jedes Update hält sich daran.",
+        "career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates lassen nutzereigene Dateien in deiner Datenschicht unangetastet (cv.md, config/, data/, reports/, output/). Der Updater darf nur die systemeigenen .gitkeep-Platzhalter in data/, reports/ und output/ erstellen oder ersetzen; andere Dateien dort verändert er nie. Diese Trennung ist der Data Contract, und jedes Update hält sich daran.",
     },
     {
       question: "Wie gebe ich career-ops meinen Lebenslauf?",
