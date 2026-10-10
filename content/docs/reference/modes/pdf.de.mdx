@@ -4,8 +4,8 @@ description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnitte
 seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebenslauf erstellen"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 7e011e82adef33f0
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -42,6 +42,42 @@ Greif zu pdf, wenn du dich für eine Bewerbung entschieden hast und nur den zuge
 - Das Papierformat richtet sich automatisch nach dem Standort des Unternehmens: `letter` für Stellen in den USA und Kanada, `a4` überall sonst.
 - Beim Einbauen der Keywords bleibt der Modus bei der Wahrheit. Er beschreibt deine echte Erfahrung mit den Begriffen aus der Stellenbeschreibung, fügt aber nie eine Fähigkeit hinzu, die du nicht hast.
 - Für den DACH-Raum und große Teile Kontinentaleuropas kannst du ein Foto einbinden, indem du `candidate.photo` in `config/profile.yml` setzt. Lässt du das Feld leer, sieht der Lebenslauf ohne Foto pixelgenau gleich aus. Für die USA, Großbritannien und Märkte, in denen zuerst ein ATS filtert, ist das die sicherere Standardeinstellung.
+
+## Prüfen, wie ein ATS ihn liest
+
+Der Modus `ats` beantwortet eine andere Frage als pdf: Liest der Parser eines Bewerbermanagementsystems diesen Lebenslauf richtig? Starte `/career-ops ats`. Er arbeitet in zwei Stufen, weil sich an zwei Stellen entscheidet, was der Parser liest.
+
+| Stufe | Script | Liest | Liefert |
+| ----- | ------ | ----- | ------- |
+| Bevor das HTML erzeugt wird | `ats-payload.mjs` | Die Daten des angepassten Lebenslaufs, die pdf gleich rendert | Dieselben Daten mit einer Korrektur, dazu Befunde für dich |
+| Nachdem das HTML erzeugt wurde | `verify-ats.mjs` | Das erzeugte HTML in `output/` | Einen Score von 0 bis 100, eine Buchstabennote und eine Liste von Problemen |
+
+### Vor dem HTML: eine Korrektur, drei Befunde
+
+Die Korrektur: Deine Kernkompetenzen wandern als eine kommagetrennte Zeile in den Skills-Abschnitt. Der gestaltete Lebenslauf zeigt Kompetenzen als Tags, zwischen denen nur ein Abstand liegt. Ein Parser, der den Text liest, zieht sie deshalb zusammen. Außerdem stehen sie unter „Core Competencies“, einer Überschrift, die Parser nicht erkennen, und so fällt oft der ganze Block weg. „Skills“ wird erkannt. Die Verschiebung erfindet nichts, und ein zweiter Lauf ändert nichts mehr.
+
+Die drei Befunde werden gemeldet und nie angewendet, weder vom Script noch vom Agenten:
+
+- `employer-in-role`: der Name eines Arbeitgebers in einem Jobtitel, häufig in der Beratung und bei Agenturen. Der Parser erfasst ihn als Arbeitgeber, den du nie hattest.
+- `parenthetical-in-company`: ein Unternehmen in der Schreibweise `Globex (Cloud Platform Division)`. Der Parser behält die Klammer als Teil des Arbeitgebernamens, und eine Suche nach dem Arbeitgeber findet dich deshalb nicht.
+- `multiple-date-ranges`: zwei Zeiträume in einem Eintrag. Zwei Stationen beim selben Arbeitgeber werden als eine gelesen.
+
+Jeder Befund braucht eine Entscheidung, die bei dir liegt: ob dieser Text ein Arbeitgeber ist, wohin das Detail gehört, welche Stichpunkte zu welcher Station gehören. Der Agent zeigt dir den Befund und überlässt dir die Entscheidung. Wenn du dich für eine Änderung entscheidest, wird sie nach deiner Bestätigung in `cv.md` oder `config/profile.yml` geschrieben.
+
+### Nach dem HTML: der Score
+
+`verify-ats.mjs` prüft die Struktur des erzeugten HTML: markierbarer Text, Standard-Abschnittsüberschriften, eine Kontakt-E-Mail im Hauptteil, eine einzige Spalte ohne Layouttabellen, kein Text in Bildern, Standardschriften, eine deklarierte UTF-8-Kodierung und kein versteckter Text. Bestanden ist ab 70 Punkten und ohne kritisches Problem. Um einen schon erzeugten Lebenslauf zu bewerten, startest du es selbst:
+
+```bash title="Terminal"
+node verify-ats.mjs output/cv-jane-doe-acme.html
+node verify-ats.mjs output/cv-jane-doe-acme.html --keywords "python,kubernetes,rag"
+```
+
+`--keywords` ergänzt eine Zeile zur Keyword-Abdeckung und ändert den Score nie.
+
+Ein sauberer Score heißt nicht, dass die erste Stufe überflüssig war. Ein Test-Lebenslauf mit dem Kompetenzen-Problem kam auf 97 von 100, Note A, ohne ein einziges Problem, und nach der Korrektur auf genau dasselbe Ergebnis. Der Score liest die Struktur des Dokuments, das er bekommt. Er kann nicht sehen, dass die Daten dahinter falsch gelesen werden.
+
+Beide Scripts sind nur Hinweise. Sie laufen ohne KI-Modell und ohne Netzwerkverbindung, ändern nie `cv.md` oder dein Profil und blockieren nie die PDF-Erstellung. Bei einem normalen `/career-ops pdf` läuft keines von beiden.
 
 ## Stolperfallen
 
