@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: d7a6ccee0dc73e47
+translationHash: ee84e9227a63d238
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -149,6 +149,8 @@ Dieses Script:
 ```bash title="Terminal"
 node merge-tracker.mjs --dry-run
 ```
+
+Ist eine Zusammenfassungsdatei fehlerhaft, überspringt das Script sie: Es gibt eine `Skipping`-Warnung aus, die die Datei und das Problem nennt, und fügt für dieses Angebot keine Zeile hinzu. Die Vorschau zeigt dieselben Warnungen, du kannst so eine Datei also bemerken, bevor irgendetwas archiviert wird.
 
 ## Wie es weitergeht
 

@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: d7a6ccee0dc73e47
+translationHash: ee84e9227a63d238
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -149,6 +149,8 @@ Ce script :
 ```bash title="Terminal"
 node merge-tracker.mjs --dry-run
 ```
+
+Si un fichier de synthèse est mal formé, le script l'ignore : il affiche un avertissement `Skipping` qui nomme le fichier et le problème, et n'ajoute aucune ligne pour cette offre. La prévisualisation affiche les mêmes avertissements, vous pouvez donc en repérer un avant que quoi que ce soit ne soit archivé.
 
 ## Et ensuite ?
 
