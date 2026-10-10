@@ -3,7 +3,7 @@ title: FAQ
 description: Häufige Fragen zu career-ops — Kosten, Datenschutz, unterstützte KI-CLIs, scan vs. scan:full, Token-Limits, Einrichtung unter Windows und was career-ops niemals in deinem Namen tun wird.
 seoTitle: "career-ops FAQ — Kosten, Datenschutz, unterstützte CLIs, Windows und kostenloser Betrieb"
 icon: CircleQuestionMark
-translationHash: cf9f3a2747689131
+translationHash: b29d463ed6d8deaa
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -40,7 +40,7 @@ Die `ANTHROPIC_API_KEY`-Regel gilt für Anthropic-Engines. Die anderen CLIs (Cod
 
 ## Wie viel kostet der Betrieb von career-ops pro Monat?
 
-Bei career-ops kostet nur die Bewertung etwas, und auch die kann 0 $ kosten. Das Scannen nach Stellen verbraucht null KI-Tokens, das Entdecken von Stellen ist also immer kostenlos; erst die Bewertung einer Stellenanzeige ruft das Modell auf. Auf drei Wegen läuft die gesamte Pipeline komplett ohne Kosten: mit einem lokalen Modell über Ollama, mit den kostenlosen Modellen von OpenRouter (`npm run or`) oder mit dem kostenlosen Kontingent von Antigravity. Mit einem günstigen kostenpflichtigen Modell wie DeepSeek V3 (mit Prompt-Caching) kostet eine Bewertung deutlich weniger als einen Cent, ein paar Cent reichen also für Dutzende Stellenanzeigen. Wenn du bereits ein Claude-Abo hast, liegen die Zusatzkosten praktisch bei 0 $; über die reine API solltest du grob 0,05 bis 0,10 $ pro Bewertung einplanen (eine Schätzung, die je nach Länge der Stellenanzeige schwankt). career-ops selbst ist für immer kostenlos, MIT-lizenziert, ohne Gebühr und ohne Stufen — du bezahlst, wenn überhaupt, nur deinen KI-Anbieter. Der Leitfaden [Kostenlose KI-Engine einrichten](/de/docs/free-ai-engine) führt dich durch die Wege für 0 $.
+Bei career-ops kostet nur die Bewertung etwas, und auch die kann 0 $ kosten. Das Scannen nach Stellen verbraucht null KI-Tokens, das Entdecken von Stellen ist also immer kostenlos; erst die Bewertung einer Stellenanzeige ruft das Modell auf. Auf drei Wegen läuft die gesamte Pipeline komplett ohne Kosten: mit einem lokalen Modell über Ollama, mit den kostenlosen Modellen von OpenRouter (`npm run or`) oder mit dem kostenlosen Kontingent von Antigravity. Mit einem günstigen kostenpflichtigen Modell wie DeepSeek V3 (mit Prompt-Caching) kostet eine Bewertung deutlich weniger als einen Cent, ein paar Cent reichen also für Dutzende Stellenanzeigen. Wenn du bereits ein Claude-Abo hast, liegen die Zusatzkosten praktisch bei 0 $; über die reine API solltest du grob 0,05 bis 0,10 $ pro Bewertung einplanen (eine Schätzung, die je nach Länge der Stellenanzeige schwankt). career-ops selbst ist für immer kostenlos, MIT-lizenziert, ohne Gebühr und ohne Stufen — du bezahlst, wenn überhaupt, nur deinen KI-Anbieter. Der Leitfaden [Kostenlose KI-Engine einrichten](/de/docs/free-ai-engine) führt dich durch die Wege für 0 $. Um pro Bewertung weniger auszugeben, stell `spend_tier` in `config/profile.yml` ein: `economy` nutzt die günstigste und schnellste Modellstufe deiner CLI und passt, wenn du viele Stellenanzeigen bewertest, `standard` ist der Standardwert, und `premium` nutzt das leistungsfähigste Modell für die Anzeigen, die dir am wichtigsten sind. Auch das Onboarding-Gespräch und das maßgeschneiderte PDF laufen über dein Modell und verbrauchen deshalb Tokens.
 
 ## Wo liegen meine Daten?
 
