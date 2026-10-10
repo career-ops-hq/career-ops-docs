@@ -4,8 +4,8 @@ description: "Genera un CV en PDF adaptado a una JD concreta usando Playwright p
 seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 6c9e87b81634e369
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -42,6 +42,35 @@ Recurre a pdf cuando has decidido aplicar y solo quieres el CV adaptado, saltán
 - El tamaño de papel sigue automáticamente la ubicación de la empresa: `letter` para puestos en EE. UU. y Canadá, `a4` en el resto del mundo.
 - La inyección de keywords se basa en la verdad. El modo reformula experiencia real con el vocabulario exacto de la JD, pero nunca añade una habilidad que no tienes.
 - Para DACH y buena parte de la Europa continental puedes optar por incluir foto configurando `candidate.photo` en `config/profile.yml`; déjalo vacío y el CV se renderiza píxel a píxel idéntico pero sin ella, que es la opción por defecto más segura para EE. UU., Reino Unido y mercados ATS-first.
+
+## Cómo se lee tu cv.md
+
+Mientras pdf adapta tu CV se ejecutan tres comprobaciones. Una compara el título de cada puesto del CV adaptado con el título que figura en `cv.md`. Otra avisa cuando un puesto perdió la descripción de la empresa o cambió de orden. La tercera clasifica las habilidades de la JD en las que ya están en tu sección Skills, las que solo aparecen en tu prosa y las que faltan de verdad. Las tres localizan tus puestos y habilidades por el encabezado, así que `cv.md` necesita esta forma:
+
+```md title="cv.md"
+## Work Experience
+
+### TechFin Corp -- Austin, TX
+
+**Senior ML Engineer**
+2020-2024
+
+- Led the ML platform team of 3 engineers
+
+## Skills
+
+- **Infra:** Kubernetes, Kafka, AWS
+```
+
+- La sección de experiencia es un encabezado de nivel 2 llamado Experience, Work Experience, Professional Experience, Employment History o Work History.
+- Cada puesto empieza con un encabezado de nivel 3: la empresa y luego la ubicación, separadas por una raya, una semirraya, `--` o `-`. Después va el título del puesto en una línea en negrita de principio a fin, y luego una línea con las fechas.
+- Las habilidades van bajo un encabezado que contiene la palabra "Skills". "Tools", "Technologies" y "Tech Stack" también cuentan, pero solo en un encabezado de nivel 1 o 2. Se leen todas las secciones que coinciden, no solo la primera.
+
+Estos nombres de encabezado se buscan en inglés, aunque el resto de tu CV esté en otro idioma.
+
+Un `cv.md` convertido desde un archivo de Word con Pandoc se lee tal cual. Las comprobaciones entienden los encabezados en negrita y en versalitas como `## **[Experience]{.smallcaps}**`, los `---` y `--` que Pandoc escribe para las rayas y la `\` final que deja en un salto de línea. No hace falta que los limpies.
+
+Cuando las comprobaciones no encuentran tus puestos, te lo dicen. La comprobación de títulos informa `title check did not run` y no muestra el check verde, y el agente te pide que compares tú cada título con `cv.md`. Informa lo mismo cuando ningún puesto del CV adaptado coincide con un puesto de `cv.md` por empresa y fechas. `npm run doctor` da el aviso durante la configuración: señala un `cv.md` sin una sección de experiencia que las comprobaciones reconozcan, o sin encabezados de puesto dentro de esa sección, e indica qué cambiar. Es un aviso, no un fallo, y career-ops sigue funcionando.
 
 ## Posibles problemas
 
