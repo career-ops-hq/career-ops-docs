@@ -24,9 +24,9 @@ You do not need to know how to code. You only need to be comfortable opening a t
       Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)**, or **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — the AI coding assistant that runs this system. career-ops works with [ten CLIs first-class](/docs/supported-clis); install any one and log in before continuing.
       </Step>
       <Step>
-        ### Node.js 18+ (22.5+ recommended)
+        ### Node.js 22.13+
 
-        Install **[Node.js](https://nodejs.org)** — minimum **18** (it works, with a warning), **22.5+ recommended** (it enables the SQLite tracker index). It runs the helper scripts and generates PDFs. Check your version with `node --version`.
+        Install **[Node.js](https://nodejs.org)** — version **22.13 or later** (on Node 23, **23.4 or later**). It runs the helper scripts and generates PDFs. Older versions fail the setup check, because the tracker's SQLite index needs a newer Node. Check your version with `node --version`.
       </Step>
       <Step>
         ### Git
@@ -39,7 +39,7 @@ You do not need to know how to code. You only need to be comfortable opening a t
 
 ## Step 1: Set up the workspace
 
-Open a terminal in the folder where you want career-ops to live. The recommended path uses one command; an advanced path with `git clone` is below it. If Node (18+) or Git are missing, `npx` will refuse to run — install both first (see prerequisites above).
+Open a terminal in the folder where you want career-ops to live. The recommended path uses one command; an advanced path with `git clone` is below it. If Node (22.13+, or 23.4+ on Node 23) or Git are missing, `npx` will refuse to run — install both first (see prerequisites above).
 
 ### Recommended — one command
 
@@ -240,7 +240,7 @@ Now that your first evaluation is done, here are a few things you can explore:
     Make sure `cv.md` exists in the root folder and has content in it. If the onboarding finished but `cv.md` is empty, ask the agent: *"my cv.md looks empty, can you help me fill it in?"*
   </Accordion>
   <Accordion title="The PDF did not generate">
-    Run `npx playwright install chromium` again. If that does not fix it, check that Node.js is version 18 or higher (22.5+ recommended) by running `node --version`.
+    Run `npx playwright install chromium` again. If that does not fix it, check that Node.js is version 22.13 or higher (23.4 or higher on Node 23) by running `node --version`.
   </Accordion>
   <Accordion title="The score seems off">
     The first few evaluations are rough — the system does not know you well yet. After each evaluation, tell your AI assistant what it got wrong. For example: *"That score is too high — I have no experience with Kubernetes."* It will learn and adjust.

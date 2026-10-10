@@ -3,7 +3,7 @@ title: Schnellstart
 description: "Starte in fünf Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: d363142d21bc56d7
+translationHash: c0c22da3bcfe4a6c
 localized: true
 translatedFrom: /docs
 ---
@@ -27,9 +27,9 @@ Du musst nicht programmieren können. Du solltest nur ein Terminal öffnen und e
       Installiere **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** oder **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**. Das ist der KI-Coding-Assistent, der dieses System ausführt. career-ops unterstützt [zehn CLIs vollwertig](/de/docs/supported-clis). Installiere eine davon und melde dich an, bevor du weitermachst.
       </Step>
       <Step>
-        ### Node.js 18+ (22.5+ empfohlen)
+        ### Node.js 22.13+
 
-        Installiere **[Node.js](https://nodejs.org)**. Mindestens Version **18** ist nötig (sie läuft, zeigt aber eine Warnung), **22.5+ wird empfohlen** (sie aktiviert den SQLite-Index für den Tracker). Node.js führt die Hilfsskripte aus und erzeugt die PDFs. Deine Version prüfst du mit `node --version`.
+        Installiere **[Node.js](https://nodejs.org)**. Nötig ist Version **22.13 oder neuer** (bei Node 23 **23.4 oder neuer**). Node.js führt die Hilfsskripte aus und erzeugt die PDFs. Ältere Versionen bestehen die Einrichtungsprüfung nicht, weil der SQLite-Index des Trackers ein neueres Node braucht. Deine Version prüfst du mit `node --version`.
       </Step>
       <Step>
         ### Git
@@ -42,7 +42,7 @@ Du musst nicht programmieren können. Du solltest nur ein Terminal öffnen und e
 
 ## Schritt 1: Workspace einrichten
 
-Öffne ein Terminal in dem Ordner, in dem career-ops liegen soll. Der empfohlene Weg braucht nur einen Befehl. Darunter findest du einen Weg für Fortgeschrittene mit `git clone`. Wenn Node (18+) oder Git fehlen, startet `npx` nicht. Installiere dann zuerst beides (siehe Voraussetzungen oben).
+Öffne ein Terminal in dem Ordner, in dem career-ops liegen soll. Der empfohlene Weg braucht nur einen Befehl. Darunter findest du einen Weg für Fortgeschrittene mit `git clone`. Wenn Node (22.13+, bei Node 23 ab 23.4) oder Git fehlen, startet `npx` nicht. Installiere dann zuerst beides (siehe Voraussetzungen oben).
 
 ### Empfohlen: ein Befehl
 
@@ -243,7 +243,7 @@ Deine erste Bewertung ist fertig. Das kannst du als Nächstes ausprobieren:
     Prüfe, ob `cv.md` im Hauptordner liegt und Inhalt hat. Wenn das Onboarding fertig ist, `cv.md` aber leer ist, frag den Agenten: *„Meine cv.md sieht leer aus. Kannst du mir helfen, sie auszufüllen?“*
   </Accordion>
   <Accordion title="Das PDF wurde nicht erstellt">
-    Führe `npx playwright install chromium` noch einmal aus. Wenn das nicht hilft, prüfe mit `node --version`, ob du Node.js 18 oder neuer hast (22.5+ empfohlen).
+    Führe `npx playwright install chromium` noch einmal aus. Wenn das nicht hilft, prüfe mit `node --version`, ob du Node.js 22.13 oder neuer hast (bei Node 23: 23.4 oder neuer).
   </Accordion>
   <Accordion title="Die Bewertung wirkt daneben">
     Die ersten Bewertungen sind noch ungenau, weil das System dich noch nicht gut kennt. Sag deinem KI-Assistenten nach jeder Bewertung, was er falsch eingeschätzt hat. Zum Beispiel: *„Die Bewertung ist zu hoch. Ich habe keine Erfahrung mit Kubernetes.“* Er lernt daraus und passt seine Bewertungen an.
