@@ -3,12 +3,12 @@ title: Schnellstart
 description: "Starte in fünf Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: d363142d21bc56d7
+translationHash: 44e44ec058558a8f
 localized: true
 translatedFrom: /docs
 ---
 
-Mit dieser Anleitung kommst du in etwa fünf Minuten zu deiner ersten bewerteten Stelle. Du richtest den Workspace ein und öffnest deinen KI-Coding-Assistenten. Er richtet dich im Gespräch ein. Danach fügst du eine Stellenanzeige ein, und career-ops liefert dir einen vollständigen Bericht, eine Bewertung und einen maßgeschneiderten Lebenslauf als PDF.
+Mit dieser Anleitung kommst du in etwa fünf Minuten zu deiner ersten bewerteten Stelle. Du richtest den Workspace ein, öffnest deinen KI-Coding-Assistenten und fügst eine Stellenanzeige ein. Der Agent erledigt das nötige Onboarding und liefert dir dann einen vollständigen Bericht, eine Bewertung und einen maßgeschneiderten Lebenslauf als PDF.
 
 ## Was du brauchst
 
@@ -116,12 +116,12 @@ Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
   </Tab>
 </Tabs>
 
-<Callout title="Der Agent stellt sich vor">
-  Wenn du deine CLI zum ersten Mal im Workspace startest, führt der career-ops-Agent ein kurzes Onboarding-Gespräch mit dir. Er fragt nach deinem Lebenslauf, nach den Rollen, die du suchst, nach deiner Gehaltsspanne und nach deinen Wünschen zum Arbeitsort. Du bearbeitest nichts von Hand: Du antwortest in normaler Sprache, und der Agent schreibt die Konfigurationsdateien für dich. Das Ganze dauert etwa zwei bis drei Minuten.
+<Callout title="Das Onboarding beginnt, wenn dein Profil gebraucht wird">
+  Vor deiner ersten Stellenbewertung oder einem anderen Ablauf, der dein Profil braucht, prüft der career-ops-Agent deine Einrichtung und führt bei Bedarf ein kurzes Onboarding-Gespräch mit dir. Du kannst ihn auch direkt bitten, das Onboarding zu starten. Er fragt nach deinem Lebenslauf, nach den Rollen, die du suchst, nach deiner Gehaltsspanne und nach deinen Wünschen zum Arbeitsort. Du antwortest in normaler Sprache, und der Agent schreibt die Konfigurationsdateien für dich. Das Ganze dauert etwa zwei bis drei Minuten. Wenn du nur den Workspace erkundest, Code ansiehst oder deine Einrichtung prüfst, startet das kein Onboarding und legt keine Profildateien an.
 </Callout>
 
 <Callout title="Eine Abfrage, die nicht von career-ops kommt">
-  Manche CLIs, zum Beispiel Claude Code, fragen beim ersten Öffnen eines neuen Ordners, ob du den Dateien darin vertraust. Diese Abfrage kommt von der CLI selbst, nicht von career-ops. Bestätige sie, um weiterzumachen. Direkt danach beginnt das Onboarding von career-ops.
+  Manche CLIs, zum Beispiel Claude Code, fragen beim ersten Öffnen eines neuen Ordners, ob du den Dateien darin vertraust. Diese Abfrage kommt von der CLI selbst, nicht von career-ops. Bestätige sie, um weiterzumachen. Damit startet das Onboarding von career-ops noch nicht.
 </Callout>
 
 <Callout type="warn" title="Du zahlst für Claude Pro oder Max? Prüfe, worüber diese Sitzung abgerechnet wird">
@@ -134,7 +134,7 @@ Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
 
 ## Schritt 3: Erste Bewertung ausführen
 
-Sobald das Onboarding fertig ist, kannst du eine echte Stellenanzeige bewerten. Kopiere die URL einer beliebigen Stellenanzeige und füge sie in den Chat ein. Mit Claude Code oder Antigravity CLI setzt du den Befehl davor. Bei den anderen CLIs fügst du die URL ein und bittest den Agenten, die auto-pipeline auszuführen:
+Kopiere die URL einer beliebigen Stellenanzeige und füge sie in den Chat ein. Ist dein Profil noch nicht fertig, erledigt der Agent zuerst das Onboarding. Mit Claude Code oder Antigravity CLI setzt du den Befehl davor. Bei den anderen CLIs fügst du die URL ein und bittest den Agenten, die auto-pipeline auszuführen:
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
   <Tab value="Claude Code">
@@ -237,7 +237,7 @@ Deine erste Bewertung ist fertig. Das kannst du als Nächstes ausprobieren:
 
 <Accordions>
   <Accordion title="Der Agent hat das Onboarding nicht gestartet">
-    Prüfe, ob du deine CLI im Ordner `career-ops` gestartet hast (das siehst du mit `pwd`). Starte die CLI im richtigen Pfad neu und sag dem Agenten: *„Bitte führe das Onboarding für den ersten Start aus.“* Er beginnt das Gespräch dann von vorn.
+    Das automatische Onboarding beginnt, wenn du eine Stellenbewertung oder einen anderen Ablauf anforderst, der dein Profil braucht, und nur, wenn die Einrichtung unvollständig ist. Um es direkt zu starten, öffne deine CLI im Ordner `career-ops` (das siehst du mit `pwd`) und sag dem Agenten: *„Bitte führe das Onboarding für den ersten Start aus.“*
   </Accordion>
   <Accordion title="Der Bericht wurde nicht erstellt">
     Prüfe, ob `cv.md` im Hauptordner liegt und Inhalt hat. Wenn das Onboarding fertig ist, `cv.md` aber leer ist, frag den Agenten: *„Meine cv.md sieht leer aus. Kannst du mir helfen, sie auszufüllen?“*
