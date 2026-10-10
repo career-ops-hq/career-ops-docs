@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: d7a6ccee0dc73e47
+translationHash: 4c0e7e13916428f6
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -110,6 +110,12 @@ Jeder Bericht ist eine Datei mit einem Namen wie `042-company-name-2026-04-14.md
 **Tracker-Einträge** → `batch/tracker-additions/`
 
 Jedes Angebot legt hier außerdem eine kurze Zusammenfassungsdatei ab: eine Kopfzeile mit den Spaltennamen und eine Zeile mit den Werten. Diese werden in Schritt 6 in deinen Haupt-Tracker übernommen.
+
+### Score Evidence
+
+Der Bericht enthält nach der Risk Summary den Abschnitt **Score Evidence**. Er deckt fünf Dimensionen ab: CV-Match, North-Star-Ausrichtung, Vergütung, kulturelle Signale und Red Flags. Jede Zeile hält einen Evidenzstatus fest (`supported`, `partial` oder `unknown`), eine konkrete Quelle oder Beobachtung und eine offene Frage. Der Abschnitt endet mit einer Stufe für das Vertrauen in die Evidenz (`High`, `Medium` oder `Low`), ihrer Begründung und bis zu drei Prüfprioritäten.
+
+Diese Stufe beschreibt die Evidenz hinter dem Global Score. Sie ist weder eine Einstellungswahrscheinlichkeit noch die Legitimitätsstufe der Anzeige aus Block G, und sie ändert den numerischen Score nicht. Die Machine Summary führt die fünf Status in `score_evidence`, die Stufe in `confidence` und die Prioritäten in `confidence_gaps`. Bleiben keine Prioritäten übrig, ist `confidence_gaps` eine leere Liste.
 
 ## Schritt 5: Wiederhole fehlgeschlagene Angebote
 
