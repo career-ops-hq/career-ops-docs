@@ -13,6 +13,8 @@ Windows does not create symlinks by default, so a fresh Git checkout leaves the 
 
 career-ops detects this automatically. Running the installer or updater — `npx @santifer/career-ops init` on a fresh install, or `node update-system.mjs apply --confirm` on an update — runs a `materializeSkillEntrypoints` step that replaces those pointer files with the full skill content. You do not need admin rights, Developer Mode, or any manual `mklink` command.
 
+If you work from a linked Git worktree, `apply` makes this repair in the checkout that has `main` checked out, not in the worktree. Run `git merge main` inside the worktree to pick it up; worktrees you create afterwards get it automatically. Setting `CAREER_OPS_UPDATE_IN_WORKTREE=1` makes `apply` repair only that worktree's branch instead, and leaves `main` unrepaired.
+
 <Callout title="No minimum-OS requirement">
 career-ops does not require any particular Windows (or macOS) version. If Node runs, career-ops runs. Any claim of a minimum OS version you may have seen elsewhere is not accurate.
 </Callout>
