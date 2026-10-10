@@ -1,0 +1,159 @@
+---
+title: Stellenangebote im Batch bewerten
+description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
+seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
+icon: FileStack
+translationHash: d7a6ccee0dc73e47
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+Nutze diese Anleitung, wenn du 10 oder mehr Stellenangebote prüfen willst und sie alle in einer Session abarbeiten möchtest statt eins nach dem anderen.
+
+Jedes Angebot bekommt seinen eigenen Claude-Worker. Dieser Worker liest deinen Lebenslauf, bewertet, wie gut du zur Stelle passt, schreibt einen vollständigen Bericht und speichert ein maßgeschneidertes PDF – ganz ohne dein Zutun.
+
+## Schritt 1: Trag deine Angebote in die Eingabedatei ein
+
+Das Batch-System liest Job-URLs aus einer Datei namens **`batch/batch-input.tsv`**. Stell sie dir als To-do-Liste für die Bewertung vor.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Öffne **`batch/batch-input.tsv`** in einem beliebigen Texteditor.
+      </Step>
+      <Step>
+        Füge pro Angebot eine Zeile hinzu. Jede Zeile hat vier Spalten, getrennt durch einen Tab:
+
+        | Spalte | Was du einträgst |
+        |--------|---------------|
+        | `id` | Eine eindeutige Nummer für dieses Angebot (1, 2, 3, …) |
+        | `url` | Die vollständige URL der Stellenanzeige |
+        | `source` | Wo du sie gefunden hast (z. B. `LinkedIn`, `Greenhouse`) |
+        | `notes` | Eine optionale Notiz – lass das Feld leer, wenn du keine hast |
+      </Step>
+      <Step>
+        Speichere die Datei.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**Beispiel:**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="Tipp">
+  Jede ID muss eine eindeutige Nummer sein. Überspringe keine Nummern und verwende keine doppelt.
+</Callout>
+
+## Schritt 2: Sieh dir deinen Batch vorab an (empfohlen)
+
+Bevor du irgendetwas verarbeitest, mach einen kurzen Check, um zu sehen, wie viele Angebote warten. Noch wird nichts bewertet – das ist nur eine Vorschau.
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+Du siehst eine Liste der ausstehenden Angebote mit ihren IDs. Wenn etwas nicht stimmt, korrigiere die Eingabedatei jetzt, bevor du Zeit mit einer fehlerhaften Liste verschwendest.
+
+## Schritt 3: Starte den Batch
+
+Wenn du so weit bist, starte den Batch. Du kannst die Angebote einzeln nacheinander verarbeiten oder mehrere gleichzeitig.
+
+**Eins nach dem anderen (am langsamsten, braucht am wenigsten Arbeitsspeicher):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**Zwei gleichzeitig (ein guter Standardwert):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**Drei gleichzeitig (schneller, belastet deinen Rechner aber stärker):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**Angebote unter einem Schwellenwert überspringen (z. B. unter 4,0 von 5):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+Behalte das Terminal im Blick, während der Batch läuft. Jede Zeile zeigt dir, welches Angebot gerade verarbeitet wird und ob es fertig geworden oder fehlgeschlagen ist.
+
+Findet ein delegierter Worker eine Anzeige einer Personalvermittlung, die deine Bestätigung braucht, hält er an, bevor er einen Bericht, einen Lebenslauf, einen Bewerbungsentwurf oder eine Tracker-Zeile schreibt, und markiert den Job als `needs_confirmation`. Beantworte die angezeigte Frage in der übergeordneten interaktiven Sitzung; erst nach deiner ausdrücklichen Antwort setzt diese Sitzung die angehaltene Anzeige fort. `--retry-failed` und `--resume-paused` setzen solche Bestätigungsstopps nicht fort.
+
+## Schritt 4: Lies die Ergebnisse, sobald sie eintreffen
+
+Du musst nicht warten, bis der Batch fertig ist. Die Ergebnisse erscheinen, sobald ein Angebot abgeschlossen ist.
+
+**Vollständige Bewertungsberichte** → `reports/`
+
+Jeder Bericht ist eine Datei mit einem Namen wie `042-company-name-2026-04-14.md`. Öffne sie, um Folgendes zu sehen:
+
+- Eine Zusammenfassung der Stelle
+- Wie gut dein Lebenslauf zur Stelle passt
+- Eine Gehaltsrecherche
+- Einen Vorschlag, wie du dich aufs Vorstellungsgespräch vorbereiten kannst
+
+**Tracker-Einträge** → `batch/tracker-additions/`
+
+Jedes Angebot legt hier außerdem eine kurze Zusammenfassungsdatei ab: eine Kopfzeile mit den Spaltennamen und eine Zeile mit den Werten. Diese werden in Schritt 6 in deinen Haupt-Tracker übernommen.
+
+## Schritt 5: Wiederhole fehlgeschlagene Angebote
+
+Manchmal schlägt ein Worker fehl – zum Beispiel, wenn die URL einer Stellenanzeige nicht mehr lädt. Fehlgeschlagene Angebote erscheinen im Terminal mit einer kurzen Fehlermeldung.
+
+**Nur die fehlgeschlagenen Angebote wiederholen:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**Mit bis zu 3 statt der standardmäßigen 2 Versuche wiederholen:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+Der Batch überspringt jedes Angebot, das bereits erfolgreich abgeschlossen wurde – ein erneuter Durchlauf ist also immer unbedenklich.
+
+## Schritt 6: Führe die Ergebnisse in deinem Tracker zusammen
+
+Wenn der Batch fertig ist, führe diesen Befehl aus, um alle neuen Bewertungen zu `data/applications.md` hinzuzufügen:
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+Dieses Script:
+
+1. Liest die Zusammenfassungsdateien aus `batch/tracker-additions/`
+2. Prüft auf Duplikate, damit du nie zwei Zeilen für dasselbe Angebot bekommst
+3. Fügt neue Einträge zu deinem Bewerbungs-Tracker hinzu
+4. Archiviert die verarbeiteten Dateien in `batch/tracker-additions/merged/`
+
+**Um die Änderungen vorab anzusehen, ohne etwas zu schreiben:**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## Wie es weitergeht
+
+Öffne **`data/applications.md`**, um alle deine Bewertungen in einer Tabelle zu sehen. Von dort aus kannst du:
+
+- Nach Score sortieren, um die Stellen zu finden, die am besten zu dir passen
+- Einzelne Berichte in `reports/` öffnen, um tiefer einzusteigen
+- Mit `/career-ops apply` den Bewerbungsprozess für deine Favoriten starten

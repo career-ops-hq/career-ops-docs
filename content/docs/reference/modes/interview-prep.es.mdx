@@ -5,26 +5,26 @@ seoTitle: "career-ops interview-prep — preparación de entrevistas específica
 icon: GraduationCap
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: 43a22bcddda1882a
+translationHash: 089e79a9cad42ea5
 localized: true
 translatedFrom: /docs/reference/modes/interview-prep
 ---
 
-career-ops **interview-prep** convierte una entrevista programada en un documento de inteligencia operativo. Nombras una empresa y un puesto — o le pasas una oferta de empleo de un puesto que nunca evaluaste formalmente — e investiga el proceso de selección, clasifica cada ronda según quién la dirige (recruiter screen, hiring manager, técnica entre pares o panel) y redacta las preguntas que cada uno probablemente hará, cada una con un borrador de respuesta extraído de tu propia trayectoria. Nunca inventa una pregunta: todas están o bien documentadas con fuente (Glassdoor, Blind) o etiquetadas como `[inferred from JD]`. El resultado es un documento de preparación guardado, no un chat.
+career-ops **interview-prep** convierte una entrevista programada en un documento de inteligencia operativo. Nombras una empresa y un puesto — o le pasas una oferta de empleo de un puesto que nunca evaluaste formalmente — e investiga el proceso de selección, clasifica cada ronda según quién la dirige (recruiter screen, hiring manager, técnica entre pares o panel) y redacta las preguntas que cada uno probablemente hará, cada una con un borrador de respuesta extraído de tu propia trayectoria. Cada pregunta procede de reseñas públicas de entrevistas encontradas con búsquedas web (por ejemplo en Glassdoor o Blind) o va etiquetada como `[inferred from JD]`. El resultado es un documento de preparación guardado, no un chat.
 
 ## Qué hace
 
-interview-prep lee el contexto de la empresa (idealmente ya enriquecido con `deep` u `oferta`), la descripción del puesto y tu perfil, y produce un único documento de preparación acotado a las rondas que esa empresa realmente ejecuta. El documento cubre los patrones de preguntas esperables por audiencia, puntos de conversación específicos de tu trayectoria e historias STAR ya redactadas que puedes adaptar en directo. Cuando ya existe un informe de evaluación para el puesto, ese informe es la fuente de autoridad; cuando pasas una URL de un puesto que nunca evaluaste, interview-prep descarga la descripción por sí mismo — primero la API estructurada del ATS, después Playwright, con un fallback headless — y nunca fabrica una oferta.
+interview-prep lee el contexto de la empresa (idealmente ya enriquecido con `deep` u `oferta`), la descripción del puesto y tu perfil, y produce un único documento de preparación acotado a las rondas que, según lo publicado, incluye el proceso de esa empresa. El documento cubre los patrones de preguntas esperables por audiencia, puntos de conversación específicos de tu trayectoria e historias STAR ya redactadas que puedes adaptar en directo. Cuando ya existe un informe de evaluación para el puesto, ese informe es la fuente de autoridad; cuando pasas una URL de un puesto que nunca evaluaste, interview-prep descarga la descripción por sí mismo — primero la API estructurada del ATS, después Playwright, con un fallback headless — y te pide que pegues el texto de la oferta si ya está cerrada.
 
 ## Cuándo usarlo
 
-Ejecuta interview-prep en cuanto haya una ronda en el calendario — produce un único documento con una sección por cada audiencia que involucra el proceso: la sección de recruiter screen cubre la preparación de la negociación salarial, la de hiring manager cubre el encaje en el puesto, la técnica entre pares cubre arquitectura y código, y la de panel cubre señales de liderazgo. También se dispara automáticamente cuando mueves a `Interview` en tu tracker un puesto con puntuación 4.0 o superior.
+Ejecuta interview-prep en cuanto haya una ronda en el calendario — produce un único documento con una sección por cada audiencia que involucra el proceso: la sección de recruiter screen cubre la preparación de la negociación salarial, la de hiring manager cubre el encaje en el puesto, la técnica entre pares cubre arquitectura y código, y la de panel cubre señales de liderazgo. A career-ops también se le indica que lo ejecute cuando un puesto con puntuación 4.0 o superior pasa a `Interview` en tu tracker.
 
 interview-prep es el paso de **investigación** — el documento de inteligencia que estudias de antemano. Es un modo distinto de los ejercicios interactivos de entrevista `plan`, `practice` y `debrief`, que te hacen ensayar en vivo y revisan una ronda a posteriori; están conectados (un debrief realimenta el material que interview-prep leerá la próxima vez). Para esos ejercicios, consulta la [guía de modos de entrevista](/es/docs/introduction/guides/interview-modes).
 
 ## Cómo es una ejecución
 
-Nombras la empresa y el puesto, y el modo devuelve un único informe de inteligencia de entrevista acotado a las rondas que esa empresa realmente ejecuta. Investiga el proceso, clasifica cada ronda por audiencia — recruiter screen, hiring manager, técnica entre pares o panel — y redacta las preguntas probables, etiquetando cada una con una cita de fuente o con la marca `[inferred from JD]`.
+Nombras la empresa y el puesto, y el modo devuelve un único informe de inteligencia de entrevista acotado a las rondas que, según lo publicado, incluye el proceso de esa empresa. Investiga el proceso, clasifica cada ronda por audiencia — recruiter screen, hiring manager, técnica entre pares o panel — y redacta las preguntas probables, etiquetando cada una con una cita de fuente o con la marca `[inferred from JD]`.
 
 ```bash title="Terminal"
 /career-ops interview-prep Anthropic "Applied AI Engineer"
@@ -58,7 +58,7 @@ Recurre a interview-prep en cuanto tengas una ronda programada y quieras un docu
 - Ejecuta antes `oferta` o `deep` contra la empresa. La preparación lee el informe de evaluación para extraer el arquetipo, los huecos y los proof points que encajan, así que más contexto produce preguntas más específicas.
 - Pega los nombres de los entrevistadores o la agenda cuando los tengas. Para un panel, el modo construye una lectura por entrevistador y redacta una pregunta de cierre a medida para cada franja.
 - Si ya has dado una cifra de compensación para el puesto, la sección de recruiter screen la incorpora — career-ops lee la cifra que declaraste para que la preparación de la negociación salarial se base en lo que realmente dijiste, no en una suposición.
-- Confía en las etiquetas: las preguntas con fuente citan Glassdoor o Blind, las inferidas llevan `[inferred from JD]`. El modo nunca inventa una pregunta para atribuírsela a un candidato.
+- Lee las etiquetas: las preguntas con fuente citan la reseña de la que salen, las inferidas llevan `[inferred from JD]`. Trata las inferidas como probables, no como lo que te van a preguntar.
 
 ## Relacionado
 

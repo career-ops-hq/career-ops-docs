@@ -1,0 +1,30 @@
+---
+title: career-ops unter Windows
+seoTitle: "Läuft career-ops unter Windows? Ja, vollständig unterstützt. Der Installer übernimmt die Einrichtung"
+description: "career-ops läuft unter Windows vollständig unterstützt. Die einzige plattformspezifische Einschränkung betrifft Symlinks, und die erledigt der Installer automatisch: kein Admin-Modus, kein mklink und keine Mindestversion des Betriebssystems."
+icon: MonitorCheck
+translationHash: b3cb4d7bb67cff87
+localized: true
+translatedFrom: /docs/windows
+---
+
+**Ja, career-ops läuft unter Windows vollständig unterstützt.** Es gibt genau eine Windows-spezifische Einschränkung, und die erledigt der Installer automatisch für dich. Du brauchst keinen Entwicklermodus, kein manuelles `mklink` und keine Mindestversion des Betriebssystems. Wenn Node installiert ist, installierst und nutzt du career-ops unter Windows genau wie auf jedem anderen System.
+
+## Die eine Windows-Einschränkung erledigt der Installer
+
+Windows legt standardmäßig keine Symlinks an. Nach einem frischen Git-Checkout sind die Skill-Einstiegspunkte der CLIs (`.claude/skills/`, `.opencode/skills/` usw.) deshalb nur einfache Verweisdateien und keine echten Symlinks. Genau das verursacht bei anderen Tools den bekannten Fehler „Skills werden nicht geladen“.
+
+career-ops erkennt das automatisch. Dafür sorgt ein Schritt namens `materializeSkillEntrypoints`. Er läuft, wenn du den Installer oder den Updater ausführst: `npx @santifer/career-ops init` bei einer Neuinstallation oder `node update-system.mjs apply --confirm` bei einem Update. Dabei ersetzt er diese Verweisdateien durch den vollständigen Skill-Inhalt. Du brauchst weder Administratorrechte noch den Entwicklermodus noch einen manuellen `mklink`-Befehl.
+
+<Callout title="Keine Mindestversion des Betriebssystems">
+career-ops setzt keine bestimmte Windows- oder macOS-Version voraus. Wenn Node läuft, läuft auch career-ops. Falls du anderswo gelesen hast, dass eine Mindestversion des Betriebssystems nötig sei, stimmt das nicht.
+</Callout>
+
+## Die maßgebliche Referenz zur Einrichtung
+
+Die technischen Details stehen im Core-Repo und werden dort aktuell gehalten. Dazu gehören das genaue Verhalten des Installers, die Befehlsvarianten für PowerShell und CMD und der Rest der FAQ:
+
+- [docs/FAQ.md: „Skills werden unter Windows nicht geladen“](https://github.com/career-ops-hq/career-ops/blob/main/docs/FAQ.md): die maßgebliche Antwort, die mit dem Installer synchron gehalten wird.
+- [docs/SETUP.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SETUP.md): die vollständige Anleitung zur Einrichtung.
+
+Nach der Installation wählst du deine Engine unter [Kostenlose KI-Engine einrichten](/de/docs/free-ai-engine) oder nutzt eine der [unterstützten CLIs](/de/docs/supported-clis). Danach geht es mit dem [Schnellstart](/de/docs) weiter.

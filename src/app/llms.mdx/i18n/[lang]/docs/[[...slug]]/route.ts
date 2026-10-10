@@ -2,7 +2,7 @@ import { getLLMText, source } from '@/lib/source';
 import { i18n } from '@/lib/i18n';
 import { notFound } from 'next/navigation';
 
-// Markdown mirror for the NON-DEFAULT locales (/es/docs/**, /fr/docs/**).
+// Markdown mirror for the NON-DEFAULT locales (/es/docs/**, /fr/docs/**, /de/docs/**).
 //
 // The EN mirror lives at /llms.mdx/docs/** and resolves pages without passing a
 // locale, which fumadocs defaults to `en` — that default is exactly why the 93
@@ -42,6 +42,12 @@ export async function GET(
       // Same discipline as the EN mirror: fetchable by agents, never competing
       // with the canonical HTML page in the search index.
       'X-Robots-Tag': 'noindex',
+      // Same URL, HTML or markdown depending on Accept: caches must key on it,
+      // or a shared cache could hand this noindex variant to a browser or to
+      // Googlebot. Next.js drops the Vary set in next.config for these
+      // responses, so it is set on the Response itself, as in the home mirror
+      // (search-ops D3, 30-sep).
+      Vary: 'Accept',
     },
   });
 }

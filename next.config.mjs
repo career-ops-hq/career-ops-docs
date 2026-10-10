@@ -47,20 +47,24 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  // One root layout per locale ((en)/, es/, fr/, de/) leaves no single layout
+  // to render a 404 for URLs that match no route; src/app/global-not-found.tsx
+  // does it instead. Experimental in Next 16.3.
+  experimental: {
+    globalNotFound: true,
+  },
   // The personalized signature OG card reads its serif TTF from disk at
   // request time (undici fetch rejects file: URLs); whitelist it for
   // Vercel's file tracing so the lambda bundle includes it.
+  // Keys are picomatch route globs, so the brackets are escaped, and the
+  // opengraph route ends in a path hash since it lives in the (en) group.
   outputFileTracingIncludes: {
-    // The home OG route reads its font from disk rather than fetching it, so
-    // the file has to be traced into the bundle or the route 500s at runtime
-    // while the build stays green.
-    '/opengraph-image': ['./src/app/(home)/*.ttf'],
-    '/manifesto/s/[username]/opengraph-image': [
-      './src/app/manifesto/s/[username]/*.ttf',
+    '/manifesto/s/\\[username\\]/opengraph-image*': [
+      './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
-    '/manifesto/sign-preview': ['./src/app/manifesto/s/[username]/*.ttf'],
-    '/manifesto/s/[username]/card-square': [
-      './src/app/manifesto/s/[username]/*.ttf',
+    '/manifesto/sign-preview': ['./src/app/(en)/manifesto/s/[username]/*.ttf'],
+    '/manifesto/s/\\[username\\]/card-square': [
+      './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
   },
   images: {
@@ -113,11 +117,11 @@ const config = {
         // had no markdown twin at all. See the route header for why the locale
         // is an explicit path segment rather than an optional prefix.
         {
-          source: '/:lang(es|fr)/docs.md',
+          source: '/:lang(es|fr|de)/docs.md',
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr)/docs/:slug(.*).md',
+          source: '/:lang(es|fr|de)/docs/:slug(.*).md',
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
         },
         // Accept negotiation for the locale docs. NOT done in src/proxy.ts:
@@ -130,13 +134,13 @@ const config = {
         // These must stay AFTER the `.md` rules above, or `:slug(.*)` would
         // swallow `<url>.md` before the explicit markdown rewrite sees it.
         {
-          source: '/:lang(es|fr)/docs',
+          source: '/:lang(es|fr|de)/docs',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr)/docs/:slug(.*)',
+          source: '/:lang(es|fr|de)/docs/:slug(.*)',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
@@ -162,17 +166,42 @@ const config = {
       ],
     };
   },
+  async redirects() {
+    return [
+      // /index and /<anything>/index answered 200 with the same page as the
+      // clean URL (canonical pointed right, but a redirect is the strongest
+      // consolidation signal). 308 to the clean URL (search-ops D5, 30-sep).
+      // Paths ending in .md never match, so the markdown mirrors are safe.
+      { source: '/index', destination: '/', permanent: true },
+      // The English home's share card moved from (home)/ to (en)/(home)/ with the
+      // per-locale root layouts, and Next derives the image's file name from its
+      // route path: the same bytes now live at a new URL. Share cards cached by
+      // social networks and saved links keep working. If the home's route moves
+      // again, the hash changes and this target must follow it.
+      { source: '/opengraph-image-12gd74.jpg', destination: '/opengraph-image-czrkkh.jpg', permanent: true },
+      // Same for every signatory's wide card: it is linked from cards already
+      // shared on X, LinkedIn and Discord, from the example card on /manifesto
+      // and /es/manifesto, and from the "Download your card: wide" link, all of
+      // which keep the stable /opengraph-image path and follow this 308.
+      // scripts/verify-i18n-seo.mjs fails if either old URL stops ending in an image.
+      {
+        source: '/manifesto/s/:username/opengraph-image',
+        destination: '/manifesto/s/:username/opengraph-image-1xn4ck',
+        permanent: true,
+      },
+      { source: '/:path+/index', destination: '/:path+', permanent: true },
+    ];
+  },
   async headers() {
     return [
-      // Spanish and French routes declare their language over HTTP. The root
-      // layout hardcodes <html lang="en"> for every page (see src/app/es/layout.tsx
-      // for why that is not changed here), and Bing reads Content-Language.
+      // Translated routes also declare their language over HTTP, which Bing
+      // reads. Their <html lang> comes from each locale's own root layout.
       {
-        source: '/:lang(es|fr)',
+        source: '/:lang(es|fr|de)',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {
-        source: '/:lang(es|fr)/:path*',
+        source: '/:lang(es|fr|de)/:path*',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {

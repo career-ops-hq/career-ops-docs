@@ -32,6 +32,12 @@ export async function GET() {
       // agents, never competing with /manifesto in the search index. Same
       // discipline as the /docs .md mirror, /AGENTS.md and /changelog.md.
       'X-Robots-Tag': 'noindex',
+      // Same URL, HTML or markdown depending on Accept: caches must key on it,
+      // or a shared cache could hand this noindex variant to a browser or to
+      // Googlebot. Next.js drops the Vary set in next.config for these
+      // responses, so it is set on the Response itself, as in the home mirror
+      // (search-ops D3, 30-sep).
+      Vary: 'Accept',
     },
   });
 }

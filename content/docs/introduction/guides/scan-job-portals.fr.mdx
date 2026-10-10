@@ -3,7 +3,7 @@ title: Scanner les portails d'emploi
 description: Configurez et lancez le scanner de portails pour trouver automatiquement de nouvelles offres d'emploi.
 seoTitle: "Scanner les portails d'emploi avec career-ops — Greenhouse, Ashby, Lever, zéro token"
 icon: ScanEye
-translationHash: 13f18941c14fa8c0
+translationHash: 1fb2c4a20e4d60c2
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -11,7 +11,7 @@ translatedFrom: /docs/introduction/guides/scan-job-portals
 Ce guide vous accompagne dans la configuration de `portals.yml` et le lancement du scanner de portails pour trouver automatiquement de nouvelles offres d'emploi.
 
 <Callout title="Avant de commencer">
-  Assurez-vous d'avoir terminé le guide [Démarrage rapide](/docs). Vous devez disposer de `cv.md` et de `modes/_profile.md` avant que le scan ne soit utile.
+  Assurez-vous d'avoir terminé le guide [Démarrage rapide](/fr/docs). Vous devez disposer de `cv.md` et de `modes/_profile.md` avant que le scan ne soit utile.
 </Callout>
 
 ## Configurer portals.yml
@@ -152,7 +152,7 @@ npm run scan
 
 Exécutez cette commande depuis le dossier du projet. Le script lit `portals.yml`, interroge directement l'API de chaque entreprise et écrit les nouvelles offres dans `data/pipeline.md`. Il n'utilise aucun token d'IA et s'exécute en environ 30 secondes.
 
-Cette option ne fonctionne que pour les entreprises qui utilisent Greenhouse, Ashby ou Lever. Les entreprises sans l'une de ces plateformes sont ignorées.
+Cette option fonctionne pour toute entreprise dont la page emploi repose sur une plateforme pour laquelle le scanner dispose d'un provider intégré : Greenhouse, Ashby et Lever, ainsi que des dizaines d'autres logiciels de recrutement (ATS) et sites d'emploi comme Workable, Workday et SmartRecruiters. La liste complète se trouve dans [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Les entreprises sans provider correspondant sont ignorées, et le scan indique combien il y en a.
 
 **Prévisualiser les résultats avant de les enregistrer :**
 
@@ -181,7 +181,7 @@ Ouvrez Claude Code dans le dossier du projet et tapez :
 Cette version visite directement la page emploi de chaque entreprise à l'aide d'un navigateur, elle fonctionne donc même pour les entreprises qui n'ont pas d'API publique. Elle exécute aussi les `search_queries` de votre `portals.yml` pour trouver des postes dans des entreprises absentes de votre liste suivie.
 
 Utilisez cette option quand :
-- Une entreprise de votre liste n'utilise pas Greenhouse, Ashby ou Lever
+- Une entreprise de votre liste utilise une plateforme pour laquelle le script n'a pas de provider, donc le scan par script l'ignore
 - Vous voulez découvrir de nouvelles entreprises, pas seulement vérifier celles que vous connaissez déjà
 - Le scan par script a manqué quelque chose que vous vous attendiez à voir
 
@@ -226,7 +226,15 @@ Voici ce que signifie chaque ligne :
 </div>
 
 
-Si **New offers added** est à 0, votre filtre de titres est peut-être trop strict. Essayez d'ajouter un mot-clé à votre liste `positive` et relancez le scan.
+Si **New offers added** est à 0, cherchez d'abord cet avertissement dans la sortie du scan :
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+Il signifie que le portail de cette entreprise n'a jamais répondu correctement : ce zéro ne prouve donc pas qu'il n'a aucune offre. L'entreprise est enregistrée comme `unverified_zero` dans `data/portal-health.tsv` et compte dans sa série d'échecs. Vérifiez ce portail avant de modifier vos filtres.
+
+Si cet avertissement n'apparaît pas, votre filtre de titres est peut-être trop strict. Essayez d'ajouter un mot-clé à votre liste `positive` et relancez le scan.
 
 **Où vont les nouvelles offres :** chaque nouvelle offre est ajoutée sous forme de ligne dans `data/pipeline.md`. C'est la liste des offres en attente d'évaluation.
 

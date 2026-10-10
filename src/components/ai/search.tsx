@@ -452,11 +452,12 @@ const UNAVAILABLE = {
   en: { text: 'The AI assistant isn\u2019t available right now.', action: 'Search the docs instead' },
   es: { text: 'El asistente de IA no est\u00e1 disponible ahora mismo.', action: 'Buscar en la documentaci\u00f3n' },
   fr: { text: 'L\u2019assistant IA n\u2019est pas disponible pour le moment.', action: 'Rechercher dans la documentation' },
+  de: { text: 'Der KI-Assistent ist gerade nicht verf\u00fcgbar.', action: 'Stattdessen die Dokumentation durchsuchen' },
 } as const;
 
 function AssistantUnavailable() {
   const pathname = usePathname() ?? '';
-  const locale = (/^\/(es|fr)(\/|$)/.exec(pathname)?.[1] ?? 'en') as keyof typeof UNAVAILABLE;
+  const locale = (/^\/(es|fr|de)(\/|$)/.exec(pathname)?.[1] ?? 'en') as keyof typeof UNAVAILABLE;
   const t = UNAVAILABLE[locale];
   const { setOpenSearch } = useSearchContext();
   const { setOpen } = useAISearchContext();
