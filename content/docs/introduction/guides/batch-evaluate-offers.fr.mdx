@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: d7a6ccee0dc73e47
+translationHash: 4af036ce1b47233a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -149,6 +149,29 @@ Ce script :
 ```bash title="Terminal"
 node merge-tracker.mjs --dry-run
 ```
+
+### Liens courts dans la colonne URL
+
+Dans `data/applications.md`, la colonne URL affiche chaque offre sous forme de lien court portant le nom du job board ou du site — par exemple `[ashby](https://jobs.ashbyhq.com/…)` — au lieu de l'adresse complète, pour que le reste du tableau reste lisible. La détection des doublons utilise toujours l'adresse complète derrière le lien.
+
+Les URL déjà présentes dans votre tracker passent au format court la prochaine fois qu'une fusion réécrit leur ligne. Pour convertir tout le tracker d'un coup, prévisualisez d'abord :
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls --dry-run
+```
+
+Puis appliquez :
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls
+```
+
+Relancer la commande est toujours sans risque, et tout libellé que vous avez écrit vous-même est conservé.
+
+- **Pas encore de colonne URL ?** Exécutez plutôt `node merge-tracker.mjs --backfill-urls`. La commande ajoute la colonne, la remplit à partir de vos rapports et écrit directement les liens courts.
+- **Certaines URL restent telles quelles.** Une URL contenant une barre oblique inverse, une tabulation ou une parenthèse non fermée est conservée en adresse complète, car un lien la modifierait.
+- **Un `|` dans une URL est remplacé.** Le tableau utilise `|` pour séparer les colonnes : une URL qui en contient est donc écrite sans lien, chaque `|` étant remplacé par une barre oblique entourée d'espaces. L'adresse de cette cellule n'est plus l'adresse d'origine et ne s'ouvrira pas telle quelle.
+- **Les lignes décalées sont ignorées.** Si une ligne n'a pas le même nombre de cellules que l'en-tête — le plus souvent à cause d'un `|` dans une URL —, la commande la laisse intacte et indique son numéro de ligne pour que vous la corrigiez à la main.
 
 ## Et ensuite ?
 

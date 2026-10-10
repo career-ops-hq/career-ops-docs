@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: d7a6ccee0dc73e47
+translationHash: 4af036ce1b47233a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -149,6 +149,29 @@ Dieses Script:
 ```bash title="Terminal"
 node merge-tracker.mjs --dry-run
 ```
+
+### Kurze Links in der URL-Spalte
+
+In `data/applications.md` zeigt die URL-Spalte jede Stellenanzeige als kurzen Link, beschriftet mit dem Namen der Jobbörse oder der Website – zum Beispiel `[ashby](https://jobs.ashbyhq.com/…)` – statt der vollständigen Adresse, damit der Rest der Tabelle lesbar bleibt. Die Duplikatprüfung nutzt weiterhin die vollständige Adresse hinter dem Link.
+
+URLs, die schon in deinem Tracker stehen, wechseln in die Kurzform, sobald eine Zusammenführung ihre Zeile neu schreibt. Um den ganzen Tracker auf einmal umzustellen, sieh dir die Änderungen zuerst an:
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls --dry-run
+```
+
+Dann wende sie an:
+
+```bash title="Terminal"
+node merge-tracker.mjs --migrate-urls
+```
+
+Du kannst den Befehl jederzeit gefahrlos erneut ausführen, und jede Beschriftung, die du selbst geschrieben hast, bleibt erhalten.
+
+- **Noch keine URL-Spalte?** Führe stattdessen `node merge-tracker.mjs --backfill-urls` aus. Der Befehl legt die Spalte an, füllt sie aus deinen Berichten und schreibt direkt die kurzen Links.
+- **Manche URLs bleiben unverändert.** Eine URL, die einen Backslash, einen Tabulator oder eine nicht geschlossene Klammer enthält, bleibt als vollständige Adresse stehen, weil ein Link sie verändern würde.
+- **Ein `|` in einer URL wird ersetzt.** Die Tabelle trennt Spalten mit `|`. Eine URL, die dieses Zeichen enthält, wird deshalb ohne Link geschrieben, und jedes `|` wird durch einen Schrägstrich mit je einem Leerzeichen davor und danach ersetzt. Die Adresse in dieser Zelle ist dann nicht mehr die ursprüngliche und lässt sich so nicht öffnen.
+- **Zeilen, die nicht zur Kopfzeile passen, werden übersprungen.** Hat eine Zeile eine andere Anzahl von Zellen als die Kopfzeile – meist wegen eines `|` in einer URL –, lässt der Befehl sie unangetastet und nennt ihre Zeilennummer, damit du sie von Hand korrigieren kannst.
 
 ## Wie es weitergeht
 
