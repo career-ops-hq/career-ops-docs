@@ -4,7 +4,7 @@ description: "Generates a tailored PDF resume against a specific JD using Playwr
 seoTitle: "career-ops pdf mode — generate an ATS-friendly tailored resume"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
+lastModified: "2026-10-09"
 ---
 
 ## What it does
@@ -39,6 +39,35 @@ Reach for pdf when you've decided to apply and want only the tailored resume, sk
 - Paper size follows the company's location automatically: `letter` for US and Canada roles, `a4` everywhere else.
 - Keyword injection is truth-based. The mode rewords real experience into the JD's exact vocabulary but never adds a skill you do not have.
 - For DACH and much of continental Europe you can opt into a photo by setting `candidate.photo` in `config/profile.yml`; leave it empty and the CV renders pixel-for-pixel identical without one, which is the safer default for US, UK, and ATS-first markets.
+
+## How your cv.md is read
+
+Three checks run while pdf tailors your CV. One compares each job title in the tailored CV with the title in `cv.md`. One warns when a job lost its company description or moved out of order. One sorts the JD's skills into those already in your Skills section, those only mentioned in your prose, and real gaps. All three find your jobs and skills by heading, so `cv.md` needs this shape:
+
+```md title="cv.md"
+## Work Experience
+
+### TechFin Corp -- Austin, TX
+
+**Senior ML Engineer**
+2020-2024
+
+- Led the ML platform team of 3 engineers
+
+## Skills
+
+- **Infra:** Kubernetes, Kafka, AWS
+```
+
+- The experience section is a level-2 heading named Experience, Work Experience, Professional Experience, Employment History or Work History.
+- Each job starts with a level-3 heading: the company, then the location, separated by an em dash, an en dash, `--` or `-`. Next comes the job title on a line that is bold from end to end, then a line with the dates.
+- Skills sit under a heading that contains the word "Skills". "Tools", "Technologies" and "Tech Stack" also count, but only on a level-1 or level-2 heading. Every matching section is read, not only the first.
+
+These heading names are matched in English, even when the rest of your CV is in another language.
+
+A `cv.md` converted from a Word file with Pandoc is read as it is. The checks see through bold and small-caps headings such as `## **[Experience]{.smallcaps}**`, the `---` and `--` that Pandoc writes for dashes, and the trailing `\` it leaves at a line break. You do not need to clean those up.
+
+When the checks cannot find your jobs, you are told. The title check reports `title check did not run` and shows no green check, and the agent asks you to compare every title with `cv.md` yourself. It reports the same when no job in the tailored CV matches a `cv.md` job by company and dates. `npm run doctor` gives the warning at setup time: it flags a `cv.md` with no experience section the checks recognize, or with no job headings inside that section, and lists what to change. It is a warning, not a failure, and career-ops keeps working.
 
 ## Gotchas
 

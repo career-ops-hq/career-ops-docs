@@ -4,8 +4,8 @@ description: "Génère un CV PDF adapté à une JD précise en utilisant Playwri
 seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 6c9e87b81634e369
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -42,6 +42,35 @@ Recourez à pdf lorsque vous avez décidé de postuler et que vous souhaitez uni
 - Le format de papier suit automatiquement la localisation de l'entreprise : `letter` pour les postes aux États-Unis et au Canada, `a4` partout ailleurs.
 - L'injection de mots-clés repose sur la vérité. Le mode reformule une expérience réelle dans le vocabulaire exact de la JD, mais n'ajoute jamais une compétence que vous ne possédez pas.
 - Pour la région DACH et une grande partie de l'Europe continentale, vous pouvez opter pour une photo en renseignant `candidate.photo` dans `config/profile.yml` ; laissez ce champ vide et le CV s'affiche à l'identique, au pixel près, sans photo — le choix par défaut le plus sûr pour les États-Unis, le Royaume-Uni et les marchés centrés sur les ATS.
+
+## Comment votre cv.md est lu
+
+Trois vérifications s'exécutent pendant que pdf personnalise votre CV. La première compare l'intitulé de chaque poste du CV personnalisé avec celui qui figure dans `cv.md`. La deuxième vous avertit lorsqu'un poste a perdu la description de l'entreprise ou a changé de place. La troisième classe les compétences de la JD entre celles déjà présentes dans votre section Skills, celles seulement mentionnées dans votre texte et celles qui manquent réellement. Toutes les trois repèrent vos postes et vos compétences par les titres, donc `cv.md` doit avoir cette forme :
+
+```md title="cv.md"
+## Work Experience
+
+### TechFin Corp -- Austin, TX
+
+**Senior ML Engineer**
+2020-2024
+
+- Led the ML platform team of 3 engineers
+
+## Skills
+
+- **Infra:** Kubernetes, Kafka, AWS
+```
+
+- La section d'expérience est un titre de niveau 2 nommé Experience, Work Experience, Professional Experience, Employment History ou Work History.
+- Chaque poste commence par un titre de niveau 3 : l'entreprise, puis le lieu, séparés par un tiret cadratin, un tiret demi-cadratin, `--` ou `-`. Vient ensuite l'intitulé du poste sur une ligne en gras d'un bout à l'autre, puis une ligne avec les dates.
+- Les compétences se trouvent sous un titre qui contient le mot « Skills ». « Tools », « Technologies » et « Tech Stack » comptent aussi, mais seulement dans un titre de niveau 1 ou 2. Toutes les sections correspondantes sont lues, pas seulement la première.
+
+Ces noms de titres sont recherchés en anglais, même si le reste de votre CV est dans une autre langue.
+
+Un `cv.md` converti depuis un fichier Word avec Pandoc est lu tel quel. Les vérifications comprennent les titres en gras et en petites capitales comme `## **[Experience]{.smallcaps}**`, les `---` et `--` que Pandoc écrit pour les tirets, ainsi que le `\` final qu'il laisse à un saut de ligne. Vous n'avez pas besoin de les nettoyer.
+
+Lorsque les vérifications ne trouvent pas vos postes, vous en êtes informé. La vérification des intitulés indique `title check did not run` et n'affiche pas de coche verte, et l'agent vous demande de comparer vous-même chaque intitulé avec `cv.md`. Elle indique la même chose lorsqu'aucun poste du CV personnalisé ne correspond à un poste de `cv.md` par entreprise et par dates. `npm run doctor` donne l'avertissement dès la configuration : il signale un `cv.md` sans section d'expérience reconnue par les vérifications, ou sans titres de poste dans cette section, et indique quoi modifier. C'est un avertissement, pas un échec, et career-ops continue de fonctionner.
 
 ## Pièges à connaître
 

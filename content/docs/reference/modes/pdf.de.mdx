@@ -4,8 +4,8 @@ description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnitte
 seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebenslauf erstellen"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 6c9e87b81634e369
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -42,6 +42,35 @@ Greif zu pdf, wenn du dich für eine Bewerbung entschieden hast und nur den zuge
 - Das Papierformat richtet sich automatisch nach dem Standort des Unternehmens: `letter` für Stellen in den USA und Kanada, `a4` überall sonst.
 - Beim Einbauen der Keywords bleibt der Modus bei der Wahrheit. Er beschreibt deine echte Erfahrung mit den Begriffen aus der Stellenbeschreibung, fügt aber nie eine Fähigkeit hinzu, die du nicht hast.
 - Für den DACH-Raum und große Teile Kontinentaleuropas kannst du ein Foto einbinden, indem du `candidate.photo` in `config/profile.yml` setzt. Lässt du das Feld leer, sieht der Lebenslauf ohne Foto pixelgenau gleich aus. Für die USA, Großbritannien und Märkte, in denen zuerst ein ATS filtert, ist das die sicherere Standardeinstellung.
+
+## So wird deine cv.md gelesen
+
+Während pdf deinen Lebenslauf anpasst, laufen drei Prüfungen. Die erste vergleicht jeden Jobtitel im angepassten Lebenslauf mit dem Titel in `cv.md`. Die zweite warnt, wenn bei einer Stelle die Unternehmensbeschreibung fehlt oder die Stelle verrutscht ist. Die dritte sortiert die Skills aus der Stellenbeschreibung: schon in deinem Skills-Abschnitt, nur im Fließtext erwähnt oder wirklich fehlend. Alle drei finden deine Stellen und Skills über die Überschriften. Deshalb braucht `cv.md` diese Form:
+
+```md title="cv.md"
+## Work Experience
+
+### TechFin Corp -- Austin, TX
+
+**Senior ML Engineer**
+2020-2024
+
+- Led the ML platform team of 3 engineers
+
+## Skills
+
+- **Infra:** Kubernetes, Kafka, AWS
+```
+
+- Der Abschnitt zur Berufserfahrung ist eine Überschrift der Ebene 2 mit dem Namen Experience, Work Experience, Professional Experience, Employment History oder Work History.
+- Jede Stelle beginnt mit einer Überschrift der Ebene 3: erst das Unternehmen, dann der Ort, getrennt durch einen Geviertstrich, einen Halbgeviertstrich, `--` oder `-`. Danach folgt der Jobtitel in einer Zeile, die von Anfang bis Ende fett ist, und dann eine Zeile mit den Daten.
+- Skills stehen unter einer Überschrift, die das Wort „Skills“ enthält. „Tools“, „Technologies“ und „Tech Stack“ zählen auch, aber nur in einer Überschrift der Ebene 1 oder 2. Gelesen werden alle passenden Abschnitte, nicht nur der erste.
+
+Diese Überschriften werden auf Englisch gesucht, auch wenn der Rest deines Lebenslaufs in einer anderen Sprache geschrieben ist.
+
+Eine `cv.md`, die mit Pandoc aus einer Word-Datei umgewandelt wurde, wird so gelesen, wie sie ist. Die Prüfungen kommen mit fetten Überschriften und Kapitälchen wie `## **[Experience]{.smallcaps}**` zurecht, mit den `---` und `--`, die Pandoc für Gedankenstriche schreibt, und mit dem `\`, das es am Zeilenende bei einem Umbruch stehen lässt. Du musst das nicht aufräumen.
+
+Finden die Prüfungen deine Stellen nicht, erfährst du das. Die Titelprüfung meldet `title check did not run` und zeigt keinen grünen Haken, und der Agent bittet dich, jeden Titel selbst mit `cv.md` zu vergleichen. Dieselbe Meldung kommt, wenn keine Stelle im angepassten Lebenslauf über Unternehmen und Daten zu einer Stelle in `cv.md` passt. `npm run doctor` warnt schon bei der Einrichtung: Es meldet eine `cv.md` ohne Erfahrungsabschnitt, den die Prüfungen erkennen, oder ohne Stellenüberschriften in diesem Abschnitt, und nennt dir, was du ändern musst. Das ist eine Warnung, kein Fehler, und career-ops läuft weiter.
 
 ## Stolperfallen
 
