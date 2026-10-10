@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: 25cf6c8fc8b0b85b
+translationHash: 4af036ce1b47233a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -169,7 +169,8 @@ node merge-tracker.mjs --migrate-urls
 Volver a ejecutarlo es siempre seguro, y se conserva cualquier etiqueta que hayas escrito tú.
 
 - **¿Aún no tienes columna URL?** Ejecuta `node merge-tracker.mjs --backfill-urls` en su lugar. Añade la columna, la rellena a partir de tus informes y escribe directamente los enlaces cortos.
-- **Algunas URLs se quedan como están.** Una URL que contiene `|`, una barra invertida, un tabulador o un paréntesis sin cerrar se conserva como dirección completa, porque un enlace la alteraría.
+- **Algunas URLs se quedan como están.** Una URL que contiene una barra invertida, un tabulador o un paréntesis sin cerrar se conserva como dirección completa, porque un enlace la alteraría.
+- **Un `|` en una URL se sustituye.** La tabla usa `|` para separar columnas, así que una URL que lo contiene se escribe sin enlace y con cada `|` sustituido por una barra con un espacio a cada lado. La dirección de esa celda ya no es la original y no se abrirá tal como está escrita.
 - **Las filas descuadradas se omiten.** Si una fila tiene un número de celdas distinto al de la cabecera — normalmente por un `|` dentro de una URL —, el comando no la toca e indica su línea para que la corrijas a mano.
 
 ## Qué hacer a continuación

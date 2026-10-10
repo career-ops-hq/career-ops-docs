@@ -166,7 +166,8 @@ node merge-tracker.mjs --migrate-urls
 Running it again is always safe, and any label you wrote yourself is kept.
 
 - **No URL column yet?** Run `node merge-tracker.mjs --backfill-urls` instead. It adds the column, fills it from your reports, and writes the short links directly.
-- **Some URLs stay plain.** A URL containing `|`, a backslash, a tab, or an unmatched parenthesis is kept as the full address, because a link would change it.
+- **Some URLs stay plain.** A URL containing a backslash, a tab, or an unmatched parenthesis is kept as the full address, because a link would change it.
+- **A `|` in a URL gets replaced.** The table uses `|` to separate columns, so a URL containing one is written without a link and with each `|` replaced by a slash with a space on either side. The address in that cell is no longer the original and will not open as written.
 - **Rows that don't line up are skipped.** If a row has a different number of cells than the header — usually because of a `|` inside a URL — the command leaves it untouched and names its line so you can fix it by hand.
 
 ## What to do next
