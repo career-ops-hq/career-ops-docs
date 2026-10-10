@@ -193,7 +193,8 @@ export default async function ComparisonPage({
                 <p className="mt-2 font-medium">$0 (MIT, open source)</p>
                 <p className="mt-2 text-sm text-fd-muted-foreground">
                   Recurring cost: only your AI CLI subscription (Claude Pro $20/mo typical).
-                  Your data never leaves your machine.
+                  No backend of ours: your CV goes from your machine to the AI provider you
+                  chose, and nowhere else.
                 </p>
               </div>
               <div className="rounded-lg border border-fd-foreground/10 p-5">

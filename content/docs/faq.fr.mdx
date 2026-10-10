@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: cf9f3a2747689131
+translationHash: b29d463ed6d8deaa
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -40,7 +40,7 @@ La règle `ANTHROPIC_API_KEY` concerne les moteurs Anthropic. Les autres CLI (Co
 
 ## Combien coûte l'utilisation de career-ops par mois ?
 
-Dans career-ops, seule l'évaluation coûte quelque chose, et l'évaluation peut coûter 0 $. Le scan des offres ne consomme aucun token d'IA : découvrir des postes est donc toujours gratuit, et seule l'évaluation d'une offre fait appel au modèle. Trois options font tourner tout le pipeline sans rien payer : un modèle local via Ollama, les modèles gratuits d'OpenRouter (`npm run or`) ou l'offre gratuite d'Antigravity. Avec un modèle payant bon marché comme DeepSeek V3 (avec le prompt caching), une évaluation coûte bien moins d'un centime, si bien que quelques centimes couvrent des dizaines d'offres. Si vous avez déjà un abonnement Claude, le coût marginal est en pratique de 0 $ ; avec l'API facturée au token, comptez environ 0,05 à 0,10 $ par évaluation (une estimation qui varie selon la longueur de l'offre). career-ops lui-même est gratuit pour toujours, sous licence MIT, sans frais ni palier : vous ne payez que votre fournisseur d'IA, et seulement si vous en choisissez un payant. Le guide [Configurer un moteur d'IA gratuit](/fr/docs/free-ai-engine) détaille les options à 0 $.
+Dans career-ops, seule l'évaluation coûte quelque chose, et l'évaluation peut coûter 0 $. Le scan des offres ne consomme aucun token d'IA : découvrir des postes est donc toujours gratuit, et seule l'évaluation d'une offre fait appel au modèle. Trois options font tourner tout le pipeline sans rien payer : un modèle local via Ollama, les modèles gratuits d'OpenRouter (`npm run or`) ou l'offre gratuite d'Antigravity. Avec un modèle payant bon marché comme DeepSeek V3 (avec le prompt caching), une évaluation coûte bien moins d'un centime, si bien que quelques centimes couvrent des dizaines d'offres. Si vous avez déjà un abonnement Claude, le coût marginal est en pratique de 0 $ ; avec l'API facturée au token, comptez environ 0,05 à 0,10 $ par évaluation (une estimation qui varie selon la longueur de l'offre). career-ops lui-même est gratuit pour toujours, sous licence MIT, sans frais ni palier : vous ne payez que votre fournisseur d'IA, et seulement si vous en choisissez un payant. Le guide [Configurer un moteur d'IA gratuit](/fr/docs/free-ai-engine) détaille les options à 0 $. Pour dépenser moins par évaluation, réglez `spend_tier` dans `config/profile.yml` : `economy` utilise le niveau de modèle le moins cher et le plus rapide de votre CLI et convient pour évaluer beaucoup d'annonces, `standard` est la valeur par défaut, et `premium` utilise le modèle le plus capable pour les annonces qui comptent le plus. La conversation d'onboarding et le PDF sur mesure s'exécutent eux aussi avec votre modèle : ils consomment donc des tokens.
 
 ## Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?
 
