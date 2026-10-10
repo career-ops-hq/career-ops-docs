@@ -74,7 +74,7 @@ export default async function ComparisonPage({
             >
               Santiago Fernández de Valderrama Aparicio
             </a>
-            , Applied AI Operator · Last updated{' '}
+            , creator of career-ops · Last updated{' '}
             <time dateTime={data.lastModified}>{formatDate(data.lastModified)}</time>
           </p>
           <h1

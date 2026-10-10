@@ -15,7 +15,7 @@
 //   - parity: the HTML cluster equals the sitemap cluster;
 //   - language signals: Content-Language header and <meta http-equiv> equal
 //     the URL's locale, og:locale starts with it, and <html lang> equals it
-//     (a WARNING until every locale has its own root layout, search-ops D1);
+//     (each locale has its own root layout since search-ops D1);
 //   - markdown negotiation on docs URLs: the Accept: text/markdown variant and
 //     the .md twin are markdown with X-Robots-Tag: noindex, and the negotiated
 //     variant carries Vary: Accept. Vary: Accept on the HTML variant is a
@@ -24,6 +24,9 @@
 //     the noindex variant away from Googlebot;
 //   - /index, /docs/index and every /<locale>/docs/index answer 308 to their
 //     canonical URL;
+//   - share-card URLs already out in the world (cached by social networks,
+//     linked from pages) still end in an image, directly or after one redirect:
+//     a route moved into a group changes the generated image's path (Oct 2026);
 //   - no English URL that production has disappears from the build. New English
 //     URLs are reported, never failed: adding a page is legitimate. A removal
 //     on purpose goes in ALLOWED_EN_REMOVALS in the same PR, with its redirect.
@@ -48,12 +51,18 @@ const BASE = (process.env.BASE || 'http://localhost:3999').replace(/\/$/, '');
 const DEFAULT_LOCALE = 'en';
 const CONCURRENCY = 8;
 
-// 'fail' once every locale has its own root layout (search-ops D1, from 6 Oct).
-const HTML_LANG_MODE = 'warn';
+// 'fail' since each locale has its own root layout (search-ops D1): the server
+// HTML carries the right <html lang>, so a wrong one is a regression.
+const HTML_LANG_MODE = 'fail';
 const HTML_VARY_MODE = 'warn';
 
 // English URLs removed on purpose (each with its 308 in next.config.mjs).
 const ALLOWED_EN_REMOVALS = [];
+
+// Public image URLs that must keep working: the EN home's share card under its
+// pre-October-2026 name, and a signatory's wide card at its stable path. Both
+// are cached by social networks and the second is linked from /manifesto.
+const STABLE_IMAGE_URLS = ['/opengraph-image-12gd74.jpg', '/manifesto/s/santifer/opengraph-image'];
 
 // ---------------------------------------------------------------- parsing
 
@@ -252,6 +261,13 @@ function check(snap, opts = {}) {
     }
   }
 
+  // share cards that must still end in an image
+  for (const path of STABLE_IMAGE_URLS) {
+    const r = snap.stableImages?.[path];
+    const ok = r && r.status === 200 && /^image\//.test(r.type || '');
+    if (!ok) fail('stable-image', path, `answered ${r ? `${r.hops ? `${r.first} → ` : ''}${r.status} ${r.type || ''}` : 'nothing'}, expected an image (directly or after one redirect)`);
+  }
+
   // English URL set vs production
   if (snap.prodSitemap === undefined) {
     // comparison not requested (BASE is production itself)
@@ -324,6 +340,17 @@ async function collect() {
     if (isDocs(p, locales)) snap.mdTwins[p] = await fetchOne(`${p}.md`);
   });
   await pool(indexRedirects(locales), async ([from]) => { snap.redirects[from] = await fetchOne(from); });
+  snap.stableImages = {};
+  await pool(STABLE_IMAGE_URLS, async (p) => {
+    let r = await fetchOne(p);
+    const first = r.status;
+    let hops = 0;
+    if ([301, 302, 307, 308].includes(r.status) && r.location) {
+      hops = 1;
+      r = await fetchOne(r.location.replace(/^https?:\/\/[^/]+/, ''));
+    }
+    snap.stableImages[p] = { status: r.status, type: r.headers['content-type'] || '', first, hops };
+  });
   if (BASE !== SITE) {
     try {
       const res = await fetch(`${SITE}/sitemap.xml`);
@@ -398,6 +425,7 @@ function fixture() {
       '/de/index': redirect('/de'), '/de/docs/index': redirect('/de/docs'),
     },
     prodSitemap: sitemap,
+    stableImages: Object.fromEntries(STABLE_IMAGE_URLS.map((p) => [p, { status: 200, type: 'image/png', first: 308, hops: 1 }])),
   };
 }
 
@@ -446,6 +474,7 @@ const SABOTAGE = [
   }],
   ['md-twin', (s) => { s.mdTwins['/docs/faq'] = { status: 404, headers: {}, body: '' }; }],
   ['index-308', (s) => { s.redirects['/de/docs/index'].status = 307; }],
+  ['stable-image', (s) => { s.stableImages['/manifesto/s/santifer/opengraph-image'] = { status: 404, type: 'text/html', first: 404, hops: 0 }; }],
   ['en-removed', (s) => { s.prodSitemap = s.prodSitemap.replace('</urlset>', '<url><loc>https://career-ops.org/press</loc></url></urlset>'); }],
   ['html-lang', (s) => edit(s, '/de', '<html lang="de">', '<html lang="en">'), { htmlLangMode: 'fail' }],
   ['html-vary', (s) => { s.pages['/docs/faq'].headers.vary = 'rsc'; }, { htmlVaryMode: 'fail' }],

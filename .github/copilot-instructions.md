@@ -28,7 +28,7 @@ Do not break these; if a task seems to require it, stop and explain in your repo
 - `src/lib/shared.ts` — frozen canonical strings (the thesis line, the CareerOps definition, the manifesto signature). Byte-identical across the site by design.
 - `src/lib/manifesto-text.ts` and the manifesto pages — a signed document; the guard compares it against the core repo.
 - Anything under `.github/`, `package.json`, `package-lock.json`.
-- The homepage (`src/app/(home)/`), the hero, and anything visual. Design decisions are the maintainer's.
+- The homepage (`src/app/(en)/(home)/`, `src/app/<locale>/(home)/` and the shared `src/app/_home/`), the hero, and anything visual. Design decisions are the maintainer's.
 
 ## Facts and wording
 

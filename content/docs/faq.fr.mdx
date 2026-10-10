@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: ac90ab093a4d1020
+translationHash: c305b7c1bd0071a5
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -56,15 +56,15 @@ career-ops fonctionne nativement avec dix CLI de codage IA : Claude Code, Cursor
 
 ## Quelle est la différence entre `scan` et `scan:full` ?
 
-`npm run scan` lit les entreprises que vous avez configurées dans `portals.yml` et interroge directement leurs API ATS ([Greenhouse](/fr/docs/reference/portals/greenhouse), [Ashby](/fr/docs/reference/portals/ashby), [Lever](/fr/docs/reference/portals/lever)), sans consommer aucun token LLM — c'est votre run de découverte habituel, quotidien ou hebdomadaire. `npm run scan:full` inverse la direction : il parcourt les annuaires publics d'entreprises des ATS et fait remonter les offres récentes qui correspondent à vos `title_filter` / `location_filter`, pour que vous repériez des postes chez des entreprises que vous n'avez pas ajoutées manuellement.
+`npm run scan` lit les entreprises que vous avez configurées dans `portals.yml` et récupère chacune via le fournisseur qui la reconnaît (par exemple [Greenhouse](/fr/docs/reference/portals/greenhouse), [Ashby](/fr/docs/reference/portals/ashby), [Lever](/fr/docs/reference/portals/lever)), sans consommer aucun token LLM — c'est votre run de découverte habituel, quotidien ou hebdomadaire. `npm run scan:full` inverse la direction : il parcourt les annuaires publics d'entreprises des ATS et fait remonter les offres récentes qui correspondent à vos `title_filter` / `location_filter`, pour que vous repériez des postes chez des entreprises que vous n'avez pas ajoutées manuellement.
 
 ## Comment éviter d'atteindre les limites de tokens ou de débit pendant un run en batch ?
 
-Pour éviter les limites de tokens ou de débit lors d'un run en batch de career-ops, plafonnez le run avec `./batch/batch-runner.sh --limit 5` pour inspecter la qualité du résultat avant de lancer un lot plus important. Si un run est interrompu par une limite de débit ou une erreur réseau, ne repartez pas de zéro — utilisez `--resume-paused` pour ignorer les tâches déjà terminées, afin qu'aucun token ne soit gaspillé sur du travail déjà accompli.
+Pour éviter les limites de tokens ou de débit lors d'un run en batch de career-ops, plafonnez le run avec `./batch/batch-runner.sh --limit 5` pour inspecter la qualité du résultat avant de lancer un lot plus important. Si un run est interrompu par une limite de débit ou une erreur réseau, ne repartez pas de zéro — utilisez `--resume-paused` pour ignorer les tâches déjà terminées, afin qu'aucun token ne soit gaspillé sur du travail déjà accompli. Une tâche `needs_confirmation` est différente : elle n'a produit ni rapport, ni CV, ni brouillon de candidature, ni ligne du tracker, et `--resume-paused` ne la reprendra pas. Répondez explicitement à sa question dans la session interactive parente.
 
 ## Les skills ne se chargent pas sous Windows — erreur de symlink à l'installation
 
-Windows ne crée pas de symlinks par défaut, donc Git extrait les points d'entrée des skills CLI de career-ops sous forme de simples fichiers pointeurs. L'installateur et l'outil de mise à jour le détectent automatiquement : lancez `node update-system.mjs apply` (ou `npx @santifer/career-ops init` lors d'une nouvelle installation) et l'étape de matérialisation remplace les fichiers pointeurs par le contenu complet des skills. Aucun `mklink` manuel ni activation du Mode développeur n'est nécessaire.
+Windows ne crée pas de symlinks par défaut, donc Git extrait les points d'entrée des skills CLI de career-ops sous forme de simples fichiers pointeurs. L'installateur et l'outil de mise à jour le détectent automatiquement : lancez `node update-system.mjs apply --confirm` (ou `npx @santifer/career-ops init` lors d'une nouvelle installation) et l'étape de matérialisation remplace les fichiers pointeurs par le contenu complet des skills. Aucun `mklink` manuel ni activation du Mode développeur n'est nécessaire.
 
 ## Puis-je exécuter career-ops avec un modèle moins cher ou local ?
 

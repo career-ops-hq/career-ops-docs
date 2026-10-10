@@ -4,8 +4,8 @@ description: "Génère un CV PDF adapté à une JD précise en utilisant Playwri
 seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: beb822061e860203
+lastModified: "2026-10-06"
+translationHash: 16914eae2d8e7aa4
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -46,6 +46,8 @@ Recourez à pdf lorsque vous avez décidé de postuler et que vous souhaitez uni
 ## Pièges à connaître
 
 Nécessite Playwright installé en local. Le script de build peut échouer sur des installations Linux minimales dépourvues de polices système. Exécutez `npm run doctor` pour diagnostiquer.
+
+La génération du PDF s'arrête si les postes de votre expérience professionnelle ne vont pas du plus récent au plus ancien, et l'erreur cite les dates du poste qui commence après celui du dessus. Remettez les postes dans l'ordre antéchronologique et relancez : on adapte un CV par le résumé et les puces, pas en déplaçant les postes. Si vous voulez délibérément un autre ordre, passez `--allow-nonchronological` à `generate-pdf.mjs` : le PDF est généré avec un avertissement. Avec `--batch`, seul le CV dans le désordre échoue ; les autres sont générés normalement.
 
 ## Pages associées
 

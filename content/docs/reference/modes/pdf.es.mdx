@@ -4,8 +4,8 @@ description: "Genera un CV en PDF adaptado a una JD concreta usando Playwright p
 seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: beb822061e860203
+lastModified: "2026-10-06"
+translationHash: 16914eae2d8e7aa4
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -46,6 +46,8 @@ Recurre a pdf cuando has decidido aplicar y solo quieres el CV adaptado, saltán
 ## Posibles problemas
 
 Requiere Playwright instalado en local. El script de build puede fallar en instalaciones Linux mínimas sin fuentes del sistema. Ejecuta `npm run doctor` para diagnosticar.
+
+La generación del PDF se detiene si los puestos de tu experiencia laboral no van del más reciente al más antiguo, y el error cita las fechas del puesto que empieza después que el de encima. Vuelve a ponerlos en orden cronológico inverso y repite: un CV se adapta con el resumen y los bullets, no moviendo puestos. Si de verdad quieres otro orden, pasa `--allow-nonchronological` a `generate-pdf.mjs` y se genera con un aviso. Con `--batch`, solo falla el CV desordenado; el resto se genera igual.
 
 ## Relacionado
 

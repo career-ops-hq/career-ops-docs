@@ -3,7 +3,7 @@ title: Glosario
 description: El vocabulario de una búsqueda de empleo con IA, definido — ATS, la puntuación global 1-5, Data Contract, spray-and-pray, liveness check, tailoring, zero-token scan, historias STAR+R y todos los términos que usa career-ops.
 seoTitle: "Glosario de career-ops — términos de la búsqueda de empleo con IA, definidos"
 icon: BookOpen
-translationHash: 121ce11415a80eb5
+translationHash: dc09d488ecdc3008
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -47,7 +47,7 @@ El flujo de trabajo de career-ops de principio a fin: escanear portales → eval
 
 ## Zero-token scan
 
-Una pasada de descubrimiento que no consume tokens de LLM: `scan.mjs` llama directamente por HTTP a las APIs de los ATS (Greenhouse, Ashby, Lever), así que encontrar ofertas nuevas es gratis con independencia del motor de IA que uses.
+Una pasada de descubrimiento que no consume tokens de LLM: `scan.mjs` lee directamente por HTTP las APIs de los ATS, los feeds de los portales de empleo y las páginas de empleo, así que encontrar ofertas nuevas es gratis con independencia del motor de IA que uses.
 
 ## Motor de IA
 
@@ -71,7 +71,7 @@ La página de empleo de una empresa, respaldada por un ATS, que career-ops puede
 
 ## Evaluación en batch
 
-Puntuar muchas ofertas guardadas en una sola ejecución en vez de una a una, con flags para mantener el control: `--limit` acota el tamaño del batch, `--dry-run` muestra una vista previa de lo que se procesaría y `--resume-paused` continúa una ejecución interrumpida sin volver a gastar tokens.
+Puntuar muchas ofertas guardadas en una sola ejecución en vez de una a una, con flags para mantener el control: `--limit` acota el tamaño del batch, `--dry-run` muestra una vista previa de lo que se procesaría y `--resume-paused` continúa una ejecución interrumpida sin volver a gastar tokens. Un trabajo `needs_confirmation` es una retención sin artefactos que solo reanuda la sesión interactiva principal tras una respuesta explícita; los flags de reintento y reanudación lo mantienen retenido.
 
 ## Local-first
 
