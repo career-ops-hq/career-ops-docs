@@ -4,8 +4,8 @@ description: "Génère un CV PDF adapté à une JD précise en utilisant Playwri
 seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 37b75011f73efd6e
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -43,6 +43,25 @@ Recourez à pdf lorsque vous avez décidé de postuler et que vous souhaitez uni
 - L'injection de mots-clés repose sur la vérité. Le mode reformule une expérience réelle dans le vocabulaire exact de la JD, mais n'ajoute jamais une compétence que vous ne possédez pas.
 - Pour la région DACH et une grande partie de l'Europe continentale, vous pouvez opter pour une photo en renseignant `candidate.photo` dans `config/profile.yml` ; laissez ce champ vide et le CV s'affiche à l'identique, au pixel près, sans photo — le choix par défaut le plus sûr pour les États-Unis, le Royaume-Uni et les marchés centrés sur les ATS.
 
+## Une copie lisible par les ATS avec `--ats`
+
+Certains formulaires de candidature ne lisent jamais votre PDF tel que vous l'avez conçu : ils vous demandent de coller votre CV dans des champs de texte, ou ils analysent le fichier téléversé et préremplissent le formulaire avec ce qu'ils parviennent à en extraire. Ajoutez `--ats` et le mode pdf génère une seconde copie du même CV personnalisé, pensée pour les parseurs. Vous collez depuis la copie ATS et vous joignez le PDF mis en page.
+
+```bash title="Terminal"
+/career-ops pdf acme --ats
+
+PDF:  output/cv-jane-doe-acme-2026-05-18.pdf
+ATS:  output/cv-jane-doe-acme-ats.html
+```
+
+- L'option est désactivée par défaut. Passez `--ats` pour une seule exécution, ou activez-la pour toutes avec une règle maison dans votre propre `modes/_custom.md`.
+- C'est le même CV, pas une seconde passe de personnalisation. La copie est construite à partir du contenu personnalisé finalisé, une fois le PDF mis en page terminé. Le seul changement : vos compétences clés passent dans une ligne `Skills` séparée par des virgules. Dans la version mise en page, ce sont des étiquettes séparées uniquement par de l'espacement, sous un en-tête que les parseurs ne reconnaissent pas, si bien qu'un parseur a tendance à écarter le bloc entier. Rien n'est ajouté et rien n'est reformulé.
+- Trois points sont signalés et jamais corrigés automatiquement : le nom d'un employeur dans un intitulé de poste (`employer-in-role`), une parenthèse dans le nom d'une entreprise (`parenthetical-in-company`) et plus d'une plage de dates pour un même poste (`multiple-date-ranges`). L'agent vous montre chaque constat et c'est vous qui décidez. La correction que vous choisissez est apportée au contenu personnalisé, et les deux copies sont reconstruites à partir de celui-ci.
+- La copie ATS passe de son côté la même vérification des faits que le CV mis en page : une affirmation retirée du CV mis en page ne peut donc pas subsister dans la copie.
+- Le fichier est toujours écrit dans `output/` avec le suffixe `-ats`. C'est un document que vous collez, pas un document que vous joignez ; il ne compte donc pas comme le PDF de la candidature : la colonne PDF de votre tracker pointe toujours vers le PDF mis en page.
+- Il n'y a pas de PDF de la copie ATS par défaut, puisque vous copiez le texte directement depuis le HTML. Demandez-en un si un formulaire exige un fichier à téléverser ; il est généré séparément et ne remplace jamais le PDF mis en page.
+- Un problème lors de la passe ATS ne touche jamais le HTML ni le PDF mis en page que vous avez déjà.
+
 ## Pièges à connaître
 
 Nécessite Playwright installé en local. Le script de build peut échouer sur des installations Linux minimales dépourvues de polices système. Exécutez `npm run doctor` pour diagnostiquer.
@@ -52,3 +71,4 @@ La génération du PDF s'arrête si les postes de votre expérience professionne
 ## Pages associées
 
 - [auto-pipeline](/fr/docs/reference/modes/auto-pipeline)
+- [apply](/fr/docs/reference/modes/apply)

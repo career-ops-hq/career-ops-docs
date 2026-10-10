@@ -4,7 +4,7 @@ description: "Generates a tailored PDF resume against a specific JD using Playwr
 seoTitle: "career-ops pdf mode — generate an ATS-friendly tailored resume"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
+lastModified: "2026-10-09"
 ---
 
 ## What it does
@@ -40,6 +40,25 @@ Reach for pdf when you've decided to apply and want only the tailored resume, sk
 - Keyword injection is truth-based. The mode rewords real experience into the JD's exact vocabulary but never adds a skill you do not have.
 - For DACH and much of continental Europe you can opt into a photo by setting `candidate.photo` in `config/profile.yml`; leave it empty and the CV renders pixel-for-pixel identical without one, which is the safer default for US, UK, and ATS-first markets.
 
+## An ATS-parseable copy with `--ats`
+
+Some application forms never read your PDF as you designed it: they ask you to paste your CV into text fields, or they parse the upload and pre-fill the form from whatever they manage to extract. Add `--ats` and pdf mode renders a second, parser-friendly copy of the same tailored CV. You paste from the ATS copy and attach the styled PDF.
+
+```bash title="Terminal"
+/career-ops pdf acme --ats
+
+PDF:  output/cv-jane-doe-acme-2026-05-18.pdf
+ATS:  output/cv-jane-doe-acme-ats.html
+```
+
+- It is off by default. Pass `--ats` for a single run, or turn it on for every run with a house rule in your own `modes/_custom.md`.
+- It is the same CV, not a second tailoring pass. The copy is built from the finished tailored content once the styled PDF is done. The one change is that your core competencies move into a comma-separated `Skills` line: in the styled layout they are tags separated only by spacing, under a header parsers do not recognise, so a parser tends to drop the whole block. Nothing is added and nothing is reworded.
+- Three things are flagged and never auto-fixed: an employer name inside a job title (`employer-in-role`), a parenthetical inside a company name (`parenthetical-in-company`), and more than one date range on a single role (`multiple-date-ranges`). The agent shows you each finding and you decide. A fix you choose is made in the tailored content, and both copies are rebuilt from it.
+- The ATS copy passes the same fact gate as the styled CV, on its own, so a claim that was removed from the styled CV cannot survive in the copy.
+- The file is always written to `output/` with an `-ats` suffix. It is something you paste, not something you attach, so it does not count as the application's PDF: your tracker's PDF column still points at the styled one.
+- There is no ATS PDF by default, because you copy the text straight out of the HTML. Ask for one if a form needs an uploadable file; it is rendered separately and never replaces the styled PDF.
+- A problem in the ATS pass never touches the styled HTML or PDF you already have.
+
 ## Gotchas
 
 Requires Playwright installed locally. The build script may fail on minimal Linux installs missing system fonts. Run `npm run doctor` to diagnose.
@@ -49,3 +68,4 @@ PDF generation stops when your Work Experience entries are not newest-first, and
 ## Related
 
 - [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [apply](/docs/reference/modes/apply)

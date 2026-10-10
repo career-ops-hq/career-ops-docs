@@ -4,8 +4,8 @@ description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnitte
 seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebenslauf erstellen"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 16914eae2d8e7aa4
+lastModified: "2026-10-09"
+translationHash: 37b75011f73efd6e
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -43,6 +43,25 @@ Greif zu pdf, wenn du dich für eine Bewerbung entschieden hast und nur den zuge
 - Beim Einbauen der Keywords bleibt der Modus bei der Wahrheit. Er beschreibt deine echte Erfahrung mit den Begriffen aus der Stellenbeschreibung, fügt aber nie eine Fähigkeit hinzu, die du nicht hast.
 - Für den DACH-Raum und große Teile Kontinentaleuropas kannst du ein Foto einbinden, indem du `candidate.photo` in `config/profile.yml` setzt. Lässt du das Feld leer, sieht der Lebenslauf ohne Foto pixelgenau gleich aus. Für die USA, Großbritannien und Märkte, in denen zuerst ein ATS filtert, ist das die sicherere Standardeinstellung.
 
+## Eine ATS-lesbare Kopie mit `--ats`
+
+Manche Bewerbungsformulare lesen dein PDF nie so, wie du es gestaltet hast: Du sollst den Lebenslauf in Textfelder einfügen, oder das Formular wertet die hochgeladene Datei aus und füllt sich mit dem, was es daraus extrahieren kann. Mit `--ats` rendert der pdf-Modus eine zweite, parserfreundliche Kopie desselben zugeschnittenen Lebenslaufs. Du fügst den Text aus der ATS-Kopie ein und hängst das gestaltete PDF an.
+
+```bash title="Terminal"
+/career-ops pdf acme --ats
+
+PDF:  output/cv-jane-doe-acme-2026-05-18.pdf
+ATS:  output/cv-jane-doe-acme-ats.html
+```
+
+- Die Option ist standardmäßig aus. Übergib `--ats` für einen einzelnen Durchlauf oder schalte sie mit einer eigenen Regel in deiner `modes/_custom.md` für jeden Durchlauf ein.
+- Es ist derselbe Lebenslauf, kein zweiter Anpassungsdurchgang. Die Kopie entsteht aus dem fertig zugeschnittenen Inhalt, sobald das gestaltete PDF steht. Die einzige Änderung: Deine Kernkompetenzen wandern in eine kommagetrennte `Skills`-Zeile. Im gestalteten Layout sind sie Tags, die nur durch Abstand getrennt sind, unter einer Überschrift, die Parser nicht erkennen. Ein Parser lässt den ganzen Block deshalb oft fallen. Es wird nichts hinzugefügt und nichts umformuliert.
+- Drei Dinge werden gemeldet und nie automatisch korrigiert: ein Arbeitgebername in einer Stellenbezeichnung (`employer-in-role`), eine Klammer im Firmennamen (`parenthetical-in-company`) und mehr als ein Zeitraum bei einer einzelnen Stelle (`multiple-date-ranges`). Der Agent zeigt dir jeden Fund, und du entscheidest. Eine Korrektur, die du wählst, landet im zugeschnittenen Inhalt, und beide Kopien werden daraus neu gebaut.
+- Die ATS-Kopie durchläuft eigenständig dieselbe Faktenprüfung wie der gestaltete Lebenslauf. Eine Aussage, die aus dem gestalteten Lebenslauf entfernt wurde, kann also nicht in der Kopie überleben.
+- Die Datei wird immer mit dem Suffix `-ats` nach `output/` geschrieben. Du fügst sie ein, du hängst sie nicht an. Deshalb zählt sie nicht als PDF der Bewerbung: Die PDF-Spalte in deinem Tracker verweist weiterhin auf das gestaltete PDF.
+- Standardmäßig gibt es kein PDF der ATS-Kopie, weil du den Text direkt aus dem HTML kopierst. Frag danach, wenn ein Formular eine Datei zum Hochladen braucht; es wird separat gerendert und ersetzt nie das gestaltete PDF.
+- Ein Problem im ATS-Durchgang berührt nie das gestaltete HTML oder PDF, das du schon hast.
+
 ## Stolperfallen
 
 Playwright muss lokal installiert sein. Auf minimalen Linux-Installationen ohne Systemschriftarten kann das Build-Script fehlschlagen. Mit `npm run doctor` findest du die Ursache.
@@ -52,3 +71,4 @@ Die PDF-Erstellung bricht ab, wenn die Stellen in deiner Berufserfahrung nicht m
 ## Siehe auch
 
 - [auto-pipeline](/de/docs/reference/modes/auto-pipeline)
+- [apply](/de/docs/reference/modes/apply)
