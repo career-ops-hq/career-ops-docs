@@ -12,7 +12,7 @@ faq:
   - q: "Is there an open source job application tracker?"
     a: "Yes. career-ops is an MIT-licensed, open-source job-search system whose tracker keeps every application in a plain-markdown file you own (data/applications.md), one row per role with its status, score, and report. Its tracker mode updates the file conversationally, and a Go dashboard reads the same file as a keyboard-driven view. Nothing is stored on a server, and there is no account or lock-in."
   - q: "Can I keep my job search data private?"
-    a: "Yes. With a file-based tracker your data never leaves your machine. career-ops keeps your applications, CV, and reports as local files with zero telemetry, so nothing is uploaded unless you push it somewhere yourself. That is the opposite of a hosted tracker, where your search history lives in the vendor's database."
+    a: "Yes. With a file-based tracker there is no backend of ours holding your data. career-ops keeps your applications, CV, and reports as local files with zero telemetry: your CV goes from your machine to the AI provider you chose, and nothing else is uploaded unless you push it somewhere yourself. That is the opposite of a hosted tracker, where your search history lives in the vendor's database."
 ---
 
 {/* FAQ below is mirrored in the `faq` frontmatter (FAQPage JSON-LD): edit both together. */}
@@ -53,7 +53,7 @@ Two things read and write that one file, and it helps to know which does what:
 - **Tracker mode** is the writer. You talk to it in your AI CLI ("mark Acme as Applied", "what is overdue for follow-up?") and it edits the rows and shows you where everything stands.
 - **The Go dashboard** is the reader. It is a keyboard-driven terminal view over the *same* `data/applications.md`. It is not a second database, it is a view.
 
-One markdown file as the source of truth; tracker mode writes it, the dashboard visualizes it. Nothing about your search leaves your machine, and career-ops keeps [zero telemetry](/blog/can-an-ai-agent-run-your-job-search) either way.
+One markdown file as the source of truth; tracker mode writes it, the dashboard visualizes it. Nothing about your search is uploaded to us, and career-ops keeps [zero telemetry](/blog/can-an-ai-agent-run-your-job-search) either way.
 
 ## Track your applications in practice
 
@@ -76,7 +76,7 @@ The best way is whatever you will actually keep updated, which usually means aut
 Yes. career-ops is an MIT-licensed, open-source job-search system whose tracker keeps every application in a plain-markdown file you own (`data/applications.md`), one row per role with its status, score, and report. Its tracker mode updates the file conversationally, and a Go dashboard reads the same file as a keyboard-driven view. Nothing is stored on a server, and there is no account or lock-in.
 
 **Can I keep my job search data private?**
-Yes. With a file-based tracker your data never leaves your machine. career-ops keeps your applications, CV, and reports as local files with zero telemetry, so nothing is uploaded unless you push it somewhere yourself. That is the opposite of a hosted tracker, where your search history lives in the vendor's database.
+Yes. With a file-based tracker there is no backend of ours holding your data. career-ops keeps your applications, CV, and reports as local files with zero telemetry: your CV goes from your machine to the AI provider you chose, and nothing else is uploaded unless you push it somewhere yourself. That is the opposite of a hosted tracker, where your search history lives in the vendor's database.
 
 ---
 

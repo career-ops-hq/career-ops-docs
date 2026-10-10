@@ -42,7 +42,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Your CV, evaluations, and tracking never leave your machine.",
+          "careerOps": "Local-first, with no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else.",
           "competitor": "Uploaded to Jobscan cloud. Subject to their privacy policy."
         },
         {
@@ -150,7 +150,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Resumes, applications, scoring history never leave your machine.",
+          "careerOps": "Local-first, with no backend of ours. Resumes, applications and scoring history are files on your machine; your CV goes to the AI provider you chose, and nowhere else.",
           "competitor": "Stored on Teal servers. Subject to Teal's privacy policy and terms."
         },
         {
@@ -198,7 +198,7 @@
         },
         {
           "q": "What about my data with career-ops?",
-          "a": "Nothing leaves your machine. Your cv.md, the listings you evaluate, your tracked applications — all of it lives in local files. There is no career-ops account, no telemetry, no cloud sync. The only network traffic is what your AI CLI sends to its provider when you invoke it."
+          "a": "Your cv.md, the listings you evaluate, your tracked applications: all of it lives in local files. There is no career-ops account, no telemetry, no cloud sync, and no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else."
         },
         {
           "q": "Does career-ops have a Chrome extension like Teal?",
@@ -263,7 +263,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local files. Applications, resumes, contacts never leave your machine.",
+          "careerOps": "Local files, with no backend of ours. Applications, resumes and contacts are files on your machine; your CV goes to the AI provider you chose, and nowhere else.",
           "competitor": "Stored on Huntr servers. Standard SaaS data-processing terms."
         },
         {
@@ -496,7 +496,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Nothing leaves your machine unless your AI CLI sends it.",
+          "careerOps": "Local-first, with no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else.",
           "competitor": "Cloud-hosted, plus desktop app that processes live audio. Interview transcripts and resumes on Final Round servers."
         },
         {

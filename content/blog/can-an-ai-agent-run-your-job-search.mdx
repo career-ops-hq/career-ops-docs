@@ -9,7 +9,7 @@ faq:
   - q: "Can an AI agent apply to jobs for me?"
     a: "It can prepare every application to one click: the evaluation, the tailored résumé, and the tracker entry are all done automatically, but it does not submit for you. You review and send each one yourself. That is deliberate: mass auto-apply damages your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the decision with you."
   - q: "Is it safe to let an AI agent handle my job search?"
-    a: "career-ops runs entirely on your own machine, inside the AI CLI you already use, and keeps zero telemetry: your CV, profile, and application history never leave your computer unless you push them somewhere. It reads and prepares; it never submits, deletes, or shares anything without your explicit action."
+    a: "career-ops runs entirely on your own machine, inside the AI CLI you already use, and keeps zero telemetry, with no backend of ours: your CV, profile, and application history go from your computer to the AI provider you chose, and nowhere else unless you push them somewhere. It reads and prepares; it never submits, deletes, or shares anything without your explicit action."
   - q: "Do I need Claude, or does any AI CLI work?"
     a: "Any supported CLI works. Claude Code is the most common runtime because of its skill loader, but career-ops is engine-agnostic: the same prompt files run on Codex, OpenCode, Qwen, GitHub Copilot CLI, and more, and you can point it at your own or a local model. Several options run at $0."
   - q: "Do employers reject applications made with AI?"
@@ -45,7 +45,7 @@ career-ops does not ship its own model. It is a set of prompt files and slash co
 
 Claude Code is the most common way people run it, because its skill loader makes the modes one command away, but it is a flagship path, not a requirement. The same files run on Codex, OpenCode, Qwen, GitHub Copilot CLI, and others, and you can bring your own model or a local one. Pick the engine that fits your cost, quality, and privacy profile; career-ops runs on top of it unchanged. Naming Claude Code here is descriptive, not an endorsement; you are never locked to one vendor.
 
-Everything runs on your own machine. Your CV, your profile, and your application history never leave it unless you push them somewhere yourself. career-ops keeps **zero telemetry**: there is no product-side dashboard of what anyone scanned or applied to.
+Everything runs on your own machine. Your CV, your profile, and your application history go from it to the AI provider you chose, and nowhere else unless you push them somewhere yourself. career-ops keeps **zero telemetry**: there is no product-side dashboard of what anyone scanned or applied to.
 
 ## What one real search looked like
 
@@ -77,7 +77,7 @@ The part an AI agent can't do (read a room, hold a conversation, decide what you
 It can prepare every application to one click: the evaluation, the tailored résumé, and the tracker entry are all done automatically, but it does not submit for you. You review and send each one yourself. That is deliberate: mass auto-apply damages your standing with recruiters and ATS systems, so career-ops removes the busywork and keeps the decision with you.
 
 **Is it safe to let an AI agent handle my job search?**
-career-ops runs entirely on your own machine, inside the AI CLI you already use, and keeps zero telemetry: your CV, profile, and application history never leave your computer unless you push them somewhere. It reads and prepares; it never submits, deletes, or shares anything without your explicit action.
+career-ops runs entirely on your own machine, inside the AI CLI you already use, and keeps zero telemetry, with no backend of ours: your CV, profile, and application history go from your computer to the AI provider you chose, and nowhere else unless you push them somewhere. It reads and prepares; it never submits, deletes, or shares anything without your explicit action.
 
 **Do I need Claude, or does any AI CLI work?**
 Any supported CLI works. Claude Code is the most common runtime because of its skill loader, but career-ops is engine-agnostic: the same prompt files run on Codex, OpenCode, Qwen, GitHub Copilot CLI, and more, and you can point it at your own or a local model. Several options run at $0.
