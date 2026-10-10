@@ -1,0 +1,53 @@
+---
+title: followup
+description: "Markiert Bewerbungen und Vorstellungsgespräche, bei denen ein Follow-up überfällig ist. Maßstab ist der Rhythmus, den du festlegst. Die Follow-up-Nachrichten entwirft er gleich mit, damit du sie prüfen und abschicken kannst."
+seoTitle: "career-ops followup-Modus — überfällige Follow-ups im Blick behalten und die Nachrichten entwerfen"
+icon: CalendarClock
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: b1eb8003f10d7ed3
+localized: true
+translatedFrom: /docs/reference/modes/followup
+---
+
+## Was er macht
+
+Der Modus followup liest deinen Bewerbungs-Tracker und vergleicht das Datum des letzten Kontakts mit dem eingestellten Rhythmus. Standardmäßig ist eine erste Erinnerung 7 Tage nach deiner Bewerbung fällig und eine Dankesnachricht 1 Tag nach einem Vorstellungsgespräch. Einträge, die überfällig oder dringend sind, markiert er. Für jeden markierten Eintrag entwirft er eine passende Follow-up-Nachricht, die auf dem jeweiligen Bericht und deinem Lebenslauf basiert.
+
+## Wann du ihn einsetzt
+
+Starte followup jeden Montagmorgen als festes Wochenritual. Er zeigt dir dann die Follow-ups, die in dieser Woche fällig sind, und legt dir fertige Entwürfe zum Abschicken bereit. Er ist bewusst zurückhaltend ausgelegt und markiert einen Eintrag erst, wenn die Frist aus dem Rhythmus eindeutig abgelaufen ist. So bleibt das Dashboard kurz, und jeder Punkt darauf ist wirklich fällig.
+
+## So sieht ein Durchlauf aus
+
+followup lässt ein Rhythmus-Script über deinen Tracker laufen und gibt ein Dashboard aus, das nach Dringlichkeit sortiert ist. Für jede überfällige oder dringende Zeile entwirft er eine Nachricht. Die Entwürfe steigen mit einem konkreten Nachweis ein, nicht mit deinem Anliegen, und sie sagen nie „Ich wollte nur mal nachhaken“.
+
+```txt title="Terminal"
+> /career-ops followup
+
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
+```
+
+## Stolperfallen
+
+Eine Bewerbung mit dem Status Applied bekommt höchstens zwei Follow-ups. Bleibt auch das zweite unbeantwortet, entwirft followup keine weiteren Nachrichten. Stattdessen schlägt er vor, den Eintrag zu schließen oder es über `contacto` bei einer anderen Kontaktperson zu versuchen. Dir sind die standardmäßigen sieben Tage zu lang? Dann gib dem Rhythmus-Script ein Flag mit, zum Beispiel `node followup-cadence.mjs --applied-days 5`, statt die Entwürfe von Hand anzupassen.
+
+## Siehe auch
+
+- [tracker](/de/docs/reference/modes/tracker)
+- [patterns](/de/docs/reference/modes/patterns)

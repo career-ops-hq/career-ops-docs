@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: e8af78155aeb84b8
+translationHash: f021222d59fea57d
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -92,6 +92,8 @@ Quand vous êtes prêt, démarrez le lot. Vous pouvez traiter une offre à la fo
 
 Surveillez le terminal pendant l'exécution du lot. Chaque ligne vous indique quelle offre est en cours de traitement et si elle s'est terminée ou a échoué.
 
+Si un worker délégué rencontre une offre d'agence qui exige votre confirmation, il s'arrête avant d'écrire un rapport, un CV, un brouillon de candidature ou une ligne du tracker, puis marque la tâche `needs_confirmation`. Répondez à la question affichée dans la session interactive parente ; cette session ne reprend la tâche suspendue qu'après votre réponse explicite. `--retry-failed` et `--resume-paused` ne reprennent pas les suspensions en attente de confirmation.
+
 ## Étape 4 : Consultez les résultats au fur et à mesure
 
 Vous n'avez pas besoin d'attendre la fin du lot. Les résultats apparaissent à mesure que chaque offre est traitée.
@@ -105,7 +107,7 @@ Chaque rapport est un fichier nommé par exemple `042-company-name-2026-04-14.md
 - Une recherche sur le salaire
 - Un plan de préparation d'entretien suggéré
 
-Chaque rapport comprend également un **Résumé des risques**. Sa ligne **Contrat à durée déterminée** cite la formulation explicite de durée déterminée de l'annonce, indique `✅ aucune durée déterminée mentionnée` lorsqu'il n'y en a pas, ou utilise `— non évalué` lorsque la description du poste n'était pas disponible. Le champ correspondant du résumé lisible par machine est `risk_summary.fixed_term`, avec l'une de ces valeurs exactes :
+Chaque rapport comprend également un **Risk Summary** (résumé des risques). Sa ligne **Fixed-term contract** (contrat à durée déterminée) cite la formulation explicite de l'annonce, indique `✅ no fixed term disclosed` lorsqu'il n'y en a pas, et est marquée comme non évaluée lorsque la description du poste n'était pas disponible. Le champ correspondant du Machine Summary est `risk_summary.fixed_term`, avec l'une de ces valeurs exactes :
 
 | Valeur | Signification |
 |--------|---------------|
@@ -113,9 +115,9 @@ Chaque rapport comprend également un **Résumé des risques**. Sa ligne **Contr
 | `not_detected` | Aucune formulation explicite de durée déterminée n'a été trouvée |
 | `not_evaluated` | La description du poste n'était pas disponible pour cette vérification |
 
-**Entrées de tracker en une ligne** → `batch/tracker-additions/`
+**Entrées de tracker** → `batch/tracker-additions/`
 
-Chaque offre dépose également un court fichier de synthèse ici. Ces fichiers seront ajoutés à votre tracker principal à l'étape 6.
+Chaque offre dépose également un court fichier de synthèse ici : une ligne d'en-tête avec les noms des colonnes et une ligne de valeurs. Ces fichiers seront ajoutés à votre tracker principal à l'étape 6.
 
 ## Étape 5 : Relancez les offres en échec
 

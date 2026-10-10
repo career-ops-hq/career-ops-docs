@@ -7,7 +7,7 @@ icon: Layers
 
 ## The 14 modes
 
-career-ops ships **14 user-invocable modes**. Each one is a plain-markdown skill the agent loads and runs inside whichever AI coding CLI you already use — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot. You invoke a mode as `/career-ops <mode>`, and each covers one stage of the job search: evaluating a listing against the rubric (five dimensions plus a holistic global score), tailoring a CV, drafting an application, tracking outcomes, or preparing for interviews. Modes are System Layer per the [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) — they update with the tool and never modify your `cv.md`, profile, or reports.
+career-ops ships **14 user-invocable modes**. Each one is a plain-markdown skill the agent loads and runs inside whichever AI coding CLI you already use — Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot, or [another supported CLI](/docs/supported-clis). You invoke a mode as `/career-ops <mode>`, and each covers one stage of the job search: evaluating a listing against the rubric (five dimensions plus a holistic global score), tailoring a CV, drafting an application, tracking outcomes, or preparing for interviews. Modes are System Layer per the [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) — updates replace them with the latest version, and no update ever modifies your `cv.md`, profile, or reports.
 
 ## Evaluate
 
@@ -40,4 +40,4 @@ Keep the search organised and calibrate it over time.
 
 ## Portals
 
-The three zero-token portal scanners — Greenhouse, Ashby, and Lever — have their own [portals reference](/docs/reference/portals).
+Greenhouse, Ashby, and Lever, three of the systems the zero-token scanner reads, have their own [portals reference](/docs/reference/portals).

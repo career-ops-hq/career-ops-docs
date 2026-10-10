@@ -1,9 +1,9 @@
-import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { homeFaqSchemaFr } from '@/lib/schema';
+import { homeLastModified } from '@/lib/home-date';
 import { hreflangHome } from '@/lib/i18n-map';
-import { HomeContent } from '../../(home)/home-content';
-import { homeFr } from '../../(home)/home-dict';
+import { HomeContent } from '@/app/_home/home-content';
+import { homeFr } from '@/app/_home/home-fr';
 
 // French home — SAME trunk as the English/Spanish homes (HomeContent), rendered
 // with the French dictionary. The signature thesis stays in LITERAL English
@@ -14,13 +14,12 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
   title: 'career-ops\u202f: agent open source de recherche d’emploi par IA',
   description:
-    'Système open source de recherche d’emploi par IA. Il tourne sur votre propre machine, dans l’assistant de codage IA que vous utilisez déjà. Il évalue les offres, adapte votre CV et suit vos candidatures. Sans compte, sans cloud, gratuit.',
+    'Système open source de recherche d’emploi par IA. Il tourne sur votre propre machine, dans l’assistant de codage IA que vous utilisez déjà. Il évalue les offres, adapte votre CV et suit vos candidatures. Sans compte, sans cloud, open source.',
   alternates: {
     canonical: 'https://career-ops.org/fr',
     languages: hreflangHome(),
   },
   openGraph: {
-    images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/fr',
     siteName: 'career-ops',
@@ -36,7 +35,7 @@ export default function HomePageFr() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchemaFr()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchemaFr(homeLastModified('fr'))) }}
       />
       <HomeContent dict={homeFr} />
     </>
