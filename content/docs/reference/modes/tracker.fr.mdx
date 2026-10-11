@@ -5,7 +5,7 @@ seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidatu
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: 7188bc520c61b01c
+translationHash: 83b5254d11b05f4a
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -46,7 +46,7 @@ Pour les chiffres cumulés — le funnel complet, les totaux du scanner, la couv
 
 ## Exporter une copie réparée
 
-Au fil de centaines de lignes, un tableau markdown s'abîme : placeholders de mojibake, score échoué dans la colonne de statut, ids en double, barres verticales parasites. `node tracker.mjs sync` les détecte et les répare dans son index SQLite, `data/applications.db`, sans toucher au markdown. `tracker.mjs` a besoin de Node 22.5 ou plus récent pour cet index ; le tracker markdown continue de fonctionner sans lui. `node tracker.mjs export` est la façon d'adopter cette copie réparée de votre propre tracker :
+Au fil de centaines de lignes, un tableau markdown s'abîme : placeholders de mojibake, score échoué dans la colonne de statut, ids en double, barres verticales parasites. `node tracker.mjs sync` les détecte et les répare dans son index SQLite, `data/applications.db`, sans toucher au markdown. `tracker.mjs` a besoin de Node 22.13 ou plus récent (23.4 ou plus récent sous Node 23) pour cet index ; le tracker markdown continue de fonctionner sans lui. `node tracker.mjs export` est la façon d'adopter cette copie réparée de votre propre tracker :
 
 ```bash
 node tracker.mjs export                            # rebuilt table on stdout
