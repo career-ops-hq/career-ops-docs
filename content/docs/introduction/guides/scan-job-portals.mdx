@@ -235,7 +235,7 @@ If there is no such warning, your title filter may be too strict. Try adding a k
 
 **Where new jobs go:** Each new offer is added as a line in `data/pipeline.md`. That is the list of jobs waiting to be evaluated.
 
-**What `data/scan-history.tsv` does:** Every URL the scanner sees — whether it was added, filtered, or skipped — gets logged here. This is how the scanner avoids showing you the same job twice across future scans. You do not need to edit this file.
+**What `data/scan-history.tsv` does:** Every URL the scanner sees — whether it was added, filtered, or skipped — gets logged here. This is how the scanner avoids showing you the same job twice across future scans. One exception is a posting removed by your `location_filter` or `max_posting_age_days` setting in `portals.yml`. It is logged as `skipped_location` or `skipped_age`, and it can show up again once you change that setting. You do not need to edit this file.
 
 ## Evaluate new offers from a scan
 

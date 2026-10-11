@@ -3,7 +3,7 @@ title: Scanner les portails d'emploi
 description: Configurez et lancez le scanner de portails pour trouver automatiquement de nouvelles offres d'emploi.
 seoTitle: "Scanner les portails d'emploi avec career-ops — Greenhouse, Ashby, Lever, zéro token"
 icon: ScanEye
-translationHash: 1fb2c4a20e4d60c2
+translationHash: 83aa3b0a7b63f9b5
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -238,7 +238,7 @@ Si cet avertissement n'apparaît pas, votre filtre de titres est peut-être trop
 
 **Où vont les nouvelles offres :** chaque nouvelle offre est ajoutée sous forme de ligne dans `data/pipeline.md`. C'est la liste des offres en attente d'évaluation.
 
-**À quoi sert `data/scan-history.tsv` :** chaque URL vue par le scanner — qu'elle ait été ajoutée, filtrée ou ignorée — est consignée ici. C'est ainsi que le scanner évite de vous montrer deux fois la même offre lors des scans futurs. Vous n'avez pas besoin de modifier ce fichier.
+**À quoi sert `data/scan-history.tsv` :** chaque URL vue par le scanner — qu'elle ait été ajoutée, filtrée ou ignorée — est consignée ici. C'est ainsi que le scanner évite de vous montrer deux fois la même offre lors des scans futurs. Une exception : les offres écartées par votre `location_filter` ou votre `max_posting_age_days` dans `portals.yml`. Elles sont consignées comme `skipped_location` ou `skipped_age` et peuvent réapparaître dès que vous modifiez ce réglage. Vous n'avez pas besoin de modifier ce fichier.
 
 ## Évaluer les nouvelles offres issues d'un scan
 
