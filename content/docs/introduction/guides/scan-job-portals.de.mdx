@@ -3,7 +3,7 @@ title: Jobportale scannen
 description: Richte den Portal-Scanner ein und starte ihn, um automatisch neue Stellenanzeigen zu finden.
 seoTitle: "Jobportale mit career-ops scannen – Greenhouse, Ashby, Lever, ohne Token-Verbrauch"
 icon: ScanEye
-translationHash: 1fb2c4a20e4d60c2
+translationHash: 83aa3b0a7b63f9b5
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -238,7 +238,7 @@ Erscheint keine solche Warnung, ist dein Titelfilter vielleicht zu streng. Füg 
 
 **Wo neue Stellen landen:** Jede neue Stelle wird als Zeile in `data/pipeline.md` eingetragen. Das ist die Liste der Stellen, die auf ihre Bewertung warten.
 
-**Wofür `data/scan-history.tsv` da ist:** Jede URL, die der Scanner sieht – ob hinzugefügt, gefiltert oder übersprungen –, wird hier protokolliert. So verhindert der Scanner, dass er dir dieselbe Stelle bei künftigen Scans zweimal zeigt. Diese Datei musst du nicht bearbeiten.
+**Wofür `data/scan-history.tsv` da ist:** Jede URL, die der Scanner sieht – ob hinzugefügt, gefiltert oder übersprungen –, wird hier protokolliert. So verhindert der Scanner, dass er dir dieselbe Stelle bei künftigen Scans zweimal zeigt. Eine Ausnahme sind Stellen, die dein `location_filter` oder `max_posting_age_days` in `portals.yml` aussortiert hat. Sie werden als `skipped_location` oder `skipped_age` protokolliert und können wieder auftauchen, sobald du diese Einstellung änderst. Diese Datei musst du nicht bearbeiten.
 
 ## Neue Stellen aus einem Scan bewerten
 

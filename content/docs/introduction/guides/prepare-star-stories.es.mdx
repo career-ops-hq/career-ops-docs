@@ -3,7 +3,7 @@ title: Prepara tus historias STAR a partir de tu CV
 description: "¿Te bloqueas con «Háblame de una vez que…»? career-ops redacta historias STAR a partir de tu CV mientras evalúas ofertas, y te deja ensayarlas antes de la ronda."
 seoTitle: "Cómo preparar historias STAR para entrevistas a partir de tu CV con career-ops"
 icon: NotebookPen
-translationHash: 16f27d9b3617f897
+translationHash: b390892bd0f804b6
 localized: true
 translatedFrom: /docs/introduction/guides/prepare-star-stories
 ---
@@ -117,7 +117,7 @@ node match-star.mjs "Give an example of handling ambiguity" --top 2
 node match-star.mjs --list
 ```
 
-El buscador lee `interview-prep/story-bank.md` dentro de tu carpeta de career-ops; no sigue una carpeta de datos separada configurada con `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` o un archivo `.career-ops-data`.
+El buscador lee `interview-prep/story-bank.md` en tu carpeta de datos, la que contiene `cv.md`, así que sigue una carpeta de datos separada configurada con `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` o un archivo `.career-ops-data`. Las versiones anteriores a career-ops v1.36.0 solo leían la carpeta de career-ops; `node update-system.mjs apply --confirm` pone la tuya al día.
 
 El resultado del buscador es tu propia historia, no una respuesta escrita para esa pregunta: edítala antes de pegarla. Para un formulario de candidatura completo, career-ops redacta borradores de respuestas con `/career-ops apply`, usando tu evaluación y sus historias STAR. Tú editas, tú envías. El asistente nunca hace clic por ti.
 
