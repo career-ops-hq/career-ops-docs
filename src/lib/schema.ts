@@ -730,7 +730,7 @@ export function sustainSchema() {
         description:
           'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
         inLanguage: 'en',
-        dateModified: '2026-10-01',
+        dateModified: '2026-10-11',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         significantLink: 'https://opencollective.com/career-ops',
