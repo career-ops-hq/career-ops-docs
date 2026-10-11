@@ -104,6 +104,14 @@ Each report is a file named like `042-company-name-2026-04-14.md`. Open it to se
 - Salary research
 - A suggested interview prep plan
 
+Each report also includes a **Risk Summary**. Its **Fixed-term contract** row quotes explicit fixed-term wording from the posting, reports `✅ no fixed term disclosed` when none is present, and is marked as not evaluated when the job description was unavailable. The matching Machine Summary field is `risk_summary.fixed_term`, with one of these exact values:
+
+| Value | Meaning |
+|-------|---------|
+| `detected` | The posting explicitly describes a fixed-term role |
+| `not_detected` | No explicit fixed-term language was found |
+| `not_evaluated` | The job description was unavailable for this check |
+
 **Tracker entries** → `batch/tracker-additions/`
 
 Each offer also drops a short summary file here: a header row of column labels and one row of values. These get added to your main tracker in Step 6.
