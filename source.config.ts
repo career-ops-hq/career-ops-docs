@@ -53,6 +53,10 @@ export const blog = defineDocs({
       faq: z
         .array(z.object({ q: z.string(), a: z.string() }))
         .optional(),
+      // Same i18n contract as docs, only on translation files (post.es.mdx).
+      translationHash: z.string().optional(),
+      localized: z.boolean().optional(),
+      translatedFrom: z.string().optional(),
     }),
     postprocess: {
       includeProcessedMarkdown: true,

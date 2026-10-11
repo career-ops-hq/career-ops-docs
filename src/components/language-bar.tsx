@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { BLOG_ES_TWINS } from '@/lib/blog-twins';
 import Link from 'next/link';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -119,6 +120,9 @@ function localeUrl(base: string, target: Code): string {
   if (base === '/manifesto') {
     // A manifesto twin exists only for some locales; otherwise send to the home.
     return MANIFESTO_LOCALES.includes(target) ? `/${target}/manifesto` : `/${target}`;
+  }
+  if (target === 'es' && base.startsWith('/blog/') && BLOG_ES_TWINS.includes(base.slice(6))) {
+    return `/es${base}`; // a blog post with a Spanish twin (same slug)
   }
   // Any other EN-only page (about, blog, compare, …) has no localized version.
   return `/${target}`;

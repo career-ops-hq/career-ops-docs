@@ -3,7 +3,7 @@ title: Escanea portales de empleo
 description: Configura y ejecuta el escáner de portales para encontrar nuevas ofertas de empleo automáticamente.
 seoTitle: "Escanea portales de empleo con career-ops — Greenhouse, Ashby, Lever, cero tokens"
 icon: ScanEye
-translationHash: 0e0155123fa62360
+translationHash: 7476c9cd97b61b48
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -238,7 +238,7 @@ Si no aparece ese aviso, puede que tu filtro de títulos sea demasiado estricto.
 
 **Adónde van las ofertas nuevas:** cada oferta nueva se añade como una línea en `data/pipeline.md`. Esa es la lista de ofertas pendientes de evaluar.
 
-**Qué hace `data/scan-history.tsv`:** cada URL que el escáner ve — tanto si se añadió, se filtró o se omitió — queda registrada aquí. Así es como el escáner evita mostrarte la misma oferta dos veces en escaneos futuros. No necesitas editar este archivo.
+**Qué hace `data/scan-history.tsv`:** cada URL que el escáner ve — tanto si se añadió, se filtró o se omitió — queda registrada aquí. Así es como el escáner evita mostrarte la misma oferta dos veces en escaneos futuros. Una excepción son las ofertas que descartó tu `location_filter` o tu `max_posting_age_days` en `portals.yml`. Se registran como `skipped_location` o `skipped_age` y pueden volver a aparecer cuando cambies ese ajuste. No necesitas editar este archivo.
 
 ## Evalúa las ofertas nuevas de un escaneo
 
