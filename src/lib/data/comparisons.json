@@ -42,7 +42,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Your CV, evaluations, and tracking never leave your machine.",
+          "careerOps": "Local-first, with no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else.",
           "competitor": "Uploaded to Jobscan cloud. Subject to their privacy policy."
         },
         {
@@ -114,7 +114,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Resume content, job descriptions, and tracking data stored on Teal servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-teal.jpg",
       "intro": "Teal bundles an AI resume builder, a Chrome-extension job tracker, and a match-mode scorer into one polished web app. career-ops runs the same pipeline locally through your AI CLI, with the rubric and the code in the open. Same problem, different philosophy.",
       "features": [
@@ -150,7 +150,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Resumes, applications, scoring history never leave your machine.",
+          "careerOps": "Local-first, with no backend of ours. Resumes, applications and scoring history are files on your machine; your CV goes to the AI provider you chose, and nowhere else.",
           "competitor": "Stored on Teal servers. Subject to Teal's privacy policy and terms."
         },
         {
@@ -198,7 +198,7 @@
         },
         {
           "q": "What about my data with career-ops?",
-          "a": "Nothing leaves your machine. Your cv.md, the listings you evaluate, your tracked applications — all of it lives in local files. There is no career-ops account, no telemetry, no cloud sync. The only network traffic is what your AI CLI sends to its provider when you invoke it."
+          "a": "Your cv.md, the listings you evaluate, your tracked applications: all of it lives in local files. There is no career-ops account, no telemetry, no cloud sync, and no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else."
         },
         {
           "q": "Does career-ops have a Chrome extension like Teal?",
@@ -217,7 +217,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Applications, resumes, contacts, and notes stored on Huntr servers."
       },
-      "lastModified": "2026-07-17",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-huntr.jpg",
       "intro": "Huntr is the original Kanban job tracker — boards, columns, drag-and-drop, and a Chrome extension that scrapes job posts into cards. career-ops covers the same pipeline plus scanning, evaluation, and tailoring, but it lives in your terminal and on your disk. Same job, different surface area.",
       "features": [
@@ -263,7 +263,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local files. Applications, resumes, contacts never leave your machine.",
+          "careerOps": "Local files, with no backend of ours. Applications, resumes and contacts are files on your machine; your CV goes to the AI provider you chose, and nowhere else.",
           "competitor": "Stored on Huntr servers. Standard SaaS data-processing terms."
         },
         {
@@ -450,7 +450,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS plus desktop app. Resume, JD, and live interview audio processed on Final Round servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-finalroundai.jpg",
       "intro": "Final Round AI sits with you during a live interview, transcribing the interviewer and flashing suggested answers on your screen in real time. career-ops sits with you before the interview — drafting the application, the cover letter, the open-ended portal answers, and the company research brief. Adjacent tools, different time slices.",
       "features": [
@@ -496,7 +496,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Nothing leaves your machine unless your AI CLI sends it.",
+          "careerOps": "Local-first, with no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else.",
           "competitor": "Cloud-hosted, plus desktop app that processes live audio. Interview transcripts and resumes on Final Round servers."
         },
         {
