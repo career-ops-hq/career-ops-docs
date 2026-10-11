@@ -3,7 +3,7 @@ title: Bereite deine STAR-Geschichten aus deinem Lebenslauf vor
 description: "Blockierst du bei „Erzähl mal von einer Situation, in der du …“? career-ops entwirft STAR-Geschichten aus deinem Lebenslauf, während du Stellen bewertest, und lässt dich sie vor der Gesprächsrunde üben."
 seoTitle: "STAR-Methode fürs Vorstellungsgespräch: Antworten mit Beispielen aus deinem Lebenslauf vorbereiten – mit career-ops"
 icon: NotebookPen
-translationHash: 16f27d9b3617f897
+translationHash: b390892bd0f804b6
 localized: true
 translatedFrom: /docs/introduction/guides/prepare-star-stories
 ---
@@ -128,7 +128,7 @@ node match-star.mjs "Give an example of handling ambiguity" --top 2
 node match-star.mjs --list
 ```
 
-Der Matcher liest immer `interview-prep/story-bank.md` in deinem career-ops-Ordner. Einen separaten Datenordner, den du mit `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` oder einer `.career-ops-data`-Datei festgelegt hast, berücksichtigt er nicht.
+Der Matcher liest `interview-prep/story-bank.md` in deinem Datenordner, also im Ordner mit deiner `cv.md`. Einen separaten Datenordner, den du mit `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` oder einer `.career-ops-data`-Datei festgelegt hast, berücksichtigt er also. Versionen vor career-ops v1.36.0 lasen nur den career-ops-Ordner; `node update-system.mjs apply --confirm` bringt deine auf den neuesten Stand.
 
 Was der Matcher ausgibt, ist deine eigene Geschichte und keine Antwort, die für diese Frage geschrieben wurde. Überarbeite sie also, bevor du sie einfügst. Für ein ganzes Bewerbungsformular entwirft career-ops die Antworten mit `/career-ops apply` und nutzt dafür deine Bewertung und ihre STAR-Geschichten. career-ops bewertet und entwirft, du entscheidest und schickst ab. Es bewirbt sich nie in deinem Namen.
 

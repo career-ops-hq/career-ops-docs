@@ -3,7 +3,7 @@ title: Préparer vos histoires STAR à partir de votre CV
 description: "Vous bloquez sur « Parlez-moi d'une fois où vous… » ? career-ops rédige des histoires STAR à partir de votre CV pendant que vous évaluez des offres, et vous permet de les répéter avant le tour d'entretien."
 seoTitle: "Comment préparer des histoires STAR pour vos entretiens à partir de votre CV avec career-ops"
 icon: NotebookPen
-translationHash: 16f27d9b3617f897
+translationHash: b390892bd0f804b6
 localized: true
 translatedFrom: /docs/introduction/guides/prepare-star-stories
 ---
@@ -124,7 +124,7 @@ node match-star.mjs "Give an example of handling ambiguity" --top 2
 node match-star.mjs --list
 ```
 
-Le matcher lit le fichier `interview-prep/story-bank.md` de votre dossier career-ops. Il ne tient pas compte d'un dossier de données distinct défini avec `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` ou un fichier `.career-ops-data`.
+Le matcher lit le fichier `interview-prep/story-bank.md` de votre dossier de données, celui qui contient `cv.md`. Il tient donc compte d'un dossier de données distinct défini avec `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` ou un fichier `.career-ops-data`. Les versions antérieures à career-ops v1.36.0 ne lisaient que le dossier career-ops ; `node update-system.mjs apply --confirm` met la vôtre à jour.
 
 Le matcher renvoie votre propre histoire, pas une réponse rédigée pour cette question : retravaillez-la avant de la coller. Pour un formulaire de candidature complet, career-ops rédige les réponses avec `/career-ops apply`, à partir de votre évaluation et de ses histoires STAR. Il évalue et rédige, mais c'est vous qui décidez et qui envoyez. Il ne postule jamais en votre nom.
 
