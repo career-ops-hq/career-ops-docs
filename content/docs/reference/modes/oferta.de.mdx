@@ -5,7 +5,7 @@ seoTitle: "career-ops oferta-Modus — eine einzelne Stellenanzeige bewerten, be
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-05-18"
-translationHash: d7123fc94d5cddaf
+translationHash: 359504e9cbeb24ea
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -54,6 +54,12 @@ Greif zu oferta, wenn du eine einzelne Stellenanzeige schnell bewerten willst, o
 - Übergibst du eine URL, läuft zuerst ein Liveness-Check. Ist die Anzeige abgelaufen oder liefert die Seite einen 404-Fehler, bricht der Modus vor Block A ab. So verschwendest du nie einen Durchlauf für Phantominhalte.
 - Die Recherche zu Unternehmen und Vergütung ist auf höchstens fünf Websuchen begrenzt. Das hier ist eine Bewertung, keine Tiefenrecherche. Führ `/career-ops deep` separat aus, wenn du ein vollständigeres Bild vom Unternehmen willst.
 - Block G liefert eine von drei Stufen: High Confidence, Proceed with Caution oder Suspicious. So fallen wahrscheinliche Ghost Jobs auf, bevor du Zeit und Mühe in die Vorbereitung auf ein Vorstellungsgespräch steckst.
+
+## Score Evidence
+
+Der Bericht enthält nach der Risk Summary den Abschnitt **Score Evidence**. Er deckt fünf Dimensionen ab: CV-Match, North-Star-Ausrichtung, Vergütung, kulturelle Signale und Red Flags. Jede Zeile hält einen Evidenzstatus fest (`supported`, `partial` oder `unknown`), eine konkrete Quelle oder Beobachtung und eine offene Frage. Der Abschnitt endet mit einer Stufe für das Vertrauen in die Evidenz (`High`, `Medium` oder `Low`), ihrer Begründung und bis zu drei Prüfprioritäten.
+
+Diese Stufe beschreibt die Evidenz hinter dem Global Score. Sie ist weder eine Einstellungswahrscheinlichkeit noch die Legitimitätsstufe der Anzeige aus Block G, und sie ändert den numerischen Score nicht. Die Machine Summary führt die fünf Status in `score_evidence`, die Stufe in `confidence` und die Prioritäten in `confidence_gaps`. Bleiben keine Prioritäten übrig, ist `confidence_gaps` eine leere Liste.
 
 ## Siehe auch
 
