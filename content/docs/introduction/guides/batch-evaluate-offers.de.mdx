@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: d7a6ccee0dc73e47
+translationHash: f021222d59fea57d
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -106,6 +106,14 @@ Jeder Bericht ist eine Datei mit einem Namen wie `042-company-name-2026-04-14.md
 - Wie gut dein Lebenslauf zur Stelle passt
 - Eine Gehaltsrecherche
 - Einen Vorschlag, wie du dich aufs Vorstellungsgespräch vorbereiten kannst
+
+Jeder Bericht enthält außerdem eine **Risk Summary** (Risikoübersicht). Ihre Zeile **Fixed-term contract** (befristeter Vertrag) zitiert die ausdrückliche Befristung aus der Anzeige, meldet `✅ no fixed term disclosed`, wenn keine genannt wird, und ist als nicht bewertet markiert, wenn die Stellenbeschreibung nicht verfügbar war. Das zugehörige Feld der Machine Summary ist `risk_summary.fixed_term` mit genau einem dieser Werte:
+
+| Wert | Bedeutung |
+|------|-----------|
+| `detected` | Die Anzeige beschreibt ausdrücklich eine befristete Stelle |
+| `not_detected` | Es wurde keine ausdrückliche Befristung gefunden |
+| `not_evaluated` | Die Stellenbeschreibung war für diese Prüfung nicht verfügbar |
 
 **Tracker-Einträge** → `batch/tracker-additions/`
 
