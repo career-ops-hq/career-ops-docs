@@ -114,7 +114,7 @@ node match-star.mjs "Give an example of handling ambiguity" --top 2
 node match-star.mjs --list
 ```
 
-The matcher reads `interview-prep/story-bank.md` inside your career-ops folder; it does not follow a separate data folder set with `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` or a `.career-ops-data` file.
+The matcher reads `interview-prep/story-bank.md` in your data folder, the one with `cv.md`, so it follows a separate data folder set with `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` or a `.career-ops-data` file. Versions before career-ops v1.36.0 read only the career-ops folder; `node update-system.mjs apply --confirm` brings yours up to date.
 
 The matcher's output is your own story, not an answer written for that question: edit it before you paste it. For a whole application form, career-ops drafts answers with `/career-ops apply`, using your evaluation and its STAR stories. It evaluates and drafts; you decide and send. It never applies in your name.
 

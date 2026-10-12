@@ -5,7 +5,7 @@ seoTitle: "Modo tracker de career-ops — consulta el estado de cada candidatura
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: 7188bc520c61b01c
+translationHash: 83b5254d11b05f4a
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -46,7 +46,7 @@ Para las cifras acumuladas — el funnel completo, los totales del scanner, la c
 
 ## Exportar una copia reparada
 
-Con cientos de filas, una tabla markdown acumula daños: marcadores de mojibake, una puntuación varada en la columna de estado, ids duplicados, barras verticales sueltas. `node tracker.mjs sync` los detecta y los repara en su índice SQLite, `data/applications.db`, sin tocar el markdown. `tracker.mjs` necesita Node 22.5 o posterior para ese índice; el tracker en markdown sigue funcionando sin él. `node tracker.mjs export` es la forma de adoptar esa copia reparada de tu propio tracker:
+Con cientos de filas, una tabla markdown acumula daños: marcadores de mojibake, una puntuación varada en la columna de estado, ids duplicados, barras verticales sueltas. `node tracker.mjs sync` los detecta y los repara en su índice SQLite, `data/applications.db`, sin tocar el markdown. `tracker.mjs` necesita Node 22.13 o posterior (23.4 o posterior en Node 23) para ese índice; el tracker en markdown sigue funcionando sin él. `node tracker.mjs export` es la forma de adoptar esa copia reparada de tu propio tracker:
 
 ```bash
 node tracker.mjs export                            # rebuilt table on stdout
