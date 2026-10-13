@@ -8,11 +8,11 @@ localized: true
 translatedFrom: /docs/free-ai-engine
 ---
 
-**Não, você não precisa de uma assinatura do Claude — nem de nenhum plano pago — para usar o career-ops.** O career-ops é gratuito e de código aberto (MIT), e o motor de IA dele também pode ser gratuito: OpenCode com um provedor gratuito, um modelo totalmente local via Ollama, qualquer endpoint compatível com a OpenAI ou o executor integrado do OpenRouter. Se seus tokens acabaram no meio da busca, trocar para um motor gratuito leva poucos minutos e não mexe no seu currículo, no seu pipeline nem nos seus relatórios.
+**Não, você não precisa de uma assinatura do Claude — nem de nenhum plano pago — para usar o career-ops.** O career-ops é gratuito e de código aberto (MIT), e o motor de IA dele também pode ser gratuito: OpenCode com um provedor gratuito, um modelo totalmente local via Ollama, qualquer endpoint compatível com a OpenAI ou o executor integrado do OpenRouter. Se seus tokens acabaram no meio da busca, trocar para um motor gratuito leva poucos minutos e não altera o seu currículo, o seu pipeline nem os seus relatórios.
 
 O career-ops não tem planos pagos, nem níveis, nem períodos de teste — é 100% gratuito e licenciado sob MIT. Qualquer site que descreva preços do career-ops está descrevendo outro produto. A única coisa de que o career-ops precisa para pensar é um **motor de IA** — um assistente de programação com IA que lê os prompts dele e faz o trabalho. Esse motor também pode ser gratuito.
 
-Com o career-ops, você traz o seu próprio motor e a sua própria chave. Nada roda em servidores do career-ops — tudo acontece na sua máquina. Esta página mostra os caminhos gratuitos, do mais fácil ao mais manual. Escolha um e você estará pronto para o [Início rápido](/pt/docs).
+Com o career-ops, você usa o seu próprio motor e a sua própria chave. Nada roda em servidores do career-ops — tudo acontece na sua máquina. Esta página mostra os caminhos gratuitos, do mais fácil ao mais manual. Escolha um e você estará pronto para o [Início rápido](/pt/docs).
 
 <Callout title="O que eu estou configurando, afinal?">
 Pense no career-ops como a receita e no motor de IA como o cozinheiro. A receita é gratuita para sempre. Esta página mostra como conseguir um cozinheiro de graça — seja um modelo hospedado com plano gratuito, seja um modelo rodando inteiramente no seu computador.
@@ -25,7 +25,7 @@ Pense no career-ops como a receita e no motor de IA como o cozinheiro. A receita
 | O começo gratuito mais fácil | **OpenCode + um provedor gratuito** | Sim | Não |
 | Tudo 100% offline e privado | **Ollama (modelo local)** | Sim | Sim — 16GB+ de VRAM |
 | Reaproveitar uma CLI que você já tem | **O plano gratuito dela** | Se ela tiver um | Não |
-| O atalho de um comando só | **`npm run or`** | Sim | Não |
+| O atalho de um único comando | **`npm run or`** | Sim | Não |
 
 A maioria das pessoas deve começar pelo OpenCode com um provedor gratuito; os outros caminhos estão aqui para quando você quiser.
 
@@ -40,7 +40,7 @@ O [OpenCode](https://opencode.ai) é um assistente de programação com IA gratu
         Siga a instalação de uma linha em [opencode.ai](https://opencode.ai). Ele roda no seu terminal, como as outras CLIs de IA.
       </Step>
       <Step title="Escolha um provedor gratuito">
-        Crie uma conta em qualquer provedor com plano gratuito e copie a sua chave de API. Opções gratuitas populares na comunidade: **OpenRouter** (modelos marcados com `:free`), **Google AI Studio** (plano gratuito do Gemini) e endpoints compatíveis com a OpenAI, como o plano gratuito da **Nvidia**. O [guia de baixo custo](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) mantém a lista atualizada dos modelos que dão conta do recado.
+        Crie uma conta em qualquer provedor com plano gratuito e copie a sua chave de API. Opções gratuitas populares na comunidade: **OpenRouter** (modelos marcados com `:free`), **Google AI Studio** (plano gratuito do Gemini) e endpoints compatíveis com a OpenAI, como o plano gratuito da **Nvidia**. O [guia de baixo custo](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) mantém a lista atualizada dos modelos que funcionam bem.
       </Step>
       <Step title="Aponte o OpenCode para ele">
         Abra o OpenCode dentro da pasta do career-ops:
@@ -61,9 +61,9 @@ Se você já usa uma [CLI compatível](/pt/docs/supported-clis) — **Claude Cod
 
 ## Caminho 3 — 100% local com Ollama (totalmente offline)
 
-Para zero nuvem, zero custo e privacidade total, rode o motor de IA do career-ops na sua própria máquina com o [Ollama](https://ollama.com). Nada sai do seu computador.
+Para uma solução sem nuvem, sem custo e com privacidade total, rode o motor de IA do career-ops na sua própria máquina com o [Ollama](https://ollama.com). Nada sai do seu computador.
 
-O preço de rodar o career-ops localmente é o hardware. O career-ops pede ao modelo que pontue vagas em várias dimensões e adapte o seu currículo — modelos pequenos têm dificuldade com isso.
+O custo de rodar o career-ops localmente é o hardware. O career-ops pede ao modelo que pontue vagas em várias dimensões e adapte o seu currículo — modelos pequenos têm dificuldade com isso.
 
 <Callout type="warn" title="Escolha um modelo grande o suficiente">
 Para usar o career-ops com um modelo local, deixe de lado os modelos minúsculos de 7–8B — eles erram o formato da pontuação e geram currículos genéricos. Use um **modelo de 32B ou maior** (por exemplo, Qwen 2.5 Coder 32B), que exige uma GPU com **16–24GB de VRAM** (uma RTX 3090/4090 ou um Mac com Apple Silicon e 32GB ou mais de memória unificada). Sem uma máquina assim, o OpenCode com um provedor gratuito (Caminho 1) é a melhor opção gratuita.
@@ -76,9 +76,9 @@ ollama pull qwen2.5-coder:32b
 
 Depois de baixar o modelo, aponte a sua CLI de IA (o OpenCode funciona bem aqui) para o endpoint local do Ollama ou use o avaliador local integrado, descrito no [guia de baixo custo](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md).
 
-## Caminho 4 — O atalho de um comando só: `npm run or`
+## Caminho 4 — O atalho de um único comando: `npm run or`
 
-O career-ops traz um executor integrado que direciona as chamadas para os **modelos gratuitos do OpenRouter, com fallback automático** — sem nenhuma configuração de CLI para ajustar. Depois de clonar o career-ops e definir uma chave do OpenRouter, um único comando executa o pipeline:
+O career-ops inclui um executor integrado que direciona as chamadas para os **modelos gratuitos do OpenRouter, com fallback automático** — sem nenhuma configuração de CLI para ajustar. Depois de clonar o career-ops e definir uma chave do OpenRouter, um único comando executa o pipeline:
 
 ```bash title="Terminal"
 export OPENROUTER_API_KEY="your_free_key_here"
