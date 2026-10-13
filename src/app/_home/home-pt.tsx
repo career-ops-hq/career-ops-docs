@@ -24,7 +24,7 @@ export const homePt: HomeDict = {
   }),
   heroH1: (
     <>
-      career-ops: agente de IA de código aberto para busca de{' '}emprego.
+      career-ops: agente de IA de código aberto para busca de{'\u00a0'}emprego.
       <br />
       Roda na sua CLI. Seus dados, seu computador.
       <br />
@@ -37,8 +37,8 @@ export const homePt: HomeDict = {
   docsHref: '/pt/docs',
   manifestoHref: '/manifesto',
   heroFreeNote: 'Gratuito para candidatos, para sempre',
-  featuredIn: 'Apareceu em',
-  memberOf: 'Membro da',
+  featuredIn: 'Destaque em',
+  memberOf: 'Membro do',
   worthApplyingLabel: 'Como saber se vale a pena se candidatar a uma vaga →',
   worthApplyingHref: '/pt/docs/introduction/guides/is-this-job-worth-applying-to',
   authorTagline: ', operador há 16 anos e criador do career-ops',
@@ -191,8 +191,8 @@ export const homePt: HomeDict = {
       a: (
         <>
           Não. O career-ops prepara cada candidatura até o último clique: varre as
-          vagas, avalia cada uma em relação ao seu currículo e adapta um
-          currículo. Depois devolve a decisão para você. Ele redige e preenche;
+          vagas, avalia cada uma em relação ao seu currículo e gera uma
+          versão adaptada dele. Depois devolve a decisão para você. Ele redige e preenche;
           nunca envia. Você clica em Enviar. Isso é proposital: candidatura em
           massa queima a sua reputação com recrutadores e sistemas de triagem
           (ATS), então o career-ops tira o trabalho repetitivo e deixa a escolha
@@ -302,7 +302,7 @@ export const homePt: HomeDict = {
         <>
           O career-ops funciona com Claude Code, Cursor, Codex, OpenCode, Pi,
           Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub
-          Copilot CLI: onze CLIs com suporte completo (a Gemini CLI é um wrapper
+          Copilot CLI: onze CLIs com suporte de primeira classe (a Gemini CLI é um wrapper
           legado). Os mesmos arquivos de modo rodam em todas. Cada pessoa escolhe
           a CLI que combina com a assinatura que já tem e com o quanto quer
           gastar; o career-ops nunca prende você a um único fornecedor. Uma busca

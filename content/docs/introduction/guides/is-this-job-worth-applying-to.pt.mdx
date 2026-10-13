@@ -27,10 +27,10 @@ Menos candidaturas, e melhores, também é uma questão de dignidade dos dois la
 ## Como saber se vale a pena se candidatar a uma vaga? [#how-do-i-check-a-job-before-i-apply]
 
 <Callout title="Antes de começar">
-  Instale o career-ops com o [Início rápido](/pt/docs) e abra-o em um dos [CLIs compatíveis](/pt/docs/supported-clis). Até você dizer a ele quem você é, as avaliações usam como referência o perfil que vem de fábrica, voltado para vagas de IA: veja [as primeiras avaliações são imprecisas](/pt/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
+  Instale o career-ops com o [Início rápido](/pt/docs) e abra-o em uma das [CLIs compatíveis](/pt/docs/supported-clis). Até você dizer a ele quem você é, as avaliações usam como referência o perfil que vem de fábrica, voltado para vagas de IA: veja [as primeiras avaliações são imprecisas](/pt/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
 </Callout>
 
-O career-ops tem um modo só de avaliação, para você decidir primeiro. Abra o seu CLI de programação com IA na pasta do career-ops, rode o comando abaixo e cole a descrição da vaga ou a URL dela:
+O career-ops tem um modo só de avaliação, para você decidir primeiro. Abra a sua CLI de programação com IA na pasta do career-ops, rode o comando abaixo e cole a descrição da vaga ou a URL dela:
 
 ```bash title="Claude Code"
 /career-ops oferta
@@ -70,11 +70,11 @@ A importância dos requisitos é rotulada, não contabilizada. O relatório list
 
 O seu histórico com uma empresa é mostrado, não pontuado. Se você já se candidatou lá e não teve retorno, ou recebeu resposta uma vez e silêncio na outra, o relatório acrescenta uma nota dizendo isso. Essa nota não é um sinal de legitimidade e não muda nem a nota nem o nível. Ela está ali para você decidir quanto esforço investir.
 
-A sua blacklist nunca muda nota nenhuma: ela é uma barreira que interrompe a execução até você responder, e nada é adicionado a ela por você.
+A sua blacklist nunca muda nota nenhuma: ela é uma barreira que interrompe a execução até você responder, e nada é adicionado a ela automaticamente, no seu lugar.
 
 ## O que acontece abaixo de 4,0? [#what-happens-below-40]
 
-Abaixo de 4,0, o career-ops recomenda não se candidatar, a menos que você tenha um motivo específico. Você pode passar por cima da recomendação, e ele vai registrar isso.
+Abaixo de 4,0, o career-ops recomenda não se candidatar, a menos que você tenha um motivo específico. Você pode passar por cima da recomendação, e ele vai deixar isso claro.
 
 A linha de 4,0 é uma recomendação. A decisão continua sendo sua, assim como cada candidatura: o career-ops redige o material, você revisa e você envia. Na outra ponta da escala, uma vaga que recebe 4,5 ou mais também ganha rascunhos de respostas para o formulário de candidatura.
 
@@ -154,7 +154,7 @@ O career-ops prepara você para negociar a partir dos seus próprios documentos 
 
 O `offer-prep` cita na íntegra cada cláusula que merece atenção, explica em linguagem simples e a marca com rótulos neutros, como "costuma ser negociada" ou "pergunte ao seu advogado". Ele fecha com perguntas para o seu advogado, pontos a levar ao empregador (como perguntas, nunca exigências) e uma nota fixa de que aquilo não é aconselhamento jurídico. Ele não faz buscas na web e lê apenas contratos em inglês.
 
-`node salary-gap.mjs --summary` mostra, por candidatura, o que você queria, o que a vaga anunciava e o que de fato propuseram a você. `node negotiation-roi.mjs --summary` redige um argumento a partir de uma afirmação de horas economizadas cujo número também aparece no seu `cv.md`, valorada com base em um salário e uma frequência que você informa: uma estimativa, não aconselhamento financeiro. `/career-ops offer-prep reply {company-slug}` redige um e-mail de resposta a partir do seu relatório de preparação; você mesmo envia.
+`node salary-gap.mjs --summary` mostra, por candidatura, o que você queria, o que a vaga anunciava e o que de fato propuseram a você. `node negotiation-roi.mjs --summary` redige um argumento a partir de uma afirmação de horas economizadas cujo número também aparece no seu `cv.md`, calculada a partir de um salário e uma frequência que você informa: uma estimativa, não aconselhamento financeiro. `/career-ops offer-prep reply {company-slug}` redige um e-mail de resposta a partir do seu relatório de preparação; você mesmo envia.
 
 ## Perguntas frequentes [#frequently-asked-questions]
 

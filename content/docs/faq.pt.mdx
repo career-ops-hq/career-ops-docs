@@ -28,7 +28,7 @@ O career-ops não tem planos pagos, níveis nem períodos de teste — é 100% g
 
 O career-ops não exige assinatura do Claude: ele é agnóstico em relação à IA, e o Claude Code é um motor entre vários, não um requisito. Você pode rodar o pipeline inteiro de graça com o OpenCode e um provedor gratuito, com um modelo local via Ollama ou com o runner integrado do OpenRouter (`npm run or`). Se você começou em um plano pago e ficou sem tokens no meio da busca, trocar para um motor gratuito leva poucos minutos e não mexe nos seus dados — veja [Configure um motor de IA gratuito](/pt/docs/free-ai-engine).
 
-## Eu pago o Claude Pro ou o Max. Por que o career-ops está cobrando dos meus créditos de API? [#eu-pago-o-claude-pro-ou-o-max-por-que-o-career-ops-esta-cobrando-dos-meus-creditos-de-api]
+## Eu pago o Claude Pro ou o Max. Por que o career-ops está consumindo os meus créditos de API? [#eu-pago-o-claude-pro-ou-o-max-por-que-o-career-ops-esta-cobrando-dos-meus-creditos-de-api]
 
 Para saber se o career-ops está cobrando da sua assinatura do Claude ou dos seus créditos de API, execute `node doctor.mjs` na pasta `career-ops`. O doctor informa em uma linha qual fonte de cobrança esta sessão está usando, antes de você gastar mais alguma coisa.
 
@@ -56,7 +56,7 @@ Para passar o seu currículo ao career-ops, cole o texto dele no chat durante a 
 
 ## Com quais CLIs de IA o career-ops funciona?
 
-O career-ops tem suporte de primeira classe a onze CLIs de programação com IA: Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub Copilot CLI (o Gemini CLI permanece apenas como wrapper legado). O career-ops é agnóstico em relação à IA: ele traz arquivos de prompt que a CLI executa, então você também pode apontá-lo para qualquer endpoint compatível com a OpenAI ou para um modelo local sem alterar uma linha de código. Veja em [CLIs de IA compatíveis](/pt/docs/supported-clis) a lista atual e como invocar cada uma.
+O career-ops tem suporte de primeira classe a onze CLIs de programação com IA: Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub Copilot CLI (a Gemini CLI permanece apenas como wrapper legado). O career-ops é agnóstico em relação à IA: ele traz arquivos de prompt que a CLI executa, então você também pode apontá-lo para qualquer endpoint compatível com a OpenAI ou para um modelo local sem alterar uma linha de código. Veja em [CLIs de IA compatíveis](/pt/docs/supported-clis) a lista atual e como invocar cada uma.
 
 ## Qual é a diferença entre `scan` e `scan:full`?
 
