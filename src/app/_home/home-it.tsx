@@ -41,7 +41,7 @@ export const homeIt: HomeDict = {
   memberOf: 'Membro di',
   worthApplyingLabel: 'Come capire se vale la pena candidarsi a un’offerta di lavoro →',
   worthApplyingHref: '/it/docs/introduction/guides/is-this-job-worth-applying-to',
-  authorTagline: ', operatore da 16 anni e creatore di career-ops',
+  authorTagline: ', titolare d\u2019azienda per 16 anni e creatore di career-ops',
   // No thesisTranslation for IT: the English thesis stands alone, as in FR, DE and PT.
   nowSignedManifesto: <>Ora un manifesto firmato ·</>,
   readIt: 'Leggi →',
