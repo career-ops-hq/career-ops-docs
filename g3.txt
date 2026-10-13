@@ -1,0 +1,462 @@
+##### batch-evaluate-offers EN
+---
+title: Batch Evaluate Offers
+description: Process 10+ job offers in a single session with parallel AI workers and tailored PDFs.
+seoTitle: "Batch-evaluate job listings with career-ops — score many at once"
+icon: FileStack
+---
+Use this guide when you have 10 or more job offers to review and want to process them all in one session instead of one by one.
+Each offer gets its own Claude worker. That worker reads your CV, scores the match, writes a full report, and saves a tailored PDF — all without you lifting a finger.
+## Step 1: Add your offers to the input file
+The batch system reads job URLs from a file called **`batch/batch-input.tsv`**. Think of it as a to-do list for the evaluator.
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Open **`batch/batch-input.tsv`** in any text editor.
+      </Step>
+      <Step>
+        Add one row per offer. Each row has four columns separated by a tab:
+        | Column | What to enter |
+        |--------|---------------|
+        | `id` | A unique number for this offer (1, 2, 3, …) |
+        | `url` | The full job posting URL |
+        | `source` | Where you found it (e.g., `LinkedIn`, `Greenhouse`) |
+        | `notes` | An optional note — leave blank if you have none |
+      </Step>
+      <Step>
+        Save the file.
+      </Step>
+    </Steps>
+  </div>
+</div>
+**Example:**
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+<Callout title="Tip">
+  Each ID must be a unique number. Do not skip numbers or repeat them.
+</Callout>
+## Step 2: Preview your batch (recommended)
+Before processing anything, run a quick check to see how many offers are waiting. Nothing gets evaluated yet — this is just a preview.
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+You'll see a list of pending offers and their IDs. If something looks wrong, fix the input file now before spending time on a bad list.
+## Step 3: Run the batch
+When you're ready, start the batch. You can run one offer at a time or several at once.
+**One at a time (slowest, uses the least memory):**
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+**Two at a time (a good default):**
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+**Three at a time (faster, but heavier on your machine):**
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+**Skip offers that score below a threshold (e.g., below 4.0 out of 5):**
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+Watch the terminal as the batch runs. Each line tells you which offer is being processed and whether it finished or failed.
+If a delegated worker finds an agency posting that needs your confirmation, it stops before writing a report, CV, application draft, or tracker row and marks the job `needs_confirmation`. Answer the displayed question in the parent interactive session; that session resumes the held posting only after your explicit answer. `--retry-failed` and `--resume-paused` do not resume confirmation holds.
+## Step 4: Read results as they come in
+You don't need to wait for the batch to finish. Results appear as each offer completes.
+**Full evaluation reports** → `reports/`
+Each report is a file named like `042-company-name-2026-04-14.md`. Open it to see:
+- A summary of the role
+- How well your CV matches the job
+- Salary research
+- A suggested interview prep plan
+Each report also includes a **Risk Summary**. Its **Fixed-term contract** row quotes explicit fixed-term wording from the posting, reports `✅ no fixed term disclosed` when none is present, and is marked as not evaluated when the job description was unavailable. The matching Machine Summary field is `risk_summary.fixed_term`, with one of these exact values:
+| Value | Meaning |
+|-------|---------|
+| `detected` | The posting explicitly describes a fixed-term role |
+| `not_detected` | No explicit fixed-term language was found |
+| `not_evaluated` | The job description was unavailable for this check |
+**Tracker entries** → `batch/tracker-additions/`
+Each offer also drops a short summary file here: a header row of column labels and one row of values. These get added to your main tracker in Step 6.
+### Score Evidence
+The report includes **Score Evidence** after Risk Summary. It covers five dimensions: CV match, North Star alignment, compensation, cultural signals, and red flags. Each row records an evidence status (`supported`, `partial`, or `unknown`), a concrete source or observation, and an unresolved question. The section ends with an evidence-confidence tier (`High`, `Medium`, or `Low`), its reason, and up to three verification priorities.
+This tier describes the evidence behind the Global Score; it is neither a hiring probability nor Block G's posting-legitimacy tier, and it does not change the numeric score. Machine Summary preserves the five statuses in `score_evidence`, the tier in `confidence`, and priorities in `confidence_gaps`. When there are no priorities left, `confidence_gaps` is an empty list.
+## Step 5: Retry any failed offers
+Sometimes a worker fails — for example, if a job posting URL stopped loading. Failed offers show up in the terminal with a short error message.
+**Retry only the failed offers:**
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+**Retry with up to 3 attempts instead of the default 2:**
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+The batch skips any offer that already finished successfully — so re-running this is always safe.
+## Step 6: Merge results into your tracker
+After the batch finishes, run this command to add all new evaluations to `data/applications.md`:
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+This script:
+1. Reads the summary files from `batch/tracker-additions/`
+2. Checks for duplicates so you never get two rows for the same offer
+3. Adds new entries to your applications tracker
+4. Archives the processed files into `batch/tracker-additions/merged/`
+**To preview the changes without writing anything:**
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+## What to do next
+Open **`data/applications.md`** to see all your evaluations in one table. From there you can:
+- Sort by score to find your best matches
+- Open individual reports in `reports/` for a full deep-dive
+- Start the application process for your top picks using `/career-ops apply`
+##### IT
+---
+title: Valutare più annunci in batch
+description: Elabora 10 o più annunci di lavoro in un'unica sessione, con worker AI in parallelo e PDF su misura.
+seoTitle: "Valutare tanti annunci di lavoro in una volta con career-ops: la valutazione in batch"
+icon: FileStack
+translationHash: 537bf031e6d66d7e
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+Usa questa guida quando hai 10 o più annunci di lavoro da esaminare e vuoi elaborarli tutti in un'unica sessione invece che uno alla volta.
+Ogni annuncio ha il suo worker Claude. Quel worker legge il tuo curriculum, calcola il punteggio di corrispondenza, scrive un report completo e salva un PDF su misura, senza che tu debba muovere un dito.
+## Passo 1: aggiungi gli annunci al file di input
+Il sistema batch legge gli URL degli annunci da un file chiamato **`batch/batch-input.tsv`**. Consideralo la lista delle cose da fare del valutatore.
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Apri **`batch/batch-input.tsv`** con un qualsiasi editor di testo.
+      </Step>
+      <Step>
+        Aggiungi una riga per ogni annuncio. Ogni riga ha quattro colonne separate da una tabulazione:
+        | Colonna | Cosa inserire |
+        |--------|---------------|
+        | `id` | Un numero univoco per questo annuncio (1, 2, 3, …) |
+        | `url` | L'URL completo dell'annuncio |
+        | `source` | Dove l'hai trovato (ad es. `LinkedIn`, `Greenhouse`) |
+        | `notes` | Una nota facoltativa: lascia vuoto se non ne hai |
+      </Step>
+      <Step>
+        Salva il file.
+      </Step>
+    </Steps>
+  </div>
+</div>
+**Esempio:**
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+<Callout title="Suggerimento">
+  Ogni ID deve essere un numero univoco. Non saltare numeri e non ripeterli.
+</Callout>
+## Passo 2: controlla il batch in anteprima (consigliato)
+Prima di elaborare qualsiasi cosa, fai un controllo rapido per vedere quanti annunci sono in attesa. Non viene ancora valutato nulla: è solo un'anteprima.
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+Vedrai l'elenco degli annunci in sospeso con i relativi ID. Se qualcosa non torna, correggi subito il file di input, prima di perdere tempo su una lista sbagliata.
+## Passo 3: avvia il batch
+Quando sei pronto, avvia il batch. Puoi elaborare un annuncio alla volta oppure più annunci insieme.
+**Uno alla volta (il più lento, usa meno memoria):**
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+**Due alla volta (una buona impostazione predefinita):**
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+**Tre alla volta (più veloce, ma più pesante per il tuo computer):**
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+**Salta gli annunci con un punteggio inferiore a una soglia (ad es. sotto 4,0 su 5):**
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+Tieni d'occhio il terminale mentre il batch è in esecuzione. Ogni riga ti dice quale annuncio è in elaborazione e se è stato completato o è fallito.
+Se un worker delegato trova un annuncio di un'agenzia che richiede la tua conferma, si ferma prima di scrivere un report, un CV, una bozza di candidatura o una riga del tracker e contrassegna il job come `needs_confirmation`. Rispondi alla domanda mostrata nella sessione interattiva principale: quella sessione riprende l'annuncio in sospeso solo dopo la tua risposta esplicita. `--retry-failed` e `--resume-paused` non riprendono gli annunci in attesa di conferma.
+## Passo 4: leggi i risultati man mano che arrivano
+Non devi aspettare che il batch finisca. I risultati compaiono ogni volta che un annuncio viene completato.
+**Report di valutazione completi** → `reports/`
+Ogni report è un file con un nome del tipo `042-company-name-2026-04-14.md`. Aprilo per vedere:
+- Un riepilogo del ruolo
+- Quanto il tuo curriculum corrisponde alla posizione
+- Una ricerca sulla retribuzione
+- Un piano consigliato per preparare il colloquio di lavoro
+Ogni report include anche un **Risk Summary**. La riga **Fixed-term contract** cita la formulazione esplicita sul tempo determinato presente nell'annuncio, riporta `✅ no fixed term disclosed` quando non ce n'è e viene contrassegnata come non valutata quando la descrizione della posizione non era disponibile. Il campo corrispondente del Machine Summary è `risk_summary.fixed_term`, con uno di questi valori esatti:
+| Valore | Significato |
+|-------|---------|
+| `detected` | L'annuncio descrive esplicitamente un ruolo a tempo determinato |
+| `not_detected` | Non è stata trovata alcuna formulazione esplicita sul tempo determinato |
+| `not_evaluated` | La descrizione della posizione non era disponibile per questo controllo |
+**Voci del tracker** → `batch/tracker-additions/`
+Ogni annuncio lascia qui anche un breve file di riepilogo: una riga di intestazione con le etichette delle colonne e una riga di valori. Queste voci vengono aggiunte al tuo tracker principale nel Passo 6.
+### Score Evidence
+Il report include la sezione **Score Evidence** dopo il Risk Summary. Copre cinque dimensioni: corrispondenza con il curriculum, allineamento con la North Star, retribuzione, segnali culturali e red flag. Ogni riga registra uno stato dell'evidenza (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità dell'evidenza (`High`, `Medium` o `Low`), la sua motivazione e fino a tre priorità di verifica.
+Questo livello descrive l'evidenza alla base del Global Score: non è una probabilità di assunzione né il livello di legittimità dell'annuncio del Blocco G, e non modifica il punteggio numerico. Il Machine Summary conserva i cinque stati in `score_evidence`, il livello in `confidence` e le priorità in `confidence_gaps`. Quando non restano priorità, `confidence_gaps` è una lista vuota.
+## Passo 5: riprova gli annunci falliti
+A volte un worker fallisce, per esempio se l'URL di un annuncio ha smesso di caricarsi. Gli annunci falliti compaiono nel terminale con un breve messaggio di errore.
+**Riprova solo gli annunci falliti:**
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+**Riprova con un massimo di 3 tentativi invece dei 2 predefiniti:**
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+Il batch salta ogni annuncio già completato con successo, quindi rieseguire questo comando è sempre sicuro.
+## Passo 6: unisci i risultati al tuo tracker
+Quando il batch è terminato, esegui questo comando per aggiungere tutte le nuove valutazioni a `data/applications.md`:
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+Questo script:
+1. Legge i file di riepilogo da `batch/tracker-additions/`
+2. Controlla i duplicati, così non avrai mai due righe per lo stesso annuncio
+3. Aggiunge le nuove voci al tracker delle tue candidature
+4. Archivia i file elaborati in `batch/tracker-additions/merged/`
+**Per vedere le modifiche in anteprima senza scrivere nulla:**
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+## Cosa fare dopo
+Apri **`data/applications.md`** per vedere tutte le tue valutazioni in un'unica tabella. Da lì puoi:
+- Ordinare per punteggio per trovare gli annunci più adatti a te
+- Aprire i singoli report in `reports/` per un'analisi approfondita
+- Iniziare a preparare la candidatura per gli annunci migliori con `/career-ops apply`
+##### prepare-star-stories EN
+---
+title: Prepare your STAR stories from your CV
+description: "Freeze on \"Tell me about a time you…\"? career-ops drafts STAR stories from your CV as you evaluate jobs, and lets you rehearse them before the round."
+seoTitle: "How to prepare STAR interview stories from your CV with career-ops"
+icon: NotebookPen
+---
+To prepare STAR stories, write each answer as Situation, Task, Action and Result, plus a Reflection on what you learned (STAR+R). career-ops drafts them from the real experience in your CV each time you evaluate a job; you check the numbers, edit them and rehearse them before the round.
+If you freeze up on "Tell me about a time you…", this is the fix. career-ops saves the stories to a story bank, `interview-prep/story-bank.md`, once you have created that file. It finds the story that scores best against a written question and lets you rehearse in a text practice interview.
+**On this page:** [STAR+R](#what-is-a-star-story-and-what-does-the-r-add) · [Start your story bank](#how-do-you-start-your-story-bank) · [Where stories come from](#where-do-your-stories-come-from) · [Where the bank lives](#where-does-the-story-bank-live) · [The entry shape](#what-does-a-star-story-entry-look-like) · [Keep the numbers honest](#how-do-you-keep-the-numbers-in-your-stories-honest) · [Find the right story](#how-do-you-find-the-right-story-for-a-written-question) · [Map stories to a company](#how-do-you-map-your-stories-to-a-companys-interviews) · [Rehearse](#how-do-you-rehearse-your-stories-before-the-round) · [After the interview](#what-happens-to-your-stories-after-the-interview) · [Commands](#commands-at-a-glance) · [FAQ](#frequently-asked-questions)
+This page is about the stories. For the full plan, practice and debrief loop, see [Prepare for Interviews](/docs/introduction/guides/interview-modes).
+<Callout title="Before you start">
+  career-ops needs your `cv.md` and `config/profile.yml` in place; the [Quick Start](/docs) sets both up. Slash commands go in your AI CLI session; `npm` and `node` commands go in a terminal in your career-ops folder. Where slash commands are not available (Codex does not guarantee them, for example), ask for the same mode by name.
+</Callout>
+## What is a STAR story, and what does the R add?
+A STAR story is an interview answer told in four parts: Situation, Task, Action and Result. career-ops adds a fifth, Reflection, and calls the format STAR+R. The Reflection is what you learned or would do differently. career-ops adds it because it signals seniority: junior candidates describe what happened, senior candidates extract lessons.
+## How do you start your story bank?
+<Steps>
+  <Step title="Create the story bank file">
+    Create `interview-prep/story-bank.md` in your data folder, the one with `cv.md`. A `# Story Bank` heading is enough. career-ops does not create the file, and an evaluation adds stories only to a bank that already exists.
+  </Step>
+  <Step title="Evaluate a job">
+    Paste the job's URL or text after `/career-ops` for the full pipeline, or run `/career-ops oferta` for the evaluation alone. Either way, the evaluation drafts STAR+R stories for that job and adds the new ones to your bank.
+  </Step>
+  <Step title="Put the new stories in the matcher's shape">
+    The evaluation adds its stories as table rows, and the story matcher reads only the entry shape shown [below](#what-does-a-star-story-entry-look-like): a table row counts as no story at all. Ask career-ops to rewrite the new stories in `story-bank.md` into that shape, pasting the example into your request, then check with `npm run star -- --list`. The mismatch is a known gap in the core, tracked in [issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514).
+  </Step>
+  <Step title="Match a question">
+    Run `npm run star -- "<question>"` in a terminal to see the story that scores best against it.
+  </Step>
+</Steps>
+## Where do your stories come from?
+career-ops builds your stories in three places, each tied to a job or an interview:
+- **When you evaluate a job.** The STAR+R section of the evaluation report ([Block F](/docs/reference/modes/oferta)) writes 6 to 10 stories from your CV, mapped to the job's requirements, and adds the new ones to your bank if `interview-prep/story-bank.md` exists, as table rows you then rewrite into the entry shape. Batch runs are not set up to add to the bank.
+- **When you prep for a company.** For each likely question with no matching story, the company dossier points to an experience in your CV that could become one, and drafts it with you if you want.
+- **After a real interview.** If you described an experience that is not in your bank, the debrief offers to build it into a STAR+R story while it is fresh, and adds it if you say yes.
+There is no single command that converts a whole CV into stories at once.
+career-ops is instructed to ask you about any claim that your own files (`cv.md`, `article-digest.md`, `config/profile.yml`) do not back, and to leave it out if you do not add it. That rule lives in its instructions, not in code, so audit the numbers in your bank with the provenance check below.
+Evaluations frame each story for the kind of role you target, and the default role types are AI and tech ones, so tell career-ops about yours. The first runs are rough. It does not know you yet. Talk to it: your CV, what you want, what you refuse.
+<Callout title="Note">
+  `/career-ops interview` is the onboarding interview that fills in your CV and profile. To rehearse, use `/career-ops interview/practice`.
+</Callout>
+## Where does the story bank live?
+The story bank is `interview-prep/story-bank.md`, a plain Markdown file in your data folder, next to `cv.md`. It belongs to your user layer, which career-ops updates never touch, and what you put in `interview-prep/` is kept out of git. There is no telemetry: when career-ops works with your stories, they go to the AI provider you chose, and nowhere else.
+## What does a STAR story entry look like?
+Write each story in this shape. The story matcher (`npm run star`) only reads entries that follow it. Keep the labels in English, whatever language you write the story in. Do not paste this example into your bank as is: the matcher would count it as a story.
+```md title="Story entry shape (example)"
+### [Theme] Short title of the story
+**Source:** {where the story comes from: your CV, an evaluation, a debrief}
+**Situation:** {the context: as long as you need, on one line}
+**Task:** {what you had to do, on one line}
+**Action:** {what you did, on one line}
+**Result:** {what changed; a number only if your CV has it}
+**Reflection:** {what you learned or would do differently}
+**Best for questions about:** {comma-separated tags, e.g. conflict, deadline, stakeholders}
+**Provenance:** {add only after checking: source: cv.md if every number is in your CV, or user-stated YYYY-MM-DD}
+```
+Keep each field on a single line: the matcher reads a field only up to the end of its line, and it skips a story with no Action line. A field can be a full paragraph as long as it stays on one line. The full convention is described in the header of [`story-provenance-check.mjs`](https://github.com/career-ops-hq/career-ops/blob/2b9fe7ea48b8ca98cf7f6b2b660654844c885adf/story-provenance-check.mjs#L72-L91).
+Leave the Provenance line out until you have checked the story's numbers. One marker covers every number in the story, and the provenance check trusts it without comparing those numbers against `cv.md`.
+## How do you keep the numbers in your stories honest?
+By career-ops's rule, a number or scope claim in your story bank counts as a fact only if it traces to a file you wrote, such as your CV, or its story carries a verified Provenance line: `source: cv.md` or `user-stated YYYY-MM-DD`. Plan, practice and debrief still read the bank when they suggest answers, so audit it before you rehearse:
+```bash
+node story-provenance-check.mjs --summary
+```
+The provenance check is a local script that reads and reports; it does not edit your files or block anything. It compares your stories' numbers against `cv.md` only, and reports any number that `cv.md` neither contains nor supports by context as derived-unverified, unless its story carries one of the two verified markers, which the check trusts as written. It misses figures spelled out in words, currency amounts and bare numbers.
+For each flagged number, you decide: confirm it (add `**Provenance:** user-stated YYYY-MM-DD` to the story), correct it, keep the story without the number, or set the story's Provenance line to `user-cannot-confirm` if you do not know. The marker covers every number in that story.
+When you admit in practice or a debrief that a claim would not hold up, career-ops offers to add it to `interview-prep/retracted-claims.md`, and plan, practice and debrief will not reuse it. The company dossier, form answers and the story matcher do not read that file, so take the claim out of your story bank too.
+## How do you find the right story for a written question?
+The story matcher, `npm run star`, finds the story in your bank that scores best against a written question, such as an open question on an application form. Run it in a terminal from your career-ops folder:
+```bash
+npm run star -- "Tell me about a time you disagreed with a decision"
+```
+The story matcher is a local script: it does not call your AI model or open a browser. It scores each story by the keywords it shares with the question. A word counts most when it matches one of the story's tags, less in its title or theme, and least in its Action or Result. Matching uses exact words, so "led" does not match "leadership": write your tags in the words questions use.
+The story matcher prints your best-scoring story, its fields joined as written, up to 500 words, with a warning if it runs under 250. When no story scores at all, it still prints one, followed by a "No strong match found" warning: treat that as a gap to fill.
+`npm run star` runs `match-star.mjs`, so you can also call the script directly: `--jd` gives extra weight to stories whose tags appear in a saved job description, `--top 2` shows the two best stories, and `--list` lists every story with its tags.
+```bash
+node match-star.mjs "Describe a conflict you resolved" --jd jds/acme.md
+node match-star.mjs "Give an example of handling ambiguity" --top 2
+node match-star.mjs --list
+```
+The matcher reads `interview-prep/story-bank.md` in your data folder, the one with `cv.md`, so it follows a separate data folder set with `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` or a `.career-ops-data` file. Versions before career-ops v1.36.0 read only the career-ops folder; `node update-system.mjs apply --confirm` brings yours up to date.
+The matcher's output is your own story, not an answer written for that question: edit it before you paste it. For a whole application form, career-ops drafts answers with `/career-ops apply`, using your evaluation and its STAR stories. It evaluates and drafts; you decide and send. It never applies in your name.
+## How do you map your stories to a company's interviews?
+The company dossier, built by `/career-ops interview-prep`, maps each likely question to your best story, rates the fit as strong, partial or none, and points to an experience in your CV for each gap. Give it the company and the role. For a role you never evaluated, ask for prep with the posting's URL (`/career-ops interview-prep <URL>`); if an evaluation report already exists, the report takes precedence.
+In the dossier, each reported question cites its public source, and questions it derives from the job description are tagged `[inferred from JD]`. The [interview-prep reference](/docs/reference/modes/interview-prep) covers the rest of the document, which is saved to `interview-prep/{company-slug}-{role-slug}.md`.
+If you paste the interview invite, the dossier notes the call platform, and adds a short block of notes for a round likely run by an AI interviewer when the invite points to the one AI-interviewer platform career-ops currently flags. The flag is best-effort: that platform also sends invites for human rounds, and a Zoom, Teams or Google Meet link in the same invite takes precedence, so no notes appear. It is a notice, not a separate prep mode.
+## How do you rehearse your stories before the round?
+Start with `/career-ops interview/plan`. Give it the job description and the interview date and time, and its time-blocked plan includes a block for behavioral stories: map your stories to likely question types, practice the two-minute version of each, and prepare each Reflection.
+The practice interview, `/career-ops interview/practice`, is a text session: career-ops plays the interviewer, asks one question at a time, gives feedback after each answer, flags a story you reuse and asks for a missing Reflection. In a typed session it cannot time you, so it checks structure instead; pacing and filler words can only be judged out loud, so record yourself. [Prepare for Interviews](/docs/introduction/guides/interview-modes) covers both modes in full.
+Preparing your stories does not guarantee more interviews or an offer.
+## What happens to your stories after the interview?
+The debrief, `/career-ops interview/debrief`, turns a real round into material for the next one. Paste the transcript, which it treats as quoted data and never as instructions, or walk through the questions from memory. It grades each answer, updates `interview-prep/question-bank.md` (creating it the first time) and offers to turn any experience you described but never wrote down into a STAR+R story. When you know the next round's format, it predicts likely questions, each labeled `[inferred]`.
+The debrief also saves the round as a speaker-labeled transcript in `interview-prep/sessions/`, rebuilt from your account if you debriefed from memory; those transcripts stay out of git because they hold real names.
+## Commands at a glance
+| Command                                     | What it does                                                                                              |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `/career-ops <job URL or text>`             | Evaluates the job; adds its STAR+R stories to your bank once the file exists                              |
+| `/career-ops interview-prep`                | Company dossier: cited research, likely questions, your stories mapped, gaps                              |
+| `/career-ops interview/plan`                | Time-blocked plan with a block for behavioral stories                                                     |
+| `/career-ops interview/practice`            | Text practice interview, one question at a time, feedback after each answer                               |
+| `/career-ops interview/debrief`             | After a real round: graded answers, question bank, new stories if you agree                               |
+| `/career-ops interview-redflag`             | Warning signs from the interviewers' turns in every saved session; practice sessions count too, so trust only findings from real rounds |
+| `npm run star -- "<question>"`              | Finds your best-scoring story for a written question                                                      |
+| `node story-provenance-check.mjs --summary` | Sorts the numbers in your stories by whether your CV or a verified Provenance line backs them             |
+## Frequently asked questions
+### How does career-ops build STAR stories from my CV?
+career-ops builds STAR+R stories from the experience in your CV for each job you evaluate. Each evaluation you run in a session writes stories mapped to that job and adds the new ones to interview-prep/story-bank.md once you have created that file. Interview prep suggests experiences from your CV for questions you have no story for, and a debrief can turn something you told in a real interview into a new story.
+### How do I prepare STAR stories for a behavioral interview next week?
+To prepare STAR stories for a behavioral interview with career-ops, evaluate the job first: the evaluation drafts STAR+R stories from your CV and adds them to interview-prep/story-bank.md once you have created that file. Then /career-ops interview-prep maps likely questions to your stories and flags the gaps, /career-ops interview/plan splits the time left into prep blocks, and /career-ops interview/practice rehearses you in text, one question at a time. For pacing, record yourself answering out loud.
+### Where do the interview questions in career-ops come from?
+career-ops takes interview questions from public interview reports, the job description and your own debriefed rounds, with general question sets as a fallback. The company dossier cites a source for each reported question and tags questions derived from the job description as inferred from the JD. The practice interview uses questions from your debriefs first, then the dossier's, then general question sets for the round type. Use them to prepare your stories, not as a script.
+##### IT
+---
+title: Prepara le tue storie STAR a partire dal curriculum
+description: "Ti blocchi davanti a \"Raccontami di una volta in cui…\"? career-ops abbozza le storie STAR dal tuo curriculum mentre valuti gli annunci e ti permette di provarle prima del colloquio."
+seoTitle: "Metodo STAR per il colloquio di lavoro: come preparare le risposte a partire dal curriculum con career-ops"
+icon: NotebookPen
+translationHash: b390892bd0f804b6
+localized: true
+translatedFrom: /docs/introduction/guides/prepare-star-stories
+---
+Per preparare le storie STAR, scrivi ogni risposta come Situazione, Compito (Task), Azione e Risultato, più una Riflessione su ciò che hai imparato (STAR+R). career-ops le abbozza a partire dall'esperienza reale del tuo curriculum ogni volta che valuti un annuncio; tu controlli i numeri, le modifichi e le provi prima del colloquio.
+Se ti blocchi davanti a "Raccontami di una volta in cui…", la soluzione è questa. career-ops salva le storie in un archivio, `interview-prep/story-bank.md`, una volta che hai creato quel file. Trova la storia che ottiene il punteggio migliore rispetto a una domanda scritta e ti permette di esercitarti in un colloquio di prova testuale.
+**In questa pagina:** [STAR+R](#che-cose-una-storia-star-e-cosa-aggiunge-la-r) · [Crea il tuo archivio](#come-creare-il-tuo-archivio-di-storie) · [Da dove vengono le storie](#da-dove-vengono-le-tue-storie) · [Dove si trova l'archivio](#dove-si-trova-larchivio-delle-storie) · [Il formato della voce](#come-si-scrive-una-storia-star) · [Numeri onesti](#come-mantenere-onesti-i-numeri-delle-tue-storie) · [Trova la storia giusta](#come-trovare-la-storia-giusta-per-una-domanda-scritta) · [Storie per azienda](#come-abbinare-le-tue-storie-ai-colloqui-di-unazienda) · [Esercitati](#come-provare-le-tue-storie-prima-del-colloquio) · [Dopo il colloquio](#cosa-succede-alle-tue-storie-dopo-il-colloquio) · [Comandi](#i-comandi-in-breve) · [Domande frequenti](#domande-frequenti)
+Questa pagina riguarda le storie. Per il ciclo completo di piano, pratica e debrief, vedi [Prepararsi ai colloqui](/it/docs/introduction/guides/interview-modes).
+<Callout title="Prima di iniziare">
+  career-ops ha bisogno che `cv.md` e `config/profile.yml` siano al loro posto; la [Guida rapida](/it/docs) li configura entrambi. I comandi slash vanno nella sessione della tua CLI AI; i comandi `npm` e `node` vanno in un terminale, nella tua cartella di career-ops. Dove i comandi slash non sono disponibili (Codex, per esempio, non li garantisce), chiedi la stessa modalità per nome.
+</Callout>
+## Che cos'è una storia STAR e cosa aggiunge la R? [#che-cose-una-storia-star-e-cosa-aggiunge-la-r]
+Una storia STAR è una risposta da colloquio raccontata in quattro parti: Situazione, Compito (Task), Azione e Risultato. career-ops ne aggiunge una quinta, la Riflessione, e chiama il formato STAR+R. La Riflessione è ciò che hai imparato o che faresti diversamente. career-ops la aggiunge perché segnala seniority: i candidati junior descrivono cosa è successo, i candidati senior ne ricavano una lezione.
+## Come creare il tuo archivio di storie? [#come-creare-il-tuo-archivio-di-storie]
+<Steps>
+  <Step title="Crea il file dell'archivio">
+    Crea `interview-prep/story-bank.md` nella tua cartella dei dati, quella che contiene `cv.md`. Basta un titolo `# Story Bank`. career-ops non crea il file, e una valutazione aggiunge storie solo a un archivio che esiste già.
+  </Step>
+  <Step title="Valuta un annuncio">
+    Incolla l'URL o il testo dell'annuncio dopo `/career-ops` per la pipeline completa, oppure esegui `/career-ops oferta` per la sola valutazione. In entrambi i casi, la valutazione abbozza le storie STAR+R per quell'annuncio e aggiunge quelle nuove al tuo archivio.
+  </Step>
+  <Step title="Porta le nuove storie nel formato del matcher">
+    La valutazione aggiunge le sue storie come righe di tabella, e il matcher delle storie legge solo il formato della voce mostrato [più sotto](#come-si-scrive-una-storia-star): una riga di tabella non conta affatto come storia. Chiedi a career-ops di riscrivere le nuove storie di `story-bank.md` in quel formato, incollando l'esempio nella tua richiesta, poi controlla con `npm run star -- --list`. Questa incompatibilità è una lacuna nota del core, tracciata nella [issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514).
+  </Step>
+  <Step title="Abbina una domanda">
+    Esegui `npm run star -- "<question>"` in un terminale per vedere la storia che ottiene il punteggio migliore rispetto a quella domanda.
+  </Step>
+</Steps>
+## Da dove vengono le tue storie? [#da-dove-vengono-le-tue-storie]
+career-ops costruisce le tue storie in tre momenti, ciascuno legato a un annuncio o a un colloquio:
+- **Quando valuti un annuncio.** La sezione STAR+R del report di valutazione ([Blocco F](/it/docs/reference/modes/oferta)) scrive da 6 a 10 storie a partire dal tuo curriculum, abbinate ai requisiti dell'annuncio, e aggiunge quelle nuove al tuo archivio se `interview-prep/story-bank.md` esiste, come righe di tabella che poi riscrivi nel formato della voce. Le esecuzioni in batch non sono predisposte per aggiungere storie all'archivio.
+- **Quando ti prepari per un'azienda.** Per ogni domanda probabile a cui non corrisponde alcuna storia, il dossier aziendale indica un'esperienza del tuo curriculum che potrebbe diventarlo, e la abbozza insieme a te se vuoi.
+- **Dopo un colloquio reale.** Se hai descritto un'esperienza che non è nel tuo archivio, il debrief ti propone di trasformarla in una storia STAR+R finché è fresca, e la aggiunge se dici di sì.
+Non esiste un comando unico che converta un intero curriculum in storie in una volta sola.
+career-ops ha l'istruzione di chiederti conto di qualsiasi affermazione che i tuoi file (`cv.md`, `article-digest.md`, `config/profile.yml`) non confermano, e di lasciarla fuori se non la aggiungi. Questa regola vive nelle sue istruzioni, non nel codice: verifica quindi i numeri del tuo archivio con il controllo di provenienza descritto più sotto.
+Le valutazioni impostano ogni storia in base al tipo di ruolo a cui punti, e i tipi di ruolo predefiniti sono quelli AI e tech: parla quindi a career-ops dei tuoi. Le prime esecuzioni sono approssimative. Non ti conosce ancora. Parlaci: il tuo curriculum, cosa vuoi, cosa rifiuti.
+<Callout title="Nota">
+  `/career-ops interview` è l'intervista di onboarding che compila il tuo CV e il tuo profilo. Per esercitarti, usa `/career-ops interview/practice`.
+</Callout>
+## Dove si trova l'archivio delle storie? [#dove-si-trova-larchivio-delle-storie]
+L'archivio delle storie è `interview-prep/story-bank.md`, un semplice file Markdown nella tua cartella dei dati, accanto a `cv.md`. Appartiene al tuo livello utente, che gli aggiornamenti di career-ops non toccano mai, e ciò che metti in `interview-prep/` resta fuori da git. Non c'è telemetria: quando career-ops lavora con le tue storie, queste vanno al fornitore AI che hai scelto, e da nessun'altra parte.
+## Come si scrive una storia STAR? [#come-si-scrive-una-storia-star]
+Scrivi ogni storia in questo formato. Il matcher delle storie (`npm run star`) legge solo le voci che lo rispettano. Lascia le etichette in inglese, qualunque sia la lingua in cui scrivi la storia. Non incollare questo esempio così com'è nel tuo archivio: il matcher lo conterebbe come una storia.
+```md title="Story entry shape (example)"
+### [Theme] Short title of the story
+**Source:** {where the story comes from: your CV, an evaluation, a debrief}
+**Situation:** {the context: as long as you need, on one line}
+**Task:** {what you had to do, on one line}
+**Action:** {what you did, on one line}
+**Result:** {what changed; a number only if your CV has it}
+**Reflection:** {what you learned or would do differently}
+**Best for questions about:** {comma-separated tags, e.g. conflict, deadline, stakeholders}
+**Provenance:** {add only after checking: source: cv.md if every number is in your CV, or user-stated YYYY-MM-DD}
+```
+Tieni ogni campo su una sola riga: il matcher legge un campo solo fino alla fine della riga, e salta una storia priva della riga Action. Un campo può essere un intero paragrafo, purché resti su una riga. La convenzione completa è descritta nell'intestazione di [`story-provenance-check.mjs`](https://github.com/career-ops-hq/career-ops/blob/2b9fe7ea48b8ca98cf7f6b2b660654844c885adf/story-provenance-check.mjs#L72-L91).
+Lascia fuori la riga Provenance finché non hai controllato i numeri della storia. Un solo marcatore copre tutti i numeri della storia, e il controllo di provenienza si fida di quel marcatore senza confrontare i numeri con `cv.md`.
+## Come mantenere onesti i numeri delle tue storie? [#come-mantenere-onesti-i-numeri-delle-tue-storie]
+Secondo la regola di career-ops, un numero o un'affermazione di portata nel tuo archivio conta come un fatto solo se risale a un file scritto da te, come il tuo CV, oppure se la sua storia riporta una riga Provenance verificata: `source: cv.md` o `user-stated YYYY-MM-DD`. Piano, pratica e debrief leggono comunque l'archivio quando suggeriscono risposte, quindi verificalo prima di esercitarti:
+```bash
+node story-provenance-check.mjs --summary
+```
+Il controllo di provenienza è uno script locale che legge e riferisce; non modifica i tuoi file e non blocca nulla. Confronta i numeri delle tue storie soltanto con `cv.md`, e segnala come derived-unverified ogni numero che `cv.md` non contiene né giustifica dal contesto, a meno che la sua storia riporti uno dei due marcatori verificati, di cui il controllo si fida così come sono scritti. Gli sfuggono le cifre scritte in lettere, gli importi in valuta e i numeri isolati.
+Per ogni numero segnalato decidi tu: confermarlo (aggiungi `**Provenance:** user-stated YYYY-MM-DD` alla storia), correggerlo, tenere la storia senza il numero, oppure impostare la riga Provenance della storia su `user-cannot-confirm` se non lo sai. Il marcatore copre tutti i numeri di quella storia.
+Quando, durante la pratica o un debrief, ammetti che un'affermazione non reggerebbe, career-ops ti propone di aggiungerla a `interview-prep/retracted-claims.md`, e piano, pratica e debrief non la riutilizzeranno. Il dossier aziendale, le risposte ai moduli e il matcher delle storie non leggono quel file, quindi togli l'affermazione anche dal tuo archivio.
+## Come trovare la storia giusta per una domanda scritta? [#come-trovare-la-storia-giusta-per-una-domanda-scritta]
+Il matcher delle storie, `npm run star`, trova nel tuo archivio la storia che ottiene il punteggio migliore rispetto a una domanda scritta, come una domanda aperta in un modulo di candidatura. Eseguilo in un terminale dalla tua cartella di career-ops:
+```bash
+npm run star -- "Tell me about a time you disagreed with a decision"
+```
+Il matcher delle storie è uno script locale: non chiama il tuo modello AI e non apre un browser. Assegna un punteggio a ogni storia in base alle parole chiave che condivide con la domanda. Una parola pesa di più quando coincide con uno dei tag della storia, meno se compare nel titolo o nel tema, e ancora meno se compare in Action o Result. Il confronto usa parole esatte, quindi "led" non corrisponde a "leadership": scrivi i tuoi tag con le parole che usano le domande.
+Il matcher stampa la tua storia con il punteggio migliore, con i campi uniti così come sono scritti, fino a 500 parole, con un avviso se resta sotto le 250. Quando nessuna storia ottiene punti, ne stampa comunque una, seguita dall'avviso "No strong match found": consideralo una lacuna da colmare.
+`npm run star` esegue `match-star.mjs`, quindi puoi anche chiamare lo script direttamente: `--jd` dà più peso alle storie i cui tag compaiono in una descrizione del ruolo salvata, `--top 2` mostra le due storie migliori e `--list` elenca tutte le storie con i loro tag.
+```bash
+node match-star.mjs "Describe a conflict you resolved" --jd jds/acme.md
+node match-star.mjs "Give an example of handling ambiguity" --top 2
+node match-star.mjs --list
+```
+Il matcher legge `interview-prep/story-bank.md` nella tua cartella dei dati, quella che contiene `cv.md`, quindi segue una cartella dei dati separata impostata con `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` o un file `.career-ops-data`. Le versioni precedenti a career-ops v1.36.0 leggevano solo la cartella di career-ops; `node update-system.mjs apply --confirm` aggiorna la tua.
+L'output del matcher è la tua storia, non una risposta scritta per quella domanda: modificala prima di incollarla. Per un intero modulo di candidatura, career-ops redige le risposte con `/career-ops apply`, usando la tua valutazione e le sue storie STAR. Valuta e redige; decidi e invii tu. career-ops non si candida mai a tuo nome.
+## Come abbinare le tue storie ai colloqui di un'azienda? [#come-abbinare-le-tue-storie-ai-colloqui-di-unazienda]
+Il dossier aziendale, creato da `/career-ops interview-prep`, abbina ogni domanda probabile alla tua storia migliore, valuta la corrispondenza come forte, parziale o assente, e per ogni lacuna indica un'esperienza del tuo curriculum. Indicagli l'azienda e il ruolo. Per un ruolo che non hai mai valutato, chiedi la preparazione con l'URL dell'annuncio (`/career-ops interview-prep <URL>`); se esiste già un report di valutazione, il report ha la precedenza.
+Nel dossier, ogni domanda riportata cita la sua fonte pubblica, e le domande ricavate dalla descrizione del ruolo sono contrassegnate con `[inferred from JD]`. Il [riferimento di interview-prep](/it/docs/reference/modes/interview-prep) copre il resto del documento, che viene salvato in `interview-prep/{company-slug}-{role-slug}.md`.
+Se incolli l'invito al colloquio, il dossier annota la piattaforma della chiamata, e aggiunge un breve blocco di note per un colloquio probabilmente condotto da un intervistatore AI quando l'invito rimanda all'unica piattaforma di intervistatori AI che career-ops attualmente segnala. La segnalazione è indicativa: quella piattaforma invia inviti anche per colloqui con persone, e un link Zoom, Teams o Google Meet nello stesso invito ha la precedenza, quindi le note non compaiono. È un avviso, non una modalità di preparazione a parte.
+## Come provare le tue storie prima del colloquio? [#come-provare-le-tue-storie-prima-del-colloquio]
+Inizia con `/career-ops interview/plan`. Dagli la descrizione del ruolo e la data e l'ora del colloquio: il suo piano a blocchi di tempo include un blocco per le storie comportamentali, in cui abbini le tue storie ai tipi di domanda probabili, provi la versione da due minuti di ciascuna e prepari ogni Riflessione.
+Il colloquio di prova, `/career-ops interview/practice`, è una sessione testuale: career-ops fa l'intervistatore, pone una domanda alla volta, dà un feedback dopo ogni risposta, segnala una storia che riutilizzi e ti chiede la Riflessione quando manca. In una sessione scritta non può cronometrarti, quindi controlla la struttura; il ritmo e gli intercalari si possono giudicare solo ad alta voce, quindi registrati. [Prepararsi ai colloqui](/it/docs/introduction/guides/interview-modes) descrive entrambe le modalità per intero.
+Preparare le tue storie non garantisce più colloqui né una proposta di assunzione.
+## Cosa succede alle tue storie dopo il colloquio? [#cosa-succede-alle-tue-storie-dopo-il-colloquio]
+Il debrief, `/career-ops interview/debrief`, trasforma un colloquio reale in materiale per quello successivo. Incolla la trascrizione, che tratta come dati citati e mai come istruzioni, oppure ripercorri le domande a memoria. Valuta ogni risposta, aggiorna `interview-prep/question-bank.md` (creandolo la prima volta) e ti propone di trasformare in una storia STAR+R ogni esperienza che hai raccontato ma non hai mai messo per iscritto. Quando conosci il formato del colloquio successivo, prevede le domande probabili, ciascuna etichettata `[inferred]`.
+Il debrief salva inoltre il colloquio come trascrizione con l'indicazione di chi parla in `interview-prep/sessions/`, ricostruita dal tuo racconto se hai fatto il debrief a memoria; queste trascrizioni restano fuori da git perché contengono nomi reali.
+## I comandi in breve [#i-comandi-in-breve]
+| Comando                                     | Cosa fa                                                                                                   |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `/career-ops <job URL or text>`             | Valuta l'annuncio; aggiunge le sue storie STAR+R al tuo archivio una volta che il file esiste             |
+| `/career-ops interview-prep`                | Dossier aziendale: ricerca con fonti citate, domande probabili, le tue storie abbinate, lacune            |
+| `/career-ops interview/plan`                | Piano a blocchi di tempo con un blocco per le storie comportamentali                                      |
+| `/career-ops interview/practice`            | Colloquio di prova testuale, una domanda alla volta, feedback dopo ogni risposta                          |
+| `/career-ops interview/debrief`             | Dopo un colloquio reale: risposte valutate, archivio delle domande, nuove storie se sei d'accordo         |
+| `/career-ops interview-redflag`             | Segnali d'allarme negli interventi degli intervistatori in ogni sessione salvata; contano anche le sessioni di pratica, quindi fidati solo dei risultati dei colloqui reali |
+| `npm run star -- "<question>"`              | Trova la tua storia con il punteggio migliore per una domanda scritta                                     |
+| `node story-provenance-check.mjs --summary` | Ordina i numeri delle tue storie a seconda che il tuo CV o una riga Provenance verificata li confermi     |
+## Domande frequenti [#domande-frequenti]
+### Come fa career-ops a creare le storie STAR dal mio curriculum?
+career-ops costruisce le storie STAR+R a partire dall'esperienza del tuo curriculum per ogni annuncio che valuti. Ogni valutazione che esegui in una sessione scrive storie abbinate a quell'annuncio e aggiunge quelle nuove a interview-prep/story-bank.md una volta che hai creato quel file. La preparazione al colloquio suggerisce esperienze del tuo curriculum per le domande a cui non corrisponde alcuna storia, e un debrief può trasformare in una nuova storia qualcosa che hai raccontato in un colloquio reale.
+### Come prepararsi con il metodo STAR a un colloquio comportamentale della prossima settimana?
+Per preparare le storie STAR per un colloquio comportamentale con career-ops, valuta prima l'annuncio: la valutazione abbozza le storie STAR+R dal tuo curriculum e le aggiunge a interview-prep/story-bank.md una volta che hai creato quel file. Poi /career-ops interview-prep abbina le domande probabili alle tue storie e segnala le lacune, /career-ops interview/plan divide il tempo rimasto in blocchi di preparazione e /career-ops interview/practice ti fa esercitare per iscritto, una domanda alla volta. Per il ritmo, registrati mentre rispondi ad alta voce.
+### Da dove vengono le domande di colloquio di career-ops?
+career-ops ricava le domande di colloquio da resoconti pubblici di colloqui, dalla descrizione del ruolo e dai tuoi colloqui passati per il debrief, con set di domande generali come ripiego. Il dossier aziendale cita una fonte per ogni domanda riportata e contrassegna come dedotte dalla descrizione del ruolo le domande che ne ricava. Il colloquio di prova usa prima le domande dei tuoi debrief, poi quelle del dossier, poi i set di domande generali per il tipo di colloquio. Usale per preparare le tue storie, non come un copione.

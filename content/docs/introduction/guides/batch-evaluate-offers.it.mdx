@@ -121,7 +121,7 @@ Ogni annuncio lascia qui anche un breve file di riepilogo: una riga di intestazi
 
 ### Score Evidence
 
-Il report include la sezione **Score Evidence** dopo il Risk Summary. Copre cinque dimensioni: corrispondenza con il curriculum, allineamento con la North Star, retribuzione, segnali culturali e red flag. Ogni riga registra uno stato dell'evidenza (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità dell'evidenza (`High`, `Medium` o `Low`), la sua motivazione e fino a tre priorità di verifica.
+Il report include la sezione **Score Evidence** dopo il Risk Summary. Copre cinque dimensioni: corrispondenza con il curriculum, allineamento con la North Star, retribuzione, segnali culturali e campanelli d'allarme. Ogni riga registra uno stato dell'evidenza (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità dell'evidenza (`High`, `Medium` o `Low`), la sua motivazione e fino a tre priorità di verifica.
 
 Questo livello descrive l'evidenza alla base del Global Score: non è una probabilità di assunzione né il livello di legittimità dell'annuncio del Blocco G, e non modifica il punteggio numerico. Il Machine Summary conserva i cinque stati in `score_evidence`, il livello in `confidence` e le priorità in `confidence_gaps`. Quando non restano priorità, `confidence_gaps` è una lista vuota.
 

@@ -16,15 +16,15 @@ career-ops **interview-prep** trasforma un colloquio di lavoro già fissato in u
 
 interview-prep legge il contesto dell'azienda (idealmente già arricchito con `deep` o `oferta`), la descrizione della posizione e il tuo profilo, poi produce un unico documento di preparazione limitato ai round che, secondo le fonti, il processo dell'azienda prevede. Il documento copre gli schemi di domande attesi per ogni interlocutore, gli argomenti specifici del tuo percorso e le storie STAR già scritte che puoi adattare sul momento. Quando per quel ruolo esiste già un report di valutazione, è quel report a fare fede; quando passi l'URL di una posizione che non hai mai valutato, interview-prep recupera da solo la descrizione della posizione (prima con l'API strutturata dell'ATS, poi con Playwright, con un ripiego in modalità headless) e, se l'annuncio è chiuso, ti chiede di incollarne il testo.
 
-## Quando usarlo
+## Quando usarla
 
 Esegui interview-prep quando un round è in calendario: produce un solo documento con una sezione per ogni interlocutore coinvolto nel processo. La sezione sullo screening con il recruiter copre la preparazione alla negoziazione della retribuzione, quella sull'hiring manager l'aderenza al ruolo, quella sul colloquio tecnico tra pari architettura e codice, quella sul panel i segnali di leadership. career-ops ha inoltre l'istruzione di eseguirlo quando un ruolo con punteggio pari o superiore a 4,0 passa a `Interview` nel tuo tracker.
 
-interview-prep è la fase di **ricerca**: il documento che studi prima del colloquio. È un modo diverso dalle esercitazioni interattive `plan`, `practice` e `debrief`, che ti fanno provare dal vivo e rivedono un round a cose fatte; i due si collegano (un debrief alimenta il materiale che interview-prep leggerà la volta successiva). Per queste esercitazioni consulta la [guida ai modi per il colloquio](/it/docs/introduction/guides/interview-modes).
+interview-prep è la fase di **ricerca**: il documento che studi prima del colloquio. È una modalità diversa dalle esercitazioni interattive `plan`, `practice` e `debrief`, che ti fanno provare dal vivo e rivedono un round a cose fatte; i due si collegano (un debrief alimenta il materiale che interview-prep leggerà la volta successiva). Per queste esercitazioni consulta la [guida alle modalità di colloquio](/it/docs/introduction/guides/interview-modes).
 
 ## Come si presenta un'esecuzione
 
-Indichi l'azienda e il ruolo, e il modo restituisce un unico report di preparazione al colloquio, limitato ai round che secondo le fonti il processo dell'azienda prevede. Ricostruisce il processo, classifica ogni round per interlocutore (screening con il recruiter, hiring manager, colloquio tecnico tra pari o panel) e prepara le domande probabili, contrassegnando ciascuna con la citazione della fonte o con l'etichetta `[inferred from JD]`.
+Indichi l'azienda e il ruolo, e la modalità restituisce un unico report di preparazione al colloquio, limitato ai round che secondo le fonti il processo dell'azienda prevede. Ricostruisce il processo, classifica ogni round per interlocutore (screening con il recruiter, hiring manager, colloquio tecnico tra pari o panel) e prepara le domande probabili, contrassegnando ciascuna con la citazione della fonte o con l'etichetta `[inferred from JD]`.
 
 ```bash title="Terminal"
 /career-ops interview-prep Anthropic "Applied AI Engineer"
@@ -56,7 +56,7 @@ Il report associa inoltre le storie del tuo `story-bank.md` a ogni domanda proba
 Ricorri a interview-prep quando un round è fissato e vuoi un documento di lavoro invece di consigli generici. Alcuni accorgimenti rendono il risultato più preciso:
 
 - Esegui prima `oferta` o `deep` sull'azienda. La preparazione legge il report di valutazione per ricavarne archetipo, lacune e prove concrete corrispondenti, quindi più contesto significa domande più specifiche.
-- Incolla i nomi degli intervistatori o il programma della giornata, quando li hai. Per un panel, il modo costruisce una lettura di ogni intervistatore e prepara una domanda di chiusura su misura per ciascuno slot.
+- Incolla i nomi degli intervistatori o il programma della giornata, quando li hai. Per un panel, la modalità costruisce una lettura di ogni intervistatore e prepara una domanda di chiusura su misura per ciascuno slot.
 - Se hai già indicato una cifra di retribuzione per il ruolo, la sezione sullo screening con il recruiter la integra: career-ops legge la cifra che hai dichiarato, così la preparazione alla negoziazione si basa su ciò che hai detto davvero e non su un'ipotesi.
 - Leggi le etichette: le domande con fonte citano la recensione da cui provengono, quelle dedotte riportano `[inferred from JD]`. Considera le domande dedotte come probabili, non come ciò che ti verrà chiesto.
 

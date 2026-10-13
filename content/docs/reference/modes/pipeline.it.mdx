@@ -14,7 +14,7 @@ translatedFrom: /docs/reference/modes/pipeline
 
 La modalità pipeline scorre gli URL presenti in data/pipeline.md (uno per riga) e lancia auto-pipeline su ciascuno. Per ogni annuncio che produce una valutazione valida vengono scritti report, PDF e voci del tracker. Le estrazioni fallite vengono registrate e saltate.
 
-## Quando usarlo
+## Quando usarla
 
 Usa pipeline quando hai un arretrato di URL da elaborare. Incollali in data/pipeline.md, lancia /career-ops pipeline e allontanati pure.
 
@@ -46,7 +46,7 @@ Ricorri a pipeline quando durante la giornata hai accumulato un arretrato di ann
 - La sezione `## Pending` accetta qualsiasi formato: va bene un semplice URL incollato, oppure puoi aggiungere le colonne `company`, `role`, `location` e `comp`, e la modalità le legge tutte.
 - Il controllo di validità viene eseguito prima del ciclo sui singoli URL, così una coda vecchia di otto URL non ti costa otto valutazioni sprecate.
 - È lo strumento di estrazione a decidere la concorrenza. Con l'estrattore predefinito basato sul browser (Playwright MCP) gli URL vengono elaborati uno alla volta, perché i worker che condividono la stessa sessione del browser possono contaminarsi a vicenda e valutare l'annuncio sbagliato. Solo quando ogni worker usa l'estrattore CLI isolato (`scan.extractor: cli`) o un'alternativa che non passa dal browser, ciascuno con il proprio processo e il proprio stato di sessione, si possono elaborare tre o più URL in parallelo, un worker per URL.
-- I PDF vengono generati solo quando il punteggio supera `auto_pdf_score_threshold` (valore predefinito: 3.0); alzalo per evitare i PDF dei ruoli poco convincenti e generali più avanti, su richiesta, con `/career-ops pdf`.
+- I PDF vengono generati solo quando il punteggio supera `auto_pdf_score_threshold` (valore predefinito: 3,0); alzalo per evitare i PDF dei ruoli poco convincenti e generarli più avanti, su richiesta, con `/career-ops pdf`.
 
 ## Vedi anche
 

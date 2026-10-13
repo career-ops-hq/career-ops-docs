@@ -1,0 +1,958 @@
+##### reference/modes/apply EN
+## What it does
+The `apply` mode reads an open application form (Greenhouse, Ashby, Lever), identifies the open-ended questions — "Why this role?", "Tell us about a project", "What's your salary expectation?" — and drafts answers grounded in your CV and the job description. You edit the drafts inline, copy them into the portal, submit.
+## When to use it
+Open the JD and the application form side-by-side. Run apply once the form is loaded. Answers with a confirmed field limit include `used/allowed` characters or words; check this status before pasting. `limit unknown` means the form limit was not confirmed, so verify it in the live field first. If an answer cannot fit without losing essential facts, revise it before pasting. The output is a draft, not a finished application — you stay in the loop for tone, facts and any field the portal layers on top. apply works best with Playwright in visible mode, where it reads the live page as you see it; without Playwright, paste the questions or share a screenshot and it drafts from that instead.
+## What a run looks like
+Run apply with the application form open in Chrome. Before it writes a single answer, the mode reads the active tab, matches it to the report you already generated for that job, confirms the posting is still live, and scans the form for knock-out questions that could auto-reject you.
+```txt title="Example"
+> /career-ops apply
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+Responses for Notion — Applied AI Engineer
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+## Gotchas
+apply never submits the application: the final Submit click is always yours. It reads every field on the form, not just the open-ended questions — dropdowns, radio buttons, checkboxes and upload fields included. It drafts the free-text answers, suggests a value for each closed-ended field, and flags work-authorization, salary and other sensitive questions your profile does not already answer, for you to confirm rather than guessing. With Playwright it can fill some fields in the live form; you review everything and complete the rest. Once the answers are in, it records the text, the selections and the files used in the report. If the preflight finds the posting has closed, apply refuses to draft final copy unless you explicitly override it — a dead link is not worth a tailored answer.
+## Known ATS quirks
+apply has been field-tested across roughly a dozen Playwright-driven applications, and a few portals break a run if you do not account for them:
+- **Ashby** deduplicates candidates by email per company, so a second application can silently merge into your first. If a report for that company already exists, apply suggests a `+tag` email alias. For Ashby, finish and submit in your ordinary system browser, then verify a success page or confirmation email before marking the application submitted.
+- **Lever** throws a captcha when a checkbox or radio button is clicked programmatically, so apply fills only text fields and dropdowns and hands you the checkboxes and radio buttons to tick.
+- **Workday** ignores values set without real keystrokes, so apply types answers character by character and asks you to review the work-authorization dropdowns before you save.
+## Related
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)
+##### IT
+## Cosa fa
+La modalità `apply` legge un modulo di candidatura aperto (Greenhouse, Ashby, Lever), individua le domande aperte — "Perché questo ruolo?", "Raccontaci un progetto", "Qual è la tua aspettativa di retribuzione?" — e redige risposte basate sul tuo curriculum e sull'annuncio. Tu modifichi le bozze, le copi nel portale e invii.
+## Quando usarla
+Apri l'annuncio e il modulo di candidatura uno accanto all'altro. Esegui apply quando il modulo è caricato. Le risposte con un limite di campo confermato riportano i caratteri o le parole `used/allowed`; controlla questo stato prima di incollare. `limit unknown` significa che il limite del modulo non è stato confermato, quindi verificalo prima nel campo reale. Se una risposta non rientra nel limite senza perdere fatti essenziali, rivedila prima di incollarla. Il risultato è una bozza, non una candidatura finita: resti tu a decidere su tono, fatti e su qualsiasi campo che il portale aggiunga. apply funziona al meglio con Playwright in modalità visibile, dove legge la pagina reale così come la vedi tu; senza Playwright, incolla le domande o condividi uno screenshot e redigerà le bozze a partire da quelli.
+## Come si presenta un'esecuzione
+Esegui apply con il modulo di candidatura aperto in Chrome. Prima di scrivere una sola risposta, la modalità legge la scheda attiva, la abbina al report che hai già generato per quell'annuncio, conferma che l'annuncio sia ancora attivo e analizza il modulo alla ricerca di domande eliminatorie che potrebbero farti scartare in automatico.
+```txt title="Example"
+> /career-ops apply
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+Responses for Notion — Applied AI Engineer
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+## A cosa fare attenzione
+apply non invia mai la candidatura: il clic finale su Invia è sempre tuo. Legge tutti i campi del modulo, non solo le domande aperte: menu a tendina, pulsanti di opzione, caselle di controllo e campi di caricamento compresi. Redige le risposte a testo libero, suggerisce un valore per ogni campo a risposta chiusa e segnala le domande su permesso di lavoro, retribuzione e altri temi sensibili a cui il tuo profilo non risponde già, perché sia tu a confermarle invece di tirare a indovinare. Con Playwright può compilare alcuni campi nel modulo reale; tu controlli tutto e completi il resto. Una volta inserite le risposte, registra nel report il testo, le selezioni e i file usati. Se il controllo preliminare rileva che l'annuncio è stato chiuso, apply si rifiuta di redigere il testo definitivo, a meno che tu non lo forzi esplicitamente: un link morto non merita una risposta su misura.
+## Particolarità note degli ATS
+apply è stata messa alla prova sul campo in una dozzina circa di candidature guidate da Playwright, e alcuni portali fanno fallire un'esecuzione se non ne tieni conto:
+- **Ashby** deduplica i candidati per email all'interno di ogni azienda, quindi una seconda candidatura può fondersi silenziosamente con la prima. Se esiste già un report per quell'azienda, apply suggerisce un alias email `+tag`. Con Ashby, completa e invia dal tuo browser di sistema abituale, poi verifica che compaia una pagina di conferma o che arrivi un'email di conferma prima di segnare la candidatura come inviata.
+- **Lever** fa comparire un captcha quando una casella di controllo o un pulsante di opzione viene cliccato in modo programmatico, quindi apply compila solo i campi di testo e i menu a tendina e lascia a te le caselle di controllo e i pulsanti di opzione da selezionare.
+- **Workday** ignora i valori impostati senza una vera digitazione da tastiera, quindi apply scrive le risposte carattere per carattere e ti chiede di controllare i menu a tendina sul permesso di lavoro prima di salvare.
+## Vedi anche
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)
+- [pdf](/it/docs/reference/modes/pdf)
+- [tracker](/it/docs/reference/modes/tracker)
+##### reference/modes/auto-pipeline EN
+## What it does
+career-ops invokes auto-pipeline whenever you drop a JD URL or pasted text into the prompt. The mode reads the listing, scores it against the rubric — five dimensions plus a holistic global score — writes the evaluation to reports/, generates the tailored PDF via Playwright, and updates the tracker entry — all in a single agent turn.
+## When to use it
+Use auto-pipeline when you want the full pipeline executed automatically. It is the default mode for new listings entering your search.
+## What a run looks like
+Paste a job URL with no sub-command and auto-pipeline runs the whole chain end to end: it extracts the description, checks the posting is live, scores it, saves the report, exports a tailored PDF, and records the entry in your tracker.
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+## Good to know
+- Paste a URL and auto-pipeline handles extraction for you: Playwright first for single-page portals like Lever, Ashby, Greenhouse and Workday, then WebFetch for static pages, then WebSearch as a last resort.
+- A liveness gate runs before the evaluation. If the link is dead or the page is an empty "position filled" shell, the mode stops there instead of scoring phantom content — and if the entry came from `data/pipeline.md`, it marks that row closed.
+- Draft application answers are written only when the score is 4.5 or higher, so low-fit roles do not spend tokens on copy you will not send.
+## Gotchas
+If you only want the evaluation without the PDF (faster, cheaper), invoke `/career-ops oferta` instead. auto-pipeline costs more tokens because it runs the full chain.
+## Related
+- [pipeline](/docs/reference/modes/pipeline)
+- [oferta](/docs/reference/modes/oferta)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)
+##### IT
+## Cosa fa
+career-ops avvia auto-pipeline ogni volta che inserisci nel prompt l'URL di un annuncio o il suo testo incollato. La modalità legge l'annuncio, gli assegna un punteggio in base alla griglia di valutazione (cinque dimensioni più un punteggio globale olistico), scrive la valutazione in reports/, genera il PDF su misura tramite Playwright e aggiorna la voce nel tracker: tutto in un unico turno dell'agente.
+## Quando usarlo
+Usa auto-pipeline quando vuoi che l'intera pipeline venga eseguita in automatico. È la modalità predefinita per i nuovi annunci che entrano nella tua ricerca di lavoro.
+## Come si presenta un'esecuzione
+Incolla l'URL di un annuncio senza alcun sottocomando e auto-pipeline esegue l'intera catena dall'inizio alla fine: estrae la descrizione, verifica che l'annuncio sia ancora attivo, gli assegna un punteggio, salva il report, esporta un PDF su misura e registra la voce nel tuo tracker.
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+## Buono a sapersi
+- Incolla un URL e auto-pipeline si occupa dell'estrazione al posto tuo: prima Playwright per i portali single-page come Lever, Ashby, Greenhouse e Workday, poi WebFetch per le pagine statiche e infine WebSearch come ultima risorsa.
+- Prima della valutazione viene eseguito un controllo di validità dell'annuncio. Se il link non funziona più o la pagina è un guscio vuoto con la scritta "posizione chiusa", la modalità si ferma lì invece di valutare contenuti fantasma; e se la voce proveniva da `data/pipeline.md`, segna quella riga come chiusa.
+- Le bozze delle risposte per la candidatura vengono scritte solo quando il punteggio è pari o superiore a 4,5, così i ruoli poco in linea con il tuo profilo non consumano token per testi che non invierai.
+## A cosa fare attenzione
+Se vuoi solo la valutazione senza il PDF (più veloce, più economica), usa invece `/career-ops oferta`. auto-pipeline costa più token perché esegue l'intera catena.
+## Vedi anche
+- [pipeline](/it/docs/reference/modes/pipeline)
+- [oferta](/it/docs/reference/modes/oferta)
+- [pdf](/it/docs/reference/modes/pdf)
+- [tracker](/it/docs/reference/modes/tracker)
+##### reference/modes/contacto EN
+## What it does
+contacto mode reads the company name and the JD context, then suggests outreach targets it finds through WebSearch — the hiring manager, the assigned recruiter, two or three team peers, and a known interviewer. It drafts a short message — three sentences, under 300 characters — tailored to the role and to who the contact is.
+## When to use it
+Use contacto when you have applied to a role and want to surface a referral path. Or use it before applying when a warm intro could move you past the recruiter pile. The default is the LinkedIn power move; for a platform with a hard character limit — a job-board chat box, a cold-email opener, BOSS Zhipin's 打招呼 — ask for a "greeting" and contacto writes one ultra-short first-touch message with no contact discovery.
+## What a run looks like
+Give contacto a company and it finds the people worth contacting, picks the one who benefits most from you being there, and writes a message built for that persona: a recruiter hears hard requirements met, a hiring manager hears impact.
+```txt title="Example"
+> /career-ops contacto notion
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+Primary target: Hiring Manager
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+## Gotchas
+contacto does not scrape LinkedIn (rejected per issue #238). It works from the context you supply — your CV, your prior employers, the mutual connections you mention — plus public WebSearch results. The agent has no access to your private LinkedIn graph. Every message stays under LinkedIn's 300-character connection-request limit and never includes your phone number.
+## Related
+- [deep](/docs/reference/modes/deep)
+- [interview-prep](/docs/reference/modes/interview-prep)
+##### IT
+## Cosa fa
+La modalità contacto legge il nome dell'azienda e il contesto dell'annuncio, poi suggerisce le persone da contattare che trova tramite WebSearch: l'hiring manager, il recruiter assegnato, due o tre colleghi del team e un intervistatore noto. Redige un messaggio breve, di tre frasi e sotto i 300 caratteri, su misura per il ruolo e per chi è il contatto.
+## Quando usarla
+Usa contacto quando ti sei candidato a un ruolo e vuoi far emergere una strada per ottenere una segnalazione. Oppure usala prima di candidarti, quando una presentazione da parte di qualcuno che ti conosce potrebbe farti uscire dalla pila di candidature sul tavolo del recruiter. L'impostazione predefinita è la mossa vincente su LinkedIn; per una piattaforma con un limite rigido di caratteri (la chat di un portale di annunci, l'apertura di una email a freddo, il 打招呼 di BOSS Zhipin) chiedi un "greeting" e contacto scrive un solo messaggio di primo contatto ultra-breve, senza ricerca dei contatti.
+## Come si presenta un'esecuzione
+Dai a contacto un'azienda e lui trova le persone che vale la pena contattare, sceglie quella che trae più vantaggio dalla tua presenza e scrive un messaggio costruito per quel profilo: a un recruiter parla dei requisiti fondamentali soddisfatti, a un hiring manager parla di impatto.
+```txt title="Example"
+> /career-ops contacto notion
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+Primary target: Hiring Manager
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+## A cosa fare attenzione
+contacto non fa scraping di LinkedIn (proposta respinta, vedi issue #238). Lavora a partire dal contesto che gli fornisci (il tuo CV, i tuoi datori di lavoro precedenti, i collegamenti in comune che citi) più i risultati pubblici di WebSearch. L'agente non ha accesso alla tua rete privata di LinkedIn. Ogni messaggio resta sotto il limite di 300 caratteri delle richieste di collegamento di LinkedIn e non include mai il tuo numero di telefono.
+## Vedi anche
+- [deep](/it/docs/reference/modes/deep)
+- [interview-prep](/it/docs/reference/modes/interview-prep)
+##### reference/modes/deep EN
+## What it does
+The `deep` mode generates a structured research prompt for a company you are evaluating, organized around six axes: its AI strategy, its moves in the last six months, its engineering culture, the technical challenges it likely faces, its competitors and differentiation, and your angle as a candidate. You paste that prompt into a research tool — Perplexity, Claude, or ChatGPT — and it returns a brief you can read before the interview. deep personalizes each axis with the specific role and company.
+## When to use it
+Use deep when applying to a company at Series B or later where the decision to apply — or how to interview — needs more than the JD tells you. The candidate-angle axis pulls from your cv.md and profile.yml, so the returned brief closes on what you specifically bring rather than on generic company facts.
+## What a run looks like
+Give deep a company and role and it writes a ready-to-paste research prompt. Each of the six axes is a checklist of questions the research tool should answer, and the final axis turns the findings back toward you.
+```txt title="Example"
+> /career-ops deep notion
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
+```
+## Gotchas
+The brief is only as good as the public information the research tool can find. Stealth-mode startups produce thin results, and any tool can hallucinate a funding round or a leadership name. Verify everything against primary sources before you make a high-stakes decision on it.
+## Related
+- [oferta](/docs/reference/modes/oferta)
+- [contacto](/docs/reference/modes/contacto)
+- [interview-prep](/docs/reference/modes/interview-prep)
+##### IT
+## Cosa fa
+La modalità `deep` genera un prompt di ricerca strutturato per un'azienda che stai valutando, organizzato attorno a sei assi: la sua strategia AI, le sue mosse negli ultimi sei mesi, la sua cultura ingegneristica, le sfide tecniche che probabilmente deve affrontare, i concorrenti e ciò che la distingue, e il tuo punto di forza come candidato. Incolli quel prompt in uno strumento di ricerca (Perplexity, Claude o ChatGPT) e ottieni un brief da leggere prima del colloquio di lavoro. deep personalizza ogni asse con il ruolo e l'azienda specifici.
+## Quando usarlo
+Usa deep quando ti candidi a un'azienda Series B o successiva e la decisione di candidarti, o il modo di affrontare il colloquio, richiede più di quanto ti dice l'annuncio. L'asse sul tuo punto di forza come candidato attinge da cv.md e profile.yml, quindi il brief si chiude su ciò che porti tu in particolare, non su informazioni generiche sull'azienda.
+## Come si presenta un'esecuzione
+Indica a deep un'azienda e un ruolo e scriverà un prompt di ricerca pronto da incollare. Ognuno dei sei assi è una lista di domande a cui lo strumento di ricerca deve rispondere, e l'ultimo asse riporta i risultati verso di te.
+```txt title="Example"
+> /career-ops deep notion
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
+```
+## A cosa fare attenzione
+Il brief vale quanto le informazioni pubbliche che lo strumento di ricerca riesce a trovare. Le startup in modalità stealth danno risultati scarsi, e qualsiasi strumento può inventarsi un round di finanziamento o il nome di un dirigente. Verifica tutto sulle fonti primarie prima di basarci una decisione importante.
+## Vedi anche
+- [oferta](/it/docs/reference/modes/oferta)
+- [contacto](/it/docs/reference/modes/contacto)
+- [interview-prep](/it/docs/reference/modes/interview-prep)
+##### reference/modes/followup EN
+## What it does
+followup mode reads your application tracker, checks the date of last contact against the configured cadence (default: a first nudge 7 days after you apply, and 1 day after an interview for a thank-you note), and flags the entries that are overdue or urgent. For each flagged entry it drafts a contextual followup message grounded in that report and your CV.
+## When to use it
+Run followup on Monday mornings as a weekly ritual. Each Monday it surfaces the followups due that week with drafts ready to send. It is conservative by design — it will not flag an entry until the cadence threshold has clearly passed, so the dashboard stays short and every item on it is genuinely due.
+## What a run looks like
+followup runs a cadence script over your tracker, prints a dashboard sorted by urgency, and drafts a message for each overdue or urgent row. The drafts lead with a concrete proof point, not with the ask, and they never say "just checking in."
+```txt title="Terminal"
+> /career-ops followup
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
+```
+## Gotchas
+An Applied role gets at most two follow-ups; after the second goes unanswered, followup stops drafting and suggests you close the entry or try a different contact through `contacto`. Want a tighter schedule than the seven-day default? Pass a flag to the cadence script — `node followup-cadence.mjs --applied-days 5` — rather than editing the drafts by hand.
+## Related
+- [tracker](/docs/reference/modes/tracker)
+- [patterns](/docs/reference/modes/patterns)
+##### IT
+## Cosa fa
+La modalità followup legge il tracker delle tue candidature, confronta la data dell'ultimo contatto con la cadenza configurata (per impostazione predefinita: un primo sollecito 7 giorni dopo la candidatura e, 1 giorno dopo un colloquio, un messaggio di ringraziamento) e segnala le voci in ritardo o urgenti. Per ogni voce segnalata prepara la bozza di un messaggio di follow-up contestualizzato, basato sul relativo report e sul tuo curriculum.
+## Quando usarla
+Esegui followup il lunedì mattina, come rituale settimanale. Ogni lunedì ti mostra i follow-up previsti per quella settimana, con le bozze pronte da inviare. È prudente per scelta: non segnala una voce finché la soglia della cadenza non è stata chiaramente superata, così la dashboard resta breve e ogni elemento che contiene va davvero gestito.
+## Come si presenta un'esecuzione
+followup esegue uno script di cadenza sul tuo tracker, stampa una dashboard ordinata per urgenza e prepara la bozza di un messaggio per ogni riga in ritardo o urgente. Le bozze partono da una prova concreta, non dalla richiesta, e non dicono mai "volevo solo sapere se ci sono novità".
+```txt title="Terminal"
+> /career-ops followup
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
+```
+## A cosa fare attenzione
+Una candidatura in stato Applied riceve al massimo due follow-up; se anche il secondo resta senza risposta, followup smette di preparare bozze e ti suggerisce di chiudere la voce o di provare con un altro contatto tramite `contacto`. Vuoi una cadenza più stretta dei sette giorni predefiniti? Passa un flag allo script di cadenza (`node followup-cadence.mjs --applied-days 5`) invece di modificare le bozze a mano.
+## Vedi anche
+- [tracker](/it/docs/reference/modes/tracker)
+- [patterns](/it/docs/reference/modes/patterns)
+##### reference/modes/index EN
+## The 14 modes
+career-ops ships **14 user-invocable modes**. Each one is a plain-markdown skill the agent loads and runs inside whichever AI coding CLI you already use — Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot, or [another supported CLI](/docs/supported-clis). You invoke a mode as `/career-ops <mode>`, and each covers one stage of the job search: evaluating a listing against the rubric (five dimensions plus a holistic global score), tailoring a CV, drafting an application, tracking outcomes, or preparing for interviews. Modes are System Layer per the [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) — updates replace them with the latest version, and no update ever modifies your `cv.md`, profile, or reports.
+## Evaluate
+The core scoring loop — read a job listing and score it against the five dimensions plus a holistic global score before you spend any effort on it.
+- **[auto-pipeline](/docs/reference/modes/auto-pipeline)** — the default flow. Paste a JD URL or text; it runs the full A–H evaluation, writes the report, exports a tailored PDF, and logs a tracker entry with no manual steps in between.
+- **[pipeline](/docs/reference/modes/pipeline)** — runs auto-pipeline against every URL queued in `data/pipeline.md`, so a day's worth of listings crunch in one session.
+- **[oferta](/docs/reference/modes/oferta)** — the A–H evaluation of a single listing when you only need the scoring decision, not the full pipeline.
+- **[ofertas](/docs/reference/modes/ofertas)** — ranks two or more competing offers across comp, fit, growth, and red flags into one decision matrix.
+- **[deep](/docs/reference/modes/deep)** — a deep company-research document (funding, leadership, press, comp signals, red flags) before you apply to a company you don't know well.
+## Tailor & apply
+Turn a high-scoring match into a submitted application.
+- **[pdf](/docs/reference/modes/pdf)** — renders a tailored, ATS-clean PDF résumé against a specific JD via Playwright.
+- **[apply](/docs/reference/modes/apply)** — reads an open application form's open-ended questions and drafts answers grounded in your CV and the JD.
+- **[contacto](/docs/reference/modes/contacto)** — surfaces likely-warm LinkedIn contacts and drafts a short, role-specific outreach message.
+- **[followup](/docs/reference/modes/followup)** — flags applications and interviews overdue for follow-up and drafts the messages.
+## Track & grow
+Keep the search organised and calibrate it over time.
+- **[tracker](/docs/reference/modes/tracker)** — a chat-side status summary of every application grouped by stage.
+- **[patterns](/docs/reference/modes/patterns)** — reads your rejected and discarded applications to surface targeting patterns and blind spots.
+- **[interview-prep](/docs/reference/modes/interview-prep)** — round-specific prep docs (recruiter, hiring manager, peer technical, panel) with likely questions and STAR stories.
+- **[training](/docs/reference/modes/training)** — scores a course or certification against your stated career direction and its opportunity cost.
+- **[project](/docs/reference/modes/project)** — scores a portfolio-project idea against your target roles and the time it would take to build.
+## Portals
+Greenhouse, Ashby, and Lever, three of the systems the zero-token scanner reads, have their own [portals reference](/docs/reference/portals).
+##### IT
+## Le 14 modalità
+career-ops include **14 modalità che puoi richiamare direttamente**. Ognuna è una skill in semplice markdown che l'agente carica ed esegue dentro la CLI di programmazione AI che usi già: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot o [un'altra CLI supportata](/it/docs/supported-clis). Richiami una modalità con `/career-ops <mode>`, e ciascuna copre una fase della ricerca di lavoro: valutare un annuncio secondo la griglia (cinque dimensioni più un punteggio globale olistico), adattare il curriculum, redigere una candidatura, monitorare i risultati o prepararti ai colloqui. Le modalità appartengono al System Layer secondo il [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md): gli aggiornamenti le sostituiscono con l'ultima versione, e nessun aggiornamento modifica mai il tuo `cv.md`, il tuo profilo o i tuoi report.
+## Valutare
+Il ciclo di valutazione centrale: leggi un annuncio di lavoro e assegnagli un punteggio sulle cinque dimensioni più un punteggio globale olistico, prima di dedicargli qualsiasi sforzo.
+- **[auto-pipeline](/it/docs/reference/modes/auto-pipeline)**: il flusso predefinito. Incolla l'URL o il testo di un annuncio; esegue la valutazione completa A–H, scrive il report, esporta un PDF su misura e registra una voce nel tracker, senza passaggi manuali nel mezzo.
+- **[pipeline](/it/docs/reference/modes/pipeline)**: esegue auto-pipeline su ogni URL in coda in `data/pipeline.md`, così gli annunci di un'intera giornata vengono elaborati in una sola sessione.
+- **[oferta](/it/docs/reference/modes/oferta)**: la valutazione A–H di un singolo annuncio, quando ti serve solo la decisione sul punteggio e non l'intera pipeline.
+- **[ofertas](/it/docs/reference/modes/ofertas)**: mette a confronto due o più proposte di assunzione in concorrenza su retribuzione, affinità, crescita e segnali d'allarme, in un'unica matrice decisionale.
+- **[deep](/it/docs/reference/modes/deep)**: un documento di ricerca approfondita sull'azienda (finanziamenti, dirigenza, stampa, indizi sulla retribuzione, segnali d'allarme) prima di candidarti a un'azienda che non conosci bene.
+## Adattare e candidarsi
+Trasforma un annuncio con un punteggio alto in una candidatura inviata.
+- **[pdf](/it/docs/reference/modes/pdf)**: genera tramite Playwright un curriculum in PDF su misura per un annuncio specifico, con una struttura pulita e leggibile dagli ATS.
+- **[apply](/it/docs/reference/modes/apply)**: legge le domande a risposta aperta di un modulo di candidatura aperto e redige risposte fondate sul tuo curriculum e sull'annuncio.
+- **[contacto](/it/docs/reference/modes/contacto)**: individua i contatti LinkedIn con cui è più probabile avere già un aggancio e redige un breve messaggio di primo contatto, specifico per il ruolo.
+- **[followup](/it/docs/reference/modes/followup)**: segnala le candidature e i colloqui per cui è ora di farsi risentire e redige i messaggi.
+## Monitorare e crescere
+Tieni in ordine la ricerca di lavoro e calibrala nel tempo.
+- **[tracker](/it/docs/reference/modes/tracker)**: un riepilogo in chat dello stato di ogni candidatura, raggruppato per fase.
+- **[patterns](/it/docs/reference/modes/patterns)**: legge le candidature rifiutate e scartate per far emergere schemi ricorrenti nella scelta degli annunci e punti ciechi.
+- **[interview-prep](/it/docs/reference/modes/interview-prep)**: documenti di preparazione specifici per ogni fase del colloquio di lavoro (recruiter, hiring manager, colloquio tecnico tra pari, panel), con le domande probabili e le storie costruite con il metodo STAR.
+- **[training](/it/docs/reference/modes/training)**: valuta un corso o una certificazione rispetto alla direzione di carriera che hai dichiarato e al suo costo opportunità.
+- **[project](/it/docs/reference/modes/project)**: valuta un'idea di progetto per il portfolio rispetto ai ruoli a cui punti e al tempo necessario per realizzarla.
+## Portali
+Greenhouse, Ashby e Lever, tre dei sistemi che lo scanner a zero token legge, hanno una propria [guida di riferimento ai portali](/it/docs/reference/portals).
+##### reference/modes/interview-prep EN
+career-ops **interview-prep** turns a scheduled interview into a working intelligence document. You name a company and role — or hand it a job posting for a role you never formally evaluated — and it researches the hiring process, classifies each round by who runs it (recruiter screen, hiring manager, peer-technical, or panel), and drafts the questions each is likely to ask, each with a draft answer pulled from your own background. Each question is either sourced from public interview reviews found by web search (for example on Glassdoor or Blind) or tagged `[inferred from JD]`. The result is a saved prep doc, not a chat.
+## What it does
+interview-prep reads the company context (ideally already enriched via `deep` or `oferta`), the job description, and your profile, then produces one prep document scoped to the rounds the company's process is reported to include. The doc covers expected question patterns by audience, talking points specific to your background, and pre-written STAR stories you can adapt live. When an evaluation report already exists for the role, that report is authoritative; when you pass a URL for a role you never evaluated, interview-prep fetches the JD itself — structured ATS API first, then Playwright, with a headless fallback — and asks you to paste the posting's text if it is closed.
+## When to use it
+Run interview-prep once a round is on the calendar — it produces a single document with a section per audience the process involves: the recruiter-screen section covers comp-negotiation prep, hiring-manager covers role fit, peer-technical covers architecture and coding, and panel covers leadership signals. career-ops is also told to run it when a role that scored 4.0 or higher moves to `Interview` in your tracker.
+interview-prep is the **research** step — the intelligence document you study beforehand. It is a different mode from the interactive `plan`, `practice`, and `debrief` interview drills, which rehearse you live and review a round afterwards; they link up (a debrief feeds back into the material interview-prep reads next time). For those drills see the [interview modes guide](/docs/introduction/guides/interview-modes).
+## What a run looks like
+You name the company and role, and the mode returns one interview intel report scoped to the rounds the company's process is reported to include. It researches the process, classifies each round by audience — recruiter screen, hiring manager, peer-technical, or panel — and drafts likely questions, tagging every one with a source citation or an `[inferred from JD]` label.
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
+```
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
+```
+The report also maps stories from your `story-bank.md` to each likely question and flags the gaps where you have no story prepared yet.
+## When to reach for it
+Reach for interview-prep once a round is scheduled and you want a working document instead of generic advice. A few things sharpen the output:
+- Run `oferta` or `deep` against the company first. The prep reads the evaluation report for archetype, gaps, and matched proof points, so more context yields more specific questions.
+- Paste the interviewers' names or the schedule when you have them. For a panel, the mode builds a per-interviewer read and drafts one tailored closing question for each slot.
+- If you have already named a compensation number for the role, the recruiter-screen section folds it in — career-ops reads your stated figure so the comp-negotiation prep is grounded in what you actually said, not a guess.
+- Read the tags: sourced questions cite the review they came from, inferred ones carry `[inferred from JD]`. Treat inferred questions as likely, not as what you will be asked.
+## Related
+- [deep](/docs/reference/modes/deep)
+- [contacto](/docs/reference/modes/contacto)
+- [oferta](/docs/reference/modes/oferta)
+##### IT
+career-ops **interview-prep** trasforma un colloquio di lavoro già fissato in un documento di lavoro da studiare. Indichi un'azienda e un ruolo, oppure gli passi l'annuncio di una posizione che non hai mai valutato formalmente, e lui ricostruisce il processo di selezione, classifica ogni round in base a chi lo conduce (screening con il recruiter, hiring manager, colloquio tecnico tra pari o panel) e prepara le domande che ciascuno ti farà con ogni probabilità, ognuna con una bozza di risposta costruita sul tuo percorso. Ogni domanda proviene da recensioni pubbliche di colloqui trovate con una ricerca web (per esempio su Glassdoor o Blind) oppure è contrassegnata con `[inferred from JD]`. Il risultato è un documento di preparazione salvato, non una chat.
+## Cosa fa
+interview-prep legge il contesto dell'azienda (idealmente già arricchito con `deep` o `oferta`), la descrizione della posizione e il tuo profilo, poi produce un unico documento di preparazione limitato ai round che, secondo le fonti, il processo dell'azienda prevede. Il documento copre gli schemi di domande attesi per ogni interlocutore, gli argomenti specifici del tuo percorso e le storie STAR già scritte che puoi adattare sul momento. Quando per quel ruolo esiste già un report di valutazione, è quel report a fare fede; quando passi l'URL di una posizione che non hai mai valutato, interview-prep recupera da solo la descrizione della posizione (prima con l'API strutturata dell'ATS, poi con Playwright, con un ripiego in modalità headless) e, se l'annuncio è chiuso, ti chiede di incollarne il testo.
+## Quando usarlo
+Esegui interview-prep quando un round è in calendario: produce un solo documento con una sezione per ogni interlocutore coinvolto nel processo. La sezione sullo screening con il recruiter copre la preparazione alla negoziazione della retribuzione, quella sull'hiring manager l'aderenza al ruolo, quella sul colloquio tecnico tra pari architettura e codice, quella sul panel i segnali di leadership. career-ops ha inoltre l'istruzione di eseguirlo quando un ruolo con punteggio pari o superiore a 4,0 passa a `Interview` nel tuo tracker.
+interview-prep è la fase di **ricerca**: il documento che studi prima del colloquio. È un modo diverso dalle esercitazioni interattive `plan`, `practice` e `debrief`, che ti fanno provare dal vivo e rivedono un round a cose fatte; i due si collegano (un debrief alimenta il materiale che interview-prep leggerà la volta successiva). Per queste esercitazioni consulta la [guida ai modi per il colloquio](/it/docs/introduction/guides/interview-modes).
+## Come si presenta un'esecuzione
+Indichi l'azienda e il ruolo, e il modo restituisce un unico report di preparazione al colloquio, limitato ai round che secondo le fonti il processo dell'azienda prevede. Ricostruisce il processo, classifica ogni round per interlocutore (screening con il recruiter, hiring manager, colloquio tecnico tra pari o panel) e prepara le domande probabili, contrassegnando ciascuna con la citazione della fonte o con l'etichetta `[inferred from JD]`.
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
+```
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
+```
+Il report associa inoltre le storie del tuo `story-bank.md` a ogni domanda probabile e segnala i punti scoperti, dove non hai ancora una storia pronta.
+## Come ottenere una preparazione più precisa
+Ricorri a interview-prep quando un round è fissato e vuoi un documento di lavoro invece di consigli generici. Alcuni accorgimenti rendono il risultato più preciso:
+- Esegui prima `oferta` o `deep` sull'azienda. La preparazione legge il report di valutazione per ricavarne archetipo, lacune e prove concrete corrispondenti, quindi più contesto significa domande più specifiche.
+- Incolla i nomi degli intervistatori o il programma della giornata, quando li hai. Per un panel, il modo costruisce una lettura di ogni intervistatore e prepara una domanda di chiusura su misura per ciascuno slot.
+- Se hai già indicato una cifra di retribuzione per il ruolo, la sezione sullo screening con il recruiter la integra: career-ops legge la cifra che hai dichiarato, così la preparazione alla negoziazione si basa su ciò che hai detto davvero e non su un'ipotesi.
+- Leggi le etichette: le domande con fonte citano la recensione da cui provengono, quelle dedotte riportano `[inferred from JD]`. Considera le domande dedotte come probabili, non come ciò che ti verrà chiesto.
+## Vedi anche
+- [deep](/it/docs/reference/modes/deep)
+- [contacto](/it/docs/reference/modes/contacto)
+- [oferta](/it/docs/reference/modes/oferta)
+##### reference/modes/oferta EN
+## What it does
+oferta mode reads a single JD (URL or pasted text), scores it against the rubric — five dimensions plus a holistic global score — with cited evidence, and writes the evaluation report. No PDF, but it adds a tracker row with the status Evaluated. Fast and cheap.
+## When to use it
+Use oferta to triage a borderline listing quickly. If the score clears 4.0 and you decide to apply, escalate to auto-pipeline or apply mode.
+## What a run looks like
+You hand the mode one listing and it returns the seven-block evaluation — Blocks A through F and a Block G legitimacy read, plus Block H draft answers when the score is 4.5 or higher — with a score and cited reasoning. Paste JD text directly, or pass a URL and the mode first confirms the posting is still live so a dead link never burns a full evaluation.
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+Blocks B through F cover CV match and gaps, level strategy, comp and demand, a customization plan, and STAR+R interview stories mapped to the job's requirements.
+## When to reach for it
+Reach for oferta to score a single listing quickly without committing to the full pipeline. Worth knowing:
+- Pass a URL and a liveness check runs first — an expired or 404 posting is stopped before Block A, so you never spend a run on phantom content.
+- Company and comp research is bounded to at most five web searches; this is an evaluation, not deep research. Run `/career-ops deep` separately when you want the fuller company picture.
+- Block G returns one of three tiers — High Confidence, Proceed with Caution, or Suspicious — so likely ghost jobs surface before you invest interview effort.
+## Score Evidence
+The report includes **Score Evidence** after Risk Summary. It covers five dimensions: CV match, North Star alignment, compensation, cultural signals, and red flags. Each row records an evidence status (`supported`, `partial`, or `unknown`), a concrete source or observation, and an unresolved question. The section ends with an evidence-confidence tier (`High`, `Medium`, or `Low`), its reason, and up to three verification priorities.
+This tier describes the evidence behind the Global Score; it is neither a hiring probability nor Block G's posting-legitimacy tier, and it does not change the numeric score. Machine Summary preserves the five statuses in `score_evidence`, the tier in `confidence`, and priorities in `confidence_gaps`. When there are no priorities left, `confidence_gaps` is an empty list.
+## Related
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [ofertas](/docs/reference/modes/ofertas)
+- [pdf](/docs/reference/modes/pdf)
+##### IT
+## Cosa fa
+La modalità oferta legge una singola JD (URL o testo incollato), le assegna un punteggio in base alla griglia di valutazione (cinque dimensioni più un punteggio globale olistico) citando le prove a supporto, e scrive il report di valutazione. Niente PDF, ma aggiunge una riga al tracker con lo stato Evaluated. Veloce ed economica.
+## Quando usarla
+Usa oferta per fare rapidamente una prima scrematura di un annuncio su cui hai dei dubbi. Se il punteggio supera 4,0 e decidi di candidarti, passa alla modalità auto-pipeline o apply.
+## Come si presenta un'esecuzione
+Passi alla modalità un annuncio e ti restituisce la valutazione in sette blocchi (i blocchi da A a F e un blocco G sulla legittimità dell'annuncio, più le bozze di risposta del blocco H quando il punteggio è pari o superiore a 4,5), con un punteggio e la motivazione corredata di prove. Incolla direttamente il testo della JD oppure passa un URL: in quel caso la modalità verifica prima che l'annuncio sia ancora attivo, così un link morto non ti fa mai sprecare una valutazione completa.
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+I blocchi da B a F coprono la corrispondenza con il CV e le lacune, la strategia di livello, la retribuzione e la domanda di mercato, un piano di personalizzazione e le storie STAR+R per il colloquio di lavoro, associate ai requisiti della posizione.
+## Quando conviene usarla
+Ricorri a oferta per valutare rapidamente un singolo annuncio senza impegnarti nell'intera pipeline. Buono a sapersi:
+- Se passi un URL, viene eseguito prima un controllo di attività: un annuncio scaduto o in 404 viene bloccato prima del blocco A, così non sprechi mai un'esecuzione su contenuti fantasma.
+- La ricerca sull'azienda e sulla retribuzione è limitata a un massimo di cinque ricerche web: è una valutazione, non una ricerca approfondita. Esegui `/career-ops deep` a parte quando vuoi un quadro più completo dell'azienda.
+- Il blocco G restituisce uno di tre livelli (High Confidence, Proceed with Caution o Suspicious), così i probabili annunci fantasma emergono prima che tu investa energie nei colloqui.
+## Score Evidence
+Il report include la sezione **Score Evidence** dopo Risk Summary. Copre cinque dimensioni: corrispondenza con il CV, allineamento con la North Star, retribuzione, segnali culturali e campanelli d'allarme. Ogni riga registra uno stato delle prove (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità delle prove (`High`, `Medium` o `Low`), la relativa motivazione e fino a tre priorità di verifica.
+Questo livello descrive le prove alla base del Global Score: non è una probabilità di assunzione né il livello di legittimità dell'annuncio del blocco G, e non modifica il punteggio numerico. Machine Summary conserva i cinque stati in `score_evidence`, il livello in `confidence` e le priorità in `confidence_gaps`. Quando non restano priorità, `confidence_gaps` è una lista vuota.
+## Vedi anche
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)
+- [ofertas](/it/docs/reference/modes/ofertas)
+- [pdf](/it/docs/reference/modes/pdf)
+##### reference/modes/ofertas EN
+## What it does
+The `ofertas` mode reads multiple JD evaluations (already produced by oferta or auto-pipeline) and ranks them against each other on the five dimensions plus a holistic global score and a normalized decision matrix. The output is a side-by-side comparison report and a ranked recommendation.
+## When to use it
+Use ofertas when you reach late-stage interviews for multiple roles and need a structured way to decide between them. Particularly useful for staff-level offers where comp packages and growth paths differ substantially.
+## What a run looks like
+You give the mode two or more offers and it scores each one across ten weighted dimensions, then ranks them. The heaviest weight sits on North Star alignment (25%), followed by CV match and seniority (15% each); compensation and growth trajectory carry 10% each, with reputation, remote quality, tech stack, time-to-offer, and cultural signals filling the rest.
+```bash title="Terminal"
+/career-ops ofertas
+```
+```txt title="Comparison excerpt"
+# Offer Comparison — 3 roles
+| Dimension (weight)       | Acme | Globex | Initech |
+|--------------------------|------|--------|---------|
+| North Star align (25%)   | 5    | 3      | 4       |
+| CV match (15%)           | 4    | 4      | 3       |
+| Compensation (10%)       | 3    | 5      | 4       |
+| Growth trajectory (10%)  | 5    | 3      | 3       |
+| ...                      |      |        |         |
+| Weighted total           | 4.4  | 3.6    | 3.5     |
+Recommendation: Acme — strongest North Star fit and growth path.
+Globex pays more but ranks lower on trajectory and time-to-offer.
+```
+## When to reach for it
+Reach for ofertas when you hold two or more competing offers and need a normalized way to choose. It is most useful at staff level, where comp packages and growth paths diverge enough that gut feel misleads.
+- Supply the postings as pasted text, URLs, or references to jobs already in your tracker; if none are in context, the mode asks for them.
+- Score each offer individually first — with `oferta` or `auto-pipeline` — so the comparison ranks consistent evaluations rather than mixing depths.
+- Because North Star alignment is weighted at 25%, a higher salary alone will not top the ranking; a role that matches your target trajectory can outscore a better-paid detour.
+## Related
+- [oferta](/docs/reference/modes/oferta)
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+##### IT
+## Cosa fa
+La modalità `ofertas` legge più valutazioni di annunci (già prodotte da oferta o auto-pipeline) e le mette a confronto in una classifica basata sulle cinque dimensioni più un punteggio globale olistico e su una matrice decisionale normalizzata. Il risultato è un report di confronto fianco a fianco e una raccomandazione in ordine di preferenza.
+## Quando usarla
+Usa ofertas quando arrivi alle fasi finali dei colloqui per più ruoli e ti serve un metodo strutturato per scegliere. È particolarmente utile per le proposte di livello staff, dove pacchetti retributivi e percorsi di crescita differiscono in modo sostanziale.
+## Come funziona in pratica
+Dai alla modalità due o più proposte di assunzione: lei assegna a ciascuna un punteggio su dieci dimensioni ponderate e poi le ordina. Il peso maggiore va all'allineamento con la tua North Star (25%), seguito da corrispondenza con il curriculum e seniority (15% ciascuna); retribuzione e traiettoria di crescita valgono il 10% ciascuna, mentre reputazione, qualità del lavoro da remoto, stack tecnologico, tempi per arrivare alla proposta e segnali culturali coprono il resto.
+```bash title="Terminal"
+/career-ops ofertas
+```
+```txt title="Comparison excerpt"
+# Offer Comparison — 3 roles
+| Dimension (weight)       | Acme | Globex | Initech |
+|--------------------------|------|--------|---------|
+| North Star align (25%)   | 5    | 3      | 4       |
+| CV match (15%)           | 4    | 4      | 3       |
+| Compensation (10%)       | 3    | 5      | 4       |
+| Growth trajectory (10%)  | 5    | 3      | 3       |
+| ...                      |      |        |         |
+| Weighted total           | 4.4  | 3.6    | 3.5     |
+Recommendation: Acme — strongest North Star fit and growth path.
+Globex pays more but ranks lower on trajectory and time-to-offer.
+```
+## Come scegliere tra più proposte di assunzione
+Ricorri a ofertas quando hai due o più proposte di assunzione in concorrenza e ti serve un criterio normalizzato per scegliere. Dà il meglio a livello staff, dove pacchetti retributivi e percorsi di crescita divergono abbastanza da rendere l'istinto una guida ingannevole.
+- Fornisci gli annunci come testo incollato, URL o riferimenti a posizioni già presenti nel tuo tracker; se nel contesto non ce n'è nessuno, la modalità te li chiede.
+- Valuta prima ogni proposta singolarmente, con `oferta` o `auto-pipeline`, così il confronto mette in classifica valutazioni omogenee invece di mescolare livelli di approfondimento diversi.
+- Poiché l'allineamento con la North Star pesa il 25%, uno stipendio più alto da solo non basta per arrivare in cima alla classifica; un ruolo coerente con la traiettoria che ti sei dato può superare una deviazione pagata meglio.
+## Pagine correlate
+- [oferta](/it/docs/reference/modes/oferta)
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)
+##### reference/modes/patterns EN
+## What it does
+The `patterns` mode reads every report in the rejected and discarded stages, looks for common features (industry, company size, seniority level, specific keywords), and produces a structured analysis of what is and is not working in your targeting.
+## When to use it
+Run patterns after every 20–30 rejections to recalibrate. The mode surfaces blind spots in your profile and helps you avoid sending applications into the same dead patterns.
+## What a run looks like
+You run the mode after a batch of outcomes and it returns a dated pattern-analysis report plus a short summary of the three findings that matter most. Under the hood it runs `analyze-patterns.mjs` over your tracker and reports, then reads back a conversion funnel, a score-versus-outcome table, top blockers, and a recommended score floor.
+```bash title="Terminal"
+/career-ops patterns
+```
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+Full report: reports/pattern-analysis-2026-05-18.md
+```
+After presenting the summary, the mode offers to act on the findings — updating `portals.yml` filters, setting a score threshold, or reweighting which archetypes you target.
+## When to reach for it
+Reach for patterns once enough applications have moved past evaluation that outcomes carry signal. The hard gate is five entries with a status that means the application was actually sent: Applied, Responded, Interview, Offer, Hired, or Rejected. Discarded and SKIP rows do not count. Below that the mode exits and asks you to come back with more data. More outcomes mean sharper patterns, so it earns its keep after a month of steady applying.
+- If you keep interview transcripts in `interview-prep/sessions/`, the mode adds a targeting signal: where your most fluent, specific answers cluster, which catches when your strongest role-type differs from the one you keep applying to.
+- The report never names a real interviewer or company from those sessions — it summarizes competency clusters only, so anything committed stays private.
+## Related
+- [tracker](/docs/reference/modes/tracker)
+- [followup](/docs/reference/modes/followup)
+##### IT
+## Cosa fa
+La modalità `patterns` legge tutti i report nelle fasi di candidatura respinta e scartata, cerca le caratteristiche comuni (settore, dimensione dell'azienda, livello di seniority, parole chiave specifiche) e produce un'analisi strutturata di ciò che funziona e di ciò che non funziona nel modo in cui scegli a cosa candidarti.
+## Quando usarla
+Esegui patterns ogni 20–30 candidature respinte per ricalibrare. La modalità fa emergere i punti ciechi del tuo profilo e ti aiuta a non inviare altre candidature seguendo gli stessi schemi senza sbocco.
+## Come si presenta un'esecuzione
+Esegui la modalità dopo una serie di esiti e ottieni un report di analisi degli schemi, con data, più un breve riepilogo dei tre risultati che contano di più. Dietro le quinte esegue `analyze-patterns.mjs` sul tuo tracker e sui tuoi report, poi ti restituisce un funnel di conversione, una tabella che mette a confronto punteggi ed esiti, gli ostacoli principali e una soglia minima di punteggio consigliata.
+```bash title="Terminal"
+/career-ops patterns
+```
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+Full report: reports/pattern-analysis-2026-05-18.md
+```
+Dopo aver presentato il riepilogo, la modalità ti propone di agire sui risultati: aggiornare i filtri di `portals.yml`, impostare una soglia di punteggio o ribilanciare gli archetipi a cui punti.
+## Quando conviene usarla
+Ricorri a patterns quando un numero sufficiente di candidature ha superato la fase di valutazione e gli esiti cominciano a dire qualcosa. Il requisito minimo è rigido: cinque voci con uno stato che indica che la candidatura è stata davvero inviata, cioè Applied, Responded, Interview, Offer, Hired o Rejected. Le righe Discarded e SKIP non contano. Sotto questa soglia la modalità si interrompe e ti chiede di tornare con più dati. Più esiti hai, più nitidi sono gli schemi: per questo dà il meglio dopo un mese di candidature costanti.
+- Se conservi le trascrizioni dei colloqui in `interview-prep/sessions/`, la modalità aggiunge un segnale in più: dove si concentrano le tue risposte più fluide e specifiche, il che rivela quando il tipo di ruolo in cui sei più forte è diverso da quello a cui continui a candidarti.
+- Il report non nomina mai un intervistatore o un'azienda reali presenti in quelle sessioni: riassume soltanto i gruppi di competenze, così tutto ciò che finisce in un commit resta privato.
+## Vedi anche
+- [tracker](/it/docs/reference/modes/tracker)
+- [followup](/it/docs/reference/modes/followup)
+##### reference/modes/pdf EN
+## What it does
+pdf mode reads your master cv.md, the JD context, and runs the tailor step (rewriting bullets, reordering sections, integrating priority keywords) before exporting to PDF via Playwright with a CSS template that respects ATS parser conventions. The result is upload-ready.
+## When to use it
+Use pdf when you have already evaluated the listing and decided to apply, and want only the tailored PDF without re-running the evaluation step.
+## What a run looks like
+You point the mode at a listing you've already evaluated and it produces one tailored, ATS-ready PDF — no re-evaluation. It extracts 15-20 keywords from the JD, picks the paper size from the company's location, rewrites your summary and reorders bullets around the role, then renders the HTML to PDF and reports keyword coverage.
+```bash title="Terminal"
+/career-ops pdf acme
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+The layout stays single-column with standard section headers and selectable text — the structure ATS parsers read cleanly — and keywords are woven into real achievements, never invented.
+## When to reach for it
+Reach for pdf when you've decided to apply and want only the tailored resume, skipping the evaluation step. A few behaviors worth knowing:
+- Paper size follows the company's location automatically: `letter` for US and Canada roles, `a4` everywhere else.
+- Keyword injection is truth-based. The mode rewords real experience into the JD's exact vocabulary but never adds a skill you do not have.
+- For DACH and much of continental Europe you can opt into a photo by setting `candidate.photo` in `config/profile.yml`; leave it empty and the CV renders pixel-for-pixel identical without one, which is the safer default for US, UK, and ATS-first markets.
+## Gotchas
+Requires Playwright installed locally. The build script may fail on minimal Linux installs missing system fonts. Run `npm run doctor` to diagnose.
+PDF generation stops when your Work Experience entries are not newest-first, and the error quotes the dates of the role that starts later than the one above it. Put the roles back in reverse-chronological order and rerun: tailor a CV through the summary and the bullets, not by moving roles. If you deliberately want another order, pass `--allow-nonchronological` to `generate-pdf.mjs` and it renders with a warning instead. With `--batch`, only the out-of-order CV fails and the rest still render.
+`generate-pdf.mjs` records each PDF it writes in `data/pdf-index.tsv`, and career-ops reads that file to find the CV for a report. Each row carries a `kind` of `cv` or `cover`, and a report keeps one row of each. Regenerating a PDF replaces only the row of its own kind.
+Without `--kind`, the kind comes from the output filename. A name that starts with `cv-` is a CV, and one that starts with `cover-` or ends in `-cover` is a cover letter. Any other name is filed as a CV.
+The cover mode files its letters as `cover` whatever their name, so the filename rule matters only when you run `generate-pdf.mjs` yourself. A letter rendered to `acme-letter.pdf` with `--report=008` replaces report 008's CV row, and a lookup of that CV returns the letter. Pass `--kind=cover` when the filename does not say which it is:
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+`--kind` takes `cv` or `cover`, and any other value, empty included, stops the run before anything renders. `--batch` rejects it; set `"kind"` on an entry in the batch file instead. `generate-pdf.mjs` owns `data/pdf-index.tsv`, and its header line says not to edit it by hand.
+## Related
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+##### IT
+## Che cosa fa
+La modalità pdf legge il tuo cv.md principale e il contesto della JD, poi esegue il passaggio di adattamento (riscrive i punti elenco, riordina le sezioni, integra le parole chiave prioritarie) prima di esportare in PDF tramite Playwright, con un template CSS che rispetta le convenzioni dei parser ATS. Il risultato è pronto da caricare.
+## Quando usarla
+Usa pdf quando hai già valutato l'annuncio e hai deciso di candidarti, e vuoi solo il PDF su misura senza rieseguire la valutazione.
+## Come si presenta un'esecuzione
+Indichi alla modalità un annuncio che hai già valutato e lei produce un solo PDF su misura, pronto per gli ATS, senza una nuova valutazione. Estrae 15-20 parole chiave dalla JD, sceglie il formato della pagina in base alla sede dell'azienda, riscrive il tuo profilo e riordina i punti elenco attorno al ruolo, poi converte l'HTML in PDF e riporta la copertura delle parole chiave.
+```bash title="Terminal"
+/career-ops pdf acme
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+L'impaginazione resta a colonna singola, con titoli di sezione standard e testo selezionabile (la struttura che i parser ATS leggono senza problemi), e le parole chiave vengono inserite in risultati reali, mai inventate.
+## Quando conviene usarla
+Scegli pdf quando hai deciso di candidarti e vuoi solo il curriculum su misura, saltando la valutazione. Alcuni comportamenti che è utile conoscere:
+- Il formato della pagina segue automaticamente la sede dell'azienda: `letter` per i ruoli negli Stati Uniti e in Canada, `a4` in tutti gli altri casi.
+- L'inserimento delle parole chiave si basa sulla verità. La modalità riformula la tua esperienza reale con il vocabolario esatto della JD, ma non aggiunge mai una competenza che non hai.
+- Per l'area DACH e gran parte dell'Europa continentale puoi scegliere di includere una foto impostando `candidate.photo` in `config/profile.yml`; se lo lasci vuoto, il CV viene generato identico pixel per pixel ma senza foto, ed è l'impostazione predefinita più sicura per Stati Uniti, Regno Unito e mercati in cui domina l'ATS.
+## Problemi comuni
+Richiede Playwright installato in locale. Lo script di build può fallire sulle installazioni Linux minimali prive dei font di sistema. Esegui `npm run doctor` per la diagnosi.
+La generazione del PDF si ferma quando le voci di Work Experience non sono ordinate dalla più recente, e l'errore riporta le date del ruolo che inizia più tardi di quello che lo precede. Rimetti i ruoli in ordine cronologico inverso e riprova: un CV si adatta attraverso il profilo e i punti elenco, non spostando i ruoli. Se vuoi di proposito un altro ordine, passa `--allow-nonchronological` a `generate-pdf.mjs` e il PDF viene generato con un avviso. Con `--batch` fallisce solo il CV fuori ordine e gli altri vengono generati comunque.
+`generate-pdf.mjs` registra ogni PDF che scrive in `data/pdf-index.tsv`, e career-ops legge quel file per trovare il CV di un report. Ogni riga ha un `kind` uguale a `cv` o `cover`, e un report conserva una riga per ciascun tipo. Rigenerare un PDF sostituisce solo la riga del suo stesso tipo.
+Senza `--kind`, il tipo si ricava dal nome del file di output. Un nome che inizia con `cv-` è un CV, e uno che inizia con `cover-` o finisce con `-cover` è una lettera di presentazione. Qualsiasi altro nome viene archiviato come CV.
+La modalità cover archivia le sue lettere come `cover` qualunque sia il loro nome, quindi la regola sul nome del file conta solo quando esegui `generate-pdf.mjs` di persona. Una lettera generata in `acme-letter.pdf` con `--report=008` sostituisce la riga CV del report 008, e una ricerca di quel CV restituisce la lettera. Passa `--kind=cover` quando il nome del file non dice di che tipo si tratta:
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+`--kind` accetta `cv` o `cover`, e qualsiasi altro valore, compreso quello vuoto, interrompe l'esecuzione prima che venga generato qualcosa. `--batch` lo rifiuta; imposta invece `"kind"` su una voce del file batch. `generate-pdf.mjs` è il proprietario di `data/pdf-index.tsv`, e la riga di intestazione del file dice di non modificarlo a mano.
+## Vedi anche
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)
+##### reference/modes/pipeline EN
+## What it does
+pipeline mode iterates over the URLs in data/pipeline.md (one per line) and invokes auto-pipeline against each. Reports, PDFs, and tracker entries are written for every listing that produces a valid evaluation. Failed scrapes are logged and skipped.
+## When to use it
+Use pipeline when you have a backlog of URLs to process. Drop them in data/pipeline.md, invoke /career-ops pipeline, and step away.
+## What a run looks like
+You drop URLs into `data/pipeline.md` and the mode processes the whole inbox in one pass. First it runs a zero-token liveness sweep to drop expired postings, then it evaluates each surviving URL through the full auto-pipeline and ends with a summary table of what it found.
+```txt title="Pipeline run"
+$ /career-ops pipeline
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+Processing 6 live URLs (one at a time)...
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+Each processed URL moves from the `## Pending` to the `## Processed` section of the file, so the inbox stays a live record of what is left.
+## When to reach for it
+Reach for pipeline when you have collected a backlog of listings during the day and want to crunch them in a single session. How it handles the queue:
+- The `## Pending` section accepts any shape — a bare pasted URL works, or you can add `company`, `role`, `location`, and `comp` columns, and the mode reads them all.
+- The liveness sweep runs before the per-URL loop, so a stale inbox of eight URLs does not cost eight wasted evaluations.
+- The extraction tool decides the concurrency. With the default browser extractor (Playwright MCP) it processes URLs one at a time, because workers sharing one browser session can cross-contaminate and evaluate the wrong posting. Only when every worker uses the isolated CLI extractor (`scan.extractor: cli`) or a non-browser fallback, each with its own process and session state, can three or more URLs run in parallel, one worker per URL.
+- PDFs are generated only when a score clears `auto_pdf_score_threshold` (default 3.0); raise it to skip PDFs for marginal roles and generate them on demand later with `/career-ops pdf`.
+## Related
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+##### IT
+## Cosa fa
+La modalità pipeline scorre gli URL presenti in data/pipeline.md (uno per riga) e lancia auto-pipeline su ciascuno. Per ogni annuncio che produce una valutazione valida vengono scritti report, PDF e voci del tracker. Le estrazioni fallite vengono registrate e saltate.
+## Quando usarlo
+Usa pipeline quando hai un arretrato di URL da elaborare. Incollali in data/pipeline.md, lancia /career-ops pipeline e allontanati pure.
+## Come si presenta un'esecuzione
+Inserisci gli URL in `data/pipeline.md` e la modalità elabora l'intera coda in un solo passaggio. Per prima cosa esegue un controllo di validità a zero token per scartare gli annunci scaduti, poi valuta ogni URL rimasto con l'auto-pipeline completo e chiude con una tabella riepilogativa di ciò che ha trovato.
+```txt title="Pipeline run"
+$ /career-ops pipeline
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+Processing 6 live URLs (one at a time)...
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+Ogni URL elaborato passa dalla sezione `## Pending` alla sezione `## Processed` del file, così la coda resta un registro sempre aggiornato di ciò che manca.
+## Quando conviene usarlo
+Ricorri a pipeline quando durante la giornata hai accumulato un arretrato di annunci e vuoi elaborarli tutti in un'unica sessione. Ecco come gestisce la coda:
+- La sezione `## Pending` accetta qualsiasi formato: va bene un semplice URL incollato, oppure puoi aggiungere le colonne `company`, `role`, `location` e `comp`, e la modalità le legge tutte.
+- Il controllo di validità viene eseguito prima del ciclo sui singoli URL, così una coda vecchia di otto URL non ti costa otto valutazioni sprecate.
+- È lo strumento di estrazione a decidere la concorrenza. Con l'estrattore predefinito basato sul browser (Playwright MCP) gli URL vengono elaborati uno alla volta, perché i worker che condividono la stessa sessione del browser possono contaminarsi a vicenda e valutare l'annuncio sbagliato. Solo quando ogni worker usa l'estrattore CLI isolato (`scan.extractor: cli`) o un'alternativa che non passa dal browser, ciascuno con il proprio processo e il proprio stato di sessione, si possono elaborare tre o più URL in parallelo, un worker per URL.
+- I PDF vengono generati solo quando il punteggio supera `auto_pdf_score_threshold` (valore predefinito: 3.0); alzalo per evitare i PDF dei ruoli poco convincenti e generali più avanti, su richiesta, con `/career-ops pdf`.
+## Vedi anche
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)
+##### reference/modes/project EN
+## What it does
+project mode reads the project idea description, your target archetypes from config/profile.yml, and your existing portfolio context, then scores the project on three dimensions: signal value for target roles, differentiation from your existing portfolio, and estimated time-to-shippable.
+## When to use it
+Use project when you have three or four side-project ideas and want to pick the one that actually moves your job search forward. It is the side-project equivalent of the oferta mode.
+## Example
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+## What a run looks like
+A project run returns a legitimacy read, a weighted score across six dimensions, and one clear verdict. You hand the mode an idea, and it grades that idea the way a hiring manager would read it off your portfolio rather than judging whether the code will compile.
+```txt title="Example"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+The verdict is always one of three: BUILD, with weekly milestones; SKIP, with what to do instead; or PIVOT TO an alternative that carries more signal for the roles you are chasing. The six dimensions are weighted, so a project that demos well and produces clean metrics can outrank a more novel idea that has no visible payoff.
+## The interview pack
+Every approved project ships with an interview pack, because the story is the deliverable, not the repository. The pack has three parts: a one-pager covering product, architecture, metrics, and evaluation plan; a demo, either a live URL or a two-minute recorded walkthrough; and a postmortem of what worked, what did not, and how you mitigated it. A built project with no narrative attached rarely moves a job search, while a modest project with a crisp trade-off story often does. The 80/20 plan reflects this: week one is the MVP with its core metric, week two is polish plus the pack itself.
+## Gotchas
+The mode does not validate technical feasibility, only career signal value. Run a separate technical scoping pass.
+## Related
+- [training](/docs/reference/modes/training)
+##### IT
+## Cosa fa
+La modalità project legge la descrizione dell'idea di progetto, i tuoi archetipi target da config/profile.yml e il contesto del portfolio che hai già, poi valuta il progetto su tre dimensioni: il valore del segnale per i ruoli target, la differenziazione rispetto al portfolio esistente e il tempo stimato per arrivare a qualcosa di pubblicabile.
+## Quando usarla
+Usa project quando hai tre o quattro idee di progetti personali e vuoi scegliere quella che fa davvero avanzare la tua ricerca di lavoro. È l'equivalente della modalità oferta, ma per i progetti personali.
+## Esempio
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+## Come si presenta un'esecuzione
+Un'esecuzione di project restituisce una lettura della legittimità, un punteggio ponderato su sei dimensioni e un unico verdetto chiaro. Tu passi un'idea alla modalità, e lei la valuta come la leggerebbe un responsabile della selezione sul tuo portfolio, invece di giudicare se il codice compilerà.
+```txt title="Esempio"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+Il verdetto è sempre uno di tre: BUILD, con le tappe settimanali; SKIP, con cosa fare al suo posto; oppure PIVOT TO, verso un'alternativa che porta più segnale per i ruoli a cui punti. Le sei dimensioni sono ponderate, quindi un progetto che si presta bene a una demo e produce metriche pulite può superare un'idea più originale ma senza un ritorno visibile.
+## Il pacchetto per il colloquio
+Ogni progetto approvato arriva con un pacchetto per il colloquio, perché il risultato da consegnare è la storia, non il repository. Il pacchetto ha tre parti: una scheda di una pagina con prodotto, architettura, metriche e piano di valutazione; una demo, cioè un URL live oppure una presentazione registrata di due minuti; e un post mortem su cosa ha funzionato, cosa no e come hai rimediato. Un progetto realizzato ma senza una narrazione raramente fa avanzare una ricerca di lavoro, mentre un progetto modesto con una storia nitida sui compromessi affrontati spesso ci riesce. Il piano 80/20 riflette proprio questo: la prima settimana è l'MVP con la sua metrica principale, la seconda è la rifinitura più il pacchetto stesso.
+## Cose da sapere
+La modalità non verifica la fattibilità tecnica, solo il valore del segnale per la carriera. Fai a parte una stima della fattibilità tecnica.
+## Vedi anche
+- [training](/it/docs/reference/modes/training)
+##### reference/modes/tracker EN
+## What it does
+The `tracker` mode reads every file in reports/ and produces a structured summary grouped by stage: applied, evaluated, interview, rejected, discarded. Counts per stage, recent activity, and overdue followups are surfaced in a single response.
+## When to use it
+Use tracker for a daily fifteen-second status check. Use the Go TUI dashboard when you need to dig in.
+## Example
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+## What a run looks like
+A tracker run prints the full applications table plus a statistics block in a single response, so you can read the whole search at a glance. Each row is one application with its company, role, score, current status, and whether a tailored PDF and an evaluation report have been generated.
+```txt title="Example"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
+```
+An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, ask for it in the chat or run `node set-status.mjs <report#|company> <state>` yourself, adding `--on YYYY-MM-DD` when it happened on an earlier day. The command rejects unknown states, locks the tracker while it writes, and logs the transition in `data/status-log.tsv`, the ledger the funnel-velocity statistics read, so use it instead of hand-editing the row.
+## Reading the lifetime numbers
+For cumulative figures — the full funnel, scanner totals, portal coverage, and follow-up compliance — the mode runs `node stats.mjs --summary` and presents its output verbatim. That command reads your local files and costs zero tokens, so the numbers are never recomputed by hand or estimated from memory. Use the chat summary above for a fast daily read, and the stats command when you want the running totals across the whole search.
+## Exporting a repaired copy
+Over hundreds of rows a markdown table picks up damage: mojibake placeholders, a score stranded in the status column, duplicate ids, stray pipes. `node tracker.mjs sync` finds and repairs these in its SQLite index, `data/applications.db`, without touching the markdown. `tracker.mjs` needs Node 22.13 or later (23.4 or later on Node 23) for that index; the markdown tracker keeps working without it. `node tracker.mjs export` is how you adopt that repaired copy of your own tracker:
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+`export` never touches `data/applications.md` unless you pass it as `--out`.
+It preserves the layout it read, not just the values: your header row, columns career-ops does not map (`Location`, `Via`, `URL` or your own), the title, any preamble and trailing lines, and CRLF vs LF line endings. Extra columns come back in their own positions, though `query` cannot filter on them.
+Anything it cannot reproduce is named on stderr. When that list is not empty, `--out` over an existing file refuses to write (exit code `1`, nothing written) until you re-run with `--force`; when it is empty, `--out` backs up the existing file and overwrites it. What gets reported:
+| Reported | Why it cannot be rebuilt |
+| --- | --- |
+| A cell outside the columns the header declares | The header has no column to put it in |
+| A line between the first and last table row, such as a heading or a second table's header | A single rebuilt table has nowhere to put it |
+| A row belonging to a later table, such as an `## Archive` section | It was indexed against the first table's header, so re-emitting it would move archived data into the active table |
+| A cell whose value had to be rewritten to survive as a cell (a stray `\|` comes back as `│`) | The value itself changed |
+No losses reported does not mean the output is byte-identical. `export` emits the repairs `sync` made, and some of them are silent: `aplicado` is a recognized alias for `Applied` in `templates/states.yml`, so `sync --check` reports no corruption and the export says `Applied` anyway. Column-aligned cells also come back single-spaced. Before adopting an export, diff it against the file it replaces:
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+The full command reference, including `sync`, `query` and `history`, is in the core repo's [scripts guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker).
+## Gotchas
+Status lives in the Status column of the tracker (`data/applications.md`), not in the report file. The Go TUI dashboard's status picker also updates that column, but it does not log the transition in `data/status-log.tsv` the way `set-status.mjs` does. funnel-velocity still sees the new status, but not when it happened: the change is missing from the stage-velocity timings, and a row that later ends in Rejected loses the stages it passed through. Use the command for any change you want those figures to include.
+## Related
+- [followup](/docs/reference/modes/followup)
+- [patterns](/docs/reference/modes/patterns)
+##### IT
+## Cosa fa
+La modalità `tracker` legge tutti i file in reports/ e produce un riepilogo strutturato, raggruppato per fase: candidature inviate, valutate, in colloquio, rifiutate, scartate. In un'unica risposta trovi i conteggi per fase, l'attività recente e i followup in ritardo.
+## Quando usarla
+Usa tracker per un controllo quotidiano dello stato che richiede quindici secondi. Usa la dashboard TUI in Go quando devi andare a fondo.
+## Esempio
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+## Come si presenta un'esecuzione
+Un'esecuzione di tracker stampa in un'unica risposta la tabella completa delle candidature e un blocco di statistiche, così puoi leggere l'intera ricerca a colpo d'occhio. Ogni riga è una candidatura, con azienda, ruolo, punteggio, stato attuale e l'indicazione se sono stati generati un PDF su misura e un report di valutazione.
+```txt title="Esempio"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
+```
+Una candidatura attraversa un insieme fisso di stati: Evaluated (report scritto, decisione in sospeso), Applied (l'hai inviata tu), Responded (l'azienda ha risposto, ma non c'è ancora un colloquio), Interview (un processo di selezione in corso) e infine uno stato finale tra Offer, Rejected, Discarded o SKIP per i ruoli che non fanno per te. Per registrare un cambio di stato, chiedilo in chat oppure esegui tu stesso `node set-status.mjs <report#|company> <state>`, aggiungendo `--on YYYY-MM-DD` se è avvenuto in un giorno precedente. Il comando rifiuta gli stati sconosciuti, blocca il tracker mentre scrive e registra la transizione in `data/status-log.tsv`, il registro da cui leggono le statistiche funnel-velocity: usalo quindi al posto di modificare la riga a mano.
+## Leggere i numeri complessivi
+Per i dati cumulativi (l'intero funnel, i totali dello scanner, la copertura dei portali e il rispetto dei follow-up) la modalità esegue `node stats.mjs --summary` e ne riporta l'output alla lettera. Il comando legge i tuoi file locali e costa zero token, quindi i numeri non vengono mai ricalcolati a mano né stimati a memoria. Usa il riepilogo in chat descritto sopra per una lettura quotidiana veloce, e il comando delle statistiche quando vuoi i totali progressivi dell'intera ricerca.
+## Esportare una copia riparata
+Dopo centinaia di righe una tabella markdown accumula danni: segnaposto con caratteri corrotti (mojibake), un punteggio finito nella colonna dello stato, id duplicati, barre verticali fuori posto. `node tracker.mjs sync` li trova e li ripara nel suo indice SQLite, `data/applications.db`, senza toccare il markdown. Per quell'indice `tracker.mjs` richiede Node 22.13 o successivo (23.4 o successivo su Node 23); il tracker in markdown continua a funzionare anche senza. `node tracker.mjs export` è il modo per adottare quella copia riparata del tuo tracker:
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+`export` non tocca mai `data/applications.md`, a meno che tu non lo passi come `--out`.
+Conserva l'impaginazione che ha letto, non solo i valori: la tua riga di intestazione, le colonne che career-ops non mappa (`Location`, `Via`, `URL` o quelle che hai aggiunto tu), il titolo, eventuali righe di premessa e di chiusura, e i fine riga CRLF o LF. Le colonne aggiuntive tornano ciascuna nella propria posizione, anche se `query` non può filtrare su di esse.
+Tutto ciò che non riesce a riprodurre viene elencato su stderr. Quando quell'elenco non è vuoto, `--out` su un file esistente si rifiuta di scrivere (codice di uscita `1`, nessuna scrittura) finché non riesegui il comando con `--force`; quando è vuoto, `--out` fa una copia di backup del file esistente e lo sovrascrive. Ecco che cosa viene segnalato:
+| Cosa viene segnalato | Perché non può essere ricostruito |
+| --- | --- |
+| Una cella al di fuori delle colonne dichiarate dall'intestazione | L'intestazione non ha una colonna in cui metterla |
+| Una riga compresa tra la prima e l'ultima riga della tabella, come un titolo o l'intestazione di una seconda tabella | Un'unica tabella ricostruita non ha un posto in cui metterla |
+| Una riga che appartiene a una tabella successiva, come una sezione `## Archive` | È stata indicizzata rispetto all'intestazione della prima tabella, quindi riemetterla sposterebbe i dati archiviati nella tabella attiva |
+| Una cella il cui valore è stato riscritto per poter sopravvivere come cella (un `\|` fuori posto torna come `│`) | È cambiato il valore stesso |
+Nessuna perdita segnalata non significa che l'output sia identico byte per byte. `export` emette le riparazioni fatte da `sync`, e alcune sono silenziose: `aplicado` è un alias riconosciuto di `Applied` in `templates/states.yml`, quindi `sync --check` non segnala alcuna corruzione e l'esportazione riporta comunque `Applied`. Anche le celle allineate in colonna tornano con una spaziatura singola. Prima di adottare un'esportazione, confrontala con diff con il file che sostituisce:
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+Il riferimento completo dei comandi, inclusi `sync`, `query` e `history`, si trova nella [guida agli script](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker) del repository principale.
+## Aspetti a cui fare attenzione
+Lo stato si trova nella colonna Status del tracker (`data/applications.md`), non nel file del report. Anche il selettore di stato della dashboard TUI in Go aggiorna quella colonna, ma non registra la transizione in `data/status-log.tsv` come fa `set-status.mjs`. funnel-velocity vede comunque il nuovo stato, ma non quando è avvenuto: il cambio manca dai tempi di permanenza nelle fasi, e una riga che in seguito finisce in Rejected perde le fasi che ha attraversato. Usa il comando per ogni cambio che vuoi veder comparire in quei dati.
+## Vedi anche
+- [followup](/it/docs/reference/modes/followup)
+- [patterns](/it/docs/reference/modes/patterns)
+##### reference/modes/training EN
+## What it does
+The `training` mode reads the course or certification details (syllabus, time commitment, cost), reads your North Star section from config/profile.yml, and scores the investment against three dimensions: skill gap closure, signal value for target roles, and opportunity cost.
+## When to use it
+Use training when you are tempted by a learning offering but unsure if it actually moves you toward your stated direction. Particularly useful for expensive certifications and bootcamps.
+## Example
+```
+`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
+```
+## What a run looks like
+A training run scores a course or certification across six dimensions and returns one of three verdicts, so you see the return on time and money before you commit to either. You give it the offering — syllabus, weeks, hours per week, and cost — and it grades that against your stated career direction.
+```txt title="Example"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+A DO verdict comes with a four-to-twelve-week plan with weekly deliverables and a scoreboard. A DON'T DO verdict names a better alternative and explains why. DO WITH TIMEBOX caps the weeks and strips the plan to essentials, which is the common outcome for courses that are useful but padded.
+## What scores highest
+The mode weights offerings that build credibility in production-grade AI over generic credentials. In priority order, that means LLM evaluation and testing, observability and monitoring, cost and reliability trade-offs, AI governance and safety, and enterprise AI architecture. A course that ends in a demonstrable artifact — an eval harness, a monitored deployment — outscores one that ends in a certificate alone, because the artifact is what a hiring manager can actually see.
+## Gotchas
+The mode is biased toward your stated North Star. If you have not filled in config/profile.yml's North Star section thoughtfully, the evaluation will be shallow.
+## Related
+- [project](/docs/reference/modes/project)
+##### IT
+## Cosa fa
+La modalità `training` legge i dettagli del corso o della certificazione (programma, impegno di tempo, costo), legge la sezione North Star del tuo config/profile.yml e valuta l'investimento su tre dimensioni: quanto colma il divario di competenze, il valore di segnale per i ruoli a cui punti e il costo opportunità.
+## Quando usarla
+Usa training quando un percorso formativo ti tenta ma non sai se ti avvicina davvero alla direzione che hai dichiarato. È particolarmente utile per certificazioni e bootcamp costosi.
+## Esempio
+```
+`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
+```
+## Come si presenta un'esecuzione
+Un'esecuzione di training valuta un corso o una certificazione su sei dimensioni e restituisce uno di tre verdetti, così vedi il ritorno su tempo e denaro prima di impegnare l'uno o l'altro. Tu gli fornisci il percorso formativo (programma, settimane, ore a settimana e costo) e la modalità lo valuta rispetto alla direzione di carriera che hai dichiarato.
+```txt title="Esempio"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+Un verdetto DO arriva con un piano da quattro a dodici settimane, con consegne settimanali e un tabellone dei progressi. Un verdetto DON'T DO indica un'alternativa migliore e spiega perché. DO WITH TIMEBOX fissa un tetto alle settimane e riduce il piano all'essenziale: è l'esito più comune per i corsi utili ma gonfiati.
+## Cosa ottiene il punteggio più alto
+La modalità dà più peso ai percorsi che costruiscono credibilità nell'AI di livello produttivo rispetto alle credenziali generiche. In ordine di priorità, significa valutazione e test degli LLM, osservabilità e monitoraggio, compromessi tra costi e affidabilità, governance e sicurezza dell'AI, architettura AI enterprise. Un corso che si conclude con un artefatto dimostrabile, come un eval harness o un deployment monitorato, ottiene un punteggio più alto di uno che si conclude con il solo certificato, perché l'artefatto è ciò che un hiring manager può vedere davvero.
+## A cosa fare attenzione
+La modalità è orientata verso la North Star che hai dichiarato. Se non hai compilato con cura la sezione North Star di config/profile.yml, la valutazione sarà superficiale.
+## Vedi anche
+- [project](/it/docs/reference/modes/project)

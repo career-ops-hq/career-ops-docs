@@ -28,7 +28,7 @@ In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://j
 
 Lo scanner legge da portals.yml gli slug di Lever che hai attivato, chiama per ciascuno l'API pubblica degli annunci di Lever e aggiunge alla tua pipeline le posizioni nuove il cui titolo corrisponde ai tuoi criteri, senza sessione del browser e senza spendere token LLM per il recupero. La stessa esecuzione di `node scan.mjs` copre anche le tue bacheche su Greenhouse e Ashby, poi filtra tutto in base alle parole chiave del titolo che hai configurato.
 
-```bash title="Terminale"
+```bash title="Terminal"
 node scan.mjs
 ```
 

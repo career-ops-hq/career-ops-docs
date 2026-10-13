@@ -9,8 +9,8 @@ import { brand, heroLine, type HomeDict } from './home-dict';
 // README.it, so the restriction line in the first passage is the site's own
 // canon (search-ops, 13 Oct 2026); if a README.it ever ships, it carries this
 // same line. Like FR, DE and PT, the thesis stays in LITERAL English with no
-// thesisTranslation. The hero, the restriction line and featApplyBody2 are
-// pending venture-ops ratification; the whole copy is pending native review.
+// thesisTranslation. The hero and the HITL lines were ratified by venture-ops (13 Oct 2026); the
+// whole copy is pending native review.
 export const homeIt: HomeDict = {
   heroHook: heroLine({
     more: 'Più candidature.',
@@ -24,11 +24,11 @@ export const homeIt: HomeDict = {
   }),
   heroH1: (
     <>
-      career-ops: agente AI open source per la ricerca di{' '}lavoro.
+      career-ops: agente AI open source per la ricerca di{'\u00a0'}lavoro.
       <br />
       Gira nella tua CLI. I tuoi dati, il tuo computer.
       <br />
-      Adatta il tuo curriculum e scrive le tue risposte.{' '}
+      Adatta il tuo curriculum e redige le tue risposte.{' '}
       <span className="inline-block">Sei tu a cliccare su Invia.</span>
     </>
   ),
@@ -284,8 +284,8 @@ export const homeIt: HomeDict = {
         <>
           career-ops è open source, ha licenza MIT, gira in locale sul tuo
           computer tramite la CLI di programmazione AI che usi già e pubblica la
-          rubrica di valutazione completa. Una persona decide ogni candidatura; non
-          invia mai nulla da solo. Non c&rsquo;è account, telemetria né abbonamento
+          rubrica di valutazione completa. Una persona decide ogni candidatura;
+          career-ops non invia mai nulla da solo. Non c&rsquo;è account, telemetria né abbonamento
           di career-ops; l&rsquo;unico costo ricorrente è la CLI AI che scegli. Per
           confronti onesti, fianco a fianco, con strumenti specifici, vedi{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
@@ -301,7 +301,7 @@ export const homeIt: HomeDict = {
         <>
           career-ops funziona con Claude Code, Cursor, Codex, OpenCode, Pi,
           Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub
-          Copilot CLI: undici CLI con supporto di prima classe (la Gemini CLI è un
+          Copilot CLI: undici CLI con supporto a pieno titolo (la Gemini CLI è un
           wrapper legacy). Gli stessi file delle modalità girano su tutte. Ognuno
           sceglie la CLI che si adatta all&rsquo;abbonamento che ha già e a quanto
           vuole spendere; career-ops non ti lega mai a un solo fornitore. Una
