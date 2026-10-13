@@ -10,11 +10,11 @@ import { usePathname } from 'next/navigation';
 // current locale has no twin for this path, the link stays English so it never
 // 404s. The rest of the footer nav stays English until those pages are
 // translated (the "localize global chrome" follow-up, with <html lang> + labels).
-type Loc = 'es' | 'fr' | 'de' | 'pt';
+type Loc = 'es' | 'fr' | 'de' | 'pt' | 'it';
 
 export function FooterLocaleLink({
   path,
-  locales = ['es', 'fr', 'de', 'pt'],
+  locales = ['es', 'fr', 'de', 'pt', 'it'],
   children,
 }: {
   /** The EN path (e.g. '/docs', '/manifesto'). The twin is '/<loc>' + path. */
@@ -32,7 +32,9 @@ export function FooterLocaleLink({
         ? 'de'
         : pathname.startsWith('/pt')
           ? 'pt'
-          : 'en';
+          : pathname.startsWith('/it')
+            ? 'it'
+            : 'en';
   const href =
     current !== 'en' && locales.includes(current) ? `/${current}${path}` : path;
   return (

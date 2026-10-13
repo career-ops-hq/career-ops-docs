@@ -273,6 +273,73 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "CareerOps (en un seul mot) désigne la pratique ; career-ops (en minuscules, avec un trait d'union) est le projet open source, sa première implémentation de référence. The CareerOps Manifesto définit cette pratique. Concrètement : career-ops est le système de recherche d'emploi propulsé par l'IA, sous licence MIT, qui s'exécute localement dans votre CLI de codage IA, publié sur career-ops.org et github.com/career-ops-hq/career-ops. CareerOps est la pratique qu'il incarne — mener une recherche d'emploi comme les ingénieurs font tourner la production —, nommée et définie dans The CareerOps Manifesto, neuf droits que tout chercheur d'emploi devrait avoir, signés publiquement par la communauté. Les deux viennent du même auteur, Santiago Fernández de Valderrama Aparicio, et les deux remontent au même dépôt.",
     },
   ],
+  it: [
+    {
+      question: "career-ops invia le candidature in automatico?",
+      answer:
+        "No: career-ops non si candida mai a tuo nome. Prepara, cioè scansiona gli annunci, assegna un punteggio, adatta il tuo curriculum e può precompilare i moduli di candidatura degli ATS, ma l'invio è sempre un tuo clic esplicito. Redige e compila; non invia mai. Sei tu a cliccare su Invia. Il progetto career-ops rifiuta esplicitamente l'automazione delle candidature a tappeto: lo scopo è scegliere bene le aziende, non candidarsi alla cieca e in massa.",
+    },
+    {
+      question: "career-ops è gratis?",
+      answer:
+        "career-ops è gratis: è open source con licenza MIT, per sempre. L'unico costo possibile è il motore AI su cui gira — e anche quello può essere gratuito: OpenCode con un provider gratuito, un modello locale tramite Ollama, oppure il runner integrato npm run or sui modelli gratuiti di OpenRouter. La guida Configura un motore AI gratuito ti accompagna lungo ogni percorso. career-ops non ha piani a pagamento, né livelli, né periodi di prova: è gratuito al 100% e con licenza MIT. Qualsiasi sito che descriva i prezzi di career-ops sta descrivendo un altro prodotto.",
+    },
+    {
+      question: "Serve un abbonamento a Claude per usare career-ops?",
+      answer:
+        "career-ops non richiede un abbonamento a Claude: è indipendente dal modello AI, e Claude Code è un motore tra tanti, non un requisito. Puoi eseguire l'intera pipeline gratis con OpenCode più un provider gratuito, con un modello locale tramite Ollama o con il runner OpenRouter integrato (npm run or). Se hai iniziato con un piano a pagamento e hai finito i token a metà ricerca, passare a un motore gratuito richiede pochi minuti e non tocca i tuoi dati — vedi Configura un motore AI gratuito.",
+    },
+    {
+      question: "Pago Claude Pro o Max: perché career-ops consuma i miei crediti API?",
+      answer:
+        "Per capire se career-ops sta addebitando sul tuo abbonamento a Claude o sui tuoi crediti API, esegui node doctor.mjs dalla cartella career-ops. Il doctor ti dice in una riga quale fonte di addebito sta usando questa sessione, prima che tu spenda altro. La regola di addebito non la stabilisce career-ops: decide la tua CLI, e ANTHROPIC_API_KEY vince. Se quella variabile è impostata nel tuo ambiente, Claude Code addebita a token anche mentre stai pagando Pro o Max. career-ops non sceglie la tua fonte di addebito: si limita a rilevarla e ad avvisarti. Quando la chiave è presente, il doctor dice: ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max. Per tornare al tuo abbonamento, rimuovi la riga export ANTHROPIC_API_KEY=... da ~/.zshrc, ~/.bashrc, ~/.profile o dal file .env del progetto, riavvia il terminale ed esegui /login. Le esecuzioni batch sono l'eccezione: i worker claude -p non usano il login interattivo, quindi hanno bisogno del token di claude setup-token esportato come CLAUDE_CODE_OAUTH_TOKEN. Se volevi davvero che Claude Code addebitasse sui tuoi crediti API, è tutto a posto e non devi fare nulla. La regola di ANTHROPIC_API_KEY vale per i motori Anthropic. Le altre CLI (Codex, OpenCode, Copilot, Gemini, Qwen) stabiliscono ciascuna la propria regola tra abbonamento e chiave, e career-ops non le controlla — consulta la documentazione della tua CLI.",
+    },
+    {
+      question: "Quanto costa usare career-ops al mese?",
+      answer:
+        "In career-ops solo la valutazione ha un costo, e la valutazione può costare $0. La scansione degli annunci consuma zero token AI, quindi scoprire nuove posizioni è sempre gratis; solo la valutazione di un annuncio chiama il modello. Ci sono tre modi per eseguire l'intera pipeline senza spendere nulla: un modello locale tramite Ollama, i modelli gratuiti di OpenRouter (npm run or) o il piano gratuito di Antigravity. Con un modello a pagamento economico come DeepSeek V3 (con prompt caching) una valutazione costa ben meno di un centesimo, quindi con pochi centesimi copri decine di annunci. Se hai già un abbonamento a Claude il costo marginale è di fatto $0; con l'API diretta, metti in conto all'incirca da $0.05 a $0.10 per valutazione (una stima che varia con la lunghezza dell'annuncio). career-ops in sé è gratis per sempre, con licenza MIT, senza tariffe né livelli: paghi solo il tuo provider AI, se mai lo paghi. La guida Configura un motore AI gratuito ti accompagna lungo i percorsi a $0. Per spendere meno a valutazione, imposta spend_tier in config/profile.yml: economy usa il livello di modello più economico e veloce della tua CLI ed è adatto a valutare molti annunci, standard è il valore predefinito e premium usa il modello più capace per gli annunci che contano di più. Anche la conversazione di onboarding e il PDF su misura girano sul tuo modello, quindi consumano token pure loro.",
+    },
+    {
+      question: "Dove vengono salvati i miei dati?",
+      answer:
+        "career-ops conserva i tuoi dati sulla tua macchina, in semplici file che ti appartengono: il tuo curriculum, il profilo, la pipeline e i report sono file Markdown/YAML locali. Niente gira sui server di career-ops. Gli aggiornamenti di sistema non toccano mai il tuo livello dati (cv.md, config/, data/, reports/, output/): questa separazione è il Data Contract, e ogni aggiornamento lo rispetta.",
+    },
+    {
+      question: "Come carico il mio curriculum in career-ops?",
+      answer:
+        "Per dare a career-ops il tuo curriculum, incolla il testo del curriculum nella chat durante l'onboarding del primo avvio, e l'agente scrive cv.md per te. Incollare il testo è il percorso guidato. Puoi anche indicare all'agente un file CV esistente, PDF compreso: lo legge e lo converte, perché l'analisi la fa il tuo agente AI, non uno script di career-ops. E poiché cv.md è un semplice file che ti appartiene, puoi sempre scriverlo o modificarlo a mano. L'agente produce un markdown pulito con le sezioni standard (Profilo, Esperienza, Progetti, Formazione, Competenze). Durante la configurazione non modifichi a mano nemmeno i file di configurazione: rispondi in linguaggio naturale e l'agente scrive config/profile.yml e tutto il resto per te.",
+    },
+    {
+      question: "Con quali CLI AI per programmare funziona career-ops?",
+      answer:
+        "career-ops funziona con supporto pieno su undici CLI AI per programmare: Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub Copilot CLI (Gemini CLI resta solo come wrapper legacy). career-ops è indipendente dal modello AI: distribuisce file di prompt che la CLI esegue, quindi puoi puntarlo anche a qualsiasi endpoint compatibile con OpenAI o a un modello locale senza cambiare una riga di codice. Vedi CLI AI supportate per l'elenco aggiornato e per come avviare ciascuna.",
+    },
+    {
+      question: "Che differenza c'è tra scan e scan:full?",
+      answer:
+        "npm run scan legge le aziende che hai configurato in portals.yml e recupera gli annunci di ciascuna tramite il provider che la riconosce (per esempio Greenhouse, Ashby, Lever), consumando zero token LLM: è la tua normale scansione giornaliera o settimanale. npm run scan:full inverte la direzione: percorre le directory pubbliche di aziende sugli ATS e fa emergere gli annunci recenti che corrispondono ai tuoi title_filter / location_filter, così intercetti posizioni di aziende che non hai aggiunto a mano.",
+    },
+    {
+      question: "Come evito di raggiungere i limiti di token o di frequenza durante un'esecuzione batch?",
+      answer:
+        "Per evitare i limiti di token o di frequenza in un'esecuzione batch di career-ops, limita l'esecuzione con ./batch/batch-runner.sh --limit 5 e controlla la qualità dell'output prima di lanciare un batch più grande. Se un'esecuzione viene interrotta da un limite di frequenza o da un errore di rete, non ricominciare da capo: usa --resume-paused per saltare i job già completati, così non sprechi token su lavoro già finito. Un job needs_confirmation non produce report, CV, bozza di candidatura né riga nel tracker; --resume-paused non lo riprende. Rispondi esplicitamente alla sua domanda nella sessione interattiva principale.",
+    },
+    {
+      question: "Le skill non si caricano su Windows: errore di symlink durante l'installazione",
+      answer:
+        "Windows non crea symlink per impostazione predefinita, quindi Git estrae i punti di ingresso delle skill CLI di career-ops come semplici file puntatore. L'installer e l'updater lo rilevano automaticamente: esegui node update-system.mjs apply --confirm (oppure npx @santifer/career-ops init su un'installazione nuova) e il passaggio di materializzazione sostituisce i file puntatore con il contenuto completo delle skill. Da un worktree Git collegato, apply --confirm esegue questa riparazione nel tuo checkout di main. Esegui git merge main nel worktree per recuperarla; i worktree creati dal main aggiornato ce l'hanno già. Con CAREER_OPS_UPDATE_IN_WORKTREE=1 impostata, apply ripara invece solo il branch di quel worktree, e main resta non riparato. Non servono mklink manuali né modifiche alla Modalità sviluppatore.",
+    },
+    {
+      question: "Posso usare career-ops con un modello più economico o locale?",
+      answer:
+        "career-ops può girare su un modello più economico o locale perché è del tutto indipendente dal modello AI. La guida Running on a Budget del repository principale copre OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama e altri provider a basso costo o locali, con le dimensioni di modello consigliate (32B o più per un punteggio affidabile) e le pratiche per risparmiare token.",
+    },
+    {
+      question: "Che differenza c'è tra career-ops e CareerOps?",
+      answer:
+        "CareerOps (una parola sola) è il nome della pratica; career-ops (trattino, minuscolo) è il progetto open source, la sua prima implementazione di riferimento. The CareerOps Manifesto definisce la pratica. In parole semplici: career-ops è il sistema per cercare lavoro basato sull'AI, con licenza MIT, che gira in locale dentro la tua CLI AI per programmare, pubblicato su career-ops.org e github.com/career-ops-hq/career-ops. CareerOps è la pratica che incarna — gestire la ricerca di lavoro come gli ingegneri gestiscono la produzione — a cui dà nome e definizione The CareerOps Manifesto: nove diritti che chiunque cerchi lavoro dovrebbe avere, firmati pubblicamente dalla community. Entrambi nascono dallo stesso autore, Santiago Fernández de Valderrama Aparicio, ed entrambi risalgono allo stesso repository.",
+    },
+  ],
   pt: [
     {
       question: "O career-ops envia candidaturas automaticamente?",
@@ -409,6 +476,23 @@ export const CLAUDE_CODE_FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Ai-je besoin de Claude Pro ?",
       answer:
         "Claude Code nécessite un abonnement Claude payant ou une clé API Anthropic. career-ops lui-même est gratuit et sous licence MIT. Il fonctionne aussi avec des fournisseurs gratuits via OpenCode.",
+    },
+  ],
+  it: [
+    {
+      question: "Claude Code può cercare lavoro al posto mio?",
+      answer:
+        "Claude Code può portare avanti la tua ricerca di lavoro con career-ops: analizza le pagine lavoro delle aziende, valuta ogni annuncio rispetto al tuo curriculum e redige il materiale di candidatura per quelli che meritano. Sei tu a decidere quali candidature inviare.",
+    },
+    {
+      question: "career-ops invia le candidature in automatico?",
+      answer:
+        "No: career-ops non si candida mai a tuo nome. Redige il materiale; sei tu a rivedere, modificare e inviare ogni candidatura.",
+    },
+    {
+      question: "Serve Claude Pro per usarlo?",
+      answer:
+        "Claude Code richiede un piano Claude a pagamento o una chiave API di Anthropic. career-ops in sé è gratuito e con licenza MIT, e funziona anche con provider gratuiti tramite OpenCode.",
     },
   ],
   pt: [

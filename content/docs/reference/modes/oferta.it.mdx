@@ -1,0 +1,68 @@
+---
+title: oferta
+description: "Esegue la valutazione A–H su un singolo annuncio e la registra nel tuo tracker, senza generare un PDF. Usala quando ti serve solo la decisione basata sul punteggio e non l'intera pipeline."
+seoTitle: "Modalità oferta di career-ops: valuta un singolo annuncio di lavoro prima di candidarti"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 359504e9cbeb24ea
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## Cosa fa
+
+La modalità oferta legge una singola JD (URL o testo incollato), le assegna un punteggio in base alla griglia di valutazione (cinque dimensioni più un punteggio globale olistico) citando le prove a supporto, e scrive il report di valutazione. Niente PDF, ma aggiunge una riga al tracker con lo stato Evaluated. Veloce ed economica.
+
+## Quando usarla
+
+Usa oferta per fare rapidamente una prima scrematura di un annuncio su cui hai dei dubbi. Se il punteggio supera 4,0 e decidi di candidarti, passa alla modalità auto-pipeline o apply.
+
+## Come si presenta un'esecuzione
+
+Passi alla modalità un annuncio e ti restituisce la valutazione in sette blocchi (i blocchi da A a F e un blocco G sulla legittimità dell'annuncio, più le bozze di risposta del blocco H quando il punteggio è pari o superiore a 4,5), con un punteggio e la motivazione corredata di prove. Incolla direttamente il testo della JD oppure passa un URL: in quel caso la modalità verifica prima che l'annuncio sia ancora attivo, così un link morto non ti fa mai sprecare una valutazione completa.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+
+I blocchi da B a F coprono la corrispondenza con il CV e le lacune, la strategia di livello, la retribuzione e la domanda di mercato, un piano di personalizzazione e le storie STAR+R per il colloquio di lavoro, associate ai requisiti della posizione.
+
+## Quando conviene usarla
+
+Ricorri a oferta per valutare rapidamente un singolo annuncio senza impegnarti nell'intera pipeline. Buono a sapersi:
+
+- Se passi un URL, viene eseguito prima un controllo di attività: un annuncio scaduto o in 404 viene bloccato prima del blocco A, così non sprechi mai un'esecuzione su contenuti fantasma.
+- La ricerca sull'azienda e sulla retribuzione è limitata a un massimo di cinque ricerche web: è una valutazione, non una ricerca approfondita. Esegui `/career-ops deep` a parte quando vuoi un quadro più completo dell'azienda.
+- Il blocco G restituisce uno di tre livelli (High Confidence, Proceed with Caution o Suspicious), così i probabili annunci fantasma emergono prima che tu investa energie nei colloqui.
+
+## Score Evidence
+
+Il report include la sezione **Score Evidence** dopo Risk Summary. Copre cinque dimensioni: corrispondenza con il CV, allineamento con la North Star, retribuzione, segnali culturali e campanelli d'allarme. Ogni riga registra uno stato delle prove (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità delle prove (`High`, `Medium` o `Low`), la relativa motivazione e fino a tre priorità di verifica.
+
+Questo livello descrive le prove alla base del Global Score: non è una probabilità di assunzione né il livello di legittimità dell'annuncio del blocco G, e non modifica il punteggio numerico. Machine Summary conserva i cinque stati in `score_evidence`, il livello in `confidence` e le priorità in `confidence_gaps`. Quando non restano priorità, `confidence_gaps` è una lista vuota.
+
+## Vedi anche
+
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)
+- [ofertas](/it/docs/reference/modes/ofertas)
+- [pdf](/it/docs/reference/modes/pdf)

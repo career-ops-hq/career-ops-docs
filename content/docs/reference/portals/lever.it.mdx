@@ -1,0 +1,57 @@
+---
+title: Lever
+description: "Lever è l'ATS consolidato delle aziende di medie dimensioni e in fase di crescita. career-ops interroga direttamente l'API pubblica degli annunci di Lever."
+seoTitle: "Cercare annunci su Lever con career-ops: scansione dei portali ATS a zero token"
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 535b6f24a4a180f6
+localized: true
+translatedFrom: /docs/reference/portals/lever
+---
+
+## Che cosa fa
+
+Il provider lever in providers/lever.mjs invia richieste HTTP a api.lever.co/v0/postings/`{slug}` e analizza la risposta JSON. Lo slug è l'identificativo degli annunci dell'azienda su Lever (ad es. 'figma' per Figma).
+
+## Quando usarlo
+
+Usa la scansione di Lever per le aziende tra la Serie C e la fase pre-IPO che non sono passate a Greenhouse o Ashby. Figma, Brex e molte aziende fintech usano ancora Lever.
+
+## Esempio
+
+```
+In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
+```
+
+## Come funziona la scansione
+
+Lo scanner legge da portals.yml gli slug di Lever che hai attivato, chiama per ciascuno l'API pubblica degli annunci di Lever e aggiunge alla tua pipeline le posizioni nuove il cui titolo corrisponde ai tuoi criteri, senza sessione del browser e senza spendere token LLM per il recupero. La stessa esecuzione di `node scan.mjs` copre anche le tue bacheche su Greenhouse e Ashby, poi filtra tutto in base alle parole chiave del titolo che hai configurato.
+
+```bash title="Terminale"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 33 total
+Filtered by title: 5 relevant
+Duplicates: 2 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Figma | AI Product Engineer | lever
+  + Brex  | Applied AI Engineer | lever
+```
+
+## Come career-ops comunica con Lever
+
+career-ops interroga `api.lever.co/v0/postings/{slug}`, oppure l'host `api.eu.lever.co` per le bacheche europee, e legge l'array JSON degli annunci. Per ogni posizione prende il campo `text` come titolo e `hostedUrl` come link, ripiegando su `applyUrl` quando `hostedUrl` manca. Poiché Lever restituisce l'intera bacheca in un'unica risposta strutturata, la scansione è una sola richiesta HTTPS GET pubblica per azienda, che resta entro i limiti di frequenza e non consuma token del modello. Il costo in token inizia solo dopo, quando valuti una posizione che ti interessa. Rilanciare la scansione è sicuro: ogni URL viene deduplicato rispetto alla cronologia delle scansioni, alle candidature già valutate e alla pipeline corrente, quindi una posizione che hai già visto non viene mai aggiunta due volte.
+
+## Cose da sapere
+
+L'API di Lever espone il testo completo dell'annuncio nella risposta. Alcune bacheche di Lever includono metadati interni della posizione, che career-ops usa come segnale aggiuntivo durante il calcolo del punteggio.
+
+## Vedi anche
+
+- [greenhouse](/it/docs/reference/portals/greenhouse)
+- [ashby](/it/docs/reference/portals/ashby)

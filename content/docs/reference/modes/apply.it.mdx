@@ -1,0 +1,68 @@
+---
+title: apply
+description: "Assistente di candidatura in tempo reale. Legge le domande aperte dei moduli di Greenhouse, Ashby e Lever e redige risposte basate sul tuo curriculum e sull'annuncio."
+seoTitle: "career-ops, modalità apply: bozze di risposta alle domande dei moduli di candidatura ATS"
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-05-19"
+translationHash: 72c62608efda3e89
+localized: true
+translatedFrom: /docs/reference/modes/apply
+---
+
+## Cosa fa
+
+La modalità `apply` legge un modulo di candidatura aperto (Greenhouse, Ashby, Lever), individua le domande aperte — "Perché questo ruolo?", "Raccontaci un progetto", "Qual è la tua aspettativa di retribuzione?" — e redige risposte basate sul tuo curriculum e sull'annuncio. Tu modifichi le bozze, le copi nel portale e invii.
+
+## Quando usarla
+
+Apri l'annuncio e il modulo di candidatura uno accanto all'altro. Esegui apply quando il modulo è caricato. Le risposte con un limite di campo confermato riportano i caratteri o le parole `used/allowed`; controlla questo stato prima di incollare. `limit unknown` significa che il limite del modulo non è stato confermato, quindi verificalo prima nel campo reale. Se una risposta non rientra nel limite senza perdere fatti essenziali, rivedila prima di incollarla. Il risultato è una bozza, non una candidatura finita: resti tu a decidere su tono, fatti e su qualsiasi campo che il portale aggiunga. apply funziona al meglio con Playwright in modalità visibile, dove legge la pagina reale così come la vedi tu; senza Playwright, incolla le domande o condividi uno screenshot e redigerà le bozze a partire da quelli.
+
+## Come si presenta un'esecuzione
+
+Esegui apply con il modulo di candidatura aperto in Chrome. Prima di scrivere una sola risposta, la modalità legge la scheda attiva, la abbina al report che hai già generato per quell'annuncio, conferma che l'annuncio sia ancora attivo e analizza il modulo alla ricerca di domande eliminatorie che potrebbero farti scartare in automatico.
+
+```txt title="Example"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+
+## A cosa fare attenzione
+
+apply non invia mai la candidatura: il clic finale su Invia è sempre tuo. Legge tutti i campi del modulo, non solo le domande aperte: menu a tendina, pulsanti di opzione, caselle di controllo e campi di caricamento compresi. Redige le risposte a testo libero, suggerisce un valore per ogni campo a risposta chiusa e segnala le domande su permesso di lavoro, retribuzione e altri temi sensibili a cui il tuo profilo non risponde già, perché sia tu a confermarle invece di tirare a indovinare. Con Playwright può compilare alcuni campi nel modulo reale; tu controlli tutto e completi il resto. Una volta inserite le risposte, registra nel report il testo, le selezioni e i file usati. Se il controllo preliminare rileva che l'annuncio è stato chiuso, apply si rifiuta di redigere il testo definitivo, a meno che tu non lo forzi esplicitamente: un link morto non merita una risposta su misura.
+
+## Particolarità note degli ATS
+
+apply è stata messa alla prova sul campo in una dozzina circa di candidature guidate da Playwright, e alcuni portali fanno fallire un'esecuzione se non ne tieni conto:
+
+- **Ashby** deduplica i candidati per email all'interno di ogni azienda, quindi una seconda candidatura può fondersi silenziosamente con la prima. Se esiste già un report per quell'azienda, apply suggerisce un alias email `+tag`. Con Ashby, completa e invia dal tuo browser di sistema abituale, poi verifica che compaia una pagina di conferma o che arrivi un'email di conferma prima di segnare la candidatura come inviata.
+- **Lever** fa comparire un captcha quando una casella di controllo o un pulsante di opzione viene cliccato in modo programmatico, quindi apply compila solo i campi di testo e i menu a tendina e lascia a te le caselle di controllo e i pulsanti di opzione da selezionare.
+- **Workday** ignora i valori impostati senza una vera digitazione da tastiera, quindi apply scrive le risposte carattere per carattere e ti chiede di controllare i menu a tendina sul permesso di lavoro prima di salvare.
+
+## Vedi anche
+
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)
+- [pdf](/it/docs/reference/modes/pdf)
+- [tracker](/it/docs/reference/modes/tracker)

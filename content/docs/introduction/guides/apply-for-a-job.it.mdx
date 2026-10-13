@@ -1,0 +1,147 @@
+---
+title: Candidarsi a un annuncio di lavoro
+description: Usa career-ops per compilare i moduli di candidatura con risposte su misura, basate sul tuo profilo e sul ruolo che cerchi.
+seoTitle: "Come candidarsi a un annuncio di lavoro con career-ops — prepara le risposte per l'ATS, adatta il curriculum"
+icon: FileInput
+translationHash: a44945dad5047331
+localized: true
+translatedFrom: /docs/introduction/guides/apply-for-a-job
+---
+
+Questa guida spiega come usare `/career-ops apply` per compilare un modulo di candidatura con risposte costruite sul tuo profilo, sui tuoi proof point e sul ruolo specifico a cui ti candidi.
+
+<Callout title="Prima di iniziare">
+  Assicurati di aver completato la guida [Scansionare i portali di lavoro](/it/docs/introduction/guides/scan-job-portals). Il comando `apply` ha bisogno di un report di valutazione già esistente. Se per quel ruolo non c'è ancora un report, esegui prima la pipeline.
+</Callout>
+
+## Eseguire il comando apply
+
+Apri la tua CLI agentica nella cartella principale di career-ops e scrivi:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name}
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+</Tabs>
+
+Per esempio:
+
+```bash title="Claude Code"
+/career-ops apply Anthropic
+```
+
+career-ops trova il report corrispondente in `reports/`, usa Playwright per aprire una finestra del browser e legge il modulo. Poi redige le risposte per i campi di testo e a risposta libera supportati. Controlla i limiti di ogni campo prima di incollare. Per Ashby ti servirà il tuo normale browser di sistema per completare e inviare la candidatura.
+
+<Callout title="Nota">
+  Se Playwright non è disponibile, career-ops ripiega su WebFetch per leggere il modulo. Consulta [Configurare Playwright](/it/docs/introduction/guides/set-up-playwright) se vuoi attivare l'esperienza completa basata sul browser.
+</Callout>
+
+**Se esegui il comando `/career-ops apply` senza argomenti**, il sistema ti chiede di fornire il contesto a mano:
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Opzione                         | Come                                                                                                  |
+    | ------------------------------- | ----------------------------------------------------------------------------------------------------- |
+    | Condividi uno screenshot        | Fai uno screenshot del modulo e condividilo nella chat. career-ops legge direttamente le immagini.     |
+    | Incolla le domande              | Copia le domande del modulo come testo e incollale nella chat.                                         |
+    | Indica l'azienda e il ruolo     | Scrivi il nome dell'azienda e il titolo della posizione. career-ops cerca la corrispondenza in `reports/`. |
+    | Condividi l'URL della candidatura | Incolla l'URL e career-ops apre il modulo.                                                           |
+  </div>
+</div>
+
+## Compilare il modulo
+
+Il sistema restituisce un elenco numerato di risposte, una per ogni campo, nello stesso ordine del modulo. Scorri l'elenco dall'alto verso il basso. Per ogni risposta a testo libero, confronta i caratteri o le parole `used/allowed` con il campo reale prima di incollare. `limit unknown` significa che devi verificare il limite direttamente nel modulo; se una risposta non ci sta senza perdere informazioni essenziali, rivedila prima di incollarla.
+
+L'output ha due parti:
+
+**Risposte** — tutti i campi del modulo, in ordine:
+
+```
+1. Name
+   Andres Urdaneta
+
+2. Email
+   andres@example.com
+
+...
+
+12. Cover Letter (optional)
+    I've spent 5+ years shipping production Rails applications...
+```
+
+I campi semplici, come nome, email e domande sì/no, vengono per primi. I campi a testo libero, come la lettera di presentazione, arrivano alla fine.
+
+**Note principali** — un breve blocco dopo le risposte con tutto ciò che vale la pena segnalare prima dell'invio:
+
+```
+Key notes:
+- No salary field — you'll negotiate at offer. Anchor to $160K–$175K at offer stage.
+- Add github.com/yourhandle to your resume PDF before uploading.
+- Cover letter is optional but the draft above is tight — worth including.
+```
+
+Ogni risposta nasce da una parte precisa del tuo report di valutazione:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Tipo di campo                                       | Fonte                                                        |
+    | --------------------------------------------------- | ------------------------------------------------------------ |
+    | Lettera di presentazione, "perché questo ruolo"     | Proof point del Blocco B + storie STAR del Blocco F          |
+    | Domande brevi a testo libero                        | Il proof point o la storia più pertinente per quella domanda |
+    | Menu a tendina, sì/no                               | Risposte dirette ricavate dal tuo profilo                    |
+  </div>
+</div>
+
+<Callout title="Campi di caricamento file">
+  Usa il file in `output/` generato quando è stato creato il report. Se non esiste ancora un PDF, esegui prima `/career-ops pdf`, poi torna al modulo. Consulta la [modalità pdf](/it/docs/reference/modes/pdf).
+</Callout>
+
+## Inviare la candidatura
+
+Rivedi ogni risposta, poi invia tu il modulo. career-ops non preme Invia. Per Ashby, completa e invia dal tuo normale browser di sistema, non dalla sessione di Playwright. Verifica di aver ricevuto una pagina di conferma o un'email di conferma prima di dire a career-ops che la candidatura è stata inviata.
+
+Dopo l'invio, conferma nella chat:
+
+> "Inviata."
+
+A quel punto career-ops:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Aggiorna lo stato della candidatura">
+        Aggiorna `data/applications.md`, cambiando lo stato da `Evaluated` a `Applied`
+      </Step>
+      <Step title="Salva le risposte nel report">
+        Salva le risposte definitive nella sezione `## Application Answers` del report, per poterle consultare in futuro
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## Cosa fare dopo la candidatura
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Punteggio              | Passo successivo                                                                                                                                                                                                         |
+    | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | **4,0 o superiore**    | Esegui `/career-ops contacto`. career-ops trova su LinkedIn un hiring manager o un membro del team e redige un messaggio di contatto. Inviarlo prima che la tua candidatura venga esaminata ti dà più visibilità.          |
+    | **Qualsiasi punteggio** | Esegui `/career-ops tracker` per vedere lo stato attuale di tutto ciò che hai nella pipeline.                                                                                                                            |
+  </div>
+</div>

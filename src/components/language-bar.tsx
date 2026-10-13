@@ -25,13 +25,14 @@ import { Check, ChevronDown, X } from 'lucide-react';
 // one exists (es) or the locale home otherwise (fr, de and pt have none yet), and
 // any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es' | 'fr' | 'de' | 'pt';
+type Code = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it';
 const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'en', label: 'EN', name: 'English' },
   { code: 'es', label: 'ES', name: 'Español' },
   { code: 'fr', label: 'FR', name: 'Français' },
   { code: 'de', label: 'DE', name: 'Deutsch' },
   { code: 'pt', label: 'PT', name: 'Português' },
+  { code: 'it', label: 'IT', name: 'Italiano' },
 ];
 // Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
 const MANIFESTO_LOCALES: Code[] = ['es'];
@@ -75,6 +76,18 @@ function FlagFR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+function FlagIT({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
+      <clipPath id="flagCircleIT"><circle cx="8" cy="8" r="8" /></clipPath>
+      <g clipPath="url(#flagCircleIT)">
+        <rect width="6" height="16" fill="#009246" />
+        <rect x="5" width="6" height="16" fill="#fff" />
+        <rect x="10" width="6" height="16" fill="#ce2b37" />
+      </g>
+    </svg>
+  );
+}
 function FlagDE({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
@@ -107,14 +120,16 @@ const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   fr: FlagFR,
   de: FlagDE,
   pt: FlagBR,
+  it: FlagIT,
 };
 
-/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de or /pt.) */
+/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de, /pt or /it.) */
 function localeOf(pathname: string): Code {
   if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
   if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
   if (pathname === '/de' || pathname.startsWith('/de/')) return 'de';
   if (pathname === '/pt' || pathname.startsWith('/pt/')) return 'pt';
+  if (pathname === '/it' || pathname.startsWith('/it/')) return 'it';
   return 'en';
 }
 
@@ -122,7 +137,7 @@ function localeOf(pathname: string): Code {
 function baseOf(pathname: string): string {
   const loc = localeOf(pathname);
   if (loc === 'en') return pathname;
-  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de' or '/pt'
+  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de', '/pt' or '/it'
 }
 
 /** The URL for `target` locale of the page whose EN-relative path is `base`.
@@ -166,6 +181,7 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
   fr: { question: 'Vous préférez le français ?', cta: 'Voir en français' },
   de: { question: 'Lieber auf Deutsch?', cta: 'Auf Deutsch ansehen' },
   pt: { question: 'Prefere português?', cta: 'Ver em português' },
+  it: { question: 'Preferisci l\u2019italiano?', cta: 'Leggi in italiano' },
 };
 
 /**

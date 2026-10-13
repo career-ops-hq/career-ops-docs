@@ -1,0 +1,52 @@
+---
+title: deep
+description: "Genera un documento di ricerca approfondita su un'azienda: storia dei finanziamenti, dirigenza, notizie recenti, evoluzione del prodotto, indizi sulle fasce retributive, campanelli d'allarme. Usalo prima di candidarti a un'azienda Series B o successiva che non conosci ancora bene."
+seoTitle: "Modalità deep di career-ops: come informarsi su un'azienda prima di candidarsi"
+icon: Search
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: cef52678d1e8b67a
+localized: true
+translatedFrom: /docs/reference/modes/deep
+---
+
+## Cosa fa
+
+La modalità `deep` genera un prompt di ricerca strutturato per un'azienda che stai valutando, organizzato attorno a sei assi: la sua strategia AI, le sue mosse negli ultimi sei mesi, la sua cultura ingegneristica, le sfide tecniche che probabilmente deve affrontare, i concorrenti e ciò che la distingue, e il tuo punto di forza come candidato. Incolli quel prompt in uno strumento di ricerca (Perplexity, Claude o ChatGPT) e ottieni un brief da leggere prima del colloquio di lavoro. deep personalizza ogni asse con il ruolo e l'azienda specifici.
+
+## Quando usarlo
+
+Usa deep quando ti candidi a un'azienda Series B o successiva e la decisione di candidarti, o il modo di affrontare il colloquio, richiede più di quanto ti dice l'annuncio. L'asse sul tuo punto di forza come candidato attinge da cv.md e profile.yml, quindi il brief si chiude su ciò che porti tu in particolare, non su informazioni generiche sull'azienda.
+
+## Come si presenta un'esecuzione
+
+Indica a deep un'azienda e un ruolo e scriverà un prompt di ricerca pronto da incollare. Ognuno dei sei assi è una lista di domande a cui lo strumento di ricerca deve rispondere, e l'ultimo asse riporta i risultati verso di te.
+
+```txt title="Example"
+> /career-ops deep notion
+
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
+```
+
+## A cosa fare attenzione
+
+Il brief vale quanto le informazioni pubbliche che lo strumento di ricerca riesce a trovare. Le startup in modalità stealth danno risultati scarsi, e qualsiasi strumento può inventarsi un round di finanziamento o il nome di un dirigente. Verifica tutto sulle fonti primarie prima di basarci una decisione importante.
+
+## Vedi anche
+
+- [oferta](/it/docs/reference/modes/oferta)
+- [contacto](/it/docs/reference/modes/contacto)
+- [interview-prep](/it/docs/reference/modes/interview-prep)
