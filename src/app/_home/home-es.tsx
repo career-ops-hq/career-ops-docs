@@ -162,8 +162,8 @@ export const homeEs: HomeDict = {
         <>
           career-ops usa una evaluación con LLM guiada por rúbrica en cinco
           dimensiones — encaje, alineación con tu norte, compensación, señales
-          culturales y red flags — que produce una nota global holística de 1.0 a
-          5.0 con citas a líneas concretas de tu CV y a los requisitos de la
+          culturales y red flags — que produce una nota global holística de 1 a
+          5 con citas a líneas concretas de tu CV y a los requisitos de la
           oferta. Por debajo de 4.0, el agente recomienda no postular. Sin fórmula
           cerrada, sin postular a ciegas. La rúbrica completa está publicada en{' '}
           <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">

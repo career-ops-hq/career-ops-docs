@@ -169,8 +169,8 @@ export const homeFr: HomeDict = {
         <>
           career-ops utilise une évaluation par LLM guidée par une grille sur
           cinq dimensions — adéquation, alignement avec votre cap, rémunération,
-          signaux culturels et red flags — qui produit une note globale de 1.0 à
-          5.0 avec des citations de lignes précises de votre CV et des exigences
+          signaux culturels et red flags — qui produit une note globale de 1 à
+          5 avec des citations de lignes précises de votre CV et des exigences
           de l’offre. En dessous de 4.0, l’agent déconseille de postuler. Pas de
           formule fermée, pas de candidatures à l’aveugle. La grille complète est
           publiée sur{' '}
