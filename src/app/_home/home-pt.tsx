@@ -9,8 +9,8 @@ import { brand, heroLine, type HomeDict } from './home-dict';
 // README's canonical restriction line in the first passage (venture-ops,
 // 13 Oct 2026: one version site-wide, the README's), because in Portuguese Gemini
 // pairs "open-source AI agent" with "auto-apply-bot github". Like FR and DE,
-// the thesis stays in LITERAL English with no thesisTranslation. The hero is
-// pending venture-ops; the whole copy is pending native review.
+// the thesis stays in LITERAL English with no thesisTranslation. The hero was
+// ratified by venture-ops (13 Oct 2026); the whole copy is pending native review.
 export const homePt: HomeDict = {
   // "vácuo" is the Brazilian idiom for a message nobody answers.
   heroHook: heroLine({
