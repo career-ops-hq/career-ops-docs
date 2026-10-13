@@ -3,7 +3,7 @@ title: Unterstützte KI-CLIs
 seoTitle: "Welche KI-CLI funktioniert mit career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops ist KI-agnostisch — es läuft auf jeder großen KI-Coding-CLI. So nutzt du den Assistenten, für den du ohnehin schon bezahlst, und bindest dich nie an einen einzigen Anbieter. Die vollständige, stets aktuelle Liste findest du im Core-Repo."
 icon: Terminal
-translationHash: c8c4656d58d67dbf
+translationHash: aba388df8b32db03
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -16,11 +16,17 @@ Die beste CLI für career-ops ist die, für die du schon bezahlst. Wenn du berei
 
 ## Welche CLIs werden unterstützt?
 
-career-ops funktioniert vollwertig mit **Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent und GitHub Copilot CLI** — zehn aktiv gepflegten KI-Coding-CLIs. (Gemini CLI gibt es nur noch als Legacy-Wrapper, es ist in Antigravity CLI aufgegangen.) Alle CLIs nutzen dieselbe Architektur von career-ops: Eine einzige kanonische `AGENTS.md` steuert die Logik, und schlanke Einstiegsdateien pro CLI regeln die Besonderheiten beim Aufruf des jeweiligen Tools.
+career-ops funktioniert vollwertig mit **Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent und GitHub Copilot CLI** — elf aktiv gepflegten KI-Coding-CLIs. (Gemini CLI gibt es nur noch als Legacy-Wrapper, es ist in Antigravity CLI aufgegangen.) Alle CLIs nutzen dieselbe Architektur von career-ops: Eine einzige kanonische `AGENTS.md` steuert die Logik, und schlanke Einstiegsdateien pro CLI regeln die Besonderheiten beim Aufruf des jeweiligen Tools.
 
 Die **kanonische, stets aktuelle Liste — mit dem genauen Befehl, mit dem du career-ops in jeder CLI aufrufst — liegt im Core-Repo**, damit sie nie veraltet:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — die vollständige Matrix der unterstützten CLIs und ihrer Einstiegsdateien, und wie du sie aufrufst (interaktiv und headless/Batch).
+
+## Pi
+
+Pi braucht keine Wrapper-Datei. Es liest `AGENTS.md` aus dem career-ops-Ordner und findet den gemeinsamen Skill von selbst. Du startest also `pi` in diesem Ordner und rufst career-ops mit `/skill:career-ops` auf, gefolgt vom gewünschten Modus. Für einen einzelnen unbeaufsichtigten Lauf nimmst du `pi -p "dein Prompt"`.
+
+Manche Pi-Versionen wollen, dass du einem Projekt vertraust, bevor sie dessen Skills laden. Ist `/skill:career-ops` nicht verfügbar, führ einmal `/trust` im Ordner aus und starte `pi` danach neu: Die Vertrauensentscheidung gilt nur für Pi-Sitzungen, die du danach startest. Zur Installation folgst du [Pis eigener Anleitung](https://github.com/earendil-works/pi).
 
 ## Welche sollte ich wählen?
 

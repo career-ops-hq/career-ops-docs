@@ -303,9 +303,9 @@ export const homeDe: HomeDict = {
       q: 'Mit welchen KI-Tools funktioniert career-ops?',
       a: (
         <>
-          career-ops funktioniert mit Claude Code, Cursor, Codex, OpenCode,
+          career-ops funktioniert mit Claude Code, Cursor, Codex, OpenCode, Pi,
           Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent und GitHub
-          Copilot CLI: zehn vollwertig unterstützte CLIs (Gemini CLI ist ein
+          Copilot CLI: elf vollwertig unterstützte CLIs (Gemini CLI ist ein
           Legacy-Wrapper). Dieselben Mode-Dateien laufen auf allen. Du wählst die
           CLI, die zu deinem Abo und deinem Budget passt; career-ops bindet dich
           nie an einen einzigen Anbieter. Eine typische Jobsuche läuft mit Claude
