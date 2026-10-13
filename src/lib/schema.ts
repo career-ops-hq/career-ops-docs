@@ -9,6 +9,7 @@ import { homeEn } from '@/app/_home/home-en';
 import { homeEs } from '@/app/_home/home-es';
 import { homeFr } from '@/app/_home/home-fr';
 import { homeDe } from '@/app/_home/home-de';
+import { homePt } from '@/app/_home/home-pt';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
@@ -228,7 +229,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr', 'de'],
+        inLanguage: ['en', 'es', 'fr', 'de', 'pt'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -761,6 +762,7 @@ const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
   es: { home: 'Inicio', docs: 'Documentación' },
   fr: { home: 'Accueil', docs: 'Documentation' },
   de: { home: 'Startseite', docs: 'Dokumentation' },
+  pt: { home: 'Início', docs: 'Documentação' },
 };
 
 export function docsBreadcrumbSchema(opts: {
@@ -893,6 +895,10 @@ export function homeFaqSchemaFr(dateModified?: Date) {
 
 export function homeFaqSchemaDe(dateModified?: Date) {
   return homeGraph('https://career-ops.org/de', 'de', faqFromDict(homeDe), dateModified);
+}
+
+export function homeFaqSchemaPt(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/pt', 'pt', faqFromDict(homePt), dateModified);
 }
 
 export function blogPostSchema(args: {

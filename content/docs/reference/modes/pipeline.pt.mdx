@@ -1,0 +1,53 @@
+---
+title: pipeline
+description: "Lê as URLs enfileiradas em data/pipeline.md e executa o auto-pipeline completo em cada uma. Use quando você juntou dez ou vinte vagas ao longo do dia e quer processar todas em uma única sessão."
+seoTitle: "Modo pipeline do career-ops: como avaliar várias vagas de uma vez"
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 23454c517c41a1c1
+localized: true
+translatedFrom: /docs/reference/modes/pipeline
+---
+
+## O que faz
+
+O modo pipeline percorre as URLs de data/pipeline.md (uma por linha) e aciona o auto-pipeline em cada uma. Relatórios, PDFs e entradas no tracker são gravados para cada vaga que gera uma avaliação válida. As extrações que falham são registradas e ignoradas.
+
+## Quando usar
+
+Use o pipeline quando você tiver uma fila de URLs acumuladas para processar. Coloque todas em data/pipeline.md, execute /career-ops pipeline e deixe rodar.
+
+## Como é uma execução
+
+Você coloca as URLs em `data/pipeline.md` e o modo processa a caixa de entrada inteira de uma só vez. Primeiro ele faz uma varredura de vagas ativas, sem gastar tokens, para descartar os anúncios expirados; depois avalia cada URL restante com o auto-pipeline completo e termina com uma tabela-resumo do que encontrou.
+
+```txt title="Execução do pipeline"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (one at a time)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+
+Cada URL processada passa da seção `## Pending` para a seção `## Processed` do arquivo, de modo que a caixa de entrada continua sendo um registro atualizado do que ainda falta.
+
+## Quando vale a pena usar
+
+Recorra ao pipeline quando você tiver acumulado várias vagas ao longo do dia e quiser processar todas em uma única sessão. Como ele trata a fila:
+
+- A seção `## Pending` aceita qualquer formato: uma URL colada sozinha já funciona, ou você pode adicionar as colunas `company`, `role`, `location` e `comp`, e o modo lê todas elas.
+- A varredura de vagas ativas roda antes do loop por URL, então uma caixa de entrada desatualizada com oito URLs não custa oito avaliações desperdiçadas.
+- A ferramenta de extração define a concorrência. Com o extrator de navegador padrão (Playwright MCP), ele processa as URLs uma de cada vez, porque workers que compartilham a mesma sessão de navegador podem se contaminar entre si e avaliar a vaga errada. Só quando todos os workers usam o extrator isolado por CLI (`scan.extractor: cli`) ou uma alternativa sem navegador, cada um com o próprio processo e estado de sessão, três ou mais URLs podem rodar em paralelo, um worker por URL.
+- Os PDFs só são gerados quando a nota ultrapassa `auto_pdf_score_threshold` (padrão: 3.0); aumente esse valor para não gerar PDFs de vagas medianas e gere-os depois, sob demanda, com `/career-ops pdf`.
+
+## Veja também
+
+- [auto-pipeline](/pt/docs/reference/modes/auto-pipeline)

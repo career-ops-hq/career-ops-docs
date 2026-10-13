@@ -1,0 +1,30 @@
+---
+title: career-ops no Windows
+seoTitle: "O career-ops funciona no Windows? Sim — suporte completo, o instalador cuida da configuração"
+description: "O career-ops roda no Windows com suporte completo. A única particularidade da plataforma — os links simbólicos — é resolvida automaticamente pelo instalador, sem modo administrador, sem mklink e sem exigência de versão mínima do sistema operacional."
+icon: MonitorCheck
+translationHash: e3486e8615e2cdac
+localized: true
+translatedFrom: /docs/windows
+---
+
+**Sim — o career-ops roda no Windows com suporte completo.** Existe uma única particularidade específica do Windows, e o instalador resolve isso automaticamente para você: sem Modo de Desenvolvedor, sem `mklink` manual e sem exigência de versão mínima do sistema operacional. Se você tem o Node instalado, você instala e executa o career-ops no Windows exatamente como em qualquer outro sistema.
+
+## A única particularidade do Windows, já resolvida para você
+
+O Windows não cria links simbólicos por padrão, então um checkout novo do Git deixa os pontos de entrada das skills de cada CLI (`.claude/skills/`, `.opencode/skills/` e assim por diante) como simples arquivos de ponteiro, em vez de links simbólicos de verdade — e é isso que causa o erro de "as skills não carregam" que as pessoas encontram em outras ferramentas.
+
+O career-ops detecta isso automaticamente. Ao rodar o instalador ou o atualizador — `npx @santifer/career-ops init` em uma instalação nova, ou `node update-system.mjs apply --confirm` em uma atualização — é executada uma etapa `materializeSkillEntrypoints`, que substitui esses arquivos de ponteiro pelo conteúdo completo das skills. A partir de um worktree vinculado do Git, `node update-system.mjs apply --confirm` faz esse reparo no seu checkout de `main`. Rode `git merge main` no worktree para trazer a correção; os worktrees criados a partir do `main` atualizado já vêm com ela. Com `CAREER_OPS_UPDATE_IN_WORKTREE=1` definida, o `apply` repara apenas o branch daquele worktree, e o `main` fica sem o reparo. Você não precisa de permissões de administrador, do Modo de Desenvolvedor nem de nenhum comando `mklink` manual.
+
+<Callout title="Sem exigência de versão mínima do sistema">
+O career-ops não exige nenhuma versão específica do Windows (nem do macOS). Se o Node roda, o career-ops roda. Qualquer afirmação sobre uma versão mínima do sistema operacional que você tenha visto em outro lugar não está correta.
+</Callout>
+
+## A referência oficial de instalação
+
+O detalhe técnico — o comportamento exato do instalador, as variantes dos comandos para PowerShell e CMD e o restante das perguntas frequentes — fica no repositório principal e é mantido atualizado por lá:
+
+- [docs/FAQ.md — "As skills não carregam no Windows"](https://github.com/career-ops-hq/career-ops/blob/main/docs/FAQ.md) — a resposta oficial, mantida em sincronia com o instalador.
+- [docs/SETUP.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SETUP.md) — guia completo de instalação.
+
+Depois de instalar, escolha o seu motor em [Configurar um motor de IA gratuito](/pt/docs/free-ai-engine) ou use qualquer [CLI compatível](/pt/docs/supported-clis) e siga para o [Início rápido](/pt/docs).

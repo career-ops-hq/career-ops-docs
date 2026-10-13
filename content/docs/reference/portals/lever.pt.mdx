@@ -1,0 +1,57 @@
+---
+title: Lever
+description: "O Lever é o ATS consolidado entre empresas de médio porte e em fase de crescimento. O career-ops consulta diretamente a API pública de vagas do Lever."
+seoTitle: "Como buscar vagas no Lever com o career-ops — varredura de portais ATS sem gastar tokens"
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 535b6f24a4a180f6
+localized: true
+translatedFrom: /docs/reference/portals/lever
+---
+
+## O que faz
+
+O provider lever, em providers/lever.mjs, faz requisições HTTP para api.lever.co/v0/postings/`{slug}` e interpreta a resposta em JSON. O slug é o identificador das vagas da empresa no Lever (por exemplo, 'figma' para a Figma).
+
+## Quando usar
+
+Use a varredura do Lever para empresas que estão entre a Série C e o pré-IPO e que ainda não migraram para o Greenhouse ou o Ashby. A Figma, a Brex e muitas fintechs continuam usando o Lever.
+
+## Exemplo
+
+```
+In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
+```
+
+## O que o scanner faz
+
+O scanner lê os slugs do Lever habilitados no seu portals.yml, chama a API pública de vagas do Lever para cada um deles e incorpora ao seu pipeline as vagas novas cujo título corresponde ao que você procura, sem sessão de navegador e sem gastar nenhum token de LLM na coleta. A mesma execução de `node scan.mjs` também cobre seus painéis do Greenhouse e do Ashby e depois filtra tudo pelas palavras-chave de título que você configurou.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 33 total
+Filtered by title: 5 relevant
+Duplicates: 2 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Figma | AI Product Engineer | lever
+  + Brex  | Applied AI Engineer | lever
+```
+
+## Como o career-ops se comunica com o Lever
+
+O career-ops consulta `api.lever.co/v0/postings/{slug}`, ou o host `api.eu.lever.co` no caso de painéis da UE, e lê o array JSON de vagas. Para cada vaga, ele usa o campo `text` como título e o `hostedUrl` como link, recorrendo ao `applyUrl` quando o `hostedUrl` não existe. Como o Lever devolve o painel inteiro em uma única resposta estruturada, a varredura é um único GET HTTPS público por empresa, que fica dentro dos limites de requisições e não gasta tokens de modelo. O custo em tokens só começa depois, quando você avalia uma vaga que quer levar adiante. Rodar a varredura de novo é seguro: cada URL é comparada com o seu histórico de varreduras, com as candidaturas que você já avaliou e com o pipeline atual, de modo que uma vaga que você já viu nunca é adicionada duas vezes.
+
+## Pontos de atenção
+
+A API do Lever expõe a descrição completa da vaga na resposta. Alguns painéis do Lever incluem metadados internos da vaga, que o career-ops aproveita como sinal adicional na hora de pontuar.
+
+## Relacionados
+
+- [greenhouse](/pt/docs/reference/portals/greenhouse)
+- [ashby](/pt/docs/reference/portals/ashby)

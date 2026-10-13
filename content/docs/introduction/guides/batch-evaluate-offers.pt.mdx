@@ -1,0 +1,173 @@
+---
+title: Avaliar vagas em lote
+description: Processe 10 ou mais vagas em uma única sessão, com workers de IA em paralelo e PDFs personalizados.
+seoTitle: "Avaliar vagas em lote com o career-ops — pontue várias de uma vez"
+icon: FileStack
+translationHash: 537bf031e6d66d7e
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+Use este guia quando você tiver 10 ou mais vagas para analisar e quiser processar todas em uma única sessão, em vez de uma por uma.
+
+Cada vaga recebe o seu próprio worker do Claude. Esse worker lê o seu currículo, pontua a compatibilidade, escreve um relatório completo e salva um PDF personalizado — tudo sem você precisar fazer nada.
+
+## Passo 1: Adicione as vagas ao arquivo de entrada
+
+O sistema de lote lê as URLs das vagas de um arquivo chamado **`batch/batch-input.tsv`**. Pense nele como uma lista de tarefas para o avaliador.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Abra **`batch/batch-input.tsv`** em qualquer editor de texto.
+      </Step>
+      <Step>
+        Adicione uma linha por vaga. Cada linha tem quatro colunas separadas por tabulação:
+
+        | Coluna | O que preencher |
+        |--------|---------------|
+        | `id` | Um número único para esta vaga (1, 2, 3, …) |
+        | `url` | A URL completa do anúncio da vaga |
+        | `source` | Onde você a encontrou (por exemplo, `LinkedIn`, `Greenhouse`) |
+        | `notes` | Uma observação opcional — deixe em branco se não tiver nenhuma |
+      </Step>
+      <Step>
+        Salve o arquivo.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**Exemplo:**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="Dica">
+  Cada ID precisa ser um número único. Não pule nem repita números.
+</Callout>
+
+## Passo 2: Confira o lote antes de rodar (recomendado)
+
+Antes de processar qualquer coisa, faça uma verificação rápida para ver quantas vagas estão na fila. Nada é avaliado ainda — é só uma prévia.
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+Você verá uma lista das vagas pendentes e seus IDs. Se algo parecer errado, corrija o arquivo de entrada agora, antes de gastar tempo com uma lista ruim.
+
+## Passo 3: Execute o lote
+
+Quando estiver tudo pronto, inicie o lote. Você pode processar uma vaga por vez ou várias ao mesmo tempo.
+
+**Uma por vez (mais lento, usa menos memória):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**Duas por vez (um bom padrão):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**Três por vez (mais rápido, mas exige mais da sua máquina):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**Pular vagas com pontuação abaixo de um limite (por exemplo, abaixo de 4,0 de 5):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+Acompanhe o terminal enquanto o lote roda. Cada linha informa qual vaga está sendo processada e se ela foi concluída ou falhou.
+
+Se um worker delegado encontrar uma vaga de agência que precise da sua confirmação, ele para antes de escrever o relatório, o currículo, o rascunho de candidatura ou a linha do tracker e marca a vaga como `needs_confirmation`. Responda à pergunta exibida na sessão interativa principal; essa sessão só retoma a vaga em espera depois da sua resposta explícita. `--retry-failed` e `--resume-paused` não retomam vagas que aguardam confirmação.
+
+## Passo 4: Leia os resultados conforme eles chegam
+
+Você não precisa esperar o lote terminar. Os resultados aparecem à medida que cada vaga é concluída.
+
+**Relatórios completos de avaliação** → `reports/`
+
+Cada relatório é um arquivo com um nome como `042-company-name-2026-04-14.md`. Abra-o para ver:
+
+- Um resumo da vaga
+- O quanto o seu currículo combina com a vaga
+- Pesquisa salarial
+- Uma sugestão de plano de preparação para entrevistas
+
+Cada relatório também inclui um **Risk Summary** (resumo de riscos). A linha **Fixed-term contract** (contrato por prazo determinado) cita o trecho do anúncio que menciona explicitamente o prazo determinado, informa `✅ no fixed term disclosed` quando não há nenhum e é marcada como não avaliada quando a descrição da vaga não estava disponível. O campo correspondente do Machine Summary é `risk_summary.fixed_term`, com um destes valores exatos:
+
+| Valor | Significado |
+|-------|---------|
+| `detected` | O anúncio descreve explicitamente uma vaga por prazo determinado |
+| `not_detected` | Nenhuma menção explícita a prazo determinado foi encontrada |
+| `not_evaluated` | A descrição da vaga não estava disponível para esta verificação |
+
+**Entradas do tracker** → `batch/tracker-additions/`
+
+Cada vaga também gera aqui um pequeno arquivo de resumo: uma linha de cabeçalho com os nomes das colunas e uma linha de valores. Eles são adicionados ao seu tracker principal no Passo 6.
+
+### Score Evidence: as evidências da pontuação
+
+O relatório inclui a seção **Score Evidence** depois do Risk Summary. Ela cobre cinco dimensões: compatibilidade com o currículo, alinhamento com o North Star, remuneração, sinais culturais e sinais de alerta. Cada linha registra um status de evidência (`supported`, `partial` ou `unknown`), uma fonte ou observação concreta e uma pergunta em aberto. A seção termina com um nível de confiança das evidências (`High`, `Medium` ou `Low`), o motivo e até três prioridades de verificação.
+
+Esse nível descreve as evidências por trás do Global Score; não é uma probabilidade de contratação nem o nível de legitimidade do anúncio do Bloco G, e não altera a pontuação numérica. O Machine Summary preserva os cinco status em `score_evidence`, o nível em `confidence` e as prioridades em `confidence_gaps`. Quando não resta nenhuma prioridade, `confidence_gaps` é uma lista vazia.
+
+## Passo 5: Tente de novo as vagas que falharam
+
+Às vezes um worker falha — por exemplo, quando a URL de uma vaga deixa de carregar. As vagas que falharam aparecem no terminal com uma mensagem de erro curta.
+
+**Tentar de novo apenas as vagas que falharam:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**Tentar de novo com até 3 tentativas, em vez das 2 padrão:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+O lote pula qualquer vaga que já tenha sido concluída com sucesso — então rodar o comando de novo é sempre seguro.
+
+## Passo 6: Junte os resultados ao seu tracker
+
+Depois que o lote terminar, execute este comando para adicionar todas as novas avaliações a `data/applications.md`:
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+Este script:
+
+1. Lê os arquivos de resumo em `batch/tracker-additions/`
+2. Verifica duplicatas, para você nunca ficar com duas linhas para a mesma vaga
+3. Adiciona as novas entradas ao seu tracker de candidaturas
+4. Arquiva os arquivos processados em `batch/tracker-additions/merged/`
+
+**Para ver as alterações antes, sem gravar nada:**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## O que fazer depois
+
+Abra **`data/applications.md`** para ver todas as suas avaliações em uma única tabela. A partir daí, você pode:
+
+- Ordenar por pontuação para encontrar as vagas mais compatíveis
+- Abrir relatórios individuais em `reports/` para uma análise completa
+- Começar o processo de candidatura para as suas melhores opções com `/career-ops apply`

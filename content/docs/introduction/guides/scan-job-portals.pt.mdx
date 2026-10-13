@@ -1,0 +1,311 @@
+---
+title: Varredura de portais de vagas
+description: Configure e execute o scanner de portais para encontrar novas vagas automaticamente.
+seoTitle: "Varredura de portais de vagas com o career-ops — Greenhouse, Ashby, Lever, zero tokens"
+icon: ScanEye
+translationHash: 7476c9cd97b61b48
+localized: true
+translatedFrom: /docs/introduction/guides/scan-job-portals
+---
+
+Este guia mostra como configurar o `portals.yml` e executar o scanner de portais para encontrar novas vagas automaticamente.
+
+<Callout title="Antes de começar">
+  Confira se você já concluiu o guia de [Início rápido](/pt/docs). Você precisa ter o `cv.md` e o `modes/_profile.md` prontos para que a varredura seja útil.
+</Callout>
+
+## Configure o portals.yml
+
+O `portals.yml` é o arquivo que controla o que o scanner procura e onde ele procura. Você o cria uma única vez a partir do modelo incluído e depois o edita para refletir os cargos que você busca.
+
+Execute este comando na pasta do projeto:
+
+```bash title="Terminal"
+cp templates/portals.example.yml portals.yml
+```
+
+Abra o `portals.yml` em qualquer editor de texto. O arquivo tem três seções. Os passos abaixo explicam cada uma delas.
+
+### Configure o filtro de títulos
+
+O filtro de títulos é como o scanner decide se vale a pena mostrar uma vaga para você. Ele compara o título da vaga com duas listas de palavras-chave.
+
+Localize a seção `title_filter` perto do início do arquivo:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "AI"
+    - "ML"
+    - "Product Manager"
+  negative:
+    - "Junior"
+    - "Intern"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+**Substitua a lista `positive`** por palavras-chave que correspondam aos cargos que você busca. Uma vaga precisa corresponder a pelo menos uma palavra-chave dessa lista para passar. A verificação não diferencia maiúsculas de minúsculas, então `"AI"` também captura `"ai engineer"`.
+
+**Substitua a lista `negative`** por palavras-chave que eliminam uma vaga. Se qualquer uma delas aparecer no título, a vaga é ignorada, mesmo que tenha correspondido a uma palavra-chave positiva.
+
+**Deixe `seniority_boost` como está**, a menos que você queira adicionar ou remover níveis de senioridade. Essas palavras-chave não eliminam nada: elas apenas colocam as vagas correspondentes mais acima nos resultados.
+
+**Exemplo:** se você procura vagas de engenharia Rails, seu filtro pode ficar assim:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "Rails"
+    - "Ruby"
+    - "Full Stack"
+    - "Backend"
+  negative:
+    - "Junior"
+    - "Intern"
+    - "PHP"
+    - "Java"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+<Callout title="Dica">
+  Comece com uma lista `positive` pequena, de três a cinco palavras-chave. Você sempre pode adicionar mais depois. Uma lista longa dificulta entender por que uma vaga passou ou foi descartada.
+</Callout>
+
+### Adicione empresas para acompanhar
+
+A seção `tracked_companies` é uma lista de empresas específicas que você quer que o scanner verifique todas as vezes. O scanner vai direto à página de vagas de cada empresa e lê as posições abertas.
+
+Localize a seção `tracked_companies` perto do final do arquivo. Cada entrada tem este formato:
+
+```yaml title="portals.yml"
+tracked_companies:
+  - name: Anthropic
+    careers_url: https://job-boards.greenhouse.io/anthropic
+    api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    enabled: true
+
+  - name: OpenAI
+    careers_url: https://openai.com/careers
+    enabled: true
+```
+
+**Para adicionar uma empresa**, copie uma entrada existente e altere os valores:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Campo         | O que colocar                                                                                      |
+    | ------------- | -------------------------------------------------------------------------------------------------- |
+    | `name`        | O nome da empresa como você quer que apareça nos resultados                                        |
+    | `careers_url` | A URL direta da página de vagas da empresa                                                         |
+    | `api`         | Opcional. A URL da API do Greenhouse, se a empresa usar o Greenhouse. Deixe de fora se não tiver certeza. |
+    | `enabled`     | Defina como `true` para incluir a empresa ou `false` para ignorá-la sem apagar a entrada.          |
+  </div>
+</div>
+
+
+**Para encontrar a `careers_url` de uma empresa**, acesse o site da empresa, clique em Careers, Jobs ou "Trabalhe conosco" e copie a URL da página que lista as vagas abertas. É essa a URL que você deve usar.
+
+**Para desativar uma empresa sem apagá-la**, defina `enabled: false`:
+
+```yaml title="portals.yml"
+  - name: Stripe
+    careers_url: https://stripe.com/jobs/search
+    enabled: false
+```
+
+<Callout title="Observação">
+  Toda empresa em `tracked_companies` precisa ter uma `careers_url`. Sem ela, o scanner não tem página para visitar e ignora a entrada.
+</Callout>
+
+### Revise as consultas de busca
+
+A seção `search_queries` executa buscas mais amplas na web para encontrar vagas em empresas que não estão na sua lista de acompanhamento. O modelo já inclui muitas consultas prontas.
+
+Você não precisa alterar esta seção para começar. As consultas prontas cobrem os principais portais de vagas, incluindo Greenhouse e Ashby, entre outros.
+
+Quando você quiser personalizar, cada consulta tem este formato:
+
+```yaml title="portals.yml"
+search_queries:
+  - name: Greenhouse — Rails Engineer
+    query: 'site:job-boards.greenhouse.io "Rails Engineer" OR "Ruby on Rails" remote'
+    enabled: true
+```
+
+Para desativar uma consulta de que você não precisa, defina `enabled: false`. Para adicionar uma nova, copie uma entrada existente, dê a ela um novo `name` e atualize o texto de `query`.
+
+## Execute uma varredura
+
+Há duas formas de executar uma varredura. Use a que atende à sua necessidade.
+
+### Opção A — Execute o script diretamente
+
+```bash title="Terminal"
+npm run scan
+```
+
+Execute o comando na pasta do projeto. O script lê o `portals.yml`, consulta diretamente a API de cada empresa e grava as vagas novas em `data/pipeline.md`. Ele não consome tokens de IA e roda em cerca de 30 segundos.
+
+Esta opção funciona para qualquer empresa cuja página de vagas rode em uma plataforma para a qual o scanner tem um provedor integrado: Greenhouse, Ashby e Lever, além de dezenas de outros sistemas de triagem (ATS) e portais de vagas, como Workable, Workday e SmartRecruiters. A lista completa está em [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Empresas sem provedor correspondente são ignoradas, e a varredura informa quantas foram.
+
+**Veja os resultados antes de salvá-los:**
+
+```bash title="Terminal"
+npm run scan -- --dry-run
+```
+
+O comando executa a varredura completa, mas não grava nada em disco. Use-o para conferir as configurações do filtro antes de gravar os resultados.
+
+**Faça a varredura de uma única empresa:**
+
+```bash title="Terminal"
+npm run scan -- --company Anthropic
+```
+
+Substitua `Anthropic` por qualquer nome de empresa da sua lista `tracked_companies`. A correspondência não diferencia maiúsculas de minúsculas.
+
+### Opção B — Execute a varredura com IA dentro do Claude Code
+
+Abra o Claude Code na pasta do projeto e digite:
+
+```bash title="Claude Code"
+/career-ops scan
+```
+
+Esta versão visita a página de vagas de cada empresa diretamente, usando um navegador, então funciona até para empresas que não têm API pública. Ela também executa as `search_queries` do seu `portals.yml` para encontrar vagas em empresas que não estão na sua lista de acompanhamento.
+
+Use esta opção quando:
+- Uma empresa da sua lista usa uma plataforma para a qual o script não tem provedor, e por isso a varredura pelo script a ignora
+- Você quer descobrir empresas novas, e não apenas verificar as que já conhece
+- A varredura pelo script deixou passar algo que você esperava ver
+
+<Callout title="Dica">
+  A Opção B consome tokens da API do Claude e demora mais do que o script. Para uma verificação diária rápida, a Opção A é mais ágil.
+</Callout>
+
+## Entenda o resultado da varredura
+
+Quando a varredura termina, você vê um resumo como este:
+
+```text title="Terminal"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Portal Scan — 2026-04-13
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Companies scanned:     42
+Total jobs found:      318
+Filtered by title:     291 removed
+Duplicates:            4 skipped
+New offers added:      23
+
+New offers:
+  + Anthropic | AI Engineer | San Francisco, CA
+  + ElevenLabs | Solutions Architect | Remote
+  ...
+
+→ Run /career-ops pipeline to evaluate new offers.
+```
+
+Veja o que cada linha significa:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Linha | O que ela informa |
+    |---|---|
+    | **Companies scanned** | Quantas empresas de `tracked_companies` foram verificadas |
+    | **Total jobs found** | Todas as vagas abertas encontradas nessas empresas, antes de qualquer filtro |
+    | **Filtered by title** | Vagas removidas porque o título não correspondeu ao seu `title_filter` |
+    | **Duplicates skipped** | Vagas que já estão no seu pipeline ou tracker e não são adicionadas de novo |
+    | **New offers added** | Vagas que passaram por todos os filtros e são novas para você |
+  </div>
+</div>
+
+
+Se **New offers added** for 0, procure primeiro este aviso no resultado da varredura:
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+Ele significa que o portal dessa empresa não chegou a responder com sucesso, então o zero não prova que não há vagas publicadas ali. A empresa é registrada como `unverified_zero` em `data/portal-health.tsv` e conta para a sequência de falhas dela. Verifique esse portal antes de mexer nos seus filtros.
+
+Se não houver esse aviso, seu filtro de títulos pode estar rígido demais. Tente adicionar uma palavra-chave à sua lista `positive` e execute a varredura de novo.
+
+**Para onde vão as vagas novas:** cada vaga nova é adicionada como uma linha em `data/pipeline.md`. Essa é a lista de vagas aguardando avaliação.
+
+**Para que serve o `data/scan-history.tsv`:** toda URL que o scanner vê, tenha sido adicionada, filtrada ou ignorada, fica registrada ali. É assim que o scanner evita mostrar a mesma vaga duas vezes em varreduras futuras. A exceção é uma vaga removida pela configuração `location_filter` ou `max_posting_age_days` do `portals.yml`. Ela é registrada como `skipped_location` ou `skipped_age` e pode voltar a aparecer quando você alterar essa configuração. Você não precisa editar esse arquivo.
+
+## Avalie as vagas novas encontradas na varredura
+
+Depois que a varredura adiciona vagas novas a `data/pipeline.md`, sua lista de vagas pendentes, execute o comando pipeline para avaliar cada uma em relação ao seu perfil. Esta etapa usa o Claude para ler a descrição da vaga, compará-la com o seu `cv.md` e o seu `modes/_profile.md` e produzir um resumo com nota para cada vaga.
+
+Abra o Claude Code na pasta do projeto e digite:
+
+```bash title="Terminal"
+/career-ops pipeline
+```
+
+O Claude lê todas as URLs pendentes em `data/pipeline.md`, visita cada vaga e a avalia. Os resultados chegam em lotes. Cada lote mostra uma tabela como esta:
+
+Lote 1 concluído (Anthropic, ElevenLabs, Mistral):
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | #   | Empresa    | Vaga                | Nota  | Legitimidade                          |
+    | --- | ---------- | ------------------- | ----- | ------------------------------------- |
+    | 024 | Anthropic  | AI Engineer         | 4,8/5 | High Confidence                       |
+    | 025 | ElevenLabs | Solutions Architect | 4,1/5 | High Confidence — em rápido crescimento |
+    | 026 | Mistral AI | Product Manager     | 3,2/5 | Proceed w/ Caution — vaga encerrada   |
+  </div>
+</div>
+
+
+Veja o que cada coluna significa:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Coluna           | O que ela informa                                                                                                                                                                            |
+    | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **#**            | O número do relatório. Use-o para encontrar o relatório completo em `reports/`. Por exemplo, o relatório 024 é `reports/024-anthropic-2026-04-13.md`                                         |
+    | **Nota**         | O quanto a vaga combina com o seu perfil, de 1 a 5                                                                                                                                           |
+    | **Legitimidade** | Se a vaga parece real e ativa. "High Confidence" significa que a vaga está no ar e os detalhes conferem. "Proceed w/ Caution" significa que algo acendeu um alerta: leia a observação ao lado. |
+  </div>
+</div>
+
+**Para ler a avaliação completa de uma vaga**, você tem duas opções:
+
+- **Abra o arquivo do relatório diretamente**: encontre-o na pasta `reports/` usando o número da tabela.
+- **Use o dashboard**: execute `./dashboard/career-dashboard` na pasta do projeto para navegar por todos os seus relatórios em uma interface de terminal. Você pode filtrar por nota e por status e abrir qualquer relatório sem sair do terminal.
+
+## Próximos passos
+
+Quando o `/career-ops pipeline` termina, cada vaga tem uma nota de 1 a 5. Você encontra o relatório completo de qualquer vaga na pasta `reports/`. A nota mostra o quanto a vaga combina com o seu perfil.
+
+Use a nota como ponto de partida:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Nota              | Ação recomendada                                                                                                                      |
+    | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+    | **4,5 ou mais**   | Combina muito com você. Execute `/career-ops apply` imediatamente.                                                                    |
+    | **4,0 – 4,4**     | Boa aderência. Execute `/career-ops apply`. Você também pode executar `/career-ops contacto` antes, para falar com alguém da equipe antes de se candidatar. |
+    | **3,5 – 3,9**     | Pode ir para qualquer lado. Execute `/career-ops deep` para saber mais antes de decidir.                                              |
+    | **Abaixo de 3,5** | Deixe passar, a menos que você tenha um motivo específico para se candidatar.                                                         |
+  </div>
+</div>
+
+Veja o que cada comando faz:
+
+- **`/career-ops apply`**: abre o formulário de candidatura e escreve respostas sob medida para o seu perfil. Ele para antes de enviar, para que você revise tudo primeiro.
+- **`/career-ops contacto`**: encontra no LinkedIn o gestor da vaga ou alguém da equipe e redige uma mensagem curta de contato para você enviar.
+- **`/career-ops deep`**: pesquisa a empresa e a vaga a fundo. Use quando você estiver em dúvida e quiser mais informações antes de decidir.
+- **`/career-ops tracker`**: mostra o status de todas as vagas no seu pipeline. Execute sempre que quiser ver em que pé as coisas estão.
+
+<Callout title="Dica">
+  Você não precisa seguir a ordem. Se uma vaga tirar 4,8, mas você nunca ouviu falar da empresa, execute `/career-ops deep` primeiro. Os comandos funcionam de forma independente: use o que fizer sentido para a sua situação.
+</Callout>
