@@ -6,7 +6,8 @@ import { brand, heroLine, type HomeDict } from './home-dict';
 // for Portuguese (F1, 9 Oct 2026): "vaga" for a listing and "proposta" for the
 // final offer (in Brazil "oferta de emprego" is the listing), the category
 // phrase "agente de IA de código aberto para busca de emprego", and the
-// human-in-the-loop promise in the first passage, because in Portuguese Gemini
+// README's canonical restriction line in the first passage (venture-ops,
+// 13 Oct 2026: one version site-wide, the README's), because in Portuguese Gemini
 // pairs "open-source AI agent" with "auto-apply-bot github". Like FR and DE,
 // the thesis stays in LITERAL English with no thesisTranslation. The hero is
 // pending venture-ops; the whole copy is pending native review.
@@ -57,8 +58,8 @@ export const homePt: HomeDict = {
     <>
       O career-ops é um agente de IA de código aberto para busca de emprego que
       roda localmente no seu computador, dentro de qualquer CLI de programação
-      com IA: Claude Code, OpenCode, Codex, GitHub Copilot e outras. Ele nunca se
-      candidata em seu nome. Avalia as vagas em relação ao seu currículo com uma
+      com IA: Claude Code, OpenCode, Codex, GitHub Copilot e outras. Ele redige e
+      preenche; nunca envia. Você clica em Enviar. Avalia as vagas em relação ao seu currículo com uma
       rubrica de cinco dimensões mais uma nota global holística de 1 a 5, gera
       currículos em PDF otimizados para ATS e adaptados a cada vaga, redige
       respostas para as perguntas abertas dos formulários do Greenhouse, do
