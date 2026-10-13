@@ -1,0 +1,173 @@
+---
+title: Valutare più annunci in batch
+description: Elabora 10 o più annunci di lavoro in un'unica sessione, con worker AI in parallelo e PDF su misura.
+seoTitle: "Valutare tanti annunci di lavoro in una volta con career-ops: la valutazione in batch"
+icon: FileStack
+translationHash: 537bf031e6d66d7e
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+Usa questa guida quando hai 10 o più annunci di lavoro da esaminare e vuoi elaborarli tutti in un'unica sessione invece che uno alla volta.
+
+Ogni annuncio ha il suo worker Claude. Quel worker legge il tuo curriculum, calcola il punteggio di corrispondenza, scrive un report completo e salva un PDF su misura, senza che tu debba muovere un dito.
+
+## Passo 1: aggiungi gli annunci al file di input
+
+Il sistema batch legge gli URL degli annunci da un file chiamato **`batch/batch-input.tsv`**. Consideralo la lista delle cose da fare del valutatore.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Apri **`batch/batch-input.tsv`** con un qualsiasi editor di testo.
+      </Step>
+      <Step>
+        Aggiungi una riga per ogni annuncio. Ogni riga ha quattro colonne separate da una tabulazione:
+
+        | Colonna | Cosa inserire |
+        |--------|---------------|
+        | `id` | Un numero univoco per questo annuncio (1, 2, 3, …) |
+        | `url` | L'URL completo dell'annuncio |
+        | `source` | Dove l'hai trovato (ad es. `LinkedIn`, `Greenhouse`) |
+        | `notes` | Una nota facoltativa: lascia vuoto se non ne hai |
+      </Step>
+      <Step>
+        Salva il file.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**Esempio:**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="Suggerimento">
+  Ogni ID deve essere un numero univoco. Non saltare numeri e non ripeterli.
+</Callout>
+
+## Passo 2: controlla il batch in anteprima (consigliato)
+
+Prima di elaborare qualsiasi cosa, fai un controllo rapido per vedere quanti annunci sono in attesa. Non viene ancora valutato nulla: è solo un'anteprima.
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+Vedrai l'elenco degli annunci in sospeso con i relativi ID. Se qualcosa non torna, correggi subito il file di input, prima di perdere tempo su una lista sbagliata.
+
+## Passo 3: avvia il batch
+
+Quando sei pronto, avvia il batch. Puoi elaborare un annuncio alla volta oppure più annunci insieme.
+
+**Uno alla volta (il più lento, usa meno memoria):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**Due alla volta (una buona impostazione predefinita):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**Tre alla volta (più veloce, ma più pesante per il tuo computer):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**Salta gli annunci con un punteggio inferiore a una soglia (ad es. sotto 4,0 su 5):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+Tieni d'occhio il terminale mentre il batch è in esecuzione. Ogni riga ti dice quale annuncio è in elaborazione e se è stato completato o è fallito.
+
+Se un worker delegato trova un annuncio di un'agenzia che richiede la tua conferma, si ferma prima di scrivere un report, un CV, una bozza di candidatura o una riga del tracker e contrassegna il job come `needs_confirmation`. Rispondi alla domanda mostrata nella sessione interattiva principale: quella sessione riprende l'annuncio in sospeso solo dopo la tua risposta esplicita. `--retry-failed` e `--resume-paused` non riprendono gli annunci in attesa di conferma.
+
+## Passo 4: leggi i risultati man mano che arrivano
+
+Non devi aspettare che il batch finisca. I risultati compaiono ogni volta che un annuncio viene completato.
+
+**Report di valutazione completi** → `reports/`
+
+Ogni report è un file con un nome del tipo `042-company-name-2026-04-14.md`. Aprilo per vedere:
+
+- Un riepilogo del ruolo
+- Quanto il tuo curriculum corrisponde alla posizione
+- Una ricerca sulla retribuzione
+- Un piano consigliato per preparare il colloquio di lavoro
+
+Ogni report include anche un **Risk Summary**. La riga **Fixed-term contract** cita la formulazione esplicita sul tempo determinato presente nell'annuncio, riporta `✅ no fixed term disclosed` quando non ce n'è e viene contrassegnata come non valutata quando la descrizione della posizione non era disponibile. Il campo corrispondente del Machine Summary è `risk_summary.fixed_term`, con uno di questi valori esatti:
+
+| Valore | Significato |
+|-------|---------|
+| `detected` | L'annuncio descrive esplicitamente un ruolo a tempo determinato |
+| `not_detected` | Non è stata trovata alcuna formulazione esplicita sul tempo determinato |
+| `not_evaluated` | La descrizione della posizione non era disponibile per questo controllo |
+
+**Voci del tracker** → `batch/tracker-additions/`
+
+Ogni annuncio lascia qui anche un breve file di riepilogo: una riga di intestazione con le etichette delle colonne e una riga di valori. Queste voci vengono aggiunte al tuo tracker principale nel Passo 6.
+
+### Score Evidence
+
+Il report include la sezione **Score Evidence** dopo il Risk Summary. Copre cinque dimensioni: corrispondenza con il curriculum, allineamento con la North Star, retribuzione, segnali culturali e campanelli d'allarme. Ogni riga registra uno stato dell'evidenza (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità dell'evidenza (`High`, `Medium` o `Low`), la sua motivazione e fino a tre priorità di verifica.
+
+Questo livello descrive l'evidenza alla base del Global Score: non è una probabilità di assunzione né il livello di legittimità dell'annuncio del Blocco G, e non modifica il punteggio numerico. Il Machine Summary conserva i cinque stati in `score_evidence`, il livello in `confidence` e le priorità in `confidence_gaps`. Quando non restano priorità, `confidence_gaps` è una lista vuota.
+
+## Passo 5: riprova gli annunci falliti
+
+A volte un worker fallisce, per esempio se l'URL di un annuncio ha smesso di caricarsi. Gli annunci falliti compaiono nel terminale con un breve messaggio di errore.
+
+**Riprova solo gli annunci falliti:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**Riprova con un massimo di 3 tentativi invece dei 2 predefiniti:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+Il batch salta ogni annuncio già completato con successo, quindi rieseguire questo comando è sempre sicuro.
+
+## Passo 6: unisci i risultati al tuo tracker
+
+Quando il batch è terminato, esegui questo comando per aggiungere tutte le nuove valutazioni a `data/applications.md`:
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+Questo script:
+
+1. Legge i file di riepilogo da `batch/tracker-additions/`
+2. Controlla i duplicati, così non avrai mai due righe per lo stesso annuncio
+3. Aggiunge le nuove voci al tracker delle tue candidature
+4. Archivia i file elaborati in `batch/tracker-additions/merged/`
+
+**Per vedere le modifiche in anteprima senza scrivere nulla:**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## Cosa fare dopo
+
+Apri **`data/applications.md`** per vedere tutte le tue valutazioni in un'unica tabella. Da lì puoi:
+
+- Ordinare per punteggio per trovare gli annunci più adatti a te
+- Aprire i singoli report in `reports/` per un'analisi approfondita
+- Iniziare a preparare la candidatura per gli annunci migliori con `/career-ops apply`

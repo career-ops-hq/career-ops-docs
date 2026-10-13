@@ -95,6 +95,14 @@ canon_por_idioma:
     embudo: "740 vagas avaliadas → 68 candidaturas → 12 entrevistas → 1 proposta"
     hitl: ["O career-ops nunca se candidata em seu nome", "Você clica em Enviar."]
     categoria: "agente de IA de código aberto para busca de emprego"
+  it:
+    # Fila IT de la §9 (F1 de search-ops, 13-oct-2026). En italiano «offerta di
+    # lavoro» es el anuncio: la oferta final es «proposta di assunzione» (D11).
+    # El core no tiene README.it: la restricción del sitio es el canon.
+    anuncio_oferta: "annunci → proposta di assunzione"
+    embudo: "740 annunci valutati → 68 candidature → 12 colloqui → 1 proposta di assunzione"
+    hitl: ["career-ops non si candida mai a tuo nome", "Sei tu a cliccare su Invia."]
+    categoria: "agente AI open source per la ricerca di lavoro"
 
 rules:
   general: >

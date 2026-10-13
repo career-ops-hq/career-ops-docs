@@ -24,7 +24,7 @@ export type HomeDict = {
   heroH1: ReactNode;
   runItNow: string;
   // Page language, for the star button's click event (its label stays English).
-  locale: 'en' | 'es' | 'fr' | 'de' | 'pt';
+  locale: 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it';
   // Locale-aware destination for the "get started" / docs CTAs: EN '/docs',
   // ES '/es/docs'. Keeps the Spanish home sending users into the Spanish docs
   // (which now has a translated landing) instead of dropping them into English.

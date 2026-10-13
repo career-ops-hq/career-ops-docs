@@ -1,0 +1,85 @@
+---
+title: tracker
+description: "Una lettura rapida dello stato di ogni candidatura. Utile come controllo quotidiano o per preparare la revisione settimanale. L'interfaccia completa da tastiera è nella dashboard TUI in Go; questa modalità è il riepilogo in chat."
+seoTitle: "Modalità tracker di career-ops: a che punto è ogni candidatura di lavoro"
+icon: LayoutGrid
+date: "2026-05-18"
+lastModified: "2026-09-25"
+translationHash: 83b5254d11b05f4a
+localized: true
+translatedFrom: /docs/reference/modes/tracker
+---
+
+## Cosa fa
+
+La modalità `tracker` legge tutti i file in reports/ e produce un riepilogo strutturato, raggruppato per fase: candidature inviate, valutate, in colloquio, rifiutate, scartate. In un'unica risposta trovi i conteggi per fase, l'attività recente e i followup in ritardo.
+
+## Quando usarla
+
+Usa tracker per un controllo quotidiano dello stato che richiede quindici secondi. Usa la dashboard TUI in Go quando devi andare a fondo.
+
+## Esempio
+
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+
+## Come si presenta un'esecuzione
+
+Un'esecuzione di tracker stampa in un'unica risposta la tabella completa delle candidature e un blocco di statistiche, così puoi leggere l'intera ricerca a colpo d'occhio. Ogni riga è una candidatura, con azienda, ruolo, punteggio, stato attuale e l'indicazione se sono stati generati un PDF su misura e un report di valutazione.
+
+```txt title="Esempio"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
+
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
+```
+
+Una candidatura attraversa un insieme fisso di stati: Evaluated (report scritto, decisione in sospeso), Applied (l'hai inviata tu), Responded (l'azienda ha risposto, ma non c'è ancora un colloquio), Interview (un processo di selezione in corso) e infine uno stato finale tra Offer, Rejected, Discarded o SKIP per i ruoli che non fanno per te. Per registrare un cambio di stato, chiedilo in chat oppure esegui tu stesso `node set-status.mjs <report#|company> <state>`, aggiungendo `--on YYYY-MM-DD` se è avvenuto in un giorno precedente. Il comando rifiuta gli stati sconosciuti, blocca il tracker mentre scrive e registra la transizione in `data/status-log.tsv`, il registro da cui leggono le statistiche funnel-velocity: usalo quindi al posto di modificare la riga a mano.
+
+## Leggere i numeri complessivi
+
+Per i dati cumulativi (l'intero funnel, i totali dello scanner, la copertura dei portali e il rispetto dei follow-up) la modalità esegue `node stats.mjs --summary` e ne riporta l'output alla lettera. Il comando legge i tuoi file locali e costa zero token, quindi i numeri non vengono mai ricalcolati a mano né stimati a memoria. Usa il riepilogo in chat descritto sopra per una lettura quotidiana veloce, e il comando delle statistiche quando vuoi i totali progressivi dell'intera ricerca.
+
+## Esportare una copia riparata
+
+Dopo centinaia di righe una tabella markdown accumula danni: segnaposto con caratteri corrotti (mojibake), un punteggio finito nella colonna dello stato, id duplicati, barre verticali fuori posto. `node tracker.mjs sync` li trova e li ripara nel suo indice SQLite, `data/applications.db`, senza toccare il markdown. Per quell'indice `tracker.mjs` richiede Node 22.13 o successivo (23.4 o successivo su Node 23); il tracker in markdown continua a funzionare anche senza. `node tracker.mjs export` è il modo per adottare quella copia riparata del tuo tracker:
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+`export` non tocca mai `data/applications.md`, a meno che tu non lo passi come `--out`.
+
+Conserva l'impaginazione che ha letto, non solo i valori: la tua riga di intestazione, le colonne che career-ops non mappa (`Location`, `Via`, `URL` o quelle che hai aggiunto tu), il titolo, eventuali righe di premessa e di chiusura, e i fine riga CRLF o LF. Le colonne aggiuntive tornano ciascuna nella propria posizione, anche se `query` non può filtrare su di esse.
+
+Tutto ciò che non riesce a riprodurre viene elencato su stderr. Quando quell'elenco non è vuoto, `--out` su un file esistente si rifiuta di scrivere (codice di uscita `1`, nessuna scrittura) finché non riesegui il comando con `--force`; quando è vuoto, `--out` fa una copia di backup del file esistente e lo sovrascrive. Ecco che cosa viene segnalato:
+
+| Cosa viene segnalato | Perché non può essere ricostruito |
+| --- | --- |
+| Una cella al di fuori delle colonne dichiarate dall'intestazione | L'intestazione non ha una colonna in cui metterla |
+| Una riga compresa tra la prima e l'ultima riga della tabella, come un titolo o l'intestazione di una seconda tabella | Un'unica tabella ricostruita non ha un posto in cui metterla |
+| Una riga che appartiene a una tabella successiva, come una sezione `## Archive` | È stata indicizzata rispetto all'intestazione della prima tabella, quindi riemetterla sposterebbe i dati archiviati nella tabella attiva |
+| Una cella il cui valore è stato riscritto per poter sopravvivere come cella (un `\|` fuori posto torna come `│`) | È cambiato il valore stesso |
+
+Nessuna perdita segnalata non significa che l'output sia identico byte per byte. `export` emette le riparazioni fatte da `sync`, e alcune sono silenziose: `aplicado` è un alias riconosciuto di `Applied` in `templates/states.yml`, quindi `sync --check` non segnala alcuna corruzione e l'esportazione riporta comunque `Applied`. Anche le celle allineate in colonna tornano con una spaziatura singola. Prima di adottare un'esportazione, confrontala con diff con il file che sostituisce:
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+Il riferimento completo dei comandi, inclusi `sync`, `query` e `history`, si trova nella [guida agli script](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker) del repository principale.
+
+## Aspetti a cui fare attenzione
+
+Lo stato si trova nella colonna Status del tracker (`data/applications.md`), non nel file del report. Anche il selettore di stato della dashboard TUI in Go aggiorna quella colonna, ma non registra la transizione in `data/status-log.tsv` come fa `set-status.mjs`. funnel-velocity vede comunque il nuovo stato, ma non quando è avvenuto: il cambio manca dai tempi di permanenza nelle fasi, e una riga che in seguito finisce in Rejected perde le fasi che ha attraversato. Usa il comando per ogni cambio che vuoi veder comparire in quei dati.
+
+## Vedi anche
+
+- [followup](/it/docs/reference/modes/followup)
+- [patterns](/it/docs/reference/modes/patterns)

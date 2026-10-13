@@ -1,0 +1,67 @@
+---
+title: interview-prep
+description: "career-ops interview-prep genera un documento di preparazione al colloquio di lavoro specifico per azienda e ruolo, suddiviso in base a chi hai davanti (recruiter, hiring manager, colloquio tecnico tra pari o panel), con le domande probabili, gli argomenti da portare e le storie STAR tratte dal tuo profilo."
+seoTitle: "career-ops interview-prep: come prepararsi a un colloquio di lavoro, azienda per azienda e round per round"
+icon: GraduationCap
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 089e79a9cad42ea5
+localized: true
+translatedFrom: /docs/reference/modes/interview-prep
+---
+
+career-ops **interview-prep** trasforma un colloquio di lavoro già fissato in un documento di lavoro da studiare. Indichi un'azienda e un ruolo, oppure gli passi l'annuncio di una posizione che non hai mai valutato formalmente, e lui ricostruisce il processo di selezione, classifica ogni round in base a chi lo conduce (screening con il recruiter, hiring manager, colloquio tecnico tra pari o panel) e prepara le domande che ciascuno ti farà con ogni probabilità, ognuna con una bozza di risposta costruita sul tuo percorso. Ogni domanda proviene da recensioni pubbliche di colloqui trovate con una ricerca web (per esempio su Glassdoor o Blind) oppure è contrassegnata con `[inferred from JD]`. Il risultato è un documento di preparazione salvato, non una chat.
+
+## Cosa fa
+
+interview-prep legge il contesto dell'azienda (idealmente già arricchito con `deep` o `oferta`), la descrizione della posizione e il tuo profilo, poi produce un unico documento di preparazione limitato ai round che, secondo le fonti, il processo dell'azienda prevede. Il documento copre gli schemi di domande attesi per ogni interlocutore, gli argomenti specifici del tuo percorso e le storie STAR già scritte che puoi adattare sul momento. Quando per quel ruolo esiste già un report di valutazione, è quel report a fare fede; quando passi l'URL di una posizione che non hai mai valutato, interview-prep recupera da solo la descrizione della posizione (prima con l'API strutturata dell'ATS, poi con Playwright, con un ripiego in modalità headless) e, se l'annuncio è chiuso, ti chiede di incollarne il testo.
+
+## Quando usarla
+
+Esegui interview-prep quando un round è in calendario: produce un solo documento con una sezione per ogni interlocutore coinvolto nel processo. La sezione sullo screening con il recruiter copre la preparazione alla negoziazione della retribuzione, quella sull'hiring manager l'aderenza al ruolo, quella sul colloquio tecnico tra pari architettura e codice, quella sul panel i segnali di leadership. career-ops ha inoltre l'istruzione di eseguirlo quando un ruolo con punteggio pari o superiore a 4,0 passa a `Interview` nel tuo tracker.
+
+interview-prep è la fase di **ricerca**: il documento che studi prima del colloquio. È una modalità diversa dalle esercitazioni interattive `plan`, `practice` e `debrief`, che ti fanno provare dal vivo e rivedono un round a cose fatte; i due si collegano (un debrief alimenta il materiale che interview-prep leggerà la volta successiva). Per queste esercitazioni consulta la [guida alle modalità di colloquio](/it/docs/introduction/guides/interview-modes).
+
+## Come si presenta un'esecuzione
+
+Indichi l'azienda e il ruolo, e la modalità restituisce un unico report di preparazione al colloquio, limitato ai round che secondo le fonti il processo dell'azienda prevede. Ricostruisce il processo, classifica ogni round per interlocutore (screening con il recruiter, hiring manager, colloquio tecnico tra pari o panel) e prepara le domande probabili, contrassegnando ciascuna con la citazione della fonte o con l'etichetta `[inferred from JD]`.
+
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
+```
+
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
+```
+
+Il report associa inoltre le storie del tuo `story-bank.md` a ogni domanda probabile e segnala i punti scoperti, dove non hai ancora una storia pronta.
+
+## Come ottenere una preparazione più precisa
+
+Ricorri a interview-prep quando un round è fissato e vuoi un documento di lavoro invece di consigli generici. Alcuni accorgimenti rendono il risultato più preciso:
+
+- Esegui prima `oferta` o `deep` sull'azienda. La preparazione legge il report di valutazione per ricavarne archetipo, lacune e prove concrete corrispondenti, quindi più contesto significa domande più specifiche.
+- Incolla i nomi degli intervistatori o il programma della giornata, quando li hai. Per un panel, la modalità costruisce una lettura di ogni intervistatore e prepara una domanda di chiusura su misura per ciascuno slot.
+- Se hai già indicato una cifra di retribuzione per il ruolo, la sezione sullo screening con il recruiter la integra: career-ops legge la cifra che hai dichiarato, così la preparazione alla negoziazione si basa su ciò che hai detto davvero e non su un'ipotesi.
+- Leggi le etichette: le domande con fonte citano la recensione da cui provengono, quelle dedotte riportano `[inferred from JD]`. Considera le domande dedotte come probabili, non come ciò che ti verrà chiesto.
+
+## Vedi anche
+
+- [deep](/it/docs/reference/modes/deep)
+- [contacto](/it/docs/reference/modes/contacto)
+- [oferta](/it/docs/reference/modes/oferta)

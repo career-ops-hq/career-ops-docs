@@ -153,4 +153,28 @@ export const UI: Record<SiteLocale, UiStrings> = {
     officialSite: 'Site oficial',
     agents: 'Agentes',
   },
+  it: {
+    compareHeading: 'Stai confrontando strumenti?',
+    compareBody:
+      'Confronti onesti, fianco a fianco: funzionalità, prezzi e cosa nessuno di loro offre. In inglese.',
+    compareAria: (name) => `Confronto career-ops vs ${name} (in inglese)`,
+    comparePause: 'Metti in pausa la rotazione dei confronti',
+    compareResume: 'Riprendi la rotazione dei confronti',
+    copy: 'Copia',
+    copyCommand: 'Copia il comando',
+    copied: 'Copiato',
+    copiedToClipboard: 'Copiato negli appunti',
+    honeypot: 'Lascia vuoto questo campo',
+    emailLabel: 'Indirizzo email',
+    subscribe: 'Iscriviti',
+    subscribing: 'Iscrizione in corso…',
+    subscribeSent: 'Controlla la tua email per confermare l\u2019iscrizione.',
+    subscribeRetry: 'Riprova.',
+    subscribeFailed: 'Qualcosa è andato storto',
+    heroImageAlt: 'Interfaccia da terminale di career-ops con il tracker delle candidature',
+    starChartAlt:
+      'Storico delle stelle di career-ops su Warpchart: da 0 a oltre 50K stelle su GitHub, tracciato da date reali',
+    officialSite: 'Sito ufficiale',
+    agents: 'Agenti',
+  },
 };
