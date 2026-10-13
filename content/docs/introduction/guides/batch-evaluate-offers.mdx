@@ -153,7 +153,7 @@ This script:
 1. Reads the summary files from `batch/tracker-additions/`
 2. Checks each one against the rows already in your tracker, so you never get two rows for the same offer
 3. Adds a row for each new offer
-4. Updates the existing row for an offer you evaluated before: the new score and report link replace the old ones, and the row keeps its number and its status
+4. Updates the existing row for an offer you evaluated before: the new score and report link replace the old ones, and the row keeps its number and its status. A re-evaluation that produced no score (`N/A`, `—` or `-`) is skipped when the row already has one, and the row is left as it is
 5. Archives the processed files into `batch/tracker-additions/merged/`
 
 A merge never changes a status. A row you already marked `Applied` stays `Applied` when the offer is evaluated again. To change a status, use `node set-status.mjs`; the [tracker mode](/docs/reference/modes/tracker) page covers it.

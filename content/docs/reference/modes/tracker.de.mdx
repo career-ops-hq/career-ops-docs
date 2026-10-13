@@ -5,7 +5,7 @@ seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: 0bd0918262de7986
+translationHash: 8115c231878f1183
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -45,7 +45,7 @@ Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht g
 Auch für die anderen Spalten gibt es Befehle, die sie schreiben. Die Tabelle bearbeitest du also nicht von Hand.
 
 - **Notizen.** `node set-status.mjs <report#|company> <state> --note "..."` hängt eine Notiz an die Zeile an. Gib den Zustand an, den die Zeile schon hat, wenn du nur eine Notiz ergänzen willst: Der Status bleibt, wie er ist, und in `data/status-log.tsv` wird nichts geschrieben.
-- **Datum, Score, Bericht, Unternehmen und Rolle.** Sie stammen aus einer Bewertung und ändern sich deshalb, wenn die Rolle erneut bewertet wird. `node merge-tracker.mjs` ordnet die neue Bewertung der Zeile zu, die schon im Tracker steht, und aktualisiert diese Zeile, statt eine zweite anzulegen. Datum, Score und Berichtslink werden ersetzt, und eine `Re-eval`-Notiz hält den alten und den neuen Score fest. Läuft die Zuordnung über den Bericht oder über die URL der Stellenanzeige, werden auch das Unternehmen und der Rollentitel ersetzt. Die Zeile behält ihre `#` und ihren Status.
+- **Datum, Score, Bericht, Unternehmen und Rolle.** Sie stammen aus einer Bewertung und ändern sich deshalb, wenn die Rolle erneut bewertet wird. `node merge-tracker.mjs` ordnet die neue Bewertung der Zeile zu, die schon im Tracker steht, und aktualisiert diese Zeile, statt eine zweite anzulegen. Datum, Score und Berichtslink werden ersetzt, und eine `Re-eval`-Notiz hält den alten und den neuen Score fest. Läuft die Zuordnung über den Bericht oder über die URL der Stellenanzeige, werden auch das Unternehmen und der Rollentitel ersetzt. Die Zeile behält ihre `#` und ihren Status. Eine erneute Bewertung, die keinen Score ergeben hat (`N/A`, `—` oder `-`), wird übersprungen, wenn die Zeile schon einen hat, und die Zeile bleibt, wie sie ist.
 - **PDF.** Jeder Merge setzt außerdem die PDF-Spalte einer Zeile von ❌ auf ✅, sobald für ihren Bericht ein CV erzeugt wurde.
 
 Ein Merge ändert nie den Status einer Zeile, die schon im Tracker steht. Eine neue Bewertung, die `Applied` für eine Zeile angibt, die auf `Evaluated` steht, lässt sie auf `Evaluated`. Erst `set-status.mjs` setzt sie weiter.

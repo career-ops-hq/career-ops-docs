@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: 5af8665a357b8e7c
+translationHash: 30fa6edc5cc9f3d2
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -156,7 +156,7 @@ Este script:
 1. Lee los archivos de resumen de `batch/tracker-additions/`
 2. Compara cada uno con las filas que ya están en tu tracker, para que nunca acabes con dos filas para la misma oferta
 3. Añade una fila por cada oferta nueva
-4. Actualiza la fila existente de una oferta que ya habías evaluado: la puntuación y el enlace al informe nuevos sustituyen a los anteriores, y la fila conserva su número y su estado
+4. Actualiza la fila existente de una oferta que ya habías evaluado: la puntuación y el enlace al informe nuevos sustituyen a los anteriores, y la fila conserva su número y su estado. Una reevaluación que no produjo puntuación (`N/A`, `—` o `-`) se omite cuando la fila ya tiene una, y la fila se queda como está
 5. Archiva los archivos procesados en `batch/tracker-additions/merged/`
 
 Una fusión nunca cambia un estado. Una fila que ya marcaste como `Applied` sigue en `Applied` cuando la oferta se evalúa de nuevo. Para cambiar un estado, usa `node set-status.mjs`; la página del [modo tracker](/es/docs/reference/modes/tracker) lo explica.

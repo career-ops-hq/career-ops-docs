@@ -5,7 +5,7 @@ seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidatu
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: 0bd0918262de7986
+translationHash: 8115c231878f1183
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -45,7 +45,7 @@ Une candidature traverse un ensemble fixe d'états : Evaluated (rapport rédigé
 Les autres colonnes ont elles aussi leur commande d'écriture : le tableau ne se modifie donc pas à la main.
 
 - **Notes.** `node set-status.mjs <report#|company> <state> --note "..."` ajoute une note à la ligne. Passez l'état que la ligne a déjà pour ajouter uniquement la note : le statut reste tel quel et rien n'est écrit dans `data/status-log.tsv`.
-- **Date, score, rapport, entreprise et poste.** Ils viennent d'une évaluation et changent donc quand le poste est évalué de nouveau. `node merge-tracker.mjs` rapproche la nouvelle évaluation de la ligne déjà présente dans le tracker et met à jour cette ligne au lieu d'en ajouter une seconde. La date, le score et le lien vers le rapport sont remplacés, et une note `Re-eval` consigne l'ancien score et le nouveau. Quand la correspondance se fait sur le rapport ou sur l'URL de l'offre, l'entreprise et l'intitulé du poste sont remplacés eux aussi. La ligne garde son `#` et son statut.
+- **Date, score, rapport, entreprise et poste.** Ils viennent d'une évaluation et changent donc quand le poste est évalué de nouveau. `node merge-tracker.mjs` rapproche la nouvelle évaluation de la ligne déjà présente dans le tracker et met à jour cette ligne au lieu d'en ajouter une seconde. La date, le score et le lien vers le rapport sont remplacés, et une note `Re-eval` consigne l'ancien score et le nouveau. Quand la correspondance se fait sur le rapport ou sur l'URL de l'offre, l'entreprise et l'intitulé du poste sont remplacés eux aussi. La ligne garde son `#` et son statut. Une réévaluation qui n'a produit aucun score (`N/A`, `—` ou `-`) est ignorée quand la ligne en a déjà un, et la ligne reste telle quelle.
 - **PDF.** Chaque fusion fait aussi passer la colonne PDF d'une ligne de ❌ à ✅ dès qu'un CV a été généré pour son rapport.
 
 Une fusion ne change jamais le statut d'une ligne déjà présente dans le tracker. Une nouvelle évaluation qui indique `Applied` pour une ligne en `Evaluated` la laisse en `Evaluated` ; c'est `set-status.mjs` qui la fait avancer.

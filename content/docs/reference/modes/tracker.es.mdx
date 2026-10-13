@@ -5,7 +5,7 @@ seoTitle: "Modo tracker de career-ops — consulta el estado de cada candidatura
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: 0bd0918262de7986
+translationHash: 8115c231878f1183
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -45,7 +45,7 @@ Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escri
 Las demás columnas también tienen quien las escriba, así que la tabla no se edita a mano.
 
 - **Notas.** `node set-status.mjs <report#|company> <state> --note "..."` añade una nota a la fila. Pasa el estado que la fila ya tiene para añadir solo la nota: el estado se queda como está y no se escribe nada en `data/status-log.tsv`.
-- **Fecha, puntuación, informe, empresa y puesto.** Salen de una evaluación, así que cambian cuando el puesto se evalúa de nuevo. `node merge-tracker.mjs` empareja la evaluación nueva con la fila que ya está en el tracker y actualiza esa fila en lugar de añadir otra. La fecha, la puntuación y el enlace al informe se sustituyen, y una nota `Re-eval` deja constancia de la puntuación anterior y de la nueva. Cuando la coincidencia es por el informe o por la URL de la oferta, también se sustituyen la empresa y el título del puesto. La fila conserva su `#` y su estado.
+- **Fecha, puntuación, informe, empresa y puesto.** Salen de una evaluación, así que cambian cuando el puesto se evalúa de nuevo. `node merge-tracker.mjs` empareja la evaluación nueva con la fila que ya está en el tracker y actualiza esa fila en lugar de añadir otra. La fecha, la puntuación y el enlace al informe se sustituyen, y una nota `Re-eval` deja constancia de la puntuación anterior y de la nueva. Cuando la coincidencia es por el informe o por la URL de la oferta, también se sustituyen la empresa y el título del puesto. La fila conserva su `#` y su estado. Una reevaluación que no produjo puntuación (`N/A`, `—` o `-`) se omite cuando la fila ya tiene una, y la fila se queda como está.
 - **PDF.** Cada fusión también cambia la columna PDF de una fila de ❌ a ✅ cuando ya se ha generado un CV para su informe.
 
 Una fusión nunca cambia el estado de una fila que ya está en el tracker. Una evaluación nueva que dice `Applied` para una fila que está en `Evaluated` la deja en `Evaluated`; quien la mueve es `set-status.mjs`.
