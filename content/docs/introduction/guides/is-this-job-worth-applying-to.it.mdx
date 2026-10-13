@@ -16,11 +16,11 @@ Per controllare un annuncio prima di candidarti, esegui `/career-ops oferta` e i
 
 ## Decidi prima di candidarti [#decide-before-you-apply]
 
-career-ops è costruito attorno a una sola decisione: se un annuncio merita davvero una candidatura. Incolla l'annuncio a cui stavi per candidarti stasera e ti dice se quella serata ne vale la pena. Non può dirti chi ti risponderà. Ti dice quanto il ruolo corrisponde al tuo curriculum e a ciò che vuoi, prima che tu passi la serata su una candidatura che potrebbe finire nel silenzio.
+career-ops ruota attorno a una sola decisione: se un annuncio merita davvero una candidatura. Incolla l'annuncio a cui stavi per candidarti stasera e ti dice se quella serata ne vale la pena. Non può dirti chi ti risponderà. Ti dice quanto il ruolo corrisponde al tuo curriculum e a ciò che vuoi, prima che tu passi la serata a preparare una candidatura che potrebbe finire nel silenzio.
 
-career-ops è pensato per la qualità, non per la quantità. Ti orienta verso meno candidature, ma migliori, e te lo dice chiaramente quando un annuncio non è all'altezza. Un risultato che dice *non candidarti* è il prodotto che fa il suo lavoro.
+career-ops è pensato per la qualità, non per la quantità. Ti orienta verso meno candidature, ma migliori, e te lo dice chiaramente quando un annuncio non è all'altezza. Un risultato che dice *non candidarti* significa che il prodotto sta facendo il suo lavoro.
 
-Meno candidature, ma migliori: è anche una questione di dignità da entrambi i lati del tavolo. Il tempo dei recruiter merita rispetto. Anche il tuo.
+Meno candidature, ma migliori: è anche una questione di dignità da entrambe le parti. Il tempo dei recruiter merita rispetto. Anche il tuo.
 
 > Ho creato career-ops per cercare lavoro io stesso nel 2026. Il mio percorso: 740 annunci valutati → 68 candidature → 12 colloqui → 1 proposta di assunzione. — Santiago Fernández de Valderrama Aparicio
 
@@ -36,7 +36,7 @@ career-ops ha una modalità di sola valutazione, per decidere prima di tutto il 
 /career-ops oferta
 ```
 
-La modalità `oferta` esegue la valutazione e scrive il report, senza PDF automatico. Se invece incolli un annuncio direttamente in `/career-ops`, parte la pipeline completa, che adatta anche un CV (un PDF per impostazione predefinita) qualunque sia il punteggio. Usa `oferta` quando vuoi il verdetto prima di ogni altra cosa. Se poi decidi di candidarti, `/career-ops pdf` adatta il tuo CV e `/career-ops apply` redige le risposte alle domande del modulo di candidatura, che rivedi e invii tu.
+La modalità `oferta` esegue la valutazione e genera il report, senza PDF automatico. Se invece incolli un annuncio direttamente in `/career-ops`, parte la pipeline completa, che adatta anche un CV (un PDF per impostazione predefinita) qualunque sia il punteggio. Usa `oferta` quando vuoi il verdetto prima di ogni altra cosa. Se poi decidi di candidarti, `/career-ops pdf` adatta il tuo CV e `/career-ops apply` redige le risposte alle domande del modulo di candidatura, che rivedi e invii tu.
 
 In Codex i comandi slash non sono garantiti: indica la modalità in un prompt, per esempio `Run the career-ops oferta mode on this job: {URL}`.
 
@@ -64,9 +64,9 @@ career-ops confronta l'autorizzazione al lavoro con il tuo profilo. Se un annunc
 
 ## Che cosa non cambia il punteggio? [#what-does-not-change-the-score]
 
-Il livello di legittimità dell'annuncio non cambia mai il punteggio da 1 a 5. Il controllo di legittimità dell'annuncio (Blocco G del report) considera segnali come l'età dell'annuncio, se il pulsante per candidarsi è ancora attivo, quanto è specifica la descrizione, notizie recenti di licenziamenti e se lo stesso ruolo continua a essere ripubblicato. Restituisce uno di tre livelli: High Confidence, Proceed with Caution o Suspicious. Presenta ciò che ha visto, non accusa mai nessuno, riporta le spiegazioni legittime di un segnale preoccupante e lascia a te il giudizio. Senza una data di pubblicazione e senza altri elementi preoccupanti, il livello predefinito è Proceed with Caution, mai Suspicious. La ricerca sull'azienda alla base del controllo, come le notizie sulla sua stabilità, può comunque contribuire alla dimensione Segnali culturali.
+Il livello di legittimità dell'annuncio non cambia mai il punteggio da 1 a 5. Il controllo di legittimità dell'annuncio (Blocco G del report) considera segnali come l'età dell'annuncio, se il pulsante per candidarsi è ancora attivo, quanto è specifica la descrizione, notizie recenti su licenziamenti e se lo stesso ruolo continua a essere ripubblicato. Restituisce uno di tre livelli: High Confidence, Proceed with Caution o Suspicious. Presenta ciò che ha visto, non accusa mai nessuno, riporta le spiegazioni legittime di un segnale preoccupante e lascia a te il giudizio. Senza una data di pubblicazione e senza altri elementi preoccupanti, il livello predefinito è Proceed with Caution, mai Suspicious. La ricerca sull'azienda alla base del controllo, come le notizie sulla sua stabilità, può comunque contribuire alla dimensione Segnali culturali.
 
-L'importanza dei requisiti viene etichettata, non conteggiata. Il report elenca i requisiti significativi dell'annuncio, fino a 12 righe, e non ne scarta mai uno critico o alto per farli stare tutti. Per ciascuno indica quanto pesa in questo annuncio, da critico a segnale debole, e se questo deriva dalle parole stesse dell'annuncio, dalla sua struttura o da una stima dichiarata come tale. L'importanza viene compilata a partire dal solo annuncio, prima di leggere il tuo CV, così un requisito non viene giudicato importante solo perché è un tuo punto di forza. Ogni requisito critico o alto che non soddisfi, o che soddisfi solo in parte, è accompagnato da un rischio specifico per il colloquio di lavoro e da un piano per prepararti. Le etichette di importanza non spostano il punteggio da 1 a 5.
+L'importanza dei requisiti viene etichettata, non conteggiata. Il report elenca i requisiti significativi dell'annuncio, fino a 12 righe, e non ne scarta mai uno critico o alto per includerli tutti. Per ciascuno indica quanto pesa in questo annuncio, da critico a segnale debole, e se questo deriva dalle parole stesse dell'annuncio, dalla sua struttura o da una stima dichiarata come tale. L'importanza viene compilata a partire dal solo annuncio, prima di leggere il tuo CV, così un requisito non viene giudicato importante solo perché è un tuo punto di forza. Ogni requisito critico o alto che non soddisfi, o che soddisfi solo in parte, è accompagnato da un rischio specifico per il colloquio di lavoro e da un piano per prepararti. Le etichette di importanza non spostano il punteggio da 1 a 5.
 
 La tua storia con un'azienda viene mostrata, non valutata. Se ti sei già candidato lì e non hai ricevuto risposta, oppure una volta ti hanno risposto e un'altra no, il report aggiunge una nota che lo dice. Quella nota non è un segnale di legittimità e non cambia né il punteggio né il livello. Serve a farti decidere quanto impegno investire.
 
@@ -74,7 +74,7 @@ La tua blacklist non cambia mai alcun punteggio: è un blocco che ferma l'esecuz
 
 ## Che cosa succede sotto 4,0? [#what-happens-below-40]
 
-Sotto 4,0, career-ops sconsiglia di candidarti, a meno che tu non abbia un motivo preciso. Puoi decidere diversamente, e te lo dirà.
+Sotto 4,0, career-ops sconsiglia di candidarti, a meno che tu non abbia un motivo preciso. Puoi decidere diversamente, e career-ops lo segnalerà.
 
 La soglia di 4,0 è una raccomandazione. La decisione resta a te, come ogni candidatura: career-ops redige il materiale, tu lo rivedi e lo invii. All'altro estremo della scala, un annuncio che ottiene 4,5 o più riceve anche una bozza delle risposte per il modulo di candidatura.
 
@@ -102,7 +102,7 @@ L'annuncio stesso viene archiviato integralmente nel report (uno molto lungo fin
 
 In questo esempio inventato, Maya è un'ingegnera backend che ha detto a career-ops che cosa vuole: ruoli di backend di prodotto, un team piccolo, lavoro da remoto. Incolla l'URL dell'annuncio per una posizione di Senior Platform Engineer in Acme Freight. Nelle cinque dimensioni, il ragionamento procede così:
 
-- **Corrispondenza con il CV:** forte sul nucleo del lavoro, servizi in Go e Postgres. Un requisito critico, gestire Kubernetes in produzione, è soddisfatto solo in parte, quindi il report indica il rischio per il colloquio e un modo per prepararsi.
+- **Corrispondenza con il CV:** forte sugli aspetti centrali del lavoro, servizi in Go e Postgres. Un requisito critico, gestire Kubernetes in produzione, è soddisfatto solo in parte, quindi il report indica il rischio per il colloquio e un modo per prepararsi.
 - **Allineamento con la North Star:** vicino ai suoi obiettivi, ma il ruolo tende più verso l'infrastruttura che verso il lavoro di backend di prodotto che aveva chiesto.
 - **Retribuzione:** l'annuncio non indica alcuno stipendio. Il report lo dice, classifica il tipo di azienda, valuta quanto sono affidabili i dati pubblici sulle retribuzioni per quel tipo di azienda e si ferma lì.
 - **Segnali culturali:** aveva chiesto un team piccolo; l'annuncio descrive una grande organizzazione di piattaforma con diversi livelli di management. Il report segnala questo divario invece di lasciare che la forte corrispondenza con il CV lo nasconda.
@@ -118,7 +118,7 @@ Maya ha un motivo che il report non può vedere: conosce l'engineering manager, 
 
 career-ops valuta in base al profilo che ha, e il profilo incluso nel progetto non è il tuo. I ruoli obiettivo predefiniti di quel profilo sono tutti ruoli AI. Finché non personalizzi `modes/_profile.md`, le valutazioni si basano sugli obiettivi dell'autore del profilo predefinito, ed eseguendo `node doctor.mjs` il problema viene segnalato.
 
-Le prime esecuzioni sono approssimative. Non ti conosce ancora. Parlagli: il tuo curriculum, che cosa vuoi, che cosa rifiuti. Al primo avvio ti chiede tutto questo in chat. Per cambiare i ruoli obiettivo, dillo con parole semplici, per esempio "Cambia gli archetipi in ruoli di ingegneria backend". Dopo ogni valutazione, digli che cosa ha sbagliato, per esempio "questo punteggio è troppo alto" oppure "non hai considerato la mia esperienza in X", e lui aggiorna i file del tuo profilo.
+Le prime esecuzioni sono approssimative. Non ti conosce ancora. Parlagli di te: del tuo curriculum, di cosa vuoi, di cosa rifiuti. Al primo avvio ti chiede tutto questo in chat. Per cambiare i ruoli obiettivo, dillo con parole semplici, per esempio "Cambia gli archetipi in ruoli di ingegneria backend". Dopo ogni valutazione, digli che cosa ha sbagliato, per esempio "questo punteggio è troppo alto" oppure "non hai considerato la mia esperienza in X", e lui aggiorna i file del tuo profilo.
 
 ## Il punteggio è giusto per te? [#is-the-score-right-for-you]
 
@@ -128,7 +128,7 @@ career-ops non dà per scontato che il suo punteggio preveda i tuoi risultati: t
 node calibrate.mjs
 ```
 
-Il report di `calibrate` pone una sola domanda: nel tuo caso, le candidature con il punteggio più alto si trasformano più spesso in colloqui e proposte di assunzione? È puramente consultivo. Non modifica mai il sistema di punteggio, le soglie o la tua configurazione, e nulla si regola da solo in automatico. Non mostra alcun tasso quando il campione è troppo piccolo ed esclude le candidature ancora in corso. Se i tuoi risultati suggeriscono che per te la soglia è nel punto sbagliato, ciò che i dati possono giustificare è cambiare il punteggio a partire dal quale tu ti candidi, oppure i ruoli a cui punti. Quella decisione è tua.
+Il report di `calibrate` pone una sola domanda: nel tuo caso, le candidature con il punteggio più alto si trasformano più spesso in colloqui e proposte di assunzione? È puramente consultivo. Non modifica mai il sistema di punteggio, le soglie o la tua configurazione, e nulla si regola da solo in automatico. Non mostra alcuna percentuale quando il campione è troppo piccolo ed esclude le candidature ancora in corso. Se i tuoi risultati suggeriscono che per te la soglia è nel punto sbagliato, ciò che i dati possono giustificare è cambiare il punteggio a partire dal quale tu ti candidi, oppure i ruoli a cui punti. Quella decisione è tua.
 
 ## Confrontare due proposte di assunzione oltre lo stipendio [#compare-two-offers-beyond-salary]
 
@@ -164,7 +164,7 @@ career-ops è uno strumento open source, con licenza MIT, che legge un annuncio 
 
 ### Un punteggio alto vuol dire che mi chiameranno per un colloquio?
 
-Un punteggio alto di career-ops non promette un colloquio di lavoro. Il punteggio è un giudizio su quanto un annuncio corrisponde al tuo curriculum e ai tuoi obiettivi, non una previsione di colloqui o di proposte di assunzione. Per vedere come il punteggio segue i tuoi risultati, registra gli esiti man mano che arrivano ed esegui il report di calibrate, che è consultivo e non modifica mai il sistema di punteggio.
+Un punteggio alto di career-ops non promette un colloquio di lavoro. Il punteggio è un giudizio su quanto un annuncio corrisponde al tuo curriculum e ai tuoi obiettivi, non una previsione di colloqui o di proposte di assunzione. Per vedere come il punteggio si correla con i tuoi risultati, registra gli esiti man mano che arrivano ed esegui il report di calibrate, che è consultivo e non modifica mai il sistema di punteggio.
 
 ### Come confrontare due proposte di assunzione oltre lo stipendio?
 
