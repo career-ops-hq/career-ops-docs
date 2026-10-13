@@ -42,7 +42,7 @@ export const homePt: HomeDict = {
   memberOf: 'Membro do',
   worthApplyingLabel: 'Como saber se vale a pena se candidatar a uma vaga →',
   worthApplyingHref: '/pt/docs/introduction/guides/is-this-job-worth-applying-to',
-  authorTagline: ', operador há 16 anos e criador do career-ops',
+  authorTagline: ', 16 anos à frente de um negócio e criador do career-ops',
   // No thesisTranslation for PT: the English thesis stands alone, as in FR and DE.
   nowSignedManifesto: <>Agora um manifesto assinado ·</>,
   readIt: 'Ler →',
