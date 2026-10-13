@@ -52,7 +52,7 @@ export const homeEs: HomeDict = {
       ejecuta en local, en tu propia máquina, dentro de cualquier CLI de
       programación con IA — Claude Code, OpenCode, Codex, GitHub Copilot y más.
       Evalúa ofertas frente a tu CV con una rúbrica de cinco dimensiones más una
-      nota global holística, puntuando de 1.0 a 5.0, genera PDFs de CV
+      nota global holística, puntuando de 1 a 5, genera PDFs de CV
       optimizados para ATS y adaptados a cada puesto, redacta las respuestas
       abiertas de los formularios de Greenhouse, Ashby y Lever, rastrea más de
       150 fuentes de empleo sin gastar tokens y hace el seguimiento del
@@ -162,8 +162,8 @@ export const homeEs: HomeDict = {
         <>
           career-ops usa una evaluación con LLM guiada por rúbrica en cinco
           dimensiones — encaje, alineación con tu norte, compensación, señales
-          culturales y red flags — que produce una nota global holística de 1.0 a
-          5.0 con citas a líneas concretas de tu CV y a los requisitos de la
+          culturales y red flags — que produce una nota global holística de 1 a
+          5 con citas a líneas concretas de tu CV y a los requisitos de la
           oferta. Por debajo de 4.0, el agente recomienda no postular. Sin fórmula
           cerrada, sin postular a ciegas. La rúbrica completa está publicada en{' '}
           <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
@@ -274,9 +274,9 @@ export const homeEs: HomeDict = {
       q: '¿Con qué herramientas de IA funciona career-ops?',
       a: (
         <>
-          career-ops funciona con Claude Code, Cursor, Codex, OpenCode, Antigravity
+          career-ops funciona con Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity
           CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent y GitHub Copilot CLI —
-          diez CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
+          once CLIs de primera clase (Gemini CLI es un wrapper legacy). Los mismos archivos de modo funcionan en todos. Cada
           usuario elige el CLI que encaja con su suscripción y sus preferencias de
           coste — career-ops nunca te ata a un solo proveedor. Una búsqueda de
           empleo típica corre con Claude Pro a 20 $/mes, pero la elección es tuya.
