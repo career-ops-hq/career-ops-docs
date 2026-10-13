@@ -427,7 +427,7 @@ export function methodologySchema() {
             name: 'How does career-ops actually score job listings?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions (match, north-star alignment, comp, cultural signals, red flags) producing a holistic score from 1.0 to 5.0. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
+              text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions (match, north-star alignment, comp, cultural signals, red flags) producing a holistic score from 1 to 5. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
             },
           },
           {
