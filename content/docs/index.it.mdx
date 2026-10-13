@@ -8,14 +8,14 @@ localized: true
 translatedFrom: /docs
 ---
 
-Questa guida ti porta da zero al tuo primo annuncio valutato in circa quindici minuti, la prima volta. Configurerai il workspace, aprirai il tuo assistente di programmazione AI e incollerai un annuncio di lavoro. L'agente completa l'onboarding, se serve, e poi ti consegna un report completo, un punteggio e un curriculum in PDF su misura.
+Questa guida ti porta da zero al tuo primo annuncio valutato in circa quindici minuti al primo utilizzo. Configurerai il workspace, aprirai il tuo assistente di programmazione AI e incollerai un annuncio di lavoro. L'agente completa l'onboarding, se serve, e poi ti restituisce un report completo, un punteggio e un curriculum in PDF su misura.
 
 ## Cosa ti serve
 
-Non devi saper programmare. Ti basta sentirti a tuo agio ad aprire un terminale ed eseguire un comando.
+Non devi saper programmare. Ti basta saper aprire un terminale ed eseguire un comando.
 
 <Callout title="Non hai mai usato il terminale?">
-  Se non hai mai usato una riga di comando, nessun problema, ma questa guida non è il posto giusto per impararlo. Per metterti in pari in fretta, leggi il manuale [Command Line for Beginners](https://www.freecodecamp.org/news/command-line-for-beginners/) di freeCodeCamp (in inglese). Copre tutto quello che ti serve per seguire questa guida. Quando ti senti a tuo agio ad aprire un terminale ed eseguire un comando, torna qui e riprendi dal Passo 1.
+  Se non hai mai usato una riga di comando, nessun problema, ma questa guida non è il posto giusto per impararlo. Per metterti in pari in fretta, leggi il manuale [Command Line for Beginners](https://www.freecodecamp.org/news/command-line-for-beginners/) di freeCodeCamp (in inglese). Copre tutto quello che ti serve per seguire questa guida. Quando saprai aprire un terminale ed eseguire un comando, torna qui e riprendi dal Passo 1.
 </Callout>
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
@@ -24,12 +24,12 @@ Non devi saper programmare. Ti basta sentirti a tuo agio ad aprire un terminale 
       <Step>
       ### Assistente di programmazione AI
 
-      Installa **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**: è l'assistente di programmazione AI che fa girare questo sistema. career-ops funziona con [undici CLI supportate a pieno titolo](/it/docs/supported-clis); installane una qualsiasi e fai il login prima di continuare.
+      Installa **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**: è l'assistente di programmazione AI che fa funzionare questo sistema. career-ops funziona con [undici CLI pienamente supportate](/it/docs/supported-clis); installane una qualsiasi e fai il login prima di continuare.
       </Step>
       <Step>
         ### Node.js 22.13+
 
-        Installa **[Node.js](https://nodejs.org)**, versione **22.13 o successiva** (su Node 23, **23.4 o successiva**). Esegue gli script di supporto e genera i PDF. Le versioni precedenti non superano il controllo di configurazione, perché l'indice SQLite del tracker richiede un Node più recente. Controlla la tua versione con `node --version`.
+        Installa **[Node.js](https://nodejs.org)**, versione **22.13 o successiva** (su Node 23, **23.4 o successiva**). Esegue gli script di supporto e genera i PDF. Le versioni precedenti non superano il controllo di configurazione, perché l'indice SQLite del tracker richiede una versione più recente di Node. Controlla la tua versione con `node --version`.
       </Step>
       <Step>
         ### Git
@@ -81,7 +81,7 @@ npx playwright install chromium
 
 ## Passo 2: Apri il tuo assistente AI
 
-Dall'interno della cartella `career-ops`, avvia la CLI di programmazione AI che hai installato.
+Dalla cartella `career-ops`, avvia la CLI di programmazione AI che hai installato.
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
   <Tab value="Claude Code">
@@ -126,13 +126,13 @@ Dall'interno della cartella `career-ops`, avvia la CLI di programmazione AI che 
 </Callout>
 
 <Callout title="Una richiesta che non c'entra e che potresti vedere">
-  Alcune CLI (Claude Code, per esempio) ti chiedono se ti fidi dei file di una cartella nuova la prima volta che la apri. Quella richiesta arriva dalla CLI, non da career-ops. Rispondi di sì per continuare. Accettarla non avvia l'onboarding di career-ops.
+  Alcune CLI (Claude Code, per esempio) ti chiedono se consideri attendibili i file di una cartella nuova la prima volta che la apri. Quella richiesta arriva dalla CLI, non da career-ops. Rispondi di sì per continuare. Accettarla non avvia l'onboarding di career-ops.
 </Callout>
 
 <Callout type="warn" title="Paghi Claude Pro o Max? Controlla cosa ti sta addebitando questa sessione">
   Esegui `node doctor.mjs` dalla cartella `career-ops` prima della tua prima valutazione. Ti indica in una riga da dove arriva l'addebito.
 
-  Se nel tuo ambiente è impostata `ANTHROPIC_API_KEY`, **la tua CLI la usa e addebita a token, anche mentre paghi Pro o Max.** Quella precedenza è di Claude Code, non di career-ops: il doctor si limita a rilevarla e a dirtelo. Per usare invece il tuo abbonamento, rimuovi la riga `export ANTHROPIC_API_KEY=...` da `~/.zshrc`, `~/.bashrc`, `~/.profile` o da un `.env` di progetto, riavvia il terminale ed esegui `/login`. Se volevi usare i crediti API, è tutto a posto.
+  Se nel tuo ambiente è impostata `ANTHROPIC_API_KEY`, **la tua CLI la usa e addebita per token, anche mentre paghi Pro o Max.** Questa regola di precedenza è di Claude Code, non di career-ops: il doctor si limita a rilevarla e a segnalartelo. Per usare invece il tuo abbonamento, rimuovi la riga `export ANTHROPIC_API_KEY=...` da `~/.zshrc`, `~/.bashrc`, `~/.profile` o da un `.env` di progetto, riavvia il terminale ed esegui `/login`. Se volevi usare i crediti API, è tutto a posto.
 
   Ognuna delle altre CLI stabilisce una propria regola tra abbonamento e chiave, che career-ops non controlla. Trovi la risposta completa nelle [FAQ](/it/docs/faq).
 </Callout>
@@ -183,7 +183,7 @@ Se non hai un URL, incolla nella chat il testo completo dell'annuncio. L'agente 
 
 ### Cosa succede dopo
 
-Dopo che hai incollato l'annuncio, career-ops fa da solo quanto segue:
+Dopo che hai incollato l'annuncio, career-ops esegue automaticamente quanto segue:
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
   <div className="rounded-xl bg-fd-background p-3">
@@ -220,7 +220,7 @@ L'intero processo richiede circa uno o due minuti. Quando ha finito, career-ops 
 
 ## Come leggere i risultati
 
-Il report include **Score Evidence** dopo Risk Summary. Copre cinque dimensioni: corrispondenza con il CV, allineamento con la North Star, retribuzione, segnali culturali e campanelli d'allarme. Ogni riga riporta uno stato dell'evidenza (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità dell'evidenza (`High`, `Medium` o `Low`), la sua motivazione e fino a tre priorità di verifica.
+Il report include **Score Evidence** dopo Risk Summary. Copre cinque dimensioni: corrispondenza con il CV, allineamento con la North Star, retribuzione, segnali culturali e campanelli d'allarme. Ogni riga riporta uno stato delle prove (`supported`, `partial` o `unknown`), una fonte o un'osservazione concreta e una domanda ancora aperta. La sezione si chiude con un livello di affidabilità delle prove (`High`, `Medium` o `Low`), la sua motivazione e fino a tre priorità di verifica.
 
 Apri il file del report in `reports/`. Il nome del file segue lo schema `{number}-{company}-{date}.md`. All'interno troverai:
 
@@ -249,7 +249,7 @@ Ora che hai fatto la tua prima valutazione, ecco alcune cose che puoi provare:
 
 <Accordions>
   <Accordion title="L'agente non ha avviato l'onboarding">
-    L'onboarding automatico parte quando chiedi la valutazione di un annuncio o un altro flusso di lavoro che richiede il tuo profilo, e solo se la configurazione è incompleta. Per avviarlo direttamente, apri la tua CLI dall'interno della cartella `career-ops` (esegui `pwd` per verificarlo) e di' all'agente: *"per favore avvia l'onboarding iniziale."*
+    L'onboarding automatico parte quando chiedi la valutazione di un annuncio o un altro flusso di lavoro che richiede il tuo profilo, e solo se la configurazione è incompleta. Per avviarlo direttamente, apri la tua CLI dalla cartella `career-ops` (esegui `pwd` per verificarlo) e di' all'agente: *"per favore avvia l'onboarding iniziale."*
   </Accordion>
   <Accordion title="Il report non è stato generato">
     Assicurati che `cv.md` esista nella cartella principale e che non sia vuoto. Se l'onboarding è terminato ma `cv.md` è vuoto, chiedi all'agente: *"il mio cv.md sembra vuoto, mi aiuti a compilarlo?"*
@@ -271,6 +271,6 @@ Se qualcosa non funziona come descritto in questa guida, segnalalo. Le segnalazi
 
 - **Segnala un bug:** Apri una issue nel [repository GitHub](https://github.com/career-ops-hq/career-ops/issues). Descrivi che cosa ti aspettavi, che cosa è successo davvero e incolla gli eventuali messaggi di errore che hai visto.
 - **Fai una domanda:** Unisciti alla [community Discord](https://discord.gg/8pRpHETxa4). È il modo più rapido per ricevere aiuto dagli altri utenti e dall'autore.
-- **Proponi una correzione:** Se sai come risolvere il problema, leggi [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) prima di aprire una pull request. In breve: apri prima una issue per una nuova funzionalità, una nuova modalità o un nuovo comando, o una modifica all'architettura. Le correzioni di bug, i nuovi provider di scansione senza autenticazione, la documentazione e le traduzioni possono andare direttamente in una pull request.
+- **Proponi una correzione:** Se sai come risolvere il problema, leggi [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) prima di aprire una pull request. In breve: apri prima una issue per una nuova funzionalità, una nuova modalità o un nuovo comando, o una modifica all'architettura. Le correzioni di bug, i nuovi provider di scansione senza autenticazione, la documentazione e le traduzioni possono essere proposte direttamente in una pull request.
 
 <StarOnGitHub locale="it" />

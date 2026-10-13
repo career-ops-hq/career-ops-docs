@@ -156,7 +156,7 @@ export const UI: Record<SiteLocale, UiStrings> = {
   it: {
     compareHeading: 'Stai confrontando strumenti?',
     compareBody:
-      'Confronti onesti, fianco a fianco: funzionalità, prezzi e cosa nessuno di loro offre. In inglese.',
+      'Confronti onesti, fianco a fianco: funzionalità, prezzi e ciò che nessuno di loro offre. In inglese.',
     compareAria: (name) => `Confronto career-ops vs ${name} (in inglese)`,
     comparePause: 'Metti in pausa la rotazione dei confronti',
     compareResume: 'Riprendi la rotazione dei confronti',

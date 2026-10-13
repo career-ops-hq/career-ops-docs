@@ -56,10 +56,10 @@ export const homeIt: HomeDict = {
   whatIsBody: (
     <>
       career-ops è un agente AI open source per la ricerca di lavoro che gira in
-      locale sul tuo computer, dentro qualsiasi CLI di programmazione AI: Claude
+      locale sul tuo computer, in qualsiasi CLI di programmazione AI: Claude
       Code, OpenCode, Codex, GitHub Copilot e altre. Redige e compila; non invia
       mai. Sei tu a cliccare su Invia. Valuta gli annunci rispetto al tuo curriculum
-      con una rubrica a cinque dimensioni più un voto globale olistico da 1 a 5,
+      con una griglia di valutazione a cinque dimensioni più un voto globale olistico da 1 a 5,
       genera curriculum in PDF ottimizzati per gli ATS e adattati a ogni
       annuncio, scrive le risposte alle domande aperte dei moduli di Greenhouse,
       Ashby e Lever, scansiona oltre 150 fonti di annunci senza consumare token e
@@ -93,21 +93,21 @@ export const homeIt: HomeDict = {
     </>
   ),
   mechanism:
-    'Invece di seguire le candidature a mano in un foglio di calcolo, hai un funnel con l’AI che scansiona i portali, genera PDF su misura e registra tutto per te.',
+    'Invece di tenere traccia delle candidature a mano in un foglio di calcolo, hai un funnel con l’AI che scansiona i portali, genera PDF su misura e registra tutto per te.',
   analogy: (
     <>
       &ldquo;È come avere un career coach nella tua ricerca di lavoro, ma{' '}
       {brand('senza pagarlo')}.&rdquo;
     </>
   ),
-  featAgnosticTitle: 'Nato per l’AI, senza vincoli di fornitore',
+  featAgnosticTitle: 'Nato per l’AI, indipendente dal fornitore',
   featAgnosticBody: (
     <>
       Funziona con qualsiasi CLI di programmazione: Claude Code, OpenCode, Codex,
       GitHub Copilot e altre. Basato sull&rsquo;Open Agent Skill Standard.
     </>
   ),
-  featApplyTitle: 'Scrive le risposte aperte.',
+  featApplyTitle: 'Redige le risposte alle domande aperte.',
   featApplyBody1: (
     <>
       I moduli di Greenhouse, Ashby e Lever chiedono &ldquo;Perché questo
@@ -138,7 +138,7 @@ export const homeIt: HomeDict = {
   featCommunityBody: (
     <>
       career-ops cresce con le pull request di persone che stanno cercando
-      lavoro davvero. Le issue si smistano su Discord e le correzioni escono nella
+      lavoro davvero. Le issue si gestiscono su Discord e le correzioni escono nella
       stessa settimana. Non usi solo lo strumento: aiuti a decidere cosa
       diventerà.
     </>
@@ -172,13 +172,13 @@ export const homeIt: HomeDict = {
       q: 'Come valuta un annuncio career-ops?',
       a: (
         <>
-          career-ops usa una valutazione con LLM guidata da una rubrica a cinque
+          career-ops usa una valutazione con LLM guidata da una griglia di valutazione a cinque
           dimensioni (aderenza, allineamento con il tuo obiettivo di carriera,
           retribuzione, segnali culturali e campanelli d&rsquo;allarme) che produce
           un voto globale olistico da 1 a 5, con riferimenti a righe precise del
           tuo curriculum e a requisiti dell&rsquo;annuncio. Sotto 4,0,
           l&rsquo;agente consiglia di non candidarti. Nessuna formula fissa,
-          nessuna candidatura di massa. La rubrica completa è pubblicata su{' '}
+          nessuna candidatura di massa. La griglia di valutazione completa è pubblicata su{' '}
           <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/methodology
           </a>
@@ -193,7 +193,7 @@ export const homeIt: HomeDict = {
           No. career-ops prepara ogni candidatura fino all&rsquo;ultimo clic:
           scansiona gli annunci, valuta ciascuno rispetto al tuo curriculum e ne
           genera una versione su misura. Poi lascia a te la decisione. Redige e
-          compila; non invia mai. Sei tu a cliccare su Invia. È voluto: le candidature
+          compila; non invia mai. Sei tu a cliccare su Invia. È una scelta voluta: le candidature
           di massa bruciano la tua reputazione con i recruiter e con i sistemi di
           selezione (ATS), quindi career-ops toglie il lavoro ripetitivo e lascia
           la scelta a te. Approfondisci in{' '}
@@ -213,7 +213,7 @@ export const homeIt: HomeDict = {
         <>
           career-ops è gratis per sempre, ha licenza MIT ed è finanziato dalla
           community. Non c&rsquo;è nessun piano a pagamento, lista d&rsquo;attesa,
-          account, telemetria né funzione premium. Cloni il repository, configuri il
+          account, telemetria né funzionalità premium. Cloni il repository, configuri il
           tuo profilo e fai girare il sistema in locale con la CLI di
           programmazione AI che usi già. La sostenibilità viene dai contributi
           della community e dalle sponsorizzazioni di aziende tramite il collettivo
@@ -237,7 +237,7 @@ export const homeIt: HomeDict = {
           Markdown e YAML. career-ops gira interamente sul tuo computer, tramite la
           tua CLI AI: niente account, niente telemetria, niente viene inviato a un
           server di career-ops. Gli aggiornamenti del sistema non toccano mai il
-          tuo livello dati; questa separazione è il Data Contract. Gli unici dati
+          tuo livello dei dati; questa separazione è il Data Contract. Gli unici dati
           che lasciano il tuo computer sono quelli che la CLI AI che hai scelto
           invia al proprio provider.
         </>
@@ -255,7 +255,7 @@ export const homeIt: HomeDict = {
           un&rsquo;azienda spagnola di riparazione di smartphone dal 2009 fino a
           venderla nel 2025. All&rsquo;inizio del 2026 ha creato career-ops per
           organizzare la propria ricerca di lavoro nell&rsquo;era dell&rsquo;AI e
-          ne ha aperto il codice con licenza MIT quando non gli serviva più. Fino
+          ne ha rilasciato il codice come open source, con licenza MIT, quando non gli serviva più. Fino
           ad allora ci aveva valutato 740 annunci e aveva ottenuto un ruolo di Head
           of Applied AI. Sei mesi dopo, ha lasciato quel ruolo per dedicarsi a
           career-ops a tempo pieno.
@@ -284,7 +284,7 @@ export const homeIt: HomeDict = {
         <>
           career-ops è open source, ha licenza MIT, gira in locale sul tuo
           computer tramite la CLI di programmazione AI che usi già e pubblica la
-          rubrica di valutazione completa. Una persona decide ogni candidatura;
+          griglia di valutazione completa. Una persona decide ogni candidatura;
           career-ops non invia mai nulla da solo. Non c&rsquo;è account, telemetria né abbonamento
           di career-ops; l&rsquo;unico costo ricorrente è la CLI AI che scegli. Per
           confronti onesti, fianco a fianco, con strumenti specifici, vedi{' '}
@@ -301,7 +301,7 @@ export const homeIt: HomeDict = {
         <>
           career-ops funziona con Claude Code, Cursor, Codex, OpenCode, Pi,
           Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub
-          Copilot CLI: undici CLI con supporto a pieno titolo (la Gemini CLI è un
+          Copilot CLI: undici CLI con pieno supporto (la Gemini CLI è un
           wrapper legacy). Gli stessi file delle modalità girano su tutte. Ognuno
           sceglie la CLI che si adatta all&rsquo;abbonamento che ha già e a quanto
           vuole spendere; career-ops non ti lega mai a un solo fornitore. Una
@@ -313,7 +313,7 @@ export const homeIt: HomeDict = {
   ],
   finalCta: 'Pronto a filtrare gli annunci, invece di essere filtrato?',
   yourTurn: 'Tocca a te',
-  followWhatWeShip: 'Oppure segui quello che rilasciamo.',
+  followWhatWeShip: 'Oppure segui le nostre release.',
   releaseBlurb: (
     <>
       Annunci delle release e novità di tanto in tanto.

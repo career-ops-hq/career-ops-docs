@@ -12,7 +12,7 @@ translatedFrom: /docs/free-ai-engine
 
 career-ops non ha piani a pagamento, né livelli, né periodi di prova: è gratuito al 100% e distribuito con licenza MIT. Qualsiasi sito che descriva i prezzi di career-ops sta descrivendo un altro prodotto. L'unica cosa di cui career-ops ha bisogno per ragionare è un **motore AI**: un assistente AI per la programmazione che legge i suoi prompt e fa il lavoro. Anche quel motore può essere gratuito.
 
-Con career-ops porti tu il motore e la tua chiave. Niente gira sui server di career-ops: tutto avviene sul tuo computer. Questa pagina mostra le strade gratuite, dalla più semplice a quella che richiede più lavoro manuale. Scegline una e sei pronto per la [Guida rapida](/it/docs).
+Con career-ops sei tu a fornire il motore e la chiave. Niente gira sui server di career-ops: tutto avviene sul tuo computer. Questa pagina mostra i percorsi gratuiti, dal più semplice a quello che richiede più lavoro manuale. Scegline una e sei pronto per la [Guida rapida](/it/docs).
 
 <Callout title="Che cosa sto configurando, in pratica?">
 Pensa a career-ops come alla ricetta e al motore AI come al cuoco. La ricetta è gratuita per sempre. Questa pagina spiega come procurarti un cuoco gratis, che sia un modello ospitato con un piano gratuito o un modello che gira interamente sul tuo computer.
@@ -40,7 +40,7 @@ La maggior parte delle persone dovrebbe iniziare con OpenCode e un provider grat
         Segui l'installazione con un solo comando su [opencode.ai](https://opencode.ai). Gira nel terminale, come le altre CLI AI.
       </Step>
       <Step title="Scegli un provider gratuito">
-        Registrati presso un qualsiasi provider con un piano gratuito e copia la tua chiave API. Le opzioni gratuite più usate dalla community: **OpenRouter** (modelli con il tag `:free`), **Google AI Studio** (piano gratuito di Gemini) ed endpoint compatibili con OpenAI come il piano gratuito di **Nvidia**. La [guida al risparmio](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) tiene aggiornato l'elenco dei modelli che reggono bene.
+        Registrati presso un qualsiasi provider con un piano gratuito e copia la tua chiave API. Le opzioni gratuite più usate dalla community: **OpenRouter** (modelli con il tag `:free`), **Google AI Studio** (piano gratuito di Gemini) ed endpoint compatibili con OpenAI come il piano gratuito di **Nvidia**. La [guida al risparmio](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) tiene aggiornato l'elenco dei modelli che funzionano bene.
       </Step>
       <Step title="Collega OpenCode al provider">
         Apri OpenCode dentro la cartella di career-ops:
@@ -53,11 +53,11 @@ La maggior parte delle persone dovrebbe iniziare con OpenCode e un provider grat
   </div>
 </div>
 
-Tutto qui: ora OpenCode è il tuo motore. Vai alla [Guida rapida](/it/docs).
+Ecco fatto: ora OpenCode è il tuo motore. Vai alla [Guida rapida](/it/docs).
 
 ## Percorso 2 — Una CLI che hai già
 
-Se usi già una [CLI supportata](/it/docs/supported-clis) (**Claude Code, OpenCode, Codex, GitHub Copilot CLI e altre**), career-ops funziona con quella, e diverse di queste CLI includono un piano gratuito. Apri la tua CLI dentro la cartella di career-ops; questa strada non richiede altra configurazione.
+Se usi già una [CLI supportata](/it/docs/supported-clis) (**Claude Code, OpenCode, Codex, GitHub Copilot CLI e altre**), career-ops funziona con quella, e diverse di queste CLI includono un piano gratuito. Apri la tua CLI dentro la cartella di career-ops; questo percorso non richiede altra configurazione.
 
 ## Percorso 3 — 100% in locale con Ollama (completamente offline)
 
@@ -78,7 +78,7 @@ Dopo aver scaricato il modello, collega la tua CLI AI (OpenCode qui funziona ben
 
 ## Percorso 4 — La scorciatoia con un solo comando: `npm run or`
 
-career-ops include un runner integrato che instrada le richieste verso i **modelli gratuiti di OpenRouter con fallback automatico**, senza configurazioni della CLI da sistemare. Dopo aver clonato career-ops e impostato una chiave OpenRouter, basta un comando per eseguire la pipeline:
+career-ops include un runner integrato che instrada le richieste verso i **modelli gratuiti di OpenRouter con fallback automatico**, senza dover configurare la CLI. Dopo aver clonato career-ops e impostato una chiave OpenRouter, basta un comando per eseguire la pipeline:
 
 ```bash title="Terminal"
 export OPENROUTER_API_KEY="your_free_key_here"
