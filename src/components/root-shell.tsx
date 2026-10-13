@@ -8,6 +8,7 @@ import { CoMark } from '@/components/co-mark';
 import { LocaleRootProvider, type SiteLocale } from '@/components/locale-root-provider';
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
+import { UI } from '@/lib/ui-strings';
 
 import type { Metadata } from 'next';
 
@@ -186,7 +187,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
                 2026-04-06) can verify they're on the real site. Mono font
                 + muted color reads as identification, not promotional. */}
             <div className={`${inter.className} border-t border-fd-foreground/5 py-3 text-xs font-mono text-fd-muted-foreground/70 tracking-wide text-center`}>
-              Official site: career-ops.org &middot; GitHub:{' '}
+              {UI[locale].officialSite}: career-ops.org &middot; GitHub:{' '}
               <a
                 href="https://github.com/career-ops-hq/career-ops"
                 rel="me noopener"
@@ -202,7 +203,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
               >
                 discord.gg/8pRpHETxa4
               </a>{' '}
-              &middot; Agents:{' '}
+              &middot; {UI[locale].agents}:{' '}
               <a
                 href="/llms.txt"
                 className="hover:text-fd-foreground transition-colors"
