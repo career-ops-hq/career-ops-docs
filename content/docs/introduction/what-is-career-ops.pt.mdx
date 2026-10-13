@@ -1,0 +1,35 @@
+---
+title: O que é o career-ops?
+description: "O career-ops é um agente de IA gratuito e de código aberto para busca de emprego, que roda localmente na CLI de IA que você já usa: avalia vagas, adapta seu currículo e acompanha suas candidaturas."
+seoTitle: "O que é o career-ops? O agente de IA de código aberto para busca de emprego, local e gratuito"
+icon: CircleQuestionMark
+date: 2026-04-20
+lastModified: 2026-10-11
+translationHash: 0433d1c8c30d103b
+localized: true
+translatedFrom: /docs/introduction/what-is-career-ops
+---
+
+O career-ops é um agente de IA de código aberto para busca de emprego que roda dentro do seu assistente de programação com IA. Ele redige e preenche; nunca envia. Você clica em Enviar. O career-ops é um filtro: ajuda você a se candidatar melhor a menos vagas, e todas as decisões são suas. Você informa a URL de uma vaga ou cola o texto dela, e ele lê a descrição, avalia a vaga em relação à sua trajetória em cinco dimensões mais uma nota global holística, gera um currículo em PDF sob medida citando linhas específicas do seu currículo e registra tudo em um tracker de candidaturas local. Tudo isso em um único comando, sem planilhas, sem conta e sem nenhum backend nosso: seu currículo sai da sua máquina para o provedor de IA que você escolheu, e para nenhum outro lugar. O career-ops foi criado por [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) para gerenciar uma busca de emprego real na era da IA, no início de 2026: 740 vagas avaliadas segundo critérios explícitos e um cargo de Head of Applied AI conquistado. Ele abriu o código sob a licença MIT quando deixou de precisar do sistema, para que qualquer pessoa que esteja procurando emprego de forma estruturada possa usar o mesmo sistema de graça, na própria máquina, com o modelo de IA que já paga. Seis meses depois de assumir esse cargo, ele o deixou para se dedicar em tempo integral ao career-ops.
+
+## Filosofia
+
+### Código aberto, de verdade
+
+O career-ops não tem plano pago, lista de espera, conta nem telemetria. Você clona o repositório e o executa localmente com a CLI de programação com IA que já usa. Seu currículo fica em markdown simples e sua configuração em YAML: arquivos que são seus e que você pode editar quando quiser. Durante a configuração inicial você nem precisa mexer neles, porque responde em linguagem natural e o agente os escreve para você. Seu perfil e seu histórico de candidaturas ficam em arquivos na sua máquina. O provedor de IA que você escolheu lê o que a sua CLI envia, e esses dados não vão para nenhum outro lugar, a menos que você mesmo os envie. O projeto cresce com contribuições da comunidade revisadas abertamente: quando alguém adiciona um scraper para o portal de uma empresa, melhora os critérios de avaliação ou corrige um bug, essa melhoria chega a todo mundo na versão seguinte. Esse é o modelo de negócio inteiro: não há upsell, não há plano enterprise, não há venda de dados prevista. O sistema é licenciado sob MIT para sempre; mesmo que o mantenedor pare de publicar versões, os critérios de avaliação, os prompts e os scrapers continuam sendo seus para fazer fork, auditar e executar.
+
+<Callout title="Quer contribuir?">
+  Leia o [guia de contribuição](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) antes de abrir um pull request. Em resumo: abra primeiro uma issue para uma nova funcionalidade, um novo modo ou comando, ou uma mudança de arquitetura. Correções de bugs, novos provedores de scanner sem autenticação, documentação e traduções podem ir direto para um pull request. Os mantenedores revisam rápido.
+</Callout>
+
+### Nativo de IA e agnóstico
+
+O career-ops não traz um modelo de IA próprio. Ele roda como um conjunto de slash commands e arquivos de prompt dentro da CLI de programação com IA em que você já confia: Claude Code, Codex, OpenCode, Qwen, GitHub Copilot e [outras](/pt/docs/supported-clis). A IA faz o raciocínio; o career-ops fornece a estrutura, os critérios de avaliação, os scrapers dos portais de empresas e o contrato de dados que mantém seus arquivos sob o seu controle. Com essa arquitetura, você não fica preso ao roadmap nem aos preços de um único provedor: quando sair um modelo melhor, você troca de CLI e o career-ops continua rodando sobre ele, sem mudanças. Os mesmos critérios, cinco dimensões de avaliação mais uma nota global holística, produzem um raciocínio comparável, seja com um modelo Claude, OpenAI, Gemini ou Qwen. Escolha o motor que combina com seu perfil de custo, qualidade e privacidade, e troque à vontade conforme o cenário evoluir.
+
+## Quando usar o career-ops
+
+O career-ops é a ferramenta certa quando você está procurando emprego de forma ativa e estruturada, não apenas dando uma olhada nas vagas. Ele funciona melhor para quem tem um currículo com o qual está satisfeito e quer adaptá-lo a cada candidatura sem reescrevê-lo à mão toda vez, para quem acompanha várias candidaturas e quer uma única fonte de verdade em vez de uma planilha que não para de crescer, para quem quer se candidatar só a vagas que realmente combinam com seu perfil, e não a tudo que parece vagamente relevante, e para quem se sente à vontade executando comandos em um terminal, mesmo sem programar profissionalmente. O career-ops provavelmente não é o que você precisa se vai enviar uma ou duas candidaturas e pronto. A configuração inicial (clonar o repositório, configurar seu perfil, adicionar seu currículo) leva cerca de quinze minutos, um investimento que só compensa quando você está avaliando mais do que um punhado de vagas.
+
+## O que o career-ops não faz
+
+O career-ops nunca se candidata em seu nome. O sistema avalia, pontua, gera e acompanha, mas cada envio é uma decisão sua, tomada com o raciocínio do agente visível em cada etapa, e nada vai a lugar nenhum sem a sua aprovação explícita. O career-ops também não é um criador de currículos nem um otimizador de LinkedIn: você traz o currículo que já tem, e o sistema garante que cada versão dele esteja ajustada à vaga que está na sua frente. É um pipeline, não uma fábrica de conteúdo. A fronteira entre o código do sistema (que é atualizado a cada versão) e os dados do usuário (que nunca são sobrescritos) é garantida pelo DATA_CONTRACT.md do repositório: seu currículo, seu perfil e seu histórico de candidaturas são soberanos. O career-ops vai lê-los, mas nunca vai reescrever nem apagar silenciosamente o que você colocou ali, em nenhuma versão.

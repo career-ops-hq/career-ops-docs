@@ -14,7 +14,7 @@ const ORIGIN = 'https://career-ops.org';
 
 /** Non-default locales that can have docs twins. Extend as languages are added
  *  (each also needs its route group + defineI18n entry). */
-export const DOCS_LOCALES = ['es', 'fr', 'de'] as const;
+export const DOCS_LOCALES = ['es', 'fr', 'de', 'pt'] as const;
 
 /** Bidirectional hreflang cluster for a docs page, built from the locales that
  *  actually have a twin. Pass the EN page.url and the subset of DOCS_LOCALES
@@ -40,12 +40,14 @@ export const HOME_EN = '/';
 export const HOME_ES = '/es';
 export const HOME_FR = '/fr';
 export const HOME_DE = '/de';
+export const HOME_PT = '/pt';
 export function hreflangHome(): Record<string, string> {
   return {
     en: `${ORIGIN}/`,
     es: `${ORIGIN}/es`,
     fr: `${ORIGIN}/fr`,
     de: `${ORIGIN}/de`,
+    pt: `${ORIGIN}/pt`,
     'x-default': `${ORIGIN}/`,
   };
 }

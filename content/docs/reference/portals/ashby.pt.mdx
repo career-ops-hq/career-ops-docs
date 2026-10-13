@@ -1,0 +1,61 @@
+---
+title: Ashby
+description: "O Ashby é o ATS moderno preferido por startups de Série A a C nas áreas de IA e ferramentas para desenvolvedores. O career-ops consulta diretamente a API pública do quadro de vagas."
+seoTitle: "Buscar vagas no Ashby com o career-ops — varredura de portais ATS sem gastar tokens"
+icon: Sparkles
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 8e0f69ac9571b6b9
+localized: true
+translatedFrom: /docs/reference/portals/ashby
+---
+
+## O que faz
+
+O provider ashby em providers/ashby.mjs faz requisições HTTP para api.ashbyhq.com/posting-api/job-board/`{slug}` e interpreta o JSON retornado. O slug é o identificador do quadro de vagas da empresa no Ashby (por exemplo, 'elevenlabs' para a ElevenLabs). O career-ops escolhe esse provider a partir do `careers_url` da entrada (`https://jobs.ashbyhq.com/<slug>`) ou de um campo `api:` explícito.
+
+## Quando usar
+
+Use a varredura do Ashby quando o seu alvo forem laboratórios de IA, empresas de infraestrutura e startups modernas. ElevenLabs, Deepgram, Sierra, Decagon e n8n estão entre os 40 quadros de vagas do Ashby pré-configurados em templates/portals.example.yml.
+
+## Exemplo
+
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
+```
+
+Na varredura seguinte, as vagas abertas da ElevenLabs já aparecem.
+
+## O que o scanner faz
+
+O scanner lê os slugs do Ashby habilitados no portals.yml, chama a API pública de quadro de vagas do Ashby para cada um deles e incorpora as vagas novas ao seu pipeline, sem navegador, sem login e sem gastar nenhum token de LLM na coleta em si. Uma única execução de `node scan.mjs` cobre os seus quadros de vagas do Ashby, do Greenhouse e do Lever de uma vez e depois filtra os resultados pelas palavras-chave de título que você configurou.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 41 total
+Filtered by title: 6 relevant
+Duplicates: 3 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + ElevenLabs | Applied AI Engineer | ashby
+  + Deepgram   | Inference Engineer  | ashby
+```
+
+## Como o career-ops se comunica com o Ashby
+
+O career-ops chama a API pública de vagas do Ashby em `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` e lê a lista `jobs` diretamente da resposta JSON. De cada vaga, ele extrai o título, o `jobUrl` público como link de candidatura, a localização (a principal mais as secundárias, com "Remote" acrescentado para vagas remotas), a descrição em texto puro, a data de publicação e uma faixa salarial anualizada quando o quadro de vagas a divulga. Como se trata de uma chamada estruturada à API, e não de raspagem de página, a varredura não precisa de navegador e não gasta tokens do modelo. A API pública do Ashby demora para responder, com um mínimo de cerca de dez segundos por quadro de vagas, e limita a taxa de requisições repetidas; por isso o career-ops espera até 30 segundos por quadro e tenta de novo com backoff. Os tokens só são gastos depois, na etapa de avaliação, quando você decide que uma vaga merece um olhar mais atento. Executar a varredura de novo é seguro: cada URL é deduplicada em relação ao seu histórico de varreduras, às suas candidaturas avaliadas e ao pipeline atual, de modo que uma vaga que você já viu nunca é adicionada duas vezes.
+
+## Pontos de atenção
+
+A API de quadro de vagas do Ashby retorna o texto completo da descrição da vaga diretamente, sem precisar de uma segunda requisição. Cada quadro leva cerca de dez segundos para responder, então uma varredura com muitos quadros do Ashby demora um pouco mais do que a mesma quantidade de quadros do Greenhouse ou do Lever.
+
+## Relacionados
+
+- [greenhouse](/pt/docs/reference/portals/greenhouse)
+- [lever](/pt/docs/reference/portals/lever)

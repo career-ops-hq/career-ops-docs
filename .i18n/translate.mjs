@@ -6,7 +6,7 @@
 // canonical non-translatables, and stamps the drift-tracking translationHash.
 //
 // Usage:
-//   node .i18n/translate.mjs [--lang es|fr|de] content/docs/reference/modes/pdf.mdx [more.mdx ...]
+//   node .i18n/translate.mjs [--lang es|fr|de|pt] content/docs/reference/modes/pdf.mdx [more.mdx ...]
 //   (--lang defaults to es for back-compat; the output suffix follows the lang)
 //
 // It calls `claude -p` once per file (a headless one-shot), captures the
@@ -40,6 +40,13 @@ const LANGS = {
   de: {
     suffix: 'de',
     name: 'natural German (Germany), addressing the reader informally as "du" (lowercase, as in modern German developer documentation). Use German typographic quotes „…“ in prose. Job-search vocabulary: Stelle / Stellenanzeige (job listing), Jobangebot (the final job offer; never a bare Angebot for a listing), Bewerbung (application), Bewerbungsunterlagen (the application documents), Lebenslauf (CV — the file cv.md keeps its name), Anschreiben (cover letter), Vorstellungsgespräch (interview), Einladungen zum Vorstellungsgespräch bekommen (to get interviews). Write KI, not AI, except in proper names. For whether a listing is trustworthy the native word is seriös; never promise to detect fraud. In titles and headings say STAR-Methode, not STAR-Geschichten (the body may say Geschichten). Phrase FAQ questions the way German readers search, not as calques of the English (search-ops native profile for German, 1 Oct 2026)',
+  },
+  // PT added 2026-10-13: Brazil is ~87% of Portuguese-language clicks, and the
+  // core already ships modes/pt in Brazilian Portuguese. "Para o tradutor"
+  // block from the search-ops native profile for Portuguese (F1, 9 Oct 2026).
+  pt: {
+    suffix: 'pt',
+    name: 'natural Brazilian Portuguese (pt-BR), addressing the reader as "você" (never "tu" or "o senhor/a senhora"). Use Brazilian, not European, vocabulary: arquivo (not ficheiro), tela (not ecrã), usuário (not utilizador), equipe (not equipa), registro (not registo), celular (not telemóvel). Job-search vocabulary, as in the core modes/pt: vaga (job listing), proposta (de trabalho) (the final job offer received). NEVER use "oferta" for either one, because in Brazil "oferta de emprego" means the listing. The funnel reads exactly "740 vagas avaliadas → 68 candidaturas → 12 entrevistas → 1 proposta". Also: candidatura / candidatar-se, currículo (not "CV" in prose; the file cv.md keeps its name), carta de apresentação, processo seletivo, sistemas de triagem (ATS), entrevista comportamental, método STAR, recrutador. Write IA, not AI, except in proper names. Category noun: "agente de IA de código aberto para busca de emprego"; verb: "procurar emprego" (never "procura de emprego", which is European). The score scale is named "de 1 a 5"; score values use a decimal comma (4,0 and 4,5, "4,2/5"). The human-in-the-loop promise is "O career-ops nunca se candidata em seu nome." Never present "candidatura automática" as something career-ops does, and never promise to get past the ATS. Phrase headings and FAQ questions the way Brazilian readers search, not as calques of the English (search-ops native profile for Portuguese, 9 Oct 2026)',
   },
 };
 

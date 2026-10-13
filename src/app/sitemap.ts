@@ -52,9 +52,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     es: `${SITE_URL}/es`,
     fr: `${SITE_URL}/fr`,
     de: `${SITE_URL}/de`,
+    pt: `${SITE_URL}/pt`,
     'x-default': `${SITE_URL}/`,
   };
-  const DOCS_LOCALES = ['es', 'fr', 'de'] as const;
+  const DOCS_LOCALES = ['es', 'fr', 'de', 'pt'] as const;
   // Source-derived (search-ops drift contract): a page has a twin iff
   // getPage(slug, loc) resolves, which with fallbackLanguage:null happens only
   // for a real .<loc>.mdx, never an English fallback.
@@ -190,7 +191,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Localized homes (es, fr, de) — same cluster as the English home.
+  // Localized homes (es, fr, de, pt): same cluster as the English home.
   entries.push({
     url: `${SITE_URL}/es`,
     lastModified: homeLastModified('es'),
@@ -204,6 +205,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   entries.push({
     url: `${SITE_URL}/de`,
     lastModified: homeLastModified('de'),
+    alternates: { languages: homeCluster },
+  });
+  entries.push({
+    url: `${SITE_URL}/pt`,
+    lastModified: homeLastModified('pt'),
     alternates: { languages: homeCluster },
   });
 
@@ -221,7 +227,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   });
 
-  // Localized docs (es, fr, de): one entry per existing twin, each carrying the
+  // Localized docs (es, fr, de, pt): one entry per existing twin, each carrying the
   // same cluster as its English page (see docsCluster above).
   for (const enPage of source.getPages('en')) {
     const c = docsCluster(enPage);

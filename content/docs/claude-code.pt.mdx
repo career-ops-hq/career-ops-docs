@@ -1,0 +1,56 @@
+---
+title: Procurar emprego com IA usando o Claude Code
+seoTitle: "Procurar emprego com IA no Claude Code | career-ops"
+description: "Use o Claude Code como agente de IA para busca de emprego: o career-ops varre páginas de vagas, pontua cada vaga com base no seu currículo e redige suas candidaturas. Você decide e envia."
+icon: Bot
+translationHash: 70ef59ade0e61bf1
+localized: true
+translatedFrom: /docs/claude-code
+---
+
+Você pode procurar emprego com o Claude: o career-ops transforma o Claude Code em um agente de IA para busca de emprego que roda no seu terminal. Ele varre as páginas de vagas das empresas, pontua cada vaga com base no seu currículo, adapta o currículo e redige cartas de apresentação e as respostas da sua candidatura. Ele avalia e redige; você decide e envia. O career-ops nunca se candidata em seu nome. Ele também roda no Codex, no OpenCode e em outras CLIs de programação com IA.
+
+## Como usar o career-ops no Claude Code
+
+O career-ops é carregado no Claude Code pelo arquivo `CLAUDE.md` da pasta do projeto. O [Início rápido](/pt/docs) explica a instalação. Há um passo extra, feito uma única vez: adicione as ferramentas de navegador do Playwright, que confirmam se uma vaga continua aberta, com `/plugin install playwright@claude-plugins-official` dentro do Claude Code. A verificação inicial (`node doctor.mjs`) avisa se elas estiverem faltando. A instalação também baixa o navegador usado para os PDFs e para o `scan --verify`; se esse passo tiver sido pulado, rode `npx playwright install chromium`.
+
+- **Interativo:** abra a pasta do career-ops, rode `claude` e digite `/career-ops`.
+- **Em lote:** rode sem interface com `claude -p "prompt"`. O executor em lote inicia seus workers sem ferramentas de navegador, então eles não conseguem confirmar se uma vaga continua aberta, e o relatório informa isso.
+
+## Quanto custa
+
+O career-ops em si é gratuito e tem licença MIT. O Claude Code não: ele exige um plano pago do Claude ou uma chave de API da Anthropic.
+
+Se `ANTHROPIC_API_KEY` estiver definida no seu ambiente, o Claude Code cobra por token mesmo que você também pague o Claude Pro ou o Max. As [perguntas frequentes explicam o motivo e como verificar](/pt/docs/faq#eu-pago-o-claude-pro-ou-o-max-por-que-o-career-ops-esta-cobrando-dos-meus-creditos-de-api).
+
+Se você preferir não pagar por nenhum motor, o career-ops roda em provedores gratuitos pelo OpenCode. Veja [Configure um motor de IA gratuito](/pt/docs/free-ai-engine).
+
+## O que ele faz e o que fica com você
+
+Cada vaga recebe uma nota global de 1 a 5: uma avaliação holística orientada por cinco dimensões, não uma fórmula ponderada. Abaixo de 4,0, ele recomenda não se candidatar, a menos que você tenha um motivo específico. Para as vagas que valem a pena, ele adapta seu currículo, redige uma carta de apresentação e redige as respostas às perguntas abertas da candidatura.
+
+Aí ele para. Você revisa o que ele redigiu, edita e envia a candidatura por conta própria. O career-ops nunca se candidata em seu nome.
+
+As primeiras execuções são imprecisas. Ele ainda não conhece você. Converse com ele: seu currículo, o que você quer, o que você recusa.
+
+## Prefere outra CLI?
+
+O career-ops também roda no Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub Copilot CLI. A forma de iniciar muda conforme a CLI: veja em [CLIs compatíveis](/pt/docs/supported-clis) como cada uma o carrega.
+
+## Como surgiu
+
+Criei o career-ops para a minha própria busca de emprego em 2026. Meu funil: 740 vagas avaliadas → 68 candidaturas → 12 entrevistas → 1 proposta. — Santiago Fernández de Valderrama Aparicio
+
+## Perguntas frequentes
+
+### O Claude Code consegue procurar emprego para mim?
+
+O Claude Code pode conduzir sua busca de emprego com o career-ops: ele varre as páginas de vagas das empresas, pontua cada vaga com base no seu currículo e redige o material de candidatura para as que valem a pena. Você decide quais candidaturas enviar.
+
+### Ele se candidata às vagas por mim?
+
+Não: o career-ops nunca se candidata em seu nome. Ele redige o material; você revisa, edita e envia cada candidatura por conta própria.
+
+### Preciso do Claude Pro?
+
+O Claude Code exige um plano pago do Claude ou uma chave de API da Anthropic. O career-ops em si é gratuito e tem licença MIT, e também roda em provedores gratuitos pelo OpenCode.

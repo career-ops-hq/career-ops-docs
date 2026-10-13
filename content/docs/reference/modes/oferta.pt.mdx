@@ -1,0 +1,68 @@
+---
+title: oferta
+description: "Executa a avaliação A–H de uma única vaga e a registra no seu tracker, sem gerar PDF. Use quando você só precisa da decisão de pontuação, e não do pipeline completo."
+seoTitle: "Modo oferta do career-ops: avalie uma vaga de emprego antes de se candidatar"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 359504e9cbeb24ea
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## O que o modo faz
+
+O modo oferta lê uma única descrição de vaga (URL ou texto colado), pontua a vaga segundo a rubrica — cinco dimensões mais uma nota global holística — com evidências citadas, e escreve o relatório de avaliação. Não gera PDF, mas adiciona uma linha ao tracker com o status Evaluated. Rápido e barato.
+
+## Quando usar
+
+Use o oferta para fazer a triagem rápida de uma vaga que deixa você em dúvida. Se a nota passar de 4,0 e você decidir se candidatar, avance para o modo auto-pipeline ou apply.
+
+## Como é uma execução
+
+Você entrega uma vaga ao modo e ele devolve a avaliação em sete blocos — os Blocos A a F e um Bloco G com a leitura de legitimidade, além do Bloco H com rascunhos de respostas quando a nota é 4,5 ou mais — com uma nota e o raciocínio citado. Cole o texto da vaga diretamente ou passe uma URL: nesse caso, o modo primeiro confirma que a vaga continua aberta, para que um link morto nunca consuma uma avaliação completa.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+
+Os Blocos B a F cobrem a aderência do currículo e as lacunas, a estratégia de nível, a remuneração e a demanda, um plano de personalização e histórias de entrevista no formato STAR+R mapeadas para os requisitos da vaga.
+
+## Quando vale a pena usar
+
+Recorra ao oferta para pontuar rapidamente uma única vaga sem se comprometer com o pipeline completo. Vale saber:
+
+- Passe uma URL e uma verificação de atividade roda primeiro — uma vaga expirada ou com erro 404 é barrada antes do Bloco A, então você nunca gasta uma execução com conteúdo fantasma.
+- A pesquisa sobre a empresa e a remuneração é limitada a no máximo cinco buscas na web; isto é uma avaliação, não uma pesquisa aprofundada. Execute `/career-ops deep` separadamente quando quiser um retrato mais completo da empresa.
+- O Bloco G devolve um de três níveis — High Confidence, Proceed with Caution ou Suspicious — para que prováveis vagas fantasma apareçam antes de você investir esforço em entrevistas.
+
+## Score Evidence
+
+O relatório inclui a seção **Score Evidence** depois de Risk Summary. Ela cobre cinco dimensões: aderência do currículo, alinhamento com o North Star, remuneração, sinais culturais e sinais de alerta. Cada linha registra um status de evidência (`supported`, `partial` ou `unknown`), uma fonte ou observação concreta e uma pergunta em aberto. A seção termina com um nível de confiança da evidência (`High`, `Medium` ou `Low`), o motivo e até três prioridades de verificação.
+
+Esse nível descreve a evidência por trás do Global Score; não é uma probabilidade de contratação nem o nível de legitimidade da vaga do Bloco G, e não altera a nota numérica. O Machine Summary preserva os cinco status em `score_evidence`, o nível em `confidence` e as prioridades em `confidence_gaps`. Quando não resta nenhuma prioridade, `confidence_gaps` é uma lista vazia.
+
+## Veja também
+
+- [auto-pipeline](/pt/docs/reference/modes/auto-pipeline)
+- [ofertas](/pt/docs/reference/modes/ofertas)
+- [pdf](/pt/docs/reference/modes/pdf)

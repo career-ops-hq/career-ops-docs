@@ -1,0 +1,57 @@
+---
+title: Greenhouse
+description: "O career-ops consulta diretamente a API pública de boards do Greenhouse. Sem scraping de HTML, sem risco de esbarrar em limites de requisições e sem consumir tokens de IA durante a varredura."
+seoTitle: "Como buscar vagas no Greenhouse com o career-ops — varredura de portais ATS sem gastar tokens"
+icon: Leaf
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 7b6f2cf40aacd803
+localized: true
+translatedFrom: /docs/reference/portals/greenhouse
+---
+
+## O que faz
+
+O provider greenhouse, em providers/greenhouse.mjs, faz requisições HTTP para boards-api.greenhouse.io/v1/boards/`{slug}`/jobs e converte a resposta JSON para o formato de vaga do career-ops. O slug é o identificador do board da empresa no Greenhouse (por exemplo, 'notion' para a Notion).
+
+## Quando usar
+
+Use a varredura do Greenhouse quando as empresas que você tem em vista usam o Greenhouse como ATS. É o caso da maioria das empresas de tecnologia dos Estados Unidos com 50 a 10.000 funcionários. O templates/portals.example.yml já vem com mais de 70 slugs do Greenhouse pré-configurados, prontos para você ativar.
+
+## Exemplo
+
+```
+In your portals.yml: `- provider: greenhouse\n  slug: notion\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.
+```
+
+## O que o scanner faz
+
+O scanner lê no portals.yml os slugs do Greenhouse que você ativou, chama a API pública de boards para cada um e adiciona ao seu pipeline as vagas novas cujo título corresponde ao que você procura, sem scraping e sem gastar nenhum token de LLM na coleta. Uma única execução de `node scan.mjs` cobre seus boards do Greenhouse, Ashby e Lever de uma vez só e depois filtra os resultados pelas palavras-chave de título que você configurou.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 58 total
+Filtered by title: 9 relevant
+Duplicates: 6 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Notion | AI Product Engineer | greenhouse
+  + OpenAI | Applied Engineer    | greenhouse
+```
+
+## Como o career-ops se comunica com o Greenhouse
+
+O career-ops consulta `boards-api.greenhouse.io/v1/boards/{slug}/jobs` e lê o array `jobs` do JSON, extraindo o título de cada vaga e o respectivo `absolute_url`. Esse endpoint de boards devolve os metadados da vaga (título, localização e departamento), mas não a descrição completa. Por isso, o career-ops busca o texto integral da vaga com uma requisição adicional por vaga durante a etapa de avaliação, ou acrescentando `?content=true` quando o board oferece suporte. A varredura em si é um simples GET via HTTPS em um endpoint público, e é por isso que ela se mantém dentro dos limites de requisições e não gasta tokens do modelo. Rodar a varredura de novo é seguro: cada URL é deduplicada em relação ao seu histórico de varreduras, às candidaturas que você já avaliou e ao pipeline atual, então uma vaga que você já viu nunca é adicionada duas vezes.
+
+## Pontos de atenção
+
+No endpoint de boards, as vagas obtidas pela API do Greenhouse trazem apenas título, localização e departamento. O texto completo da descrição da vaga exige uma requisição adicional por vaga, que o career-ops faz automaticamente durante a etapa de avaliação.
+
+## Veja também
+
+- [ashby](/pt/docs/reference/portals/ashby)
+- [lever](/pt/docs/reference/portals/lever)

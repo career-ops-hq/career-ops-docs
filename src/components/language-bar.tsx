@@ -22,15 +22,16 @@ import { Check, ChevronDown, X } from 'lucide-react';
 // version for crawlers that do not run JS. Each link resolves to the
 // SAFE URL for that locale — docs go to /<loc>/docs (the route redirects an
 // untranslated slug to EN), the home to /<loc>, the manifesto to its twin when
-// one exists (es) or the locale home otherwise (fr and de have none yet), and
+// one exists (es) or the locale home otherwise (fr, de and pt have none yet), and
 // any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es' | 'fr' | 'de';
+type Code = 'en' | 'es' | 'fr' | 'de' | 'pt';
 const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'en', label: 'EN', name: 'English' },
   { code: 'es', label: 'ES', name: 'Español' },
   { code: 'fr', label: 'FR', name: 'Français' },
   { code: 'de', label: 'DE', name: 'Deutsch' },
+  { code: 'pt', label: 'PT', name: 'Português' },
 ];
 // Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
 const MANIFESTO_LOCALES: Code[] = ['es'];
@@ -86,18 +87,34 @@ function FlagDE({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+// Brazil, not Portugal: the Portuguese content is pt-BR (Brazil is ~87% of the
+// Portuguese-language clicks).
+function FlagBR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
+      <clipPath id="flagCircleBR"><circle cx="8" cy="8" r="8" /></clipPath>
+      <g clipPath="url(#flagCircleBR)">
+        <rect width="16" height="16" fill="#009c3b" />
+        <polygon points="8,2.5 14.5,8 8,13.5 1.5,8" fill="#ffdf00" />
+        <circle cx="8" cy="8" r="3" fill="#002776" />
+      </g>
+    </svg>
+  );
+}
 const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   en: FlagEN,
   es: FlagES,
   fr: FlagFR,
   de: FlagDE,
+  pt: FlagBR,
 };
 
-/** Which locale is this path? (localized surfaces are prefixed /es, /fr or /de.) */
+/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de or /pt.) */
 function localeOf(pathname: string): Code {
   if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
   if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
   if (pathname === '/de' || pathname.startsWith('/de/')) return 'de';
+  if (pathname === '/pt' || pathname.startsWith('/pt/')) return 'pt';
   return 'en';
 }
 
@@ -105,7 +122,7 @@ function localeOf(pathname: string): Code {
 function baseOf(pathname: string): string {
   const loc = localeOf(pathname);
   if (loc === 'en') return pathname;
-  return pathname.slice(3) || '/'; // drop '/es', '/fr' or '/de'
+  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de' or '/pt'
 }
 
 /** The URL for `target` locale of the page whose EN-relative path is `base`.
@@ -148,6 +165,7 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
   es: { question: '¿Prefieres español?', cta: 'Ver en español' },
   fr: { question: 'Vous préférez le français ?', cta: 'Voir en français' },
   de: { question: 'Lieber auf Deutsch?', cta: 'Auf Deutsch ansehen' },
+  pt: { question: 'Prefere português?', cta: 'Ver em português' },
 };
 
 /**

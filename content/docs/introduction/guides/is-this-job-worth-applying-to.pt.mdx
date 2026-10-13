@@ -1,0 +1,171 @@
+---
+title: "Vale a pena se candidatar a esta vaga?"
+description: "Decida antes de se candidatar. O career-ops dá a uma vaga uma nota de 1 a 5 com base no seu currículo e nos seus objetivos, mostra o raciocínio e deixa a decisão com você."
+seoTitle: "Vale a pena se candidatar a esta vaga? Decida antes de se candidatar com o career-ops — uma nota de 1 a 5 e o raciocínio por trás dela"
+icon: Scale
+translationHash: 7108334c927d4e60
+localized: true
+translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
+---
+
+Vale a pena se candidatar a uma vaga quando ela combina com o seu currículo, o seu nível e as suas condições o suficiente para justificar a candidatura. O career-ops lê a vaga com base no seu currículo e nos seus objetivos e dá a ela uma nota de 1 a 5, com o raciocínio; abaixo de 4,0, ele recomenda não se candidatar, a menos que você tenha um motivo específico. Você decide.
+
+Para analisar uma vaga antes de se candidatar, rode `/career-ops oferta` e cole a vaga. Ele avalia e redige; você decide e envia. O career-ops nunca se candidata em seu nome.
+
+**Nesta página:** [Decida antes de se candidatar](#decide-before-you-apply) · [Como analisar uma vaga](#how-do-i-check-a-job-before-i-apply) · [Como a nota é definida](#how-does-career-ops-decide-the-score) · [O que não muda a nota](#what-does-not-change-the-score) · [Abaixo de 4,0](#what-happens-below-40) · [O que a avaliação entrega](#what-does-the-evaluation-give-you) · [Um exemplo fictício](#a-fictional-example) · [Diga a ele quem você é](#the-first-evaluations-are-rough-until-you-tell-it-who-you-are) · [Confira a nota com os seus resultados](#is-the-score-right-for-you) · [Compare duas propostas além do salário](#compare-two-offers-beyond-salary) · [Negocie com os seus próprios números](#negotiate-with-your-own-numbers) · [Perguntas frequentes](#frequently-asked-questions)
+
+## Decida antes de se candidatar [#decide-before-you-apply]
+
+O career-ops foi construído em torno de uma única decisão: se uma vaga merece mesmo uma candidatura. Cole a vaga à qual você ia se candidatar hoje à noite, e ele diz se essa noite vale a pena. Ele não tem como dizer quem vai responder. Ele diz o quanto a vaga combina com o seu currículo e com o que você quer, antes de você gastar a noite em uma candidatura que pode terminar em silêncio.
+
+O career-ops foi pensado para qualidade, não para quantidade. Ele conduz você a menos candidaturas, e melhores, e diz com todas as letras quando uma vaga fica aquém. Um resultado que diz *não se candidate* é o produto fazendo o trabalho dele.
+
+Menos candidaturas, e melhores, também é uma questão de dignidade dos dois lados da mesa. O tempo dos recrutadores merece respeito. O seu também.
+
+> Eu criei o career-ops para a minha própria busca de emprego em 2026. Meu funil: 740 vagas avaliadas → 68 candidaturas → 12 entrevistas → 1 proposta. — Santiago Fernández de Valderrama Aparicio
+
+## Como saber se vale a pena se candidatar a uma vaga? [#how-do-i-check-a-job-before-i-apply]
+
+<Callout title="Antes de começar">
+  Instale o career-ops com o [Início rápido](/pt/docs) e abra-o em uma das [CLIs compatíveis](/pt/docs/supported-clis). Até você dizer a ele quem você é, as avaliações usam como referência o perfil que vem de fábrica, voltado para vagas de IA: veja [as primeiras avaliações são imprecisas](/pt/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
+</Callout>
+
+O career-ops tem um modo só de avaliação, para você decidir primeiro. Abra a sua CLI de programação com IA na pasta do career-ops, rode o comando abaixo e cole a descrição da vaga ou a URL dela:
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+O modo `oferta` roda a avaliação e escreve o relatório, sem PDF automático. Se, em vez disso, você colar uma vaga direto no `/career-ops`, ele roda o pipeline completo, que também adapta um currículo (em PDF, por padrão), seja qual for a nota. Use `oferta` quando quiser o veredito antes de qualquer outra coisa. Se depois você decidir se candidatar, `/career-ops pdf` adapta o seu currículo, e `/career-ops apply` redige respostas para as perguntas do formulário de candidatura, para você revisar e enviar por conta própria.
+
+No Codex, os comandos com barra não são garantidos: em vez disso, cite o modo em um prompt, por exemplo `Run the career-ops oferta mode on this job: {URL}`.
+
+O career-ops faz algumas verificações antes de dar qualquer nota. Quando você passa uma URL, ele primeiro confirma que a vaga continua aberta; um link morto interrompe a execução antes da avaliação, sem relatório e sem currículo. Texto colado não pode ser verificado desse jeito, e o relatório registra isso. Se você mantém a sua própria lista de empresas às quais não quer se candidatar em `data/blacklist.md`, uma empresa listada interrompe a execução: o career-ops cita o motivo que você registrou e pergunta se você ainda quer a avaliação. Se a vaga parece ter vindo de uma agência, ele pergunta qual agência antes de escrever qualquer coisa.
+
+A pesquisa dentro de uma avaliação tem limite. A pesquisa de remuneração e a de legitimidade da vaga, somadas, ficam limitadas a cinco buscas na web, e tudo o que ele não encontra é marcado como indisponível. Para um olhar mais aprofundado sobre uma empresa, rode `/career-ops deep` separadamente.
+
+## Como o career-ops define a nota? [#how-does-career-ops-decide-the-score]
+
+A nota do career-ops é uma avaliação holística guiada por cinco dimensões:
+
+| Dimensão                   | O que ela analisa                                                            |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| Aderência ao currículo     | Como as suas competências, experiência e provas concretas se alinham à vaga  |
+| Alinhamento com a North Star | O quanto o cargo combina com os cargos-alvo do seu perfil                  |
+| Remuneração                | O salário que a vaga informa, lido à luz de pesquisa de mercado              |
+| Sinais culturais           | Cultura da empresa, crescimento, estabilidade e política de trabalho remoto  |
+| Sinais de alerta           | Impeditivos e avisos, que puxam a nota para baixo                            |
+
+A nota global do career-ops integra as cinco dimensões em um único número de 1 a 5, sem fórmula aritmética. As seções do relatório não entram em uma média para chegar a ela. A mesma nota vai para o cabeçalho do relatório e para o seu tracker.
+
+A afinidade cultural não pode se esconder atrás de uma forte aderência ao currículo. Se você definiu requisitos de cultura em `config/profile.yml` e as evidências da vaga os contradizem, o relatório aponta o que está faltando e limita a dimensão Sinais culturais. Um cargo que recebe 4,5 ou mais com afinidade cultural fraca traz um aviso explícito para você verificar antes de se candidatar.
+
+O career-ops confere a autorização de trabalho com base no seu perfil. Se uma vaga não diz nada sobre patrocínio de visto, a nota não cai. Um genérico "must be authorized to work in X" também não a reduz, quando X é um país onde você tem autorização. Uma frase explícita de que não há patrocínio, como "no visa sponsorship" ou "must have existing work authorization", em um cargo que você não pode assumir a partir de um país onde tem autorização, é registrada como impeditivo absoluto, e o relatório cita as palavras exatas da vaga.
+
+## O que não muda a nota? [#what-does-not-change-the-score]
+
+O nível de legitimidade da vaga nunca muda a nota de 1 a 5. A verificação de legitimidade da vaga (Bloco G do relatório) observa sinais como a idade do anúncio, se o botão de candidatura continua ativo, o quanto a descrição é específica, notícias recentes de demissões e se o mesmo cargo vive sendo republicado. Ela devolve um de três níveis: High Confidence, Proceed with Caution ou Suspicious. Ela apresenta o que viu, nunca acusa ninguém, registra as explicações legítimas para um sinal preocupante e deixa o julgamento com você. Sem data de publicação e sem mais nada preocupante, o nível padrão é Proceed with Caution, nunca Suspicious. A pesquisa sobre a empresa que sustenta essa verificação, como notícias sobre a estabilidade da empresa, ainda pode alimentar a dimensão Sinais culturais.
+
+A importância dos requisitos é rotulada, não contabilizada. O relatório lista os requisitos relevantes da vaga, em até 12 linhas, e nunca descarta um requisito crítico ou alto para caber. Para cada um, ele marca o quanto aquilo pesa nesta vaga, de crítico a sinal fraco, e se isso vem do próprio texto da vaga, da estrutura dela ou de uma estimativa identificada como tal. A importância é preenchida só a partir da vaga, antes de o seu currículo ser lido, para que um requisito não seja classificado como importante só porque você, por acaso, é forte nele. Todo requisito crítico ou alto que você não atende, ou atende só em parte, vem acompanhado de um risco específico para a entrevista e de um plano para se preparar. Os rótulos de importância não mexem na nota de 1 a 5.
+
+O seu histórico com uma empresa é mostrado, não pontuado. Se você já se candidatou lá e não teve retorno, ou recebeu resposta uma vez e silêncio na outra, o relatório acrescenta uma nota dizendo isso. Essa nota não é um sinal de legitimidade e não muda nem a nota nem o nível. Ela está ali para você decidir quanto esforço investir.
+
+A sua blacklist nunca muda nota nenhuma: ela é uma barreira que interrompe a execução até você responder, e nada é adicionado a ela automaticamente, no seu lugar.
+
+## O que acontece abaixo de 4,0? [#what-happens-below-40]
+
+Abaixo de 4,0, o career-ops recomenda não se candidatar, a menos que você tenha um motivo específico. Você pode passar por cima da recomendação, e ele vai deixar isso claro.
+
+A linha de 4,0 é uma recomendação. A decisão continua sendo sua, assim como cada candidatura: o career-ops redige o material, você revisa e você envia. Na outra ponta da escala, uma vaga que recebe 4,5 ou mais também ganha rascunhos de respostas para o formulário de candidatura.
+
+## O que a avaliação entrega? [#what-does-the-evaluation-give-you]
+
+O career-ops grava cada avaliação em um relatório em `reports/` e adiciona uma linha ao seu tracker, `data/applications.md`, com o status Evaluated. O cabeçalho do relatório traz a nota, o nível de legitimidade e a situação da autorização de trabalho, e logo abaixo fica um resumo legível por máquina. As seções principais vêm em seguida, nesta ordem:
+
+- A) Resumo do cargo
+- B) Aderência ao currículo
+- C) Nível e estratégia
+- D) Remuneração e demanda
+- E) Plano de personalização
+- F) Plano de entrevistas
+- G) Legitimidade da vaga
+- Resumo de riscos, que reúne os sinais de risco em uma única tela, sem reavaliar nada
+- H) Rascunho das respostas da candidatura, só quando a nota é 4,5 ou mais
+
+A vaga em si é arquivada na íntegra no relatório (uma muito longa vai para um arquivo em `jds/`, para o qual o relatório aponta), de modo que você guarda os requisitos depois que o anúncio sai do ar. Um primeiro rascunho de carta de apresentação é anexado para você finalizar com `/career-ops cover {slug}`.
+
+## Um exemplo fictício [#a-fictional-example]
+
+<Callout title="Exemplo fictício">
+  A Acme Freight, o cargo e a candidata abaixo são inventados. Esta não é uma avaliação real nem se baseia em uma. Ela só mostra como o raciocínio se apresenta.
+</Callout>
+
+Neste exemplo inventado, Maya é uma engenheira de backend que disse ao career-ops o que quer: cargos de backend de produto, equipe pequena, trabalho remoto. Ela cola a URL de uma vaga de Senior Platform Engineer na Acme Freight. Nas cinco dimensões, o raciocínio segue assim:
+
+- **Aderência ao currículo:** forte no núcleo do trabalho, serviços em Go e Postgres. Um requisito crítico, operar Kubernetes em produção, é atendido só em parte, então o relatório aponta o risco para a entrevista e um jeito de se preparar.
+- **Alinhamento com a North Star:** perto dos objetivos dela, mas o cargo pende mais para infraestrutura do que para o trabalho de backend de produto que ela pediu.
+- **Remuneração:** a vaga não informa salário. O relatório diz isso, classifica o tipo de empresa, avalia o quanto os dados públicos de remuneração são confiáveis para esse tipo de empresa e para por aí.
+- **Sinais culturais:** ela pediu uma equipe pequena; a vaga descreve uma grande organização de plataforma, com várias camadas de gestão. O relatório aponta essa lacuna em vez de deixar que a forte aderência ao currículo a esconda.
+- **Sinais de alerta:** nada que impeça a candidatura.
+
+**Nota (fictícia): 3,6/5.** Abaixo de 4,0, o career-ops recomenda não se candidatar, a menos que ela tenha um motivo específico.
+
+À parte, o nível de legitimidade neste exemplo é Proceed with Caution: a página da vaga não mostra data e não há mais nada preocupante. O nível não muda a nota.
+
+Maya tem um motivo que o relatório não consegue ver: ela conhece o gerente de engenharia, que contou a ela que a equipe está sendo dividida em squads menores. O career-ops já avisou que recomenda não se candidatar. Ela segue em frente mesmo assim; a decisão é dela. Ela revisa o que o career-ops redigiu e envia a candidatura por conta própria.
+
+## As primeiras avaliações são imprecisas até você dizer a ele quem você é [#the-first-evaluations-are-rough-until-you-tell-it-who-you-are]
+
+O career-ops avalia com base no perfil que ele tem, e o perfil que vem de fábrica não é o seu. Os cargos-alvo padrão desse perfil são todos cargos de IA. Até você personalizar `modes/_profile.md`, as avaliações usam como referência os objetivos do autor do modelo, e rodar `node doctor.mjs` sinaliza isso.
+
+As primeiras execuções são imprecisas. Ele ainda não conhece você. Converse com ele: o seu currículo, o que você quer, o que você recusa. Na primeira vez que é aberto, ele pergunta tudo isso no chat. Para mudar os cargos-alvo, diga isso com palavras simples, por exemplo "Mude os arquétipos para cargos de engenharia de backend". Depois de qualquer avaliação, diga a ele o que ele errou, como "esta nota está alta demais" ou "você não considerou a minha experiência em X", e ele atualiza os arquivos do seu perfil.
+
+## A nota funciona para o seu caso? [#is-the-score-right-for-you]
+
+O career-ops não presume que a nota dele prevê os seus resultados; ele deixa você conferir. Registre o que aconteceu com cada candidatura usando `/career-ops outcome`. Quando você tiver resultados, rode:
+
+```bash
+node calibrate.mjs
+```
+
+O relatório do `calibrate` faz uma pergunta: as suas candidaturas com nota mais alta viram entrevistas e propostas com mais frequência, no seu caso? Ele é consultivo. Nunca edita a avaliação, os limites nem a sua configuração, e nada se ajusta sozinho. Ele omite qualquer taxa em que a amostra seja pequena demais e deixa de fora as candidaturas que ainda estão em andamento. Se os seus resultados sugerem que a linha está no lugar errado para você, o que as evidências sustentam é mudar a nota a partir da qual você, pessoalmente, se candidata, ou os cargos que você busca. Essa decisão é sua.
+
+## Compare duas propostas além do salário [#compare-two-offers-beyond-salary]
+
+Para comparar duas propostas além do salário, compare os cargos com `/career-ops ofertas` e depois leia cada carta-proposta com `/career-ops offer-prep`. O modo `ofertas` trabalha a partir dos anúncios das vagas: nenhuma das dez dimensões dele cobre os termos de uma carta-proposta que você recebeu, e ele não tem dimensão de deslocamento nem de qualidade de vida além da qualidade do trabalho remoto.
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+O modo `ofertas` recebe duas ou mais vagas: o texto delas, as URLs ou cargos que você já avaliou no seu tracker. Ele avalia cada cargo de 1 a 5 em dez dimensões e devolve um ranking com uma recomendação que leva em conta o tempo até a proposta.
+
+O salário, como remuneração estimada, é uma das dez dimensões que o `ofertas` avalia. As outras nove são alinhamento com a North Star, aderência ao currículo, nível, trajetória de crescimento, qualidade do trabalho remoto, reputação da empresa, modernidade da stack tecnológica, rapidez até a proposta e sinais culturais.
+
+Diferentemente da nota de avaliação de 1 a 5, que não tem fórmula aritmética, a comparação do `ofertas` usa pesos padrão, e o alinhamento com a North Star é o que mais conta. Os padrões pendem para cargos seniores de IA: a dimensão de nível dá a nota mais alta a cargos de nível staff, e a dimensão de stack tecnológica dá a nota mais alta a IA e ML de ponta. Se essa não é a sua busca, diga o que importa para você antes de comparar. As suas preferências de avaliação ficam no seu perfil, `modes/_profile.md`, que a comparação lê.
+
+### Negocie com os seus próprios números [#negotiate-with-your-own-numbers]
+
+O career-ops prepara você para negociar a partir dos seus próprios documentos e dos seus próprios números. O modo `offer-prep` lê a sua carta-proposta ou o seu contrato junto com você e não opina se a proposta é baixa, justa ou alta: essa decisão é sua. Cole o texto ou aponte para o arquivo:
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+O `offer-prep` cita na íntegra cada cláusula que merece atenção, explica em linguagem simples e a marca com rótulos neutros, como "costuma ser negociada" ou "pergunte ao seu advogado". Ele fecha com perguntas para o seu advogado, pontos a levar ao empregador (como perguntas, nunca exigências) e uma nota fixa de que aquilo não é aconselhamento jurídico. Ele não faz buscas na web e lê apenas contratos em inglês.
+
+`node salary-gap.mjs --summary` mostra, por candidatura, o que você queria, o que a vaga anunciava e o que de fato propuseram a você. `node negotiation-roi.mjs --summary` redige um argumento a partir de uma afirmação de horas economizadas cujo número também aparece no seu `cv.md`, calculada a partir de um salário e uma frequência que você informa: uma estimativa, não aconselhamento financeiro. `/career-ops offer-prep reply {company-slug}` redige um e-mail de resposta a partir do seu relatório de preparação; você mesmo envia.
+
+## Perguntas frequentes [#frequently-asked-questions]
+
+### Existe alguma ferramenta que diz a quais vagas vale a pena me candidatar com base no meu currículo?
+
+O career-ops é uma ferramenta de código aberto, sob licença MIT, que lê uma vaga com base no seu currículo e nos seus objetivos antes de você se candidatar. Ele devolve uma nota global de 1 a 5 com o raciocínio. Abaixo de 4,0, ele recomenda não se candidatar, a menos que você tenha um motivo específico, e você pode passar por cima dessa recomendação. O career-ops nunca se candidata em seu nome: você revisa e envia cada candidatura por conta própria.
+
+### Uma nota alta quer dizer que vou ser chamado para entrevista?
+
+Uma nota alta do career-ops não promete uma entrevista. A nota é uma avaliação do quanto uma vaga combina com o seu currículo e os seus objetivos, não uma previsão de entrevistas ou propostas. Para ver como a nota acompanha os seus próprios resultados, registre os resultados à medida que acontecem e rode o relatório do calibrate, que é consultivo e nunca muda a avaliação.
+
+### Como comparar duas propostas de emprego além do salário?
+
+Para comparar duas propostas de emprego além do salário com o career-ops, compare os cargos com o modo ofertas, que avalia cada cargo em dez dimensões, das quais o salário é apenas uma, e devolve um ranking com uma recomendação. Nenhuma dessas dimensões cobre os termos de uma carta-proposta, então leia cada carta com o modo offer-prep: ele percorre as cláusulas com você e lista perguntas para o seu advogado e pontos a levar ao empregador, sem nenhum veredito sobre a proposta.
