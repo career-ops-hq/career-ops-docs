@@ -5,7 +5,7 @@ seoTitle: "Modo tracker de career-ops — consulta el estado de cada candidatura
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: 83b5254d11b05f4a
+translationHash: 0bd0918262de7986
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -39,6 +39,22 @@ Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
 Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escrito, decisión pendiente), Applied (la has enviado), Responded (la empresa respondió pero aún sin entrevista), Interview (un proceso activo), y después un estado terminal de Offer, Rejected, Discarded o SKIP para los puestos que no encajan. Para registrar un cambio de estado, pídelo en el chat o ejecuta tú mismo `node set-status.mjs <report#|company> <state>`, y añade `--on YYYY-MM-DD` si ocurrió en una fecha anterior. El comando rechaza los estados desconocidos, bloquea el tracker mientras escribe y registra la transición en `data/status-log.tsv`, el registro que leen las estadísticas de funnel-velocity, así que úsalo en lugar de editar la fila a mano.
+
+## Cambiar las demás columnas
+
+Las demás columnas también tienen quien las escriba, así que la tabla no se edita a mano.
+
+- **Notas.** `node set-status.mjs <report#|company> <state> --note "..."` añade una nota a la fila. Pasa el estado que la fila ya tiene para añadir solo la nota: el estado se queda como está y no se escribe nada en `data/status-log.tsv`.
+- **Fecha, puntuación, informe, empresa y puesto.** Salen de una evaluación, así que cambian cuando el puesto se evalúa de nuevo. `node merge-tracker.mjs` empareja la evaluación nueva con la fila que ya está en el tracker y actualiza esa fila en lugar de añadir otra. La fecha, la puntuación y el enlace al informe se sustituyen, y una nota `Re-eval` deja constancia de la puntuación anterior y de la nueva. Cuando la coincidencia es por el informe o por la URL de la oferta, también se sustituyen la empresa y el título del puesto. La fila conserva su `#` y su estado.
+- **PDF.** Cada fusión también cambia la columna PDF de una fila de ❌ a ✅ cuando ya se ha generado un CV para su informe.
+
+Una fusión nunca cambia el estado de una fila que ya está en el tracker. Una evaluación nueva que dice `Applied` para una fila que está en `Evaluated` la deja en `Evaluated`; quien la mueve es `set-status.mjs`.
+
+## Poner nombre a la empresa de una fila `?`
+
+Una oferta que llegó a través de una agencia sin nombrar a la empresa se registra con `?` en la columna Company. Cuando sepas cuál es la empresa, dilo en el chat («el puesto de la agencia es en Acme»). El modo tracker renombra la fila a través de `node merge-tracker.mjs`, emparejada por el informe de la fila: `?` pasa a ser el nombre real, y la fila conserva su `#` y su estado. También escribe la empresa en el informe sin renombrar el archivo del informe, y después ejecuta `node verify-pipeline.mjs` y te avisa si la misma empresa y el mismo puesto ya están en tu tracker por otro canal. Nunca fusiona esas dos filas: las dos candidaturas ocurrieron, y tú decides a qué canal pertenece la candidatura.
+
+Una fila `?` que no tiene informe es la excepción. Sin el enlace al informe ningún comando puede saber a qué fila `?` te refieres, así que career-ops te lo dice y te deja esa celda Company para que la cambies tú.
 
 ## Cómo leer las cifras acumuladas
 

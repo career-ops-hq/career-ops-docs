@@ -37,6 +37,22 @@ Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 
 An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, ask for it in the chat or run `node set-status.mjs <report#|company> <state>` yourself, adding `--on YYYY-MM-DD` when it happened on an earlier day. The command rejects unknown states, locks the tracker while it writes, and logs the transition in `data/status-log.tsv`, the ledger the funnel-velocity statistics read, so use it instead of hand-editing the row.
 
+## Changing the other columns
+
+The other columns have writers too, so the table is not something you edit by hand.
+
+- **Notes.** `node set-status.mjs <report#|company> <state> --note "..."` appends a note to the row. Pass the state the row already has to add a note on its own: the status stays as it is and nothing is written to `data/status-log.tsv`.
+- **Date, score, report, company and role.** These come from an evaluation, so they change when the role is evaluated again. `node merge-tracker.mjs` matches the new evaluation to the row already in the tracker and updates that row instead of adding a second one. The date, the score and the report link are replaced, and a `Re-eval` note records the old and the new score. When the match is on the report or on the posting URL, the company and the role title are replaced too. The row keeps its `#` and its status.
+- **PDF.** Each merge also flips a row's PDF column from ❌ to ✅ once a CV has been generated for its report.
+
+A merge never changes the status of a row that is already in the tracker. A new evaluation that says `Applied` for a row sitting on `Evaluated` leaves it on `Evaluated`; `set-status.mjs` is what moves it.
+
+## Naming the employer of a `?` row
+
+A posting that came through an agency without naming the employer is tracked with `?` in the Company column. When you learn who the employer is, say so in the chat ("the agency role is at Acme"). The tracker mode renames the row through `node merge-tracker.mjs`, matched on the row's report: `?` becomes the real name, and the row keeps its `#` and its status. It also writes the company into the report without renaming the report file, then runs `node verify-pipeline.mjs` and warns you if the same company and role is already in your tracker through another channel. It never merges those two rows: both applications happened, and you decide which channel owns the candidacy.
+
+A `?` row that has no report is the exception. Without the report link no command can tell which `?` row is meant, so career-ops says so and leaves that one Company cell for you to change yourself.
+
 ## Reading the lifetime numbers
 
 For cumulative figures — the full funnel, scanner totals, portal coverage, and follow-up compliance — the mode runs `node stats.mjs --summary` and presents its output verbatim. That command reads your local files and costs zero tokens, so the numbers are never recomputed by hand or estimated from memory. Use the chat summary above for a fast daily read, and the stats command when you want the running totals across the whole search.

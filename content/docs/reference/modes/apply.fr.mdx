@@ -5,7 +5,7 @@ seoTitle: "Mode apply de career-ops — brouillons automatiques de réponses aux
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: 72c62608efda3e89
+translationHash: 53b1f3949e1458f8
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -52,6 +52,13 @@ captcha, and submit yourself.
 ## Pièges à connaître
 
 apply n'envoie jamais la candidature : le clic final sur Envoyer vous revient toujours. Il lit tous les champs du formulaire, pas seulement les questions ouvertes — listes déroulantes, boutons radio, cases à cocher et champs d'envoi de fichiers compris. Il rédige les réponses en texte libre, propose une valeur pour chaque champ fermé et signale les questions d'autorisation de travail, de salaire et autres sujets sensibles auxquelles votre profil ne répond pas encore, pour que vous les confirmiez plutôt que de les deviner lui-même. Avec Playwright, il peut remplir certains champs directement dans le formulaire ; vous vérifiez l'ensemble et complétez le reste. Une fois les réponses saisies, il enregistre dans le rapport le texte, les sélections et les fichiers utilisés. Si la vérification préalable détecte que l'annonce est fermée, apply refuse de rédiger un texte final à moins que vous ne l'y forciez explicitement — un lien mort ne vaut pas une réponse sur mesure.
+
+## Quand le poste a changé
+
+Si le poste du formulaire n'est pas celui que votre rapport a évalué, apply vous indique l'ancien intitulé et le nouveau, puis vous demande s'il faut réévaluer ou adapter les réponses au nouvel intitulé. Aucun des deux choix ne modifie à la main le tableau du tracker.
+
+- **Réévaluer.** apply relance l'évaluation complète et met à jour le rapport sur place : le rapport garde donc son numéro. Le nouvel intitulé arrive dans le tracker via `node merge-tracker.mjs` : l'intitulé du poste de la ligne est remplacé, et la ligne garde son `#` et son statut.
+- **Adapter.** Les réponses sont ajustées au nouvel intitulé sans nouvelle évaluation, et seulement après que vous avez accepté l'écart. La ligne garde l'intitulé que le rapport a évalué, et une note sur la ligne consigne que l'offre avait changé d'intitulé au moment de la candidature.
 
 ## Particularités connues des ATS
 

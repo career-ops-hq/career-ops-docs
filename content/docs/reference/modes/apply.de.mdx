@@ -5,7 +5,7 @@ seoTitle: "career-ops apply-Modus — Antworten auf ATS-Bewerbungsfragen automat
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: 72c62608efda3e89
+translationHash: 53b1f3949e1458f8
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -52,6 +52,13 @@ captcha, and submit yourself.
 ## Stolperfallen
 
 apply schickt die Bewerbung nie ab: Den letzten Klick auf Absenden machst immer du. Er liest jedes Feld des Formulars, nicht nur die Freitextfragen, also auch Dropdowns, Radiobuttons, Checkboxen und Upload-Felder. Er entwirft die Freitextantworten, schlägt für jedes Feld mit vorgegebenen Antworten einen Wert vor und markiert Fragen zur Arbeitserlaubnis, zum Gehalt und andere heikle Fragen, die dein Profil noch nicht beantwortet, damit du sie bestätigst, statt dass er rät. Mit Playwright kann er einige Felder direkt im Live-Formular ausfüllen; du prüfst alles und erledigst den Rest. Sobald die Antworten eingetragen sind, hält er den Text, die Auswahl und die verwendeten Dateien im Bericht fest. Stellt die Vorabprüfung (Preflight) fest, dass die Anzeige nicht mehr online ist, schreibt apply keinen finalen Text. Das geht nur, wenn du dich ausdrücklich darüber hinwegsetzt. Ein toter Link ist keine maßgeschneiderte Antwort wert.
+
+## Wenn sich die Rolle geändert hat
+
+Ist die Rolle im Formular nicht die, die dein Bericht bewertet hat, nennt dir apply den alten und den neuen Titel und fragt, ob neu bewertet oder die Antworten an den neuen Titel angepasst werden sollen. Keine der beiden Möglichkeiten bearbeitet die Tracker-Tabelle von Hand.
+
+- **Neu bewerten.** apply führt die vollständige Bewertung erneut aus und aktualisiert den Bericht an Ort und Stelle, sodass der Bericht seine Nummer behält. Der neue Titel gelangt über `node merge-tracker.mjs` in den Tracker: Der Rollentitel der Zeile wird ersetzt, und die Zeile behält ihre `#` und ihren Status.
+- **Anpassen.** Die Antworten werden ohne neue Bewertung an den neuen Titel angepasst, und erst, nachdem du die Abweichung akzeptiert hast. Die Zeile behält den Titel, den der Bericht bewertet hat, und eine Notiz in der Zeile hält fest, dass die Stellenanzeige bei der Bewerbung einen neuen Titel hatte.
 
 ## Bekannte ATS-Eigenheiten
 

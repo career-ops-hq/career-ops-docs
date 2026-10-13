@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: 5af8665a357b8e7c
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -154,9 +154,12 @@ node merge-tracker.mjs
 Ce script :
 
 1. Lit les fichiers de synthèse depuis `batch/tracker-additions/`
-2. Vérifie les doublons pour que vous n'ayez jamais deux lignes pour la même offre
-3. Ajoute les nouvelles entrées à votre tracker de candidatures
-4. Archive les fichiers traités dans `batch/tracker-additions/merged/`
+2. Compare chacun aux lignes déjà présentes dans votre tracker, pour que vous n'ayez jamais deux lignes pour la même offre
+3. Ajoute une ligne pour chaque nouvelle offre
+4. Met à jour la ligne existante d'une offre que vous aviez déjà évaluée : le nouveau score et le nouveau lien vers le rapport remplacent les anciens, et la ligne garde son numéro et son statut
+5. Archive les fichiers traités dans `batch/tracker-additions/merged/`
+
+Une fusion ne change jamais un statut. Une ligne que vous avez déjà passée en `Applied` reste en `Applied` quand l'offre est évaluée de nouveau. Pour changer un statut, utilisez `node set-status.mjs` ; la page du [mode tracker](/fr/docs/reference/modes/tracker) l'explique.
 
 **Pour prévisualiser les changements sans rien écrire :**
 

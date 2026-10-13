@@ -5,7 +5,7 @@ seoTitle: "Modo apply de career-ops — borradores automáticos de respuestas a 
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-05-19"
-translationHash: 72c62608efda3e89
+translationHash: 53b1f3949e1458f8
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -52,6 +52,13 @@ captcha, and submit yourself.
 ## Advertencias
 
 apply nunca envía la candidatura: el clic final en Enviar siempre es tuyo. Lee todos los campos del formulario, no solo las preguntas abiertas — desplegables, botones de opción, casillas y campos de subida de archivos incluidos. Redacta las respuestas de texto libre, sugiere un valor para cada campo cerrado y marca las preguntas sobre autorización de trabajo, salario y otros temas sensibles que tu perfil aún no responde, para que las confirmes tú en lugar de adivinarlas por ti. Con Playwright puede rellenar algunos campos en el formulario en vivo; tú lo revisas todo y completas el resto. Cuando las respuestas están listas, guarda en el informe el texto, las selecciones y los archivos usados. Si la comprobación preflight detecta que la publicación ha cerrado, apply se niega a redactar la versión final salvo que lo fuerces explícitamente — un enlace muerto no merece una respuesta a medida.
+
+## Cuando el puesto ha cambiado
+
+Si el puesto del formulario no es el que evaluó tu informe, apply te dice el título anterior y el nuevo y te pregunta si quieres reevaluar o adaptar las respuestas al título nuevo. Ninguna de las dos opciones edita a mano la tabla del tracker.
+
+- **Reevaluar.** apply ejecuta de nuevo la evaluación completa y actualiza el informe en su sitio, así que el informe conserva su número. El título nuevo llega al tracker a través de `node merge-tracker.mjs`: se sustituye el título del puesto de la fila, y la fila conserva su `#` y su estado.
+- **Adaptar.** Las respuestas se ajustan al título nuevo sin una evaluación nueva, y solo después de que aceptes la diferencia. La fila conserva el título que evaluó el informe, y una nota en la fila deja constancia de que la oferta había cambiado de título cuando enviaste la candidatura.
 
 ## Peculiaridades conocidas de los ATS
 

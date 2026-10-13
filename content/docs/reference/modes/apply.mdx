@@ -50,6 +50,13 @@ captcha, and submit yourself.
 
 apply never submits the application: the final Submit click is always yours. It reads every field on the form, not just the open-ended questions — dropdowns, radio buttons, checkboxes and upload fields included. It drafts the free-text answers, suggests a value for each closed-ended field, and flags work-authorization, salary and other sensitive questions your profile does not already answer, for you to confirm rather than guessing. With Playwright it can fill some fields in the live form; you review everything and complete the rest. Once the answers are in, it records the text, the selections and the files used in the report. If the preflight finds the posting has closed, apply refuses to draft final copy unless you explicitly override it — a dead link is not worth a tailored answer.
 
+## When the role has changed
+
+If the role on the form is not the one your report evaluated, apply tells you the old and the new title and asks whether to re-evaluate or to adapt the answers to the new title. Neither choice edits the tracker table by hand.
+
+- **Re-evaluate.** apply runs the full evaluation again and updates the report in place, so the report keeps its number. The new title reaches the tracker through `node merge-tracker.mjs`: the row's role title is replaced, and the row keeps its `#` and its status.
+- **Adapt.** The answers are adjusted to the new title with no new evaluation, and only after you accept the mismatch. The row keeps the title the report evaluated, and a note on the row records that the posting was retitled when you applied.
+
 ## Known ATS quirks
 
 apply has been field-tested across roughly a dozen Playwright-driven applications, and a few portals break a run if you do not account for them:

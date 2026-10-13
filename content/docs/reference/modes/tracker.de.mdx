@@ -5,7 +5,7 @@ seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-09-25"
-translationHash: 83b5254d11b05f4a
+translationHash: 0bd0918262de7986
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -39,6 +39,22 @@ Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
 Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded oder SKIP für Rollen, die nicht passen. Um eine Statusänderung festzuhalten, bittest du im Chat darum oder führst selbst `node set-status.mjs <report#|company> <state>` aus. Ist sie an einem früheren Tag passiert, ergänzt du `--on YYYY-MM-DD`. Der Befehl lehnt unbekannte Zustände ab, sperrt den Tracker, während er schreibt, und protokolliert den Übergang in `data/status-log.tsv`, dem Protokoll, aus dem die funnel-velocity-Statistiken lesen. Nutze ihn also, statt die Zeile von Hand zu bearbeiten.
+
+## Die anderen Spalten ändern
+
+Auch für die anderen Spalten gibt es Befehle, die sie schreiben. Die Tabelle bearbeitest du also nicht von Hand.
+
+- **Notizen.** `node set-status.mjs <report#|company> <state> --note "..."` hängt eine Notiz an die Zeile an. Gib den Zustand an, den die Zeile schon hat, wenn du nur eine Notiz ergänzen willst: Der Status bleibt, wie er ist, und in `data/status-log.tsv` wird nichts geschrieben.
+- **Datum, Score, Bericht, Unternehmen und Rolle.** Sie stammen aus einer Bewertung und ändern sich deshalb, wenn die Rolle erneut bewertet wird. `node merge-tracker.mjs` ordnet die neue Bewertung der Zeile zu, die schon im Tracker steht, und aktualisiert diese Zeile, statt eine zweite anzulegen. Datum, Score und Berichtslink werden ersetzt, und eine `Re-eval`-Notiz hält den alten und den neuen Score fest. Läuft die Zuordnung über den Bericht oder über die URL der Stellenanzeige, werden auch das Unternehmen und der Rollentitel ersetzt. Die Zeile behält ihre `#` und ihren Status.
+- **PDF.** Jeder Merge setzt außerdem die PDF-Spalte einer Zeile von ❌ auf ✅, sobald für ihren Bericht ein CV erzeugt wurde.
+
+Ein Merge ändert nie den Status einer Zeile, die schon im Tracker steht. Eine neue Bewertung, die `Applied` für eine Zeile angibt, die auf `Evaluated` steht, lässt sie auf `Evaluated`. Erst `set-status.mjs` setzt sie weiter.
+
+## Den Arbeitgeber einer `?`-Zeile eintragen
+
+Eine Stelle, die über eine Agentur kam, ohne den Arbeitgeber zu nennen, steht mit `?` in der Spalte Company. Wenn du erfährst, wer der Arbeitgeber ist, sag es im Chat („die Agenturstelle ist bei Acme“). Der tracker-Modus benennt die Zeile über `node merge-tracker.mjs` um, zugeordnet über den Bericht der Zeile: Aus `?` wird der echte Name, und die Zeile behält ihre `#` und ihren Status. Er trägt das Unternehmen außerdem in den Bericht ein, ohne die Berichtsdatei umzubenennen, führt dann `node verify-pipeline.mjs` aus und warnt dich, wenn dasselbe Unternehmen mit derselben Rolle schon über einen anderen Kanal in deinem Tracker steht. Er führt diese beiden Zeilen nie zusammen: Beide Bewerbungen haben stattgefunden, und du entscheidest, welchem Kanal die Bewerbung gehört.
+
+Eine `?`-Zeile ohne Bericht ist die Ausnahme. Ohne den Berichtslink kann kein Befehl erkennen, welche `?`-Zeile gemeint ist. career-ops sagt dir das und überlässt dir, diese eine Company-Zelle selbst zu ändern.
 
 ## Die Gesamtzahlen lesen
 
