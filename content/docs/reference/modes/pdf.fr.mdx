@@ -5,7 +5,7 @@ seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible A
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-09"
-translationHash: 7e011e82adef33f0
+translationHash: ac6b7dc3c06568ee
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -84,6 +84,19 @@ Les deux scripts sont indicatifs. Ils fonctionnent sans modèle d'IA et sans con
 Nécessite Playwright installé en local. Le script de build peut échouer sur des installations Linux minimales dépourvues de polices système. Exécutez `npm run doctor` pour diagnostiquer.
 
 La génération du PDF s'arrête si les postes de votre expérience professionnelle ne vont pas du plus récent au plus ancien, et l'erreur cite les dates du poste qui commence après celui du dessus. Remettez les postes dans l'ordre antéchronologique et relancez : on adapte un CV par le résumé et les puces, pas en déplaçant les postes. Si vous voulez délibérément un autre ordre, passez `--allow-nonchronological` à `generate-pdf.mjs` : le PDF est généré avec un avertissement. Avec `--batch`, seul le CV dans le désordre échoue ; les autres sont générés normalement.
+
+`generate-pdf.mjs` inscrit chaque PDF qu'il écrit dans `data/pdf-index.tsv`, et career-ops lit ce fichier pour retrouver le CV d'un rapport. Chaque ligne porte un `kind` valant `cv` ou `cover`, et un rapport garde une ligne de chaque type. Régénérer un PDF ne remplace que la ligne de son propre type.
+
+Sans `--kind`, le type est déduit du nom du fichier de sortie. Un nom qui commence par `cv-` est un CV. Un nom qui commence par `cover-` ou se termine par `-cover` est une lettre de motivation. Tout autre nom est inscrit comme CV.
+
+Le mode cover inscrit toujours ses lettres comme `cover`, quel que soit leur nom : la règle du nom de fichier ne compte donc que si vous lancez `generate-pdf.mjs` vous-même. Une lettre générée sous `acme-letter.pdf` avec `--report=008` remplace la ligne du CV du rapport 008, et qui cherche ce CV obtient la lettre. Passez `--kind=cover` quand le nom du fichier ne dit pas de quoi il s'agit :
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind` accepte `cv` ou `cover`, et toute autre valeur, y compris vide, arrête l'exécution avant tout rendu. `--batch` le refuse ; indiquez alors `"kind"` sur l'entrée concernée du fichier de lot. `data/pdf-index.tsv` appartient à `generate-pdf.mjs`, et sa ligne d'en-tête demande de ne pas le modifier à la main.
 
 ## Pages associées
 

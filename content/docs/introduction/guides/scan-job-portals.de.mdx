@@ -3,7 +3,7 @@ title: Jobportale scannen
 description: Richte den Portal-Scanner ein und starte ihn, um automatisch neue Stellenanzeigen zu finden.
 seoTitle: "Jobportale mit career-ops scannen – Greenhouse, Ashby, Lever, ohne Token-Verbrauch"
 icon: ScanEye
-translationHash: 1fb2c4a20e4d60c2
+translationHash: e9fbece900af577b
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -170,6 +170,16 @@ npm run scan -- --company Anthropic
 
 Ersetze `Anthropic` durch einen beliebigen Unternehmensnamen aus deiner `tracked_companies`-Liste. Groß- und Kleinschreibung spielen dabei keine Rolle.
 
+**Dayforce-Karriereseiten scannen:**
+
+Karriereseiten auf Dayforce (Ceridian) unter `jobs.dayforcehcm.com` blockieren einfache Webanfragen, deshalb kann `npm run scan` sie nicht auslesen. Stattdessen öffnet ein eigenes Script für sie eine echte Browser-Sitzung und ist dadurch langsamer als der Haupt-Scan. Trag die Karriereseiten unter `dayforce_boards` in `portals.yml` ein, einen Eintrag pro Unternehmen mit seinem `name` und seinem `tenant` (dem Kürzel des Unternehmens in der Dayforce-Adresse); `templates/portals.example.yml` zeigt das Format. Führe dann aus:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+Neue Stellen landen wie beim Haupt-Scan in `data/pipeline.md`. Häng `-- --dry-run` an, um eine Vorschau ohne Speichern zu sehen, `-- --tenant <tenant>`, um eine einzelne Karriereseite zu scannen, oder `-- --debug`, um von jeder Karriereseite einen Screenshot in `output/` zu speichern. Zeigt eine Karriereseite eine Bot-Abfrage, überspringt das Script sie; es versucht nie, eine solche Abfrage zu umgehen.
+
 ### Option B – Den KI-gestützten Scan in Claude Code starten
 
 Öffne Claude Code im Projektordner und gib ein:
@@ -238,7 +248,7 @@ Erscheint keine solche Warnung, ist dein Titelfilter vielleicht zu streng. Füg 
 
 **Wo neue Stellen landen:** Jede neue Stelle wird als Zeile in `data/pipeline.md` eingetragen. Das ist die Liste der Stellen, die auf ihre Bewertung warten.
 
-**Wofür `data/scan-history.tsv` da ist:** Jede URL, die der Scanner sieht – ob hinzugefügt, gefiltert oder übersprungen –, wird hier protokolliert. So verhindert der Scanner, dass er dir dieselbe Stelle bei künftigen Scans zweimal zeigt. Diese Datei musst du nicht bearbeiten.
+**Wofür `data/scan-history.tsv` da ist:** Jede URL, die der Scanner sieht – ob hinzugefügt, gefiltert oder übersprungen –, wird hier protokolliert. So verhindert der Scanner, dass er dir dieselbe Stelle bei künftigen Scans zweimal zeigt. Eine Ausnahme sind Stellen, die dein `location_filter` oder `max_posting_age_days` in `portals.yml` aussortiert hat. Sie werden als `skipped_location` oder `skipped_age` protokolliert und können wieder auftauchen, sobald du diese Einstellung änderst. Diese Datei musst du nicht bearbeiten.
 
 ## Neue Stellen aus einem Scan bewerten
 
@@ -272,7 +282,7 @@ Das bedeuten die einzelnen Spalten:
     | Spalte          | Was sie dir sagt                                                                                                                                                                                              |
     | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
     | **#**           | Die Berichtsnummer. Damit findest du den vollständigen Bericht in `reports/` – Bericht 024 ist zum Beispiel `reports/024-anthropic-2026-04-13.md`                                                              |
-    | **Score**       | Wie gut die Rolle zu deinem Profil passt, von 1.0 bis 5.0                                                                                                                                                      |
+    | **Score**       | Wie gut die Rolle zu deinem Profil passt, von 1 bis 5                                                                                                                                                      |
     | **Legitimität** | Ob die Anzeige echt und aktiv wirkt. „High Confidence“ bedeutet, dass die Stelle online ist und die Angaben stimmig sind. „Proceed w/ Caution“ bedeutet, dass etwas auffällig war – lies die Notiz daneben. |
   </div>
 </div>
@@ -284,7 +294,7 @@ Das bedeuten die einzelnen Spalten:
 
 ## Wie es weitergeht
 
-Wenn `/career-ops pipeline` fertig ist, hat jede Stelle einen Score von 1.0 bis 5.0. Den vollständigen Bericht zu jeder Rolle findest du im Ordner `reports/`. Der Score zeigt, wie gut die Rolle zu deinem Profil passt.
+Wenn `/career-ops pipeline` fertig ist, hat jede Stelle einen Score von 1 bis 5. Den vollständigen Bericht zu jeder Rolle findest du im Ordner `reports/`. Der Score zeigt, wie gut die Rolle zu deinem Profil passt.
 
 Nimm den Score als Ausgangspunkt:
 

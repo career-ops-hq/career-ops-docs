@@ -82,6 +82,19 @@ Requires Playwright installed locally. The build script may fail on minimal Linu
 
 PDF generation stops when your Work Experience entries are not newest-first, and the error quotes the dates of the role that starts later than the one above it. Put the roles back in reverse-chronological order and rerun: tailor a CV through the summary and the bullets, not by moving roles. If you deliberately want another order, pass `--allow-nonchronological` to `generate-pdf.mjs` and it renders with a warning instead. With `--batch`, only the out-of-order CV fails and the rest still render.
 
+`generate-pdf.mjs` records each PDF it writes in `data/pdf-index.tsv`, and career-ops reads that file to find the CV for a report. Each row carries a `kind` of `cv` or `cover`, and a report keeps one row of each. Regenerating a PDF replaces only the row of its own kind.
+
+Without `--kind`, the kind comes from the output filename. A name that starts with `cv-` is a CV, and one that starts with `cover-` or ends in `-cover` is a cover letter. Any other name is filed as a CV.
+
+The cover mode files its letters as `cover` whatever their name, so the filename rule matters only when you run `generate-pdf.mjs` yourself. A letter rendered to `acme-letter.pdf` with `--report=008` replaces report 008's CV row, and a lookup of that CV returns the letter. Pass `--kind=cover` when the filename does not say which it is:
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind` takes `cv` or `cover`, and any other value, empty included, stops the run before anything renders. `--batch` rejects it; set `"kind"` on an entry in the batch file instead. `generate-pdf.mjs` owns `data/pdf-index.tsv`, and its header line says not to edit it by hand.
+
 ## Related
 
 - [auto-pipeline](/docs/reference/modes/auto-pipeline)

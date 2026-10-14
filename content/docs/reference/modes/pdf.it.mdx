@@ -1,0 +1,67 @@
+---
+title: pdf
+description: "Genera un curriculum in PDF su misura per una JD specifica, usando Playwright per impaginare il markdown con un template tipografico pulito. Il risultato ha una struttura semplice (niente tabelle, niente colonne, niente grafica), proprio quella che i parser ATS leggono in modo affidabile."
+seoTitle: "Modalità pdf di career-ops: genera un curriculum su misura compatibile con gli ATS"
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-10-06"
+translationHash: 61f561d97321e237
+localized: true
+translatedFrom: /docs/reference/modes/pdf
+---
+
+## Che cosa fa
+
+La modalità pdf legge il tuo cv.md principale e il contesto della JD, poi esegue il passaggio di adattamento (riscrive i punti elenco, riordina le sezioni, integra le parole chiave prioritarie) prima di esportare in PDF tramite Playwright, con un template CSS che rispetta le convenzioni dei parser ATS. Il risultato è pronto da caricare.
+
+## Quando usarla
+
+Usa pdf quando hai già valutato l'annuncio e hai deciso di candidarti, e vuoi solo il PDF su misura senza rieseguire la valutazione.
+
+## Come si presenta un'esecuzione
+
+Indichi alla modalità un annuncio che hai già valutato e lei produce un solo PDF su misura, pronto per gli ATS, senza una nuova valutazione. Estrae 15-20 parole chiave dalla JD, sceglie il formato della pagina in base alla sede dell'azienda, riscrive il tuo profilo e riordina i punti elenco attorno al ruolo, poi converte l'HTML in PDF e riporta la copertura delle parole chiave.
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+
+L'impaginazione resta a colonna singola, con titoli di sezione standard e testo selezionabile (la struttura che i parser ATS leggono senza problemi), e le parole chiave vengono inserite in risultati reali, mai inventate.
+
+## Quando conviene usarla
+
+Scegli pdf quando hai deciso di candidarti e vuoi solo il curriculum su misura, saltando la valutazione. Alcuni comportamenti che è utile conoscere:
+
+- Il formato della pagina segue automaticamente la sede dell'azienda: `letter` per i ruoli negli Stati Uniti e in Canada, `a4` in tutti gli altri casi.
+- L'inserimento delle parole chiave si basa sulla verità. La modalità riformula la tua esperienza reale con il vocabolario esatto della JD, ma non aggiunge mai una competenza che non hai.
+- Per l'area DACH e gran parte dell'Europa continentale puoi scegliere di includere una foto impostando `candidate.photo` in `config/profile.yml`; se lo lasci vuoto, il CV viene generato identico pixel per pixel ma senza foto, ed è l'impostazione predefinita più sicura per Stati Uniti, Regno Unito e mercati in cui domina l'ATS.
+
+## Problemi comuni
+
+Richiede Playwright installato in locale. Lo script di build può fallire sulle installazioni Linux minimali prive dei font di sistema. Esegui `npm run doctor` per la diagnosi.
+
+La generazione del PDF si ferma quando le voci di Work Experience non sono ordinate dalla più recente, e l'errore riporta le date del ruolo che inizia più tardi di quello che lo precede. Rimetti i ruoli in ordine cronologico inverso e riprova: un CV si adatta attraverso il profilo e i punti elenco, non spostando i ruoli. Se vuoi di proposito un altro ordine, passa `--allow-nonchronological` a `generate-pdf.mjs` e il PDF viene generato con un avviso. Con `--batch` fallisce solo il CV fuori ordine e gli altri vengono generati comunque.
+
+`generate-pdf.mjs` registra ogni PDF che scrive in `data/pdf-index.tsv`, e career-ops legge quel file per trovare il CV di un report. Ogni riga ha un `kind` uguale a `cv` o `cover`, e un report conserva una riga per ciascun tipo. Rigenerare un PDF sostituisce solo la riga del suo stesso tipo.
+
+Senza `--kind`, il tipo si ricava dal nome del file di output. Un nome che inizia con `cv-` è un CV, e uno che inizia con `cover-` o finisce con `-cover` è una lettera di presentazione. Qualsiasi altro nome viene archiviato come CV.
+
+La modalità cover archivia le sue lettere come `cover` qualunque sia il loro nome, quindi la regola sul nome del file conta solo quando esegui `generate-pdf.mjs` di persona. Una lettera generata in `acme-letter.pdf` con `--report=008` sostituisce la riga CV del report 008, e una ricerca di quel CV restituisce la lettera. Passa `--kind=cover` quando il nome del file non dice di che tipo si tratta:
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind` accetta `cv` o `cover`, e qualsiasi altro valore, compreso quello vuoto, interrompe l'esecuzione prima che venga generato qualcosa. `--batch` lo rifiuta; imposta invece `"kind"` su una voce del file batch. `generate-pdf.mjs` è il proprietario di `data/pdf-index.tsv`, e la riga di intestazione del file dice di non modificarlo a mano.
+
+## Vedi anche
+
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)

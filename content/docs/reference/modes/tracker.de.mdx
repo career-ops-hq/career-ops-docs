@@ -4,8 +4,8 @@ description: "Schneller Überblick darüber, wo jede Bewerbung gerade steht. Nü
 seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-09-25"
-translationHash: 7188bc520c61b01c
+lastModified: "2026-10-14"
+translationHash: c95cd399167d223d
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -40,13 +40,32 @@ Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 
 Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded oder SKIP für Rollen, die nicht passen. Um eine Statusänderung festzuhalten, bittest du im Chat darum oder führst selbst `node set-status.mjs <report#|company> <state>` aus. Ist sie an einem früheren Tag passiert, ergänzt du `--on YYYY-MM-DD`. Der Befehl lehnt unbekannte Zustände ab, sperrt den Tracker, während er schreibt, und protokolliert den Übergang in `data/status-log.tsv`, dem Protokoll, aus dem die funnel-velocity-Statistiken lesen. Nutze ihn also, statt die Zeile von Hand zu bearbeiten.
 
+Um eine Notiz zu korrigieren, statt eine weitere hinzuzufügen, übergibst du die alte Notiz mit `--replace-note` und den neuen Text mit `--note`. Ohne diese Option hängt `--note` nur an, was Widersprüche wie `not applied; applied` in der Zeile hinterlässt. Abgeglichen wird eine ganze Notiz zwischen den Trennzeichen `; `. Steht keiner der beiden Texte in der Notes-Zelle, wird nichts geschrieben:
+
+```bash
+node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applied via referral"
+```
+
+Drei weitere Flags gibt es vor allem für das Go-TUI-Dashboard, das seine Statusänderungen jetzt über `set-status.mjs` festhält. `--report-link N` wählt die Zeile, deren Report-Zelle genau einen Link auf Bericht `N` enthält, und lehnt fehlerhafte Zellen ab, statt zu raten. `--repair-status-log` und `--repair-followup` greifen, wenn eine Änderung auf Applied für eine Zeile erneut ausgeführt wird, die bereits auf Applied steht: Sie ergänzen den Protokolleintrag oder die Follow-up-Erinnerung, die der erste Versuch nicht schreiben konnte, und fügen nichts hinzu, wenn er schon vorhanden ist.
+
+## Tote Berichtslinks reparieren
+
+`node verify-pipeline.mjs` meldet `Report not found`, wenn die Report-Zelle einer Zeile auf eine Datei verlinkt, die nicht mehr existiert. `npm run fix-report-links` repariert diese Zeilen, indem es nur diese Zelle auf die im Tracker übliche Markierung für „kein Bericht“ setzt. Den fehlenden Bericht erzeugt es nicht neu. Sieh dir zuerst eine Vorschau an:
+
+```bash
+npm run fix-report-links -- --dry-run  # list the affected rows, write nothing
+npm run fix-report-links               # apply; the tracker is backed up to .bak first
+```
+
+Alle anderen Zellen, die Reihenfolge der Zeilen und die Zeilenenden bleiben, wie sie waren. Eine Report-Zelle, die etwas anderes als genau einen Link enthält, wird aufgelistet, damit du sie von Hand prüfst, und bleibt unverändert. Ein zweiter Durchlauf ändert nichts mehr.
+
 ## Die Gesamtzahlen lesen
 
 Für kumulierte Werte – den vollständigen Funnel, die Scanner-Summen, die Portal-Abdeckung und die Einhaltung der Follow-ups – führt der Modus `node stats.mjs --summary` aus und gibt dessen Ausgabe unverändert wieder. Dieser Befehl liest deine lokalen Dateien und kostet null Tokens, deshalb werden die Zahlen nie von Hand neu berechnet oder aus dem Gedächtnis geschätzt. Nutze die Chat-Zusammenfassung oben für den schnellen täglichen Überblick und den stats-Befehl, wenn du die laufenden Summen über deine gesamte Suche sehen willst.
 
 ## Eine reparierte Kopie exportieren
 
-Über Hunderte von Zeilen sammelt eine Markdown-Tabelle Schäden an: Mojibake-Platzhalter, ein Score, der in der Status-Spalte gestrandet ist, doppelte IDs, verirrte senkrechte Striche. `node tracker.mjs sync` findet und repariert diese Schäden in seinem SQLite-Index `data/applications.db`, ohne das Markdown anzufassen. Für diesen Index braucht `tracker.mjs` Node 22.5 oder neuer; der Markdown-Tracker funktioniert auch ohne ihn. Mit `node tracker.mjs export` übernimmst du diese reparierte Kopie deines eigenen Trackers:
+Über Hunderte von Zeilen sammelt eine Markdown-Tabelle Schäden an: Mojibake-Platzhalter, ein Score, der in der Status-Spalte gestrandet ist, doppelte IDs, verirrte senkrechte Striche. `node tracker.mjs sync` findet und repariert diese Schäden in seinem SQLite-Index `data/applications.db`, ohne das Markdown anzufassen. Für diesen Index braucht `tracker.mjs` Node 22.13 oder neuer (bei Node 23: 23.4 oder neuer); der Markdown-Tracker funktioniert auch ohne ihn. Mit `node tracker.mjs export` übernimmst du diese reparierte Kopie deines eigenen Trackers:
 
 ```bash
 node tracker.mjs export                            # rebuilt table on stdout
@@ -77,7 +96,7 @@ Die vollständige Befehlsreferenz, einschließlich `sync`, `query` und `history`
 
 ## Stolperfallen
 
-Der Status steht in der Status-Spalte des Trackers (`data/applications.md`), nicht in der Berichtsdatei. Auch die Statusauswahl im Go-TUI-Dashboard aktualisiert diese Spalte, protokolliert den Übergang aber nicht in `data/status-log.tsv`, wie es `set-status.mjs` tut. funnel-velocity sieht dann zwar den neuen Status, aber nicht, wann er sich geändert hat: Die Änderung fehlt in den Zeiten pro Phase, und eine Zeile, die später in Rejected endet, verliert die Phasen, die sie durchlaufen hat. Nutze den Befehl für jede Änderung, die in diese Zahlen eingehen soll.
+Der Status steht in der Status-Spalte des Trackers (`data/applications.md`), nicht in der Berichtsdatei. Änderst du ihn von Hand, wird `data/status-log.tsv` übergangen: funnel-velocity sieht dann zwar den neuen Status, aber nicht, wann er sich geändert hat. Die Änderung fehlt also in den Zeiten pro Phase, und eine Zeile, die später in Rejected endet, verliert die Phasen, die sie durchlaufen hat. Nutze `set-status.mjs`, den Chat oder die Statusauswahl im Go-TUI-Dashboard, die denselben Befehl ausführt.
 
 ## Verwandte Seiten
 

@@ -5,7 +5,7 @@ seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebens
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-09"
-translationHash: 7e011e82adef33f0
+translationHash: ac6b7dc3c06568ee
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -84,6 +84,19 @@ Beide Scripts sind nur Hinweise. Sie laufen ohne KI-Modell und ohne Netzwerkverb
 Playwright muss lokal installiert sein. Auf minimalen Linux-Installationen ohne Systemschriftarten kann das Build-Script fehlschlagen. Mit `npm run doctor` findest du die Ursache.
 
 Die PDF-Erstellung bricht ab, wenn die Stellen in deiner Berufserfahrung nicht mit der neuesten beginnen; die Fehlermeldung nennt die Daten der Stelle, die später beginnt als die darüber. Bring die Stellen wieder in umgekehrt chronologische Reihenfolge und starte neu: Angepasst wird ein CV über Zusammenfassung und Stichpunkte, nicht durch Verschieben von Stellen. Willst du bewusst eine andere Reihenfolge, übergib `--allow-nonchronological` an `generate-pdf.mjs`; dann gibt es nur eine Warnung. Mit `--batch` schlägt nur der falsch sortierte CV fehl, die übrigen werden trotzdem erstellt.
+
+`generate-pdf.mjs` trägt jedes PDF, das es schreibt, in `data/pdf-index.tsv` ein. Aus dieser Datei holt career-ops den Lebenslauf zu einem Bericht. Jede Zeile hat eine Spalte `kind` mit `cv` oder `cover`, und ein Bericht behält von jeder Art eine Zeile. Ein neu erzeugtes PDF ersetzt nur die Zeile seiner eigenen Art.
+
+Ohne `--kind` ergibt sich die Art aus dem Dateinamen der Ausgabe. Ein Name, der mit `cv-` beginnt, ist ein Lebenslauf. Ein Name, der mit `cover-` beginnt oder auf `-cover` endet, ist ein Anschreiben. Jeder andere Name wird als Lebenslauf eingetragen.
+
+Der cover-Modus trägt seine Anschreiben immer als `cover` ein, egal wie sie heißen. Die Regel mit dem Dateinamen zählt also nur, wenn du `generate-pdf.mjs` selbst aufrufst. Ein Anschreiben, das du mit `--report=008` als `acme-letter.pdf` erzeugst, ersetzt die Lebenslauf-Zeile von Bericht 008. Wer dann diesen Lebenslauf sucht, bekommt das Anschreiben. Übergib `--kind=cover`, wenn der Dateiname die Art nicht verrät:
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind` nimmt `cv` oder `cover` an. Jeder andere Wert, auch ein leerer, bricht den Lauf ab, bevor etwas gerendert wird. `--batch` lehnt den Schalter ab; setz dort `"kind"` am jeweiligen Eintrag der Batch-Datei. `data/pdf-index.tsv` gehört `generate-pdf.mjs`, und die Kopfzeile sagt, dass du die Datei nicht von Hand bearbeiten sollst.
 
 ## Siehe auch
 

@@ -4,8 +4,8 @@ description: "Flujo por defecto cuando pegas la URL de una descripción de puest
 seoTitle: "auto-pipeline de career-ops — evalúa una oferta y construye CV + tracker desde una sola URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: a103f3feac73a799
+lastModified: "2026-10-14"
+translationHash: 233c7fa8819747b5
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
@@ -38,6 +38,7 @@ Updated data/applications.md (Report and PDF marked done).
 
 - Pega una URL y auto-pipeline se encarga de la extracción por ti: primero Playwright para portales de una sola página como Lever, Ashby, Greenhouse y Workday, después WebFetch para páginas estáticas y, como último recurso, WebSearch.
 - Antes de la evaluación se ejecuta una comprobación de vigencia (liveness gate). Si el enlace está muerto o la página es un cascarón vacío de «posición ya cubierta», el modo se detiene ahí en lugar de puntuar contenido fantasma — y si la entrada venía de `data/pipeline.md`, marca esa fila como cerrada.
+- Una página de LinkedIn cuya descripción se queda en un esqueleto de carga no es una oferta cerrada, pero tampoco es una descripción de puesto: auto-pipeline se detiene antes de la evaluación, el informe, el PDF y cualquier escritura en el tracker, y te pide que pegues el texto de la oferta o que des un enlace del empleador o del ATS para el mismo puesto.
 - Los borradores de respuestas de candidatura solo se escriben cuando la puntuación es 4.5 o superior, para que los puestos con poco encaje no gasten tokens en textos que no vas a enviar.
 
 ## Posibles problemas

@@ -1,14 +1,14 @@
 ---
 title: Schnellstart
-description: "Starte in fünf Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
+description: "Starte in etwa fünfzehn Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: d363142d21bc56d7
+translationHash: 3dc0cfbde93edb50
 localized: true
 translatedFrom: /docs
 ---
 
-Mit dieser Anleitung kommst du in etwa fünf Minuten zu deiner ersten bewerteten Stelle. Du richtest den Workspace ein und öffnest deinen KI-Coding-Assistenten. Er richtet dich im Gespräch ein. Danach fügst du eine Stellenanzeige ein, und career-ops liefert dir einen vollständigen Bericht, eine Bewertung und einen maßgeschneiderten Lebenslauf als PDF.
+Mit dieser Anleitung kommst du beim ersten Mal in etwa fünfzehn Minuten zu deiner ersten bewerteten Stelle. Du richtest den Workspace ein, öffnest deinen KI-Coding-Assistenten und fügst eine Stellenanzeige ein. Der Agent erledigt das nötige Onboarding und liefert dir dann einen vollständigen Bericht, eine Bewertung und einen maßgeschneiderten Lebenslauf als PDF.
 
 ## Was du brauchst
 
@@ -24,12 +24,12 @@ Du musst nicht programmieren können. Du solltest nur ein Terminal öffnen und e
       <Step>
       ### KI-Coding-Assistent
 
-      Installiere **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** oder **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**. Das ist der KI-Coding-Assistent, der dieses System ausführt. career-ops unterstützt [zehn CLIs vollwertig](/de/docs/supported-clis). Installiere eine davon und melde dich an, bevor du weitermachst.
+      Installiere **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** oder **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**. Das ist der KI-Coding-Assistent, der dieses System ausführt. career-ops unterstützt [elf CLIs vollwertig](/de/docs/supported-clis). Installiere eine davon und melde dich an, bevor du weitermachst.
       </Step>
       <Step>
-        ### Node.js 18+ (22.5+ empfohlen)
+        ### Node.js 22.13+
 
-        Installiere **[Node.js](https://nodejs.org)**. Mindestens Version **18** ist nötig (sie läuft, zeigt aber eine Warnung), **22.5+ wird empfohlen** (sie aktiviert den SQLite-Index für den Tracker). Node.js führt die Hilfsskripte aus und erzeugt die PDFs. Deine Version prüfst du mit `node --version`.
+        Installiere **[Node.js](https://nodejs.org)**. Nötig ist Version **22.13 oder neuer** (bei Node 23 **23.4 oder neuer**). Node.js führt die Hilfsskripte aus und erzeugt die PDFs. Ältere Versionen bestehen die Einrichtungsprüfung nicht, weil der SQLite-Index des Trackers ein neueres Node braucht. Deine Version prüfst du mit `node --version`.
       </Step>
       <Step>
         ### Git
@@ -42,7 +42,7 @@ Du musst nicht programmieren können. Du solltest nur ein Terminal öffnen und e
 
 ## Schritt 1: Workspace einrichten
 
-Öffne ein Terminal in dem Ordner, in dem career-ops liegen soll. Der empfohlene Weg braucht nur einen Befehl. Darunter findest du einen Weg für Fortgeschrittene mit `git clone`. Wenn Node (18+) oder Git fehlen, startet `npx` nicht. Installiere dann zuerst beides (siehe Voraussetzungen oben).
+Öffne ein Terminal in dem Ordner, in dem career-ops liegen soll. Der empfohlene Weg braucht nur einen Befehl. Darunter findest du einen Weg für Fortgeschrittene mit `git clone`. Wenn Node (22.13+, bei Node 23 ab 23.4) oder Git fehlen, startet `npx` nicht. Installiere dann zuerst beides (siehe Voraussetzungen oben).
 
 ### Empfohlen: ein Befehl
 
@@ -83,7 +83,7 @@ npx playwright install chromium
 
 Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
 
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
   <Tab value="Claude Code">
     ```bash title="Terminal"
     claude
@@ -114,14 +114,21 @@ Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
     agy
     ```
   </Tab>
+  <Tab value="Pi">
+    ```bash title="Terminal"
+    pi
+    ```
+  </Tab>
 </Tabs>
 
-<Callout title="Der Agent stellt sich vor">
-  Wenn du deine CLI zum ersten Mal im Workspace startest, führt der career-ops-Agent ein kurzes Onboarding-Gespräch mit dir. Er fragt nach deinem Lebenslauf, nach den Rollen, die du suchst, nach deiner Gehaltsspanne und nach deinen Wünschen zum Arbeitsort. Du bearbeitest nichts von Hand: Du antwortest in normaler Sprache, und der Agent schreibt die Konfigurationsdateien für dich. Das Ganze dauert etwa zwei bis drei Minuten.
+<Callout title="Das Onboarding beginnt, wenn dein Profil gebraucht wird">
+  Vor deiner ersten Stellenbewertung oder einem anderen Ablauf, der dein Profil braucht, prüft der career-ops-Agent deine Einrichtung und führt bei Bedarf ein kurzes Onboarding-Gespräch mit dir. Du kannst ihn auch direkt bitten, das Onboarding zu starten. Er fragt nach deinem Lebenslauf, nach den Rollen, die du suchst, nach deiner Gehaltsspanne und nach deinen Wünschen zum Arbeitsort. Du antwortest in normaler Sprache, und der Agent schreibt die Konfigurationsdateien für dich. Das Ganze dauert etwa zwei bis drei Minuten. Wenn du nur den Workspace erkundest, Code ansiehst oder deine Einrichtung prüfst, startet das kein Onboarding und legt keine Profildateien an.
+
+  Für Entwickler: Die Einrichtungsprüfung läuft über `node doctor.mjs --json` und liest nur. Das Onboarding legt die fehlenden Personalisierungsdateien (`modes/_profile.md`, `modes/_custom.md`, `modes/_brief.md` und `voice-dna.md`) mit `node doctor.mjs --json --init-templates` aus ihren Vorlagen an und überschreibt nie eine Datei, die du schon hast.
 </Callout>
 
 <Callout title="Eine Abfrage, die nicht von career-ops kommt">
-  Manche CLIs, zum Beispiel Claude Code, fragen beim ersten Öffnen eines neuen Ordners, ob du den Dateien darin vertraust. Diese Abfrage kommt von der CLI selbst, nicht von career-ops. Bestätige sie, um weiterzumachen. Direkt danach beginnt das Onboarding von career-ops.
+  Manche CLIs, zum Beispiel Claude Code, fragen beim ersten Öffnen eines neuen Ordners, ob du den Dateien darin vertraust. Diese Abfrage kommt von der CLI selbst, nicht von career-ops. Bestätige sie, um weiterzumachen. Damit startet das Onboarding von career-ops noch nicht.
 </Callout>
 
 <Callout type="warn" title="Du zahlst für Claude Pro oder Max? Prüfe, worüber diese Sitzung abgerechnet wird">
@@ -134,9 +141,9 @@ Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
 
 ## Schritt 3: Erste Bewertung ausführen
 
-Sobald das Onboarding fertig ist, kannst du eine echte Stellenanzeige bewerten. Kopiere die URL einer beliebigen Stellenanzeige und füge sie in den Chat ein. Mit Claude Code oder Antigravity CLI setzt du den Befehl davor. Bei den anderen CLIs fügst du die URL ein und bittest den Agenten, die auto-pipeline auszuführen:
+Kopiere die URL einer beliebigen Stellenanzeige und füge sie in den Chat ein. Ist dein Profil noch nicht fertig, erledigt der Agent zuerst das Onboarding. Mit Claude Code, Antigravity CLI oder Pi setzt du den Befehl davor. Bei den anderen CLIs fügst du die URL ein und bittest den Agenten, die auto-pipeline auszuführen:
 
-<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI"]}>
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
   <Tab value="Claude Code">
     ```bash
     /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
@@ -165,6 +172,11 @@ Sobald das Onboarding fertig ist, kannst du eine echte Stellenanzeige bewerten. 
   <Tab value="Antigravity CLI">
     ```bash
     /career-ops https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash
+    /skill:career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
     ```
   </Tab>
 </Tabs>
@@ -210,6 +222,8 @@ Das Ganze dauert etwa ein bis zwei Minuten. Danach zeigt dir career-ops die Bewe
 
 ## Deine Ergebnisse lesen
 
+Der Bericht enthält nach der Risk Summary den Abschnitt **Score Evidence**. Er deckt fünf Dimensionen ab: CV-Match, North-Star-Ausrichtung, Vergütung, kulturelle Signale und Red Flags. Jede Zeile hält einen Evidenzstatus fest (`supported`, `partial` oder `unknown`), eine konkrete Quelle oder Beobachtung und eine offene Frage. Der Abschnitt endet mit einer Stufe für das Vertrauen in die Evidenz (`High`, `Medium` oder `Low`), ihrer Begründung und bis zu drei Prüfprioritäten.
+
 Öffne die Berichtsdatei in `reports/`. Der Dateiname folgt dem Muster `{number}-{company}-{date}.md`. Darin findest du:
 
 - **Score**: eine Zahl von 1 bis 5. Alles unter 4,0 heißt, dass die Stelle wahrscheinlich nicht besonders gut passt.
@@ -237,13 +251,13 @@ Deine erste Bewertung ist fertig. Das kannst du als Nächstes ausprobieren:
 
 <Accordions>
   <Accordion title="Der Agent hat das Onboarding nicht gestartet">
-    Prüfe, ob du deine CLI im Ordner `career-ops` gestartet hast (das siehst du mit `pwd`). Starte die CLI im richtigen Pfad neu und sag dem Agenten: *„Bitte führe das Onboarding für den ersten Start aus.“* Er beginnt das Gespräch dann von vorn.
+    Das automatische Onboarding beginnt, wenn du eine Stellenbewertung oder einen anderen Ablauf anforderst, der dein Profil braucht, und nur, wenn die Einrichtung unvollständig ist. Um es direkt zu starten, öffne deine CLI im Ordner `career-ops` (das siehst du mit `pwd`) und sag dem Agenten: *„Bitte führe das Onboarding für den ersten Start aus.“*
   </Accordion>
   <Accordion title="Der Bericht wurde nicht erstellt">
     Prüfe, ob `cv.md` im Hauptordner liegt und Inhalt hat. Wenn das Onboarding fertig ist, `cv.md` aber leer ist, frag den Agenten: *„Meine cv.md sieht leer aus. Kannst du mir helfen, sie auszufüllen?“*
   </Accordion>
   <Accordion title="Das PDF wurde nicht erstellt">
-    Führe `npx playwright install chromium` noch einmal aus. Wenn das nicht hilft, prüfe mit `node --version`, ob du Node.js 18 oder neuer hast (22.5+ empfohlen).
+    Führe `npx playwright install chromium` noch einmal aus. Wenn das nicht hilft, prüfe mit `node --version`, ob du Node.js 22.13 oder neuer hast (bei Node 23: 23.4 oder neuer).
   </Accordion>
   <Accordion title="Die Bewertung wirkt daneben">
     Die ersten Bewertungen sind noch ungenau, weil das System dich noch nicht gut kennt. Sag deinem KI-Assistenten nach jeder Bewertung, was er falsch eingeschätzt hat. Zum Beispiel: *„Die Bewertung ist zu hoch. Ich habe keine Erfahrung mit Kubernetes.“* Er lernt daraus und passt seine Bewertungen an.
@@ -259,6 +273,6 @@ Wenn etwas nicht so funktioniert, wie es in dieser Anleitung steht, melde es bit
 
 - **Bug melden:** Eröffne ein Issue im [GitHub-Repository](https://github.com/career-ops-hq/career-ops/issues). Beschreibe, was du erwartet hast und was tatsächlich passiert ist, und füge die Fehlermeldungen ein, die du gesehen hast.
 - **Frage stellen:** Komm in die [Discord-Community](https://discord.gg/8pRpHETxa4). Dort bekommst du am schnellsten Hilfe von anderen Nutzern und vom Autor.
-- **Fix beitragen:** Wenn du das Problem selbst beheben kannst, lies [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md), bevor du einen Pull Request öffnest. Kurz gesagt: Eröffne zuerst ein Issue, um die Änderung zu besprechen, und reiche dann deinen PR ein.
+- **Fix beitragen:** Wenn du das Problem selbst beheben kannst, lies [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md), bevor du einen Pull Request öffnest. Kurz gesagt: Für ein neues Feature, einen neuen Modus oder Befehl oder eine Änderung an der Architektur eröffnest du zuerst ein Issue. Bugfixes, neue Scanner-Provider ohne Authentifizierung, Dokumentation und Übersetzungen kannst du direkt als Pull Request einreichen.
 
 <StarOnGitHub locale="en" />

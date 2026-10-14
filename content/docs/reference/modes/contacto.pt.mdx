@@ -1,0 +1,53 @@
+---
+title: contacto
+description: "A jogada de mestre no LinkedIn. A partir do nome de uma empresa e do contexto da sua rede, o contacto encontra contatos com quem você provavelmente já tem alguma proximidade (conexões em comum, segundo grau) e redige uma mensagem curta de abordagem, sob medida para a vaga à qual você está se candidatando."
+seoTitle: "Modo contacto do career-ops — como encontrar contatos no LinkedIn e escrever a mensagem de abordagem"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## O que ele faz
+
+O modo contacto lê o nome da empresa e o contexto da descrição da vaga e, em seguida, sugere pessoas para abordar que ele encontra via WebSearch: o gestor da vaga, o recrutador responsável, dois ou três colegas da equipe e um entrevistador conhecido. Ele redige uma mensagem curta, de três frases e menos de 300 caracteres, sob medida para a vaga e para quem é o contato.
+
+**Primeiro, os contatos que você já salvou.** Antes de qualquer busca, o contacto executa `node contact-lookup.mjs --company "<company>" --summary` sobre os contatos salvos em `data/contacts.tsv` e mostra quem você já conhece nessa empresa, junto com a candidatura anterior que liga essa pessoa a ela. Se você escolher alguém, ele pula a busca e redige uma mensagem de **Internal Referral** (indicação interna): cita o seu contato real anterior, explica em uma linha por que a nova vaga combina com você e pede a indicação diretamente, o oposto da mensagem para colegas da equipe, que nunca pede uma vaga. Um contato salvo só é marcado como indicação interna depois que você confirma que teve uma relação real com essa pessoa; trabalhar na mesma empresa não basta. Para salvar um contato a partir da resposta de um recrutador ou entrevistador, cole a resposta em um arquivo e execute `node contact-extract.mjs --file <email.txt>`, que pede sua confirmação antes de gravar. O contacto redige todas as mensagens; você decide se vai enviá-las.
+
+## Quando usar
+
+Use o contacto quando você já se candidatou a uma vaga e quer abrir caminho para uma indicação. Ou use antes de se candidatar, quando uma apresentação feita por alguém conhecido pode tirar você da pilha de currículos do recrutador. O padrão é a jogada de mestre no LinkedIn; para uma plataforma com limite rígido de caracteres (a caixa de chat de um site de vagas, a abertura de um e-mail frio, o 打招呼 do BOSS Zhipin), peça uma "saudação" e o contacto escreve uma única mensagem ultracurta de primeiro contato, sem buscar contatos.
+
+## Como é uma execução
+
+Informe uma empresa ao contacto e ele encontra as pessoas que vale a pena abordar, escolhe aquela que mais se beneficia de ter você na equipe e escreve uma mensagem pensada para esse perfil: um recrutador ouve que os requisitos obrigatórios foram atendidos, um gestor ouve impacto.
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## Pontos de atenção
+
+O contacto não faz scraping do LinkedIn (proposta rejeitada na issue #238). Ele trabalha a partir do contexto que você fornece (seu currículo, seus empregadores anteriores, as conexões em comum que você menciona) e dos resultados públicos do WebSearch. O agente não tem acesso à sua rede privada do LinkedIn. Toda mensagem fica abaixo do limite de 300 caracteres do pedido de conexão do LinkedIn e nunca inclui o seu número de telefone.
+
+## Veja também
+
+- [deep](/pt/docs/reference/modes/deep)
+- [interview-prep](/pt/docs/reference/modes/interview-prep)

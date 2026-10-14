@@ -138,8 +138,8 @@ export default function SustainPage() {
                 conversation with the community. Money cannot buy a feature.
               </li>
               <li>
-                <strong>No data ownership.</strong> Your data never leaves your machine,
-                sponsor or not.
+                <strong>No data ownership.</strong> There is no backend of ours: your CV goes
+                from your machine to the AI provider you chose, and nowhere else, sponsor or not.
               </li>
             </ul>
           </section>
@@ -271,7 +271,7 @@ export default function SustainPage() {
         </p>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-10-01">1 October 2026</time>
+          Last updated <time dateTime="2026-10-13">13 October 2026</time>
         </p>
       </article>
     </>
