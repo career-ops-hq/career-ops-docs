@@ -4,7 +4,7 @@ description: "Default flow when you paste a job description URL or raw text. Run
 seoTitle: "career-ops auto-pipeline — evaluate a job and build CV + tracker from one URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-10-14"
 ---
 
 ## What it does
@@ -35,6 +35,7 @@ Updated data/applications.md (Report and PDF marked done).
 
 - Paste a URL and auto-pipeline handles extraction for you: Playwright first for single-page portals like Lever, Ashby, Greenhouse and Workday, then WebFetch for static pages, then WebSearch as a last resort.
 - A liveness gate runs before the evaluation. If the link is dead or the page is an empty "position filled" shell, the mode stops there instead of scoring phantom content — and if the entry came from `data/pipeline.md`, it marks that row closed.
+- A LinkedIn page whose description stays a loading skeleton is not a closed job, and not a job description either: auto-pipeline stops before the evaluation, the report, the PDF and any tracker write, and asks you to paste the job text or give an employer or ATS link for the same role.
 - Draft application answers are written only when the score is 4.5 or higher, so low-fit roles do not spend tokens on copy you will not send.
 
 ## Gotchas

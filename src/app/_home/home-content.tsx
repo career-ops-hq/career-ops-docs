@@ -11,6 +11,7 @@ import { CompareRotator } from '@/components/compare-rotator';
 import { getProjectStats } from '@/lib/stats';
 import { GitHubStar } from '@/components/github-star';
 import type { HomeDict } from './home-dict';
+import { UI } from '@/lib/ui-strings';
 
 // One home trunk, rendered for every locale. Structure, widgets and
 // layout are identical across languages; only the strings — supplied by
@@ -71,6 +72,7 @@ const buttonVariants = cva(
 );
 
 export async function HomeContent({ dict }: { dict: HomeDict }) {
+  const ui = UI[dict.locale];
   const [contributors, stats] = await Promise.all([
     getContributors(),
     getProjectStats(),
@@ -83,7 +85,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         <Hero />
         <Image
           src="/hero_image.avif"
-          alt="career-ops terminal interface showing the job pipeline tracker"
+          alt={ui.heroImageAlt}
           width={1628}
           height={1044}
           sizes="(min-width: 1400px) 1050px, (min-width: 1024px) 75vw, 100vw"
@@ -151,7 +153,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
                 href={PRESS.wiredGR}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                aria-label="Featured in WIRED Greece"
+                aria-label={`${dict.featuredIn} WIRED Greece`}
                 className="opacity-55 hover:opacity-100 transition-opacity duration-300"
               >
                 <Image src="/press/wired.svg" alt="WIRED" width={110} height={22} className="h-[22px] w-auto brightness-0 dark:invert" />
@@ -160,7 +162,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
                 href={PRESS.biEN}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                aria-label="Featured in Business Insider"
+                aria-label={`${dict.featuredIn} Business Insider`}
                 className="opacity-55 hover:opacity-100 transition-opacity duration-300"
               >
                 <Image src="/press/business-insider.svg" alt="Business Insider" width={84} height={26} className="h-[26px] w-auto brightness-0 dark:invert" />
@@ -174,7 +176,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               href="https://vercel.com/open-source-program"
               target="_blank"
               rel="noopener sponsored"
-              aria-label="Member of the Vercel Open Source Program, Summer 2026 cohort"
+              aria-label={UI[dict.locale].vercelOssAria}
               className="opacity-55 hover:opacity-100 transition-opacity duration-300"
             >
               <Image src="/press/vercel-oss-2026.svg" alt="Vercel Open Source Software Program 2026" width={240} height={24} className="h-[24px] w-auto brightness-0 dark:invert" />
@@ -278,7 +280,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               <span className="text-brand-text text-center sm:content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 py-1 sm:py-0 rounded-xl text-sm self-start sm:self-auto">
                 {dict.tryItOut}
               </span>
-              <CopyableCommand command="npx @santifer/career-ops init" className="flex-1 min-w-0" />
+              <CopyableCommand command="npx @santifer/career-ops init" className="flex-1 min-w-0" locale={dict.locale} />
             </div>
             <p className="mt-2 px-1 text-xs text-fd-muted-foreground">
               {dict.runsCommand}
@@ -376,14 +378,14 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
             {dict.meetContributors}
           </a>
           <a href="https://warpchart.dev/r/career-ops-hq/career-ops?utm_source=career-ops.org" target="_blank" rel="noopener noreferrer" className="mt-4 w-full max-w-[800px]">
-            <img src="https://warpchart.dev/api/chart?repo=career-ops-hq/career-ops&theme=light&w=800&h=420" alt="career-ops star history on Warpchart — 0 to 50K+ GitHub stars drawn from real timestamps" width={800} height={420} loading="lazy" className="w-full h-auto dark:hidden" />
-            <img src="https://warpchart.dev/api/chart?repo=career-ops-hq/career-ops&theme=dark&w=800&h=420" alt="career-ops star history on Warpchart — 0 to 50K+ GitHub stars drawn from real timestamps" width={800} height={420} loading="lazy" className="w-full h-auto hidden dark:block" />
+            <img src="https://warpchart.dev/api/chart?repo=career-ops-hq/career-ops&theme=light&w=800&h=420" alt={ui.starChartAlt} width={800} height={420} loading="lazy" className="w-full h-auto dark:hidden" />
+            <img src="https://warpchart.dev/api/chart?repo=career-ops-hq/career-ops&theme=dark&w=800&h=420" alt={ui.starChartAlt} width={800} height={420} loading="lazy" className="w-full h-auto hidden dark:block" />
           </a>
         </div>
       </div>
 
       {/* Compare rotator */}
-      <CompareRotator />
+      <CompareRotator locale={dict.locale} />
 
       {/* Frequently asked */}
       <section className="mx-auto w-full max-w-[1100px] px-6 md:px-12 mt-16 lg:mt-24">
@@ -411,7 +413,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         </Link>
         <div className="mt-16 lg:mt-20 max-w-md mx-auto">
           <p className="text-sm text-fd-muted-foreground mb-4">{dict.followWhatWeShip}</p>
-          <SubscribeForm compact />
+          <SubscribeForm compact locale={dict.locale} />
           <p className="mt-3 text-xs text-fd-muted-foreground">{dict.releaseBlurb}</p>
         </div>
       </section>

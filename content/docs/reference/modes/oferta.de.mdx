@@ -4,8 +4,8 @@ description: "Führt die A–H-Bewertung für eine einzelne Stellenanzeige aus u
 seoTitle: "career-ops oferta-Modus — eine einzelne Stellenanzeige bewerten, bevor du dich bewirbst"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-11"
-translationHash: 9d443f59929570f5
+lastModified: "2026-10-14"
+translationHash: 6999cd4e3beceb29
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -55,8 +55,11 @@ Die Blöcke B bis F behandeln fünf Themen. Sie gleichen die Stelle mit deinem L
 Greif zu oferta, wenn du eine einzelne Stellenanzeige schnell bewerten willst, ohne gleich die komplette Pipeline zu starten. Gut zu wissen:
 
 - Übergibst du eine URL, läuft zuerst ein Liveness-Check. Ist die Anzeige abgelaufen oder liefert die Seite einen 404-Fehler, bricht der Modus vor Block A ab. So verschwendest du nie einen Durchlauf für Phantominhalte.
+- Zeigt eine LinkedIn-Seite statt der Beschreibung dauerhaft nur einen Ladeplatzhalter, gilt die Stellenbeschreibung als nicht verfügbar und nicht als geschlossene Stelle. oferta bricht dann vor Block A ab und bittet dich, den Text der Stellenanzeige einzufügen oder einen Link des Arbeitgebers oder des ATS zu derselben Stelle anzugeben.
+- Der Archetyp wird anhand deiner eigenen Zielrollen eingeordnet, also anhand des Abschnitts *Your Target Roles* in `modes/_profile.md`. Die Standard-Rollentypen gelten nur, wenn du keine eigenen festgelegt hast. Passt eine Stelle zu keiner deiner Zielrollen, bekommt sie bei der North-Star-Ausrichtung eine 1, die Bewertung läuft für die übrigen Dimensionen weiter, und die Archetype-Zeile im Bericht lautet `Not a target — closest default: {default role type}` oder `Not a target — no close match`.
 - Die Recherche zu Unternehmen und Vergütung ist auf höchstens fünf Websuchen begrenzt. Das hier ist eine Bewertung, keine Tiefenrecherche. Führ `/career-ops deep` separat aus, wenn du ein vollständigeres Bild vom Unternehmen willst.
 - Block G liefert eine von drei Stufen: High Confidence, Proceed with Caution oder Suspicious. So fallen wahrscheinliche Ghost Jobs auf, bevor du Zeit und Mühe in die Vorbereitung auf ein Vorstellungsgespräch steckst.
+- Beschreibt die Anzeige ausdrücklich eine befristete Stelle, etwa einen Vertrag über 18 Monate oder eine Aushilfsstelle, ergänzt Block G einen Hinweis auf die Befristung, der die betreffende Formulierung zitiert, dazu optional ein Argument für das Gespräch über die Vergütung. Der Hinweis dient nur der Information: Er ändert nie den Score, die Legitimitätsstufe oder die Empfehlung.
 
 ## Score Evidence
 

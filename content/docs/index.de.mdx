@@ -3,7 +3,7 @@ title: Schnellstart
 description: "Starte in etwa fünfzehn Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: 68206b033b3e09ec
+translationHash: d72e728139455f71
 localized: true
 translatedFrom: /docs
 ---
@@ -123,6 +123,8 @@ Starte im Ordner `career-ops` die KI-Coding-CLI, die du installiert hast.
 
 <Callout title="Das Onboarding beginnt, wenn dein Profil gebraucht wird">
   Vor deiner ersten Stellenbewertung oder einem anderen Ablauf, der dein Profil braucht, prüft der career-ops-Agent deine Einrichtung und führt bei Bedarf ein kurzes Onboarding-Gespräch mit dir. Du kannst ihn auch direkt bitten, das Onboarding zu starten. Er fragt nach deinem Lebenslauf, nach den Rollen, die du suchst, nach deiner Gehaltsspanne und nach deinen Wünschen zum Arbeitsort. Du antwortest in normaler Sprache, und der Agent schreibt die Konfigurationsdateien für dich. Das Ganze dauert etwa zwei bis drei Minuten. Wenn du nur den Workspace erkundest, Code ansiehst oder deine Einrichtung prüfst, startet das kein Onboarding und legt keine Profildateien an.
+
+  Für Entwickler: Die Einrichtungsprüfung läuft über `node doctor.mjs --json` und liest nur. Das Onboarding legt die fehlenden Personalisierungsdateien (`modes/_profile.md`, `modes/_custom.md`, `modes/_brief.md` und `voice-dna.md`) mit `node doctor.mjs --json --init-templates` aus ihren Vorlagen an und überschreibt nie eine Datei, die du schon hast.
 </Callout>
 
 <Callout title="Eine Abfrage, die nicht von career-ops kommt">

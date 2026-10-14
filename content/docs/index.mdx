@@ -120,6 +120,8 @@ From inside the `career-ops` folder, launch the AI coding CLI you installed.
 
 <Callout title="Onboarding starts when you need your profile">
   Before your first job evaluation or another workflow that needs your profile, the career-ops agent checks your setup and runs a short onboarding conversation if needed. You can also ask it to run onboarding directly. It asks for your CV, the kinds of roles you are targeting, your compensation range, and your location preference. You reply in plain language and the agent writes the config files for you. The session takes about two to three minutes. Exploring the workspace, reviewing code, or diagnosing your setup does not start onboarding or create profile files.
+
+  For developers: the setup check is `node doctor.mjs --json`, which only reads. Onboarding creates the missing personalization files (`modes/_profile.md`, `modes/_custom.md`, `modes/_brief.md` and `voice-dna.md`) from their templates with `node doctor.mjs --json --init-templates`, and never overwrites one you already have.
 </Callout>
 
 <Callout title="One unrelated prompt you may see">

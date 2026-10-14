@@ -1,0 +1,46 @@
+---
+title: Modos
+description: "Os 14 modos do career-ops que você pode invocar (avaliar, adaptar, candidatar-se, acompanhar e se preparar), cada um deles uma skill em markdown que roda em qualquer CLI de programação com IA compatível."
+seoTitle: "Modos do career-ops: os 14 comandos para procurar emprego (avaliar, adaptar, candidatar-se, acompanhar, preparar)"
+icon: Layers
+translationHash: bb322a1cf17f35c3
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## Os 14 modos
+
+O career-ops vem com **14 modos que você pode invocar**. Cada um é uma skill em markdown puro que o agente carrega e executa dentro da CLI de programação com IA que você já usa: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot ou [outra CLI compatível](/pt/docs/supported-clis). Você invoca um modo com `/career-ops <mode>`, e cada um cobre uma etapa da busca de emprego: avaliar uma vaga segundo a rubrica (cinco dimensões mais uma nota global holística), adaptar o currículo, redigir uma candidatura, acompanhar os resultados ou se preparar para entrevistas. Os modos fazem parte da System Layer, conforme o [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md): as atualizações os substituem pela versão mais recente, e nenhuma atualização jamais modifica o seu `cv.md`, o seu perfil ou os seus relatórios.
+
+## Avaliar vagas
+
+O ciclo central de pontuação: ler uma vaga e pontuá-la nas cinco dimensões mais uma nota global holística antes de você gastar qualquer esforço com ela.
+
+- **[auto-pipeline](/pt/docs/reference/modes/auto-pipeline)**: o fluxo padrão. Cole a URL ou o texto da descrição da vaga; ele executa a avaliação A–H completa, escreve o relatório, exporta um PDF sob medida e cria um registro no tracker, sem etapas manuais no meio do caminho.
+- **[pipeline](/pt/docs/reference/modes/pipeline)**: executa o auto-pipeline em cada URL da fila em `data/pipeline.md`, para que as vagas de um dia inteiro sejam processadas em uma única sessão.
+- **[oferta](/pt/docs/reference/modes/oferta)**: a avaliação A–H de uma única vaga, para quando você só precisa da decisão de pontuação, não do pipeline completo.
+- **[ofertas](/pt/docs/reference/modes/ofertas)**: compara duas ou mais propostas concorrentes em remuneração, aderência, crescimento e sinais de alerta, reunindo tudo em uma única matriz de decisão.
+- **[deep](/pt/docs/reference/modes/deep)**: um documento de pesquisa aprofundada sobre a empresa (financiamento, liderança, imprensa, sinais de remuneração, sinais de alerta) antes de você se candidatar a uma empresa que não conhece bem.
+
+## Adaptar o currículo e se candidatar
+
+Transforme uma vaga com nota alta em uma candidatura enviada.
+
+- **[pdf](/pt/docs/reference/modes/pdf)**: gera, via Playwright, um currículo em PDF sob medida para uma vaga específica, com formatação limpa para sistemas de triagem (ATS).
+- **[apply](/pt/docs/reference/modes/apply)**: lê as perguntas abertas de um formulário de candidatura aberto e redige respostas fundamentadas no seu currículo e na descrição da vaga.
+- **[contacto](/pt/docs/reference/modes/contacto)**: identifica contatos do LinkedIn com quem você provavelmente já tem alguma proximidade e redige uma mensagem de abordagem curta e específica para a vaga.
+- **[followup](/pt/docs/reference/modes/followup)**: sinaliza candidaturas e entrevistas com retorno atrasado e redige as mensagens.
+
+## Acompanhar e evoluir
+
+Mantenha a busca organizada e calibre-a ao longo do tempo.
+
+- **[tracker](/pt/docs/reference/modes/tracker)**: um resumo, no próprio chat, do status de todas as candidaturas, agrupadas por etapa.
+- **[patterns](/pt/docs/reference/modes/patterns)**: lê as suas candidaturas rejeitadas e descartadas para revelar padrões de direcionamento e pontos cegos.
+- **[interview-prep](/pt/docs/reference/modes/interview-prep)**: documentos de preparação específicos para cada rodada (recrutador, gestor da vaga, entrevista técnica com pares, painel), com perguntas prováveis e histórias no método STAR.
+- **[training](/pt/docs/reference/modes/training)**: pontua um curso ou certificação em relação à direção de carreira que você definiu e ao custo de oportunidade.
+- **[project](/pt/docs/reference/modes/project)**: pontua uma ideia de projeto de portfólio em relação aos cargos que você busca e ao tempo que levaria para construí-lo.
+
+## Portais de vagas
+
+Greenhouse, Ashby e Lever, três dos sistemas que o scanner de zero tokens lê, têm a sua própria [referência de portais](/pt/docs/reference/portals).

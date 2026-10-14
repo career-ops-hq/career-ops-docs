@@ -3,7 +3,7 @@ title: "¿Merece la pena aplicar a esta oferta?"
 description: "Decide antes de aplicar. career-ops puntúa una oferta de 1 a 5 según tu CV y tus objetivos, te muestra su razonamiento y te deja la decisión a ti."
 seoTitle: "¿Merece la pena aplicar a esta oferta? Decide antes de aplicar con career-ops"
 icon: Scale
-translationHash: ef81f15a2f8ba87e
+translationHash: 685dbe28f8fa067e
 localized: true
 translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
 ---
@@ -117,7 +117,7 @@ Maya tiene una razón que el informe no puede ver: conoce a la persona que dirig
 
 ## Las primeras evaluaciones son toscas hasta que le cuentas quién eres [#las-primeras-evaluaciones-son-toscas-hasta-que-le-cuentas-quien-eres]
 
-career-ops puntúa con el perfil que tiene, y el perfil que viene por defecto no es el tuyo. Los roles objetivo por defecto del perfil de ejemplo son todos puestos de IA. Hasta que personalices `modes/_profile.md`, las evaluaciones se puntúan contra los objetivos del autor de la plantilla, y ejecutar `node doctor.mjs` lo advierte.
+career-ops puntúa con el perfil que tiene, y el perfil que viene por defecto no es el tuyo. Los roles objetivo por defecto del perfil de ejemplo son todos puestos de IA. Hasta que personalices `modes/_profile.md`, las evaluaciones se puntúan contra los objetivos del autor de la plantilla, y ejecutar `node doctor.mjs` lo advierte. Cuando tu perfil incluye tus propios roles objetivo, cada oferta se clasifica según ellos: un puesto que no encaja con ninguno puntúa 1 en North Star alignment, y el informe indica que no es un objetivo en lugar de forzarlo al tipo de rol más parecido.
 
 Las primeras pasadas son toscas. Todavía no te conoce. Háblale: tu CV, lo que quieres, lo que rechazas. La primera vez que lo abres, te pide todo eso en el chat. Para cambiar los roles objetivo, dilo con palabras sencillas, por ejemplo «Cambia los arquetipos a puestos de ingeniería de backend». Después de cualquier evaluación, dile en qué se equivocó, como «esta puntuación es demasiado alta» o «has pasado por alto mi experiencia en X», y actualizará tus archivos de perfil.
 
@@ -156,6 +156,14 @@ career-ops te prepara para negociar a partir de tus propios documentos y tus pro
 `offer-prep` cita literalmente cada cláusula digna de mención, la explica en lenguaje sencillo y la etiqueta con calificativos neutros como *habitualmente negociado* o *consulta a tu abogado*. Cierra con preguntas para tu abogado, puntos para plantear al empleador (como preguntas, nunca como exigencias) y una nota fija de que no es asesoramiento legal. No hace búsquedas web y solo lee contratos en inglés.
 
 `node salary-gap.mjs --summary` muestra, por cada candidatura, lo que querías, lo que la oferta anunciaba y lo que realmente te ofrecieron. `node negotiation-roi.mjs --summary` prepara un argumento a partir de una afirmación de horas ahorradas cuyo número también aparece en tu `cv.md`, valorado a partir de un salario y una frecuencia que tú indicas: una estimación, no un consejo financiero. `/career-ops offer-prep reply {company-slug}` prepara un borrador de correo de respuesta a partir de tu informe de preparación; lo envías tú.
+
+Si un puesto implica mudarte a otra provincia, el mismo salario puede dejarte una cantidad distinta después de impuestos. `salary-gap.mjs --relocation` compara los dos lugares para una misma cifra bruta anual:
+
+```bash
+node salary-gap.mjs --relocation --gross 95k --currency CAD --posting-location "Calgary, AB" --home-location "Toronto, ON"
+```
+
+`--gross` es la cifra anual y `--currency` es la moneda en la que la oferta la indica; cuando esa moneda no coincide con la tabla de impuestos, el script se niega a comparar en lugar de adivinar. `--home-location` es opcional: sin él, tu ubicación se toma de `config/profile.yml`. `--posting-location-file <path>` lee la ubicación de la oferta desde un archivo en lugar de la línea de comandos. Por ahora, la tabla de impuestos cubre Canadá (impuesto federal más Ontario, Nueva Escocia, Alberta y Columbia Británica) y no compara entre países. El resultado solo tiene en cuenta los tramos impositivos, sin créditos fiscales, cotizaciones de nómina ni costo de vida: un dato para tu propio juicio, no un consejo financiero ni fiscal. Una evaluación hace la misma comprobación cuando la oferta indica un salario y un lugar de trabajo al que tendrías que mudarte.
 
 ## Preguntas frecuentes
 

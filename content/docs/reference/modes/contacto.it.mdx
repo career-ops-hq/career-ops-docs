@@ -1,0 +1,53 @@
+---
+title: contacto
+description: "La mossa vincente su LinkedIn. Dato il nome di un'azienda e il contesto della tua rete, contacto fa emergere i contatti con cui hai già un aggancio (collegamenti in comune, secondo grado) e redige un breve messaggio di primo contatto su misura per il ruolo a cui ti candidi."
+seoTitle: "Modalità contacto di career-ops: trova i contatti giusti su LinkedIn e scrivi il messaggio"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## Cosa fa
+
+La modalità contacto legge il nome dell'azienda e il contesto dell'annuncio, poi suggerisce le persone da contattare che trova tramite WebSearch: l'hiring manager, il recruiter assegnato, due o tre colleghi del team e un intervistatore noto. Redige un messaggio breve, di tre frasi e sotto i 300 caratteri, su misura per il ruolo e per chi è il contatto.
+
+**Si parte dai contatti salvati.** Prima di qualsiasi ricerca, contacto esegue `node contact-lookup.mjs --company "<company>" --summary` sui contatti che hai salvato in `data/contacts.tsv` e ti mostra chi conosci già in quell'azienda, insieme alla candidatura precedente che te lo collega. Se ne scegli uno, salta la ricerca e redige un messaggio **Internal Referral**: richiama il contatto reale che avete già avuto, spiega in una riga perché il nuovo ruolo fa per te e chiede apertamente una segnalazione. È l'opposto del messaggio ai colleghi del team, che non chiede mai un lavoro. Un contatto salvato viene indicato come segnalazione interna solo dopo che hai confermato di avere un rapporto reale con quella persona; lavorare nella stessa azienda non basta. Per salvare un contatto dalla risposta di un recruiter o di un intervistatore, incolla la risposta in un file ed esegui `node contact-extract.mjs --file <email.txt>`, che ti chiede conferma prima di scrivere. contacto redige ogni messaggio; sei tu a decidere se inviarlo.
+
+## Quando usarla
+
+Usa contacto quando ti sei candidato a un ruolo e vuoi far emergere una strada per ottenere una segnalazione. Oppure usala prima di candidarti, quando una presentazione da parte di qualcuno che ti conosce potrebbe farti uscire dalla pila di candidature sul tavolo del recruiter. L'impostazione predefinita è la mossa vincente su LinkedIn; per una piattaforma con un limite rigido di caratteri (la chat di un portale di annunci, l'apertura di una email a freddo, il 打招呼 di BOSS Zhipin) chiedi un "greeting" e contacto scrive un solo messaggio di primo contatto ultra-breve, senza ricerca dei contatti.
+
+## Come si presenta un'esecuzione
+
+Dai a contacto un'azienda e lui trova le persone che vale la pena contattare, sceglie quella che trae più vantaggio dalla tua presenza e scrive un messaggio costruito per quel profilo: a un recruiter parla dei requisiti fondamentali soddisfatti, a un hiring manager parla di impatto.
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## A cosa fare attenzione
+
+contacto non fa scraping di LinkedIn (proposta respinta, vedi issue #238). Lavora a partire dal contesto che gli fornisci (il tuo CV, i tuoi datori di lavoro precedenti, i collegamenti in comune che citi) più i risultati pubblici di WebSearch. L'agente non ha accesso alla tua rete privata di LinkedIn. Ogni messaggio resta sotto il limite di 300 caratteri delle richieste di collegamento di LinkedIn e non include mai il tuo numero di telefono.
+
+## Vedi anche
+
+- [deep](/it/docs/reference/modes/deep)
+- [interview-prep](/it/docs/reference/modes/interview-prep)

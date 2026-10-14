@@ -1,0 +1,57 @@
+---
+title: Greenhouse
+description: "career-ops interroga direttamente l'API pubblica dei board di Greenhouse. Niente scraping dell'HTML, nessun rischio di rate limit, nessun token AI consumato durante la scansione."
+seoTitle: "Scansionare gli annunci di Greenhouse con career-ops: portali ATS a zero token"
+icon: Leaf
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 7b6f2cf40aacd803
+localized: true
+translatedFrom: /docs/reference/portals/greenhouse
+---
+
+## Cosa fa
+
+Il provider greenhouse in providers/greenhouse.mjs invia richieste HTTP a boards-api.greenhouse.io/v1/boards/`{slug}`/jobs e converte la risposta JSON nel formato degli annunci di career-ops. Lo slug è l'identificatore del board Greenhouse dell'azienda (ad es. 'notion' per Notion).
+
+## Quando usarlo
+
+Usa la scansione di Greenhouse quando le aziende che ti interessano usano Greenhouse come ATS. È il caso della maggior parte delle aziende tech statunitensi tra i 50 e i 10.000 dipendenti. templates/portals.example.yml include oltre 70 slug di Greenhouse già configurati che puoi attivare.
+
+## Esempio
+
+```
+In your portals.yml: `- provider: greenhouse\n  slug: notion\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.
+```
+
+## Come funziona la scansione
+
+Lo scanner legge da portals.yml gli slug di Greenhouse che hai attivato, chiama l'API pubblica dei board per ciascuno e aggiunge alla tua pipeline le nuove posizioni il cui titolo corrisponde ai tuoi criteri, senza scraping e senza spendere token LLM per il recupero dei dati. Una sola esecuzione di `node scan.mjs` gestisce in un unico passaggio i tuoi board di Greenhouse, Ashby e Lever, poi filtra i risultati in base alle parole chiave del titolo che hai configurato.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 58 total
+Filtered by title: 9 relevant
+Duplicates: 6 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Notion | AI Product Engineer | greenhouse
+  + OpenAI | Applied Engineer    | greenhouse
+```
+
+## Come career-ops comunica con Greenhouse
+
+career-ops interroga `boards-api.greenhouse.io/v1/boards/{slug}/jobs` e legge l'array `jobs` del JSON, prendendo di ogni posizione il titolo e il relativo `absolute_url`. Questo endpoint dei board restituisce i metadati dell'annuncio (titolo, sede e reparto), ma non la descrizione completa: per questo career-ops recupera il testo integrale dell'annuncio con una richiesta aggiuntiva per ogni posizione durante la fase di valutazione, oppure aggiungendo `?content=true` dove il board lo supporta. La scansione in sé è una semplice GET HTTPS verso un endpoint pubblico, ed è per questo che resta entro i rate limit e non consuma token del modello. Rilanciare la scansione è sicuro: ogni URL viene deduplicato rispetto alla cronologia delle scansioni, alle candidature già valutate e alla pipeline corrente, quindi una posizione che hai già visto non viene mai aggiunta due volte.
+
+## Cose da sapere
+
+Gli annunci ottenuti dall'API di Greenhouse includono, nell'endpoint dei board, solo titolo, sede e reparto. Il testo completo dell'annuncio richiede una richiesta aggiuntiva per ogni annuncio, che career-ops gestisce automaticamente durante la fase di valutazione.
+
+## Vedi anche
+
+- [ashby](/it/docs/reference/portals/ashby)
+- [lever](/it/docs/reference/portals/lever)

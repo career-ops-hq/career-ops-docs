@@ -1,0 +1,321 @@
+---
+title: Scansionare i portali di lavoro
+description: Configura ed esegui lo scanner dei portali per trovare automaticamente nuove posizioni aperte.
+seoTitle: "Scansionare i portali di lavoro con career-ops — Greenhouse, Ashby, Lever, zero token"
+icon: ScanEye
+translationHash: e9fbece900af577b
+localized: true
+translatedFrom: /docs/introduction/guides/scan-job-portals
+---
+
+Questa guida ti accompagna nella configurazione di `portals.yml` e nell'esecuzione dello scanner dei portali per trovare automaticamente nuove posizioni aperte.
+
+<Callout title="Prima di iniziare">
+  Assicurati di aver completato la [Guida rapida](/it/docs). Perché la scansione sia utile ti servono `cv.md` e `modes/_profile.md` già pronti.
+</Callout>
+
+## Configurare portals.yml
+
+`portals.yml` è il file che stabilisce che cosa cerca lo scanner e dove lo cerca. Lo crei una sola volta a partire dal modello incluso, poi lo modifichi in base ai ruoli a cui punti.
+
+Esegui questo comando dalla cartella del progetto:
+
+```bash title="Terminal"
+cp templates/portals.example.yml portals.yml
+```
+
+Apri `portals.yml` in un qualsiasi editor di testo. Il file ha tre sezioni. I passaggi qui sotto le spiegano una per una.
+
+### Impostare il filtro sui titoli
+
+Il filtro sui titoli è il criterio con cui lo scanner decide se vale la pena mostrarti un annuncio. Confronta il titolo della posizione con due elenchi di parole chiave.
+
+Trova la sezione `title_filter` nella parte alta del file:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "AI"
+    - "ML"
+    - "Product Manager"
+  negative:
+    - "Junior"
+    - "Intern"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+**Sostituisci l'elenco `positive`** con le parole chiave che corrispondono ai ruoli a cui punti. Per passare, un annuncio deve contenere almeno una parola chiave di questo elenco. Il controllo non distingue tra maiuscole e minuscole, quindi `"AI"` intercetta anche `"ai engineer"`.
+
+**Sostituisci l'elenco `negative`** con le parole chiave che escludono un annuncio. Se una di queste compare nel titolo, l'annuncio viene scartato, anche se conteneva una parola chiave positiva.
+
+**Lascia `seniority_boost` così com'è**, a meno che tu non voglia aggiungere o togliere livelli di seniority. Queste parole chiave non escludono nulla: si limitano a far salire nei risultati gli annunci che le contengono.
+
+**Esempio:** se cerchi ruoli da sviluppatore Rails, il tuo filtro potrebbe essere questo:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "Rails"
+    - "Ruby"
+    - "Full Stack"
+    - "Backend"
+  negative:
+    - "Junior"
+    - "Intern"
+    - "PHP"
+    - "Java"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+<Callout title="Suggerimento">
+  Parti con un elenco `positive` breve, da tre a cinque parole chiave. Puoi sempre aggiungerne altre in seguito. Con un elenco lungo diventa più difficile capire perché un annuncio è passato o è stato scartato.
+</Callout>
+
+### Aggiungere le aziende da monitorare
+
+La sezione `tracked_companies` è l'elenco delle aziende specifiche che vuoi far controllare allo scanner a ogni esecuzione. Lo scanner va direttamente sulla pagina delle posizioni aperte di ciascuna azienda e legge i ruoli disponibili.
+
+Trova la sezione `tracked_companies` nella parte bassa del file. Ogni voce ha questo aspetto:
+
+```yaml title="portals.yml"
+tracked_companies:
+  - name: Anthropic
+    careers_url: https://job-boards.greenhouse.io/anthropic
+    api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    enabled: true
+
+  - name: OpenAI
+    careers_url: https://openai.com/careers
+    enabled: true
+```
+
+**Per aggiungere un'azienda**, copia una voce esistente e cambia i valori:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Campo         | Che cosa inserire                                                                                  |
+    | ------------- | -------------------------------------------------------------------------------------------------- |
+    | `name`        | Il nome dell'azienda, come vuoi che compaia nei risultati                                          |
+    | `careers_url` | L'URL diretto della pagina con le posizioni aperte dell'azienda                                    |
+    | `api`         | Facoltativo. L'URL dell'API di Greenhouse, se l'azienda usa Greenhouse. Se non sei sicuro, omettilo. |
+    | `enabled`     | Imposta `true` per includere l'azienda o `false` per saltarla senza eliminare la voce.             |
+  </div>
+</div>
+
+
+**Per trovare il `careers_url` di un'azienda**, vai sul suo sito, clicca su Careers, Jobs o «Lavora con noi» e copia l'URL della pagina che elenca le posizioni aperte. È quello l'URL da usare.
+
+**Per disattivare un'azienda senza eliminarla**, imposta `enabled: false`:
+
+```yaml title="portals.yml"
+  - name: Stripe
+    careers_url: https://stripe.com/jobs/search
+    enabled: false
+```
+
+<Callout title="Nota">
+  Ogni azienda in `tracked_companies` deve avere un `careers_url`. Senza, lo scanner non ha una pagina da visitare e salta quella voce.
+</Callout>
+
+### Controllare le query di ricerca
+
+La sezione `search_queries` esegue ricerche web più ampie per trovare ruoli in aziende che non sono nel tuo elenco di quelle monitorate. Il modello include molte query già pronte.
+
+Per iniziare non serve modificare questa sezione. Le query già pronte coprono i principali portali di lavoro, tra cui Greenhouse e Ashby.
+
+Quando vorrai personalizzarle, ogni query ha questo aspetto:
+
+```yaml title="portals.yml"
+search_queries:
+  - name: Greenhouse — Rails Engineer
+    query: 'site:job-boards.greenhouse.io "Rails Engineer" OR "Ruby on Rails" remote'
+    enabled: true
+```
+
+Per disattivare una query che non ti serve, imposta `enabled: false`. Per aggiungerne una nuova, copia una voce esistente, dalle un nuovo `name` e aggiorna il testo di `query`.
+
+## Avviare una scansione
+
+Ci sono due modi per avviare una scansione. Usa quello più adatto a ciò che ti serve.
+
+### Opzione A — Eseguire direttamente lo script
+
+```bash title="Terminal"
+npm run scan
+```
+
+Esegui il comando dalla cartella del progetto. Lo script legge `portals.yml`, interroga direttamente l'API di ogni azienda e scrive i nuovi annunci in `data/pipeline.md`. Non consuma token AI e impiega circa 30 secondi.
+
+Questa opzione funziona per tutte le aziende la cui pagina delle posizioni aperte gira su una piattaforma per cui lo scanner ha un provider integrato: Greenhouse, Ashby e Lever, più decine di altri sistemi ATS e portali di lavoro come Workable, Workday e SmartRecruiters. L'elenco completo è in [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Le aziende senza un provider corrispondente vengono saltate, e la scansione indica quante sono.
+
+**Vedere i risultati in anteprima prima di salvarli:**
+
+```bash title="Terminal"
+npm run scan -- --dry-run
+```
+
+Esegue la scansione completa ma non scrive nulla su disco. Usalo per verificare le impostazioni dei filtri prima di salvare i risultati.
+
+**Scansionare una sola azienda:**
+
+```bash title="Terminal"
+npm run scan -- --company Anthropic
+```
+
+Sostituisci `Anthropic` con il nome di una qualsiasi azienda del tuo elenco `tracked_companies`. La corrispondenza non distingue tra maiuscole e minuscole.
+
+**Scansionare i siti carriere su Dayforce:**
+
+I siti carriere su Dayforce (Ceridian), all'indirizzo `jobs.dayforcehcm.com`, bloccano le normali richieste web, quindi `npm run scan` non riesce a leggerli. Per questi siti uno script separato apre invece una vera sessione del browser, e per questo è più lento della scansione principale. Elenca i portali sotto `dayforce_boards` in `portals.yml`, una voce per azienda con il suo `name` e il suo `tenant` (il codice dell'azienda nell'indirizzo Dayforce); `templates/portals.example.yml` mostra il formato. Poi esegui:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+I nuovi annunci finiscono in `data/pipeline.md`, come con la scansione principale. Aggiungi `-- --dry-run` per vedere l'anteprima senza salvare, `-- --tenant <tenant>` per scansionare un solo portale oppure `-- --debug` per salvare in `output/` uno screenshot di ogni portale. Se un portale mostra una verifica anti-bot, lo script lo salta; non prova mai a superarla.
+
+### Opzione B — Eseguire la scansione con l'AI dentro Claude Code
+
+Apri Claude Code nella cartella del progetto e scrivi:
+
+```bash title="Claude Code"
+/career-ops scan
+```
+
+Questa versione visita direttamente la pagina delle posizioni aperte di ogni azienda usando un browser, quindi funziona anche con le aziende che non hanno un'API pubblica. Esegue inoltre le `search_queries` del tuo `portals.yml` per trovare ruoli in aziende che non sono nel tuo elenco di quelle monitorate.
+
+Usa questa opzione quando:
+- Un'azienda del tuo elenco usa una piattaforma per cui lo script non ha un provider, e quindi la scansione con lo script la salta
+- Vuoi scoprire nuove aziende, non solo controllare quelle che conosci già
+- La scansione con lo script non ha trovato qualcosa che ti aspettavi di vedere
+
+<Callout title="Suggerimento">
+  L'Opzione B consuma token dell'API di Claude e richiede più tempo dello script. Per un controllo quotidiano veloce, l'Opzione A è più rapida.
+</Callout>
+
+## Leggere il risultato della scansione
+
+Al termine della scansione vedrai un riepilogo come questo:
+
+```text title="Terminal"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Portal Scan — 2026-04-13
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Companies scanned:     42
+Total jobs found:      318
+Filtered by title:     291 removed
+Duplicates:            4 skipped
+New offers added:      23
+
+New offers:
+  + Anthropic | AI Engineer | San Francisco, CA
+  + ElevenLabs | Solutions Architect | Remote
+  ...
+
+→ Run /career-ops pipeline to evaluate new offers.
+```
+
+Ecco che cosa significa ogni riga:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Riga | Che cosa ti dice |
+    |---|---|
+    | **Companies scanned** | Quante aziende di `tracked_companies` sono state controllate |
+    | **Total jobs found** | Tutte le posizioni aperte viste in quelle aziende, prima di qualsiasi filtro |
+    | **Filtered by title** | Annunci rimossi perché il titolo non corrispondeva al tuo `title_filter` |
+    | **Duplicates skipped** | Annunci già presenti nella tua pipeline o nel tracker, che non vengono aggiunti di nuovo |
+    | **New offers added** | Annunci che hanno superato tutti i filtri e che per te sono nuovi |
+  </div>
+</div>
+
+
+Se **New offers added** è 0, cerca prima di tutto questo avviso nel risultato della scansione:
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+Significa che il portale di quell'azienda non ha mai risposto correttamente, quindi lo zero non dimostra che non abbia posizioni aperte. L'azienda viene registrata come `unverified_zero` in `data/portal-health.tsv` e l'episodio si aggiunge alla sua serie di errori consecutivi. Controlla quel portale prima di cambiare i filtri.
+
+Se l'avviso non c'è, il tuo filtro sui titoli potrebbe essere troppo restrittivo. Prova ad aggiungere una parola chiave all'elenco `positive` e avvia di nuovo la scansione.
+
+**Dove finiscono i nuovi annunci:** ogni nuovo annuncio viene aggiunto come riga in `data/pipeline.md`. È l'elenco degli annunci in attesa di valutazione.
+
+**A che cosa serve `data/scan-history.tsv`:** ogni URL che lo scanner vede, che sia stato aggiunto, filtrato o saltato, viene registrato qui. È così che lo scanner evita di mostrarti due volte lo stesso annuncio nelle scansioni successive. Fa eccezione un annuncio rimosso dall'impostazione `location_filter` o `max_posting_age_days` di `portals.yml`: viene registrato come `skipped_location` o `skipped_age` e può ricomparire quando cambi quell'impostazione. Non devi modificare questo file.
+
+## Valutare i nuovi annunci trovati dalla scansione
+
+Dopo che una scansione ha aggiunto nuovi annunci a `data/pipeline.md`, il tuo elenco di annunci in sospeso, esegui il comando pipeline per valutarli uno per uno rispetto al tuo profilo. Questo passaggio usa Claude per leggere la descrizione della posizione, confrontarla con il tuo `cv.md` e con `modes/_profile.md` e produrre per ogni ruolo un riepilogo con punteggio.
+
+Apri Claude Code nella cartella del progetto e scrivi:
+
+```bash title="Terminal"
+/career-ops pipeline
+```
+
+Claude legge tutti gli URL in sospeso in `data/pipeline.md`, visita ogni annuncio e lo valuta. I risultati arrivano a lotti. Ogni lotto mostra una tabella come questa:
+
+Lotto 1 completato (Anthropic, ElevenLabs, Mistral):
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | #   | Azienda    | Ruolo               | Punteggio | Legittimità                            |
+    | --- | ---------- | ------------------- | --------- | -------------------------------------- |
+    | 024 | Anthropic  | AI Engineer         | 4,8/5     | High Confidence                        |
+    | 025 | ElevenLabs | Solutions Architect | 4,1/5     | High Confidence — in forte crescita    |
+    | 026 | Mistral AI | Product Manager     | 3,2/5     | Proceed w/ Caution — posizione chiusa  |
+  </div>
+</div>
+
+
+Ecco che cosa significa ogni colonna:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Colonna         | Che cosa ti dice                                                                                                                                                                             |
+    | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **#**           | Il numero del report. Usalo per trovare il report completo in `reports/`: per esempio, il report 024 è `reports/024-anthropic-2026-04-13.md`                                                 |
+    | **Punteggio**   | Quanto il ruolo è adatto al tuo profilo, da 1 a 5                                                                                                                                            |
+    | **Legittimità** | Se l'annuncio sembra reale e attivo. "High Confidence" significa che la posizione è aperta e i dettagli tornano. "Proceed w/ Caution" significa che qualcosa ha fatto scattare un segnale d'allarme: leggi la nota accanto. |
+  </div>
+</div>
+
+**Per leggere la valutazione completa di un ruolo** hai due possibilità:
+
+- **Aprire direttamente il file del report**: lo trovi nella cartella `reports/` usando il numero della tabella.
+- **Usare la dashboard**: esegui `./dashboard/career-dashboard` dalla cartella del progetto per sfogliare tutti i tuoi report in un'interfaccia da terminale. Puoi filtrare per punteggio e per stato e aprire qualsiasi report senza uscire dal terminale.
+
+## Cosa fare dopo la valutazione
+
+Quando `/career-ops pipeline` ha finito, ogni annuncio ha un punteggio da 1 a 5. Il report completo di ogni ruolo è nella cartella `reports/`. Il punteggio indica quanto il ruolo corrisponde al tuo profilo.
+
+Usa il punteggio come punto di partenza:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Punteggio      | Azione consigliata                                                                                                                              |
+    | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **4,5 o più**  | Corrispondenza forte. Esegui subito `/career-ops apply`.                                                                                        |
+    | **4,0 – 4,4**  | Buona corrispondenza. Esegui `/career-ops apply`. Puoi anche eseguire prima `/career-ops contacto` per contattare qualcuno del team prima di candidarti. |
+    | **3,5 – 3,9**  | Può andare in un senso o nell'altro. Esegui `/career-ops deep` per saperne di più prima di decidere.                                            |
+    | **Sotto 3,5**  | Lascia perdere, a meno che tu non abbia un motivo preciso per candidarti.                                                                       |
+  </div>
+</div>
+
+Ecco che cosa fa ogni comando:
+
+- **`/career-ops apply`** — Apre il modulo di candidatura e scrive risposte su misura per il tuo profilo. Si ferma prima dell'invio, così puoi rivedere tutto.
+- **`/career-ops contacto`** — Trova su LinkedIn un hiring manager o un membro del team e prepara la bozza di un breve messaggio di contatto che invierai tu.
+- **`/career-ops deep`** — Fa una ricerca approfondita sull'azienda e sul ruolo. Usalo quando sei indeciso e vuoi più informazioni prima di scegliere.
+- **`/career-ops tracker`** — Mostra lo stato di ogni ruolo nella tua pipeline. Eseguilo ogni volta che vuoi vedere a che punto sei.
+
+<Callout title="Suggerimento">
+  Non devi seguire un ordine. Se un ruolo ottiene 4,8 ma non hai mai sentito nominare l'azienda, esegui prima `/career-ops deep`. I comandi funzionano in modo indipendente: usa quello più adatto alla tua situazione.
+</Callout>

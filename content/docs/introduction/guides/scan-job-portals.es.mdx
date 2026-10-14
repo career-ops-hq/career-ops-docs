@@ -3,7 +3,7 @@ title: Escanea portales de empleo
 description: Configura y ejecuta el escáner de portales para encontrar nuevas ofertas de empleo automáticamente.
 seoTitle: "Escanea portales de empleo con career-ops — Greenhouse, Ashby, Lever, cero tokens"
 icon: ScanEye
-translationHash: 7476c9cd97b61b48
+translationHash: e9fbece900af577b
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -169,6 +169,16 @@ npm run scan -- --company Anthropic
 ```
 
 Sustituye `Anthropic` por cualquier nombre de empresa de tu lista `tracked_companies`. La coincidencia no distingue mayúsculas de minúsculas.
+
+**Escanea sitios de empleo de Dayforce:**
+
+Los sitios de empleo de Dayforce (Ceridian), en `jobs.dayforcehcm.com`, bloquean las peticiones web simples, así que `npm run scan` no puede leerlos. En su lugar, un script aparte abre una sesión real de navegador para ellos, lo que lo hace más lento que el escaneo principal. Añade los portales en `dayforce_boards` dentro de `portals.yml`, una entrada por empresa con su `name` y su `tenant` (el código de la empresa en la dirección de Dayforce); `templates/portals.example.yml` muestra el formato. Después ejecuta:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+Las ofertas nuevas van a `data/pipeline.md`, igual que en el escaneo principal. Añade `-- --dry-run` para previsualizar sin guardar, `-- --tenant <tenant>` para escanear un solo portal, o `-- --debug` para guardar una captura de pantalla de cada portal en `output/`. Si un portal muestra una verificación anti-bots, el script lo omite; nunca intenta saltársela.
 
 ### Opción B — Ejecuta el escaneo con IA dentro de Claude Code
 

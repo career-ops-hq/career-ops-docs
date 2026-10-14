@@ -3,7 +3,7 @@ title: Jobportale scannen
 description: Richte den Portal-Scanner ein und starte ihn, um automatisch neue Stellenanzeigen zu finden.
 seoTitle: "Jobportale mit career-ops scannen – Greenhouse, Ashby, Lever, ohne Token-Verbrauch"
 icon: ScanEye
-translationHash: 7476c9cd97b61b48
+translationHash: e9fbece900af577b
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -169,6 +169,16 @@ npm run scan -- --company Anthropic
 ```
 
 Ersetze `Anthropic` durch einen beliebigen Unternehmensnamen aus deiner `tracked_companies`-Liste. Groß- und Kleinschreibung spielen dabei keine Rolle.
+
+**Dayforce-Karriereseiten scannen:**
+
+Karriereseiten auf Dayforce (Ceridian) unter `jobs.dayforcehcm.com` blockieren einfache Webanfragen, deshalb kann `npm run scan` sie nicht auslesen. Stattdessen öffnet ein eigenes Script für sie eine echte Browser-Sitzung und ist dadurch langsamer als der Haupt-Scan. Trag die Karriereseiten unter `dayforce_boards` in `portals.yml` ein, einen Eintrag pro Unternehmen mit seinem `name` und seinem `tenant` (dem Kürzel des Unternehmens in der Dayforce-Adresse); `templates/portals.example.yml` zeigt das Format. Führe dann aus:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+Neue Stellen landen wie beim Haupt-Scan in `data/pipeline.md`. Häng `-- --dry-run` an, um eine Vorschau ohne Speichern zu sehen, `-- --tenant <tenant>`, um eine einzelne Karriereseite zu scannen, oder `-- --debug`, um von jeder Karriereseite einen Screenshot in `output/` zu speichern. Zeigt eine Karriereseite eine Bot-Abfrage, überspringt das Script sie; es versucht nie, eine solche Abfrage zu umgehen.
 
 ### Option B – Den KI-gestützten Scan in Claude Code starten
 
