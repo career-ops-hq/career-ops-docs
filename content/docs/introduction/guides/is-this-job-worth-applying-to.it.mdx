@@ -3,7 +3,7 @@ title: "Vale la pena candidarsi a questo annuncio?"
 description: "Decidi prima di candidarti. career-ops assegna a un annuncio un punteggio da 1 a 5 in base al tuo curriculum e ai tuoi obiettivi, mostra il suo ragionamento e lascia a te la decisione."
 seoTitle: "Vale la pena candidarsi a questo annuncio? Decidi prima di candidarti con career-ops — un punteggio da 1 a 5 e il suo ragionamento"
 icon: Scale
-translationHash: 7108334c927d4e60
+translationHash: ffabdfa983e32c8c
 localized: true
 translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
 ---
@@ -155,6 +155,14 @@ career-ops ti prepara a negoziare a partire dai tuoi documenti e dai tuoi numeri
 `offer-prep` cita testualmente ogni clausola degna di nota, la spiega in parole semplici e le assegna etichette neutre, come "comunemente negoziata" o "chiedi al tuo avvocato". Si chiude con le domande per il tuo avvocato, i punti da sollevare con il datore di lavoro (come domande, mai come pretese) e una nota fissa che ricorda che non si tratta di consulenza legale. Non fa ricerche web e legge soltanto contratti in lingua inglese.
 
 `node salary-gap.mjs --summary` mostra, per ogni candidatura, quanto volevi, quanto indicava l'annuncio e quanto ti è stato effettivamente proposto. `node negotiation-roi.mjs --summary` redige un argomento di trattativa a partire da un'affermazione sulle ore risparmiate il cui numero compare anche nel tuo `cv.md`, valorizzata in base a una retribuzione e a una frequenza che fornisci tu: una stima, non una consulenza finanziaria. `/career-ops offer-prep reply {company-slug}` redige un'email di risposta a partire dal tuo report di preparazione; la invii tu.
+
+Se un ruolo comporta il trasferimento in un'altra provincia, lo stesso stipendio può lasciarti in tasca un importo diverso al netto delle imposte. `salary-gap.mjs --relocation` confronta i due luoghi a parità di stipendio lordo annuo:
+
+```bash
+node salary-gap.mjs --relocation --gross 95k --currency CAD --posting-location "Calgary, AB" --home-location "Toronto, ON"
+```
+
+`--gross` è l'importo annuo e `--currency` è la valuta in cui lo indica l'annuncio; quando quella valuta non corrisponde alla tabella fiscale, lo script si rifiuta di fare il confronto invece di tirare a indovinare. `--home-location` è facoltativo: se non lo indichi, la tua località viene presa da `config/profile.yml`. `--posting-location-file <path>` legge la località dell'annuncio da un file invece che dalla riga di comando. Per ora la tabella fiscale copre il Canada (imposta federale più Ontario, Nuova Scozia, Alberta e Columbia Britannica) e non fa confronti tra paesi diversi. Il risultato considera soltanto gli scaglioni d'imposta, senza detrazioni, contributi previdenziali né costo della vita: un dato a supporto del tuo giudizio, non una consulenza finanziaria o fiscale. Una valutazione esegue lo stesso controllo quando l'annuncio indica uno stipendio e una sede di lavoro per cui dovresti trasferirti.
 
 ## Domande frequenti [#frequently-asked-questions]
 

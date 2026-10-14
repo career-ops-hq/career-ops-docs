@@ -3,7 +3,7 @@ title: "Vale a pena se candidatar a esta vaga?"
 description: "Decida antes de se candidatar. O career-ops dá a uma vaga uma nota de 1 a 5 com base no seu currículo e nos seus objetivos, mostra o raciocínio e deixa a decisão com você."
 seoTitle: "Vale a pena se candidatar a esta vaga? Decida antes de se candidatar com o career-ops — uma nota de 1 a 5 e o raciocínio por trás dela"
 icon: Scale
-translationHash: 7108334c927d4e60
+translationHash: ffabdfa983e32c8c
 localized: true
 translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
 ---
@@ -155,6 +155,14 @@ O career-ops prepara você para negociar a partir dos seus próprios documentos 
 O `offer-prep` cita na íntegra cada cláusula que merece atenção, explica em linguagem simples e a marca com rótulos neutros, como "costuma ser negociada" ou "pergunte ao seu advogado". Ele termina com perguntas para o seu advogado, pontos a levar ao empregador (como perguntas, nunca exigências) e uma nota fixa de que aquilo não é aconselhamento jurídico. Ele não faz buscas na web e lê apenas contratos em inglês.
 
 `node salary-gap.mjs --summary` mostra, por candidatura, o que você queria, o que a vaga anunciava e o que de fato propuseram a você. `node negotiation-roi.mjs --summary` redige um argumento a partir de uma afirmação de horas economizadas cujo número também aparece no seu `cv.md`, calculada a partir de um salário e uma frequência que você informa: uma estimativa, não aconselhamento financeiro. `/career-ops offer-prep reply {company-slug}` redige um e-mail de resposta a partir do seu relatório de preparação; você mesmo envia.
+
+Se um cargo exige que você se mude para outra província, o mesmo salário pode deixar para você um valor diferente depois dos impostos. `salary-gap.mjs --relocation` compara os dois lugares para um único valor bruto anual:
+
+```bash
+node salary-gap.mjs --relocation --gross 95k --currency CAD --posting-location "Calgary, AB" --home-location "Toronto, ON"
+```
+
+`--gross` é o valor anual e `--currency` é a moeda em que a vaga o informa; quando essa moeda não corresponde à tabela de impostos, o script se recusa a comparar em vez de adivinhar. `--home-location` é opcional: sem ele, a sua localização vem de `config/profile.yml`. `--posting-location-file <path>` lê a localização da vaga a partir de um arquivo, em vez da linha de comando. A tabela de impostos cobre atualmente o Canadá (imposto federal mais Ontário, Nova Escócia, Alberta e Colúmbia Britânica) e não faz comparações entre países. O resultado considera apenas as faixas de imposto, sem créditos, contribuições previdenciárias nem custo de vida: um dado para o seu próprio julgamento, não aconselhamento financeiro nem tributário. Uma avaliação faz a mesma verificação quando a vaga informa um salário e um local de trabalho para o qual você teria que se mudar.
 
 ## Perguntas frequentes [#frequently-asked-questions]
 

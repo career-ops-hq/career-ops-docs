@@ -3,7 +3,7 @@ title: Varredura de portais de vagas
 description: Configure e execute o scanner de portais para encontrar novas vagas automaticamente.
 seoTitle: "Varredura de portais de vagas com o career-ops — Greenhouse, Ashby, Lever, zero tokens"
 icon: ScanEye
-translationHash: 7476c9cd97b61b48
+translationHash: e9fbece900af577b
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -169,6 +169,16 @@ npm run scan -- --company Anthropic
 ```
 
 Substitua `Anthropic` por qualquer nome de empresa da sua lista `tracked_companies`. A correspondência não diferencia maiúsculas de minúsculas.
+
+**Faça a varredura dos sites de vagas da Dayforce:**
+
+Os sites de vagas da Dayforce (Ceridian), em `jobs.dayforcehcm.com`, bloqueiam requisições web simples, então o `npm run scan` não consegue lê-los. Em vez disso, um script separado abre uma sessão real de navegador para eles, o que o deixa mais lento do que a varredura principal. Liste esses portais em `dayforce_boards` no `portals.yml`, com uma entrada por empresa contendo o `name` e o `tenant` dela (o código da empresa no endereço da Dayforce); o `templates/portals.example.yml` mostra o formato. Depois execute:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+As vagas novas vão para `data/pipeline.md`, como na varredura principal. Adicione `-- --dry-run` para ver os resultados sem salvar, `-- --tenant <tenant>` para fazer a varredura de um único portal ou `-- --debug` para salvar uma captura de tela de cada portal em `output/`. Se um portal exibir um desafio anti-bot, o script o ignora; ele nunca tenta contorná-lo.
 
 ### Opção B — Execute a varredura com IA dentro do Claude Code
 
