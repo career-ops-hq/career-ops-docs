@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { CheckIcon, CopyIcon } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { UI } from '@/lib/ui-strings';
+import type { SiteLocale } from '@/components/locale-root-provider';
 
 // Single-line monospace command + copy-to-clipboard button. Pattern from
 // Vercel/Linear/Stripe — the snippet truncates on narrow viewports rather
@@ -10,10 +12,13 @@ import { cn } from '@/lib/cn';
 export function CopyableCommand({
   command,
   className,
+  locale = 'en',
 }: {
   command: string;
   className?: string;
+  locale?: SiteLocale;
 }) {
+  const t = UI[locale];
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -47,13 +52,13 @@ export function CopyableCommand({
           copied ? 'opacity-100' : 'opacity-0',
         )}
       >
-        Copied
+        {t.copied}
       </span>
       <button
         type="button"
         onClick={handleCopy}
-        aria-label={copied ? 'Copied to clipboard' : 'Copy command'}
-        title={copied ? 'Copied' : 'Copy'}
+        aria-label={copied ? t.copiedToClipboard : t.copyCommand}
+        title={copied ? t.copied : t.copy}
         className={cn(
           'shrink-0 inline-flex items-center justify-center rounded-md p-1.5 transition-colors',
           'text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-accent-foreground',

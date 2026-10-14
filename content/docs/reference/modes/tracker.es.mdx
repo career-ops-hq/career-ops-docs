@@ -4,8 +4,8 @@ description: "Lectura rápida del estado de cada candidatura. Útil como chequeo
 seoTitle: "Modo tracker de career-ops — consulta el estado de cada candidatura"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-09-25"
-translationHash: 7188bc520c61b01c
+lastModified: "2026-10-14"
+translationHash: c95cd399167d223d
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -40,13 +40,32 @@ Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 
 Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escrito, decisión pendiente), Applied (la has enviado), Responded (la empresa respondió pero aún sin entrevista), Interview (un proceso activo), y después un estado terminal de Offer, Rejected, Discarded o SKIP para los puestos que no encajan. Para registrar un cambio de estado, pídelo en el chat o ejecuta tú mismo `node set-status.mjs <report#|company> <state>`, y añade `--on YYYY-MM-DD` si ocurrió en una fecha anterior. El comando rechaza los estados desconocidos, bloquea el tracker mientras escribe y registra la transición en `data/status-log.tsv`, el registro que leen las estadísticas de funnel-velocity, así que úsalo en lugar de editar la fila a mano.
 
+Para corregir una nota en lugar de añadir otra, pasa la nota antigua con `--replace-note` y el texto nuevo con `--note`. Sin esa opción, `--note` solo añade al final, lo que deja contradicciones como `not applied; applied` en la fila. La coincidencia se busca sobre una nota completa entre separadores `; `, y si ninguno de los dos textos está en la celda Notes, no se escribe nada:
+
+```bash
+node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applied via referral"
+```
+
+Hay tres flags más pensadas sobre todo para el dashboard TUI en Go, que ahora registra sus cambios de estado a través de `set-status.mjs`. `--report-link N` selecciona la fila cuya celda Report contiene exactamente un enlace al informe `N`, y rechaza las celdas mal formadas en lugar de adivinar. `--repair-status-log` y `--repair-followup` se aplican cuando un cambio a Applied se vuelve a ejecutar sobre una fila que ya está en Applied: añaden la entrada del registro o el recordatorio de seguimiento que el primer intento no llegó a escribir, y no añaden nada si ya están.
+
+## Reparar enlaces rotos a informes
+
+`node verify-pipeline.mjs` reporta `Report not found` cuando la celda Report de una fila enlaza un archivo que ya no existe. `npm run fix-report-links` repara esas filas cambiando solo esa celda por la marca habitual de "sin informe" del tracker. No regenera el informe que falta. Previsualiza primero:
+
+```bash
+npm run fix-report-links -- --dry-run  # list the affected rows, write nothing
+npm run fix-report-links               # apply; the tracker is backed up to .bak first
+```
+
+Todas las demás celdas, el orden de las filas y los finales de línea se quedan como estaban. Una celda Report que contenga cualquier cosa distinta de exactamente un enlace se lista para que la revises a mano y se deja sin cambios. Ejecutarlo dos veces no cambia nada la segunda vez.
+
 ## Cómo leer las cifras acumuladas
 
 Para las cifras acumuladas — el funnel completo, los totales del scanner, la cobertura de portales y el cumplimiento de los seguimientos — el modo ejecuta `node stats.mjs --summary` y presenta su salida tal cual. Ese comando lee tus archivos locales y cuesta cero tokens, así que los números nunca se recalculan a mano ni se estiman de memoria. Usa el resumen en el chat de arriba para una lectura diaria rápida, y el comando de estadísticas cuando quieras los totales acumulados de toda la búsqueda.
 
 ## Exportar una copia reparada
 
-Con cientos de filas, una tabla markdown acumula daños: marcadores de mojibake, una puntuación varada en la columna de estado, ids duplicados, barras verticales sueltas. `node tracker.mjs sync` los detecta y los repara en su índice SQLite, `data/applications.db`, sin tocar el markdown. `tracker.mjs` necesita Node 22.5 o posterior para ese índice; el tracker en markdown sigue funcionando sin él. `node tracker.mjs export` es la forma de adoptar esa copia reparada de tu propio tracker:
+Con cientos de filas, una tabla markdown acumula daños: marcadores de mojibake, una puntuación varada en la columna de estado, ids duplicados, barras verticales sueltas. `node tracker.mjs sync` los detecta y los repara en su índice SQLite, `data/applications.db`, sin tocar el markdown. `tracker.mjs` necesita Node 22.13 o posterior (23.4 o posterior en Node 23) para ese índice; el tracker en markdown sigue funcionando sin él. `node tracker.mjs export` es la forma de adoptar esa copia reparada de tu propio tracker:
 
 ```bash
 node tracker.mjs export                            # rebuilt table on stdout
@@ -77,7 +96,7 @@ La referencia completa del comando, incluidos `sync`, `query` y `history`, está
 
 ## Cosas a tener en cuenta
 
-El estado vive en la columna Status del tracker (`data/applications.md`), no en el archivo del informe. El selector de estado del dashboard TUI en Go también actualiza esa columna, pero no registra la transición en `data/status-log.tsv` como lo hace `set-status.mjs`. funnel-velocity sí ve el nuevo estado, pero no cuándo ocurrió: el cambio falta en los tiempos por etapa, y una fila que acaba en Rejected pierde las etapas por las que pasó. Usa el comando para cualquier cambio que quieras que esas cifras incluyan.
+El estado vive en la columna Status del tracker (`data/applications.md`), no en el archivo del informe. Cambiarlo a mano se salta `data/status-log.tsv`: funnel-velocity sí ve el nuevo estado, pero no cuándo ocurrió, así que el cambio falta en los tiempos por etapa, y una fila que acaba en Rejected pierde las etapas por las que pasó. Usa `set-status.mjs`, el chat o el selector de estado del dashboard TUI en Go, que ejecuta el mismo comando.
 
 ## Relacionados
 

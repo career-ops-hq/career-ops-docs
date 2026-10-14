@@ -11,7 +11,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Resume and job description uploaded to Jobscan servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-jobscan.jpg",
       "intro": "Jobscan is a polished ATS scanner with a low setup bar. career-ops is an end-to-end pipeline that runs on your machine. Different tools, different audiences. Here is the honest comparison.",
       "features": [
@@ -42,12 +42,12 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Your CV, evaluations, and tracking never leave your machine.",
+          "careerOps": "Local-first, with no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else.",
           "competitor": "Uploaded to Jobscan cloud. Subject to their privacy policy."
         },
         {
           "name": "Setup",
-          "careerOps": "git clone + npm install + config. 10–15 minutes if you already have Node 18+.",
+          "careerOps": "git clone + npm install + config. 10–15 minutes if you already have Node 22.13+ (23.4+ on Node 23).",
           "competitor": "Sign up, paste resume. Two minutes."
         },
         {
@@ -80,7 +80,7 @@
         "headline": "Pick career-ops if you write code and want the full pipeline plus pre-apply form drafting. Pick Jobscan if you want a one-click ATS scan and zero setup.",
         "body": [
           "Jobscan does one thing well: tells you which keywords your resume is missing for a specific job description. Their UX is polished, their match score is easy to read, and you are productive in two minutes. The trade-offs are real: $50 a month, your data lives on their servers, and the algorithm is a black box.",
-          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent rubric of five scoring dimensions plus a holistic global score, tailor your CV per job, and — the part nobody else does — pre-apply: the apply mode reads the portal's form, drafts answers for every open-ended question from your profile and the JD, and hands them back for you to review and submit. That single feature saves 15-20 minutes per application, the slowest step in any serious search. The trade-offs are also real: you need Node 22.5+, you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
+          "career-ops is end-to-end and local-first. Scan portals, evaluate listings against a transparent rubric of five scoring dimensions plus a holistic global score, tailor your CV per job, and — the part nobody else does — pre-apply: the apply mode reads the portal's form, drafts answers for every open-ended question from your profile and the JD, and hands them back for you to review and submit. That single feature saves 15-20 minutes per application, the slowest step in any serious search. The trade-offs are also real: you need Node 22.13+ (23.4+ on Node 23), you run things in a terminal, and the methodology assumes you read documentation. Most non-devs would find that setup painful. Most devs would find Jobscan limiting.",
           "Different audiences, different price points, different philosophies. The pre-apply step is where career-ops materially leaves the rest behind."
         ]
       },
@@ -114,7 +114,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Resume content, job descriptions, and tracking data stored on Teal servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-teal.jpg",
       "intro": "Teal bundles an AI resume builder, a Chrome-extension job tracker, and a match-mode scorer into one polished web app. career-ops runs the same pipeline locally through your AI CLI, with the rubric and the code in the open. Same problem, different philosophy.",
       "features": [
@@ -150,7 +150,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Resumes, applications, scoring history never leave your machine.",
+          "careerOps": "Local-first, with no backend of ours. Resumes, applications and scoring history are files on your machine; your CV goes to the AI provider you chose, and nowhere else.",
           "competitor": "Stored on Teal servers. Subject to Teal's privacy policy and terms."
         },
         {
@@ -198,7 +198,7 @@
         },
         {
           "q": "What about my data with career-ops?",
-          "a": "Nothing leaves your machine. Your cv.md, the listings you evaluate, your tracked applications — all of it lives in local files. There is no career-ops account, no telemetry, no cloud sync. The only network traffic is what your AI CLI sends to its provider when you invoke it."
+          "a": "Your cv.md, the listings you evaluate, your tracked applications: all of it lives in local files. There is no career-ops account, no telemetry, no cloud sync, and no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else."
         },
         {
           "q": "Does career-ops have a Chrome extension like Teal?",
@@ -217,7 +217,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Applications, resumes, contacts, and notes stored on Huntr servers."
       },
-      "lastModified": "2026-07-17",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-huntr.jpg",
       "intro": "Huntr is the original Kanban job tracker — boards, columns, drag-and-drop, and a Chrome extension that scrapes job posts into cards. career-ops covers the same pipeline plus scanning, evaluation, and tailoring, but it lives in your terminal and on your disk. Same job, different surface area.",
       "features": [
@@ -263,7 +263,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local files. Applications, resumes, contacts never leave your machine.",
+          "careerOps": "Local files, with no backend of ours. Applications, resumes and contacts are files on your machine; your CV goes to the AI provider you chose, and nowhere else.",
           "competitor": "Stored on Huntr servers. Standard SaaS data-processing terms."
         },
         {
@@ -347,7 +347,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Profile, resume, and tracking data on Simplify servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-simplify.jpg",
       "intro": "Simplify is the polished autofill extension that owns the tech-side job search in 2026 — over 1.5 million users, generous free tier, human-in-the-loop submission. career-ops is the local-first pipeline that runs through your AI CLI. Both reject mass auto-submission. The differences are everything else.",
       "features": [
@@ -388,7 +388,7 @@
         },
         {
           "name": "Setup time",
-          "careerOps": "10-15 minutes (git clone + npm install + config) if you already have Node 18+.",
+          "careerOps": "10-15 minutes (git clone + npm install + config) if you already have Node 22.13+ (23.4+ on Node 23).",
           "competitor": "Two minutes — install extension, fill profile, done."
         },
         {
@@ -450,7 +450,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS plus desktop app. Resume, JD, and live interview audio processed on Final Round servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-finalroundai.jpg",
       "intro": "Final Round AI sits with you during a live interview, transcribing the interviewer and flashing suggested answers on your screen in real time. career-ops sits with you before the interview — drafting the application, the cover letter, the open-ended portal answers, and the company research brief. Adjacent tools, different time slices.",
       "features": [
@@ -496,7 +496,7 @@
         },
         {
           "name": "Data ownership",
-          "careerOps": "Local-first. Nothing leaves your machine unless your AI CLI sends it.",
+          "careerOps": "Local-first, with no backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else.",
           "competitor": "Cloud-hosted, plus desktop app that processes live audio. Interview transcripts and resumes on Final Round servers."
         },
         {
@@ -651,7 +651,7 @@
         "license": "Proprietary, closed-source",
         "dataModel": "Cloud SaaS. Profile, CV, and tracking data on Loopcv servers."
       },
-      "lastModified": "2026-05-18",
+      "lastModified": "2026-10-11",
       "heroImage": "/og/compare/career-ops-vs-loopcv.jpg",
       "intro": "Loopcv is the cleaner auto-apply player — fewer hallucinated wrong-role submissions than LazyApply, transparent volume caps, a real free tier. career-ops is the opposite philosophy: filter hard, tailor every application, draft each form, and the candidate submits. Both have audiences; the trade-offs are sharp.",
       "features": [
@@ -692,7 +692,7 @@
         },
         {
           "name": "Setup time",
-          "careerOps": "10-15 minutes if you already have Node 18+.",
+          "careerOps": "10-15 minutes if you already have Node 22.13+ (23.4+ on Node 23).",
           "competitor": "Five minutes — upload CV, configure loops, done."
         },
         {

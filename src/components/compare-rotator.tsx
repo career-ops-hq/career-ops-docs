@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { Pause, Play } from 'lucide-react';
 import { CoMark } from '@/components/co-mark';
 import { instrumentSerifRegular } from '@/lib/fonts';
+import { UI } from '@/lib/ui-strings';
+import type { SiteLocale } from '@/components/locale-root-provider';
 
 // Eight competitor wordmarks with their canonical brand colors.
 // Order matches the comparison pages shipped in /compare. The wordmark
@@ -22,7 +24,8 @@ const competitors = [
   { name: 'JobHire.AI', slug: 'jobhire', color: '#0d9488' },
 ];
 
-export function CompareRotator() {
+export function CompareRotator({ locale = 'en' }: { locale?: SiteLocale }) {
+  const t = UI[locale];
   const [idx, setIdx] = useState(0);
   const [reduced, setReduced] = useState(false);
   // WCAG 2.2.2 — auto-rotating content needs an explicit pause
@@ -50,12 +53,11 @@ export function CompareRotator() {
       <h2
         className={`${instrumentSerifRegular.className} text-center tracking-tight text-3xl md:text-4xl lg:text-5xl mb-6 lg:mb-8`}
       >
-        Comparing tools?
+        {t.compareHeading}
       </h2>
 
       <p className="text-fd-muted-foreground text-center max-w-xl mx-auto mb-8 lg:mb-12">
-        Side-by-side honest comparisons. Feature matrix, pricing, the
-        killer feature none of them ship.
+        {t.compareBody}
       </p>
 
       <div className="flex flex-col items-center gap-8">
@@ -73,7 +75,7 @@ export function CompareRotator() {
             <Link
               key={c.slug}
               href={`/compare/career-ops-vs-${c.slug}`}
-              aria-label={`career-ops vs ${c.name} comparison`}
+              aria-label={t.compareAria(c.name)}
               aria-hidden={i === idx ? undefined : true}
               tabIndex={i === idx ? undefined : -1}
               className={`absolute inset-0 transition-opacity duration-700 ${
@@ -101,7 +103,7 @@ export function CompareRotator() {
               onClick={() => setPaused((p) => !p)}
               aria-pressed={paused}
               aria-label={
-                paused ? 'Resume comparison slideshow' : 'Pause comparison slideshow'
+                paused ? t.compareResume : t.comparePause
               }
               className="absolute bottom-3 right-3 z-10 flex size-11 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm transition-opacity hover:bg-black/75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
             >
@@ -159,7 +161,7 @@ export function CompareRotator() {
           href="/compare"
           className="text-fd-foreground hover:underline underline-offset-2 text-sm"
         >
-          See all 8 comparisons &rarr;
+          {t.compareSeeAll} &rarr;
         </Link>
       </div>
     </section>

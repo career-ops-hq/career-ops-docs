@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: 463d2a0b30801ba7
+translationHash: 353af4b7011654e3
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -107,9 +107,23 @@ Jeder Bericht ist eine Datei mit einem Namen wie `042-company-name-2026-04-14.md
 - Eine Gehaltsrecherche
 - Einen Vorschlag, wie du dich aufs Vorstellungsgespräch vorbereiten kannst
 
+Jeder Bericht enthält außerdem eine **Risk Summary** (Risikoübersicht). Ihre Zeile **Fixed-term contract** (befristeter Vertrag) zitiert die ausdrückliche Befristung aus der Anzeige, meldet `✅ no fixed term disclosed`, wenn keine genannt wird, und ist als nicht bewertet markiert, wenn die Stellenbeschreibung nicht verfügbar war. Das zugehörige Feld der Machine Summary ist `risk_summary.fixed_term` mit genau einem dieser Werte:
+
+| Wert | Bedeutung |
+|------|-----------|
+| `detected` | Die Anzeige beschreibt ausdrücklich eine befristete Stelle |
+| `not_detected` | Es wurde keine ausdrückliche Befristung gefunden |
+| `not_evaluated` | Die Stellenbeschreibung war für diese Prüfung nicht verfügbar |
+
 **Tracker-Einträge** → `batch/tracker-additions/`
 
 Jedes Angebot legt hier außerdem eine kurze Zusammenfassungsdatei ab: eine Kopfzeile mit den Spaltennamen und eine Zeile mit den Werten, darunter die `url` der Stellenanzeige. Diese werden in Schritt 6 in deinen Haupt-Tracker übernommen.
+
+### Score Evidence
+
+Der Bericht enthält nach der Risk Summary den Abschnitt **Score Evidence**. Er deckt fünf Dimensionen ab: CV-Match, North-Star-Ausrichtung, Vergütung, kulturelle Signale und Red Flags. Jede Zeile hält einen Evidenzstatus fest (`supported`, `partial` oder `unknown`), eine konkrete Quelle oder Beobachtung und eine offene Frage. Der Abschnitt endet mit einer Stufe für das Vertrauen in die Evidenz (`High`, `Medium` oder `Low`), ihrer Begründung und bis zu drei Prüfprioritäten.
+
+Diese Stufe beschreibt die Evidenz hinter dem Global Score. Sie ist weder eine Einstellungswahrscheinlichkeit noch die Legitimitätsstufe der Anzeige aus Block G, und sie ändert den numerischen Score nicht. Die Machine Summary führt die fünf Status in `score_evidence`, die Stufe in `confidence` und die Prioritäten in `confidence_gaps`. Bleiben keine Prioritäten übrig, ist `confidence_gaps` eine leere Liste.
 
 ## Schritt 5: Wiederhole fehlgeschlagene Angebote
 

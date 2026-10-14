@@ -57,7 +57,7 @@ export const homeFr: HomeDict = {
       tourne en local, sur votre propre machine, dans n’importe quel CLI de
       codage IA — Claude Code, OpenCode, Codex, GitHub Copilot et d’autres. Il
       évalue les offres face à votre CV avec une grille de cinq dimensions plus
-      une note globale, de 1.0 à 5.0, génère des CV PDF optimisés pour les ATS et
+      une note globale, de 1 à 5, génère des CV PDF optimisés pour les ATS et
       adaptés à chaque poste, rédige les réponses aux questions ouvertes des
       formulaires Greenhouse, Ashby et Lever, parcourt plus de 150 sources
       d’emploi sans consommer de jetons et suit votre pipeline dans un
@@ -169,8 +169,8 @@ export const homeFr: HomeDict = {
         <>
           career-ops utilise une évaluation par LLM guidée par une grille sur
           cinq dimensions — adéquation, alignement avec votre cap, rémunération,
-          signaux culturels et red flags — qui produit une note globale de 1.0 à
-          5.0 avec des citations de lignes précises de votre CV et des exigences
+          signaux culturels et red flags — qui produit une note globale de 1 à
+          5 avec des citations de lignes précises de votre CV et des exigences
           de l’offre. En dessous de 4.0, l’agent déconseille de postuler. Pas de
           formule fermée, pas de candidatures à l’aveugle. La grille complète est
           publiée sur{' '}
@@ -300,9 +300,9 @@ export const homeFr: HomeDict = {
       q: 'Avec quels outils d’IA career-ops fonctionne-t-il ?',
       a: (
         <>
-          career-ops fonctionne avec Claude Code, Cursor, Codex, OpenCode,
+          career-ops fonctionne avec Claude Code, Cursor, Codex, OpenCode, Pi,
           Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub
-          Copilot CLI — dix CLIs de premier plan (Gemini CLI est un wrapper
+          Copilot CLI — onze CLIs de premier plan (Gemini CLI est un wrapper
           legacy). Les mêmes fichiers de mode fonctionnent sur tous.
           Chacun choisit le CLI qui correspond à son abonnement et à ses
           préférences de coût — career-ops ne vous enferme jamais chez un seul

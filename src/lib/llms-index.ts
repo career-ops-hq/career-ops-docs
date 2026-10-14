@@ -73,7 +73,7 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
 - Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
-- AI coding CLIs supported first-class (10): Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
+- AI coding CLIs supported first-class (11): Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
 - Press: WIRED Greece (published), Business Insider (forthcoming)
 
 ## Business model & sustainability
@@ -113,6 +113,7 @@ ${comparisonsData.comparisons
 - https://career-ops.org/blog/why-career-ops — the thesis behind the project, what it deliberately is not, and the asymmetry it addresses
 - https://career-ops.org/blog/the-complete-ai-job-search-guide — opinionated guide to AI-powered job search in 2026, four-phase pipeline, tool selection by user archetype
 - https://career-ops.org/blog/job-search-data-from-740-listings — real data from one real search: threshold ratios, tailoring delta, reject-pile patterns
+- https://career-ops.org/blog/why-am-i-not-getting-interviews — why applications go unanswered: what the US hiring data says, and what you control (where you apply, who you write to, your own funnel).
 
 ## Source of truth (core repo)
 
@@ -125,6 +126,15 @@ ${comparisonsData.comparisons
 
 - Repository: https://github.com/career-ops-hq/career-ops
 - Discord: https://discord.gg/8pRpHETxa4
+
+## Other languages
+
+Full documentation and a home page in each language; same content, same facts.
+- Español: https://career-ops.org/es · docs https://career-ops.org/es/docs
+- Français: https://career-ops.org/fr · docs https://career-ops.org/fr/docs
+- Deutsch: https://career-ops.org/de · docs https://career-ops.org/de/docs
+- Português (Brasil): https://career-ops.org/pt · docs https://career-ops.org/pt/docs
+- Italiano: https://career-ops.org/it · docs https://career-ops.org/it/docs
 
 ## License
 
@@ -172,7 +182,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\` or \`/de/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all four languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\` or \`/it/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all six languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 
