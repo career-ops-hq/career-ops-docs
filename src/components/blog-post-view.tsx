@@ -2,6 +2,7 @@ import { getMDXComponents } from '@/components/mdx';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { blogPostSchema, faqPageSchema } from '@/lib/schema';
 import { blogSource, type BlogPage } from '@/lib/blog-source';
+import type { BlogLocale } from '@/lib/blog-twins';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 
 export type BlogFrontmatter = {
@@ -16,13 +17,15 @@ export type BlogFrontmatter = {
 };
 
 // Shared render for a blog post, used by /blog/[slug] (EN) and
-// /es/blog/[slug] (ES). Only the byline labels and the date locale vary.
+// /<loc>/blog/[slug] (its twins). Only the byline labels and the date locale vary.
 const LABELS = {
   en: { by: 'By', role: 'creator of career-ops', updated: 'Updated', dateLocale: 'en-US' },
   es: { by: 'Por', role: 'creador de career-ops', updated: 'Actualizado el', dateLocale: 'es' },
+  pt: { by: 'Por', role: 'criador do career-ops', updated: 'Atualizado em', dateLocale: 'pt-BR' },
+  it: { by: 'Di', role: 'creatore di career-ops', updated: 'Aggiornato il', dateLocale: 'it' },
 } as const;
 
-export function BlogPostView({ page, locale }: { page: BlogPage; locale: 'en' | 'es' }) {
+export function BlogPostView({ page, locale }: { page: BlogPage; locale: 'en' | BlogLocale }) {
   const data = page.data as unknown as BlogFrontmatter;
   const MDX = page.data.body;
   const t = LABELS[locale];

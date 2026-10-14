@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
-import { blogSource, blogTwin, type BlogPage } from '@/lib/blog-source';
+import { blogCluster, blogSource, blogTwin, type BlogPage } from '@/lib/blog-source';
+import { BLOG_LOCALES } from '@/lib/blog-twins';
 import { gitLastMod } from '@/lib/git-date';
 import { homeLastModified } from '@/lib/home-date';
 import comparisonsData from '@/lib/data/comparisons.json';
@@ -143,32 +144,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: gd('src/app/(en)/blog/page.tsx'),
   });
   // A post dates itself from its own frontmatter (git as the fallback). A
-  // post with a Spanish twin lists both URLs with the same hreflang cluster.
+  // post with translated twins lists every URL with the same hreflang cluster.
   const postDate = (p: BlogPage) => {
     const data = p.data as { date?: string; lastModified?: string };
     const lastMod = data.lastModified || data.date;
     return lastMod ? handDate(lastMod) : gd(`content/blog/${p.path}`);
   };
   for (const post of blogSource.getPages('en')) {
-    const es = blogTwin(post, 'es');
-    const cluster = es
-      ? {
-          en: `${SITE_URL}${post.url}`,
-          es: `${SITE_URL}${es.url}`,
-          'x-default': `${SITE_URL}${post.url}`,
-        }
-      : undefined;
+    const cluster = blogCluster(post);
     entries.push({
       url: `${SITE_URL}${post.url}`,
       lastModified: postDate(post),
       ...(cluster ? { alternates: { languages: cluster } } : {}),
     });
-    if (es && cluster) {
-      entries.push({
-        url: `${SITE_URL}${es.url}`,
-        lastModified: postDate(es),
-        alternates: { languages: cluster },
-      });
+    for (const loc of BLOG_LOCALES) {
+      const twin = blogTwin(post, loc);
+      if (twin && cluster) {
+        entries.push({
+          url: `${SITE_URL}${twin.url}`,
+          lastModified: postDate(twin),
+          alternates: { languages: cluster },
+        });
+      }
     }
   }
 
