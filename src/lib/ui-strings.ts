@@ -30,6 +30,12 @@ export type UiStrings = {
   starChartAlt: string;
   officialSite: string;
   agents: string;
+  compareSeeAll: string;
+  vercelOssAria: string;
+  languageMenu: (name: string) => string;
+  languageNav: string;
+  dismiss: string;
+  xFormerlyTwitter: string;
 };
 
 export const UI: Record<SiteLocale, UiStrings> = {
@@ -56,6 +62,12 @@ export const UI: Record<SiteLocale, UiStrings> = {
       'career-ops star history on Warpchart — 0 to 50K+ GitHub stars drawn from real timestamps',
     officialSite: 'Official site',
     agents: 'Agents',
+    compareSeeAll: 'See all 8 comparisons',
+    vercelOssAria: 'Member of the Vercel Open Source Program, Summer 2026 cohort',
+    languageMenu: (name) => `Language: ${name}`,
+    languageNav: 'Language',
+    dismiss: 'Dismiss',
+    xFormerlyTwitter: 'X (formerly Twitter)',
   },
   es: {
     compareHeading: '¿Comparando herramientas?',
@@ -80,6 +92,12 @@ export const UI: Record<SiteLocale, UiStrings> = {
       'Historial de estrellas de career-ops en Warpchart: de 0 a más de 50K estrellas en GitHub, trazado con fechas reales',
     officialSite: 'Sitio oficial',
     agents: 'Agentes',
+    compareSeeAll: 'Ver las 8 comparativas',
+    vercelOssAria: 'Miembro del Vercel Open Source Program, cohorte Summer 2026',
+    languageMenu: (name) => `Idioma: ${name}`,
+    languageNav: 'Idioma',
+    dismiss: 'Cerrar',
+    xFormerlyTwitter: 'X (antes Twitter)',
   },
   fr: {
     compareHeading: 'Vous comparez des outils ?',
@@ -104,6 +122,12 @@ export const UI: Record<SiteLocale, UiStrings> = {
       'Historique des étoiles de career-ops sur Warpchart : de 0 à plus de 50K étoiles GitHub, tracé à partir de dates réelles',
     officialSite: 'Site officiel',
     agents: 'Agents',
+    compareSeeAll: 'Voir les 8 comparatifs',
+    vercelOssAria: 'Membre du Vercel Open Source Program, promotion Summer 2026',
+    languageMenu: (name) => `Langue\u00a0: ${name}`,
+    languageNav: 'Langue',
+    dismiss: 'Fermer',
+    xFormerlyTwitter: 'X (anciennement Twitter)',
   },
   de: {
     compareHeading: 'Tools im Vergleich?',
@@ -128,6 +152,12 @@ export const UI: Record<SiteLocale, UiStrings> = {
       'Sterne-Verlauf von career-ops auf Warpchart: von 0 auf über 50K GitHub-Sterne, gezeichnet aus echten Zeitstempeln',
     officialSite: 'Offizielle Website',
     agents: 'Agenten',
+    compareSeeAll: 'Alle 8 Vergleiche ansehen',
+    vercelOssAria: 'Mitglied im Vercel Open Source Program, Kohorte Summer 2026',
+    languageMenu: (name) => `Sprache: ${name}`,
+    languageNav: 'Sprache',
+    dismiss: 'Schließen',
+    xFormerlyTwitter: 'X (ehemals Twitter)',
   },
   pt: {
     compareHeading: 'Comparando ferramentas?',
@@ -152,6 +182,12 @@ export const UI: Record<SiteLocale, UiStrings> = {
       'Histórico de estrelas do career-ops no Warpchart: de 0 a mais de 50 mil estrelas no GitHub, traçado com datas reais',
     officialSite: 'Site oficial',
     agents: 'Agentes',
+    compareSeeAll: 'Ver as 8 comparações',
+    vercelOssAria: 'Membro do Vercel Open Source Program, turma Summer 2026',
+    languageMenu: (name) => `Idioma: ${name}`,
+    languageNav: 'Idioma',
+    dismiss: 'Fechar',
+    xFormerlyTwitter: 'X (antigo Twitter)',
   },
   it: {
     compareHeading: 'Stai confrontando strumenti?',
@@ -176,5 +212,11 @@ export const UI: Record<SiteLocale, UiStrings> = {
       'Storico delle stelle di career-ops su Warpchart: da 0 a oltre 50K stelle su GitHub, tracciato da date reali',
     officialSite: 'Sito ufficiale',
     agents: 'Agenti',
+    compareSeeAll: 'Vedi tutti gli 8 confronti',
+    vercelOssAria: 'Membro del Vercel Open Source Program, coorte Summer 2026',
+    languageMenu: (name) => `Lingua: ${name}`,
+    languageNav: 'Lingua',
+    dismiss: 'Chiudi',
+    xFormerlyTwitter: 'X (ex Twitter)',
   },
 };

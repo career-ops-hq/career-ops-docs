@@ -153,7 +153,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
                 href={PRESS.wiredGR}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                aria-label="Featured in WIRED Greece"
+                aria-label={`${dict.featuredIn} WIRED Greece`}
                 className="opacity-55 hover:opacity-100 transition-opacity duration-300"
               >
                 <Image src="/press/wired.svg" alt="WIRED" width={110} height={22} className="h-[22px] w-auto brightness-0 dark:invert" />
@@ -162,7 +162,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
                 href={PRESS.biEN}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                aria-label="Featured in Business Insider"
+                aria-label={`${dict.featuredIn} Business Insider`}
                 className="opacity-55 hover:opacity-100 transition-opacity duration-300"
               >
                 <Image src="/press/business-insider.svg" alt="Business Insider" width={84} height={26} className="h-[26px] w-auto brightness-0 dark:invert" />
@@ -176,7 +176,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               href="https://vercel.com/open-source-program"
               target="_blank"
               rel="noopener sponsored"
-              aria-label="Member of the Vercel Open Source Program, Summer 2026 cohort"
+              aria-label={UI[dict.locale].vercelOssAria}
               className="opacity-55 hover:opacity-100 transition-opacity duration-300"
             >
               <Image src="/press/vercel-oss-2026.svg" alt="Vercel Open Source Software Program 2026" width={240} height={24} className="h-[24px] w-auto brightness-0 dark:invert" />

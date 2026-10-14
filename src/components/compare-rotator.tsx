@@ -161,7 +161,7 @@ export function CompareRotator({ locale = 'en' }: { locale?: SiteLocale }) {
           href="/compare"
           className="text-fd-foreground hover:underline underline-offset-2 text-sm"
         >
-          See all 8 comparisons &rarr;
+          {t.compareSeeAll} &rarr;
         </Link>
       </div>
     </section>
