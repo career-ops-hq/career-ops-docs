@@ -10,6 +10,7 @@ import { LocaleRootProvider, type SiteLocale } from '@/components/locale-root-pr
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { UI } from '@/lib/ui-strings';
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 
 import type { Metadata } from 'next';
 
@@ -18,8 +19,17 @@ import type { Metadata } from 'next';
 // exposes at build time: production happened to resolve to career-ops.org,
 // but that was an implicit dependency, and a local build resolved the same
 // cards to http://localhost:3000.
+//
+// The share card every page inherits unless it sets its own: the home card
+// (og-banner.jpg is the same image). Only openGraph: twitter:image already
+// falls back to the page's og:image, and a twitter fallback here would
+// override a page's own card (the docs set openGraph only). Next merges
+// metadata one key deep, so a page that defines openGraph WITHOUT images
+// drops this fallback; verify-i18n-seo fails any sitemap URL left without
+// og:image or twitter:image, which catches that case.
 export const rootMetadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
+  openGraph: { images: [DEFAULT_OG_IMAGE] },
 };
 
 // Social brand marks as inline SVG (the installed lucide-react 1.8.0

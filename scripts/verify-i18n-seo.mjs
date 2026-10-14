@@ -103,6 +103,8 @@ function parseHead(html) {
   let canonical = null;
   let ogLocale = null;
   let metaLang = null;
+  let ogImage = null;
+  let twitterImage = null;
   for (const tag of head.match(/<link\b[^>]*>/gi) || []) {
     const a = attrs(tag);
     if (a.rel === 'canonical' && a.href) canonical = norm(a.href);
@@ -111,10 +113,12 @@ function parseHead(html) {
   for (const tag of head.match(/<meta\b[^>]*>/gi) || []) {
     const a = attrs(tag);
     if (a.property === 'og:locale') ogLocale = a.content ?? null;
+    if (a.property === 'og:image') ogImage ??= a.content || null;
+    if (a.name === 'twitter:image') twitterImage ??= a.content || null;
     if ((a['http-equiv'] || '').toLowerCase() === 'content-language') metaLang = a.content ?? null;
   }
   const htmlLang = html.match(/<html\b[^>]*\blang="([^"]*)"/i)?.[1] ?? null;
-  return { cluster, canonical, ogLocale, metaLang, htmlLang, hasHead: /<\/head>/i.test(html) };
+  return { cluster, canonical, ogLocale, metaLang, ogImage, twitterImage, htmlLang, hasHead: /<\/head>/i.test(html) };
 }
 
 const pathOf = (url) => (url.startsWith(SITE) ? url.slice(SITE.length) || '/' : url);
@@ -178,6 +182,12 @@ function check(snap, opts = {}) {
     checked++;
     const h = parseHead(page.body);
     if (!h.hasHead) fail('head', path, 'no </head> in the HTML');
+
+    // share card: every indexable page needs one (the root layout supplies
+    // the home card; a page whose own openGraph/twitter omits images drops it)
+    if (!h.ogImage || !h.twitterImage) {
+      fail('share-image', path, `no ${[!h.ogImage && 'og:image', !h.twitterImage && 'twitter:image'].filter(Boolean).join(' or ')}`);
+    }
 
     // canonical
     if (h.canonical !== loc) fail('canonical', path, `canonical is ${h.canonical ?? '(none)'}, expected ${loc}`);
@@ -405,7 +415,9 @@ function fixture() {
     (meta ? `<meta http-equiv="content-language" content="${meta}"/>` : '') +
     `<link rel="canonical" href="${canonical}"/>` +
     (cluster ? Object.entries(cluster).map(([k, v]) => `<link rel="alternate" hrefLang="${k}" href="${v}"/>`).join('') : '') +
-    (og ? `<meta property="og:locale" content="${og}"/>` : '') + '</head><body>x</body></html>';
+    (og ? `<meta property="og:locale" content="${og}"/>` : '') +
+    `<meta property="og:image" content="${S}/og-banner.jpg"/><meta name="twitter:image" content="${S}/og-banner.jpg"/>` +
+    '</head><body>x</body></html>';
   const ok = (body, extra = {}) => ({ status: 200, headers: { 'content-type': 'text/html; charset=utf-8', vary: 'rsc, Accept', ...extra }, body });
   const md = { status: 200, headers: { 'content-type': 'text/markdown; charset=utf-8', vary: 'Accept', 'x-robots-tag': 'noindex' }, body: '# x' };
   const redirect = (to) => ({ status: 308, headers: {}, body: '', location: `http://localhost:3999${to}` });
@@ -458,6 +470,7 @@ const SABOTAGE = [
   ['md-noindex', (s) => { delete s.negotiated['/docs/faq'].headers['x-robots-tag']; }],
   ['md-twin-noindex', (s) => { delete s.mdTwins['/de/docs/faq'].headers['x-robots-tag']; }],
   ['head', (s) => edit(s, '/about', '</head>', '')],
+  ['share-image', (s) => edit(s, '/about', '<meta property="og:image"', '<meta property="og:image:alt"')],
   ['x-default-missing', (s) => {
     s.sitemap = s.sitemap.split('<xhtml:link rel="alternate" hreflang="x-default" href="https://career-ops.org/docs/faq"/>').join('');
     for (const p of ['/docs/faq', '/de/docs/faq']) edit(s, p, '<link rel="alternate" hrefLang="x-default" href="https://career-ops.org/docs/faq"/>', '');
