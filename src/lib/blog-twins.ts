@@ -8,6 +8,6 @@ export type BlogLocale = (typeof BLOG_LOCALES)[number];
 
 export const BLOG_TWINS: Record<BlogLocale, readonly string[]> = {
   es: ['why-am-i-not-getting-interviews'],
-  pt: [],
-  it: [],
+  pt: ['why-am-i-not-getting-interviews'],
+  it: ['why-am-i-not-getting-interviews'],
 };
