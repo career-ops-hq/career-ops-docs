@@ -3,7 +3,7 @@ title: career-ops unter Windows
 seoTitle: "Läuft career-ops unter Windows? Ja, vollständig unterstützt. Der Installer übernimmt die Einrichtung"
 description: "career-ops läuft unter Windows vollständig unterstützt. Die einzige plattformspezifische Einschränkung betrifft Symlinks, und die erledigt der Installer automatisch: kein Admin-Modus, kein mklink und keine Mindestversion des Betriebssystems."
 icon: MonitorCheck
-translationHash: b3cb4d7bb67cff87
+translationHash: e3486e8615e2cdac
 localized: true
 translatedFrom: /docs/windows
 ---
@@ -14,7 +14,7 @@ translatedFrom: /docs/windows
 
 Windows legt standardmäßig keine Symlinks an. Nach einem frischen Git-Checkout sind die Skill-Einstiegspunkte der CLIs (`.claude/skills/`, `.opencode/skills/` usw.) deshalb nur einfache Verweisdateien und keine echten Symlinks. Genau das verursacht bei anderen Tools den bekannten Fehler „Skills werden nicht geladen“.
 
-career-ops erkennt das automatisch. Dafür sorgt ein Schritt namens `materializeSkillEntrypoints`. Er läuft, wenn du den Installer oder den Updater ausführst: `npx @santifer/career-ops init` bei einer Neuinstallation oder `node update-system.mjs apply --confirm` bei einem Update. Dabei ersetzt er diese Verweisdateien durch den vollständigen Skill-Inhalt. Du brauchst weder Administratorrechte noch den Entwicklermodus noch einen manuellen `mklink`-Befehl.
+career-ops erkennt das automatisch. Dafür sorgt ein Schritt namens `materializeSkillEntrypoints`. Er läuft, wenn du den Installer oder den Updater ausführst: `npx @santifer/career-ops init` bei einer Neuinstallation oder `node update-system.mjs apply --confirm` bei einem Update. Dabei ersetzt er diese Verweisdateien durch den vollständigen Skill-Inhalt. Aus einem verknüpften Git-Worktree heraus führt `node update-system.mjs apply --confirm` diese Reparatur in deinem `main`-Checkout durch. Führe im Worktree `git merge main` aus, um sie zu übernehmen; Worktrees, die vom aktualisierten `main` aus erstellt werden, haben sie bereits. Ist `CAREER_OPS_UPDATE_IN_WORKTREE=1` gesetzt, repariert `apply` stattdessen nur den Branch dieses Worktrees, und `main` bleibt unrepariert. Du brauchst weder Administratorrechte noch den Entwicklermodus noch einen manuellen `mklink`-Befehl.
 
 <Callout title="Keine Mindestversion des Betriebssystems">
 career-ops setzt keine bestimmte Windows- oder macOS-Version voraus. Wenn Node läuft, läuft auch career-ops. Falls du anderswo gelesen hast, dass eine Mindestversion des Betriebssystems nötig sei, stimmt das nicht.

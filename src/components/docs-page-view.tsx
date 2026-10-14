@@ -14,46 +14,42 @@ import { SiteLink } from '@/components/mdx-link';
 import { gitConfig } from '@/lib/shared';
 import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
 import { gitLastMod } from '@/lib/git-date';
-import { CLAUDE_CODE_FAQ } from '@/lib/claude-code-faq';
-import { FAQ_ENTRIES } from '@/lib/faq-data';
+import { CLAUDE_CODE_FAQ_BY_LOCALE, FAQ_BY_LOCALE, type FaqEntry } from '@/lib/faq-data';
 import { GLOSSARY_TERMS } from '@/lib/glossary-data';
 
 type DocsPageType = InferPageType<typeof source>;
 
 // A few docs pages carry an extra structured-data layer beyond TechArticle:
 // /docs/faq and /docs/claude-code (FAQPage), /docs/free-ai-engine (HowTo) and
-// /docs/reference/glossary (DefinedTermSet). The data is English, so it is
-// emitted on English pages only. Spanish and French pages used to carry the
-// English graphs, with the English page's @id, where none of that text is
-// visible. Until the data is generated from each locale's own MDX, a
-// translated page gets no extra layer rather than a wrong one.
-function extraSchemaFor(slug: string[] | undefined, locale: string): object | null {
-  if (locale !== 'en') return null;
+// /docs/reference/glossary (DefinedTermSet). The two FAQPages are generated
+// from each locale's own MDX (scripts/faq-from-mdx.mjs), so every language
+// gets its own, with its own @id and inLanguage. HowTo and DefinedTermSet are
+// English data, so they stay on English pages only: Spanish and French pages
+// used to carry the English graphs, with the English page's @id, where none of
+// that text is visible. A translated page gets no extra layer rather than a
+// wrong one.
+const SITE = 'https://career-ops.org';
+
+function faqPage(url: string, locale: string, list: FaqEntry[] | undefined): object | null {
+  if (!list?.length) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${SITE}${url}#faq`,
+    inLanguage: locale,
+    mainEntity: list.map((e) => ({
+      '@type': 'Question',
+      name: e.question,
+      acceptedAnswer: { '@type': 'Answer', text: e.answer },
+    })),
+  };
+}
+
+function extraSchemaFor(slug: string[] | undefined, locale: string, url: string): object | null {
   const key = (slug ?? []).join('/');
-  if (key === 'faq') {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      '@id': 'https://career-ops.org/docs/faq#faq',
-      mainEntity: FAQ_ENTRIES.map((e) => ({
-        '@type': 'Question',
-        name: e.question,
-        acceptedAnswer: { '@type': 'Answer', text: e.answer },
-      })),
-    };
-  }
-  if (key === 'claude-code') {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      '@id': 'https://career-ops.org/docs/claude-code#faq',
-      mainEntity: CLAUDE_CODE_FAQ.map((e) => ({
-        '@type': 'Question',
-        name: e.question,
-        acceptedAnswer: { '@type': 'Answer', text: e.answer },
-      })),
-    };
-  }
+  if (key === 'faq') return faqPage(url, locale, FAQ_BY_LOCALE[locale]);
+  if (key === 'claude-code') return faqPage(url, locale, CLAUDE_CODE_FAQ_BY_LOCALE[locale]);
+  if (locale !== 'en') return null;
   if (key === 'free-ai-engine') {
     // HowTo schema (Google favours it in AI Overviews) mirroring the
     // page's recommended Path 1 — OpenCode + a free provider. Steps kept
@@ -113,8 +109,8 @@ function extraSchemaFor(slug: string[] | undefined, locale: string): object | nu
 // chrome, schema, and MDX rendering are identical. `page.path` resolves to the
 // locale's own file (.mdx or .es.mdx), so the git date and "edit on GitHub"
 // link point at the right source per language.
-const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr', de: 'de' } as const;
-const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le', de: 'Aktualisiert am' } as const;
+const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr', de: 'de', pt: 'pt-BR', it: 'it' } as const;
+const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le', de: 'Aktualisiert am', pt: 'Atualizado em', it: 'Aggiornato il' } as const;
 
 export function DocsPageView({ page }: { page: DocsPageType }) {
   const MDX = page.data.body;
@@ -128,7 +124,7 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
   // in English, next to everything else in their own language. Both the date
   // format and the label follow the page's locale.
   const locale = (page.locale ?? 'en') as keyof typeof UPDATED_LABEL;
-  const extraSchema = extraSchemaFor(page.slugs, locale);
+  const extraSchema = extraSchemaFor(page.slugs, locale, page.url);
   const dateModifiedLabel = gitDate?.toLocaleDateString(DATE_LOCALE[locale] ?? 'en-US', {
     year: 'numeric',
     month: 'long',

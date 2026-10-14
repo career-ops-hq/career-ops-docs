@@ -4,8 +4,8 @@ description: "Dein stärkster Hebel auf LinkedIn. Mit einem Firmennamen und dem 
 seoTitle: "career-ops contacto-Modus — warme LinkedIn-Kontakte finden und Nachrichten entwerfen"
 icon: UserPlus
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: ef2b573d6f41f444
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
 localized: true
 translatedFrom: /docs/reference/modes/contacto
 ---
@@ -13,6 +13,8 @@ translatedFrom: /docs/reference/modes/contacto
 ## Was der Modus macht
 
 Der Modus contacto liest den Firmennamen und den Kontext der Stellenanzeige. Dann schlägt er Ansprechpersonen vor, die er per WebSearch findet: den Hiring Manager, den zuständigen Recruiter, zwei oder drei künftige Teamkollegen und jemanden, der bekanntermaßen Vorstellungsgespräche führt. Er entwirft eine kurze Nachricht mit drei Sätzen und unter 300 Zeichen. Sie ist auf die Stelle zugeschnitten und darauf, wer der Kontakt ist.
+
+**Zuerst die gespeicherten Kontakte.** Vor jeder Suche führt contacto `node contact-lookup.mjs --company "<company>" --summary` mit deinen gespeicherten Kontakten in `data/contacts.tsv` aus. Er zeigt dir alle, die du bei dieser Firma schon kennst, zusammen mit der früheren Bewerbung, über die sie mit der Firma verbunden sind. Wählst du einen davon aus, überspringt der Modus die Suche und entwirft eine **Internal Referral**-Nachricht: Sie nennt deinen echten früheren Kontakt, sagt in einem Satz, warum die neue Stelle passt, und bittet direkt um eine Empfehlung. Das ist das Gegenteil der Nachricht an künftige Teamkollegen, die nie nach einem Job fragt. Ein gespeicherter Kontakt gilt erst dann als interne Empfehlung, wenn du bestätigst, dass du mit dieser Person wirklich schon zu tun hattest. Dass sie bei derselben Firma arbeitet, reicht nicht. Um einen Kontakt aus der Antwort eines Recruiters oder einer Person zu speichern, die mit dir ein Vorstellungsgespräch geführt hat, kopierst du die Antwort in eine Datei und führst `node contact-extract.mjs --file <email.txt>` aus. Das Skript fragt nach, bevor es etwas speichert. contacto entwirft jede Nachricht, aber ob du sie abschickst, entscheidest du.
 
 ## Wann du ihn nutzt
 

@@ -3,7 +3,7 @@ title: Scanner les portails d'emploi
 description: Configurez et lancez le scanner de portails pour trouver automatiquement de nouvelles offres d'emploi.
 seoTitle: "Scanner les portails d'emploi avec career-ops — Greenhouse, Ashby, Lever, zéro token"
 icon: ScanEye
-translationHash: 1fb2c4a20e4d60c2
+translationHash: e9fbece900af577b
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -170,6 +170,16 @@ npm run scan -- --company Anthropic
 
 Remplacez `Anthropic` par n'importe quel nom d'entreprise de votre liste `tracked_companies`. La correspondance n'est pas sensible à la casse.
 
+**Scanner les sites carrières Dayforce :**
+
+Les sites carrières hébergés sur Dayforce (Ceridian), à l'adresse `jobs.dayforcehcm.com`, bloquent les requêtes web simples : `npm run scan` ne peut donc pas les lire. Un script distinct ouvre à la place une véritable session de navigateur, ce qui le rend plus lent que le scan principal. Listez ces sites sous `dayforce_boards` dans `portals.yml`, avec une entrée par entreprise indiquant son `name` et son `tenant` (le code de l'entreprise dans l'adresse Dayforce) ; `templates/portals.example.yml` montre le format. Puis exécutez :
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+Les nouvelles offres sont ajoutées à `data/pipeline.md`, comme avec le scan principal. Ajoutez `-- --dry-run` pour prévisualiser sans enregistrer, `-- --tenant <tenant>` pour scanner un seul site, ou `-- --debug` pour enregistrer une capture d'écran de chaque site dans `output/`. Si un site affiche une vérification anti-bot, le script l'ignore ; il ne tente jamais de la contourner.
+
 ### Option B — Lancer le scan piloté par l'IA dans Claude Code
 
 Ouvrez Claude Code dans le dossier du projet et tapez :
@@ -238,7 +248,7 @@ Si cet avertissement n'apparaît pas, votre filtre de titres est peut-être trop
 
 **Où vont les nouvelles offres :** chaque nouvelle offre est ajoutée sous forme de ligne dans `data/pipeline.md`. C'est la liste des offres en attente d'évaluation.
 
-**À quoi sert `data/scan-history.tsv` :** chaque URL vue par le scanner — qu'elle ait été ajoutée, filtrée ou ignorée — est consignée ici. C'est ainsi que le scanner évite de vous montrer deux fois la même offre lors des scans futurs. Vous n'avez pas besoin de modifier ce fichier.
+**À quoi sert `data/scan-history.tsv` :** chaque URL vue par le scanner — qu'elle ait été ajoutée, filtrée ou ignorée — est consignée ici. C'est ainsi que le scanner évite de vous montrer deux fois la même offre lors des scans futurs. Une exception : les offres écartées par votre `location_filter` ou votre `max_posting_age_days` dans `portals.yml`. Elles sont consignées comme `skipped_location` ou `skipped_age` et peuvent réapparaître dès que vous modifiez ce réglage. Vous n'avez pas besoin de modifier ce fichier.
 
 ## Évaluer les nouvelles offres issues d'un scan
 
@@ -272,7 +282,7 @@ Voici ce que signifie chaque colonne :
     | Colonne        | Ce qu'elle vous indique                                                                                                                                                                        |
     | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
     | **#**          | Le numéro du rapport. Utilisez-le pour retrouver le rapport complet dans `reports/` — par exemple, le rapport 024 est `reports/024-anthropic-2026-04-13.md`                                    |
-    | **Score**      | Dans quelle mesure le poste correspond à votre profil, de 1.0 à 5.0                                                                                                                            |
+    | **Score**      | Dans quelle mesure le poste correspond à votre profil, de 1 à 5                                                                                                                            |
     | **Légitimité** | Si l'annonce semble réelle et active. « High Confidence » signifie que l'offre est en ligne et que les détails sont cohérents. « Proceed w/ Caution » signifie que quelque chose a attiré l'attention — lisez la note à côté. |
   </div>
 </div>
@@ -284,7 +294,7 @@ Voici ce que signifie chaque colonne :
 
 ## Que faire ensuite
 
-Quand `/career-ops pipeline` se termine, chaque offre a un score de 1.0 à 5.0. Vous trouverez le rapport complet de chaque poste dans le dossier `reports/`. Le score indique dans quelle mesure le poste correspond à votre profil.
+Quand `/career-ops pipeline` se termine, chaque offre a un score de 1 à 5. Vous trouverez le rapport complet de chaque poste dans le dossier `reports/`. Le score indique dans quelle mesure le poste correspond à votre profil.
 
 Utilisez le score comme point de départ :
 

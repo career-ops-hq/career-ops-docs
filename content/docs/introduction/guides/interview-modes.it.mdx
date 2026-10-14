@@ -1,0 +1,66 @@
+---
+title: Prepararsi ai colloqui
+description: Usa le modalità di colloquio (piano, pratica, debriefing) per prepararti a un colloquio specifico del processo di selezione, provarla con un intervistatore AI e trasformare ogni colloquio reale in informazioni utili per il successivo.
+seoTitle: "Come prepararsi a un colloquio di lavoro con career-ops, fase per fase"
+icon: GraduationCap
+translationHash: f200ca2ca0715a2e
+localized: true
+translatedFrom: /docs/introduction/guides/interview-modes
+---
+
+Le modalità di colloquio sono il sistema di preparazione ai colloqui di career-ops, disponibile dalla v1.16.0: `interview/plan` costruisce un piano di preparazione a blocchi orari per un colloquio specifico del processo, `interview/practice` conduce una simulazione di colloquio testuale, una domanda alla volta, e `interview/debrief` registra ciò che è successo davvero, così il colloquio successivo parte da una base migliore. Insieme formano un ciclo (piano, pratica, colloquio, debriefing, e di nuovo da capo) i cui benefici si sommano lungo tutto il processo di selezione.
+
+Completano la più vecchia [modalità `interview-prep`](/it/docs/reference/modes/interview-prep), che costruisce le tue fondamenta durature (archivio di storie, archivio di domande). Le tre modalità mirate riguardano invece una *specifica fase in arrivo*.
+
+<Callout title="Cosa ti serve prima">
+Uno spazio di lavoro con `cv.md` e `config/profile.yml` già al loro posto (la [Guida rapida](/it/docs) li configura entrambi). Le modalità li leggono per ancorare ogni piano e ogni feedback alla tua esperienza reale, non a consigli generici sui colloqui.
+</Callout>
+
+## Il ciclo in breve
+
+| Modalità | Quando | Cosa ottieni |
+| --- | --- | --- |
+| `interview/plan` | Appena viene fissata una fase | Un piano di preparazione a blocchi orari, dimensionato sulle ore che hai davvero |
+| `interview/practice` | Prima della fase | Una simulazione di colloquio testuale con feedback strutturato per ogni risposta |
+| `interview/debrief` | Subito dopo il colloquio reale | Una valutazione onesta domanda per domanda + un archivio di domande aggiornato |
+
+## Piano: come organizzare la preparazione a partire dalla data del colloquio
+
+Dai a `interview/plan` la descrizione della posizione, la data e l'ora del colloquio, più il tipo di fase e il nome dell'intervistatore, se li conosci. Legge il tuo curriculum e il tuo profilo, esegue una valutazione onesta della compatibilità (i punti di forza su cui fare leva, le lacune che con ogni probabilità verranno messe alla prova) e divide le ore che ti restano in blocchi di preparazione concreti.
+
+```txt title="Esempio"
+/career-ops interview/plan
+
+→ Inputs: JD (pasted), interview Thursday 14:00, HM screen with Ana (Eng Manager)
+→ Fit assessment: 4 strengths to anchor · 2 gaps ranked by test likelihood
+→ Plan (9 hours available):
+   Block 1 — Lock your narrative (~1.5h): timeline, "why us", strongest proof point
+   Block 2 — Gap: event-driven architectures (~3h)
+   Block 3 — Behavioral stories, STAR+R (~2h)
+   Block 4 — Mock run + comp answer (~1.5h)
+```
+
+Il piano si calibra sulla fase: per un primo colloquio con il recruiter prevede logistica e narrazione, non i dettagli tecnici più profondi; per un approfondimento tecnico con chi fa quel lavoro prevede profondità nella competenza chiave indicata nell'annuncio. Se esiste un archivio di domande di una fase precedente, tutto ciò che ti ha messo in difficoltà riceve un blocco dedicato: i dati reali sulle tue prestazioni contano più del rischio ipotizzato.
+
+## Pratica: come simulare un colloquio una domanda alla volta [#practice-rehearse-against-a-realistic-interviewer]
+
+`interview/practice` interpreta l'intervistatore, con nome e ruolo se li fornisci, e fa una domanda alla volta, restando nel personaggio, con domande di approfondimento naturali là dove un vero intervistatore andrebbe più a fondo. Dopo ogni risposta ricevi un feedback strutturato: cosa ha funzionato, cosa rendere più incisivo e una versione più forte della tua risposta, basata sul tuo curriculum reale e sul tuo archivio di storie.
+
+Tiene anche traccia della sessione come farebbe un intervistatore: se ricorri due volte alla stessa storia, ti segnala che il tuo repertorio di esempi appare scarno; se la tua risposta si chiude sull'ambito sbagliato per il ruolo, ti dice dove farla approdare.
+
+<Callout>
+La pratica è onesta sui propri limiti: se non hai ancora costruito un archivio di domande o degli appunti di preparazione specifici per il ruolo, lo dice e ti propone di eseguire prima `interview-prep` o `interview/plan`, invece di avviare in silenzio una sessione generica.
+</Callout>
+
+## Debriefing: cosa fare dopo un colloquio per non perdere ciò che hai imparato
+
+Esegui `interview/debrief` subito dopo un colloquio reale, finché il ricordo è fresco. Ti accompagna attraverso ogni domanda che riesci a ricordare, registra come ha reagito l'intervistatore e produce una valutazione onesta domanda per domanda. Poi fa il lavoro che si accumula nel tempo:
+
+- **Aggiorna l'archivio di domande**: ogni domanda viene contrassegnata con ✅ / 🟡 / 🔴 in base alla prestazione reale, non alle sensazioni.
+- **Colma le lacune**: per ogni 🔴 spiega la risposta corretta con un esempio svolto e la collega a una storia che hai già.
+- **Estrae nuove storie**: se durante il colloquio hai raccontato qualcosa che non è ancora nel tuo archivio di storie, ti propone di trasformarlo in una storia STAR+R e lo aggiunge se dici di sì.
+- **Prevede la fase successiva**: se conosci il formato, elenca le domande probabili, ciascuna etichettata `[inferred]`, a partire dal ruolo dell'intervistatore e da ciò che questa fase ha già coperto.
+
+## Perché questo ciclo funziona
+
+Di solito la preparazione ai colloqui riparte da zero a ogni fase. Le modalità di colloquio la rendono cumulativa: ciò che un vero intervistatore ha chiesto davvero diventa il segnale di preparazione con la priorità più alta per la fase successiva, conservato in semplici file Markdown (`interview-prep/question-bank.md`, `story-bank.md`) che sono tuoi, sul tuo computer, come tutto il resto in career-ops.

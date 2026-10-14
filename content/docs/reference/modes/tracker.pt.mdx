@@ -1,0 +1,104 @@
+---
+title: tracker
+description: "Leitura rápida de como está cada candidatura. Útil como conferência diária ou na preparação da revisão semanal. A interface completa, controlada pelo teclado, fica no dashboard TUI em Go; este modo é o resumo dentro do chat."
+seoTitle: "Modo tracker do career-ops: acompanhe o status de cada candidatura"
+icon: LayoutGrid
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: c95cd399167d223d
+localized: true
+translatedFrom: /docs/reference/modes/tracker
+---
+
+## O que ele faz
+
+O modo `tracker` lê todos os arquivos em reports/ e produz um resumo estruturado, agrupado por etapa: candidaturas enviadas, avaliadas, em entrevista, rejeitadas e descartadas. As contagens por etapa, a atividade recente e os follow-ups atrasados aparecem em uma única resposta.
+
+## Quando usar
+
+Use o tracker para uma conferência diária de quinze segundos. Use o dashboard TUI em Go quando precisar se aprofundar.
+
+## Exemplo
+
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+
+## Como é uma execução
+
+Uma execução do tracker imprime a tabela completa de candidaturas e um bloco de estatísticas em uma única resposta, para que você enxergue toda a busca de uma vez. Cada linha é uma candidatura, com empresa, cargo, nota, status atual e a indicação de que o PDF personalizado e o relatório de avaliação já foram gerados ou não.
+
+```txt title="Example"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
+
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
+```
+
+Uma candidatura passa por um conjunto fixo de estados: Evaluated (relatório escrito, decisão pendente), Applied (você enviou a candidatura), Responded (a empresa respondeu, mas ainda não há entrevista), Interview (um processo seletivo em andamento) e, por fim, um estado terminal: Offer (você recebeu uma proposta), Rejected, Discarded ou SKIP, para vagas que não combinam com o seu perfil. Para registrar uma mudança de status, peça no chat ou execute você mesmo `node set-status.mjs <report#|company> <state>`, acrescentando `--on YYYY-MM-DD` quando a mudança tiver acontecido em um dia anterior. O comando recusa estados desconhecidos, bloqueia o tracker enquanto grava e registra a transição em `data/status-log.tsv`, o histórico que as estatísticas de funnel-velocity leem; por isso, use o comando em vez de editar a linha à mão.
+
+Para corrigir uma nota em vez de acrescentar outra, passe a nota antiga com `--replace-note` e o novo texto com `--note`. Sem essa flag, o `--note` só acrescenta, o que deixa contradições como `not applied; applied` na linha. A correspondência é feita com uma nota inteira entre separadores `; `, e, se nenhum dos dois textos estiver na célula Notes, nada é gravado:
+
+```bash
+node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applied via referral"
+```
+
+Outras três flags existem principalmente para o dashboard TUI em Go, que agora registra as mudanças de status dele por meio do `set-status.mjs`. O `--report-link N` seleciona a linha cuja célula Report contém exatamente um link para o relatório `N` e recusa células malformadas em vez de tentar adivinhar. O `--repair-status-log` e o `--repair-followup` se aplicam quando uma mudança para Applied é executada de novo em uma linha que já está como Applied: eles acrescentam a entrada no histórico ou o lembrete de follow-up que a primeira tentativa não conseguiu gravar, e não acrescentam nada quando isso já existe.
+
+## Como corrigir links quebrados para relatórios
+
+O `node verify-pipeline.mjs` reporta `Report not found` quando a célula Report de uma linha aponta para um arquivo que não existe mais. O `npm run fix-report-links` repara essas linhas trocando apenas essa célula pela marca habitual de "sem relatório" do tracker. Ele não gera de novo o relatório que está faltando. Confira a prévia antes:
+
+```bash
+npm run fix-report-links -- --dry-run  # list the affected rows, write nothing
+npm run fix-report-links               # apply; the tracker is backed up to .bak first
+```
+
+Todas as outras células, a ordem das linhas e as quebras de linha continuam como estavam. Uma célula Report que contenha qualquer coisa diferente de exatamente um link é listada para você conferir à mão e fica sem alteração. Se você executar o comando duas vezes, a segunda execução não muda nada.
+
+## Como ler os números acumulados
+
+Para os números acumulados (o funil completo, os totais do scanner, a cobertura de portais e o cumprimento dos follow-ups), o modo executa `node stats.mjs --summary` e apresenta a saída sem alterações. Esse comando lê os seus arquivos locais e custa zero tokens, então os números nunca são recalculados à mão nem estimados de memória. Use o resumo do chat, descrito acima, para uma leitura diária rápida, e o comando de estatísticas quando quiser os totais acumulados de toda a busca.
+
+## Como exportar uma cópia reparada
+
+Ao longo de centenas de linhas, uma tabela em markdown acumula danos: caracteres corrompidos (mojibake), uma nota perdida na coluna de status, ids duplicados, barras verticais sobrando. O `node tracker.mjs sync` encontra e repara esses problemas no seu índice SQLite, `data/applications.db`, sem tocar no markdown. O `tracker.mjs` precisa do Node 22.13 ou superior (23.4 ou superior no Node 23) para esse índice; o tracker em markdown continua funcionando sem ele. É com `node tracker.mjs export` que você adota essa cópia reparada do seu próprio tracker:
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+O `export` nunca toca em `data/applications.md`, a menos que você o informe como `--out`.
+
+Ele preserva o layout que leu, não só os valores: a sua linha de cabeçalho, as colunas que o career-ops não mapeia (`Location`, `Via`, `URL` ou as suas próprias), o título, qualquer preâmbulo e as linhas finais, e as quebras de linha CRLF ou LF. As colunas extras voltam nas próprias posições, embora o `query` não consiga filtrar por elas.
+
+Tudo o que ele não consegue reproduzir é indicado no stderr. Quando essa lista não está vazia, o `--out` sobre um arquivo existente se recusa a gravar (código de saída `1`, nada gravado) até você executar de novo com `--force`; quando está vazia, o `--out` faz o backup do arquivo existente e o sobrescreve. O que é reportado:
+
+| Reportado | Por que não pode ser reconstruído |
+| --- | --- |
+| Uma célula fora das colunas declaradas no cabeçalho | O cabeçalho não tem coluna onde colocá-la |
+| Uma linha entre a primeira e a última linha da tabela, como um título ou o cabeçalho de uma segunda tabela | Uma única tabela reconstruída não tem onde colocá-la |
+| Uma linha que pertence a uma tabela posterior, como uma seção `## Archive` | Ela foi indexada com o cabeçalho da primeira tabela, então emiti-la de novo moveria dados arquivados para a tabela ativa |
+| Uma célula cujo valor precisou ser reescrito para sobreviver como célula (um `\|` solto volta como `│`) | O próprio valor mudou |
+
+Nenhuma perda reportada não significa que a saída seja idêntica byte a byte. O `export` emite os reparos feitos pelo `sync`, e alguns deles são silenciosos: `aplicado` é um alias reconhecido de `Applied` em `templates/states.yml`, então o `sync --check` não reporta nenhuma corrupção e, mesmo assim, o export traz `Applied`. As células alinhadas por coluna também voltam com espaçamento simples. Antes de adotar um export, compare-o com o arquivo que ele vai substituir:
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+A referência completa dos comandos, incluindo `sync`, `query` e `history`, está no [guia de scripts](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker) do repositório principal.
+
+## Pontos de atenção
+
+O status fica na coluna Status do tracker (`data/applications.md`), não no arquivo do relatório. Alterá-lo à mão deixa de lado o `data/status-log.tsv`: o funnel-velocity continua enxergando o novo status, mas não quando ele aconteceu, então a mudança fica de fora dos tempos de velocidade por etapa, e uma linha que mais tarde termine em Rejected perde as etapas pelas quais passou. Use o `set-status.mjs`, o chat ou o seletor de status do dashboard TUI em Go, que executa o mesmo comando.
+
+## Relacionados
+
+- [followup](/pt/docs/reference/modes/followup)
+- [patterns](/pt/docs/reference/modes/patterns)
