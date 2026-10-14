@@ -167,6 +167,16 @@ npm run scan -- --company Anthropic
 
 Replace `Anthropic` with any company name from your `tracked_companies` list. The match is not case-sensitive.
 
+**Scan Dayforce career sites:**
+
+Career sites on Dayforce (Ceridian), at `jobs.dayforcehcm.com`, block plain web requests, so `npm run scan` cannot read them. A separate script opens a real browser session for them instead, which makes it slower than the main scan. List the boards under `dayforce_boards` in `portals.yml`, one entry per company with its `name` and its `tenant` (the company's code in the Dayforce address); `templates/portals.example.yml` shows the format. Then run:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+New jobs go to `data/pipeline.md`, like the main scan. Add `-- --dry-run` to preview without saving, `-- --tenant <tenant>` to scan a single board, or `-- --debug` to save a screenshot of each board to `output/`. If a board shows a bot challenge, the script skips it; it never tries to get past one.
+
 ### Option B — Run the AI-powered scan inside Claude Code
 
 Open Claude Code in the project folder and type:

@@ -153,6 +153,14 @@ career-ops prepares you to negotiate from your own documents and your own number
 
 `node salary-gap.mjs --summary` shows, per application, what you wanted, what the posting advertised and what you were actually offered. `node negotiation-roi.mjs --summary` drafts a talking point from an hours-saved claim whose number also appears in your `cv.md`, valued from a wage and frequency you supply: an estimate, not financial advice. `/career-ops offer-prep reply {company-slug}` drafts a reply email from your prep report; you send it yourself.
 
+If a role means moving to another province, the same salary can leave you with a different amount after tax. `salary-gap.mjs --relocation` compares the two places for one annual gross figure:
+
+```bash
+node salary-gap.mjs --relocation --gross 95k --currency CAD --posting-location "Calgary, AB" --home-location "Toronto, ON"
+```
+
+`--gross` is the annual figure and `--currency` is the currency the posting states it in; when that currency does not match the tax table, the script refuses to compare rather than guess. `--home-location` is optional: without it, your location comes from `config/profile.yml`. `--posting-location-file <path>` reads the posting's location from a file instead of the command line. The tax table currently covers Canada (federal tax plus Ontario, Nova Scotia, Alberta and British Columbia) and does not compare across countries. The result counts tax brackets only, with no credits, payroll contributions or cost of living: a data point for your own judgment, not financial or tax advice. An evaluation runs the same check when the posting states a salary and a work location you would have to move to.
+
 ## Frequently asked questions
 
 ### Is there a tool that tells me which jobs are worth applying to based on my resume?
