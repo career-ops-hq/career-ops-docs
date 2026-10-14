@@ -3,7 +3,7 @@ title: CLI d'IA prises en charge
 seoTitle: "Quelle CLI d'IA fonctionne avec career-ops ? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops est agnostique en matière d'IA — il fonctionne avec toutes les grandes CLI de codage IA : vous utilisez l'assistant que vous payez déjà, sans jamais être enfermé chez un fournisseur. La liste complète et toujours à jour se trouve dans le dépôt principal."
 icon: Terminal
-translationHash: c8c4656d58d67dbf
+translationHash: aba388df8b32db03
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -16,11 +16,17 @@ La meilleure CLI pour career-ops est celle que vous payez déjà. Si vous payez 
 
 ## Quelles CLI sont prises en charge ?
 
-career-ops fonctionne nativement avec **Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub Copilot CLI** — dix CLI de codage IA activement maintenues. (Gemini CLI ne subsiste que comme wrapper hérité, ayant fait sa transition vers Antigravity CLI.) L'architecture de career-ops est commune à toutes les CLI : un unique `AGENTS.md` canonique pilote la logique, et de fins fichiers d'entrée propres à chaque CLI gèrent les nuances d'invocation de chaque outil.
+career-ops fonctionne nativement avec **Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub Copilot CLI** — onze CLI de codage IA activement maintenues. (Gemini CLI ne subsiste que comme wrapper hérité, ayant fait sa transition vers Antigravity CLI.) L'architecture de career-ops est commune à toutes les CLI : un unique `AGENTS.md` canonique pilote la logique, et de fins fichiers d'entrée propres à chaque CLI gèrent les nuances d'invocation de chaque outil.
 
 La **liste canonique et toujours à jour — avec la commande exacte pour invoquer career-ops dans chaque CLI — se trouve dans le dépôt principal**, afin qu'elle ne devienne jamais obsolète :
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — la matrice complète des CLI prises en charge, des fichiers d'entrée et de la façon de les invoquer (en mode interactif comme en headless/batch).
+
+## Pi
+
+Pi n'a besoin d'aucun fichier wrapper. Il lit `AGENTS.md` dans le dossier career-ops et trouve lui-même la skill partagée : vous lancez `pi` dans ce dossier, puis vous appelez career-ops avec `/skill:career-ops`, suivi du mode voulu. Pour une seule exécution sans surveillance, utilisez `pi -p "votre prompt"`.
+
+Certaines versions de Pi demandent de faire confiance à un projet avant de charger ses skills. Si `/skill:career-ops` n'est pas disponible, lancez `/trust` une fois dans le dossier, puis redémarrez `pi` : la décision de confiance ne s'applique qu'aux sessions Pi démarrées ensuite. Pour installer Pi, suivez [ses propres instructions](https://github.com/earendil-works/pi).
 
 ## Laquelle choisir ?
 

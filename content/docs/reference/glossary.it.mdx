@@ -1,0 +1,82 @@
+---
+title: Glossario
+description: Il vocabolario della ricerca di lavoro con l'AI, spiegato — ATS, punteggio globale da 1 a 5, Data Contract, spray-and-pray, liveness check, tailoring, scan a zero token, storie STAR+R e tutti i termini che career-ops usa.
+seoTitle: "Glossario career-ops: i termini della ricerca di lavoro con l'AI, spiegati"
+icon: BookOpen
+translationHash: c4294ea38951c036
+localized: true
+translatedFrom: /docs/reference/glossary
+---
+
+{/* Mirrored with src/lib/glossary-data.ts (DefinedTermSet JSON-LD) — edit
+    both together. Definitions must stay verifiable against the core repo. */}
+
+Tutti i termini che career-ops usa, definiti in un unico posto. Dove esiste una pagina di approfondimento, il termine rimanda lì.
+
+## ATS (Applicant Tracking System)
+
+Il software che le aziende usano per ricevere, archiviare e filtrare le candidature: [Greenhouse](/it/docs/reference/portals/greenhouse), [Ashby](/it/docs/reference/portals/ashby) e [Lever](/it/docs/reference/portals/lever) sono tra gli esempi più diffusi. career-ops legge le loro API pubbliche per scoprire le posizioni aperte e può precompilare i loro moduli di candidatura, ma non invia mai: sei tu a cliccare su Invia.
+
+## Punteggio globale (da 1 a 5)
+
+Il giudizio complessivo dell'LLM su un annuncio di lavoro, basato su cinque dimensioni (corrispondenza con il profilo, allineamento con la tua north star, retribuzione, segnali culturali, campanelli d'allarme), che produce un punteggio da 1 a 5. Da 4,5 in su l'agente consiglia di candidarsi subito; sotto 4,0 lo sconsiglia. Non esiste una formula chiusa di ponderazione: il punteggio è il giudizio dell'LLM alla luce della griglia di valutazione, che è pubblica nella [pagina sulla metodologia](https://career-ops.org/methodology).
+
+## Data Contract
+
+La promessa architetturale alla base di career-ops: il **livello di sistema** (script, modalità, template) si può aggiornare in qualsiasi momento, mentre il **livello utente** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — non viene mai toccato da un aggiornamento. I tuoi dati sopravvivono a ogni versione.
+
+## Spray-and-pray
+
+La strategia delle candidature di massa: inviare lo stesso curriculum a centinaia di annunci, senza alcuna selezione. career-ops la rifiuta esplicitamente: la pipeline prima valuta e ordina gli annunci, così l'impegno si concentra sul piccolo gruppo di ruoli per cui vale davvero la pena candidarsi.
+
+## Liveness check
+
+Un'euristica con cui career-ops verifica se un annuncio è ancora aperto prima che tu ci spenda tempo o token. È un segnale indicativo, non una garanzia — gli annunci scaduti a volte restano online sui siti di ricerca lavoro — e puoi contrassegnare un annuncio a mano quando l'euristica sbaglia.
+
+## Tailoring (adattare il curriculum all'annuncio)
+
+Riscrivere il tuo curriculum per un annuncio specifico — riordinando le priorità, mettendo in evidenza le competenze e i numeri pertinenti, allineando il vocabolario a quello della descrizione del ruolo — senza che nessuna affermazione si allontani dalla tua esperienza reale. career-ops genera un CV su misura per ogni candidatura, in Markdown che puoi modificare.
+
+## Modalità
+
+Un flusso di lavoro mirato, definito da un prompt, che career-ops distribuisce come semplice file Markdown eseguito dalla tua CLI AI: [scan, apply, tracker](/it/docs/reference/modes), [interview/practice](/it/docs/introduction/guides/interview-modes) e una dozzina di altre. Le modalità sono testo che puoi ispezionare, non codice a scatola chiusa.
+
+## Pipeline
+
+Il flusso di lavoro completo di career-ops: scansione dei portali → valutazione degli annunci (da 1 a 5) → curriculum su misura → candidatura → monitoraggio → preparazione dei colloqui. Ogni fase è una modalità che puoi eseguire da sola oppure in batch.
+
+## Scan a zero token
+
+Una ricerca di nuovi annunci che non consuma token LLM: `scan.mjs` legge le API degli ATS, i feed dei siti di annunci e le pagine "Lavora con noi" direttamente via HTTP, quindi trovare nuovi annunci è gratuito qualunque motore AI tu usi.
+
+## Motore AI
+
+La CLI AI per la programmazione che esegue i prompt di career-ops — Claude Code, OpenCode, Codex, GitHub Copilot CLI e [le altre CLI supportate](/it/docs/supported-clis) — oppure qualsiasi endpoint compatibile con OpenAI. career-ops non dipende da un motore specifico e [funziona anche con motori gratuiti](/it/docs/free-ai-engine).
+
+## Question bank (archivio delle domande)
+
+Un file Markdown locale (`interview-prep/question-bank.md`) in cui career-ops raccoglie le domande reali dei colloqui di lavoro e come te la sei cavata con ciascuna (✅/🟡/🔴). La [modalità interview/debrief](/it/docs/introduction/guides/interview-modes) lo aggiorna dopo ogni colloquio reale, così la preparazione si accumula da un colloquio all'altro.
+
+## Storia STAR+R
+
+Una storia da colloquio strutturata in **S**ituation (situazione), **T**ask (compito), **A**ction (azione), **R**esult (risultato), più **R**eflection (riflessione): è il metodo STAR con un passaggio in più, e il formato che career-ops usa nel suo story bank perché le risposte comportamentali siano concrete, quantificate e riutilizzabili in più colloqui.
+
+## Story bank (archivio delle storie)
+
+Un file Markdown locale (`interview-prep/story-bank.md`) con le tue storie STAR+R già preparate. Le sessioni di pratica confrontano le tue risposte con questo archivio, e i debrief ne ricavano nuove storie da ciò che hai detto davvero nei colloqui reali.
+
+## Portale
+
+Il sito "Lavora con noi" di un'azienda, basato su un ATS, che career-ops è in grado di scansionare. I portali che segui sono elencati in `portals.yml`; a ogni esecuzione lo scanner legge le loro API pubbliche.
+
+## Valutazione in batch
+
+Assegnare un punteggio a molti annunci salvati in un'unica esecuzione, invece che uno alla volta, con opzioni per non perdere il controllo: `--limit` fissa la dimensione massima del batch, `--dry-run` mostra in anteprima che cosa verrebbe elaborato e `--resume-paused` riprende un'esecuzione interrotta senza spendere di nuovo token. Un job `needs_confirmation` è una sospensione che non produce artefatti e che solo la sessione interattiva principale riprende dopo una risposta esplicita; le opzioni di nuovo tentativo e di ripresa dei job in pausa lo lasciano sospeso.
+
+## Local-first
+
+Il principio architetturale di career-ops: tutto — i tuoi dati, i prompt, gli script, la CLI AI — gira sulla tua macchina. Non c'è un backend ospitato, non c'è un account e non c'è niente a cui iscriversi.
+
+## CareerOps
+
+CareerOps è la pratica di gestire la ricerca di lavoro come gli ingegneri gestiscono la produzione: con prove, con disciplina e con strumenti dalla parte del candidato. Il termine indica la pratica, non un prodotto; career-ops ne è la prima implementazione di riferimento. Coniato da Santiago Fernández de Valderrama Aparicio in [The CareerOps Manifesto](https://career-ops.org/manifesto) (14 luglio 2026).

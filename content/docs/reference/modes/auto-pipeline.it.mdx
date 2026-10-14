@@ -1,0 +1,53 @@
+---
+title: auto-pipeline
+description: "Flusso predefinito quando incolli l'URL di un annuncio o il suo testo. Esegue la valutazione A–H, genera il report, esporta un PDF su misura e scrive la voce nel tracker, senza interventi manuali tra un passaggio e l'altro."
+seoTitle: "career-ops auto-pipeline — valuta un annuncio e crea CV e tracker da un solo URL"
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 233c7fa8819747b5
+localized: true
+translatedFrom: /docs/reference/modes/auto-pipeline
+---
+
+## Cosa fa
+
+career-ops avvia auto-pipeline ogni volta che inserisci nel prompt l'URL di un annuncio o il suo testo incollato. La modalità legge l'annuncio, gli assegna un punteggio in base alla griglia di valutazione (cinque dimensioni più un punteggio globale olistico), scrive la valutazione in reports/, genera il PDF su misura tramite Playwright e aggiorna la voce nel tracker: tutto in un unico turno dell'agente.
+
+## Quando usarla
+
+Usa auto-pipeline quando vuoi che l'intera pipeline venga eseguita in automatico. È la modalità predefinita per i nuovi annunci che entrano nella tua ricerca di lavoro.
+
+## Come si presenta un'esecuzione
+
+Incolla l'URL di un annuncio senza alcun sottocomando e auto-pipeline esegue l'intera catena dall'inizio alla fine: estrae la descrizione, verifica che l'annuncio sia ancora attivo, gli assegna un punteggio, salva il report, esporta un PDF su misura e registra la voce nel tuo tracker.
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+
+## Buono a sapersi
+
+- Incolla un URL e auto-pipeline si occupa dell'estrazione al posto tuo: prima Playwright per i portali single-page come Lever, Ashby, Greenhouse e Workday, poi WebFetch per le pagine statiche e infine WebSearch come ultima risorsa.
+- Prima della valutazione viene eseguito un controllo di validità dell'annuncio. Se il link non funziona più o la pagina è un guscio vuoto con la scritta "posizione chiusa", la modalità si ferma lì invece di valutare contenuti fantasma; e se la voce proveniva da `data/pipeline.md`, segna quella riga come chiusa.
+- Una pagina LinkedIn in cui la descrizione resta uno scheletro di caricamento non è un annuncio chiuso, ma non è nemmeno la descrizione di un annuncio: auto-pipeline si ferma prima della valutazione, del report, del PDF e di qualsiasi scrittura nel tracker, e ti chiede di incollare il testo dell'annuncio o di fornire un link del datore di lavoro o dell'ATS per lo stesso ruolo.
+- Le bozze delle risposte per la candidatura vengono scritte solo quando il punteggio è pari o superiore a 4,5, così i ruoli poco in linea con il tuo profilo non consumano token per testi che non invierai.
+
+## A cosa fare attenzione
+
+Se vuoi solo la valutazione senza il PDF (più veloce, più economica), usa invece `/career-ops oferta`. auto-pipeline costa più token perché esegue l'intera catena.
+
+## Vedi anche
+
+- [pipeline](/it/docs/reference/modes/pipeline)
+- [oferta](/it/docs/reference/modes/oferta)
+- [pdf](/it/docs/reference/modes/pdf)
+- [tracker](/it/docs/reference/modes/tracker)

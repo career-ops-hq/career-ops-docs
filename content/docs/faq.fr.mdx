@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: af70c70da79f2fad
+translationHash: a316e2ed0c2d8126
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -40,7 +40,7 @@ La règle `ANTHROPIC_API_KEY` concerne les moteurs Anthropic. Les autres CLI (Co
 
 ## Combien coûte l'utilisation de career-ops par mois ?
 
-Dans career-ops, seule l'évaluation coûte quelque chose, et l'évaluation peut coûter 0 $. Le scan des offres ne consomme aucun token d'IA : découvrir des postes est donc toujours gratuit, et seule l'évaluation d'une offre fait appel au modèle. Trois options font tourner tout le pipeline sans rien payer : un modèle local via Ollama, les modèles gratuits d'OpenRouter (`npm run or`) ou l'offre gratuite d'Antigravity. Avec un modèle payant bon marché comme DeepSeek V3 (avec le prompt caching), une évaluation coûte bien moins d'un centime, si bien que quelques centimes couvrent des dizaines d'offres. Si vous avez déjà un abonnement Claude, le coût marginal est en pratique de 0 $ ; avec l'API facturée au token, comptez environ 0,05 à 0,10 $ par évaluation (une estimation qui varie selon la longueur de l'offre). career-ops lui-même est gratuit pour toujours, sous licence MIT, sans frais ni palier : vous ne payez que votre fournisseur d'IA, et seulement si vous en choisissez un payant. Le guide [Configurer un moteur d'IA gratuit](/fr/docs/free-ai-engine) détaille les options à 0 $.
+Dans career-ops, seule l'évaluation coûte quelque chose, et l'évaluation peut coûter 0 $. Le scan des offres ne consomme aucun token d'IA : découvrir des postes est donc toujours gratuit, et seule l'évaluation d'une offre fait appel au modèle. Trois options font tourner tout le pipeline sans rien payer : un modèle local via Ollama, les modèles gratuits d'OpenRouter (`npm run or`) ou l'offre gratuite d'Antigravity. Avec un modèle payant bon marché comme DeepSeek V3 (avec le prompt caching), une évaluation coûte bien moins d'un centime, si bien que quelques centimes couvrent des dizaines d'offres. Si vous avez déjà un abonnement Claude, le coût marginal est en pratique de 0 $ ; avec l'API facturée au token, comptez environ 0,05 à 0,10 $ par évaluation (une estimation qui varie selon la longueur de l'offre). career-ops lui-même est gratuit pour toujours, sous licence MIT, sans frais ni palier : vous ne payez que votre fournisseur d'IA, et seulement si vous en choisissez un payant. Le guide [Configurer un moteur d'IA gratuit](/fr/docs/free-ai-engine) détaille les options à 0 $. Pour dépenser moins par évaluation, réglez `spend_tier` dans `config/profile.yml` : `economy` utilise le niveau de modèle le moins cher et le plus rapide de votre CLI et convient pour évaluer beaucoup d'annonces, `standard` est la valeur par défaut, et `premium` utilise le modèle le plus capable pour les annonces qui comptent le plus. La conversation d'onboarding et le PDF sur mesure s'exécutent eux aussi avec votre modèle : ils consomment donc des tokens.
 
 ## Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?
 
@@ -58,7 +58,7 @@ Pour donner votre CV à career-ops, collez le texte de votre CV dans le chat pen
 
 ## Avec quels CLI de codage IA career-ops fonctionne-t-il ?
 
-career-ops fonctionne nativement avec dix CLI de codage IA : Claude Code, Cursor, Codex, OpenCode, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub Copilot CLI (Gemini CLI ne subsiste que comme wrapper legacy). career-ops est agnostique en matière d'IA : il fournit des fichiers de prompts que le CLI exécute, si bien que vous pouvez aussi le pointer vers n'importe quel endpoint compatible OpenAI ou un modèle local, sans modifier une seule ligne de code. Consultez [CLI d'IA pris en charge](/fr/docs/supported-clis) pour la liste à jour et la façon d'invoquer chacun d'eux.
+career-ops fonctionne nativement avec onze CLI de codage IA : Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent et GitHub Copilot CLI (Gemini CLI ne subsiste que comme wrapper legacy). career-ops est agnostique en matière d'IA : il fournit des fichiers de prompts que le CLI exécute, si bien que vous pouvez aussi le pointer vers n'importe quel endpoint compatible OpenAI ou un modèle local, sans modifier une seule ligne de code. Consultez [CLI d'IA pris en charge](/fr/docs/supported-clis) pour la liste à jour et la façon d'invoquer chacun d'eux.
 
 ## Quelle est la différence entre `scan` et `scan:full` ?
 
@@ -70,7 +70,7 @@ Pour éviter les limites de tokens ou de débit lors d'un run en batch de career
 
 ## Les skills ne se chargent pas sous Windows — erreur de symlink à l'installation
 
-Windows ne crée pas de symlinks par défaut, donc Git extrait les points d'entrée des skills CLI de career-ops sous forme de simples fichiers pointeurs. L'installateur et l'outil de mise à jour le détectent automatiquement : lancez `node update-system.mjs apply --confirm` (ou `npx @santifer/career-ops init` lors d'une nouvelle installation) et l'étape de matérialisation remplace les fichiers pointeurs par le contenu complet des skills. Aucun `mklink` manuel ni activation du Mode développeur n'est nécessaire.
+Windows ne crée pas de symlinks par défaut, donc Git extrait les points d'entrée des skills CLI de career-ops sous forme de simples fichiers pointeurs. L'installateur et l'outil de mise à jour le détectent automatiquement : lancez `node update-system.mjs apply --confirm` (ou `npx @santifer/career-ops init` lors d'une nouvelle installation) et l'étape de matérialisation remplace les fichiers pointeurs par le contenu complet des skills. Depuis un worktree Git lié, `apply --confirm` effectue cette réparation dans votre checkout de `main`. Lancez `git merge main` dans le worktree pour la récupérer ; les worktrees créés à partir du `main` mis à jour l'ont déjà. Avec `CAREER_OPS_UPDATE_IN_WORKTREE=1` défini, `apply` ne répare que la branche de ce worktree, et `main` reste non réparé. Aucun `mklink` manuel ni activation du Mode développeur n'est nécessaire.
 
 ## Puis-je exécuter career-ops avec un modèle moins cher ou local ?
 

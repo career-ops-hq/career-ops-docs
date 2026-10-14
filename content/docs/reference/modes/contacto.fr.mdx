@@ -4,8 +4,8 @@ description: "Le power move LinkedIn. À partir d'un nom d'entreprise et du cont
 seoTitle: "Mode contacto de career-ops — trouver des contacts LinkedIn chauds et rédiger une prise de contact"
 icon: UserPlus
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: ef2b573d6f41f444
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
 localized: true
 translatedFrom: /docs/reference/modes/contacto
 ---
@@ -13,6 +13,8 @@ translatedFrom: /docs/reference/modes/contacto
 ## Ce qu'il fait
 
 Le mode contacto lit le nom de l'entreprise et le contexte de l'offre, puis suggère des cibles de prise de contact qu'il trouve via WebSearch — le hiring manager, le recruteur assigné, deux ou trois pairs dans l'équipe et un interviewer connu. Il rédige un message court — trois phrases, moins de 300 caractères — adapté au poste et à l'identité du contact.
+
+**D'abord les contacts enregistrés.** Avant toute recherche, contacto exécute `node contact-lookup.mjs --company "<company>" --summary` sur vos contacts enregistrés dans `data/contacts.tsv` et affiche les personnes que vous connaissez déjà dans cette entreprise, avec la candidature antérieure qui les y rattache. Si vous en choisissez une, il saute la recherche et rédige un message de **cooptation interne** : il nomme votre véritable contact passé, explique en une ligne pourquoi le nouveau poste vous correspond et demande directement une cooptation, à l'inverse du message aux pairs, qui ne demande jamais de poste. Un contact enregistré n'est marqué comme cooptation interne qu'une fois que vous avez confirmé une véritable relation antérieure avec cette personne ; travailler dans la même entreprise ne suffit pas. Pour enregistrer un contact à partir de la réponse d'un recruteur ou d'un interviewer, collez la réponse dans un fichier et lancez `node contact-extract.mjs --file <email.txt>`, qui vous demande confirmation avant d'écrire. contacto rédige chaque message ; c'est vous qui décidez de l'envoyer ou non.
 
 ## Quand l'utiliser
 

@@ -4,8 +4,8 @@ description: "La jugada maestra de LinkedIn. A partir del nombre de una empresa 
 seoTitle: "modo contacto de career-ops — encuentra contactos cercanos en LinkedIn y redacta el outreach"
 icon: UserPlus
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: ef2b573d6f41f444
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
 localized: true
 translatedFrom: /docs/reference/modes/contacto
 ---
@@ -13,6 +13,8 @@ translatedFrom: /docs/reference/modes/contacto
 ## Qué hace
 
 El modo contacto lee el nombre de la empresa y el contexto de la oferta, y a continuación sugiere objetivos de outreach que encuentra mediante WebSearch: el hiring manager, el recruiter asignado, dos o tres compañeros del equipo y algún entrevistador conocido. Redacta un mensaje corto — tres frases, menos de 300 caracteres — adaptado al puesto y a quién es cada contacto.
+
+**Primero, tus contactos guardados.** Antes de cualquier búsqueda, contacto ejecuta `node contact-lookup.mjs --company "<company>" --summary` sobre tus contactos guardados en `data/contacts.tsv` y te muestra a cualquier persona que ya tengas en esa empresa, junto con la candidatura anterior que la vincula a ella. Si eliges una, se salta la búsqueda y redacta un mensaje de **Internal Referral**: nombra a tu contacto previo real, explica en una línea por qué encaja el nuevo puesto y pide directamente un referral, justo lo contrario del mensaje para compañeros del equipo, que nunca pide un trabajo. Un contacto guardado solo se marca como internal referral después de que confirmes una relación previa real con esa persona; trabajar en la misma empresa no basta. Para guardar un contacto a partir de la respuesta de un recruiter o de un entrevistador, pega la respuesta en un archivo y ejecuta `node contact-extract.mjs --file <email.txt>`, que pregunta antes de escribir. contacto redacta cada mensaje; tú decides si lo envías.
 
 ## Cuándo usarlo
 
