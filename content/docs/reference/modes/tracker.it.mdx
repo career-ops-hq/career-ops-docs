@@ -4,8 +4,8 @@ description: "Una lettura rapida dello stato di ogni candidatura. Utile come con
 seoTitle: "Modalità tracker di career-ops: a che punto è ogni candidatura di lavoro"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-09-25"
-translationHash: 83b5254d11b05f4a
+lastModified: "2026-10-14"
+translationHash: c95cd399167d223d
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -39,6 +39,25 @@ Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
 Una candidatura attraversa un insieme fisso di stati: Evaluated (report scritto, decisione in sospeso), Applied (l'hai inviata tu), Responded (l'azienda ha risposto, ma non c'è ancora un colloquio), Interview (un processo di selezione in corso) e infine uno stato finale tra Offer, Rejected, Discarded o SKIP per i ruoli che non fanno per te. Per registrare un cambio di stato, chiedilo in chat oppure esegui tu stesso `node set-status.mjs <report#|company> <state>`, aggiungendo `--on YYYY-MM-DD` se è avvenuto in un giorno precedente. Il comando rifiuta gli stati sconosciuti, blocca il tracker mentre scrive e registra la transizione in `data/status-log.tsv`, il registro da cui leggono le statistiche funnel-velocity: usalo quindi al posto di modificare la riga a mano.
+
+Per correggere una nota invece di aggiungerne un'altra, passa la nota vecchia con `--replace-note` e il nuovo testo con `--note`. Senza questo flag, `--note` si limita ad aggiungere, e nella riga restano contraddizioni come `not applied; applied`. La corrispondenza avviene su una nota intera tra separatori `; `, e se nessuno dei due testi si trova nella cella Notes non viene scritto nulla:
+
+```bash
+node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applied via referral"
+```
+
+Altri tre flag esistono soprattutto per la dashboard TUI in Go, che ora registra i suoi cambi di stato tramite `set-status.mjs`. `--report-link N` seleziona la riga la cui cella Report contiene esattamente un link al report `N`, e rifiuta le celle malformate invece di tirare a indovinare. `--repair-status-log` e `--repair-followup` si applicano quando un cambio ad Applied viene rieseguito su una riga che è già Applied: aggiungono la voce nel registro o il promemoria di follow-up che il primo tentativo non è riuscito a scrivere, e non aggiungono nulla quando c'è già.
+
+## Riparare i link interrotti ai report
+
+`node verify-pipeline.mjs` segnala `Report not found` quando la cella Report di una riga punta a un file che non esiste più. `npm run fix-report-links` ripara quelle righe cambiando soltanto quella cella nel segno di "nessun report" che il tracker usa di solito. Non rigenera il report mancante. Prima fai un'anteprima:
+
+```bash
+npm run fix-report-links -- --dry-run  # list the affected rows, write nothing
+npm run fix-report-links               # apply; the tracker is backed up to .bak first
+```
+
+Tutte le altre celle, l'ordine delle righe e i fine riga restano com'erano. Una cella Report che contiene qualcosa di diverso da esattamente un link viene elencata perché tu la controlli a mano, e resta invariata. Se lo esegui una seconda volta, non cambia nulla.
 
 ## Leggere i numeri complessivi
 
@@ -77,7 +96,7 @@ Il riferimento completo dei comandi, inclusi `sync`, `query` e `history`, si tro
 
 ## Aspetti a cui fare attenzione
 
-Lo stato si trova nella colonna Status del tracker (`data/applications.md`), non nel file del report. Anche il selettore di stato della dashboard TUI in Go aggiorna quella colonna, ma non registra la transizione in `data/status-log.tsv` come fa `set-status.mjs`. funnel-velocity vede comunque il nuovo stato, ma non quando è avvenuto: il cambio manca dai tempi di permanenza nelle fasi, e una riga che in seguito finisce in Rejected perde le fasi che ha attraversato. Usa il comando per ogni cambio che vuoi veder comparire in quei dati.
+Lo stato si trova nella colonna Status del tracker (`data/applications.md`), non nel file del report. Se lo modifichi a mano, la transizione non viene registrata in `data/status-log.tsv`: funnel-velocity vede comunque il nuovo stato, ma non quando è avvenuto, quindi il cambio manca dai tempi di permanenza nelle fasi, e una riga che in seguito finisce in Rejected perde le fasi che ha attraversato. Usa `set-status.mjs`, la chat oppure il selettore di stato della dashboard TUI in Go, che esegue lo stesso comando.
 
 ## Vedi anche
 
