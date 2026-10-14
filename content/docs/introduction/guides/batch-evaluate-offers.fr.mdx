@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: 5ad72cb17b7cd67d
+translationHash: 192c11c3c95133c4
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -154,7 +154,7 @@ node merge-tracker.mjs
 Ce script :
 
 1. Lit les fichiers de synthèse depuis `batch/tracker-additions/`
-2. Vérifie les doublons pour que vous n'ayez jamais deux lignes pour la même offre. Si votre tracker a une colonne URL, il compare d'abord l'URL de l'annonce ; sinon, il compare le numéro de rapport, puis l'entreprise et le poste
+2. Vérifie les doublons pour que vous n'ayez jamais deux lignes pour la même offre. Si votre tracker a une colonne URL, il compare d'abord l'URL de l'annonce. Ensuite, ou s'il n'en a pas, il cherche une ligne avec le même fichier de rapport, puis le même numéro de rapport et la même entreprise, puis le même numéro `#` et la même entreprise, et enfin une entreprise et un poste similaires
 3. Ajoute les nouvelles entrées à votre tracker de candidatures
 4. Archive les fichiers traités dans `batch/tracker-additions/merged/`
 

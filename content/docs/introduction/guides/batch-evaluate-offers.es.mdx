@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: 5ad72cb17b7cd67d
+translationHash: 192c11c3c95133c4
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -154,7 +154,7 @@ node merge-tracker.mjs
 Este script:
 
 1. Lee los archivos de resumen de `batch/tracker-additions/`
-2. Comprueba duplicados para que nunca acabes con dos filas para la misma oferta. Si tu tracker tiene una columna URL, compara primero la URL de la oferta; si no, compara el número de informe y después la empresa y el puesto
+2. Comprueba duplicados para que nunca acabes con dos filas para la misma oferta. Si tu tracker tiene una columna URL, compara primero la URL de la oferta. Después, o si no la tiene, busca una fila con el mismo archivo de informe, luego con el mismo número de informe y la misma empresa, luego con el mismo número `#` y la misma empresa y, por último, con una empresa y un puesto parecidos
 3. Añade las entradas nuevas a tu tracker de candidaturas
 4. Archiva los archivos procesados en `batch/tracker-additions/merged/`
 
