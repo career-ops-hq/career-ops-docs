@@ -59,6 +59,8 @@ const config = {
   // Keys are picomatch route globs, so the brackets are escaped, and the
   // opengraph route ends in a path hash since it lives in the (en) group.
   outputFileTracingIncludes: {
+    '/icon': ['./src/app/_fonts/*.ttf'],
+    '/apple-icon': ['./src/app/_fonts/*.ttf'],
     '/manifesto/s/\\[username\\]/opengraph-image*': [
       './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],

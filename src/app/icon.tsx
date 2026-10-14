@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 
 export const size = { width: 32, height: 32 };
@@ -9,9 +11,11 @@ export const contentType = 'image/png';
 // companies"). Instrument Serif on brand orange so the favicon shares
 // voice with the home hero.
 export default async function Icon() {
-  const fontData = await fetch(
-    'https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf',
-  ).then((res) => res.arrayBuffer());
+  // Read from disk, not fonts.gstatic.com: a network fetch at build time
+  // timed out on Vercel twice (14-oct) and failed the whole deploy. Same
+  // file Google served (Instrument Serif v5), so the icon is unchanged.
+  const buf = await readFile(join(process.cwd(), 'src/app/_fonts/InstrumentSerif-Regular-v5.ttf'));
+  const fontData = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
 
   return new ImageResponse(
     (
