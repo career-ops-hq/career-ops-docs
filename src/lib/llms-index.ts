@@ -127,6 +127,15 @@ ${comparisonsData.comparisons
 - Repository: https://github.com/career-ops-hq/career-ops
 - Discord: https://discord.gg/8pRpHETxa4
 
+## Other languages
+
+Full documentation and a home page in each language; same content, same facts.
+- Español: https://career-ops.org/es · docs https://career-ops.org/es/docs
+- Français: https://career-ops.org/fr · docs https://career-ops.org/fr/docs
+- Deutsch: https://career-ops.org/de · docs https://career-ops.org/de/docs
+- Português (Brasil): https://career-ops.org/pt · docs https://career-ops.org/pt/docs
+- Italiano: https://career-ops.org/it · docs https://career-ops.org/it/docs
+
 ## License
 
 MIT — free forever, no paywalls, no account required.
