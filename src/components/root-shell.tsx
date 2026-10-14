@@ -172,7 +172,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
                   <a
                     href="https://x.com/santifer"
                     rel="me noreferrer noopener"
-                    aria-label="X (formerly Twitter)"
+                    aria-label={UI[locale].xFormerlyTwitter}
                     className="hover:text-fd-foreground transition-colors"
                   >
                     <XIcon />

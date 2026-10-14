@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Check, ChevronDown, X } from 'lucide-react';
+import { UI } from '@/lib/ui-strings';
 
 // Language switcher + browser-detection suggestion, both living in the header.
 // Ported from santifer.io's pattern (cv-santiago): suggest, never auto-redirect
@@ -264,7 +265,7 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
           </Link>
           <button
             onClick={dismiss}
-            aria-label="Dismiss"
+            aria-label={UI[target].dismiss}
             className="inline-flex size-5 items-center justify-center rounded-full text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-foreground transition-colors"
           >
             <X className="w-3 h-3" />
@@ -403,7 +404,7 @@ function LanguageMenu({ current, base, compact }: { current: Code; base: string;
         type="button"
         aria-expanded={open}
         aria-controls={menuId}
-        aria-label={`Language: ${cur.name}`}
+        aria-label={UI[current].languageMenu(cur.name)}
         onClick={() => {
           if (!open) place();
           setOpen((o) => !o);
@@ -418,7 +419,7 @@ function LanguageMenu({ current, base, compact }: { current: Code; base: string;
         />
       </button>
       {/* Server-rendered, never shown: the crawlable copy of the links. */}
-      <nav aria-label="Language" className="hidden">
+      <nav aria-label={UI[current].languageNav} className="hidden">
         {list}
       </nav>
       {open &&
@@ -427,7 +428,7 @@ function LanguageMenu({ current, base, compact }: { current: Code; base: string;
           <nav
             ref={menuRef}
             id={menuId}
-            aria-label="Language"
+            aria-label={UI[current].languageNav}
             style={{ position: 'fixed', top: pos.top, left: pos.left, right: pos.right }}
             className="z-[100] min-w-48 rounded-xl border bg-fd-popover p-1.5 text-sm text-fd-popover-foreground shadow-lg animate-in fade-in zoom-in-95 duration-100"
           >
