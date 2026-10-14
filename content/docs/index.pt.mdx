@@ -12,10 +12,10 @@ Este guia leva você do zero à sua primeira vaga avaliada em cerca de quinze mi
 
 ## O que você precisa
 
-Você não precisa saber programar. Basta se sentir à vontade para abrir um terminal e executar um comando.
+Você não precisa saber programar. Basta saber abrir um terminal e executar um comando.
 
 <Callout title="Nunca usou o terminal?">
-  Se você nunca usou uma linha de comando, não tem problema nenhum — mas este guia não é o lugar para aprender isso. Para pegar o jeito rapidamente, leia o manual [Command Line for Beginners](https://www.freecodecamp.org/news/command-line-for-beginners/), do freeCodeCamp (em inglês). Ele cobre tudo o que você precisa para acompanhar este guia. Quando estiver à vontade para abrir um terminal e executar um comando, volte e continue a partir do Passo 1.
+  Se você nunca usou uma linha de comando, não tem problema nenhum — mas este guia não é o lugar para aprender isso. Para pegar o jeito rapidamente, leia o manual [Command Line for Beginners](https://www.freecodecamp.org/news/command-line-for-beginners/), do freeCodeCamp (em inglês). Ele cobre tudo o que você precisa para acompanhar este guia. Quando souber abrir um terminal e executar um comando, volte e continue a partir do Passo 1.
 </Callout>
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
@@ -24,7 +24,7 @@ Você não precisa saber programar. Basta se sentir à vontade para abrir um ter
       <Step>
       ### Assistente de programação com IA
 
-      Instale o **[Claude Code](https://claude.ai/code)**, o **[Codex](https://developers.openai.com/codex/cli)**, o **[OpenCode](https://opencode.ai/)**, o **[Qwen Code](https://qwen.ai/qwencode)** ou o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — o assistente de programação com IA que executa este sistema. O career-ops funciona com [onze CLIs com suporte de primeira classe](/pt/docs/supported-clis); instale qualquer uma delas e faça login antes de continuar.
+      Instale o **[Claude Code](https://claude.ai/code)**, o **[Codex](https://developers.openai.com/codex/cli)**, o **[OpenCode](https://opencode.ai/)**, o **[Qwen Code](https://qwen.ai/qwencode)** ou o **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — o assistente de programação com IA que executa este sistema. O career-ops funciona com [onze CLIs com suporte completo](/pt/docs/supported-clis); instale qualquer uma delas e faça login antes de continuar.
       </Step>
       <Step>
         ### Node.js 22.13+
@@ -50,7 +50,7 @@ Abra um terminal na pasta onde você quer que o career-ops fique. O caminho reco
 npx @santifer/career-ops init
 ```
 
-Esse comando clona a versão mais recente em `./career-ops`, instala as dependências e monta a estrutura do workspace. Ele também detecta qual CLI de programação com IA você tem instalada e informa o comando certo para começar. Ele só instala em uma pasta nova: se `./career-ops` já existir e não estiver vazia, o comando para com um erro e não altera nada; portanto, executá-lo de novo não repara nem atualiza um workspace existente.
+Esse comando clona a versão mais recente em `./career-ops`, instala as dependências e monta a estrutura do workspace. Ele também detecta qual CLI de programação com IA você tem instalada e informa o comando certo para começar. Ele só instala em uma pasta nova: se `./career-ops` já existir e não estiver vazia, o comando para e mostra um erro e não altera nada; portanto, executá-lo de novo não repara nem atualiza um workspace existente.
 
 Quando terminar, entre no workspace:
 
@@ -81,7 +81,7 @@ npx playwright install chromium
 
 ## Passo 2: Abra o seu assistente de IA
 
-De dentro da pasta `career-ops`, inicie a CLI de programação com IA que você instalou.
+Na pasta `career-ops`, inicie a CLI de programação com IA que você instalou.
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
   <Tab value="Claude Code">
@@ -139,7 +139,7 @@ De dentro da pasta `career-ops`, inicie a CLI de programação com IA que você 
 
 ## Passo 3: Faça a sua primeira avaliação
 
-Copie a URL de qualquer anúncio de vaga e cole no chat. Se o seu perfil ainda não estiver pronto, o agente conclui o onboarding primeiro. Com o Claude Code, o Antigravity CLI ou o Pi, coloque o comando explícito antes da URL; com as outras CLIs, cole a URL e peça ao agente que execute o auto-pipeline:
+Copie a URL de qualquer vaga e cole no chat. Se o seu perfil ainda não estiver pronto, o agente conclui o onboarding primeiro. Com o Claude Code, o Antigravity CLI ou o Pi, coloque o comando explícito antes da URL; com as outras CLIs, cole a URL e peça ao agente que execute o auto-pipeline:
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
   <Tab value="Claude Code">
@@ -231,7 +231,7 @@ Abra o arquivo do relatório em `reports/`. O nome do arquivo segue o padrão `{
 - **Bloco D** — pesquisa de remuneração que compara o que a vaga paga com os valores de mercado.
 - **Bloco E** — notas de personalização para a sua candidatura.
 - **Bloco F** — preparação para entrevistas, com histórias no método STAR feitas sob medida para essa vaga.
-- **Bloco G** — legitimidade da vaga: uma verificação heurística de sinais, como se a vaga continua aberta e se ela vem sendo republicada repetidamente. O bloco relata o que encontra e deixa o julgamento com você.
+- **Bloco G** — legitimidade da vaga: uma verificação heurística de sinais, como se a vaga continua aberta e se ela vem sendo republicada repetidamente. O bloco relata o que encontra e deixa a decisão com você.
 - **Bloco H** — rascunhos de respostas para o formulário de candidatura, escritos somente quando a nota é 4,5 ou superior.
 
 O seu currículo em PDF sob medida está na pasta `output/`. Revise-o antes de enviá-lo para qualquer lugar — o career-ops nunca envia nada sem a sua aprovação.
@@ -249,7 +249,7 @@ Agora que a sua primeira avaliação está pronta, veja algumas coisas que você
 
 <Accordions>
   <Accordion title="O agente não fez o onboarding">
-    O onboarding automático começa quando você pede uma avaliação de vaga ou outro fluxo que precise do seu perfil, e somente se a configuração estiver incompleta. Para iniciá-lo diretamente, abra a sua CLI de dentro da pasta `career-ops` (execute `pwd` para conferir) e diga ao agente: *"por favor, execute o onboarding inicial."*
+    O onboarding automático começa quando você pede uma avaliação de vaga ou outro fluxo que precise do seu perfil, e somente se a configuração estiver incompleta. Para iniciá-lo diretamente, abra a sua CLI na pasta `career-ops` (execute `pwd` para conferir) e diga ao agente: *"por favor, execute o onboarding inicial."*
   </Accordion>
   <Accordion title="O relatório não foi gerado">
     Confira se o `cv.md` existe na pasta raiz e se tem conteúdo. Se o onboarding terminou, mas o `cv.md` está vazio, peça ao agente: *"meu cv.md parece estar vazio, você pode me ajudar a preenchê-lo?"*

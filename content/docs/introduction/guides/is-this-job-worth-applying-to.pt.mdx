@@ -8,7 +8,7 @@ localized: true
 translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
 ---
 
-Vale a pena se candidatar a uma vaga quando ela combina com o seu currículo, o seu nível e as suas condições o suficiente para justificar a candidatura. O career-ops lê a vaga com base no seu currículo e nos seus objetivos e dá a ela uma nota de 1 a 5, com o raciocínio; abaixo de 4,0, ele recomenda não se candidatar, a menos que você tenha um motivo específico. Você decide.
+Vale a pena se candidatar a uma vaga quando ela combina o suficiente com o seu currículo, o seu nível e as suas condições para justificar a candidatura. O career-ops lê a vaga com base no seu currículo e nos seus objetivos e dá a ela uma nota de 1 a 5, com o raciocínio; abaixo de 4,0, ele recomenda não se candidatar, a menos que você tenha um motivo específico. Você decide.
 
 Para analisar uma vaga antes de se candidatar, rode `/career-ops oferta` e cole a vaga. Ele avalia e redige; você decide e envia. O career-ops nunca se candidata em seu nome.
 
@@ -16,9 +16,9 @@ Para analisar uma vaga antes de se candidatar, rode `/career-ops oferta` e cole 
 
 ## Decida antes de se candidatar [#decide-before-you-apply]
 
-O career-ops foi construído em torno de uma única decisão: se uma vaga merece mesmo uma candidatura. Cole a vaga à qual você ia se candidatar hoje à noite, e ele diz se essa noite vale a pena. Ele não tem como dizer quem vai responder. Ele diz o quanto a vaga combina com o seu currículo e com o que você quer, antes de você gastar a noite em uma candidatura que pode terminar em silêncio.
+O career-ops gira em torno de uma única decisão: se uma vaga merece mesmo uma candidatura. Cole a vaga à qual você ia se candidatar hoje à noite, e ele diz se essa noite vale a pena. Ele não tem como dizer quem vai responder. Ele diz o quanto a vaga combina com o seu currículo e com o que você quer, antes de você gastar a noite em uma candidatura que pode terminar em silêncio.
 
-O career-ops foi pensado para qualidade, não para quantidade. Ele conduz você a menos candidaturas, e melhores, e diz com todas as letras quando uma vaga fica aquém. Um resultado que diz *não se candidate* é o produto fazendo o trabalho dele.
+O career-ops foi pensado para qualidade, não para quantidade. Ele conduz você a menos candidaturas, e melhores, e diz com todas as letras quando uma vaga fica aquém. Um resultado que diz *não se candidate* significa que o produto está cumprindo sua função.
 
 Menos candidaturas, e melhores, também é uma questão de dignidade dos dois lados da mesa. O tempo dos recrutadores merece respeito. O seu também.
 
@@ -36,7 +36,7 @@ O career-ops tem um modo só de avaliação, para você decidir primeiro. Abra a
 /career-ops oferta
 ```
 
-O modo `oferta` roda a avaliação e escreve o relatório, sem PDF automático. Se, em vez disso, você colar uma vaga direto no `/career-ops`, ele roda o pipeline completo, que também adapta um currículo (em PDF, por padrão), seja qual for a nota. Use `oferta` quando quiser o veredito antes de qualquer outra coisa. Se depois você decidir se candidatar, `/career-ops pdf` adapta o seu currículo, e `/career-ops apply` redige respostas para as perguntas do formulário de candidatura, para você revisar e enviar por conta própria.
+O modo `oferta` roda a avaliação e gera o relatório, sem PDF automático. Se, em vez disso, você colar uma vaga direto no `/career-ops`, ele roda o pipeline completo, que também adapta um currículo (em PDF, por padrão), seja qual for a nota. Use `oferta` quando quiser o veredito antes de qualquer outra coisa. Se depois você decidir se candidatar, `/career-ops pdf` adapta o seu currículo, e `/career-ops apply` redige respostas para as perguntas do formulário de candidatura, para você revisar e enviar por conta própria.
 
 No Codex, os comandos com barra não são garantidos: em vez disso, cite o modo em um prompt, por exemplo `Run the career-ops oferta mode on this job: {URL}`.
 
@@ -76,7 +76,7 @@ A sua blacklist nunca muda nota nenhuma: ela é uma barreira que interrompe a ex
 
 Abaixo de 4,0, o career-ops recomenda não se candidatar, a menos que você tenha um motivo específico. Você pode passar por cima da recomendação, e ele vai deixar isso claro.
 
-A linha de 4,0 é uma recomendação. A decisão continua sendo sua, assim como cada candidatura: o career-ops redige o material, você revisa e você envia. Na outra ponta da escala, uma vaga que recebe 4,5 ou mais também ganha rascunhos de respostas para o formulário de candidatura.
+A nota de corte de 4,0 é uma recomendação. A decisão continua sendo sua, assim como cada candidatura: o career-ops redige o material, você revisa e você envia. Na outra ponta da escala, uma vaga que recebe 4,5 ou mais também ganha rascunhos de respostas para o formulário de candidatura.
 
 ## O que a avaliação entrega? [#what-does-the-evaluation-give-you]
 
@@ -128,7 +128,7 @@ O career-ops não presume que a nota dele prevê os seus resultados; ele deixa v
 node calibrate.mjs
 ```
 
-O relatório do `calibrate` faz uma pergunta: as suas candidaturas com nota mais alta viram entrevistas e propostas com mais frequência, no seu caso? Ele é consultivo. Nunca edita a avaliação, os limites nem a sua configuração, e nada se ajusta sozinho. Ele omite qualquer taxa em que a amostra seja pequena demais e deixa de fora as candidaturas que ainda estão em andamento. Se os seus resultados sugerem que a linha está no lugar errado para você, o que as evidências sustentam é mudar a nota a partir da qual você, pessoalmente, se candidata, ou os cargos que você busca. Essa decisão é sua.
+O relatório do `calibrate` faz uma pergunta: as suas candidaturas com nota mais alta viram entrevistas e propostas com mais frequência, no seu caso? Ele é consultivo. Nunca edita a avaliação, os limites nem a sua configuração, e nada se ajusta sozinho. Ele omite qualquer taxa em que a amostra seja pequena demais e deixa de fora as candidaturas que ainda estão em andamento. Se os seus resultados sugerem que a nota de corte está no lugar errado para você, o que as evidências sustentam é mudar a nota a partir da qual você, pessoalmente, se candidata, ou os cargos que você busca. Essa decisão é sua.
 
 ## Compare duas propostas além do salário [#compare-two-offers-beyond-salary]
 
@@ -152,7 +152,7 @@ O career-ops prepara você para negociar a partir dos seus próprios documentos 
 /career-ops offer-prep
 ```
 
-O `offer-prep` cita na íntegra cada cláusula que merece atenção, explica em linguagem simples e a marca com rótulos neutros, como "costuma ser negociada" ou "pergunte ao seu advogado". Ele fecha com perguntas para o seu advogado, pontos a levar ao empregador (como perguntas, nunca exigências) e uma nota fixa de que aquilo não é aconselhamento jurídico. Ele não faz buscas na web e lê apenas contratos em inglês.
+O `offer-prep` cita na íntegra cada cláusula que merece atenção, explica em linguagem simples e a marca com rótulos neutros, como "costuma ser negociada" ou "pergunte ao seu advogado". Ele termina com perguntas para o seu advogado, pontos a levar ao empregador (como perguntas, nunca exigências) e uma nota fixa de que aquilo não é aconselhamento jurídico. Ele não faz buscas na web e lê apenas contratos em inglês.
 
 `node salary-gap.mjs --summary` mostra, por candidatura, o que você queria, o que a vaga anunciava e o que de fato propuseram a você. `node negotiation-roi.mjs --summary` redige um argumento a partir de uma afirmação de horas economizadas cujo número também aparece no seu `cv.md`, calculada a partir de um salário e uma frequência que você informa: uma estimativa, não aconselhamento financeiro. `/career-ops offer-prep reply {company-slug}` redige um e-mail de resposta a partir do seu relatório de preparação; você mesmo envia.
 
@@ -164,7 +164,7 @@ O career-ops é uma ferramenta de código aberto, sob licença MIT, que lê uma 
 
 ### Uma nota alta quer dizer que vou ser chamado para entrevista?
 
-Uma nota alta do career-ops não promete uma entrevista. A nota é uma avaliação do quanto uma vaga combina com o seu currículo e os seus objetivos, não uma previsão de entrevistas ou propostas. Para ver como a nota acompanha os seus próprios resultados, registre os resultados à medida que acontecem e rode o relatório do calibrate, que é consultivo e nunca muda a avaliação.
+Uma nota alta do career-ops não promete uma entrevista. A nota é uma avaliação do quanto uma vaga combina com o seu currículo e os seus objetivos, não uma previsão de entrevistas ou propostas. Para ver como a nota se correlaciona com os seus próprios resultados, registre os resultados à medida que acontecem e rode o relatório do calibrate, que é consultivo e nunca muda a avaliação.
 
 ### Como comparar duas propostas de emprego além do salário?
 

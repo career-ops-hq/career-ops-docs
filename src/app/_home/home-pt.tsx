@@ -42,7 +42,7 @@ export const homePt: HomeDict = {
   memberOf: 'Membro do',
   worthApplyingLabel: 'Como saber se vale a pena se candidatar a uma vaga →',
   worthApplyingHref: '/pt/docs/introduction/guides/is-this-job-worth-applying-to',
-  authorTagline: ', operador há 16 anos e criador do career-ops',
+  authorTagline: ', 16 anos à frente de um negócio e criador do career-ops',
   // No thesisTranslation for PT: the English thesis stands alone, as in FR and DE.
   nowSignedManifesto: <>Agora um manifesto assinado ·</>,
   readIt: 'Ler →',
@@ -64,7 +64,7 @@ export const homePt: HomeDict = {
       currículos em PDF otimizados para ATS e adaptados a cada vaga, redige
       respostas para as perguntas abertas dos formulários do Greenhouse, do
       Ashby e do Lever, varre mais de 150 fontes de vagas sem gastar tokens e
-      acompanha o funil em um painel de terminal escrito em Go. Tudo fica no seu
+      acompanha o funil em um painel no terminal escrito em Go. Tudo fica no seu
       computador: {brand('sem nuvem')}, {brand('sem telemetria')},{' '}
       {brand('sem conta')}. Licença MIT e gratuito para sempre; o único custo é a
       CLI de programação com IA que você já paga. Criado por Santiago Fernández
@@ -101,7 +101,7 @@ export const homePt: HomeDict = {
       {brand('sem pagar por isso')}.&rdquo;
     </>
   ),
-  featAgnosticTitle: 'Feito para IA, sem amarra a fornecedor',
+  featAgnosticTitle: 'Feito para IA, sem dependência de fornecedor',
   featAgnosticBody: (
     <>
       Funciona com qualquer CLI de programação: Claude Code, OpenCode, Codex,
@@ -218,7 +218,7 @@ export const homePt: HomeDict = {
           roda o sistema localmente com a CLI de programação com IA que já usa. A
           sustentabilidade vem de contribuições da comunidade e de patrocínio de
           empresas pelo coletivo do projeto no Open Collective, e não de planos
-          premium, recursos pagos ou dados. Os fundos ficam com o fiscal host do
+          premium, recursos pagos ou dados. Os fundos ficam com o anfitrião fiscal do
           projeto, o Open Source Collective, num livro-caixa público, e vão para
           manutenção, correções de segurança, releases e documentação. Detalhes
           em{' '}
@@ -274,7 +274,7 @@ export const homePt: HomeDict = {
           repositório como prompts simples em Markdown; qualquer agente que
           carregue skills pode chamá-los. Não há dependência específica da
           Anthropic. O Claude Code é o ambiente mais comum por causa do seu
-          carregador de skills, mas os mesmos modos rodam sem mudanças nas outras
+          carregador de skills, mas os mesmos modos rodam sem alterações nas outras
           CLIs.
         </>
       ),
@@ -303,7 +303,7 @@ export const homePt: HomeDict = {
         <>
           O career-ops funciona com Claude Code, Cursor, Codex, OpenCode, Pi,
           Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub
-          Copilot CLI: onze CLIs com suporte de primeira classe (a Gemini CLI é um wrapper
+          Copilot CLI: onze CLIs com suporte completo (a Gemini CLI é um wrapper
           legado). Os mesmos arquivos de modo rodam em todas. Cada pessoa escolhe
           a CLI que combina com a assinatura que já tem e com o quanto quer
           gastar; o career-ops nunca prende você a um único fornecedor. Uma busca
@@ -315,7 +315,7 @@ export const homePt: HomeDict = {
   ],
   finalCta: 'Pronto para filtrar as vagas, em vez de ser filtrado?',
   yourTurn: 'Sua vez',
-  followWhatWeShip: 'Ou acompanhe o que a gente lança.',
+  followWhatWeShip: 'Ou acompanhe nossos lançamentos.',
   releaseBlurb: (
     <>
       Anúncios de releases e novidades de vez em quando.

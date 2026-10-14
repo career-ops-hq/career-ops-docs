@@ -379,7 +379,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Com quais CLIs de IA o career-ops funciona?",
       answer:
-        "O career-ops tem suporte de primeira classe a onze CLIs de programação com IA: Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub Copilot CLI (a Gemini CLI permanece apenas como wrapper legado). O career-ops é agnóstico em relação à IA: ele traz arquivos de prompt que a CLI executa, então você também pode apontá-lo para qualquer endpoint compatível com a OpenAI ou para um modelo local sem alterar uma linha de código. Veja em CLIs de IA compatíveis a lista atual e como invocar cada uma.",
+        "O career-ops tem suporte de primeira classe a onze CLIs de programação com IA: Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent e GitHub Copilot CLI (a Gemini CLI permanece apenas como wrapper legado). O career-ops é agnóstico em relação à IA: ele inclui arquivos de prompt que a CLI executa, então você também pode apontá-lo para qualquer endpoint compatível com a OpenAI ou para um modelo local sem alterar uma linha de código. Veja em CLIs de IA compatíveis a lista atual e como invocar cada uma.",
     },
     {
       question: "Qual é a diferença entre scan e scan:full?",
