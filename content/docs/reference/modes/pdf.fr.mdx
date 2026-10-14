@@ -5,7 +5,7 @@ seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible A
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-09"
-translationHash: 06b8aa69327229e6
+translationHash: ac6b7dc3c06568ee
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -62,7 +62,7 @@ Les trois constats sont signalés et jamais appliqués, ni par le script ni par 
 - `parenthetical-in-company` : une entreprise écrite `Globex (Cloud Platform Division)`. Le parseur conserve la parenthèse dans le nom de l'employeur, et une recherche sur l'employeur ne vous trouve donc pas.
 - `multiple-date-ranges` : deux périodes dans une même entrée. Deux passages chez un même employeur sont lus comme un seul.
 
-Chacun demande une décision qui vous appartient : ce texte est-il un employeur, où le détail doit-il aller, quelles puces relèvent de quel passage. L'agent vous montre le constat et vous laisse décider. L'endroit où va une modification que vous choisissez dépend de la façon dont l'étape a été lancée. Dans le mode `ats`, elle est écrite dans `cv.md` ou dans `config/profile.yml` après votre confirmation. Avec `/career-ops pdf --ats`, elle est faite dans le contenu personnalisé de ce CV et les deux copies sont reconstruites à partir de lui ; la copie ATS n'est jamais modifiée à la main.
+Chacun demande une décision qui vous appartient : ce texte est-il un employeur, où le détail doit-il aller, quelles puces relèvent de quel passage. L'agent vous montre le constat et vous laisse décider. Si vous choisissez une modification, elle est écrite dans `cv.md` ou dans `config/profile.yml` après votre confirmation.
 
 ### Après le HTML : le score
 
