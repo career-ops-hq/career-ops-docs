@@ -1,7 +1,7 @@
 import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { blogSource, blogTwin } from '@/lib/blog-source';
+import { blogCluster, blogSource } from '@/lib/blog-source';
 import { BlogPostView, type BlogFrontmatter } from '@/components/blog-post-view';
 
 export async function generateStaticParams() {
@@ -23,17 +23,15 @@ export async function generateMetadata(
 
   const data = page.data as unknown as BlogFrontmatter;
   const url = `https://career-ops.org${page.url}`;
-  // hreflang only when a Spanish twin exists; every other post keeps its
+  // hreflang only when a translated twin exists; every other post keeps its
   // metadata exactly as before.
-  const es = blogTwin(page, 'es');
+  const cluster = blogCluster(page);
   return {
     title: `${data.seoTitle ?? data.title} · career-ops blog`,
     description: data.summary || data.description,
     alternates: {
       canonical: url,
-      ...(es
-        ? { languages: { en: url, es: `https://career-ops.org${es.url}`, 'x-default': url } }
-        : {}),
+      ...(cluster ? { languages: cluster } : {}),
     },
     openGraph: {
       images: [DEFAULT_OG_IMAGE],
