@@ -93,7 +93,7 @@ The full command reference, including `sync`, `query` and `history`, is in the c
 
 ## Gotchas
 
-Status lives in the Status column of the tracker (`data/applications.md`), not in the report file. Changing it by hand skips `data/status-log.tsv`: funnel-velocity still sees the new status, but not when it happened, so the change is missing from the stage-velocity timings. Use `set-status.mjs`, the chat, or the Go TUI dashboard's status picker, which runs the same command.
+Status lives in the Status column of the tracker (`data/applications.md`), not in the report file. Changing it by hand skips `data/status-log.tsv`: funnel-velocity still sees the new status, but not when it happened, so the change is missing from the stage-velocity timings, and a row that later ends in Rejected loses the stages it passed through. Use `set-status.mjs`, the chat, or the Go TUI dashboard's status picker, which runs the same command.
 
 ## Related
 
