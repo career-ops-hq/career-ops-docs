@@ -39,11 +39,15 @@ const LOCALES: { code: Code; label: string; name: string }[] = [
 const MANIFESTO_LOCALES: Code[] = ['es'];
 
 /** Circular flag icons (SVG, not emoji — emoji renders inconsistently). */
+// Rounded with CSS, not an SVG <clipPath>: a clipPath needs a document-wide
+// id, every copy of a flag shared it, and the first copy lives in the hidden
+// crawlable <nav>. A url(#id) that resolves into display:none clips nothing
+// visible, so the flag next to the suggestion disappeared.
+const FLAG_CLIP = { borderRadius: '50%', overflow: 'hidden' } as const;
 function FlagES({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
-      <clipPath id="flagCircleES"><circle cx="8" cy="8" r="8" /></clipPath>
-      <g clipPath="url(#flagCircleES)">
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
         <rect y="0" width="16" height="4" fill="#c60b1e" />
         <rect y="4" width="16" height="8" fill="#ffc400" />
         <rect y="12" width="16" height="4" fill="#c60b1e" />
@@ -53,9 +57,8 @@ function FlagES({ className = 'w-3.5 h-3.5' }: { className?: string }) {
 }
 function FlagEN({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
-      <clipPath id="flagCircleEN"><circle cx="8" cy="8" r="8" /></clipPath>
-      <g clipPath="url(#flagCircleEN)">
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
         <rect width="16" height="16" fill="#012169" />
         <path d="M0 0L16 16M16 0L0 16" stroke="#fff" strokeWidth="2.5" />
         <path d="M0 0L16 16M16 0L0 16" stroke="#c8102e" strokeWidth="1.5" />
@@ -67,9 +70,8 @@ function FlagEN({ className = 'w-3.5 h-3.5' }: { className?: string }) {
 }
 function FlagFR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
-      <clipPath id="flagCircleFR"><circle cx="8" cy="8" r="8" /></clipPath>
-      <g clipPath="url(#flagCircleFR)">
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
         <rect width="6" height="16" fill="#002395" />
         <rect x="5" width="6" height="16" fill="#fff" />
         <rect x="10" width="6" height="16" fill="#ed2939" />
@@ -79,9 +81,8 @@ function FlagFR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
 }
 function FlagIT({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
-      <clipPath id="flagCircleIT"><circle cx="8" cy="8" r="8" /></clipPath>
-      <g clipPath="url(#flagCircleIT)">
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
         <rect width="6" height="16" fill="#009246" />
         <rect x="5" width="6" height="16" fill="#fff" />
         <rect x="10" width="6" height="16" fill="#ce2b37" />
@@ -91,9 +92,8 @@ function FlagIT({ className = 'w-3.5 h-3.5' }: { className?: string }) {
 }
 function FlagDE({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
-      <clipPath id="flagCircleDE"><circle cx="8" cy="8" r="8" /></clipPath>
-      <g clipPath="url(#flagCircleDE)">
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
         <rect y="0" width="16" height="6" fill="#000" />
         <rect y="5" width="16" height="6" fill="#dd0000" />
         <rect y="10" width="16" height="6" fill="#ffce00" />
@@ -105,9 +105,8 @@ function FlagDE({ className = 'w-3.5 h-3.5' }: { className?: string }) {
 // Portuguese-language clicks).
 function FlagBR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 16 16" aria-hidden="true">
-      <clipPath id="flagCircleBR"><circle cx="8" cy="8" r="8" /></clipPath>
-      <g clipPath="url(#flagCircleBR)">
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
         <rect width="16" height="16" fill="#009c3b" />
         <polygon points="8,2.5 14.5,8 8,13.5 1.5,8" fill="#ffdf00" />
         <circle cx="8" cy="8" r="3" fill="#002776" />
@@ -193,6 +192,8 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
  *  banner and expires with the session, so a return visit is re-offered once.
  *  No cookie, no localStorage → zero GDPR surface.
  */
+const DISMISS_EVENT = 'lang-banner-dismiss';
+
 function useLanguageBanner(target: Code, mismatch: boolean) {
   const KEY = `lang-banner-dismissed:${target}`;
   const stored = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem(KEY) : null;
@@ -216,9 +217,18 @@ function useLanguageBanner(target: Code, mismatch: boolean) {
     }
   }, [KEY, visible, mismatch]);
 
+  // The banner can be mounted more than once (header, mobile panel, floating
+  // pill): closing one closes them all.
+  useEffect(() => {
+    const onDismiss = () => setVisible(false);
+    window.addEventListener(DISMISS_EVENT, onDismiss);
+    return () => window.removeEventListener(DISMISS_EVENT, onDismiss);
+  }, []);
+
   const dismiss = useCallback(() => {
     sessionStorage.setItem(KEY, 'dismissed');
     setVisible(false);
+    window.dispatchEvent(new Event(DISMISS_EVENT));
   }, [KEY]);
 
   return { showBanner: visible, dismiss, animate: visible && firstAppearance.current };
@@ -244,6 +254,7 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
     <div className={compact ? 'flex flex-col items-start gap-2' : 'flex items-center gap-2'}>
       {mounted && showBanner && (
         <div
+          data-lang-banner
           // Measured 30-sep with the dropdown (four languages, 16px steps):
           // the tightest header is /fr, whose long tagline needs 1136px for
           // the banner and 1264px for banner + question. Below that the theme
@@ -273,6 +284,70 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
         </div>
       )}
       <LanguageMenu current={current} base={base} compact={compact} />
+    </div>
+  );
+}
+
+/**
+ * The same suggestion, for screens where the header has no room for it.
+ * Below lg the header's links live in the collapsed mobile menu, so a reader
+ * whose browser is in Portuguese landing on an English page never saw the
+ * offer; between 1024 and 1151px the header hides it to keep the theme
+ * toggle. Mounted once per page (RootShell); it shows only while no header
+ * copy of the banner is actually on screen, so the two never appear together.
+ * Bottom-start, clear of the AI search button at bottom-end of the docs.
+ */
+export function LanguageSuggestion() {
+  const pathname = usePathname() || '/';
+  const current = localeOf(pathname);
+  const base = baseOf(pathname);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const target = mounted ? detectLocale() : current;
+  const mismatch = mounted && target !== current;
+  const { showBanner, dismiss, animate } = useLanguageBanner(target, mismatch);
+
+  const [headerShows, setHeaderShows] = useState(true);
+  useEffect(() => {
+    if (!showBanner) return;
+    // On screen, not merely rendered: the docs keep a copy in the mobile
+    // drawer, which has a layout box while closed off-canvas. Hit-testing the
+    // banner's centre tells a visible copy from a hidden or covered one.
+    const onScreen = (el: Element) => {
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return false;
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return !!hit && el.contains(hit);
+    };
+    const check = () => setHeaderShows(Array.from(document.querySelectorAll('[data-lang-banner]')).some(onScreen));
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [showBanner]);
+
+  if (!mounted || !showBanner || headerShows) return null;
+  const TargetFlag = FLAG[target];
+  return (
+    <div
+      lang={target}
+      className={`fixed bottom-4 inset-s-4 z-20 inline-flex h-10 items-center whitespace-nowrap gap-1.5 rounded-full border border-brand/30 bg-fd-background ps-3.5 pe-2 text-sm shadow-lg${animate ? ' animate-in fade-in slide-in-from-bottom-2 duration-500' : ''}`}
+    >
+      <Link
+        href={localeUrl(base, target)}
+        hrefLang={target}
+        onClick={dismiss}
+        className="inline-flex items-center gap-1.5 font-medium text-brand-text hover:underline"
+      >
+        <TargetFlag className="w-3.5 h-3.5" />
+        {BANNER[target].cta}
+      </Link>
+      <button
+        onClick={dismiss}
+        aria-label={UI[target].dismiss}
+        className="inline-flex size-6 shrink-0 items-center justify-center rounded-full text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-foreground transition-colors"
+      >
+        <X className="w-3.5 h-3.5" />
+      </button>
     </div>
   );
 }

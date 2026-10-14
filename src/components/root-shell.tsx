@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { UtmLanding } from '@/components/utm-landing';
+import { LanguageSuggestion } from '@/components/language-bar';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
@@ -99,6 +100,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
         <LocaleRootProvider locale={locale}>{children}</LocaleRootProvider>
+        <LanguageSuggestion />
         <footer className={`${instrumentSerifRegular.className} border-t text-lg text-fd-muted-foreground`}>
           <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12">
             <div className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
