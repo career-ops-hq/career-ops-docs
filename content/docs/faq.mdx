@@ -47,7 +47,7 @@ career-ops keeps your data on your machine, in plain files you own — your CV, 
 
 A career-ops update started from a linked git worktree lands on `main`, in the checkout that has `main` checked out, not on the worktree's branch. Agents such as Claude Code can run each session in a linked worktree on a throwaway branch. When `node update-system.mjs` runs there, `check`, `apply`, `rollback` and `dismiss` re-run themselves in the `main` checkout, so the update is committed to `main` and worktrees created from the updated `main` already have it. To bring the worktree you are in up to date afterwards, run `git merge main` (or `git rebase main`) inside it.
 
-If no checkout has `main` checked out, or the `main` checkout has uncommitted changes to tracked files, `apply` and `rollback` refuse without changing anything and tell you what to fix. To update the worktree's own branch instead, set `CAREER_OPS_UPDATE_IN_WORKTREE=1`. Running the updater from your main checkout works exactly as before. This ships in career-ops releases after v1.35.0; the full behavior is in the core repo's [docs/SCRIPTS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md).
+If no checkout has `main` checked out, or the `main` checkout has uncommitted changes to tracked files, `apply` and `rollback` refuse without changing anything and tell you what to fix. To update the worktree's own branch instead, set `CAREER_OPS_UPDATE_IN_WORKTREE=1`. Running the updater from your main checkout works exactly as before. This is the behavior since career-ops v1.36.0; the full behavior is in the core repo's [docs/SCRIPTS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md).
 
 ## How do I give career-ops my CV?
 
