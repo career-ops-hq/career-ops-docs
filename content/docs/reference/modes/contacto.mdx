@@ -4,12 +4,14 @@ description: "The LinkedIn power move. Given a company name and your network con
 seoTitle: "career-ops contacto mode — find warm LinkedIn contacts and draft outreach"
 icon: UserPlus
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-10-14"
 ---
 
 ## What it does
 
 contacto mode reads the company name and the JD context, then suggests outreach targets it finds through WebSearch — the hiring manager, the assigned recruiter, two or three team peers, and a known interviewer. It drafts a short message — three sentences, under 300 characters — tailored to the role and to who the contact is.
+
+**Saved contacts first.** Before any search, contacto runs `node contact-lookup.mjs --company "<company>" --summary` against your saved contacts in `data/contacts.tsv` and shows anyone you already have at that company, with the earlier application that ties them to it. If you pick one, it skips the search and drafts an **Internal Referral** message: it names your real prior contact, says in one line why the new role fits, and asks directly for a referral, the opposite of the peer message, which never asks for a job. A saved contact is marked as an internal referral only after you confirm a real prior relationship with that person; working at the same company is not enough. To save a contact from a recruiter's or interviewer's reply, paste the reply into a file and run `node contact-extract.mjs --file <email.txt>`, which asks before writing. contacto drafts every message; you decide whether to send it.
 
 ## When to use it
 
