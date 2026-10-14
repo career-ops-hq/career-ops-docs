@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: 353af4b7011654e3
+translationHash: 5ad72cb17b7cd67d
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -154,7 +154,7 @@ node merge-tracker.mjs
 Dieses Script:
 
 1. Liest die Zusammenfassungsdateien aus `batch/tracker-additions/`
-2. Prüft auf Duplikate, zuerst anhand der URL der Stellenanzeige, damit du nie zwei Zeilen für dasselbe Angebot bekommst
+2. Prüft auf Duplikate, damit du nie zwei Zeilen für dasselbe Angebot bekommst. Hat dein Tracker eine URL-Spalte, vergleicht es zuerst die URL der Stellenanzeige; sonst die Berichtsnummer und danach Firma und Rolle
 3. Fügt neue Einträge zu deinem Bewerbungs-Tracker hinzu
 4. Archiviert die verarbeiteten Dateien in `batch/tracker-additions/merged/`
 

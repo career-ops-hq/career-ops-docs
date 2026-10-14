@@ -151,7 +151,7 @@ node merge-tracker.mjs
 This script:
 
 1. Reads the summary files from `batch/tracker-additions/`
-2. Checks for duplicates, matching on the posting URL first, so you never get two rows for the same offer
+2. Checks for duplicates so you never get two rows for the same offer. If your tracker has a URL column, it matches on the posting URL first; otherwise it matches on the report number, then on company and role
 3. Adds new entries to your applications tracker
 4. Archives the processed files into `batch/tracker-additions/merged/`
 
