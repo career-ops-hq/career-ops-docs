@@ -4,8 +4,8 @@ description: "Lê as URLs enfileiradas em data/pipeline.md e executa o auto-pipe
 seoTitle: "Modo pipeline do career-ops: como avaliar várias vagas de uma vez"
 icon: GitBranch
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 23454c517c41a1c1
+lastModified: "2026-10-14"
+translationHash: 3577755ad38f8486
 localized: true
 translatedFrom: /docs/reference/modes/pipeline
 ---
@@ -45,6 +45,7 @@ Recorra ao pipeline quando você tiver acumulado várias vagas ao longo do dia e
 
 - A seção `## Pending` aceita qualquer formato: uma URL colada sozinha já funciona, ou você pode adicionar as colunas `company`, `role`, `location` e `comp`, e o modo lê todas elas.
 - A varredura de vagas ativas roda antes do loop por URL, então uma caixa de entrada desatualizada com oito URLs não custa oito avaliações desperdiçadas.
+- As URLs do LinkedIn não passam pela varredura de vagas ativas; em vez disso, recebem uma única tentativa com navegador no loop por URL. Se essa tentativa deixar a descrição indisponível, por exemplo com a página travada em um esqueleto de carregamento, a entrada continua em Pending marcada com `[!]` e você recebe um pedido para colar o texto da vaga ou informar um link do empregador ou do ATS para o mesmo cargo. Uma falha ao carregar o LinkedIn nunca é tratada como vaga encerrada.
 - A ferramenta de extração define a concorrência. Com o extrator de navegador padrão (Playwright MCP), ele processa as URLs uma de cada vez, porque workers que compartilham a mesma sessão de navegador podem se contaminar entre si e avaliar a vaga errada. Só quando todos os workers usam o extrator isolado por CLI (`scan.extractor: cli`) ou uma alternativa sem navegador, cada um com o próprio processo e estado de sessão, três ou mais URLs podem rodar em paralelo, um worker por URL.
 - Os PDFs só são gerados quando a nota ultrapassa `auto_pdf_score_threshold` (padrão: 3.0); aumente esse valor para não gerar PDFs de vagas medianas e gere-os depois, sob demanda, com `/career-ops pdf`.
 

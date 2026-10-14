@@ -4,8 +4,8 @@ description: "Lit les URL en file d'attente dans data/pipeline.md et exécute l'
 seoTitle: "Mode pipeline de career-ops — évaluer en lot de nombreuses offres d'emploi à la fois"
 icon: GitBranch
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 23454c517c41a1c1
+lastModified: "2026-10-14"
+translationHash: 3577755ad38f8486
 localized: true
 translatedFrom: /docs/reference/modes/pipeline
 ---
@@ -45,6 +45,7 @@ Recourez à pipeline lorsque vous avez accumulé un arriéré d'annonces au cour
 
 - La section `## Pending` accepte n'importe quel format — une URL collée telle quelle fonctionne, ou vous pouvez ajouter des colonnes `company`, `role`, `location` et `comp`, et le mode les lit toutes.
 - Le balayage de liveness s'exécute avant la boucle par URL, de sorte qu'une boîte de réception périmée de huit URL ne coûte pas huit évaluations gaspillées.
+- Les URL LinkedIn ne passent pas par le balayage de liveness : elles ont droit à la place à une seule tentative dans le navigateur, pendant la boucle par URL. Si la description reste indisponible après cette tentative, par exemple quand la page reste bloquée sur un squelette de chargement, l'entrée reste dans Pending avec la marque `[!]`, et on vous demande de coller le texte de l'annonce ou de fournir un lien vers le même poste sur le site de l'employeur ou sur un ATS. Un chargement LinkedIn en échec n'est jamais considéré comme une annonce clôturée.
 - C'est l'outil d'extraction qui détermine la concurrence. Avec l'extracteur navigateur par défaut (Playwright MCP), il traite les URL une à une, car des workers qui partagent une même session de navigateur peuvent se mélanger et évaluer la mauvaise annonce. Ce n'est que lorsque chaque worker utilise l'extracteur CLI isolé (`scan.extractor: cli`) ou une solution de repli sans navigateur, chacun avec son propre processus et son propre état de session, que trois URL ou plus peuvent être traitées en parallèle, un worker par URL.
 - Les PDF ne sont générés que lorsqu'un score dépasse `auto_pdf_score_threshold` (3.0 par défaut) ; augmentez ce seuil pour éviter les PDF des postes marginaux et les générer plus tard à la demande avec `/career-ops pdf`.
 

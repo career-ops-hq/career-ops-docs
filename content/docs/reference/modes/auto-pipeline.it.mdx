@@ -4,8 +4,8 @@ description: "Flusso predefinito quando incolli l'URL di un annuncio o il suo te
 seoTitle: "career-ops auto-pipeline — valuta un annuncio e crea CV e tracker da un solo URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: a103f3feac73a799
+lastModified: "2026-10-14"
+translationHash: 233c7fa8819747b5
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
@@ -38,6 +38,7 @@ Updated data/applications.md (Report and PDF marked done).
 
 - Incolla un URL e auto-pipeline si occupa dell'estrazione al posto tuo: prima Playwright per i portali single-page come Lever, Ashby, Greenhouse e Workday, poi WebFetch per le pagine statiche e infine WebSearch come ultima risorsa.
 - Prima della valutazione viene eseguito un controllo di validità dell'annuncio. Se il link non funziona più o la pagina è un guscio vuoto con la scritta "posizione chiusa", la modalità si ferma lì invece di valutare contenuti fantasma; e se la voce proveniva da `data/pipeline.md`, segna quella riga come chiusa.
+- Una pagina LinkedIn in cui la descrizione resta uno scheletro di caricamento non è un annuncio chiuso, ma non è nemmeno la descrizione di un annuncio: auto-pipeline si ferma prima della valutazione, del report, del PDF e di qualsiasi scrittura nel tracker, e ti chiede di incollare il testo dell'annuncio o di fornire un link del datore di lavoro o dell'ATS per lo stesso ruolo.
 - Le bozze delle risposte per la candidatura vengono scritte solo quando il punteggio è pari o superiore a 4,5, così i ruoli poco in linea con il tuo profilo non consumano token per testi che non invierai.
 
 ## A cosa fare attenzione

@@ -4,8 +4,8 @@ description: "Fluxo padrão quando você cola a URL de uma vaga ou o texto bruto
 seoTitle: "career-ops auto-pipeline — avalie uma vaga e gere currículo + tracker a partir de uma URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: a103f3feac73a799
+lastModified: "2026-10-14"
+translationHash: 233c7fa8819747b5
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
@@ -38,6 +38,7 @@ Updated data/applications.md (Report and PDF marked done).
 
 - Cole uma URL e o auto-pipeline cuida da extração para você: primeiro Playwright, para portais de página única como Lever, Ashby, Greenhouse e Workday; depois WebFetch, para páginas estáticas; e, por último, WebSearch como último recurso.
 - Uma verificação de vaga ativa roda antes da avaliação. Se o link estiver quebrado ou a página for só uma casca vazia de "vaga preenchida", o modo para ali em vez de pontuar um conteúdo fantasma. E, se a entrada veio de `data/pipeline.md`, ele marca essa linha como encerrada.
+- Uma página do LinkedIn cuja descrição fica presa em um esqueleto de carregamento não é uma vaga encerrada, mas também não é a descrição de uma vaga: o auto-pipeline para antes da avaliação, do relatório, do PDF e de qualquer registro no tracker, e pede que você cole o texto da vaga ou informe um link do site da empresa ou do ATS para a mesma vaga.
 - Os rascunhos de respostas para a candidatura só são escritos quando a nota é 4,5 ou mais, para que vagas com pouca aderência não gastem tokens em um texto que você não vai enviar.
 
 ## Pontos de atenção

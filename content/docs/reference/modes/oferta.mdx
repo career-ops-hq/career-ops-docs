@@ -4,7 +4,7 @@ description: "Runs the A–H evaluation against one listing and records it in yo
 seoTitle: "career-ops oferta mode — score a single job listing before you apply"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-10-14"
 ---
 
 ## What it does
@@ -49,8 +49,11 @@ Blocks B through F cover CV match and gaps, level strategy, comp and demand, a c
 Reach for oferta to score a single listing quickly without committing to the full pipeline. Worth knowing:
 
 - Pass a URL and a liveness check runs first — an expired or 404 posting is stopped before Block A, so you never spend a run on phantom content.
+- A LinkedIn page whose description stays a loading skeleton counts as JD unavailable, not as a closed job: oferta stops before Block A and asks you to paste the job text or give an employer or ATS link for the same role.
+- The archetype is classified against your own target roles, the *Your Target Roles* section of `modes/_profile.md`; the default role types apply only when you have defined none. A role that matches none of your targets scores 1 on North Star alignment, the evaluation continues on the other dimensions, and the report's Archetype line reads `Not a target — closest default: {default role type}` or `Not a target — no close match`.
 - Company and comp research is bounded to at most five web searches; this is an evaluation, not deep research. Run `/career-ops deep` separately when you want the fuller company picture.
 - Block G returns one of three tiers — High Confidence, Proceed with Caution, or Suspicious — so likely ghost jobs surface before you invest interview effort.
+- When the posting explicitly describes a fixed-term role, such as an 18-month contract or a temporary position, Block G adds a fixed-term contract note that quotes the phrase, plus an optional talking point for the compensation conversation. It is informational only: it never changes the score, the legitimacy tier or the recommendation.
 
 ## Score Evidence
 

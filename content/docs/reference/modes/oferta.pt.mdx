@@ -4,8 +4,8 @@ description: "Executa a avaliação A–H de uma única vaga e a registra no seu
 seoTitle: "Modo oferta do career-ops: avalie uma vaga de emprego antes de se candidatar"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 359504e9cbeb24ea
+lastModified: "2026-10-14"
+translationHash: 9a968f6bcb8dda55
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -52,8 +52,11 @@ Os Blocos B a F cobrem a aderência do currículo e as lacunas, a estratégia de
 Recorra ao oferta para pontuar rapidamente uma única vaga sem se comprometer com o pipeline completo. Vale saber:
 
 - Passe uma URL e uma verificação de atividade roda primeiro — uma vaga expirada ou com erro 404 é barrada antes do Bloco A, então você nunca gasta uma execução com conteúdo fantasma.
+- Uma página do LinkedIn cuja descrição continua presa na tela de carregamento conta como descrição de vaga indisponível, não como vaga encerrada: o oferta para antes do Bloco A e pede que você cole o texto da vaga ou informe um link do empregador ou do ATS para a mesma vaga.
+- O arquétipo é classificado com base nos seus próprios cargos-alvo, definidos na seção *Your Target Roles* de `modes/_profile.md`; os tipos de cargo padrão só valem quando você não definiu nenhum. Uma vaga que não corresponde a nenhum dos seus cargos-alvo recebe nota 1 em alinhamento com o North Star, a avaliação continua nas outras dimensões e a linha Archetype do relatório mostra `Not a target — closest default: {default role type}` ou `Not a target — no close match`.
 - A pesquisa sobre a empresa e a remuneração é limitada a no máximo cinco buscas na web; isto é uma avaliação, não uma pesquisa aprofundada. Execute `/career-ops deep` separadamente quando quiser um retrato mais completo da empresa.
 - O Bloco G devolve um de três níveis — High Confidence, Proceed with Caution ou Suspicious — para que prováveis vagas fantasma apareçam antes de você investir esforço em entrevistas.
+- Quando a vaga descreve explicitamente uma posição por prazo determinado, como um contrato de 18 meses ou uma vaga temporária, o Bloco G acrescenta uma observação sobre contrato por prazo determinado que cita o trecho, além de um argumento opcional para a conversa sobre remuneração. É apenas informativa: nunca altera a nota, o nível de legitimidade nem a recomendação.
 
 ## Score Evidence
 

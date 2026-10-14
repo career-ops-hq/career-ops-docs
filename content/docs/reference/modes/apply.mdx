@@ -4,7 +4,7 @@ description: "Live application assistant. Reads the open-ended questions Greenho
 seoTitle: "career-ops apply mode — auto-draft answers to ATS application questions"
 icon: Send
 date: "2026-05-19"
-lastModified: "2026-05-19"
+lastModified: "2026-10-14"
 ---
 
 ## What it does
@@ -50,12 +50,19 @@ captcha, and submit yourself.
 
 apply never submits the application: the final Submit click is always yours. It reads every field on the form, not just the open-ended questions — dropdowns, radio buttons, checkboxes and upload fields included. It drafts the free-text answers, suggests a value for each closed-ended field, and flags work-authorization, salary and other sensitive questions your profile does not already answer, for you to confirm rather than guessing. With Playwright it can fill some fields in the live form; you review everything and complete the rest. Once the answers are in, it records the text, the selections and the files used in the report. If the preflight finds the posting has closed, apply refuses to draft final copy unless you explicitly override it — a dead link is not worth a tailored answer.
 
+Experience fields come from the tailored CV built for that report, not from `cv.md`: employers, titles, dates, role descriptions, skills and education match the document you upload, so the form and the attached resume tell the same story. `config/profile.yml` stays authoritative for your identity and contact details, work authorization and compensation expectations. If apply finds no tailored CV for the application, it says so and falls back to `cv.md`.
+
+When the report or the job description explicitly describes the role as fixed-term, apply shows one **Fixed-term role reminder** before the first answer, quoting the phrase and any stated duration, and suggests confirming renewal, benefits and end-of-term terms. It is informational: it never changes a field, never blocks the application and needs no acknowledgment.
+
+Before every Save, Next or Continue on a multi-step form, and before handing the form to you for Submit, apply re-reads the whole step and checks that every required control holds a value, including controls that appear only after another answer. If a required field cannot be filled from your own files, it stops and asks you.
+
 ## Known ATS quirks
 
 apply has been field-tested across roughly a dozen Playwright-driven applications, and a few portals break a run if you do not account for them:
 
 - **Ashby** deduplicates candidates by email per company, so a second application can silently merge into your first. If a report for that company already exists, apply suggests a `+tag` email alias. For Ashby, finish and submit in your ordinary system browser, then verify a success page or confirmation email before marking the application submitted.
 - **Lever** throws a captcha when a checkbox or radio button is clicked programmatically, so apply fills only text fields and dropdowns and hands you the checkboxes and radio buttons to tick.
+- **Repeated sections** such as Work Experience or Education ("Add Another") reuse the same labels in every block, so apply fills at most two or three entries at a time and checks each value against its intended entry before continuing. If it cannot identify a field uniquely, it stops and asks you instead of guessing.
 - **Workday** ignores values set without real keystrokes, so apply types answers character by character and asks you to review the work-authorization dropdowns before you save.
 
 ## Related

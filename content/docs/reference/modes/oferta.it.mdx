@@ -4,8 +4,8 @@ description: "Esegue la valutazione A–H su un singolo annuncio e la registra n
 seoTitle: "Modalità oferta di career-ops: valuta un singolo annuncio di lavoro prima di candidarti"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 359504e9cbeb24ea
+lastModified: "2026-10-14"
+translationHash: 9a968f6bcb8dda55
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -52,8 +52,11 @@ I blocchi da B a F coprono la corrispondenza con il CV e le lacune, la strategia
 Ricorri a oferta per valutare rapidamente un singolo annuncio senza impegnarti nell'intera pipeline. Buono a sapersi:
 
 - Se passi un URL, viene eseguito prima un controllo di attività: un annuncio scaduto o in 404 viene bloccato prima del blocco A, così non sprechi mai un'esecuzione su contenuti fantasma.
+- Una pagina LinkedIn la cui descrizione resta uno scheletro di caricamento viene trattata come JD non disponibile, non come annuncio chiuso: oferta si ferma prima del blocco A e ti chiede di incollare il testo dell'annuncio o di fornire un link del datore di lavoro o dell'ATS per la stessa posizione.
+- L'archetipo viene classificato in base ai tuoi ruoli target, cioè la sezione *Your Target Roles* di `modes/_profile.md`; i tipi di ruolo predefiniti si applicano solo quando non ne hai definito nessuno. Un ruolo che non corrisponde a nessuno dei tuoi target ottiene 1 nell'allineamento con la North Star, la valutazione prosegue sulle altre dimensioni e la riga Archetype del report riporta `Not a target — closest default: {default role type}` oppure `Not a target — no close match`.
 - La ricerca sull'azienda e sulla retribuzione è limitata a un massimo di cinque ricerche web: è una valutazione, non una ricerca approfondita. Esegui `/career-ops deep` a parte quando vuoi un quadro più completo dell'azienda.
 - Il blocco G restituisce uno di tre livelli (High Confidence, Proceed with Caution o Suspicious), così i probabili annunci fantasma emergono prima che tu investa energie nei colloqui.
+- Quando l'annuncio descrive esplicitamente una posizione a tempo determinato, come un contratto di 18 mesi o un incarico temporaneo, il blocco G aggiunge una nota sul contratto a tempo determinato che cita la frase, più un eventuale spunto da usare quando si parla di retribuzione. È solo informativa: non modifica mai il punteggio, il livello di legittimità né la raccomandazione.
 
 ## Score Evidence
 

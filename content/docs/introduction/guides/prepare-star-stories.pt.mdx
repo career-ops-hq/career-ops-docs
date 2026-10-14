@@ -3,14 +3,14 @@ title: Prepare suas histórias STAR a partir do seu currículo
 description: "Trava no \"Conte sobre uma situação em que você…\"? O career-ops redige histórias STAR a partir do seu currículo enquanto você avalia vagas e deixa você ensaiá-las antes da entrevista."
 seoTitle: "Como preparar histórias STAR para entrevistas a partir do seu currículo com o career-ops"
 icon: NotebookPen
-translationHash: b390892bd0f804b6
+translationHash: b992c17341a033d9
 localized: true
 translatedFrom: /docs/introduction/guides/prepare-star-stories
 ---
 
 Para preparar histórias STAR, escreva cada resposta como Situação (Situation), Tarefa (Task), Ação (Action) e Resultado (Result), mais uma Reflexão (Reflection) sobre o que você aprendeu (STAR+R). O career-ops redige as histórias a partir da experiência real do seu currículo cada vez que você avalia uma vaga; você confere os números, edita e ensaia antes da entrevista.
 
-Se você trava no "Conte sobre uma situação em que você…", a solução está aqui. O career-ops salva as histórias em um banco de histórias, `interview-prep/story-bank.md`, depois que você cria esse arquivo. Ele encontra a história com a melhor pontuação para uma pergunta escrita e deixa você ensaiar em uma entrevista simulada por texto.
+Se você trava no "Conte sobre uma situação em que você…", a solução está aqui. O career-ops salva as histórias em um banco de histórias, `interview-prep/story-bank.md`, e cria esse arquivo na primeira vez que tem uma história para adicionar. Ele encontra a história com a melhor pontuação para uma pergunta escrita e deixa você ensaiar em uma entrevista simulada por texto.
 
 **Nesta página:** [STAR+R](#o-que-e-uma-historia-star-e-o-que-o-r-acrescenta) · [Comece seu banco de histórias](#como-comecar-seu-banco-de-historias) · [De onde vêm as histórias](#de-onde-vem-suas-historias) · [Onde fica o banco](#onde-fica-o-banco-de-historias) · [O formato da entrada](#como-e-uma-entrada-de-historia-star) · [Números honestos](#como-manter-honestos-os-numeros-das-suas-historias) · [Encontre a história certa](#como-encontrar-a-historia-certa-para-uma-pergunta-escrita) · [Histórias por empresa](#como-relacionar-suas-historias-com-as-entrevistas-de-uma-empresa) · [Ensaie](#como-ensaiar-suas-historias-antes-da-entrevista) · [Depois da entrevista](#o-que-acontece-com-suas-historias-depois-da-entrevista) · [Comandos](#resumo-dos-comandos) · [Perguntas frequentes](#perguntas-frequentes)
 
@@ -27,14 +27,11 @@ Uma história STAR é uma resposta de entrevista contada em quatro partes: Situa
 ## Como começar seu banco de histórias? [#como-comecar-seu-banco-de-historias]
 
 <Steps>
-  <Step title="Crie o arquivo do banco de histórias">
-    Crie `interview-prep/story-bank.md` na sua pasta de dados, a mesma onde está o `cv.md`. Um título `# Story Bank` já basta. O career-ops não cria o arquivo, e uma avaliação só adiciona histórias a um banco que já existe.
-  </Step>
   <Step title="Avalie uma vaga">
-    Cole a URL ou o texto da vaga depois de `/career-ops` para rodar o pipeline completo, ou rode `/career-ops oferta` para fazer só a avaliação. Nos dois casos, a avaliação redige histórias STAR+R para aquela vaga e adiciona as novas ao seu banco.
+    Cole a URL ou o texto da vaga depois de `/career-ops` para rodar o pipeline completo, ou rode `/career-ops oferta` para fazer só a avaliação. Nos dois casos, a avaliação redige histórias STAR+R para aquela vaga e adiciona as novas ao seu banco. Se `interview-prep/story-bank.md` ainda não existir na sua pasta de dados, a mesma onde está o `cv.md`, o career-ops primeiro o cria a partir do modelo de banco de histórias dele.
   </Step>
-  <Step title="Coloque as histórias novas no formato que o buscador lê">
-    A avaliação adiciona as histórias como linhas de tabela, e o buscador de histórias só lê o formato de entrada mostrado [abaixo](#como-e-uma-entrada-de-historia-star): uma linha de tabela não conta como história. Peça ao career-ops que reescreva as histórias novas do `story-bank.md` nesse formato, colando o exemplo no seu pedido, e depois confira com `npm run star -- --list`. Essa incompatibilidade é uma lacuna conhecida do core, acompanhada na [issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514).
+  <Step title="Confira as histórias novas">
+    A avaliação adiciona cada história nova como uma entrada no formato mostrado [abaixo](#como-e-uma-entrada-de-historia-star), o mesmo que o buscador de histórias lê, e pula qualquer história cujo título já esteja no seu banco. Rode `npm run star -- --list` para vê-las e depois edite o que você não diria em uma entrevista.
   </Step>
   <Step title="Busque a história para uma pergunta">
     Rode `npm run star -- "<question>"` em um terminal para ver a história com a melhor pontuação para a pergunta.
@@ -45,7 +42,7 @@ Uma história STAR é uma resposta de entrevista contada em quatro partes: Situa
 
 O career-ops constrói suas histórias em três momentos, cada um ligado a uma vaga ou a uma entrevista:
 
-- **Quando você avalia uma vaga.** A seção STAR+R do relatório de avaliação ([Bloco F](/pt/docs/reference/modes/oferta)) escreve de 6 a 10 histórias a partir do seu currículo, relacionadas aos requisitos da vaga, e adiciona as novas ao seu banco se `interview-prep/story-bank.md` existir, como linhas de tabela que você depois reescreve no formato de entrada. As execuções em lote não estão configuradas para adicionar histórias ao banco.
+- **Quando você avalia uma vaga.** A seção STAR+R do relatório de avaliação ([Bloco F](/pt/docs/reference/modes/oferta)) escreve de 6 a 10 histórias a partir do seu currículo, relacionadas aos requisitos da vaga, e adiciona as novas a `interview-prep/story-bank.md` no formato de entrada, criando o arquivo se ele não existir. As execuções em lote não estão configuradas para adicionar histórias ao banco.
 - **Quando você se prepara para uma empresa.** Para cada pergunta provável sem história correspondente, o dossiê da empresa aponta uma experiência do seu currículo que poderia virar uma e a redige com você, se você quiser.
 - **Depois de uma entrevista real.** Se você descreveu uma experiência que não está no seu banco, o debrief se oferece para transformá-la em uma história STAR+R enquanto ela ainda está fresca e a adiciona se você aceitar.
 
@@ -65,7 +62,7 @@ O banco de histórias é o `interview-prep/story-bank.md`, um arquivo Markdown s
 
 ## Como é uma entrada de história STAR? [#como-e-uma-entrada-de-historia-star]
 
-Escreva cada história neste formato. O buscador de histórias (`npm run star`) só lê as entradas que o seguem. Mantenha os rótulos em inglês, seja qual for o idioma em que você escreve a história. Não cole este exemplo no seu banco do jeito que está: o buscador o contaria como uma história.
+Escreva cada história neste formato. O buscador de histórias (`npm run star`) só lê as entradas que o seguem. Mantenha os rótulos em inglês, seja qual for o idioma em que você escreve a história. Não cole este exemplo no seu banco do jeito que está: o buscador o contaria como uma história. As histórias que o career-ops adiciona usam os rótulos longos, como `**S (Situation):**` e `**A (Action):**`; o buscador lê as duas formas.
 
 ```md title="Story entry shape (example)"
 ### [Theme] Short title of the story
@@ -147,7 +144,7 @@ O debrief também salva a etapa como uma transcrição com identificação de qu
 
 | Comando                                     | O que faz                                                                                                 |
 | ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `/career-ops <job URL or text>`             | Avalia a vaga; adiciona as histórias STAR+R dela ao seu banco, desde que o arquivo exista                 |
+| `/career-ops <job URL or text>`             | Avalia a vaga; adiciona as histórias STAR+R dela ao seu banco, criando o arquivo se necessário            |
 | `/career-ops interview-prep`                | Dossiê da empresa: pesquisa com fontes citadas, perguntas prováveis, suas histórias relacionadas, lacunas |
 | `/career-ops interview/plan`                | Plano dividido em blocos de tempo, com um bloco para as histórias comportamentais                         |
 | `/career-ops interview/practice`            | Entrevista simulada por texto, uma pergunta por vez, com feedback depois de cada resposta                 |
@@ -160,11 +157,11 @@ O debrief também salva a etapa como uma transcrição com identificação de qu
 
 ### Como o career-ops cria histórias STAR a partir do meu currículo?
 
-O career-ops cria histórias STAR+R a partir da experiência do seu currículo para cada vaga que você avalia. Cada avaliação que você roda em uma sessão escreve histórias relacionadas àquela vaga e adiciona as novas a interview-prep/story-bank.md, depois que você cria esse arquivo. A preparação para entrevistas sugere experiências do seu currículo para as perguntas para as quais você não tem história, e um debrief pode transformar em uma nova história algo que você contou em uma entrevista real.
+O career-ops cria histórias STAR+R a partir da experiência do seu currículo para cada vaga que você avalia. Cada avaliação que você roda em uma sessão escreve histórias relacionadas àquela vaga e adiciona as novas a interview-prep/story-bank.md, criando esse arquivo na primeira vez. A preparação para entrevistas sugere experiências do seu currículo para as perguntas para as quais você não tem história, e um debrief pode transformar em uma nova história algo que você contou em uma entrevista real.
 
 ### Como me preparar para uma entrevista comportamental na semana que vem usando o método STAR?
 
-Para preparar histórias STAR para uma entrevista comportamental com o career-ops, avalie a vaga primeiro: a avaliação redige histórias STAR+R a partir do seu currículo e as adiciona a interview-prep/story-bank.md, depois que você cria esse arquivo. Em seguida, /career-ops interview-prep relaciona as perguntas prováveis às suas histórias e sinaliza as lacunas, /career-ops interview/plan divide o tempo que resta em blocos de preparação e /career-ops interview/practice ensaia com você por texto, uma pergunta por vez. Para treinar o ritmo, grave-se respondendo em voz alta.
+Para preparar histórias STAR para uma entrevista comportamental com o career-ops, avalie a vaga primeiro: a avaliação redige histórias STAR+R a partir do seu currículo e as adiciona a interview-prep/story-bank.md, criando esse arquivo se ele não existir. Em seguida, /career-ops interview-prep relaciona as perguntas prováveis às suas histórias e sinaliza as lacunas, /career-ops interview/plan divide o tempo que resta em blocos de preparação e /career-ops interview/practice ensaia com você por texto, uma pergunta por vez. Para treinar o ritmo, grave-se respondendo em voz alta.
 
 ### De onde vêm as perguntas de entrevista do career-ops?
 

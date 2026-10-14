@@ -4,8 +4,8 @@ description: "La mossa vincente su LinkedIn. Dato il nome di un'azienda e il con
 seoTitle: "Modalità contacto di career-ops: trova i contatti giusti su LinkedIn e scrivi il messaggio"
 icon: UserPlus
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: ef2b573d6f41f444
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
 localized: true
 translatedFrom: /docs/reference/modes/contacto
 ---
@@ -13,6 +13,8 @@ translatedFrom: /docs/reference/modes/contacto
 ## Cosa fa
 
 La modalità contacto legge il nome dell'azienda e il contesto dell'annuncio, poi suggerisce le persone da contattare che trova tramite WebSearch: l'hiring manager, il recruiter assegnato, due o tre colleghi del team e un intervistatore noto. Redige un messaggio breve, di tre frasi e sotto i 300 caratteri, su misura per il ruolo e per chi è il contatto.
+
+**Si parte dai contatti salvati.** Prima di qualsiasi ricerca, contacto esegue `node contact-lookup.mjs --company "<company>" --summary` sui contatti che hai salvato in `data/contacts.tsv` e ti mostra chi conosci già in quell'azienda, insieme alla candidatura precedente che te lo collega. Se ne scegli uno, salta la ricerca e redige un messaggio **Internal Referral**: richiama il contatto reale che avete già avuto, spiega in una riga perché il nuovo ruolo fa per te e chiede apertamente una segnalazione. È l'opposto del messaggio ai colleghi del team, che non chiede mai un lavoro. Un contatto salvato viene indicato come segnalazione interna solo dopo che hai confermato di avere un rapporto reale con quella persona; lavorare nella stessa azienda non basta. Per salvare un contatto dalla risposta di un recruiter o di un intervistatore, incolla la risposta in un file ed esegui `node contact-extract.mjs --file <email.txt>`, che ti chiede conferma prima di scrivere. contacto redige ogni messaggio; sei tu a decidere se inviarlo.
 
 ## Quando usarla
 

@@ -4,8 +4,8 @@ description: "Standardablauf, wenn du die URL oder den Rohtext einer Stellenanze
 seoTitle: "career-ops auto-pipeline — eine Stelle bewerten und Lebenslauf + Tracker aus einer einzigen URL erstellen"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: a103f3feac73a799
+lastModified: "2026-10-14"
+translationHash: 233c7fa8819747b5
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
@@ -38,6 +38,7 @@ Updated data/applications.md (Report and PDF marked done).
 
 - Füge eine URL ein, und auto-pipeline übernimmt die Extraktion für dich. Bei Single-Page-Portalen wie Lever, Ashby, Greenhouse und Workday kommt zuerst Playwright zum Einsatz. Bei statischen Seiten folgt WebFetch, und als letzter Ausweg bleibt WebSearch.
 - Vor der Bewertung prüft der Modus, ob die Anzeige noch online ist. Ist der Link tot oder die Seite nur eine leere Hülle mit dem Hinweis „Stelle besetzt“, bricht er an dieser Stelle ab und bewertet keine Phantominhalte. Stammt der Eintrag aus `data/pipeline.md`, markiert er diese Zeile als geschlossen.
+- Eine LinkedIn-Seite, deren Beschreibung dauerhaft nur ein Ladeplatzhalter bleibt, ist weder eine geschlossene Stelle noch eine Stellenbeschreibung. auto-pipeline hält dann vor der Bewertung, dem Bericht, dem PDF und jedem Tracker-Eintrag an. Der Modus bittet dich, den Text der Stellenanzeige einzufügen oder für dieselbe Stelle einen Link zur Karriereseite des Arbeitgebers oder zum ATS anzugeben.
 - Entwürfe für Antworten im Bewerbungsformular entstehen nur ab einer Bewertung von 4,5. So verbrauchen schlecht passende Stellen keine Tokens für Texte, die du ohnehin nicht abschickst.
 
 ## Stolperfallen

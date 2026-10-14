@@ -4,8 +4,8 @@ description: "A jogada de mestre no LinkedIn. A partir do nome de uma empresa e 
 seoTitle: "Modo contacto do career-ops — como encontrar contatos no LinkedIn e escrever a mensagem de abordagem"
 icon: UserPlus
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: ef2b573d6f41f444
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
 localized: true
 translatedFrom: /docs/reference/modes/contacto
 ---
@@ -13,6 +13,8 @@ translatedFrom: /docs/reference/modes/contacto
 ## O que ele faz
 
 O modo contacto lê o nome da empresa e o contexto da descrição da vaga e, em seguida, sugere pessoas para abordar que ele encontra via WebSearch: o gestor da vaga, o recrutador responsável, dois ou três colegas da equipe e um entrevistador conhecido. Ele redige uma mensagem curta, de três frases e menos de 300 caracteres, sob medida para a vaga e para quem é o contato.
+
+**Primeiro, os contatos que você já salvou.** Antes de qualquer busca, o contacto executa `node contact-lookup.mjs --company "<company>" --summary` sobre os contatos salvos em `data/contacts.tsv` e mostra quem você já conhece nessa empresa, junto com a candidatura anterior que liga essa pessoa a ela. Se você escolher alguém, ele pula a busca e redige uma mensagem de **Internal Referral** (indicação interna): cita o seu contato real anterior, explica em uma linha por que a nova vaga combina com você e pede a indicação diretamente, o oposto da mensagem para colegas da equipe, que nunca pede uma vaga. Um contato salvo só é marcado como indicação interna depois que você confirma que teve uma relação real com essa pessoa; trabalhar na mesma empresa não basta. Para salvar um contato a partir da resposta de um recrutador ou entrevistador, cole a resposta em um arquivo e execute `node contact-extract.mjs --file <email.txt>`, que pede sua confirmação antes de gravar. O contacto redige todas as mensagens; você decide se vai enviá-las.
 
 ## Quando usar
 
