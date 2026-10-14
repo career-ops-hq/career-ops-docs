@@ -4,8 +4,8 @@ description: "Assistant de candidature en direct. Il lit les questions ouvertes 
 seoTitle: "Mode apply de career-ops — brouillons automatiques de réponses aux questions de candidature ATS"
 icon: Send
 date: "2026-05-19"
-lastModified: "2026-05-19"
-translationHash: 53b1f3949e1458f8
+lastModified: "2026-10-14"
+translationHash: 43f7be9c5fa520be
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -53,6 +53,12 @@ captcha, and submit yourself.
 
 apply n'envoie jamais la candidature : le clic final sur Envoyer vous revient toujours. Il lit tous les champs du formulaire, pas seulement les questions ouvertes — listes déroulantes, boutons radio, cases à cocher et champs d'envoi de fichiers compris. Il rédige les réponses en texte libre, propose une valeur pour chaque champ fermé et signale les questions d'autorisation de travail, de salaire et autres sujets sensibles auxquelles votre profil ne répond pas encore, pour que vous les confirmiez plutôt que de les deviner lui-même. Avec Playwright, il peut remplir certains champs directement dans le formulaire ; vous vérifiez l'ensemble et complétez le reste. Une fois les réponses saisies, il enregistre dans le rapport le texte, les sélections et les fichiers utilisés. Si la vérification préalable détecte que l'annonce est fermée, apply refuse de rédiger un texte final à moins que vous ne l'y forciez explicitement — un lien mort ne vaut pas une réponse sur mesure.
 
+Les champs d'expérience proviennent du CV adapté généré pour ce rapport, et non de `cv.md` : employeurs, intitulés de poste, dates, descriptions de poste, compétences et formation correspondent au document que vous joignez, de sorte que le formulaire et le CV joint racontent la même histoire. `config/profile.yml` reste la référence pour votre identité et vos coordonnées, votre autorisation de travail et vos prétentions salariales. Si apply ne trouve aucun CV adapté pour cette candidature, il vous le signale et se rabat sur `cv.md`.
+
+Lorsque le rapport ou la description du poste indique explicitement qu'il s'agit d'un poste à durée déterminée, apply affiche un unique **Fixed-term role reminder** avant la première réponse, en citant la formule employée et la durée éventuelle, et vous suggère de vérifier les conditions de renouvellement, les avantages et les modalités de fin de contrat. Ce rappel est purement informatif : il ne modifie jamais aucun champ, ne bloque jamais la candidature et ne demande aucune confirmation.
+
+Avant chaque clic sur Enregistrer, Suivant ou Continuer dans un formulaire en plusieurs étapes, et avant de vous laisser le formulaire pour l'envoi, apply relit toute l'étape et vérifie que chaque champ obligatoire contient une valeur, y compris ceux qui n'apparaissent qu'après une autre réponse. Si un champ obligatoire ne peut pas être rempli à partir de vos propres fichiers, il s'arrête et vous pose la question.
+
 ## Quand le poste a changé
 
 Si le poste du formulaire n'est pas celui que votre rapport a évalué, apply vous indique l'ancien intitulé et le nouveau, puis vous demande s'il faut réévaluer ou adapter les réponses au nouvel intitulé. Aucun des deux choix ne modifie à la main le tableau du tracker.
@@ -66,6 +72,7 @@ apply a été éprouvé sur le terrain à travers une douzaine de candidatures p
 
 - **Ashby** déduplique les candidats par adresse e-mail au sein de chaque entreprise : une seconde candidature peut donc fusionner silencieusement avec la première. Si un rapport existe déjà pour cette entreprise, apply vous suggère un alias e-mail `+tag`. Pour Ashby, terminez et envoyez la candidature dans votre navigateur habituel, puis vérifiez la page de réussite ou l’e-mail de confirmation avant de la marquer comme envoyée.
 - **Lever** déclenche un captcha lorsqu'une case à cocher ou un bouton radio est cliqué de façon programmatique : apply ne remplit donc que les champs texte et les listes déroulantes, et vous laisse cocher les cases et les boutons radio.
+- **Les sections répétées** comme Work Experience ou Education (« Add Another ») réutilisent les mêmes libellés dans chaque bloc : apply remplit donc au maximum deux ou trois entrées à la fois et vérifie chaque valeur par rapport à l'entrée visée avant de continuer. S'il ne parvient pas à identifier un champ sans ambiguïté, il s'arrête et vous pose la question au lieu de deviner.
 - **Workday** ignore les valeurs saisies sans véritables frappes clavier : apply tape donc les réponses caractère par caractère et vous demande de vérifier les listes déroulantes d'autorisation de travail avant d'enregistrer.
 
 ## Pages liées

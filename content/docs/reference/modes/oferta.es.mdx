@@ -4,8 +4,8 @@ description: "Ejecuta la evaluación A–H sobre un único anuncio. Omite la gen
 seoTitle: "Modo oferta de career-ops — puntúa una oferta de empleo antes de aplicar"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 359504e9cbeb24ea
+lastModified: "2026-10-14"
+translationHash: 9a968f6bcb8dda55
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -52,8 +52,11 @@ Los Bloques B a F cubren el encaje del CV y sus carencias, la estrategia de nive
 Recurre a oferta para puntuar un único anuncio rápidamente sin comprometerte con el pipeline completo. Conviene saber:
 
 - Si pasas una URL, primero se ejecuta una comprobación de liveness — una publicación caducada o con 404 se detiene antes del Bloque A, así que nunca gastas una ejecución en contenido fantasma.
+- Una página de LinkedIn cuya descripción se queda en un esqueleto de carga cuenta como JD no disponible, no como un puesto cerrado: oferta se detiene antes del Bloque A y te pide que pegues el texto del anuncio o que proporciones un enlace del empleador o del ATS para el mismo puesto.
+- El arquetipo se clasifica según tus propios puestos objetivo, la sección *Your Target Roles* de `modes/_profile.md`; los tipos de puesto por defecto solo se aplican cuando no has definido ninguno. Un puesto que no coincide con ninguno de tus objetivos obtiene un 1 en alineación con North Star, la evaluación continúa con las demás dimensiones y la línea Archetype del informe muestra `Not a target — closest default: {default role type}` o `Not a target — no close match`.
 - La investigación de empresa y compensación está acotada a un máximo de cinco búsquedas web; esto es una evaluación, no una investigación en profundidad. Ejecuta `/career-ops deep` por separado cuando quieras la imagen más completa de la empresa.
 - El Bloque G devuelve uno de tres niveles — High Confidence, Proceed with Caution o Suspicious — de modo que los probables ghost jobs salen a la luz antes de que inviertas esfuerzo en la entrevista.
+- Cuando la publicación describe explícitamente un puesto de duración determinada, como un contrato de 18 meses o un puesto temporal, el Bloque G añade una nota de contrato de duración determinada que cita la frase, además de un argumento opcional para la conversación sobre compensación. Es solo informativa: nunca cambia la puntuación, el nivel de legitimidad ni la recomendación.
 
 ## Score Evidence
 

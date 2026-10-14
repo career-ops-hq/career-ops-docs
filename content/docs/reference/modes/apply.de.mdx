@@ -4,8 +4,8 @@ description: "Live-Assistent für Bewerbungen. Liest die Freitextfragen in Formu
 seoTitle: "career-ops apply-Modus — Antworten auf ATS-Bewerbungsfragen automatisch entwerfen"
 icon: Send
 date: "2026-05-19"
-lastModified: "2026-05-19"
-translationHash: 53b1f3949e1458f8
+lastModified: "2026-10-14"
+translationHash: 43f7be9c5fa520be
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -53,6 +53,12 @@ captcha, and submit yourself.
 
 apply schickt die Bewerbung nie ab: Den letzten Klick auf Absenden machst immer du. Er liest jedes Feld des Formulars, nicht nur die Freitextfragen, also auch Dropdowns, Radiobuttons, Checkboxen und Upload-Felder. Er entwirft die Freitextantworten, schlägt für jedes Feld mit vorgegebenen Antworten einen Wert vor und markiert Fragen zur Arbeitserlaubnis, zum Gehalt und andere heikle Fragen, die dein Profil noch nicht beantwortet, damit du sie bestätigst, statt dass er rät. Mit Playwright kann er einige Felder direkt im Live-Formular ausfüllen; du prüfst alles und erledigst den Rest. Sobald die Antworten eingetragen sind, hält er den Text, die Auswahl und die verwendeten Dateien im Bericht fest. Stellt die Vorabprüfung (Preflight) fest, dass die Anzeige nicht mehr online ist, schreibt apply keinen finalen Text. Das geht nur, wenn du dich ausdrücklich darüber hinwegsetzt. Ein toter Link ist keine maßgeschneiderte Antwort wert.
 
+Die Felder zur Berufserfahrung stammen aus dem angepassten Lebenslauf, der für diesen Bericht erstellt wurde, nicht aus `cv.md`: Arbeitgeber, Positionen, Zeiträume, Tätigkeitsbeschreibungen, Kenntnisse und Ausbildung stimmen mit dem Dokument überein, das du hochlädst. So erzählen das Formular und der angehängte Lebenslauf dieselbe Geschichte. Für deine Identität und Kontaktdaten, deine Arbeitserlaubnis und deine Gehaltsvorstellungen bleibt `config/profile.yml` maßgeblich. Findet apply keinen angepassten Lebenslauf für die Bewerbung, sagt er dir das und greift auf `cv.md` zurück.
+
+Beschreibt der Bericht oder die Stellenanzeige die Stelle ausdrücklich als befristet, zeigt apply vor der ersten Antwort einmalig einen **Fixed-term role reminder** (Hinweis auf eine befristete Stelle) an. Er zitiert die entsprechende Formulierung und eine eventuell genannte Laufzeit und schlägt vor, Verlängerung, Zusatzleistungen und die Bedingungen zum Vertragsende zu klären. Der Hinweis dient nur zur Information: Er ändert nie ein Feld, blockiert nie die Bewerbung und muss nicht bestätigt werden.
+
+Vor jedem Klick auf Speichern, Weiter oder Fortfahren in einem mehrstufigen Formular und bevor er dir das Formular zum Absenden übergibt, liest apply den ganzen Schritt erneut und prüft, ob jedes Pflichtfeld einen Wert enthält, auch Felder, die erst nach einer anderen Antwort erscheinen. Lässt sich ein Pflichtfeld nicht aus deinen eigenen Dateien ausfüllen, hält er an und fragt dich.
+
 ## Wenn sich die Rolle geändert hat
 
 Ist die Rolle im Formular nicht die, die dein Bericht bewertet hat, nennt dir apply den alten und den neuen Titel und fragt, ob neu bewertet oder die Antworten an den neuen Titel angepasst werden sollen. Keine der beiden Möglichkeiten bearbeitet die Tracker-Tabelle von Hand.
@@ -66,6 +72,7 @@ apply wurde bei rund einem Dutzend Bewerbungen mit Playwright in der Praxis gete
 
 - **Ashby** erkennt doppelte Bewerbungen pro Unternehmen anhand der E-Mail-Adresse. Eine zweite Bewerbung kann deshalb stillschweigend mit deiner ersten zusammengeführt werden. Gibt es für dieses Unternehmen schon einen Bericht, schlägt apply einen E-Mail-Alias mit `+tag` vor. Bei Ashby schließt du die Bewerbung in deinem gewohnten System-Browser ab und sendest sie dort ab. Prüfe die Erfolgsseite oder die Bestätigungs-E-Mail, bevor du sie als abgeschickt markierst.
 - **Lever** zeigt ein Captcha an, wenn eine Checkbox oder ein Radiobutton per Skript angeklickt wird. Deshalb füllt apply nur Textfelder und Dropdowns aus und überlässt dir das Ankreuzen der Checkboxen und Radiobuttons.
+- **Wiederholte Abschnitte** wie Berufserfahrung oder Ausbildung („Add Another“) verwenden in jedem Block dieselben Feldbezeichnungen. Deshalb füllt apply höchstens zwei oder drei Einträge auf einmal aus und prüft jeden Wert gegen den Eintrag, zu dem er gehört, bevor er weitermacht. Kann er ein Feld nicht eindeutig zuordnen, hält er an und fragt dich, statt zu raten.
 - **Workday** ignoriert Werte, die ohne echte Tastenanschläge gesetzt werden. Deshalb tippt apply die Antworten Zeichen für Zeichen ein. Die Dropdowns zur Arbeitserlaubnis prüfst du selbst, bevor du speicherst.
 
 ## Siehe auch

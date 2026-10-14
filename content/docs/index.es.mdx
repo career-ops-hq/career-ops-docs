@@ -3,7 +3,7 @@ title: Guía rápida
 description: "Empieza con career-ops en unos quince minutos: instala el sistema open source de búsqueda de empleo con IA, abre tu CLI de IA y evalúa tu primera oferta. Sin necesidad de programar."
 seoTitle: "career-ops Guía rápida — instala y ejecuta tu primer análisis de ofertas con IA en minutos"
 icon: Rocket
-translationHash: f402f8d909fe0c5b
+translationHash: 3dc0cfbde93edb50
 localized: true
 translatedFrom: /docs
 ---
@@ -123,6 +123,8 @@ Desde dentro de la carpeta `career-ops`, lanza el CLI de programación con IA qu
 
 <Callout title="El onboarding empieza cuando hace falta tu perfil">
   Antes de tu primera evaluación de una oferta, o de cualquier otro flujo que necesite tu perfil, el agente de career-ops comprueba tu configuración y, si hace falta, ejecuta una breve conversación de onboarding. También puedes pedirle directamente que haga el onboarding. Te pregunta por tu CV, el tipo de puestos que buscas, tu rango salarial y tu preferencia de ubicación. Respondes en lenguaje natural y el agente escribe los archivos de configuración por ti. La sesión dura unos dos o tres minutos. Explorar el espacio de trabajo, revisar código o diagnosticar tu instalación no inicia el onboarding ni crea archivos de perfil.
+
+  Para desarrolladores: la comprobación de configuración es `node doctor.mjs --json`, que solo lee. El onboarding crea los archivos de personalización que faltan (`modes/_profile.md`, `modes/_custom.md`, `modes/_brief.md` y `voice-dna.md`) a partir de sus plantillas con `node doctor.mjs --json --init-templates`, y nunca sobrescribe uno que ya tengas.
 </Callout>
 
 <Callout title="Un aviso no relacionado que puede que veas">

@@ -127,6 +127,15 @@ ${comparisonsData.comparisons
 - Repository: https://github.com/career-ops-hq/career-ops
 - Discord: https://discord.gg/8pRpHETxa4
 
+## Other languages
+
+Full documentation and a home page in each language; same content, same facts.
+- Español: https://career-ops.org/es · docs https://career-ops.org/es/docs
+- Français: https://career-ops.org/fr · docs https://career-ops.org/fr/docs
+- Deutsch: https://career-ops.org/de · docs https://career-ops.org/de/docs
+- Português (Brasil): https://career-ops.org/pt · docs https://career-ops.org/pt/docs
+- Italiano: https://career-ops.org/it · docs https://career-ops.org/it/docs
+
 ## License
 
 MIT — free forever, no paywalls, no account required.
@@ -173,7 +182,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\` or \`/de/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all four languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\` or \`/it/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all six languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 

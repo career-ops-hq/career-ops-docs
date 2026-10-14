@@ -4,8 +4,8 @@ description: "Schneller Überblick darüber, wo jede Bewerbung gerade steht. Nü
 seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-09-25"
-translationHash: 8115c231878f1183
+lastModified: "2026-10-14"
+translationHash: 2e14d5328088de55
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -40,6 +40,14 @@ Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 
 Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded oder SKIP für Rollen, die nicht passen. Um eine Statusänderung festzuhalten, bittest du im Chat darum oder führst selbst `node set-status.mjs <report#|company> <state>` aus. Ist sie an einem früheren Tag passiert, ergänzt du `--on YYYY-MM-DD`. Der Befehl lehnt unbekannte Zustände ab, sperrt den Tracker, während er schreibt, und protokolliert den Übergang in `data/status-log.tsv`, dem Protokoll, aus dem die funnel-velocity-Statistiken lesen. Nutze ihn also, statt die Zeile von Hand zu bearbeiten.
 
+Um eine Notiz zu korrigieren, statt eine weitere hinzuzufügen, übergibst du die alte Notiz mit `--replace-note` und den neuen Text mit `--note`. Ohne diese Option hängt `--note` nur an, was Widersprüche wie `not applied; applied` in der Zeile hinterlässt. Abgeglichen wird eine ganze Notiz zwischen den Trennzeichen `; `. Steht keiner der beiden Texte in der Notes-Zelle, wird nichts geschrieben:
+
+```bash
+node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applied via referral"
+```
+
+Drei weitere Flags gibt es vor allem für das Go-TUI-Dashboard, das seine Statusänderungen jetzt über `set-status.mjs` festhält. `--report-link N` wählt die Zeile, deren Report-Zelle genau einen Link auf Bericht `N` enthält, und lehnt fehlerhafte Zellen ab, statt zu raten. `--repair-status-log` und `--repair-followup` greifen, wenn eine Änderung auf Applied für eine Zeile erneut ausgeführt wird, die bereits auf Applied steht: Sie ergänzen den Protokolleintrag oder die Follow-up-Erinnerung, die der erste Versuch nicht schreiben konnte, und fügen nichts hinzu, wenn er schon vorhanden ist.
+
 ## Die anderen Spalten ändern
 
 Auch für die anderen Spalten gibt es Befehle, die sie schreiben. Die Tabelle bearbeitest du also nicht von Hand.
@@ -55,6 +63,17 @@ Ein Merge ändert nie den Status einer Zeile, die schon im Tracker steht. Eine n
 Eine Stelle, die über eine Agentur kam, ohne den Arbeitgeber zu nennen, steht mit `?` in der Spalte Company. Wenn du erfährst, wer der Arbeitgeber ist, sag es im Chat („die Agenturstelle ist bei Acme“). Der tracker-Modus benennt die Zeile über `node merge-tracker.mjs` um, zugeordnet über den Bericht der Zeile: Aus `?` wird der echte Name, und die Zeile behält ihre `#` und ihren Status. Er trägt das Unternehmen außerdem in den Bericht ein, ohne die Berichtsdatei umzubenennen, führt dann `node verify-pipeline.mjs` aus und warnt dich, wenn dasselbe Unternehmen mit derselben Rolle schon über einen anderen Kanal in deinem Tracker steht. Er führt diese beiden Zeilen nie zusammen: Beide Bewerbungen haben stattgefunden, und du entscheidest, welchem Kanal die Bewerbung gehört.
 
 Eine `?`-Zeile ohne Bericht ist die Ausnahme. Ohne den Berichtslink kann kein Befehl erkennen, welche `?`-Zeile gemeint ist. career-ops sagt dir das und überlässt dir, diese eine Company-Zelle selbst zu ändern.
+
+## Tote Berichtslinks reparieren
+
+`node verify-pipeline.mjs` meldet `Report not found`, wenn die Report-Zelle einer Zeile auf eine Datei verlinkt, die nicht mehr existiert. `npm run fix-report-links` repariert diese Zeilen, indem es nur diese Zelle auf die im Tracker übliche Markierung für „kein Bericht“ setzt. Den fehlenden Bericht erzeugt es nicht neu. Sieh dir zuerst eine Vorschau an:
+
+```bash
+npm run fix-report-links -- --dry-run  # list the affected rows, write nothing
+npm run fix-report-links               # apply; the tracker is backed up to .bak first
+```
+
+Alle anderen Zellen, die Reihenfolge der Zeilen und die Zeilenenden bleiben, wie sie waren. Eine Report-Zelle, die etwas anderes als genau einen Link enthält, wird aufgelistet, damit du sie von Hand prüfst, und bleibt unverändert. Ein zweiter Durchlauf ändert nichts mehr.
 
 ## Die Gesamtzahlen lesen
 
@@ -93,7 +112,7 @@ Die vollständige Befehlsreferenz, einschließlich `sync`, `query` und `history`
 
 ## Stolperfallen
 
-Der Status steht in der Status-Spalte des Trackers (`data/applications.md`), nicht in der Berichtsdatei. Auch die Statusauswahl im Go-TUI-Dashboard aktualisiert diese Spalte, protokolliert den Übergang aber nicht in `data/status-log.tsv`, wie es `set-status.mjs` tut. funnel-velocity sieht dann zwar den neuen Status, aber nicht, wann er sich geändert hat: Die Änderung fehlt in den Zeiten pro Phase, und eine Zeile, die später in Rejected endet, verliert die Phasen, die sie durchlaufen hat. Nutze den Befehl für jede Änderung, die in diese Zahlen eingehen soll.
+Der Status steht in der Status-Spalte des Trackers (`data/applications.md`), nicht in der Berichtsdatei. Änderst du ihn von Hand, wird `data/status-log.tsv` übergangen: funnel-velocity sieht dann zwar den neuen Status, aber nicht, wann er sich geändert hat. Die Änderung fehlt also in den Zeiten pro Phase, und eine Zeile, die später in Rejected endet, verliert die Phasen, die sie durchlaufen hat. Nutze `set-status.mjs`, den Chat oder die Statusauswahl im Go-TUI-Dashboard, die denselben Befehl ausführt.
 
 ## Verwandte Seiten
 

@@ -4,8 +4,8 @@ description: "Flux par défaut lorsque vous collez l'URL d'une description de po
 seoTitle: "career-ops auto-pipeline — évaluer une offre et générer CV + tracker à partir d'une seule URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: a103f3feac73a799
+lastModified: "2026-10-14"
+translationHash: 233c7fa8819747b5
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
@@ -38,6 +38,7 @@ Updated data/applications.md (Report and PDF marked done).
 
 - Collez une URL et auto-pipeline se charge de l'extraction pour vous : Playwright d'abord pour les portails à page unique comme Lever, Ashby, Greenhouse et Workday, puis WebFetch pour les pages statiques, et WebSearch en dernier recours.
 - Un contrôle de disponibilité (liveness gate) s'exécute avant l'évaluation. Si le lien est mort ou si la page n'est qu'une coquille vide « poste pourvu », le mode s'arrête là au lieu de noter un contenu fantôme — et si l'entrée provenait de `data/pipeline.md`, il marque cette ligne comme fermée.
+- Une page LinkedIn dont la description reste un squelette de chargement n'est ni une offre fermée ni une description de poste : auto-pipeline s'arrête avant l'évaluation, le rapport, le PDF et toute écriture dans le tracker, et vous demande de coller le texte de l'annonce ou de fournir un lien vers le site de l'employeur ou vers un ATS pour le même poste.
 - Les brouillons de réponses de candidature ne sont rédigés que lorsque le score atteint 4.5 ou plus, afin que les postes peu pertinents ne consomment pas de tokens pour un texte que vous n'enverrez pas.
 
 ## Pièges à éviter

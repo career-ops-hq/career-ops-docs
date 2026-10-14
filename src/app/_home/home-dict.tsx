@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { instrumentSerif } from '@/lib/fonts';
 
 // Home copy dictionary: the shared type and helpers. Each language's copy
-// lives in its own file (home-en.tsx, home-es.tsx, home-fr.tsx, home-de.tsx),
+// lives in its own file (home-en.tsx, home-es.tsx, home-fr.tsx, home-de.tsx, home-pt.tsx),
 // so editing one home moves only that home's lastmod (see home-date.ts).
 // Before October 2026 the four lived here, and any edit to one of them moved
 // the date of all four.
@@ -24,7 +24,7 @@ export type HomeDict = {
   heroH1: ReactNode;
   runItNow: string;
   // Page language, for the star button's click event (its label stays English).
-  locale: 'en' | 'es' | 'fr' | 'de';
+  locale: 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it';
   // Locale-aware destination for the "get started" / docs CTAs: EN '/docs',
   // ES '/es/docs'. Keeps the Spanish home sending users into the Spanish docs
   // (which now has a translated landing) instead of dropping them into English.

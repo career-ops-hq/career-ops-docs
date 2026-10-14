@@ -4,8 +4,8 @@ description: "Exécute l'évaluation A–H sur une seule annonce. Saute la gén�
 seoTitle: "Mode oferta de career-ops — noter une offre d'emploi avant de postuler"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 359504e9cbeb24ea
+lastModified: "2026-10-14"
+translationHash: 9a968f6bcb8dda55
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -52,8 +52,11 @@ Les blocs B à F couvrent l'adéquation du CV et ses lacunes, la stratégie de n
 Recourez à oferta pour noter rapidement une seule annonce sans vous engager dans le pipeline complet. Bon à savoir :
 
 - Passez une URL et une vérification de disponibilité s'exécute en premier — une annonce expirée ou renvoyant une 404 est arrêtée avant le bloc A, si bien que vous ne dépensez jamais une exécution sur un contenu fantôme.
+- Une page LinkedIn dont la description reste un squelette de chargement est traitée comme une fiche de poste indisponible, et non comme une annonce clôturée : oferta s'arrête avant le bloc A et vous demande de coller le texte de l'annonce ou de fournir un lien vers le site de l'employeur ou vers un ATS pour le même poste.
+- L'archétype est classé par rapport à vos propres rôles cibles, définis dans la section *Your Target Roles* de `modes/_profile.md` ; les types de rôle par défaut ne s'appliquent que si vous n'en avez défini aucun. Un rôle qui ne correspond à aucune de vos cibles obtient 1 en alignement avec North Star, l'évaluation se poursuit sur les autres dimensions, et la ligne Archetype du rapport indique `Not a target — closest default: {default role type}` ou `Not a target — no close match`.
 - La recherche sur l'entreprise et la rémunération est limitée à cinq recherches web au maximum ; il s'agit d'une évaluation, pas d'une recherche approfondie. Lancez `/career-ops deep` séparément quand vous voulez un tableau plus complet de l'entreprise.
 - Le bloc G renvoie l'un de trois niveaux — High Confidence, Proceed with Caution ou Suspicious — de sorte que les probables offres fantômes ressortent avant que vous n'investissiez des efforts de préparation d'entretien.
+- Lorsque l'annonce décrit explicitement un poste à durée déterminée, comme un contrat de 18 mois ou un poste temporaire, le bloc G ajoute une note sur le contrat à durée déterminée qui cite la formulation, ainsi qu'un argument facultatif pour la discussion sur la rémunération. Cette note est purement informative : elle ne modifie jamais le score, le niveau de légitimité ni la recommandation.
 
 ## Score Evidence
 
