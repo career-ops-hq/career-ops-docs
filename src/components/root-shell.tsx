@@ -2,6 +2,7 @@ import '@/app/global.css';
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { UtmLanding } from '@/components/utm-landing';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
@@ -214,6 +215,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
           </div>
         </footer>
         <Analytics />
+        <UtmLanding locale={locale} />
         {/*
           3% sampling, not the default 1 (= every page view). The site emitted
           165,640 data points in 30 days — 1,656% of the 10,000 included in the
