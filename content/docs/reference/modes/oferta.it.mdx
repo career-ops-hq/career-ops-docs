@@ -5,7 +5,7 @@ seoTitle: "Modalità oferta di career-ops: valuta un singolo annuncio di lavoro 
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-10-14"
-translationHash: 9a968f6bcb8dda55
+translationHash: 6999cd4e3beceb29
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -20,7 +20,7 @@ Usa oferta per fare rapidamente una prima scrematura di un annuncio su cui hai d
 
 ## Come si presenta un'esecuzione
 
-Passi alla modalità un annuncio e ti restituisce la valutazione in sette blocchi (i blocchi da A a F e un blocco G sulla legittimità dell'annuncio, più le bozze di risposta del blocco H quando il punteggio è pari o superiore a 4,5), con un punteggio e la motivazione corredata di prove. Incolla direttamente il testo della JD oppure passa un URL: in quel caso la modalità verifica prima che l'annuncio sia ancora attivo, così un link morto non ti fa mai sprecare una valutazione completa.
+Passi alla modalità un annuncio e ti restituisce la valutazione in sette blocchi (i blocchi da A a F e un blocco G sulla legittimità dell'annuncio, più le bozze di risposta del blocco H quando il punteggio è pari o superiore a 4,5), con un punteggio e la motivazione corredata di prove. Subito dopo il blocco G, un blocco senza lettera, Verdict (lead), dà la decisione in una frase: Apply, Consider, Research first o Skip. Incolla direttamente il testo della JD oppure passa un URL: in quel caso la modalità verifica prima che l'annuncio sia ancora attivo, così un link morto non ti fa mai sprecare una valutazione completa.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -43,6 +43,9 @@ Passi alla modalità un annuncio e ti restituisce la valutazione in sette blocch
 ## G) Posting Legitimacy
 Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
+
+## Verdict (lead)
+**Apply.** Strong match on the role's core axis with no hard stops, and Block G returned High Confidence.
 ```
 
 I blocchi da B a F coprono la corrispondenza con il CV e le lacune, la strategia di livello, la retribuzione e la domanda di mercato, un piano di personalizzazione e le storie STAR+R per il colloquio di lavoro, associate ai requisiti della posizione.
