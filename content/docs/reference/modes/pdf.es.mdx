@@ -5,7 +5,7 @@ seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-09"
-translationHash: ac6b7dc3c06568ee
+translationHash: 06b8aa69327229e6
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -62,7 +62,7 @@ Los tres hallazgos se informan y nunca se aplican, ni por el script ni por el ag
 - `parenthetical-in-company`: una empresa escrita como `Globex (Cloud Platform Division)`. El parser conserva el paréntesis como parte del nombre del empleador, así que una búsqueda por el empleador no te encuentra.
 - `multiple-date-ranges`: dos rangos de fechas en una misma entrada. Dos etapas en un mismo empleador se leen como una.
 
-Cada uno necesita una decisión que es tuya: si ese texto es un empleador, dónde debe ir el detalle, qué bullets pertenecen a cada etapa. El agente te muestra el hallazgo y te deja la decisión. Si eliges un cambio, se escribe en `cv.md` o en `config/profile.yml` después de que lo confirmes.
+Cada uno necesita una decisión que es tuya: si ese texto es un empleador, dónde debe ir el detalle, qué bullets pertenecen a cada etapa. El agente te muestra el hallazgo y te deja la decisión. Dónde va un cambio que elijas depende de cómo se ejecutó la etapa. En el modo `ats`, se escribe en `cv.md` o en `config/profile.yml` después de que lo confirmes. Con `/career-ops pdf --ats`, se hace en el contenido adaptado de este CV y las dos copias se regeneran a partir de él; la copia ATS nunca se edita a mano.
 
 ### Después del HTML: la puntuación
 

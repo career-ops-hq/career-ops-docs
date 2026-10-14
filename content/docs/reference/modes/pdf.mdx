@@ -59,7 +59,7 @@ The three findings are reported and never applied, by the script or by the agent
 - `parenthetical-in-company`: a company written as `Globex (Cloud Platform Division)`. The parser keeps the parenthetical as part of the employer name, so a search for the employer does not find you.
 - `multiple-date-ranges`: two date ranges in one entry. Two stints at one employer parse as one.
 
-Each one needs a decision that is yours: whether that text is an employer, where the detail should go, which bullets belong to which stint. The agent shows you the finding and leaves the decision to you. If you choose a change, it is written to `cv.md` or `config/profile.yml` after you confirm it.
+Each one needs a decision that is yours: whether that text is an employer, where the detail should go, which bullets belong to which stint. The agent shows you the finding and leaves the decision to you. Where a change you choose goes depends on how the stage ran. In the `ats` mode, it is written to `cv.md` or `config/profile.yml` after you confirm it. With `/career-ops pdf --ats`, it is made in this CV's tailored content and both copies are rebuilt from it; the ATS copy is never edited by hand.
 
 ### After the HTML: the score
 
