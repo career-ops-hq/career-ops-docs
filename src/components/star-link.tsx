@@ -28,7 +28,6 @@ export function StarLink({
       href="https://github.com/career-ops-hq/career-ops"
       target="_blank"
       rel="noopener"
-      aria-label={count ? `Star on GitHub, ${count} stars` : 'Star on GitHub'}
       onClick={() => track('star_click', { placement, locale })}
       className={className}
     >

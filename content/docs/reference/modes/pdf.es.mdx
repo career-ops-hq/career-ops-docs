@@ -5,7 +5,7 @@ seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-09"
-translationHash: 6c9e87b81634e369
+translationHash: 83a8f77258d037ed
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -77,6 +77,19 @@ Cuando las comprobaciones no encuentran tus puestos, te lo dicen. La comprobaci�
 Requiere Playwright instalado en local. El script de build puede fallar en instalaciones Linux mínimas sin fuentes del sistema. Ejecuta `npm run doctor` para diagnosticar.
 
 La generación del PDF se detiene si los puestos de tu experiencia laboral no van del más reciente al más antiguo, y el error cita las fechas del puesto que empieza después que el de encima. Vuelve a ponerlos en orden cronológico inverso y repite: un CV se adapta con el resumen y los bullets, no moviendo puestos. Si de verdad quieres otro orden, pasa `--allow-nonchronological` a `generate-pdf.mjs` y se genera con un aviso. Con `--batch`, solo falla el CV desordenado; el resto se genera igual.
+
+`generate-pdf.mjs` registra cada PDF que escribe en `data/pdf-index.tsv`, y career-ops lee ese archivo para encontrar el CV de un informe. Cada fila lleva un `kind` con valor `cv` o `cover`, y un informe conserva una fila de cada tipo. Al regenerar un PDF solo se sustituye la fila de su propio tipo.
+
+Sin `--kind`, el tipo sale del nombre del archivo de salida. Un nombre que empieza por `cv-` es un CV, y uno que empieza por `cover-` o termina en `-cover` es una carta de presentación. Cualquier otro nombre se registra como CV.
+
+El modo cover registra sus cartas como `cover`, se llamen como se llamen. La regla del nombre solo importa cuando ejecutas `generate-pdf.mjs` tú mismo. Una carta generada como `acme-letter.pdf` con `--report=008` sustituye la fila del CV del informe 008, y quien busque ese CV recibe la carta. Pasa `--kind=cover` cuando el nombre del archivo no diga qué es:
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind` acepta `cv` o `cover`, y cualquier otro valor, incluido uno vacío, detiene la ejecución antes de generar nada. `--batch` lo rechaza; pon `"kind"` en la entrada correspondiente del archivo del lote. `data/pdf-index.tsv` es de `generate-pdf.mjs`, y su línea de cabecera indica que no se edita a mano.
 
 ## Relacionado
 

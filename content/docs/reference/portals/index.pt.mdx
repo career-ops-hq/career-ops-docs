@@ -1,0 +1,18 @@
+---
+title: Portais
+description: "Três dos sistemas de triagem (ATS) que o career-ops varre, explicados em detalhe: Greenhouse, Ashby e Lever. A varredura em si não consome tokens de IA."
+icon: Radar
+translationHash: 7861539d2cd00351
+localized: true
+translatedFrom: /docs/reference/portals
+---
+
+O career-ops varre esses sistemas de triagem (ATS) pelas APIs públicas dos quadros de vagas, então a varredura em si não consome tokens de IA. Cada página explica o que o scanner faz, como o career-ops se comunica com aquele sistema e as pegadinhas que vale a pena conhecer.
+
+Eles são três entre muitos. O scanner também lê outros sistemas de triagem (ATS) e sites de vagas; a lista completa está em [Supported Job Boards](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md), no repositório principal.
+
+- **[Greenhouse](/pt/docs/reference/portals/greenhouse)** — o career-ops acessa diretamente a API pública de boards do Greenhouse. Sem scraping de HTML, sem risco de limite de requisições, sem consumo de tokens de IA durante a varredura em si.
+- **[Ashby](/pt/docs/reference/portals/ashby)** — o Ashby é o ATS moderno preferido por startups de Série A a C nas áreas de IA e ferramentas para desenvolvedores. O career-ops acessa diretamente a API pública do quadro de vagas.
+- **[Lever](/pt/docs/reference/portals/lever)** — o Lever é o ATS consolidado entre empresas de médio porte e em fase de crescimento. O career-ops acessa diretamente a API pública de vagas do Lever.
+
+Para rodar uma varredura em todos eles, veja [Como buscar vagas nos portais](/pt/docs/introduction/guides/scan-job-portals).

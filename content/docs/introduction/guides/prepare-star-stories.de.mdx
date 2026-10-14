@@ -3,14 +3,14 @@ title: Bereite deine STAR-Geschichten aus deinem Lebenslauf vor
 description: "Blockierst du bei „Erzähl mal von einer Situation, in der du …“? career-ops entwirft STAR-Geschichten aus deinem Lebenslauf, während du Stellen bewertest, und lässt dich sie vor der Gesprächsrunde üben."
 seoTitle: "STAR-Methode fürs Vorstellungsgespräch: Antworten mit Beispielen aus deinem Lebenslauf vorbereiten – mit career-ops"
 icon: NotebookPen
-translationHash: 16f27d9b3617f897
+translationHash: b992c17341a033d9
 localized: true
 translatedFrom: /docs/introduction/guides/prepare-star-stories
 ---
 
 Um STAR-Geschichten vorzubereiten, schreibst du jede Antwort als Situation, Task (Aufgabe), Action (Handlung) und Result (Ergebnis) auf, dazu eine Reflection (Reflexion) darüber, was du gelernt hast (STAR+R). career-ops entwirft sie jedes Mal, wenn du eine Stelle bewertest, aus der echten Erfahrung in deinem Lebenslauf. Du prüfst die Zahlen, überarbeitest die Geschichten und übst sie vor der Gesprächsrunde.
 
-Wenn du bei „Erzähl mal von einer Situation, in der du …“ ins Stocken gerätst, hilft dir das weiter. career-ops speichert die Geschichten in einer Story-Bank, `interview-prep/story-bank.md`, sobald du diese Datei angelegt hast. Es findet die Geschichte, die bei einer schriftlichen Frage am höchsten punktet, und lässt dich in einem Übungsinterview in Textform proben.
+Wenn du bei „Erzähl mal von einer Situation, in der du …“ ins Stocken gerätst, hilft dir das weiter. career-ops speichert die Geschichten in einer Story-Bank, `interview-prep/story-bank.md`, und legt diese Datei an, sobald es zum ersten Mal eine Geschichte hinzuzufügen hat. Es findet die Geschichte, die bei einer schriftlichen Frage am höchsten punktet, und lässt dich in einem Übungsinterview in Textform proben.
 
 **Auf dieser Seite:** [STAR+R](#was-ist-die-star-methode-und-was-bringt-das-r) · [Story-Bank anlegen](#wie-legst-du-deine-story-bank-an) · [Woher die Geschichten kommen](#woher-kommen-deine-geschichten) · [Wo die Story-Bank liegt](#wo-liegt-die-story-bank) · [Das Eintragsformat](#wie-sieht-ein-eintrag-fuer-eine-star-geschichte-aus) · [Ehrliche Zahlen](#wie-haeltst-du-die-zahlen-in-deinen-geschichten-ehrlich) · [Die richtige Geschichte finden](#wie-findest-du-die-richtige-geschichte-fuer-eine-schriftliche-frage) · [Geschichten einem Unternehmen zuordnen](#wie-ordnest-du-deine-geschichten-den-vorstellungsgespraechen-eines-unternehmens-zu) · [Üben](#wie-uebst-du-deine-geschichten-vor-der-gespraechsrunde) · [Nach dem Vorstellungsgespräch](#was-passiert-nach-dem-vorstellungsgespraech-mit-deinen-geschichten) · [Befehle](#befehle-im-ueberblick) · [FAQ](#haeufig-gestellte-fragen)
 
@@ -27,14 +27,11 @@ Eine STAR-Geschichte ist eine Antwort im Vorstellungsgespräch, die du in vier T
 ## Wie legst du deine Story-Bank an? [#wie-legst-du-deine-story-bank-an]
 
 <Steps>
-  <Step title="Die Datei für die Story-Bank anlegen">
-    Lege `interview-prep/story-bank.md` in deinem Datenordner an, also im Ordner mit deiner `cv.md`. Eine Überschrift `# Story Bank` reicht. career-ops legt die Datei nicht selbst an, und eine Bewertung fügt Geschichten nur zu einer Story-Bank hinzu, die schon existiert.
-  </Step>
   <Step title="Eine Stelle bewerten">
-    Füge die URL oder den Text der Stellenanzeige nach `/career-ops` ein, um die komplette Pipeline zu starten. Wenn du nur die Bewertung willst, führst du `/career-ops oferta` aus. In beiden Fällen entwirft die Bewertung STAR+R-Geschichten für diese Stelle und fügt die neuen zu deiner Story-Bank hinzu.
+    Füge die URL oder den Text der Stellenanzeige nach `/career-ops` ein, um die komplette Pipeline zu starten. Wenn du nur die Bewertung willst, führst du `/career-ops oferta` aus. In beiden Fällen entwirft die Bewertung STAR+R-Geschichten für diese Stelle und fügt die neuen zu deiner Story-Bank hinzu. Falls `interview-prep/story-bank.md` in deinem Datenordner, also im Ordner mit deiner `cv.md`, noch nicht existiert, legt career-ops die Datei vorher aus seiner Vorlage für die Story-Bank an.
   </Step>
-  <Step title="Die neuen Geschichten ins Format des Matchers bringen">
-    Die Bewertung fügt ihre Geschichten als Tabellenzeilen ein. Der Story-Matcher liest aber nur das [unten](#wie-sieht-ein-eintrag-fuer-eine-star-geschichte-aus) gezeigte Eintragsformat, und eine Tabellenzeile zählt für ihn überhaupt nicht als Geschichte. Bitte career-ops, die neuen Geschichten in `story-bank.md` in dieses Format umzuschreiben, und füge das Beispiel in deine Anfrage ein. Prüfe das Ergebnis danach mit `npm run star -- --list`. Diese Abweichung ist eine bekannte Lücke im Core und wird in [Issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514) verfolgt.
+  <Step title="Die neuen Geschichten prüfen">
+    Die Bewertung fügt jede neue Geschichte als Eintrag im [unten](#wie-sieht-ein-eintrag-fuer-eine-star-geschichte-aus) gezeigten Format ein, also in dem Format, das der Story-Matcher liest. Geschichten, deren Titel schon in deiner Story-Bank steht, überspringt sie. Führe `npm run star -- --list` aus, um sie zu sehen, und überarbeite dann alles, was du in einem Vorstellungsgespräch nicht sagen würdest.
   </Step>
   <Step title="Eine Frage abgleichen">
     Führe `npm run star -- "<question>"` in einem Terminal aus. So siehst du, welche Geschichte bei dieser Frage am höchsten punktet.
@@ -45,7 +42,7 @@ Eine STAR-Geschichte ist eine Antwort im Vorstellungsgespräch, die du in vier T
 
 career-ops baut deine Geschichten in drei Situationen auf, jeweils zu einer bestimmten Stelle oder einem bestimmten Vorstellungsgespräch:
 
-- **Wenn du eine Stelle bewertest.** Der STAR+R-Abschnitt des Bewertungsberichts ([Block F](/de/docs/reference/modes/oferta)) schreibt 6 bis 10 Geschichten aus deinem Lebenslauf und ordnet sie den Anforderungen der Stelle zu. Wenn `interview-prep/story-bank.md` existiert, fügt er die neuen zu deiner Story-Bank hinzu. Das passiert als Tabellenzeilen, die du danach ins Eintragsformat umschreibst. Batch-Läufe sind nicht dafür eingerichtet, Geschichten zur Story-Bank hinzuzufügen.
+- **Wenn du eine Stelle bewertest.** Der STAR+R-Abschnitt des Bewertungsberichts ([Block F](/de/docs/reference/modes/oferta)) schreibt 6 bis 10 Geschichten aus deinem Lebenslauf und ordnet sie den Anforderungen der Stelle zu. Die neuen fügt er im Eintragsformat zu `interview-prep/story-bank.md` hinzu und legt die Datei an, falls sie fehlt. Batch-Läufe sind nicht dafür eingerichtet, Geschichten zur Story-Bank hinzuzufügen.
 - **Wenn du dich auf ein Unternehmen vorbereitest.** Für jede wahrscheinliche Frage ohne passende Geschichte verweist das Firmendossier auf eine Erfahrung aus deinem Lebenslauf, die sich als Geschichte eignen würde. Auf Wunsch entwirft es sie gemeinsam mit dir.
 - **Nach einem echten Vorstellungsgespräch.** Wenn du eine Erfahrung erzählt hast, die noch nicht in deiner Story-Bank steht, bietet dir die Nachbesprechung an, sie zu einer STAR+R-Geschichte auszubauen, solange die Erinnerung frisch ist. Wenn du zustimmst, fügt sie die Geschichte hinzu.
 
@@ -65,7 +62,7 @@ Die Story-Bank ist `interview-prep/story-bank.md`, eine einfache Markdown-Datei 
 
 ## Wie sieht ein Eintrag für eine STAR-Geschichte aus? [#wie-sieht-ein-eintrag-fuer-eine-star-geschichte-aus]
 
-Schreib jede Geschichte in diesem Format. Der Story-Matcher (`npm run star`) liest nur Einträge, die sich daran halten. Lass die Labels auf Englisch, egal in welcher Sprache du die Geschichte schreibst. Füge dieses Beispiel nicht unverändert in deine Story-Bank ein, sonst zählt der Matcher es als Geschichte.
+Schreib jede Geschichte in diesem Format. Der Story-Matcher (`npm run star`) liest nur Einträge, die sich daran halten. Lass die Labels auf Englisch, egal in welcher Sprache du die Geschichte schreibst. Füge dieses Beispiel nicht unverändert in deine Story-Bank ein, sonst zählt der Matcher es als Geschichte. Geschichten, die career-ops hinzufügt, verwenden die langen Labels, etwa `**S (Situation):**` und `**A (Action):**`. Der Matcher liest beide Formen.
 
 ```md title="Story entry shape (example)"
 ### [Theme] Short title of the story
@@ -128,7 +125,7 @@ node match-star.mjs "Give an example of handling ambiguity" --top 2
 node match-star.mjs --list
 ```
 
-Der Matcher liest immer `interview-prep/story-bank.md` in deinem career-ops-Ordner. Einen separaten Datenordner, den du mit `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` oder einer `.career-ops-data`-Datei festgelegt hast, berücksichtigt er nicht.
+Der Matcher liest `interview-prep/story-bank.md` in deinem Datenordner, also im Ordner mit deiner `cv.md`. Einen separaten Datenordner, den du mit `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` oder einer `.career-ops-data`-Datei festgelegt hast, berücksichtigt er also. Versionen vor career-ops v1.36.0 lasen nur den career-ops-Ordner; `node update-system.mjs apply --confirm` bringt deine auf den neuesten Stand.
 
 Was der Matcher ausgibt, ist deine eigene Geschichte und keine Antwort, die für diese Frage geschrieben wurde. Überarbeite sie also, bevor du sie einfügst. Für ein ganzes Bewerbungsformular entwirft career-ops die Antworten mit `/career-ops apply` und nutzt dafür deine Bewertung und ihre STAR-Geschichten. career-ops bewertet und entwirft, du entscheidest und schickst ab. Es bewirbt sich nie in deinem Namen.
 
@@ -164,7 +161,7 @@ Außerdem speichert die Nachbesprechung die Runde in `interview-prep/sessions/` 
 
 | Befehl                                      | Was er macht                                                                                              |
 | ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `/career-ops <job URL or text>`             | Bewertet die Stelle und fügt ihre STAR+R-Geschichten zu deiner Story-Bank hinzu, sobald die Datei existiert |
+| `/career-ops <job URL or text>`             | Bewertet die Stelle und fügt ihre STAR+R-Geschichten zu deiner Story-Bank hinzu, legt die Datei bei Bedarf an |
 | `/career-ops interview-prep`                | Firmendossier: Recherche mit Quellenangaben, wahrscheinliche Fragen, deine zugeordneten Geschichten, Lücken |
 | `/career-ops interview/plan`                | Plan in Zeitblöcken, mit einem Block für die Geschichten zu Verhaltensfragen                              |
 | `/career-ops interview/practice`            | Übungsinterview in Textform, eine Frage nach der anderen, mit Feedback nach jeder Antwort                 |
@@ -177,11 +174,11 @@ Außerdem speichert die Nachbesprechung die Runde in `interview-prep/sessions/` 
 
 ### Wie erstellt career-ops STAR-Geschichten aus meinem Lebenslauf? [#wie-erstellt-career-ops-star-geschichten-aus-meinem-lebenslauf]
 
-career-ops erstellt für jede Stelle, die du bewertest, STAR+R-Geschichten aus der Erfahrung in deinem Lebenslauf. Jede Bewertung, die du in einer Sitzung ausführst, schreibt Geschichten zu dieser Stelle. Die neuen fügt sie zu interview-prep/story-bank.md hinzu, sobald du diese Datei angelegt hast. Bei der Vorbereitung auf ein Vorstellungsgespräch schlägt career-ops für Fragen ohne passende Geschichte Erfahrungen aus deinem Lebenslauf vor. Und eine Nachbesprechung kann aus etwas, das du in einem echten Vorstellungsgespräch erzählt hast, eine neue Geschichte machen.
+career-ops erstellt für jede Stelle, die du bewertest, STAR+R-Geschichten aus der Erfahrung in deinem Lebenslauf. Jede Bewertung, die du in einer Sitzung ausführst, schreibt Geschichten zu dieser Stelle. Die neuen fügt sie zu interview-prep/story-bank.md hinzu und legt diese Datei beim ersten Mal an. Bei der Vorbereitung auf ein Vorstellungsgespräch schlägt career-ops für Fragen ohne passende Geschichte Erfahrungen aus deinem Lebenslauf vor. Und eine Nachbesprechung kann aus etwas, das du in einem echten Vorstellungsgespräch erzählt hast, eine neue Geschichte machen.
 
 ### Wie bereite ich STAR-Geschichten für ein verhaltensbasiertes Vorstellungsgespräch nächste Woche vor? [#wie-bereite-ich-star-geschichten-fuer-ein-verhaltensbasiertes-vorstellungsgespraech-naechste-woche-vor]
 
-Um mit career-ops STAR-Geschichten für ein verhaltensbasiertes Vorstellungsgespräch vorzubereiten, bewertest du zuerst die Stelle. Die Bewertung entwirft STAR+R-Geschichten aus deinem Lebenslauf und fügt sie zu interview-prep/story-bank.md hinzu, sobald du diese Datei angelegt hast. Danach ordnet /career-ops interview-prep wahrscheinliche Fragen deinen Geschichten zu und zeigt dir die Lücken. /career-ops interview/plan teilt die verbleibende Zeit in Vorbereitungsblöcke auf, und mit /career-ops interview/practice übst du in Textform, eine Frage nach der anderen. Um dein Tempo zu prüfen, nimm dich auf, während du laut antwortest.
+Um mit career-ops STAR-Geschichten für ein verhaltensbasiertes Vorstellungsgespräch vorzubereiten, bewertest du zuerst die Stelle. Die Bewertung entwirft STAR+R-Geschichten aus deinem Lebenslauf und fügt sie zu interview-prep/story-bank.md hinzu. Fehlt diese Datei noch, legt sie sie an. Danach ordnet /career-ops interview-prep wahrscheinliche Fragen deinen Geschichten zu und zeigt dir die Lücken. /career-ops interview/plan teilt die verbleibende Zeit in Vorbereitungsblöcke auf, und mit /career-ops interview/practice übst du in Textform, eine Frage nach der anderen. Um dein Tempo zu prüfen, nimm dich auf, während du laut antwortest.
 
 ### Woher kommen die Interviewfragen in career-ops? [#woher-kommen-die-interviewfragen-in-career-ops]
 

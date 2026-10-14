@@ -3,7 +3,7 @@ title: Escanea portales de empleo
 description: Configura y ejecuta el escáner de portales para encontrar nuevas ofertas de empleo automáticamente.
 seoTitle: "Escanea portales de empleo con career-ops — Greenhouse, Ashby, Lever, cero tokens"
 icon: ScanEye
-translationHash: 1fb2c4a20e4d60c2
+translationHash: e9fbece900af577b
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -170,6 +170,16 @@ npm run scan -- --company Anthropic
 
 Sustituye `Anthropic` por cualquier nombre de empresa de tu lista `tracked_companies`. La coincidencia no distingue mayúsculas de minúsculas.
 
+**Escanea sitios de empleo de Dayforce:**
+
+Los sitios de empleo de Dayforce (Ceridian), en `jobs.dayforcehcm.com`, bloquean las peticiones web simples, así que `npm run scan` no puede leerlos. En su lugar, un script aparte abre una sesión real de navegador para ellos, lo que lo hace más lento que el escaneo principal. Añade los portales en `dayforce_boards` dentro de `portals.yml`, una entrada por empresa con su `name` y su `tenant` (el código de la empresa en la dirección de Dayforce); `templates/portals.example.yml` muestra el formato. Después ejecuta:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+Las ofertas nuevas van a `data/pipeline.md`, igual que en el escaneo principal. Añade `-- --dry-run` para previsualizar sin guardar, `-- --tenant <tenant>` para escanear un solo portal, o `-- --debug` para guardar una captura de pantalla de cada portal en `output/`. Si un portal muestra una verificación anti-bots, el script lo omite; nunca intenta saltársela.
+
 ### Opción B — Ejecuta el escaneo con IA dentro de Claude Code
 
 Abre Claude Code en la carpeta del proyecto y escribe:
@@ -238,7 +248,7 @@ Si no aparece ese aviso, puede que tu filtro de títulos sea demasiado estricto.
 
 **Adónde van las ofertas nuevas:** cada oferta nueva se añade como una línea en `data/pipeline.md`. Esa es la lista de ofertas pendientes de evaluar.
 
-**Qué hace `data/scan-history.tsv`:** cada URL que el escáner ve — tanto si se añadió, se filtró o se omitió — queda registrada aquí. Así es como el escáner evita mostrarte la misma oferta dos veces en escaneos futuros. No necesitas editar este archivo.
+**Qué hace `data/scan-history.tsv`:** cada URL que el escáner ve — tanto si se añadió, se filtró o se omitió — queda registrada aquí. Así es como el escáner evita mostrarte la misma oferta dos veces en escaneos futuros. Una excepción son las ofertas que descartó tu `location_filter` o tu `max_posting_age_days` en `portals.yml`. Se registran como `skipped_location` o `skipped_age` y pueden volver a aparecer cuando cambies ese ajuste. No necesitas editar este archivo.
 
 ## Evalúa las ofertas nuevas de un escaneo
 
@@ -272,7 +282,7 @@ Esto es lo que significa cada columna:
     | Columna         | Qué te dice                                                                                                                                                                                                    |
     | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
     | **#**           | El número del informe. Úsalo para encontrar el informe completo en `reports/` — por ejemplo, el informe 024 es `reports/024-anthropic-2026-04-13.md`                                                             |
-    | **Puntuación**  | Cómo de bien encaja el puesto con tu perfil, de 1.0 a 5.0                                                                                                                                                        |
+    | **Puntuación**  | Cómo de bien encaja el puesto con tu perfil, de 1 a 5                                                                                                                                                        |
     | **Legitimidad** | Si la oferta parece real y activa. "High Confidence" significa que la oferta está activa y los detalles cuadran. "Proceed w/ Caution" significa que algo levantó una alerta — lee la nota que la acompaña.        |
   </div>
 </div>
@@ -284,7 +294,7 @@ Esto es lo que significa cada columna:
 
 ## Qué hacer después
 
-Cuando `/career-ops pipeline` termina, cada oferta tiene una puntuación de 1.0 a 5.0. Puedes encontrar el informe completo de cualquier puesto en la carpeta `reports/`. La puntuación muestra cómo de bien encaja el puesto con tu perfil.
+Cuando `/career-ops pipeline` termina, cada oferta tiene una puntuación de 1 a 5. Puedes encontrar el informe completo de cualquier puesto en la carpeta `reports/`. La puntuación muestra cómo de bien encaja el puesto con tu perfil.
 
 Usa la puntuación como punto de partida:
 

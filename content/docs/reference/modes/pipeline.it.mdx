@@ -1,0 +1,54 @@
+---
+title: pipeline
+description: "Legge gli URL in coda in data/pipeline.md ed esegue l'auto-pipeline completo su ciascuno. Usalo quando durante la giornata hai raccolto dieci o venti annunci e vuoi elaborarli tutti in un'unica sessione."
+seoTitle: "Modalità pipeline di career-ops: come valutare molti annunci di lavoro in una volta sola"
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3577755ad38f8486
+localized: true
+translatedFrom: /docs/reference/modes/pipeline
+---
+
+## Cosa fa
+
+La modalità pipeline scorre gli URL presenti in data/pipeline.md (uno per riga) e lancia auto-pipeline su ciascuno. Per ogni annuncio che produce una valutazione valida vengono scritti report, PDF e voci del tracker. Le estrazioni fallite vengono registrate e saltate.
+
+## Quando usarla
+
+Usa pipeline quando hai un arretrato di URL da elaborare. Incollali in data/pipeline.md, lancia /career-ops pipeline e allontanati pure.
+
+## Come si presenta un'esecuzione
+
+Inserisci gli URL in `data/pipeline.md` e la modalità elabora l'intera coda in un solo passaggio. Per prima cosa esegue un controllo di validità a zero token per scartare gli annunci scaduti, poi valuta ogni URL rimasto con l'auto-pipeline completo e chiude con una tabella riepilogativa di ciò che ha trovato.
+
+```txt title="Pipeline run"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (one at a time)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+
+Ogni URL elaborato passa dalla sezione `## Pending` alla sezione `## Processed` del file, così la coda resta un registro sempre aggiornato di ciò che manca.
+
+## Quando conviene usarlo
+
+Ricorri a pipeline quando durante la giornata hai accumulato un arretrato di annunci e vuoi elaborarli tutti in un'unica sessione. Ecco come gestisce la coda:
+
+- La sezione `## Pending` accetta qualsiasi formato: va bene un semplice URL incollato, oppure puoi aggiungere le colonne `company`, `role`, `location` e `comp`, e la modalità le legge tutte.
+- Il controllo di validità viene eseguito prima del ciclo sui singoli URL, così una coda vecchia di otto URL non ti costa otto valutazioni sprecate.
+- Gli URL di LinkedIn saltano il controllo di validità e ricevono invece un solo tentativo con il browser nel ciclo sui singoli URL. Se dopo quel tentativo la descrizione resta non disponibile, per esempio perché la pagina rimane bloccata su uno scheletro di caricamento, la voce resta in Pending contrassegnata con `[!]` e ti viene chiesto di incollare il testo dell'annuncio o di fornire un link del datore di lavoro o dell'ATS per lo stesso ruolo. Un caricamento di LinkedIn fallito non viene mai considerato un annuncio chiuso.
+- È lo strumento di estrazione a decidere la concorrenza. Con l'estrattore predefinito basato sul browser (Playwright MCP) gli URL vengono elaborati uno alla volta, perché i worker che condividono la stessa sessione del browser possono contaminarsi a vicenda e valutare l'annuncio sbagliato. Solo quando ogni worker usa l'estrattore CLI isolato (`scan.extractor: cli`) o un'alternativa che non passa dal browser, ciascuno con il proprio processo e il proprio stato di sessione, si possono elaborare tre o più URL in parallelo, un worker per URL.
+- I PDF vengono generati solo quando il punteggio supera `auto_pdf_score_threshold` (valore predefinito: 3,0); alzalo per evitare i PDF dei ruoli poco convincenti e generarli più avanti, su richiesta, con `/career-ops pdf`.
+
+## Vedi anche
+
+- [auto-pipeline](/it/docs/reference/modes/auto-pipeline)

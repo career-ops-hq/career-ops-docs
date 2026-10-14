@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { source } from '@/lib/source';
-import { blogSource } from '@/lib/blog-source';
+import { blogSource, blogTwin, type BlogPage } from '@/lib/blog-source';
 import { gitLastMod } from '@/lib/git-date';
 import { homeLastModified } from '@/lib/home-date';
 import comparisonsData from '@/lib/data/comparisons.json';
@@ -52,9 +52,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     es: `${SITE_URL}/es`,
     fr: `${SITE_URL}/fr`,
     de: `${SITE_URL}/de`,
+    pt: `${SITE_URL}/pt`,
+    it: `${SITE_URL}/it`,
     'x-default': `${SITE_URL}/`,
   };
-  const DOCS_LOCALES = ['es', 'fr', 'de'] as const;
+  const DOCS_LOCALES = ['es', 'fr', 'de', 'pt', 'it'] as const;
   // Source-derived (search-ops drift contract): a page has a twin iff
   // getPage(slug, loc) resolves, which with fallbackLanguage:null happens only
   // for a real .<loc>.mdx, never an English fallback.
@@ -140,16 +142,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${SITE_URL}/blog`,
     lastModified: gd('src/app/(en)/blog/page.tsx'),
   });
-  for (const post of blogSource.getPages()) {
-    const data = post.data as { date?: string; lastModified?: string };
+  // A post dates itself from its own frontmatter (git as the fallback). A
+  // post with a Spanish twin lists both URLs with the same hreflang cluster.
+  const postDate = (p: BlogPage) => {
+    const data = p.data as { date?: string; lastModified?: string };
     const lastMod = data.lastModified || data.date;
-    const mdxRel = `content/blog/${post.slugs.join('/')}.mdx`;
+    return lastMod ? handDate(lastMod) : gd(`content/blog/${p.path}`);
+  };
+  for (const post of blogSource.getPages('en')) {
+    const es = blogTwin(post, 'es');
+    const cluster = es
+      ? {
+          en: `${SITE_URL}${post.url}`,
+          es: `${SITE_URL}${es.url}`,
+          'x-default': `${SITE_URL}${post.url}`,
+        }
+      : undefined;
     entries.push({
       url: `${SITE_URL}${post.url}`,
-      lastModified: lastMod
-        ? handDate(lastMod)
-        : gd(mdxRel),
+      lastModified: postDate(post),
+      ...(cluster ? { alternates: { languages: cluster } } : {}),
     });
+    if (es && cluster) {
+      entries.push({
+        url: `${SITE_URL}${es.url}`,
+        lastModified: postDate(es),
+        alternates: { languages: cluster },
+      });
+    }
   }
 
   // /docs/** auto-discovered from Fumadocs source (includes
@@ -172,7 +192,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Localized homes (es, fr, de) — same cluster as the English home.
+  // Localized homes (es, fr, de, pt, it): same cluster as the English home.
   entries.push({
     url: `${SITE_URL}/es`,
     lastModified: homeLastModified('es'),
@@ -186,6 +206,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   entries.push({
     url: `${SITE_URL}/de`,
     lastModified: homeLastModified('de'),
+    alternates: { languages: homeCluster },
+  });
+  entries.push({
+    url: `${SITE_URL}/pt`,
+    lastModified: homeLastModified('pt'),
+    alternates: { languages: homeCluster },
+  });
+  entries.push({
+    url: `${SITE_URL}/it`,
+    lastModified: homeLastModified('it'),
     alternates: { languages: homeCluster },
   });
 
@@ -203,7 +233,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   });
 
-  // Localized docs (es, fr, de): one entry per existing twin, each carrying the
+  // Localized docs (es, fr, de, pt, it): one entry per existing twin, each carrying the
   // same cluster as its English page (see docsCluster above).
   for (const enPage of source.getPages('en')) {
     const c = docsCluster(enPage);
