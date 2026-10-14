@@ -4,8 +4,8 @@ description: "Asistente de candidatura en vivo. Lee las preguntas abiertas de lo
 seoTitle: "Modo apply de career-ops — borradores automáticos de respuestas a preguntas de formularios ATS"
 icon: Send
 date: "2026-05-19"
-lastModified: "2026-05-19"
-translationHash: 72c62608efda3e89
+lastModified: "2026-10-14"
+translationHash: 7cdeaddd88619799
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -53,12 +53,19 @@ captcha, and submit yourself.
 
 apply nunca envía la candidatura: el clic final en Enviar siempre es tuyo. Lee todos los campos del formulario, no solo las preguntas abiertas — desplegables, botones de opción, casillas y campos de subida de archivos incluidos. Redacta las respuestas de texto libre, sugiere un valor para cada campo cerrado y marca las preguntas sobre autorización de trabajo, salario y otros temas sensibles que tu perfil aún no responde, para que las confirmes tú en lugar de adivinarlas por ti. Con Playwright puede rellenar algunos campos en el formulario en vivo; tú lo revisas todo y completas el resto. Cuando las respuestas están listas, guarda en el informe el texto, las selecciones y los archivos usados. Si la comprobación preflight detecta que la publicación ha cerrado, apply se niega a redactar la versión final salvo que lo fuerces explícitamente — un enlace muerto no merece una respuesta a medida.
 
+Los campos de experiencia salen del CV adaptado que se generó para ese informe, no de `cv.md`: empleadores, cargos, fechas, descripciones de puesto, habilidades y formación coinciden con el documento que subes, así que el formulario y el currículum adjunto cuentan la misma historia. `config/profile.yml` sigue siendo la referencia para tu identidad y tus datos de contacto, tu autorización de trabajo y tus expectativas salariales. Si apply no encuentra un CV adaptado para la candidatura, te lo indica y usa `cv.md` en su lugar.
+
+Cuando el informe o la descripción del puesto indican explícitamente que el puesto es temporal, apply muestra un único **Fixed-term role reminder** (aviso de puesto temporal) antes de la primera respuesta, cita la frase y la duración indicada si la hay, y te sugiere confirmar la renovación, las prestaciones y las condiciones al final del contrato. Es solo informativo: nunca cambia un campo, nunca bloquea la candidatura y no requiere que lo confirmes.
+
+Antes de cada Guardar, Siguiente o Continuar en un formulario de varios pasos, y antes de pasarte el formulario para que pulses Enviar, apply vuelve a leer el paso completo y comprueba que cada control obligatorio tenga un valor, incluidos los controles que solo aparecen después de otra respuesta. Si un campo obligatorio no se puede rellenar con tus propios archivos, se detiene y te pregunta.
+
 ## Peculiaridades conocidas de los ATS
 
 apply se ha probado en campo en cerca de una docena de candidaturas gestionadas con Playwright, y algunos portales rompen la ejecución si no los tienes en cuenta:
 
 - **Ashby** deduplica candidatos por email dentro de cada empresa, así que una segunda candidatura puede fusionarse silenciosamente con la primera. Si ya existe un informe para esa empresa, apply sugiere un alias de email con `+tag`. Para Ashby, termina y envía la solicitud en tu navegador habitual y comprueba la página de éxito o el correo de confirmación antes de marcarla como enviada.
 - **Lever** lanza un captcha cuando una casilla o un botón de opción se marca de forma programática, así que apply rellena solo los campos de texto y los desplegables, y te deja las casillas y los botones de opción para que los marques tú.
+- **Las secciones repetidas** como Experiencia laboral o Formación («Add Another») reutilizan las mismas etiquetas en cada bloque, así que apply rellena como máximo dos o tres entradas a la vez y comprueba cada valor con la entrada que le corresponde antes de continuar. Si no puede identificar un campo de forma única, se detiene y te pregunta en lugar de adivinar.
 - **Workday** ignora los valores introducidos sin pulsaciones de teclado reales, así que apply escribe las respuestas carácter a carácter y te pide revisar los desplegables de autorización de trabajo antes de guardar.
 
 ## Relacionado

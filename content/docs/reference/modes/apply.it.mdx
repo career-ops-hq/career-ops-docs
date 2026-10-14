@@ -4,8 +4,8 @@ description: "Assistente di candidatura in tempo reale. Legge le domande aperte 
 seoTitle: "career-ops, modalità apply: bozze di risposta alle domande dei moduli di candidatura ATS"
 icon: Send
 date: "2026-05-19"
-lastModified: "2026-05-19"
-translationHash: 72c62608efda3e89
+lastModified: "2026-10-14"
+translationHash: 7cdeaddd88619799
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -53,12 +53,19 @@ captcha, and submit yourself.
 
 apply non invia mai la candidatura: il clic finale su Invia è sempre tuo. Legge tutti i campi del modulo, non solo le domande aperte: menu a tendina, pulsanti di opzione, caselle di controllo e campi di caricamento compresi. Redige le risposte a testo libero, suggerisce un valore per ogni campo a risposta chiusa e segnala le domande su permesso di lavoro, retribuzione e altri temi sensibili a cui il tuo profilo non risponde già, perché sia tu a confermarle invece di tirare a indovinare. Con Playwright può compilare alcuni campi nel modulo reale; tu controlli tutto e completi il resto. Una volta inserite le risposte, registra nel report il testo, le selezioni e i file usati. Se il controllo preliminare rileva che l'annuncio è stato chiuso, apply si rifiuta di redigere il testo definitivo, a meno che tu non lo forzi esplicitamente: un link morto non merita una risposta su misura.
 
+I campi sull'esperienza provengono dal CV su misura creato per quel report, non da `cv.md`: datori di lavoro, qualifiche, date, descrizioni dei ruoli, competenze e formazione corrispondono al documento che carichi, così il modulo e il curriculum allegato raccontano la stessa storia. `config/profile.yml` resta la fonte di riferimento per la tua identità e i tuoi recapiti, il permesso di lavoro e le aspettative di retribuzione. Se apply non trova un CV su misura per la candidatura, te lo dice e ripiega su `cv.md`.
+
+Quando il report o l'annuncio descrive esplicitamente il ruolo come a tempo determinato, apply mostra un solo **promemoria per ruolo a tempo determinato** prima della prima risposta, citando la frase e l'eventuale durata indicata, e ti suggerisce di verificare rinnovo, benefit e condizioni di fine contratto. È solo informativo: non modifica mai un campo, non blocca mai la candidatura e non richiede alcuna conferma.
+
+Prima di ogni Salva, Avanti o Continua in un modulo a più passaggi, e prima di passarti il modulo per l'invio, apply rilegge l'intero passaggio e controlla che ogni campo obbligatorio abbia un valore, compresi i campi che compaiono solo dopo un'altra risposta. Se un campo obbligatorio non si può compilare a partire dai tuoi file, si ferma e te lo chiede.
+
 ## Particolarità note degli ATS
 
 apply è stata messa alla prova sul campo in una dozzina circa di candidature guidate da Playwright, e alcuni portali fanno fallire un'esecuzione se non ne tieni conto:
 
 - **Ashby** deduplica i candidati per email all'interno di ogni azienda, quindi una seconda candidatura può fondersi silenziosamente con la prima. Se esiste già un report per quell'azienda, apply suggerisce un alias email `+tag`. Con Ashby, completa e invia dal tuo browser di sistema abituale, poi verifica che compaia una pagina di conferma o che arrivi un'email di conferma prima di segnare la candidatura come inviata.
 - **Lever** fa comparire un captcha quando una casella di controllo o un pulsante di opzione viene cliccato in modo programmatico, quindi apply compila solo i campi di testo e i menu a tendina e lascia a te le caselle di controllo e i pulsanti di opzione da selezionare.
+- **Le sezioni ripetute** come Esperienza lavorativa o Istruzione ("Add Another") riutilizzano le stesse etichette in ogni blocco, quindi apply compila al massimo due o tre voci alla volta e verifica che ogni valore corrisponda alla voce prevista prima di proseguire. Se non riesce a identificare un campo in modo univoco, si ferma e te lo chiede invece di tirare a indovinare.
 - **Workday** ignora i valori impostati senza una vera digitazione da tastiera, quindi apply scrive le risposte carattere per carattere e ti chiede di controllare i menu a tendina sul permesso di lavoro prima di salvare.
 
 ## Vedi anche

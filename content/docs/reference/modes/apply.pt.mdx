@@ -4,8 +4,8 @@ description: "Assistente de candidatura ao vivo. Lê as perguntas abertas dos fo
 seoTitle: "Modo apply do career-ops — rascunhos de respostas para as perguntas dos formulários de candidatura (ATS)"
 icon: Send
 date: "2026-05-19"
-lastModified: "2026-05-19"
-translationHash: 72c62608efda3e89
+lastModified: "2026-10-14"
+translationHash: 7cdeaddd88619799
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -53,12 +53,19 @@ captcha, and submit yourself.
 
 O apply nunca envia a candidatura: o clique final em Enviar é sempre seu. Ele lê todos os campos do formulário, não só as perguntas abertas — incluindo listas suspensas, botões de opção, caixas de seleção e campos de upload. Ele redige as respostas de texto livre, sugere um valor para cada campo de resposta fechada e sinaliza as perguntas sobre autorização de trabalho, salário e outros temas sensíveis que o seu perfil ainda não responde, para você confirmar em vez de ele adivinhar. Com o Playwright, ele consegue preencher alguns campos no formulário ao vivo; você revisa tudo e completa o resto. Depois que as respostas estão no formulário, ele registra no relatório o texto, as opções selecionadas e os arquivos usados. Se a verificação prévia constatar que a vaga foi encerrada, o apply se recusa a redigir o texto final, a menos que você peça explicitamente para continuar — um link morto não vale uma resposta sob medida.
 
+Os campos de experiência vêm do currículo sob medida gerado para aquele relatório, não do `cv.md`: empregadores, cargos, datas, descrições das funções, habilidades e formação coincidem com o documento que você anexa, então o formulário e o currículo enviado contam a mesma história. O `config/profile.yml` continua sendo a referência para a sua identidade e os seus dados de contato, a autorização de trabalho e a pretensão salarial. Se o apply não encontrar um currículo sob medida para a candidatura, ele avisa e usa o `cv.md` no lugar.
+
+Quando o relatório ou a descrição da vaga diz explicitamente que a vaga é por prazo determinado, o apply mostra um único **Aviso de contrato por prazo determinado** antes da primeira resposta, citando o trecho e a duração informada, se houver, e sugere confirmar as condições de renovação, os benefícios e o que acontece no fim do contrato. É apenas informativo: nunca altera nenhum campo, nunca bloqueia a candidatura e não exige confirmação.
+
+Antes de cada Salvar, Próximo ou Continuar em um formulário de várias etapas, e antes de entregar o formulário para você clicar em Enviar, o apply relê a etapa inteira e verifica se todos os campos obrigatórios têm um valor, incluindo os que só aparecem depois de outra resposta. Se um campo obrigatório não puder ser preenchido a partir dos seus próprios arquivos, ele para e pergunta a você.
+
 ## Particularidades conhecidas de cada ATS
 
 O apply foi testado na prática em cerca de uma dúzia de candidaturas conduzidas com o Playwright, e alguns portais quebram a execução se você não levar em conta o comportamento deles:
 
 - O **Ashby** elimina candidatos duplicados por e-mail em cada empresa, então uma segunda candidatura pode ser fundida silenciosamente com a primeira. Se já existir um relatório para aquela empresa, o apply sugere um alias de e-mail com `+tag`. No Ashby, finalize e envie pelo navegador comum do seu sistema e depois confira se apareceu uma página de sucesso ou se chegou um e-mail de confirmação antes de marcar a candidatura como enviada.
 - O **Lever** exibe um captcha quando uma caixa de seleção ou um botão de opção é clicado de forma programática, então o apply preenche apenas os campos de texto e as listas suspensas e deixa as caixas de seleção e os botões de opção para você marcar.
+- As **seções repetidas**, como Experiência profissional ou Formação acadêmica ("Add Another"), reutilizam os mesmos rótulos em cada bloco, então o apply preenche no máximo duas ou três entradas por vez e confere cada valor com a entrada a que ele se destina antes de continuar. Se não conseguir identificar um campo sem ambiguidade, ele para e pergunta a você em vez de adivinhar.
 - O **Workday** ignora valores definidos sem digitação real, então o apply digita as respostas caractere por caractere e pede que você revise as listas suspensas de autorização de trabalho antes de salvar.
 
 ## Veja também

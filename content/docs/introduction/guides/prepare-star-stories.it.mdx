@@ -3,14 +3,14 @@ title: Prepara le tue storie STAR a partire dal curriculum
 description: "Ti blocchi davanti a \"Raccontami di una volta in cui…\"? career-ops abbozza le storie STAR dal tuo curriculum mentre valuti gli annunci e ti permette di provarle prima del colloquio."
 seoTitle: "Metodo STAR per il colloquio di lavoro: come preparare le risposte a partire dal curriculum con career-ops"
 icon: NotebookPen
-translationHash: b390892bd0f804b6
+translationHash: b992c17341a033d9
 localized: true
 translatedFrom: /docs/introduction/guides/prepare-star-stories
 ---
 
 Per preparare le storie STAR, scrivi ogni risposta come Situazione, Compito (Task), Azione e Risultato, più una Riflessione su ciò che hai imparato (STAR+R). career-ops le abbozza a partire dall'esperienza reale del tuo curriculum ogni volta che valuti un annuncio; tu controlli i numeri, le modifichi e le provi prima del colloquio.
 
-Se ti blocchi davanti a "Raccontami di una volta in cui…", la soluzione è questa. career-ops salva le storie in un archivio, `interview-prep/story-bank.md`, una volta che hai creato quel file. Trova la storia che ottiene il punteggio migliore rispetto a una domanda scritta e ti permette di esercitarti in un colloquio di prova testuale.
+Se ti blocchi davanti a "Raccontami di una volta in cui…", la soluzione è questa. career-ops salva le storie in un archivio, `interview-prep/story-bank.md`, e crea quel file la prima volta che ha una storia da aggiungere. Trova la storia che ottiene il punteggio migliore rispetto a una domanda scritta e ti permette di esercitarti in un colloquio di prova testuale.
 
 **In questa pagina:** [STAR+R](#che-cose-una-storia-star-e-cosa-aggiunge-la-r) · [Crea il tuo archivio](#come-creare-il-tuo-archivio-di-storie) · [Da dove vengono le storie](#da-dove-vengono-le-tue-storie) · [Dove si trova l'archivio](#dove-si-trova-larchivio-delle-storie) · [Il formato della voce](#come-si-scrive-una-storia-star) · [Numeri onesti](#come-mantenere-onesti-i-numeri-delle-tue-storie) · [Trova la storia giusta](#come-trovare-la-storia-giusta-per-una-domanda-scritta) · [Storie per azienda](#come-abbinare-le-tue-storie-ai-colloqui-di-unazienda) · [Esercitati](#come-provare-le-tue-storie-prima-del-colloquio) · [Dopo il colloquio](#cosa-succede-alle-tue-storie-dopo-il-colloquio) · [Comandi](#i-comandi-in-breve) · [Domande frequenti](#domande-frequenti)
 
@@ -27,14 +27,11 @@ Una storia STAR è una risposta da colloquio raccontata in quattro parti: Situaz
 ## Come creare il tuo archivio di storie? [#come-creare-il-tuo-archivio-di-storie]
 
 <Steps>
-  <Step title="Crea il file dell'archivio">
-    Crea `interview-prep/story-bank.md` nella tua cartella dei dati, quella che contiene `cv.md`. Basta un titolo `# Story Bank`. career-ops non crea il file, e una valutazione aggiunge storie solo a un archivio che esiste già.
-  </Step>
   <Step title="Valuta un annuncio">
-    Incolla l'URL o il testo dell'annuncio dopo `/career-ops` per la pipeline completa, oppure esegui `/career-ops oferta` per la sola valutazione. In entrambi i casi, la valutazione abbozza le storie STAR+R per quell'annuncio e aggiunge quelle nuove al tuo archivio.
+    Incolla l'URL o il testo dell'annuncio dopo `/career-ops` per la pipeline completa, oppure esegui `/career-ops oferta` per la sola valutazione. In entrambi i casi, la valutazione abbozza le storie STAR+R per quell'annuncio e aggiunge quelle nuove al tuo archivio. Se `interview-prep/story-bank.md` non esiste ancora nella tua cartella dei dati, quella che contiene `cv.md`, career-ops prima lo crea a partire dal suo modello di archivio delle storie.
   </Step>
-  <Step title="Porta le nuove storie nel formato del matcher">
-    La valutazione aggiunge le sue storie come righe di tabella, e il matcher delle storie legge solo il formato della voce mostrato [più sotto](#come-si-scrive-una-storia-star): una riga di tabella non conta affatto come storia. Chiedi a career-ops di riscrivere le nuove storie di `story-bank.md` in quel formato, incollando l'esempio nella tua richiesta, poi controlla con `npm run star -- --list`. Questa incompatibilità è una lacuna nota del core, tracciata nella [issue #4514](https://github.com/career-ops-hq/career-ops/issues/4514).
+  <Step title="Controlla le nuove storie">
+    La valutazione aggiunge ogni nuova storia come voce nel formato mostrato [più sotto](#come-si-scrive-una-storia-star), quello che legge il matcher delle storie, e salta ogni storia il cui titolo è già nel tuo archivio. Esegui `npm run star -- --list` per vederle, poi modifica ciò che non diresti in un colloquio.
   </Step>
   <Step title="Abbina una domanda">
     Esegui `npm run star -- "<question>"` in un terminale per vedere la storia che ottiene il punteggio migliore rispetto a quella domanda.
@@ -45,7 +42,7 @@ Una storia STAR è una risposta da colloquio raccontata in quattro parti: Situaz
 
 career-ops costruisce le tue storie in tre momenti, ciascuno legato a un annuncio o a un colloquio:
 
-- **Quando valuti un annuncio.** La sezione STAR+R del report di valutazione ([Blocco F](/it/docs/reference/modes/oferta)) scrive da 6 a 10 storie a partire dal tuo curriculum, abbinate ai requisiti dell'annuncio, e aggiunge quelle nuove al tuo archivio se `interview-prep/story-bank.md` esiste, come righe di tabella che poi riscrivi nel formato della voce. Le esecuzioni in batch non sono predisposte per aggiungere storie all'archivio.
+- **Quando valuti un annuncio.** La sezione STAR+R del report di valutazione ([Blocco F](/it/docs/reference/modes/oferta)) scrive da 6 a 10 storie a partire dal tuo curriculum, abbinate ai requisiti dell'annuncio, e aggiunge quelle nuove a `interview-prep/story-bank.md` nel formato della voce, creando il file se manca. Le esecuzioni in batch non sono predisposte per aggiungere storie all'archivio.
 - **Quando ti prepari per un'azienda.** Per ogni domanda probabile a cui non corrisponde alcuna storia, il dossier aziendale indica un'esperienza del tuo curriculum che potrebbe diventarlo, e la abbozza insieme a te se vuoi.
 - **Dopo un colloquio reale.** Se hai descritto un'esperienza che non è nel tuo archivio, il debrief ti propone di trasformarla in una storia STAR+R finché è fresca, e la aggiunge se dici di sì.
 
@@ -65,7 +62,7 @@ L'archivio delle storie è `interview-prep/story-bank.md`, un semplice file Mark
 
 ## Come si scrive una storia STAR? [#come-si-scrive-una-storia-star]
 
-Scrivi ogni storia in questo formato. Il matcher delle storie (`npm run star`) legge solo le voci che lo rispettano. Lascia le etichette in inglese, qualunque sia la lingua in cui scrivi la storia. Non incollare questo esempio così com'è nel tuo archivio: il matcher lo conterebbe come una storia.
+Scrivi ogni storia in questo formato. Il matcher delle storie (`npm run star`) legge solo le voci che lo rispettano. Lascia le etichette in inglese, qualunque sia la lingua in cui scrivi la storia. Non incollare questo esempio così com'è nel tuo archivio: il matcher lo conterebbe come una storia. Le storie che aggiunge career-ops usano le etichette lunghe, come `**S (Situation):**` e `**A (Action):**`; il matcher legge entrambe le forme.
 
 ```md title="Story entry shape (example)"
 ### [Theme] Short title of the story
@@ -147,7 +144,7 @@ Il debrief salva inoltre il colloquio come trascrizione con l'indicazione di chi
 
 | Comando                                     | Cosa fa                                                                                                   |
 | ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `/career-ops <job URL or text>`             | Valuta l'annuncio; aggiunge le sue storie STAR+R al tuo archivio una volta che il file esiste             |
+| `/career-ops <job URL or text>`             | Valuta l'annuncio; aggiunge le sue storie STAR+R al tuo archivio, creando il file se necessario           |
 | `/career-ops interview-prep`                | Dossier aziendale: ricerca con fonti citate, domande probabili, le tue storie abbinate, lacune            |
 | `/career-ops interview/plan`                | Piano a blocchi di tempo con un blocco per le storie comportamentali                                      |
 | `/career-ops interview/practice`            | Colloquio di prova testuale, una domanda alla volta, feedback dopo ogni risposta                          |
@@ -160,11 +157,11 @@ Il debrief salva inoltre il colloquio come trascrizione con l'indicazione di chi
 
 ### Come fa career-ops a creare le storie STAR dal mio curriculum?
 
-career-ops costruisce le storie STAR+R a partire dall'esperienza del tuo curriculum per ogni annuncio che valuti. Ogni valutazione che esegui in una sessione scrive storie abbinate a quell'annuncio e aggiunge quelle nuove a interview-prep/story-bank.md una volta che hai creato quel file. La preparazione al colloquio suggerisce esperienze del tuo curriculum per le domande a cui non corrisponde alcuna storia, e un debrief può trasformare in una nuova storia qualcosa che hai raccontato in un colloquio reale.
+career-ops costruisce le storie STAR+R a partire dall'esperienza del tuo curriculum per ogni annuncio che valuti. Ogni valutazione che esegui in una sessione scrive storie abbinate a quell'annuncio e aggiunge quelle nuove a interview-prep/story-bank.md, creando quel file la prima volta. La preparazione al colloquio suggerisce esperienze del tuo curriculum per le domande a cui non corrisponde alcuna storia, e un debrief può trasformare in una nuova storia qualcosa che hai raccontato in un colloquio reale.
 
 ### Come prepararsi con il metodo STAR a un colloquio comportamentale della prossima settimana?
 
-Per preparare le storie STAR per un colloquio comportamentale con career-ops, valuta prima l'annuncio: la valutazione abbozza le storie STAR+R dal tuo curriculum e le aggiunge a interview-prep/story-bank.md una volta che hai creato quel file. Poi /career-ops interview-prep abbina le domande probabili alle tue storie e segnala le lacune, /career-ops interview/plan divide il tempo rimasto in blocchi di preparazione e /career-ops interview/practice ti fa esercitare per iscritto, una domanda alla volta. Per il ritmo, registrati mentre rispondi ad alta voce.
+Per preparare le storie STAR per un colloquio comportamentale con career-ops, valuta prima l'annuncio: la valutazione abbozza le storie STAR+R dal tuo curriculum e le aggiunge a interview-prep/story-bank.md, creando quel file se manca. Poi /career-ops interview-prep abbina le domande probabili alle tue storie e segnala le lacune, /career-ops interview/plan divide il tempo rimasto in blocchi di preparazione e /career-ops interview/practice ti fa esercitare per iscritto, una domanda alla volta. Per il ritmo, registrati mentre rispondi ad alta voce.
 
 ### Da dove vengono le domande di colloquio di career-ops?
 
