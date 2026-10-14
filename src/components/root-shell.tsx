@@ -2,12 +2,16 @@ import '@/app/global.css';
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { UtmLanding } from '@/components/utm-landing';
+import { LanguageSuggestion } from '@/components/language-bar';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
 import { LocaleRootProvider, type SiteLocale } from '@/components/locale-root-provider';
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
+import { UI } from '@/lib/ui-strings';
+import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 
 import type { Metadata } from 'next';
 
@@ -16,8 +20,17 @@ import type { Metadata } from 'next';
 // exposes at build time: production happened to resolve to career-ops.org,
 // but that was an implicit dependency, and a local build resolved the same
 // cards to http://localhost:3000.
+//
+// The share card every page inherits unless it sets its own: the home card
+// (og-banner.jpg is the same image). Only openGraph: twitter:image already
+// falls back to the page's og:image, and a twitter fallback here would
+// override a page's own card (the docs set openGraph only). Next merges
+// metadata one key deep, so a page that defines openGraph WITHOUT images
+// drops this fallback; verify-i18n-seo fails any sitemap URL left without
+// og:image or twitter:image, which catches that case.
 export const rootMetadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
+  openGraph: { images: [DEFAULT_OG_IMAGE] },
 };
 
 // Social brand marks as inline SVG (the installed lucide-react 1.8.0
@@ -97,6 +110,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
         <LocaleRootProvider locale={locale}>{children}</LocaleRootProvider>
+        <LanguageSuggestion />
         <footer className={`${instrumentSerifRegular.className} border-t text-lg text-fd-muted-foreground`}>
           <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12">
             <div className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
@@ -171,7 +185,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
                   <a
                     href="https://x.com/santifer"
                     rel="me noreferrer noopener"
-                    aria-label="X (formerly Twitter)"
+                    aria-label={UI[locale].xFormerlyTwitter}
                     className="hover:text-fd-foreground transition-colors"
                   >
                     <XIcon />
@@ -186,7 +200,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
                 2026-04-06) can verify they're on the real site. Mono font
                 + muted color reads as identification, not promotional. */}
             <div className={`${inter.className} border-t border-fd-foreground/5 py-3 text-xs font-mono text-fd-muted-foreground/70 tracking-wide text-center`}>
-              Official site: career-ops.org &middot; GitHub:{' '}
+              {UI[locale].officialSite}: career-ops.org &middot; GitHub:{' '}
               <a
                 href="https://github.com/career-ops-hq/career-ops"
                 rel="me noopener"
@@ -202,7 +216,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
               >
                 discord.gg/8pRpHETxa4
               </a>{' '}
-              &middot; Agents:{' '}
+              &middot; {UI[locale].agents}:{' '}
               <a
                 href="/llms.txt"
                 className="hover:text-fd-foreground transition-colors"
@@ -213,6 +227,7 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
           </div>
         </footer>
         <Analytics />
+        <UtmLanding locale={locale} />
         {/*
           3% sampling, not the default 1 (= every page view). The site emitted
           165,640 data points in 30 days — 1,656% of the 10,000 included in the

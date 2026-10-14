@@ -1,0 +1,46 @@
+---
+title: Modalità
+description: "Le 14 modalità di career-ops che puoi richiamare (valutare, adattare, candidarti, monitorare e prepararti): ognuna è una skill in markdown che gira in qualsiasi CLI di programmazione AI supportata."
+seoTitle: "Modalità di career-ops: i 14 comandi per cercare lavoro (valutare, adattare, candidarsi, monitorare, prepararsi)"
+icon: Layers
+translationHash: bb322a1cf17f35c3
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## Le 14 modalità
+
+career-ops include **14 modalità che puoi richiamare direttamente**. Ognuna è una skill in semplice markdown che l'agente carica ed esegue dentro la CLI di programmazione AI che usi già: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot o [un'altra CLI supportata](/it/docs/supported-clis). Richiami una modalità con `/career-ops <mode>`, e ciascuna copre una fase della ricerca di lavoro: valutare un annuncio secondo la griglia (cinque dimensioni più un punteggio globale olistico), adattare il curriculum, redigere una candidatura, monitorare i risultati o prepararti ai colloqui. Le modalità appartengono al System Layer secondo il [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md): gli aggiornamenti le sostituiscono con l'ultima versione, e nessun aggiornamento modifica mai il tuo `cv.md`, il tuo profilo o i tuoi report.
+
+## Valutare
+
+Il ciclo di valutazione centrale: leggi un annuncio di lavoro e assegnagli un punteggio sulle cinque dimensioni più un punteggio globale olistico, prima di dedicargli qualsiasi sforzo.
+
+- **[auto-pipeline](/it/docs/reference/modes/auto-pipeline)**: il flusso predefinito. Incolla l'URL o il testo di un annuncio; esegue la valutazione completa A–H, scrive il report, esporta un PDF su misura e registra una voce nel tracker, senza passaggi manuali nel mezzo.
+- **[pipeline](/it/docs/reference/modes/pipeline)**: esegue auto-pipeline su ogni URL in coda in `data/pipeline.md`, così gli annunci di un'intera giornata vengono elaborati in una sola sessione.
+- **[oferta](/it/docs/reference/modes/oferta)**: la valutazione A–H di un singolo annuncio, quando ti serve solo la decisione sul punteggio e non l'intera pipeline.
+- **[ofertas](/it/docs/reference/modes/ofertas)**: mette a confronto due o più proposte di assunzione in concorrenza su retribuzione, affinità, crescita e segnali d'allarme, in un'unica matrice decisionale.
+- **[deep](/it/docs/reference/modes/deep)**: un documento di ricerca approfondita sull'azienda (finanziamenti, dirigenza, stampa, indizi sulla retribuzione, segnali d'allarme) prima di candidarti a un'azienda che non conosci bene.
+
+## Adattare e candidarsi
+
+Trasforma un annuncio con un punteggio alto in una candidatura inviata.
+
+- **[pdf](/it/docs/reference/modes/pdf)**: genera tramite Playwright un curriculum in PDF su misura per un annuncio specifico, con una struttura pulita e leggibile dagli ATS.
+- **[apply](/it/docs/reference/modes/apply)**: legge le domande a risposta aperta di un modulo di candidatura aperto e redige risposte fondate sul tuo curriculum e sull'annuncio.
+- **[contacto](/it/docs/reference/modes/contacto)**: individua i contatti LinkedIn con cui è più probabile avere già un aggancio e redige un breve messaggio di primo contatto, specifico per il ruolo.
+- **[followup](/it/docs/reference/modes/followup)**: segnala le candidature e i colloqui per cui è ora di farsi risentire e redige i messaggi.
+
+## Monitorare e crescere
+
+Tieni in ordine la ricerca di lavoro e calibrala nel tempo.
+
+- **[tracker](/it/docs/reference/modes/tracker)**: un riepilogo in chat dello stato di ogni candidatura, raggruppato per fase.
+- **[patterns](/it/docs/reference/modes/patterns)**: legge le candidature rifiutate e scartate per far emergere schemi ricorrenti nella scelta degli annunci e punti ciechi.
+- **[interview-prep](/it/docs/reference/modes/interview-prep)**: documenti di preparazione specifici per ogni fase del colloquio di lavoro (recruiter, hiring manager, colloquio tecnico tra pari, panel), con le domande probabili e le storie costruite con il metodo STAR.
+- **[training](/it/docs/reference/modes/training)**: valuta un corso o una certificazione rispetto alla direzione di carriera che hai dichiarato e al suo costo opportunità.
+- **[project](/it/docs/reference/modes/project)**: valuta un'idea di progetto per il portfolio rispetto ai ruoli a cui punti e al tempo necessario per realizzarla.
+
+## Portali
+
+Greenhouse, Ashby e Lever, tre dei sistemi che lo scanner a zero token legge, hanno una propria [guida di riferimento ai portali](/it/docs/reference/portals).

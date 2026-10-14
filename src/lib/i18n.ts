@@ -28,7 +28,11 @@ export const i18n = defineI18n({
   // 'de' added 2026-09-30: Germany is the #4 country by pageviews and Google
   // clicks and the first non-English-speaking market; full parity from day one
   // (the index must be translated or /de/docs falls back to English).
-  languages: ['en', 'es', 'fr', 'de'],
+  // 'pt' added 2026-10-13: Brazilian Portuguese (pt-BR content, code 'pt'),
+  // the next language by demand; the core ships modes/pt. Full parity.
+  // 'it' added 2026-10-13: Italian ("tu"), the core ships all ten modes in
+  // modes/it. Full parity.
+  languages: ['en', 'es', 'fr', 'de', 'pt', 'it'],
   parser: 'dot',
   hideLocale: 'default-locale',
   fallbackLanguage: null,

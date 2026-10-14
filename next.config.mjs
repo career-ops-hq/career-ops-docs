@@ -59,6 +59,8 @@ const config = {
   // Keys are picomatch route globs, so the brackets are escaped, and the
   // opengraph route ends in a path hash since it lives in the (en) group.
   outputFileTracingIncludes: {
+    '/icon': ['./src/app/_fonts/*.ttf'],
+    '/apple-icon': ['./src/app/_fonts/*.ttf'],
     '/manifesto/s/\\[username\\]/opengraph-image*': [
       './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
@@ -117,11 +119,11 @@ const config = {
         // had no markdown twin at all. See the route header for why the locale
         // is an explicit path segment rather than an optional prefix.
         {
-          source: '/:lang(es|fr|de)/docs.md',
+          source: '/:lang(es|fr|de|pt|it)/docs.md',
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr|de)/docs/:slug(.*).md',
+          source: '/:lang(es|fr|de|pt|it)/docs/:slug(.*).md',
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
         },
         // Accept negotiation for the locale docs. NOT done in src/proxy.ts:
@@ -134,13 +136,13 @@ const config = {
         // These must stay AFTER the `.md` rules above, or `:slug(.*)` would
         // swallow `<url>.md` before the explicit markdown rewrite sees it.
         {
-          source: '/:lang(es|fr|de)/docs',
+          source: '/:lang(es|fr|de|pt|it)/docs',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr|de)/docs/:slug(.*)',
+          source: '/:lang(es|fr|de|pt|it)/docs/:slug(.*)',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
@@ -197,11 +199,11 @@ const config = {
       // Translated routes also declare their language over HTTP, which Bing
       // reads. Their <html lang> comes from each locale's own root layout.
       {
-        source: '/:lang(es|fr|de)',
+        source: '/:lang(es|fr|de|pt|it)',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {
-        source: '/:lang(es|fr|de)/:path*',
+        source: '/:lang(es|fr|de|pt|it)/:path*',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {

@@ -167,6 +167,16 @@ npm run scan -- --company Anthropic
 
 Replace `Anthropic` with any company name from your `tracked_companies` list. The match is not case-sensitive.
 
+**Scan Dayforce career sites:**
+
+Career sites on Dayforce (Ceridian), at `jobs.dayforcehcm.com`, block plain web requests, so `npm run scan` cannot read them. A separate script opens a real browser session for them instead, which makes it slower than the main scan. List the boards under `dayforce_boards` in `portals.yml`, one entry per company with its `name` and its `tenant` (the company's code in the Dayforce address); `templates/portals.example.yml` shows the format. Then run:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+New jobs go to `data/pipeline.md`, like the main scan. Add `-- --dry-run` to preview without saving, `-- --tenant <tenant>` to scan a single board, or `-- --debug` to save a screenshot of each board to `output/`. If a board shows a bot challenge, the script skips it; it never tries to get past one.
+
 ### Option B — Run the AI-powered scan inside Claude Code
 
 Open Claude Code in the project folder and type:
@@ -235,7 +245,7 @@ If there is no such warning, your title filter may be too strict. Try adding a k
 
 **Where new jobs go:** Each new offer is added as a line in `data/pipeline.md`. That is the list of jobs waiting to be evaluated.
 
-**What `data/scan-history.tsv` does:** Every URL the scanner sees — whether it was added, filtered, or skipped — gets logged here. This is how the scanner avoids showing you the same job twice across future scans. You do not need to edit this file.
+**What `data/scan-history.tsv` does:** Every URL the scanner sees — whether it was added, filtered, or skipped — gets logged here. This is how the scanner avoids showing you the same job twice across future scans. One exception is a posting removed by your `location_filter` or `max_posting_age_days` setting in `portals.yml`. It is logged as `skipped_location` or `skipped_age`, and it can show up again once you change that setting. You do not need to edit this file.
 
 ## Evaluate new offers from a scan
 
@@ -269,7 +279,7 @@ Here is what each column means:
     | Column         | What it tells you                                                                                                                                                                            |
     | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
     | **#**          | The report number. Use it to find the full report in `reports/` — for example, report 024 is `reports/024-anthropic-2026-04-13.md`                                                           |
-    | **Score**      | How well the role fits your profile, from 1.0 to 5.0                                                                                                                                         |
+    | **Score**      | How well the role fits your profile, from 1 to 5                                                                                                                                         |
     | **Legitimacy** | Whether the posting looks real and active. "High Confidence" means the job is live and the details check out. "Proceed w/ Caution" means something raised a flag — read the note next to it. |
   </div>
 </div>
@@ -281,7 +291,7 @@ Here is what each column means:
 
 ## What to do next
 
-When `/career-ops pipeline` finishes, each job has a score from 1.0 to 5.0. You can find the full report for any role in the `reports/` folder. The score shows how well the role matches your profile.
+When `/career-ops pipeline` finishes, each job has a score from 1 to 5. You can find the full report for any role in the `reports/` folder. The score shows how well the role matches your profile.
 
 Use the score as your starting point:
 

@@ -1,0 +1,66 @@
+---
+title: Como se preparar para entrevistas
+description: Use os modos de entrevista (planejar, praticar, fazer o balanço) para se preparar para uma etapa específica do processo seletivo, ensaiá-la com um entrevistador de IA e transformar cada entrevista real em inteligência para a próxima.
+seoTitle: "Preparação para entrevistas com o career-ops — etapa por etapa"
+icon: GraduationCap
+translationHash: f200ca2ca0715a2e
+localized: true
+translatedFrom: /docs/introduction/guides/interview-modes
+---
+
+Os modos de entrevista são o sistema de preparação para entrevistas do career-ops, lançado na v1.16.0: o `interview/plan` monta um plano de preparação dividido em blocos de tempo para uma etapa específica, o `interview/practice` conduz uma entrevista simulada por texto, uma pergunta de cada vez, e o `interview/debrief` registra o que realmente aconteceu para que a próxima etapa comece com mais informação. Juntos, eles formam um ciclo (planejar, praticar, fazer a entrevista, fazer o balanço, repetir) cujo efeito se acumula ao longo de um processo seletivo.
+
+Eles complementam o [modo `interview-prep`](/pt/docs/reference/modes/interview-prep), mais antigo, que constrói a sua base duradoura (banco de histórias, banco de perguntas). Os três modos focados tratam de uma *etapa específica que está por vir*.
+
+<Callout title="O que você precisa antes">
+Um workspace com o seu `cv.md` e o `config/profile.yml` no lugar (o [Início rápido](/pt/docs) configura os dois). Os modos leem esses arquivos para basear cada plano e cada feedback na sua experiência real, e não em conselhos genéricos de entrevista.
+</Callout>
+
+## O ciclo em resumo
+
+| Modo | Quando | O que você recebe |
+| --- | --- | --- |
+| `interview/plan` | Assim que uma etapa é agendada | Um plano de preparação em blocos de tempo, dimensionado para as horas que você realmente tem |
+| `interview/practice` | Antes da etapa | Uma entrevista simulada por texto, com feedback estruturado a cada resposta |
+| `interview/debrief` | Logo depois da entrevista real | Uma avaliação honesta, pergunta por pergunta, e um banco de perguntas atualizado |
+
+## Plan: transforme uma data em um cronograma
+
+Passe ao `interview/plan` a descrição da vaga e a data e a hora da entrevista, além do tipo de etapa e do entrevistador, se você souber. Ele lê o seu currículo e o seu perfil, faz uma avaliação honesta de aderência à vaga (pontos fortes em que se apoiar, lacunas que provavelmente serão testadas) e divide as horas que restam em blocos concretos de preparação.
+
+```txt title="Example"
+/career-ops interview/plan
+
+→ Inputs: JD (pasted), interview Thursday 14:00, HM screen with Ana (Eng Manager)
+→ Fit assessment: 4 strengths to anchor · 2 gaps ranked by test likelihood
+→ Plan (9 hours available):
+   Block 1 — Lock your narrative (~1.5h): timeline, "why us", strongest proof point
+   Block 2 — Gap: event-driven architectures (~3h)
+   Block 3 — Behavioral stories, STAR+R (~2h)
+   Block 4 — Mock run + comp answer (~1.5h)
+```
+
+O plano se ajusta à etapa: uma triagem com o recrutador pede logística e narrativa, não detalhes técnicos profundos; uma entrevista técnica aprofundada com alguém da área pede profundidade na principal competência da descrição da vaga. Se já existe um banco de perguntas de uma etapa anterior, tudo aquilo em que você teve dificuldade ganha um bloco dedicado: dados reais de desempenho pesam mais do que riscos inferidos.
+
+## Practice: ensaie uma pergunta de cada vez [#practice-rehearse-against-a-realistic-interviewer]
+
+O `interview/practice` faz o papel do entrevistador (com nome e cargo, se você informar) e faz uma pergunta de cada vez, sem sair do personagem, com perguntas de aprofundamento naturais nos pontos em que um entrevistador de verdade insistiria. Depois de cada resposta, você recebe um feedback estruturado: o que funcionou, o que enxugar e uma versão mais forte da sua resposta, baseada no seu currículo real e no seu banco de histórias.
+
+Ele também acompanha a sessão como um entrevistador faria: se você recorre à mesma história duas vezes, ele avisa que o seu repertório de exemplos parece curto; se a sua resposta termina no domínio errado para a vaga, ele diz onde você deveria fechá-la.
+
+<Callout>
+O modo practice é honesto sobre os próprios limites: se você ainda não montou um banco de perguntas nem anotações de preparação específicas para a vaga, ele avisa e se oferece para rodar antes o `interview-prep` ou o `interview/plan`, em vez de conduzir em silêncio uma sessão genérica.
+</Callout>
+
+## Debrief: não perca o que cada entrevista ensinou
+
+Rode o `interview/debrief` logo depois de uma entrevista real, enquanto a memória está fresca. Ele percorre com você cada pergunta de que você se lembra, registra como o entrevistador reagiu e produz uma avaliação honesta, pergunta por pergunta. Depois, faz o trabalho que se acumula de uma etapa para a outra:
+
+- **Atualiza o banco de perguntas**: cada pergunta é marcada com ✅ / 🟡 / 🔴 com base no desempenho real, não na intuição.
+- **Fecha as lacunas**: para cada 🔴, ele explica a resposta correta com um exemplo resolvido e a conecta a uma história que você já tem.
+- **Extrai novas histórias**: se você contou na entrevista algo que ainda não está no seu banco de histórias, ele se oferece para transformar isso em uma história STAR+R e a adiciona se você disser sim.
+- **Prevê a próxima etapa**: se você sabe o formato, ele lista as perguntas prováveis, cada uma marcada como `[inferred]`, a partir do cargo do entrevistador e do que esta etapa já cobriu.
+
+## Por que esse ciclo funciona
+
+A preparação para entrevistas costuma voltar à estaca zero a cada etapa. Os modos de entrevista a tornam cumulativa: o que um entrevistador real de fato perguntou vira o sinal de maior prioridade na preparação para a próxima etapa, guardado em arquivos Markdown simples (`interview-prep/question-bank.md`, `story-bank.md`) que são seus, na sua máquina, como todo o resto no career-ops.

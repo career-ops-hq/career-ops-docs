@@ -9,6 +9,8 @@ import { homeEn } from '@/app/_home/home-en';
 import { homeEs } from '@/app/_home/home-es';
 import { homeFr } from '@/app/_home/home-fr';
 import { homeDe } from '@/app/_home/home-de';
+import { homePt } from '@/app/_home/home-pt';
+import { homeIt } from '@/app/_home/home-it';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
@@ -228,7 +230,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr', 'de'],
+        inLanguage: ['en', 'es', 'fr', 'de', 'pt', 'it'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -427,7 +429,7 @@ export function methodologySchema() {
             name: 'How does career-ops actually score job listings?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions (match, north-star alignment, comp, cultural signals, red flags) producing a holistic score from 1.0 to 5.0. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
+              text: 'career-ops uses a rubric-guided LLM evaluation across five dimensions (match, north-star alignment, comp, cultural signals, red flags) producing a holistic score from 1 to 5. Below 4.0 the agent recommends against applying. There is no closed-form weighting formula — the global score is the LLM’s judgement given the rubric, with citations to specific CV lines and JD requirements.',
             },
           },
           {
@@ -730,7 +732,7 @@ export function sustainSchema() {
         description:
           'career-ops is permanently free, MIT-licensed, and community-funded. Sponsorship funds the project through its fiscal host and never buys direction.',
         inLanguage: 'en',
-        dateModified: '2026-10-01',
+        dateModified: '2026-10-13',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         significantLink: 'https://opencollective.com/career-ops',
@@ -761,6 +763,8 @@ const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
   es: { home: 'Inicio', docs: 'Documentación' },
   fr: { home: 'Accueil', docs: 'Documentation' },
   de: { home: 'Startseite', docs: 'Dokumentation' },
+  pt: { home: 'Início', docs: 'Documentação' },
+  it: { home: 'Home', docs: 'Documentazione' },
 };
 
 export function docsBreadcrumbSchema(opts: {
@@ -895,6 +899,14 @@ export function homeFaqSchemaDe(dateModified?: Date) {
   return homeGraph('https://career-ops.org/de', 'de', faqFromDict(homeDe), dateModified);
 }
 
+export function homeFaqSchemaPt(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/pt', 'pt', faqFromDict(homePt), dateModified);
+}
+
+export function homeFaqSchemaIt(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/it', 'it', faqFromDict(homeIt), dateModified);
+}
+
 export function blogPostSchema(args: {
   url: string;
   title: string;
@@ -903,6 +915,7 @@ export function blogPostSchema(args: {
   lastModified: string;
   tags: string[];
   image?: string;
+  inLanguage?: string;
 }) {
   // Google's Article rich result requires `image`; without it all three
   // posts were ineligible (2026-06-30 audit). Defaults to the site OG
@@ -925,7 +938,7 @@ export function blogPostSchema(args: {
       width: 1200,
       height: 630,
     },
-    inLanguage: 'en',
+    inLanguage: args.inLanguage ?? 'en',
     keywords: args.tags.join(', '),
     isPartOf: { '@id': 'https://career-ops.org/#website' },
     mainEntityOfPage: args.url,
@@ -939,11 +952,13 @@ export function blogPostSchema(args: {
 export function faqPageSchema(
   pageUrl: string,
   items: Array<{ q: string; a: string }>,
+  inLanguage?: string,
 ) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${pageUrl}#faq`,
+    ...(inLanguage ? { inLanguage } : {}),
     mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.q,

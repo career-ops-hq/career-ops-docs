@@ -1,0 +1,18 @@
+---
+title: Portali
+description: "Tre dei sistemi di gestione delle candidature che career-ops analizza, trattati in dettaglio: Greenhouse, Ashby e Lever. La scansione in sé non consuma token AI."
+icon: Radar
+translationHash: 7861539d2cd00351
+localized: true
+translatedFrom: /docs/reference/portals
+---
+
+career-ops analizza questi sistemi di gestione delle candidature attraverso le API pubbliche delle loro bacheche di annunci, quindi la scansione in sé non consuma token AI. Ogni pagina spiega cosa fa lo scanner, come career-ops comunica con quel sistema e le insidie che vale la pena conoscere.
+
+Sono tre fra tanti. Lo scanner legge anche altri sistemi di gestione delle candidature e altre bacheche di annunci; l'elenco completo è [Supported Job Boards](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md) nel repository principale.
+
+- **[Greenhouse](/it/docs/reference/portals/greenhouse)** — career-ops interroga direttamente l'API pubblica delle bacheche di Greenhouse. Niente scraping dell'HTML, nessun rischio di rate limit, nessun token AI consumato durante la scansione in sé.
+- **[Ashby](/it/docs/reference/portals/ashby)** — Ashby è l'ATS moderno scelto dalle startup tra Series A e Series C nel settore dell'AI e degli strumenti per sviluppatori. career-ops interroga direttamente l'API pubblica della bacheca di annunci.
+- **[Lever](/it/docs/reference/portals/lever)** — Lever è l'ATS consolidato delle aziende di fascia media e in fase di crescita. career-ops interroga direttamente l'API pubblica degli annunci di Lever.
+
+Per lanciare una scansione su tutti quanti, leggi [Scansionare i portali di lavoro](/it/docs/introduction/guides/scan-job-portals).

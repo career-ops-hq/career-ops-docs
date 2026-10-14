@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { cn } from '@/lib/cn';
+import { UI } from '@/lib/ui-strings';
+import type { SiteLocale } from '@/components/locale-root-provider';
 
 type State = 'idle' | 'submitting' | 'sent' | 'error';
 
@@ -11,9 +13,11 @@ type Props = {
   // parent can provide a section-level heading (used in the home block).
   // The footer keeps the default layout with copy inline.
   compact?: boolean;
+  locale?: SiteLocale;
 };
 
-export function SubscribeForm({ className, compact = false }: Props) {
+export function SubscribeForm({ className, compact = false, locale = 'en' }: Props) {
+  const t = UI[locale];
   const [email, setEmail] = useState('');
   const [hp, setHp] = useState(''); // honeypot
   const [state, setState] = useState<State>('idle');
@@ -32,12 +36,12 @@ export function SubscribeForm({ className, compact = false }: Props) {
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        throw new Error(j.error ?? 'Something went wrong');
+        throw new Error(j.error ?? t.subscribeFailed);
       }
       setState('sent');
     } catch (err) {
       setState('error');
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      setError(err instanceof Error ? err.message : t.subscribeFailed);
     }
   }
 
@@ -72,7 +76,7 @@ export function SubscribeForm({ className, compact = false }: Props) {
             !compact && 'md:text-right md:self-center',
           )}
         >
-          Check your inbox to confirm your subscription.
+          {t.subscribeSent}
         </p>
       ) : (
         <form
@@ -82,7 +86,7 @@ export function SubscribeForm({ className, compact = false }: Props) {
         >
           {/* Honeypot — hidden from humans, bots fill it. */}
           <label className="sr-only" aria-hidden="true">
-            Leave this field empty
+            {t.honeypot}
             <input
               type="text"
               tabIndex={-1}
@@ -93,7 +97,7 @@ export function SubscribeForm({ className, compact = false }: Props) {
           </label>
 
           <label className="sr-only" htmlFor="subscribe-email">
-            Email address
+            {t.emailLabel}
           </label>
           <input
             id="subscribe-email"
@@ -112,14 +116,14 @@ export function SubscribeForm({ className, compact = false }: Props) {
             disabled={state === 'submitting'}
             className="rounded-md border bg-fd-secondary px-4 py-2 text-sm font-medium text-fd-secondary-foreground transition-colors hover:bg-fd-accent hover:text-fd-accent-foreground disabled:pointer-events-none disabled:opacity-50"
           >
-            {state === 'submitting' ? 'Subscribing…' : 'Subscribe'}
+            {state === 'submitting' ? t.subscribing : t.subscribe}
           </button>
           {state === 'error' && error ? (
             <p
               role="alert"
               className="text-fd-muted-foreground text-xs sm:basis-full sm:mt-1"
             >
-              {error}. Please try again.
+              {error}. {t.subscribeRetry}
             </p>
           ) : null}
         </form>
