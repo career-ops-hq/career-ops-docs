@@ -94,9 +94,12 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
         />
         <div className="flex flex-col z-2 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
           {/* The hero line. On phones a soft veil sits behind it: over the
-              orange halftone the grey drops to ~2.4:1 in the worst pixels. */}
+              orange halftone the grey drops to ~2.4:1 in the worst pixels.
+              Chinese phrases are seven characters with no space to break at:
+              at 44px they overflow a phone and break mid-word, so on phones
+              the zh hero scales with the viewport (fits from 320px). */}
           <p
-            className={`${instrumentSerifRegular.className} text-[44px] md:text-5xl mt-12 mb-6 leading-[1.05] [font-synthesis:none] xl:mb-8 ${dict.locale === 'fr' ? 'xl:text-[56px]' : 'xl:text-7xl'} max-md:relative max-md:isolate max-md:before:absolute max-md:before:-inset-x-6 max-md:before:-inset-y-4 max-md:before:-z-10 max-md:before:rounded-[2rem] max-md:before:bg-[radial-gradient(ellipse_at_center,var(--color-fd-background)_40%,transparent_78%)] max-md:before:opacity-80 max-md:before:content-['']`}
+            className={`${instrumentSerifRegular.className} text-[44px] md:text-5xl mt-12 mb-6 leading-[1.05] [font-synthesis:none] xl:mb-8 ${dict.locale === 'fr' ? 'xl:text-[56px]' : 'xl:text-7xl'}${dict.locale === 'zh' ? ' max-md:text-[length:min(44px,10vw)]' : ''} max-md:relative max-md:isolate max-md:before:absolute max-md:before:-inset-x-6 max-md:before:-inset-y-4 max-md:before:-z-10 max-md:before:rounded-[2rem] max-md:before:bg-[radial-gradient(ellipse_at_center,var(--color-fd-background)_40%,transparent_78%)] max-md:before:opacity-80 max-md:before:content-['']`}
           >
             {dict.heroHook}
           </p>
@@ -235,7 +238,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
       {/* What is career-ops? — self-contained GEO answer block. */}
       <div className="w-full bg-[#efeeed] dark:bg-stone-900 dot-bg mt-16 lg:mt-24 py-16 lg:py-24">
         <section className="mx-auto w-full max-w-[920px] px-6 md:px-12">
-          <h2 className={`${instrumentSerif.className} text-center text-3xl md:text-4xl xl:text-5xl mb-10 lg:mb-12`}>
+          <h2 className={`${instrumentSerif.className} text-center text-3xl md:text-4xl xl:text-5xl mb-10 lg:mb-12 [font-synthesis:none]`}>
             {dict.whatIsHeading}
           </h2>
           <div className="rounded-2xl bg-fd-card border bg-origin-border shadow-lg bg-gradient-to-br from-brand/10 via-transparent to-transparent overflow-hidden">
@@ -301,7 +304,7 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
 
         {/* Analogy mini-quote */}
         <blockquote className="col-span-full text-center my-4 lg:my-8">
-          <p className={`${instrumentSerif.className} text-2xl md:text-3xl xl:text-4xl leading-tight text-fd-foreground`}>
+          <p className={`${instrumentSerif.className} text-2xl md:text-3xl xl:text-4xl leading-tight text-fd-foreground [font-synthesis:none]`}>
             {dict.analogy}
           </p>
           <footer className="mt-3 text-sm text-fd-muted-foreground">

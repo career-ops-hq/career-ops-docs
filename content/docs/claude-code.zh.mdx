@@ -1,0 +1,56 @@
+---
+title: 用 Claude Code 找工作
+seoTitle: "用 Claude Code 找工作 | career-ops"
+description: "把 Claude Code 变成你的 AI 求职智能体：career-ops 扫描招聘网站，根据你的简历为职位打分，并起草你的申请材料。由你决定，由你发送。"
+icon: Bot
+translationHash: 70ef59ade0e61bf1
+localized: true
+translatedFrom: /docs/claude-code
+---
+
+你可以用 Claude 来找工作：career-ops 会把 Claude Code 变成一个在终端里运行的 AI 求职智能体。它会扫描各家公司的招聘页面，根据你的简历给每个职位打分，帮你定制简历，还会起草求职信和申请表里的问题回答。它负责评估和起草，你来决定、你来发送。career-ops 从不替你提交申请。它也能在 Codex、OpenCode 和其他 AI 编程 CLI 中运行。
+
+## 如何在 Claude Code 中运行 career-ops
+
+career-ops 通过项目文件夹里的 `CLAUDE.md` 文件加载到 Claude Code 中。安装步骤见[快速开始](/zh/docs)。另外还有一步，只需做一次：在 Claude Code 中运行 `/plugin install playwright@claude-plugins-official`，添加 Playwright 浏览器工具，用来确认职位是否还在招聘。如果缺少这些工具，启动检查（`node doctor.mjs`）会提醒你。安装过程还会下载生成 PDF 和运行 `scan --verify` 所需的浏览器；如果跳过了这一步，请运行 `npx playwright install chromium`。
+
+- **交互模式：** 打开 career-ops 文件夹，运行 `claude`，然后输入 `/career-ops`。
+- **批处理模式：** 用 `claude -p "prompt"` 以无头模式运行。批处理运行器启动的工作进程不带浏览器工具，因此无法确认职位是否还在招聘，报告中会写明这一点。
+
+## 费用
+
+career-ops 本身免费，采用 MIT 许可证。Claude Code 则不是免费的：它需要付费的 Claude 套餐或 Anthropic API 密钥。
+
+如果你的环境中设置了 `ANTHROPIC_API_KEY`，即使你同时订阅了 Claude Pro 或 Max，Claude Code 也会按 token 计费。[常见问题里解释了原因以及检查方法](/zh/docs/faq#i-pay-for-claude-pro-or-max-why-is-career-ops-billing-my-api-credits)。
+
+如果你完全不想为引擎付费，career-ops 也可以通过 OpenCode 使用免费的提供商运行。参见[设置免费的 AI 引擎](/zh/docs/free-ai-engine)。
+
+## 它做什么，又把什么留给你
+
+每个职位都会得到一个 1-5 分的综合评分：这是在五个维度引导下做出的整体判断，而不是加权公式。低于 4.0 时，除非你有特别的理由，它会建议你不要申请。对于值得争取的职位，它会帮你定制简历、起草求职信，并起草申请表中开放式问题的回答。
+
+然后它就停下来。你审阅它起草的内容，加以修改，再亲自提交申请。career-ops 从不替你提交申请。
+
+最初几次运行的效果会比较粗糙，因为它还不了解你。多跟它聊聊：你的简历、你想要什么、你不接受什么。
+
+## 想用其他 CLI？
+
+career-ops 也能在 Cursor、Codex、OpenCode、Pi、Antigravity CLI、Grok Build CLI、Qwen、Kimi、Hermes Agent 和 GitHub Copilot CLI 中运行。不同 CLI 的启动方式不一样：每个 CLI 如何加载 career-ops，请参见[支持的 CLI](/zh/docs/supported-clis)。
+
+## 项目缘起
+
+我为自己 2026 年的求职打造了 career-ops。我的求职漏斗：740 个职位已评估 → 68 个已投递 → 12 次面试 → 1 份 offer。——Santiago Fernández de Valderrama Aparicio
+
+## 常见问题
+
+### Claude Code 能帮我找工作吗？
+
+可以。Claude Code 配合 career-ops 就能帮你找工作：它会扫描各家公司的招聘页面，根据你的简历给每个职位打分，并为值得争取的职位起草申请材料。发出哪些申请，由你决定。
+
+### 它会自动帮我申请职位吗？
+
+不会：career-ops 从不替你提交申请。它负责起草材料；每一份申请都由你亲自审阅、修改并发送。
+
+### 必须订阅 Claude Pro 吗？
+
+Claude Code 需要付费的 Claude 套餐或 Anthropic API 密钥。career-ops 本身免费，采用 MIT 许可证，也可以通过 OpenCode 使用免费的提供商运行。

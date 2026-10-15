@@ -1,0 +1,321 @@
+---
+title: 扫描招聘门户
+description: 配置并运行招聘门户扫描器，自动发现新的在招职位。
+seoTitle: "用 career-ops 扫描招聘网站：Greenhouse、Ashby、Lever，零 token 消耗"
+icon: ScanEye
+translationHash: e9fbece900af577b
+localized: true
+translatedFrom: /docs/introduction/guides/scan-job-portals
+---
+
+本指南介绍如何配置 `portals.yml` 并运行招聘门户扫描器，自动发现新的在招职位。
+
+<Callout title="开始之前">
+  请先完成[快速开始](/zh/docs)指南。只有准备好 `cv.md` 和 `modes/_profile.md`，扫描才有意义。
+</Callout>
+
+## 配置 portals.yml
+
+`portals.yml` 决定扫描器找什么、去哪里找。你只需用自带的模板创建一次，再按你的目标岗位修改即可。
+
+在项目文件夹中运行以下命令：
+
+```bash title="Terminal"
+cp templates/portals.example.yml portals.yml
+```
+
+用任意文本编辑器打开 `portals.yml`。文件分为三个部分，下面的步骤会逐一说明。
+
+### 配置职位名称过滤器
+
+扫描器靠职位名称过滤器判断某个职位是否值得展示给你。它会用两组关键词去比对职位名称。
+
+在文件开头附近找到 `title_filter` 部分：
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "AI"
+    - "ML"
+    - "Product Manager"
+  negative:
+    - "Junior"
+    - "Intern"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+**替换 `positive` 列表**，填入与你目标岗位相符的关键词。职位名称至少要匹配其中一个关键词才能通过。匹配不区分大小写，所以 `"AI"` 也能匹配到 `"ai engineer"`。
+
+**替换 `negative` 列表**，填入用来排除职位的关键词。只要职位名称中出现其中任何一个，该职位就会被跳过——即使它已经匹配了正向关键词。
+
+**`seniority_boost` 保持不变**，除非你想增减职级。这些关键词不会过滤掉任何职位，只会把匹配的职位排到结果的更前面。
+
+**示例**：如果你在找 Rails 工程师岗位，过滤器可以这样写：
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "Rails"
+    - "Ruby"
+    - "Full Stack"
+    - "Backend"
+  negative:
+    - "Junior"
+    - "Intern"
+    - "PHP"
+    - "Java"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+<Callout title="提示">
+  `positive` 列表先从三到五个关键词开始，之后随时可以再加。列表太长，就很难看出某个职位为什么通过或被过滤掉。
+</Callout>
+
+### 添加要跟踪的公司
+
+`tracked_companies` 部分列出你希望扫描器每次都检查的特定公司。扫描器会直接访问每家公司的招聘页面，读取在招岗位。
+
+在文件末尾附近找到 `tracked_companies` 部分。每个条目的格式如下：
+
+```yaml title="portals.yml"
+tracked_companies:
+  - name: Anthropic
+    careers_url: https://job-boards.greenhouse.io/anthropic
+    api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    enabled: true
+
+  - name: OpenAI
+    careers_url: https://openai.com/careers
+    enabled: true
+```
+
+**要添加一家公司**，复制一个已有条目，再修改其中的值：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 字段          | 填写内容                                                                 |
+    | ------------- | ------------------------------------------------------------------------ |
+    | `name`        | 公司名称，按你希望它在结果中显示的写法填写                               |
+    | `careers_url` | 该公司职位列表页面的直接 URL                                             |
+    | `api`         | 可选。如果该公司使用 Greenhouse，填写 Greenhouse API 的 URL。不确定就不填。 |
+    | `enabled`     | 设为 `true` 表示纳入扫描；设为 `false` 表示跳过该公司，而无需删除条目。   |
+  </div>
+</div>
+
+
+**要找到某家公司的 `careers_url`**，打开该公司官网，点击 Careers 或 Jobs（招聘、加入我们），复制列出在招岗位的那个页面的 URL，用它就行。
+
+**要停用某家公司而不删除它**，设置 `enabled: false`：
+
+```yaml title="portals.yml"
+  - name: Stripe
+    careers_url: https://stripe.com/jobs/search
+    enabled: false
+```
+
+<Callout title="注意">
+  `tracked_companies` 中的每家公司都必须有 `careers_url`。没有它，扫描器就没有可访问的页面，会跳过该条目。
+</Callout>
+
+### 检查搜索查询
+
+`search_queries` 部分会进行范围更广的网络搜索，找出不在你跟踪列表中的公司的岗位。模板里已经内置了很多查询。
+
+刚开始使用时，这一部分无需修改。内置查询覆盖了 Greenhouse、Ashby 等主流招聘平台。
+
+等你准备好自定义时，每条查询的格式如下：
+
+```yaml title="portals.yml"
+search_queries:
+  - name: Greenhouse — Rails Engineer
+    query: 'site:job-boards.greenhouse.io "Rails Engineer" OR "Ruby on Rails" remote'
+    enabled: true
+```
+
+不需要的查询，设置 `enabled: false` 即可关闭。要新增一条，复制已有条目，给它起一个新的 `name`，再修改 `query` 的内容。
+
+## 运行扫描
+
+运行扫描有两种方式，按需选择即可。
+
+### 方式 A：直接运行脚本
+
+```bash title="Terminal"
+npm run scan
+```
+
+在项目文件夹中运行。脚本会读取 `portals.yml`，直接调用每家公司的 API，并把新职位写入 `data/pipeline.md`。它不消耗任何 AI token，大约 30 秒就能跑完。
+
+只要公司招聘页面所在的平台在扫描器中有内置适配器，就可以用这种方式：包括 Greenhouse、Ashby 和 Lever，以及 Workable、Workday、SmartRecruiters 等几十种其他 ATS 和招聘平台。完整列表见 [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md)。没有对应适配器的公司会被跳过，扫描结果会报告跳过了多少家。
+
+**保存前先预览结果：**
+
+```bash title="Terminal"
+npm run scan -- --dry-run
+```
+
+这会完整执行扫描，但不会向磁盘写入任何内容。在正式保存结果之前，可以先用它检查过滤设置。
+
+**只扫描一家公司：**
+
+```bash title="Terminal"
+npm run scan -- --company Anthropic
+```
+
+把 `Anthropic` 换成 `tracked_companies` 列表中的任意公司名称。匹配不区分大小写。
+
+**扫描 Dayforce 招聘网站：**
+
+托管在 Dayforce（Ceridian）上的招聘网站（地址为 `jobs.dayforcehcm.com`）会拦截普通的网络请求，所以 `npm run scan` 无法读取。针对这类网站，有一个单独的脚本会打开真实的浏览器会话来读取，因此比主扫描慢。在 `portals.yml` 的 `dayforce_boards` 下列出这些招聘页面，每家公司一个条目，包含它的 `name` 和 `tenant`（该公司在 Dayforce 地址中的代码）；格式可参考 `templates/portals.example.yml`。然后运行：
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+和主扫描一样，新职位会写入 `data/pipeline.md`。加上 `-- --dry-run` 可以只预览不保存，加上 `-- --tenant <tenant>` 可以只扫描一个招聘页面，加上 `-- --debug` 可以把每个招聘页面的截图保存到 `output/`。如果某个招聘页面弹出人机验证，脚本会跳过它，从不尝试绕过。
+
+### 方式 B：在 Claude Code 中运行 AI 扫描
+
+在项目文件夹中打开 Claude Code，输入：
+
+```bash title="Claude Code"
+/career-ops scan
+```
+
+这种方式会用浏览器直接访问每家公司的招聘页面，所以即使公司没有公开 API 也能用。它还会运行 `portals.yml` 中的 `search_queries`，找出不在你跟踪列表中的公司的岗位。
+
+以下情况适合用这种方式：
+- 你列表中的某家公司所用的平台没有脚本适配器，脚本扫描会跳过它
+- 你想发现新公司，而不只是检查已知的公司
+- 脚本扫描漏掉了你预期会看到的职位
+
+<Callout title="提示">
+  方式 B 会消耗 Claude API token，耗时也比脚本长。如果只是每天快速看一眼，方式 A 更快。
+</Callout>
+
+## 看懂扫描结果
+
+扫描完成后，你会看到类似这样的摘要：
+
+```text title="Terminal"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Portal Scan — 2026-04-13
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Companies scanned:     42
+Total jobs found:      318
+Filtered by title:     291 removed
+Duplicates:            4 skipped
+New offers added:      23
+
+New offers:
+  + Anthropic | AI Engineer | San Francisco, CA
+  + ElevenLabs | Solutions Architect | Remote
+  ...
+
+→ Run /career-ops pipeline to evaluate new offers.
+```
+
+每一行的含义如下：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 行 | 含义 |
+    |---|---|
+    | **Companies scanned** | 检查了 `tracked_companies` 中的多少家公司 |
+    | **Total jobs found** | 在这些公司看到的全部在招岗位，即过滤前的总数 |
+    | **Filtered by title** | 因职位名称不符合你的 `title_filter` 而被移除的职位 |
+    | **Duplicates skipped** | 已在你的 pipeline 或 tracker 中的职位，不会重复添加 |
+    | **New offers added** | 通过了所有过滤条件、对你来说是新的职位 |
+  </div>
+</div>
+
+
+如果 **New offers added** 为 0，先在扫描输出中找找有没有这条警告：
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+这表示该公司的招聘门户一直没有成功响应，所以这个 0 并不能证明它没有在招职位。该公司会在 `data/portal-health.tsv` 中被记为 `unverified_zero`，并计入它的连续失败次数。在修改过滤条件之前，先检查一下那个招聘门户。
+
+如果没有这条警告，可能是你的职位名称过滤器太严格了。试着在 `positive` 列表中加一个关键词，再扫描一次。
+
+**新职位去了哪里**：每个新职位都会作为一行添加到 `data/pipeline.md`，这就是等待评估的职位列表。
+
+**`data/scan-history.tsv` 的作用**：扫描器见过的每个 URL，无论是被添加、被过滤还是被跳过，都会记录在这里。扫描器正是靠它避免在之后的扫描中重复给你看同一个职位。不过有一个例外，即被 `portals.yml` 中 `location_filter` 或 `max_posting_age_days` 设置排除的职位：它会被记为 `skipped_location` 或 `skipped_age`，一旦你修改了这项设置，它可能会再次出现。你不需要编辑这个文件。
+
+## 评估扫描到的新职位
+
+扫描把新职位添加到 `data/pipeline.md`（你的待评估职位列表）之后，运行 pipeline 命令，对照你的个人资料逐一评估。这一步由 Claude 读取职位描述，与你的 `cv.md` 和 `modes/_profile.md` 进行比对，并为每个岗位生成一份带评分的摘要。
+
+在项目文件夹中打开 Claude Code，输入：
+
+```bash title="Terminal"
+/career-ops pipeline
+```
+
+Claude 会读取 `data/pipeline.md` 中每个待处理的 URL，逐一访问职位页面并进行评估。结果分批返回，每批都会显示类似这样的表格：
+
+第 1 批完成（Anthropic、ElevenLabs、Mistral）：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | #   | 公司       | 岗位                | 评分  | 可信度                           |
+    | --- | ---------- | ------------------- | ----- | -------------------------------- |
+    | 024 | Anthropic  | AI Engineer         | 4.8/5 | High Confidence                  |
+    | 025 | ElevenLabs | Solutions Architect | 4.1/5 | High Confidence — fast-growing   |
+    | 026 | Mistral AI | Product Manager     | 3.2/5 | Proceed w/ Caution — role closed |
+  </div>
+</div>
+
+
+每一列的含义如下：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 列         | 含义                                                                                                                  |
+    | ---------- | --------------------------------------------------------------------------------------------------------------------- |
+    | **#**      | 报告编号。用它在 `reports/` 中找到完整报告，例如报告 024 就是 `reports/024-anthropic-2026-04-13.md`                   |
+    | **评分**   | 这个岗位与你个人资料的匹配程度，范围为 1-5                                                                            |
+    | **可信度** | 这则职位看起来是否真实、仍在招聘。“High Confidence”表示职位仍然有效，各项细节都经得起核对。“Proceed w/ Caution”表示有地方引起了警觉，请阅读旁边的说明。 |
+  </div>
+</div>
+
+**要查看某个岗位的完整评估**，有两种方式：
+
+- **直接打开报告文件**：按表格中的编号，在 `reports/` 文件夹中找到它。
+- **使用仪表盘**：在项目文件夹中运行 `./dashboard/career-dashboard`，在终端界面中浏览你的所有报告。你可以按评分和状态筛选，不离开终端就能打开任意报告。
+
+## 下一步
+
+`/career-ops pipeline` 运行完成后，每个职位都会有一个 1-5 的评分。任何岗位的完整报告都可以在 `reports/` 文件夹中找到。评分反映了这个岗位与你个人资料的匹配程度。
+
+以评分作为起点：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 评分              | 建议操作                                                                                                   |
+    | ----------------- | ---------------------------------------------------------------------------------------------------------- |
+    | **4.5 或以上**    | 高度匹配。立即运行 `/career-ops apply`。                                                                   |
+    | **4.0 – 4.4**     | 比较合适。运行 `/career-ops apply`。你也可以先运行 `/career-ops contacto`，在申请前联系团队中的某个人。     |
+    | **3.5 – 3.9**     | 可去可留。先运行 `/career-ops deep` 深入了解，再做决定。                                                   |
+    | **低于 3.5**      | 除非你有特别的理由要申请，否则跳过。                                                                       |
+  </div>
+</div>
+
+各命令的作用如下：
+
+- **`/career-ops apply`**：打开申请表，根据你的个人资料写出量身定制的回答。它会在提交前停下，让你先检查所有内容。
+- **`/career-ops contacto`**：在 LinkedIn 上找到招聘经理或团队成员，并起草一条简短的联系消息，由你自己发送。
+- **`/career-ops deep`**：深入调研这家公司和这个岗位。当你犹豫不决、想在决定前了解更多信息时使用。
+- **`/career-ops tracker`**：显示你 pipeline 中每个岗位的状态。想了解进展时，随时都可以运行。
+
+<Callout title="提示">
+  不必按顺序来。如果某个岗位评分 4.8，但你从没听说过这家公司，就先运行 `/career-ops deep`。这些命令都可以单独使用，选最适合你情况的那个即可。
+</Callout>

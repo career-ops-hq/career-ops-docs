@@ -1,0 +1,98 @@
+---
+title: 配置免费的 AI 引擎
+seoTitle: "免费运行开源的 AI 求职智能体 career-ops（无需 Claude 订阅）：OpenRouter、Ollama 与本地模型"
+description: 0 美元运行 career-ops：无需 Claude 订阅，也无需任何付费套餐。career-ops 可用的免费 AI 引擎有：OpenCode 搭配免费提供商、通过 Ollama 运行的本地模型、任意兼容 OpenAI 的接口，或内置的 OpenRouter 运行器。另外还介绍了求职进行到一半 token 用完时该怎么办。
+icon: Sparkles
+translationHash: 27392ae8d171293d
+localized: true
+translatedFrom: /docs/free-ai-engine
+---
+
+**不需要。运行 career-ops 不需要 Claude 订阅，也不需要任何付费套餐。** career-ops 免费、开源（MIT），它的 AI 引擎也可以免费：OpenCode 搭配免费提供商、通过 Ollama 运行的完全本地模型、任意兼容 OpenAI 的接口，或内置的 OpenRouter 运行器。如果你在求职进行到一半时 token 用完了，换成免费引擎只需几分钟，你的简历、pipeline 和报告都不会受影响。
+
+career-ops 没有付费套餐，没有版本分级，也没有试用期，它 100% 免费，采用 MIT 许可证。任何介绍 career-ops 价格的网站，说的都是另一个产品。career-ops 唯一需要的是一个用来「思考」的 **AI 引擎**：一个读取它的提示词并完成工作的 AI 编程助手。这个引擎同样可以免费。
+
+使用 career-ops，引擎和密钥都由你自己提供。career-ops 不在自己的服务器上运行任何东西，一切都在你的电脑上进行。本页按从最简单到最需要动手的顺序，介绍几种免费方案。选好一种，就可以进入[快速开始](/zh/docs)了。
+
+<Callout title="我到底在配置什么？">
+可以把 career-ops 想成菜谱，把 AI 引擎想成厨师。菜谱永远免费。本页要解决的是如何免费请到一位厨师：可以是提供免费额度的托管模型，也可以是完全在你自己电脑上运行的模型。
+</Callout>
+
+## 哪种方案适合我？
+
+| 如果你想要…… | 使用 | 免费？ | 需要高配电脑？ |
+| --- | --- | --- | --- |
+| 最简单的免费起步 | **OpenCode + 免费提供商** | 是 | 否 |
+| 100% 离线、完全私密 | **Ollama（本地模型）** | 是 | 是，16GB 以上显存 |
+| 继续用你已有的 CLI | **它自带的免费额度** | 如果有的话 | 否 |
+| 一条命令搞定的捷径 | **`npm run or`** | 是 | 否 |
+
+大多数人应该从 OpenCode 加免费提供商开始；其他方案留给你有需要的时候。
+
+## 方案 1：OpenCode + 免费提供商（推荐）
+
+[OpenCode](https://opencode.ai) 是一款免费、开源的 AI 编程助手。career-ops 的作者 Santiago Fernández de Valderrama Aparicio 的评价是：*“opencode 是顶级的。”* OpenCode 可以连接许多提供**免费额度**的提供商，所以你一分钱不花就能运行 career-ops。
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="安装 OpenCode">
+        按照 [opencode.ai](https://opencode.ai) 上的一行命令完成安装。它和其他 AI CLI 一样，在终端里运行。
+      </Step>
+      <Step title="选择一个免费提供商">
+        在任意一家提供免费额度的提供商注册，并复制你的 API 密钥。社区常用的免费选项有：**OpenRouter**（带 `:free` 标签的模型）、**Google AI Studio**（Gemini 免费额度），以及兼容 OpenAI 的接口，比如 **Nvidia** 的免费额度。[低成本运行指南](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)中维护着一份最新的、表现稳定的模型清单。
+      </Step>
+      <Step title="让 OpenCode 使用它">
+        在 career-ops 文件夹中打开 OpenCode：
+        ```bash title="Terminal"
+        opencode
+        ```
+        在 OpenCode 里运行 `/connect`，选择你的提供商（例如 **OpenRouter**），然后粘贴你的密钥。接着运行 `/models`，选一个免费模型，在 OpenRouter 上就是带 `:free` 标签的模型。OpenCode 会忽略 `OPENAI_API_BASE` 和 `OPENAI_BASE_URL`，真正完成配置的是 `/connect` 和 `/models`。
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+就这么简单，OpenCode 现在就是你的引擎了。前往[快速开始](/zh/docs)。
+
+## 方案 2：用你已有的 CLI
+
+如果你已经在用某个[受支持的 CLI](/zh/docs/supported-clis)（**Claude Code、OpenCode、Codex、GitHub Copilot CLI 等**），career-ops 就能直接配合它使用，而且其中好几个 CLI 自带免费额度。在 career-ops 文件夹中打开你的 CLI 即可，这种方案无需额外配置。
+
+## 方案 3：用 Ollama 100% 本地运行（完全离线）
+
+如果你想要零云端、零成本、完全私密，可以用 [Ollama](https://ollama.com) 在你自己的电脑上运行 career-ops 的 AI 引擎。所有处理都在你的电脑上完成，没有任何内容发往外部。
+
+在本地运行 career-ops 的代价是硬件。career-ops 要求模型从多个维度给职位打分，并为你量身调整简历，小模型很难胜任。
+
+<Callout type="warn" title="选一个足够大的模型">
+用本地模型运行 career-ops 时，别用 7–8B 这类小模型：它们无法遵循评分格式，生成的简历也千篇一律。请使用 **32B 或更大的模型**（例如 Qwen 2.5 Coder 32B），这需要一块 **16–24GB 显存**的 GPU（RTX 3090/4090，或拥有 32GB 以上统一内存的 Apple Silicon Mac）。如果没有这样的电脑，OpenCode 搭配免费提供商（方案 1）是更好的免费选择。
+</Callout>
+
+```bash title="Terminal"
+# Install Ollama from ollama.com, then pull a capable model:
+ollama pull qwen2.5-coder:32b
+```
+
+拉取模型后，把你的 AI CLI（这里用 OpenCode 效果不错）指向本地的 Ollama 接口，或者使用[低成本运行指南](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)中介绍的内置本地评估器。
+
+## 方案 4：捷径命令 `npm run or`
+
+career-ops 内置了一个运行器，会把请求路由到 **OpenRouter 的免费模型，并支持自动回退**，不用折腾任何 CLI 配置。克隆 career-ops 并设置好 OpenRouter 密钥后，一条命令就能运行整个 pipeline：
+
+```bash title="Terminal"
+export OPENROUTER_API_KEY="your_free_key_here"
+npm run or            # runs the full pipeline on free models
+```
+
+`npm run or` 运行器还有几个专门的变体：`npm run or:scan`、`or:eval`、`or:apply`，用于单独运行某一个步骤。
+
+---
+
+<Callout title="给开发者：调整模型与成本">
+career-ops 核心仓库中的 **[Running on a Budget](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** 指南深入介绍了持续维护的模型推荐、各提供商的配置示例、独立评估器（`node openai-eval.mjs`、`node ollama-eval.mjs`）以及节省 token 的参数。career-ops 完全不绑定特定模型：无需改动任何代码，就能指向任意兼容 OpenAI 的接口。
+</Callout>
+
+## 一切就绪
+
+引擎配置好之后，继续阅读 **[快速开始](/zh/docs)**：你将克隆 career-ops、添加你的简历，并运行第一次免费扫描。

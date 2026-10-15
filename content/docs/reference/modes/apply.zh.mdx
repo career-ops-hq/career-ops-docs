@@ -1,0 +1,75 @@
+---
+title: apply
+description: "实时申请助手。读取 Greenhouse、Ashby 和 Lever 申请表中的开放式问题，并根据你的简历和职位描述（JD）起草回答。"
+seoTitle: "career-ops apply 模式：自动起草 ATS 网申问题的回答"
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-10-14"
+translationHash: 7cdeaddd88619799
+localized: true
+translatedFrom: /docs/reference/modes/apply
+---
+
+## 它能做什么
+
+`apply` 模式会读取一个已打开的申请表（Greenhouse、Ashby、Lever），识别其中的开放式问题，例如“为什么选择这个职位？”“介绍一个你做过的项目”“你的期望薪资是多少？”，然后根据你的简历和职位描述起草回答。你直接在原处修改草稿，复制到招聘门户中，然后提交。
+
+## 什么时候使用
+
+把 JD 和申请表并排打开。表单加载完成后再运行 apply。已确认字段限制的回答会附带 `used/allowed` 形式的字符数或词数；粘贴之前请先查看这一状态。`limit unknown` 表示表单的限制尚未确认，请先在页面上的实际字段中核实。如果某条回答不删掉关键信息就放不下，请在粘贴前先修改。输出的是草稿，而不是一份完成的申请：语气、事实，以及招聘门户额外加上的任何字段，都始终由你把关。apply 在 Playwright 可见模式下效果最好，这时它读取的就是你眼前看到的实时页面；没有 Playwright 时，粘贴问题或分享一张截图，它会据此起草。
+
+## 实际运行效果
+
+在 Chrome 中打开申请表，然后运行 apply。在写出任何一条回答之前，该模式会先读取当前标签页，把它与你之前为这个职位生成的报告进行匹配，确认职位仍在招聘中，并扫描表单中可能让你被自动拒绝的淘汰性问题（knock-out questions）。
+
+```txt title="Example"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+
+## 注意事项
+
+apply 从不提交申请：最后那一下提交，永远由你点击。它会读取表单上的每一个字段，而不只是开放式问题，下拉菜单、单选按钮、复选框和上传字段都包括在内。它会起草自由文本回答，为每个封闭式字段建议一个值，并把工作许可、薪资以及其他你的个人资料中尚未回答的敏感问题标记出来，交给你确认，而不是自己猜测。借助 Playwright，它可以在实时表单中填写部分字段；所有内容由你检查，剩下的部分由你完成。回答填好之后，它会把所用的文本、选项和文件记录到报告中。如果预检发现职位已经关闭，除非你明确要求覆盖，否则 apply 会拒绝起草最终文案：一个失效的链接，不值得一份量身定制的回答。
+
+经历类字段来自为这份报告定制的简历，而不是 `cv.md`：雇主、职位名称、日期、工作内容描述、技能和教育背景都与你上传的文档一致，这样表单和附上的简历讲的是同一个故事。`config/profile.yml` 仍然是你的身份和联系方式、工作许可以及薪酬期望的权威来源。如果 apply 找不到这次申请对应的定制简历，它会明确告诉你，并改用 `cv.md`。
+
+如果报告或职位描述明确说明该职位是固定期限的，apply 会在第一条回答之前显示一次**固定期限职位提醒**，引用相关原文以及其中写明的期限，并建议你确认续约、福利和合同期满时的相关条款。它只是提示信息：从不修改任何字段，从不阻止申请，也不需要你确认。
+
+在多步骤表单中，每次点击保存、下一步或继续之前，以及把表单交给你点击提交之前，apply 都会重新读取整个步骤，检查每个必填控件是否都已有值，包括那些只有在回答另一个问题后才会出现的控件。如果某个必填字段无法根据你自己的文件填写，它会停下来问你。
+
+## 各 ATS 平台的已知问题
+
+apply 已在大约十几次由 Playwright 驱动的申请中经过实测，有几个招聘门户如果不加以应对，就会让运行中断：
+
+- **Ashby** 会在同一家公司内按邮箱对候选人去重，所以第二次申请可能会悄无声息地合并到你的第一次申请中。如果已经存在这家公司的报告，apply 会建议你使用 `+tag` 邮箱别名。对于 Ashby，请在系统自带的普通浏览器中完成并提交，然后确认看到提交成功页面或确认邮件，再把这次申请标记为已提交。
+- **Lever** 在以程序方式点击复选框或单选按钮时会弹出验证码（captcha），因此 apply 只填写文本字段和下拉菜单，把复选框和单选按钮留给你来勾选。
+- **重复区块**，例如工作经历或教育背景（“Add Another”），每个区块都使用相同的标签，因此 apply 每次最多只填写两到三条，并在继续之前逐一核对每个值是否对应预期的条目。如果它无法唯一确定某个字段，它会停下来问你，而不是猜测。
+- **Workday** 会忽略不是通过真实按键输入的值，因此 apply 会逐字符输入回答，并在你保存之前请你检查工作许可相关的下拉菜单。
+
+## 相关链接
+
+- [auto-pipeline](/zh/docs/reference/modes/auto-pipeline)
+- [pdf](/zh/docs/reference/modes/pdf)
+- [tracker](/zh/docs/reference/modes/tracker)

@@ -109,8 +109,8 @@ function extraSchemaFor(slug: string[] | undefined, locale: string, url: string)
 // chrome, schema, and MDX rendering are identical. `page.path` resolves to the
 // locale's own file (.mdx or .es.mdx), so the git date and "edit on GitHub"
 // link point at the right source per language.
-const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr', de: 'de', pt: 'pt-BR', it: 'it' } as const;
-const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le', de: 'Aktualisiert am', pt: 'Atualizado em', it: 'Aggiornato il' } as const;
+const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr', de: 'de', pt: 'pt-BR', it: 'it', zh: 'zh-CN' } as const;
+const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le', de: 'Aktualisiert am', pt: 'Atualizado em', it: 'Aggiornato il', zh: '更新于' } as const;
 
 export function DocsPageView({ page }: { page: DocsPageType }) {
   const MDX = page.data.body;

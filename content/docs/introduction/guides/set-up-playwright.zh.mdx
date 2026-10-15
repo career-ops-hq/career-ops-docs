@@ -1,0 +1,145 @@
+---
+title: 配置 Playwright
+description: 安装并配置 Playwright，用于浏览器自动化。
+seoTitle: "为 career-ops 配置 Playwright：职位抓取与 PDF 简历导出"
+icon: Globe
+translationHash: 4bcbad1e28e7d6f3
+localized: true
+translatedFrom: /docs/introduction/guides/set-up-playwright
+---
+
+本指南将带你完成三个配置步骤，让 career-ops 具备浏览器自动化能力：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="安装 Playwright 包">
+        安装 Playwright 的 Node 包
+      </Step>
+      <Step title="下载 Chromium">
+        下载由 Playwright 控制的 Chromium 浏览器
+      </Step>
+      <Step title="配置 Playwright MCP">
+        配置 Playwright MCP，让 Claude 能在 apply 步骤中操作浏览器
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+<Callout title="开始之前">
+  先完成[快速开始](/zh/docs)指南。你需要安装 Node.js 22.13 或更高版本（使用 Node 23 时需 23.4 或更高版本），并且必须位于 career-ops 根目录中。
+</Callout>
+
+---
+
+## 安装 Playwright 包
+
+在 career-ops 根目录中运行 `npm install`：
+
+```bash title="Terminal"
+npm install
+```
+
+这会安装 Playwright 以及 `package.json` 中声明的所有其他项目依赖。如果你在初始配置时已经运行过，可以跳过这一步。
+
+## 下载 Chromium
+
+Playwright 需要自己的一份 Chromium 才能进行自动化操作。安装程序通常会在安装完依赖后自动下载它；如果 `npm run doctor` 报告缺少 Chromium，请运行以下命令下载：
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+这一步只需执行一次。`npm` 更新后无需重复。
+
+## 配置 Playwright MCP
+
+Playwright MCP 让 Claude 在 `/career-ops apply` 步骤中直接控制浏览器：打开职位申请表单、读取字段标签并给出建议答案。
+
+### 注册 MCP 服务器
+
+在 career-ops 根目录中运行以下命令，将 Playwright MCP 注册到 Claude Code：
+
+```bash title="Terminal"
+claude mcp add --scope project playwright -- npx @playwright/mcp@latest
+```
+
+这是 [Playwright MCP 文档](https://playwright.dev/docs/getting-started-mcp)中的一步注册方法，只是额外加上了 `--scope project`，让 Claude Code 把服务器条目写入 career-ops 根目录下的 `.mcp.json`，这是 `npm run doctor` 会检查的文件之一。下次你在该目录启动 Claude Code 时，它会询问是否启用该服务器，请批准。
+
+如果想在所有项目中使用它，请改用 `--scope user` 运行该命令。`npm run doctor` 不会读取用户级的服务器，因此即使 Claude Code 已经加载了它，doctor 仍会警告无法检测到该 MCP。
+
+### 手动配置（备选）
+
+如果你更想手动配置，请在 career-ops 根目录的 `.mcp.json` 中添加以下条目（如果文件不存在，请先创建）：
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+保存文件后重启 Claude Code，并在它询问时批准该服务器。之后，career-ops 就能在 apply 会话中使用 `browser_navigate` 和 `browser_snapshot`。
+
+---
+
+## 验证配置
+
+运行 doctor 脚本，确认三个组件都已就绪：
+
+```bash title="Terminal"
+npm run doctor
+```
+
+留意输出中是否确认 Playwright、Chromium 和 MCP 服务器均已就绪。检查通过即表示配置完成。
+
+---
+
+## 实时观看浏览器填写表单
+
+Playwright MCP 默认会打开一个可见的浏览器窗口（上面的配置没有传入 `--headless`），因此你可以看到它读取的每个页面和填写的每个字段。
+
+如果想让它在该窗口中打开申请页面并填写整个表单，请在 apply 命令后加一句指令：
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name} open up with playwright the browser and fill out the entire form
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+</Tabs>
+
+对于 Ashby，Playwright 可以检查表单并帮你起草答案，但请在你平时使用的系统浏览器中完成填写并提交。在把申请标记为已提交之前，请先确认看到了成功页面或收到了确认邮件。
+
+即使不加这句指令，career-ops 仍会使用 Playwright 和 MCP，在同一个可见窗口中读取表单并起草你的答案。
+
+## 各组件的作用
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 组件               | 用途                                                                                                              |
+    | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+    | Playwright 包      | 驱动浏览器自动化的核心库                                                                                          |
+    | Chromium           | 渲染页面，通过 `/career-ops pdf` 生成打印级质量的 PDF，检查职位是否仍然有效，并为完整的 ATS 扫描提供支持          |
+    | Playwright MCP     | 让 career-ops 在 `/career-ops apply` 过程中在表单中导航，并为各字段建议答案                                       |
+  </div>
+</div>

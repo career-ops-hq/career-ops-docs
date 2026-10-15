@@ -1,0 +1,54 @@
+---
+title: pipeline
+description: "读取 data/pipeline.md 中排队的 URL，并对每一个运行完整的 auto-pipeline。如果你白天收集了十几二十个职位，想在一次会话里集中处理完，就用它。"
+seoTitle: "career-ops pipeline 模式：一次批量评估大量职位"
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3577755ad38f8486
+localized: true
+translatedFrom: /docs/reference/modes/pipeline
+---
+
+## 它能做什么
+
+pipeline 模式会遍历 data/pipeline.md 中的 URL（每行一个），并对每一个调用 auto-pipeline。只要某个职位得出了有效的评估，就会为它写入报告、PDF 和 tracker 记录。抓取失败的 URL 会被记入日志并跳过。
+
+## 什么时候使用
+
+手上积压了一批 URL 要处理时，就用 pipeline。把它们放进 data/pipeline.md，运行 /career-ops pipeline，然后就可以去忙别的了。
+
+## 实际运行效果
+
+把 URL 放进 `data/pipeline.md`，这个模式就会一次性处理完整个收件箱。它先运行一轮零 token 的职位有效性扫描，剔除已过期的职位，然后让每个仍然有效的 URL 走完整的 auto-pipeline 评估，最后输出一张汇总表，列出它的发现。
+
+```txt title="Pipeline run"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (one at a time)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+
+每处理完一个 URL，它就会从文件的 `## Pending` 部分移到 `## Processed` 部分，所以这个收件箱始终实时反映还剩哪些没处理。
+
+## 适用场景
+
+如果你白天积攒了一批职位，想在一次会话里集中处理完，就用 pipeline。它这样处理队列：
+
+- `## Pending` 部分接受任何格式：直接粘贴一个 URL 就行，你也可以加上 `company`、`role`、`location` 和 `comp` 列，这个模式会全部读取。
+- 职位有效性扫描在逐个处理 URL 的循环之前运行，所以即使收件箱里积压的八个 URL 都已过时，也不会白白耗费八次评估。
+- LinkedIn 的 URL 会跳过有效性扫描，改为在逐个处理 URL 的循环中用浏览器尝试打开一次。如果这次尝试后仍然拿不到职位描述，比如页面一直停留在加载骨架屏，这一条就会留在 Pending 中并标记为 `[!]`，career-ops 会请你粘贴职位文本，或者提供同一职位在雇主官网或 ATS 上的链接。LinkedIn 加载失败绝不会被当作职位已关闭。
+- 并发数由提取工具决定。使用默认的浏览器提取器（Playwright MCP）时，它会一次只处理一个 URL，因为共用同一个浏览器会话的 worker 可能互相串扰，评估到错误的职位。只有当每个 worker 都使用隔离的 CLI 提取器（`scan.extractor: cli`）或非浏览器的备用方案、各自拥有独立的进程和会话状态时，才能并行处理三个或更多 URL，每个 URL 一个 worker。
+- 只有评分达到 `auto_pdf_score_threshold`（默认 3.0）时才会生成 PDF；调高这个阈值，就能为评分处于边缘的职位跳过 PDF，之后需要时再用 `/career-ops pdf` 按需生成。
+
+## 相关链接
+
+- [auto-pipeline](/zh/docs/reference/modes/auto-pipeline)

@@ -1,0 +1,149 @@
+---
+title: 申请职位
+description: "用 career-ops 填写职位申请表，根据你的个人资料和目标职位生成量身定制的回答。"
+seoTitle: "如何用 career-ops 申请职位：起草 ATS 申请表回答，定制你的简历"
+icon: FileInput
+translationHash: 48ee253fe9b589dd
+localized: true
+translatedFrom: /docs/introduction/guides/apply-for-a-job
+---
+
+本指南介绍如何使用 `/career-ops apply` 填写职位申请表：每一条回答都会根据你的个人资料、能力证明以及你要申请的具体职位量身定制。
+
+<Callout title="开始之前">
+  请先确认你已经完成[扫描招聘门户](/zh/docs/introduction/guides/scan-job-portals)指南。`apply` 命令依赖一份已有的评估报告。如果这个职位还没有报告，请先运行 pipeline。
+</Callout>
+
+## 运行 apply 命令
+
+在 career-ops 根目录中打开你的智能体 CLI，然后输入：
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name}
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+</Tabs>
+
+例如：
+
+```bash title="Claude Code"
+/career-ops apply Anthropic
+```
+
+career-ops 会在 `reports/` 中找到对应的报告，用 Playwright 打开一个浏览器窗口并读取表单，然后为支持的文本字段和自由作答字段起草回答。粘贴之前，请先核对这些字段的字数限制。如果是 Ashby，你需要在系统自带的普通浏览器中完成并提交申请。
+
+<Callout title="说明">
+  如果无法使用 Playwright，career-ops 会改用 WebFetch 读取表单。如果你想启用完整的浏览器体验，请参阅[设置 Playwright](/zh/docs/introduction/guides/set-up-playwright)。
+</Callout>
+
+**如果你运行 `/career-ops apply` 时不带参数**，系统会提示你手动提供上下文：
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 方式                      | 操作方法                                                                                 |
+    | ------------------------- | ---------------------------------------------------------------------------------------- |
+    | 分享截图                  | 截取表单的屏幕截图并发到对话中。career-ops 可以直接读取图片。                            |
+    | 粘贴问题                  | 把表单中的问题以文本形式复制，粘贴到对话中。                                             |
+    | 说出公司和职位            | 输入公司名称和职位名称。career-ops 会在 `reports/` 中搜索匹配的报告。                    |
+    | 分享申请链接              | 粘贴链接，career-ops 会自动打开对应的表单。                                              |
+  </div>
+</div>
+
+## 填写表单
+
+系统会返回一份带编号的回答列表，每个表单字段对应一条，顺序与表单一致。从上到下逐条处理。对于每一条自由文本回答，粘贴之前请对照实际字段核对 `used/allowed` 的字符数或词数。`limit unknown` 表示你必须在表单中自行确认限制；如果某条回答不删掉关键信息就放不下，请先修改再粘贴。
+
+输出分为两部分：
+
+**回答**：按顺序列出表单上的每一个字段：
+
+```
+1. Name
+   Andres Urdaneta
+
+2. Email
+   andres@example.com
+
+...
+
+12. Cover Letter (optional)
+    I've spent 5+ years shipping production Rails applications...
+```
+
+姓名、邮箱、是/否问题这类简单字段排在前面，求职信这类自由文本字段放在最后。
+
+**Key notes**（要点提示）：回答之后的一小段内容，列出提交前值得你注意的事项：
+
+```
+Key notes:
+- No salary field — you'll negotiate at offer. Anchor to $160K–$175K at offer stage.
+- Add github.com/yourhandle to your resume PDF before uploading.
+- Cover letter is optional but the draft above is tight — worth including.
+```
+
+每一条回答都有明确的来源，大多来自你的评估报告：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 字段类型                      | 来源                                                  |
+    | ----------------------------- | ----------------------------------------------------- |
+    | 求职信、“为什么选择这个职位” | Block B 中的能力证明 + Block F 中的 STAR 故事         |
+    | 简短的自由文本问题            | 与该问题最相关的能力证明或故事                        |
+    | 下拉菜单、是/否               | 直接取自你个人资料的回答                              |
+    | 雇主、职位名称、日期、工作内容描述、技能、教育背景 | 为这份报告定制的简历，确保表单内容与你上传的简历一致。如果找不到，career-ops 会明确告诉你，并改用 `cv.md` |
+    | 姓名、联系方式、工作许可、薪酬 | `config/profile.yml`，任何简历都不会覆盖它 |
+  </div>
+</div>
+
+<Callout title="文件上传字段">
+  使用创建报告时在 `output/` 中生成的文件。如果还没有 PDF，请先运行 `/career-ops pdf`，再回到表单。参见 [pdf 模式](/zh/docs/reference/modes/pdf)。
+</Callout>
+
+## 提交申请
+
+检查每一条回答，然后由你自己提交表单。career-ops 不会替你点击提交。如果是 Ashby，请在系统自带的普通浏览器中完成并提交，而不是在 Playwright 会话中。在告诉 career-ops 申请已提交之前，请先确认看到了提交成功页面或确认邮件。
+
+提交之后，在对话中确认：
+
+> “已提交。”
+
+career-ops 会：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="更新申请状态">
+        更新 `data/applications.md`：把状态从 `Evaluated` 改为 `Applied`
+      </Step>
+      <Step title="将回答保存到报告">
+        把最终回答保存到报告的 `## Application Answers` 部分，方便日后参考
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## 接下来做什么
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | 评分              | 下一步                                                                                                                                                                                           |
+    | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | **4.0 或更高**    | 运行 `/career-ops contacto`。career-ops 会在 LinkedIn 上找到招聘经理或团队成员，并起草一条联系消息。如果你在申请被审阅之前发出这条消息，能让你更容易被看到。                                      |
+    | **任意评分**      | 运行 `/career-ops tracker`，查看你求职流水线中所有职位的当前状态。                                                                                                                               |
+  </div>
+</div>

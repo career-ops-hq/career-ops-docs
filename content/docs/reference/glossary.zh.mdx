@@ -1,0 +1,82 @@
+---
+title: 术语表
+description: AI 求职常用术语释义：ATS、1-5 综合评分、数据契约（Data Contract）、海投、职位有效性检查、定制简历、零 token 扫描、STAR+R 故事，以及 career-ops 用到的所有术语。
+seoTitle: "career-ops 术语表：AI 求职常用术语释义"
+icon: BookOpen
+translationHash: c4294ea38951c036
+localized: true
+translatedFrom: /docs/reference/glossary
+---
+
+{/* Mirrored with src/lib/glossary-data.ts (DefinedTermSet JSON-LD) — edit
+    both together. Definitions must stay verifiable against the core repo. */}
+
+career-ops 用到的所有术语都集中在这里释义。如果某个术语有更详细的参考文档，会附上对应链接。
+
+## ATS（Applicant Tracking System，招聘管理系统）
+
+企业用来接收、存储和筛选求职申请的软件，常见的有 [Greenhouse](/zh/docs/reference/portals/greenhouse)、[Ashby](/zh/docs/reference/portals/ashby) 和 [Lever](/zh/docs/reference/portals/lever)。career-ops 会读取它们公开的职位 API 来发现空缺职位，也可以预先填写它们的申请表，但从不自动提交。
+
+## 综合评分（1-5）
+
+LLM 从五个维度（匹配度、North Star 契合度、薪酬、文化信号和危险信号）对一个职位做出的整体判断，给出 1-5 分的评分。达到 4.5 及以上时，智能体建议立即申请；低于 4.0 时，建议不要申请。评分没有固定的加权公式：分数是 LLM 依据评分标准做出的判断，评分标准公开在[方法论页面](https://career-ops.org/methodology)上。
+
+## 数据契约（Data Contract）
+
+career-ops 在架构上的核心承诺：**系统层**（脚本、模式、模板）随时都可以更新，而**用户层**（`cv.md`、`config/profile.yml`、`data/`、`reports/`、`output/`）永远不会被任何更新改动。版本不断更替，你的数据始终都在。
+
+## 海投（Spray-and-pray）
+
+一种不做任何针对性筛选、把同一份简历发给成百上千个职位的大规模申请策略。career-ops 明确拒绝这种做法：pipeline 会先评估职位并排序，让你把精力集中在少数真正值得争取的职位上。
+
+## 职位有效性检查（Liveness check）
+
+career-ops 运行的一种启发式检查，用来在你投入时间或 token 之前判断一个职位是否仍在招聘。它只是尽力而为的参考信号，因为过期的职位有时还会在招聘网站上挂着；如果启发式判断有误，你也可以手动标记职位状态。
+
+## 定制简历（Tailoring）
+
+针对某一个具体职位改写你的简历：调整重点的先后顺序，突出与职位匹配的技能和数据指标，让用词与职位描述保持一致，同时确保每一条陈述都忠于你的真实经历。career-ops 会为每次申请生成一份定制简历，格式是你可以直接编辑的 Markdown。
+
+## 模式（Mode）
+
+一种聚焦单一任务、由提示词定义的工作流。career-ops 以纯 Markdown 文件的形式提供模式，由你的 AI CLI 执行，例如 [scan、apply、tracker](/zh/docs/reference/modes)、[interview/practice](/zh/docs/introduction/guides/interview-modes)，以及其他十几个模式。模式是可以直接查看的文本，而不是黑盒代码。
+
+## Pipeline（求职流程）
+
+career-ops 的端到端工作流：扫描招聘门户 → 评估职位并打 1-5 分 → 定制简历 → 申请 → 跟踪进度 → 准备面试。每个阶段都是一个模式，你可以单独运行，也可以批量运行。
+
+## 零 token 扫描
+
+一种不消耗任何 LLM token 的职位发现流程：`scan.mjs` 直接通过 HTTP 读取 ATS API、招聘网站的 feed 和企业招聘页面，所以无论你用哪个 AI 引擎，发现新职位都是免费的。
+
+## AI 引擎
+
+执行 career-ops 提示词的 AI 编程 CLI，包括 Claude Code、OpenCode、Codex、GitHub Copilot CLI 和[其他受支持的 CLI](/zh/docs/supported-clis)，也可以是任何兼容 OpenAI 的接口。career-ops 不绑定任何特定引擎，[也能在免费引擎上运行](/zh/docs/free-ai-engine)。
+
+## 题库（Question bank）
+
+一个本地 Markdown 文件（`interview-prep/question-bank.md`），career-ops 会在里面积累真实的面试问题，以及你在每道题上的表现（✅/🟡/🔴）。[interview/debrief 模式](/zh/docs/introduction/guides/interview-modes)会在每次真实面试后更新它，让你的准备在一轮轮面试中不断积累。
+
+## STAR+R 故事
+
+按 **S**ituation（情境）、**T**ask（任务）、**A**ction（行动）、**R**esult（结果），再加上 **R**eflection（反思）来组织的面试故事。career-ops 的故事库采用这种格式，让你对行为面试问题的回答具体、有量化数据，并且可以在多场面试中反复使用。
+
+## 故事库（Story bank）
+
+一个本地 Markdown 文件（`interview-prep/story-bank.md`），存放你准备好的 STAR+R 故事。练习时会对照它检查你的回答；复盘时会从你在真实面试中实际说过的话里提炼出新的故事。
+
+## 招聘门户（Portal）
+
+由 ATS 支撑、career-ops 可以扫描的企业招聘网站。你跟踪的招聘门户列在 `portals.yml` 中，扫描器每次运行都会读取它们的公开 API。
+
+## 批量评估（Batch evaluate）
+
+一次运行就为多个已保存的职位打分，而不是逐个评估，并提供参数让你保持控制：`--limit` 限制每批的数量，`--dry-run` 预览将要处理的内容，`--resume-paused` 继续一次被中断的运行，而不会重复消耗 token。处于 `needs_confirmation` 状态的任务会被挂起，不生成任何产物，只有父级交互式会话在收到你的明确答复后才会恢复它；重试参数和暂停恢复参数都不会解除这种挂起。
+
+## 本地优先（Local-first）
+
+career-ops 的架构原则：一切，包括你的数据、提示词、脚本和 AI CLI，都在你的电脑上运行。没有托管后端，不需要账号，也无需注册任何东西。
+
+## CareerOps
+
+CareerOps 是一种求职实践：像工程师运维生产环境那样来求职，依靠证据，保持纪律，并让工具站在求职者这一边。这个术语指的是一种实践，而不是一个产品；career-ops 是它的第一个参考实现。这个概念由 Santiago Fernández de Valderrama Aparicio 在 [The CareerOps Manifesto](https://career-ops.org/manifesto)（2026 年 7 月 14 日）中提出。

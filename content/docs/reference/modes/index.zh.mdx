@@ -1,0 +1,46 @@
+---
+title: 模式
+description: "career-ops 的 14 个可直接调用的模式，涵盖评估、定制简历、申请、跟踪和面试准备；每个模式都是一个 markdown 技能，可在任何受支持的 AI 编程 CLI 中运行。"
+seoTitle: "career-ops 的 14 个求职模式：评估、定制简历、申请、跟踪与面试准备"
+icon: Layers
+translationHash: bb322a1cf17f35c3
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## 14 个模式
+
+career-ops 提供 **14 个可由你直接调用的模式**。每个模式都是一个用纯 markdown 编写的技能（skill），由智能体加载，并在你已经在用的 AI 编程 CLI 中运行：Claude Code、Cursor、Codex、OpenCode、Qwen、GitHub Copilot，或[其他受支持的 CLI](/zh/docs/supported-clis)。调用方式是 `/career-ops <mode>`，每个模式负责求职中的一个环节：按评分标准评估一个职位（五个维度，外加一个整体综合评分）、定制简历、起草申请、跟踪结果，或准备面试。根据[数据契约（Data Contract）](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md)，模式属于系统层（System Layer）：更新时会被替换为最新版本，任何更新都不会修改你的 `cv.md`、个人档案或报告。
+
+## 评估
+
+核心评分环节：在你投入任何精力之前，先读一遍职位描述，按五个维度外加一个整体综合评分为它打分。
+
+- **[auto-pipeline](/zh/docs/reference/modes/auto-pipeline)**：默认流程。粘贴 JD 的 URL 或文本，它会完成完整的 A–H 评估、写出报告、导出定制的 PDF，并在 tracker 中记录一条，中间无需任何手动步骤。
+- **[pipeline](/zh/docs/reference/modes/pipeline)**：对 `data/pipeline.md` 中排队的每个 URL 运行 auto-pipeline，一天积累下来的职位在一次会话里就能处理完。
+- **[oferta](/zh/docs/reference/modes/oferta)**：对单个职位做 A–H 评估，适合你只需要评分结论、不需要完整流水线的时候。
+- **[ofertas](/zh/docs/reference/modes/ofertas)**：把两个或更多相互竞争的 offer 按薪酬、匹配度、成长空间和危险信号进行排序，汇总成一个决策矩阵。
+- **[deep](/zh/docs/reference/modes/deep)**：在申请一家你不太了解的公司之前，生成一份深度公司调研文档（融资、管理层、媒体报道、薪酬信号、危险信号）。
+
+## 定制与申请
+
+把高分匹配的职位变成一份提交出去的申请。
+
+- **[pdf](/zh/docs/reference/modes/pdf)**：通过 Playwright，针对某个具体的 JD 生成一份定制的、格式对 ATS 友好的 PDF 简历。
+- **[apply](/zh/docs/reference/modes/apply)**：读取已打开的申请表中的开放式问题，并基于你的简历和 JD 起草回答。
+- **[contacto](/zh/docs/reference/modes/contacto)**：找出可能比较熟络的 LinkedIn 人脉，并起草一条简短、针对该职位的联络消息。
+- **[followup](/zh/docs/reference/modes/followup)**：标出已经到期该跟进的申请和面试，并起草跟进消息。
+
+## 跟踪与成长
+
+让求职井然有序，并随着时间不断校准方向。
+
+- **[tracker](/zh/docs/reference/modes/tracker)**：在聊天中按阶段分组，汇总每一份申请的状态。
+- **[patterns](/zh/docs/reference/modes/patterns)**：分析你被拒和已放弃的申请，找出目标定位上的规律和盲点。
+- **[interview-prep](/zh/docs/reference/modes/interview-prep)**：针对不同面试轮次（招聘专员、用人经理、同行技术面、小组面）生成准备文档，附上可能被问到的问题和 STAR 故事。
+- **[training](/zh/docs/reference/modes/training)**：对照你设定的职业方向和它的机会成本，为一门课程或一项认证打分。
+- **[project](/zh/docs/reference/modes/project)**：对照你的目标岗位和所需的开发时间，为一个作品集项目的想法打分。
+
+## 招聘门户
+
+Greenhouse、Ashby 和 Lever 是零 token 扫描器读取的其中三个系统，它们有单独的[招聘门户参考](/zh/docs/reference/portals)。

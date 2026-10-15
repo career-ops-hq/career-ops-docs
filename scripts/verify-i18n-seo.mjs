@@ -54,6 +54,13 @@ const CONCURRENCY = 8;
 // 'fail' since each locale has its own root layout (search-ops D1): the server
 // HTML carries the right <html lang>, so a wrong one is a regression.
 const HTML_LANG_MODE = 'fail';
+
+// The language tag a locale declares in Content-Language, the content-language
+// meta and <html lang>, when it is not the URL code: Chinese names its script
+// (zh-Hans) while its URLs and hreflang stay zh. Mirrors LANG_TAG in
+// src/components/root-shell.tsx and the /zh header rules in next.config.mjs.
+const LANG_TAG = { zh: 'zh-Hans' };
+const tagOf = (locale) => LANG_TAG[locale] ?? locale;
 const HTML_VARY_MODE = 'warn';
 
 // English URLs removed on purpose (each with its 308 in next.config.mjs).
@@ -227,16 +234,16 @@ function check(snap, opts = {}) {
     // language signals
     const cl = (page.headers['content-language'] || '').trim();
     if (locale !== DEFAULT_LOCALE) {
-      if (cl !== locale) fail('content-language', path, `Content-Language header is '${cl}', expected ${locale}`);
-      if (h.metaLang !== locale) fail('meta-content-language', path, `<meta http-equiv="content-language"> is '${h.metaLang ?? ''}', expected ${locale}`);
+      if (cl !== tagOf(locale)) fail('content-language', path, `Content-Language header is '${cl}', expected ${tagOf(locale)}`);
+      if (h.metaLang !== tagOf(locale)) fail('meta-content-language', path, `<meta http-equiv="content-language"> is '${h.metaLang ?? ''}', expected ${tagOf(locale)}`);
       if (!h.ogLocale || !h.ogLocale.startsWith(`${locale}_`)) fail('og-locale', path, `og:locale is '${h.ogLocale ?? ''}', expected ${locale}_XX`);
     } else {
       if (cl && cl !== DEFAULT_LOCALE) fail('content-language-en', path, `English page sends Content-Language: ${cl}`);
       if (h.metaLang && h.metaLang !== DEFAULT_LOCALE) fail('meta-content-language-en', path, `English page declares content-language ${h.metaLang}`);
       if (h.ogLocale && !h.ogLocale.startsWith(`${DEFAULT_LOCALE}_`)) fail('og-locale-en', path, `English page declares og:locale ${h.ogLocale}`);
     }
-    if (h.htmlLang !== locale) {
-      (htmlLangMode === 'fail' ? fail : warn)('html-lang', path, `<html lang="${h.htmlLang ?? ''}">, expected ${locale}`);
+    if (h.htmlLang !== tagOf(locale)) {
+      (htmlLangMode === 'fail' ? fail : warn)('html-lang', path, `<html lang="${h.htmlLang ?? ''}">, expected ${tagOf(locale)}`);
     }
 
     // markdown negotiation (docs, and the English home)
