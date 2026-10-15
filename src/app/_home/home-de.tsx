@@ -290,7 +290,7 @@ export const homeDe: HomeDict = {
           veröffentlicht sein vollständiges Bewertungsraster. Bei jeder
           Bewerbung entscheidet ein Mensch; es verschickt nie etwas von selbst.
           Kein Konto, keine Telemetrie und kein Abo für career-ops selbst; die
-          einzigen laufenden Kosten sind die der KI-CLI, die du wählst. Ehrliche
+          einzigen laufenden Kosten, falls überhaupt, sind die der KI-Engine, die du wählst. Ehrliche
           Vergleiche mit konkreten Tools, Seite an Seite, findest du unter{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

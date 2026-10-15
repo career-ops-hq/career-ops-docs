@@ -261,7 +261,7 @@ export const homeEs: HomeDict = {
           propia máquina a través del CLI de IA que ya uses, y publica su rúbrica de
           evaluación completa. Un humano decide en cada candidatura; nunca envía
           solo. No hay cuenta, ni telemetría, ni suscripción al propio career-ops;
-          el único coste recurrente es el CLI de IA que elijas. Para comparativas
+          el único coste recurrente, si lo hay, es el motor de IA que elijas. Para comparativas
           honestas y lado a lado con herramientas concretas, mira{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

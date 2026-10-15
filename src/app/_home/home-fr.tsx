@@ -288,7 +288,7 @@ export const homeFr: HomeDict = {
           publie sa grille d’évaluation complète. Un humain garde la main sur
           chaque candidature ; il n’envoie jamais tout seul. Pas de compte, pas de
           télémétrie, pas d’abonnement à career-ops lui-même ; le seul coût
-          récurrent est le CLI d’IA que vous choisissez. Pour des comparaisons
+          récurrent, s’il y en a un, est le moteur d’IA que vous choisissez. Pour des comparaisons
           honnêtes, côte à côte, avec des outils précis, voyez{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

@@ -249,8 +249,8 @@ export const homeZh: HomeDict = {
       a: (
         <>
           career-ops 是开源的，采用 MIT 许可证，通过你已经在用的 AI 编程 CLI 在你的电脑上本地运行，并公开完整的评分标准。每一份申请都由人来决定；career-ops
-          从不自己提交任何东西。career-ops 没有账号、遥测或订阅；唯一的持续成本是你选择的 AI
-          CLI。和具体工具的诚实并排对比，请看{' '}
+          从不自己提交任何东西。career-ops 没有账号、遥测或订阅；唯一可能的持续成本是你选择的 AI
+          引擎。和具体工具的诚实并排对比，请看{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare
           </a>

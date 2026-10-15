@@ -258,8 +258,8 @@ export const homeEn: HomeDict = {
           machine through whichever AI coding CLI you already use, and publishes
           its full evaluation rubric. A human stays in the loop on every
           application; it never auto-submits. There is no account, no telemetry,
-          and no subscription to career-ops itself; the only recurring cost is the
-          AI CLI you choose. For honest, side-by-side comparisons with specific
+          and no subscription to career-ops itself; the only recurring cost, if any, is
+          the AI engine you choose. For honest, side-by-side comparisons with specific
           tools, see{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

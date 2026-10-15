@@ -287,7 +287,7 @@ export const homeIt: HomeDict = {
           computer tramite la CLI di programmazione AI che usi già e pubblica la
           griglia di valutazione completa. Una persona decide ogni candidatura;
           career-ops non invia mai nulla da solo. Non c&rsquo;è account, telemetria né abbonamento
-          di career-ops; l&rsquo;unico costo ricorrente è la CLI AI che scegli. Per
+          di career-ops; l&rsquo;unico costo ricorrente, se c&rsquo;è, è il motore AI che scegli. Per
           confronti onesti, fianco a fianco, con strumenti specifici, vedi{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

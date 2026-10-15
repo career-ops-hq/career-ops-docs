@@ -287,8 +287,8 @@ export const homePt: HomeDict = {
           seu computador pela CLI de programação com IA que você já usa e publica
           a rubrica de avaliação completa. Uma pessoa decide cada candidatura;
           ele nunca envia nada sozinho. Não há conta, telemetria nem assinatura do
-          próprio career-ops; o único custo recorrente é a CLI de IA que você
-          escolher. Para comparações honestas, lado a lado, com ferramentas
+          próprio career-ops; o único custo recorrente, se houver, é o motor de IA que
+          você escolher. Para comparações honestas, lado a lado, com ferramentas
           específicas, veja{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare
