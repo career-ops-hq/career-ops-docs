@@ -1,0 +1,54 @@
+---
+title: pipeline
+description: "Đọc các URL đang xếp hàng trong data/pipeline.md và chạy auto-pipeline đầy đủ cho từng URL. Dùng khi bạn đã gom mười hay hai mươi tin tuyển dụng trong ngày và muốn xử lý hết trong một phiên."
+seoTitle: "Chế độ pipeline của career-ops: đánh giá hàng loạt tin tuyển dụng cùng lúc"
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3577755ad38f8486
+localized: true
+translatedFrom: /docs/reference/modes/pipeline
+---
+
+## Chế độ này làm gì
+
+Chế độ pipeline duyệt lần lượt các URL trong data/pipeline.md (mỗi dòng một URL) và gọi auto-pipeline cho từng URL. Với mỗi tin tuyển dụng cho ra kết quả đánh giá hợp lệ, career-ops ghi báo cáo, file PDF và mục nhập trong tracker. Những lần thu thập trang thất bại sẽ được ghi log rồi bỏ qua.
+
+## Khi nào nên dùng
+
+Dùng pipeline khi bạn có một loạt URL tồn đọng cần xử lý. Bỏ chúng vào data/pipeline.md, gọi `/career-ops pipeline` rồi để đó làm việc khác.
+
+## Một lần chạy trông như thế nào
+
+Bạn bỏ các URL vào `data/pipeline.md`, chế độ này sẽ xử lý cả hộp thư đến trong một lượt. Đầu tiên nó chạy bước quét kiểm tra tin còn mở hay không (không tốn token) để loại các tin đã hết hạn, sau đó đánh giá từng URL còn lại qua auto-pipeline đầy đủ và kết thúc bằng một bảng tóm tắt những gì tìm được.
+
+```txt title="Pipeline run"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (one at a time)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+
+Mỗi URL đã xử lý sẽ chuyển từ phần `## Pending` sang phần `## Processed` của file, nhờ vậy hộp thư đến luôn phản ánh đúng những gì còn lại.
+
+## Khi nào nên dùng pipeline
+
+Hãy dùng pipeline khi bạn đã gom được một loạt tin tuyển dụng trong ngày và muốn xử lý hết trong một phiên. Cách chế độ này xử lý hàng đợi:
+
+- Phần `## Pending` chấp nhận mọi định dạng: chỉ cần dán một URL trần là được, hoặc bạn có thể thêm các cột `company`, `role`, `location` và `comp`, và chế độ này đọc được tất cả.
+- Bước quét kiểm tra tin còn mở chạy trước vòng lặp xử lý từng URL, nên một hộp thư tồn đọng tám URL cũ sẽ không khiến bạn tốn tám lần đánh giá vô ích.
+- URL LinkedIn bỏ qua bước quét kiểm tra này và thay vào đó được thử mở một lần bằng trình duyệt trong vòng lặp xử lý từng URL. Nếu lần thử đó không lấy được phần mô tả, ví dụ trang bị kẹt ở khung tải, mục đó vẫn nằm trong Pending và được đánh dấu `[!]`, đồng thời bạn sẽ được nhờ dán nội dung tin tuyển dụng hoặc đưa link của nhà tuyển dụng hay ATS cho cùng vị trí. Việc LinkedIn tải thất bại không bao giờ bị coi là tin đã đóng.
+- Công cụ trích xuất quyết định mức độ chạy song song. Với trình trích xuất mặc định qua trình duyệt (Playwright MCP), các URL được xử lý lần lượt từng cái một, vì các worker dùng chung một phiên trình duyệt có thể lẫn dữ liệu của nhau và đánh giá nhầm tin tuyển dụng. Chỉ khi mọi worker đều dùng trình trích xuất CLI tách biệt (`scan.extractor: cli`) hoặc một phương án dự phòng không dùng trình duyệt, mỗi worker có tiến trình và trạng thái phiên riêng, thì mới có thể chạy song song từ ba URL trở lên, mỗi worker một URL.
+- File PDF chỉ được tạo khi điểm số vượt `auto_pdf_score_threshold` (mặc định 3.0). Hãy tăng ngưỡng này nếu bạn muốn bỏ qua PDF cho những vị trí chỉ ở mức tạm được, rồi tạo PDF khi cần bằng `/career-ops pdf`.
+
+## Xem thêm
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)

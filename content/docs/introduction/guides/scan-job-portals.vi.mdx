@@ -1,0 +1,321 @@
+---
+title: Quét cổng tin tuyển dụng
+description: Thiết lập và chạy trình quét cổng tuyển dụng để tự động tìm các tin tuyển dụng mới.
+seoTitle: "Quét tin tuyển dụng với career-ops — Greenhouse, Ashby, Lever, không tốn token"
+icon: ScanEye
+translationHash: e9fbece900af577b
+localized: true
+translatedFrom: /docs/introduction/guides/scan-job-portals
+---
+
+Hướng dẫn này đi qua cách thiết lập `portals.yml` và chạy trình quét cổng tuyển dụng để tự động tìm các tin tuyển dụng mới.
+
+<Callout title="Trước khi bắt đầu">
+  Hãy chắc chắn bạn đã hoàn thành hướng dẫn [Bắt đầu nhanh](/docs). Bạn cần có sẵn `cv.md` và `modes/_profile.md` thì việc quét mới có ích.
+</Callout>
+
+## Thiết lập portals.yml
+
+`portals.yml` là tệp quy định trình quét tìm gì và tìm ở đâu. Bạn tạo nó một lần từ mẫu có sẵn, rồi chỉnh sửa cho khớp với các vị trí bạn nhắm tới.
+
+Chạy lệnh này từ thư mục dự án:
+
+```bash title="Terminal"
+cp templates/portals.example.yml portals.yml
+```
+
+Mở `portals.yml` bằng bất kỳ trình soạn thảo văn bản nào. Tệp có ba phần. Các bước dưới đây sẽ đi qua từng phần.
+
+### Cấu hình bộ lọc tiêu đề
+
+Bộ lọc tiêu đề là cách trình quét quyết định một tin tuyển dụng có đáng hiển thị cho bạn hay không. Nó đối chiếu tiêu đề tin với hai danh sách từ khóa.
+
+Tìm phần `title_filter` ở gần đầu tệp:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "AI"
+    - "ML"
+    - "Product Manager"
+  negative:
+    - "Junior"
+    - "Intern"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+**Thay danh sách `positive`** bằng các từ khóa khớp với vị trí bạn nhắm tới. Một tin tuyển dụng phải khớp ít nhất một từ khóa trong danh sách này mới được giữ lại. Việc so khớp không phân biệt hoa thường, nên `"AI"` cũng bắt được `"ai engineer"`.
+
+**Thay danh sách `negative`** bằng các từ khóa dùng để loại tin. Nếu bất kỳ từ nào trong số này xuất hiện trong tiêu đề, tin sẽ bị bỏ qua, kể cả khi nó khớp một từ khóa positive.
+
+**Giữ nguyên `seniority_boost`** trừ khi bạn muốn thêm hoặc bớt cấp bậc. Các từ khóa này không loại tin nào cả, chúng chỉ đẩy các tin khớp lên cao hơn trong kết quả.
+
+**Ví dụ:** Nếu bạn tìm các vị trí kỹ sư Rails, bộ lọc có thể trông như sau:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "Rails"
+    - "Ruby"
+    - "Full Stack"
+    - "Backend"
+  negative:
+    - "Junior"
+    - "Intern"
+    - "PHP"
+    - "Java"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+<Callout title="Mẹo">
+  Hãy bắt đầu với danh sách `positive` ngắn gồm ba đến năm từ khóa. Bạn luôn có thể thêm sau. Danh sách quá dài sẽ khiến bạn khó thấy vì sao một tin đạt hay không đạt.
+</Callout>
+
+### Thêm các công ty cần theo dõi
+
+Phần `tracked_companies` là danh sách những công ty cụ thể mà bạn muốn trình quét kiểm tra mỗi lần. Trình quét đi thẳng đến trang tuyển dụng của từng công ty và đọc các vị trí đang mở.
+
+Tìm phần `tracked_companies` ở gần cuối tệp. Mỗi mục trông như sau:
+
+```yaml title="portals.yml"
+tracked_companies:
+  - name: Anthropic
+    careers_url: https://job-boards.greenhouse.io/anthropic
+    api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    enabled: true
+
+  - name: OpenAI
+    careers_url: https://openai.com/careers
+    enabled: true
+```
+
+**Để thêm một công ty**, hãy sao chép một mục có sẵn và đổi các giá trị:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Trường        | Nội dung cần điền                                                                                  |
+    | ------------- | -------------------------------------------------------------------------------------------------- |
+    | `name`        | Tên công ty như bạn muốn hiển thị trong kết quả                                                    |
+    | `careers_url` | URL trực tiếp đến trang liệt kê tin tuyển dụng của công ty                                         |
+    | `api`         | Không bắt buộc. URL API Greenhouse nếu công ty dùng Greenhouse. Bỏ qua nếu bạn không chắc.         |
+    | `enabled`     | Đặt là `true` để đưa công ty vào quét, hoặc `false` để bỏ qua mà không phải xóa mục đó.            |
+  </div>
+</div>
+
+
+**Để tìm `careers_url` của một công ty**, hãy vào website của công ty, bấm Careers hoặc Jobs, rồi sao chép URL của trang liệt kê các vị trí đang mở. Đó chính là URL cần dùng.
+
+**Để tắt một công ty mà không xóa nó**, hãy đặt `enabled: false`:
+
+```yaml title="portals.yml"
+  - name: Stripe
+    careers_url: https://stripe.com/jobs/search
+    enabled: false
+```
+
+<Callout title="Lưu ý">
+  Mọi công ty trong `tracked_companies` đều phải có `careers_url`. Thiếu nó, trình quét không có trang nào để truy cập và sẽ bỏ qua mục đó.
+</Callout>
+
+### Xem lại các truy vấn tìm kiếm
+
+Phần `search_queries` chạy các tìm kiếm web rộng hơn để tìm vị trí ở những công ty không nằm trong danh sách theo dõi của bạn. Mẫu có sẵn nhiều truy vấn dựng sẵn.
+
+Bạn không cần đổi phần này để bắt đầu. Các truy vấn dựng sẵn bao phủ những trang tuyển dụng lớn, trong đó có Greenhouse, Ashby và nhiều trang khác.
+
+Khi sẵn sàng tùy chỉnh, mỗi truy vấn trông như sau:
+
+```yaml title="portals.yml"
+search_queries:
+  - name: Greenhouse — Rails Engineer
+    query: 'site:job-boards.greenhouse.io "Rails Engineer" OR "Ruby on Rails" remote'
+    enabled: true
+```
+
+Để tắt một truy vấn bạn không cần, hãy đặt `enabled: false`. Để thêm truy vấn mới, hãy sao chép một mục có sẵn, đặt `name` mới và cập nhật nội dung `query`.
+
+## Chạy quét
+
+Có hai cách chạy quét. Hãy dùng cách phù hợp với nhu cầu của bạn.
+
+### Cách A — Chạy script trực tiếp
+
+```bash title="Terminal"
+npm run scan
+```
+
+Chạy lệnh này từ thư mục dự án. Script đọc `portals.yml`, gọi trực tiếp API của từng công ty và ghi các tin mới vào `data/pipeline.md`. Cách này không tốn token AI và chạy trong khoảng 30 giây.
+
+Cách này dùng được với mọi công ty có trang tuyển dụng chạy trên nền tảng mà trình quét có sẵn provider hỗ trợ: Greenhouse, Ashby và Lever, cùng hàng chục hệ thống quản lý tuyển dụng (applicant tracking system) và trang tuyển dụng khác như Workable, Workday và SmartRecruiters. Danh sách đầy đủ nằm trong [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). Các công ty không có provider phù hợp sẽ bị bỏ qua, và lần quét sẽ báo có bao nhiêu công ty như vậy.
+
+**Xem trước kết quả trước khi lưu:**
+
+```bash title="Terminal"
+npm run scan -- --dry-run
+```
+
+Lệnh này chạy toàn bộ lần quét nhưng không ghi gì vào ổ đĩa. Hãy dùng nó để kiểm tra cài đặt bộ lọc trước khi lưu kết quả.
+
+**Quét một công ty duy nhất:**
+
+```bash title="Terminal"
+npm run scan -- --company Anthropic
+```
+
+Thay `Anthropic` bằng tên bất kỳ công ty nào trong danh sách `tracked_companies` của bạn. Việc so khớp không phân biệt hoa thường.
+
+**Quét các trang tuyển dụng Dayforce:**
+
+Các trang tuyển dụng chạy trên Dayforce (Ceridian), tại `jobs.dayforcehcm.com`, chặn các yêu cầu web thông thường, nên `npm run scan` không đọc được chúng. Thay vào đó, một script riêng sẽ mở một phiên trình duyệt thật cho các trang này, vì vậy chậm hơn lần quét chính. Hãy liệt kê các bảng tuyển dụng trong `dayforce_boards` của `portals.yml`, mỗi công ty một mục với `name` và `tenant` (mã của công ty trong địa chỉ Dayforce); `templates/portals.example.yml` có minh họa định dạng. Sau đó chạy:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+Các tin mới được ghi vào `data/pipeline.md`, giống như lần quét chính. Thêm `-- --dry-run` để xem trước mà không lưu, `-- --tenant <tenant>` để quét một bảng duy nhất, hoặc `-- --debug` để lưu ảnh chụp màn hình của từng bảng vào `output/`. Nếu một bảng hiện thử thách chống bot, script sẽ bỏ qua nó; script không bao giờ cố vượt qua thử thách đó.
+
+### Cách B — Chạy quét bằng AI trong Claude Code
+
+Mở Claude Code trong thư mục dự án và gõ:
+
+```bash title="Claude Code"
+/career-ops scan
+```
+
+Phiên bản này truy cập trực tiếp trang tuyển dụng của từng công ty bằng trình duyệt, nên dùng được cả với những công ty không có API công khai. Nó cũng chạy các `search_queries` trong `portals.yml` của bạn để tìm vị trí ở những công ty không nằm trong danh sách theo dõi.
+
+Hãy dùng cách này khi:
+- Một công ty trong danh sách của bạn dùng nền tảng mà script chưa có provider hỗ trợ, nên lần quét bằng script bỏ qua công ty đó
+- Bạn muốn khám phá công ty mới, chứ không chỉ kiểm tra các công ty đã biết
+- Lần quét bằng script bỏ sót thứ bạn mong thấy
+
+<Callout title="Mẹo">
+  Cách B tốn token Claude API và chạy lâu hơn script. Với việc kiểm tra nhanh hằng ngày, Cách A nhanh hơn.
+</Callout>
+
+## Đọc kết quả quét
+
+Khi quét xong, bạn sẽ thấy bản tóm tắt như sau:
+
+```text title="Terminal"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Portal Scan — 2026-04-13
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Companies scanned:     42
+Total jobs found:      318
+Filtered by title:     291 removed
+Duplicates:            4 skipped
+New offers added:      23
+
+New offers:
+  + Anthropic | AI Engineer | San Francisco, CA
+  + ElevenLabs | Solutions Architect | Remote
+  ...
+
+→ Run /career-ops pipeline to evaluate new offers.
+```
+
+Ý nghĩa của từng dòng:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Dòng | Cho bạn biết điều gì |
+    |---|---|
+    | **Companies scanned** | Số công ty trong `tracked_companies` đã được kiểm tra |
+    | **Total jobs found** | Tất cả vị trí đang mở thấy được ở các công ty đó, trước khi lọc |
+    | **Filtered by title** | Số tin bị loại vì tiêu đề không khớp `title_filter` của bạn |
+    | **Duplicates skipped** | Các tin đã có trong pipeline hoặc tracker của bạn, nên không thêm lại |
+    | **New offers added** | Các tin vượt qua mọi bộ lọc và là tin mới với bạn |
+  </div>
+</div>
+
+
+Nếu **New offers added** bằng 0, trước tiên hãy tìm cảnh báo này trong kết quả quét:
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+Cảnh báo này nghĩa là cổng tuyển dụng của công ty đó chưa bao giờ phản hồi thành công, nên con số 0 không chứng minh bảng tuyển dụng của họ đang trống. Công ty đó được ghi là `unverified_zero` trong `data/portal-health.tsv` và được tính vào chuỗi lỗi liên tiếp. Hãy kiểm tra cổng đó trước khi đổi bộ lọc.
+
+Nếu không có cảnh báo nào như vậy, có thể bộ lọc tiêu đề của bạn quá chặt. Hãy thử thêm một từ khóa vào danh sách `positive` rồi quét lại.
+
+**Tin mới được lưu ở đâu:** Mỗi tin mới được thêm thành một dòng trong `data/pipeline.md`. Đó là danh sách các tin đang chờ được đánh giá.
+
+**`data/scan-history.tsv` dùng để làm gì:** Mọi URL mà trình quét nhìn thấy, dù được thêm, bị lọc hay bị bỏ qua, đều được ghi vào đây. Nhờ vậy trình quét tránh hiển thị cho bạn cùng một tin hai lần ở các lần quét sau. Có một ngoại lệ: tin bị loại bởi thiết lập `location_filter` hoặc `max_posting_age_days` trong `portals.yml`. Tin đó được ghi là `skipped_location` hoặc `skipped_age`, và có thể xuất hiện lại sau khi bạn đổi thiết lập đó. Bạn không cần chỉnh sửa tệp này.
+
+## Đánh giá các tin mới từ lần quét
+
+Sau khi một lần quét thêm các tin mới vào `data/pipeline.md`, tức danh sách các tin tuyển dụng đang chờ xử lý của bạn, hãy chạy lệnh pipeline để đánh giá từng tin so với hồ sơ của bạn. Bước này dùng Claude để đọc mô tả công việc, so sánh với `cv.md` và `modes/_profile.md` của bạn, rồi tạo bản tóm tắt có chấm điểm cho từng vị trí.
+
+Mở Claude Code trong thư mục dự án và gõ:
+
+```bash title="Terminal"
+/career-ops pipeline
+```
+
+Claude đọc mọi URL đang chờ trong `data/pipeline.md`, truy cập từng tin tuyển dụng và đánh giá nó. Kết quả trả về theo từng đợt. Mỗi đợt hiện một bảng như sau:
+
+Đợt 1 hoàn tất (Anthropic, ElevenLabs, Mistral):
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | #   | Company    | Role                | Score | Legitimacy                       |
+    | --- | ---------- | ------------------- | ----- | -------------------------------- |
+    | 024 | Anthropic  | AI Engineer         | 4.8/5 | High Confidence                  |
+    | 025 | ElevenLabs | Solutions Architect | 4.1/5 | High Confidence — fast-growing   |
+    | 026 | Mistral AI | Product Manager     | 3.2/5 | Proceed w/ Caution — role closed |
+  </div>
+</div>
+
+
+Ý nghĩa của từng cột:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Cột            | Cho bạn biết điều gì |
+    | -------------- | -------------------- |
+    | **#**          | Số thứ tự báo cáo. Dùng nó để tìm báo cáo đầy đủ trong `reports/`, ví dụ báo cáo 024 là `reports/024-anthropic-2026-04-13.md` |
+    | **Score**      | Mức độ phù hợp của vị trí với hồ sơ của bạn, từ 1 đến 5 |
+    | **Legitimacy** | Tin tuyển dụng trông có thật và còn hiệu lực hay không. "High Confidence" nghĩa là tin còn mở và các chi tiết khớp nhau. "Proceed w/ Caution" nghĩa là có điều gì đó đáng ngờ, hãy đọc ghi chú bên cạnh. |
+  </div>
+</div>
+
+**Để đọc đánh giá đầy đủ của một vị trí**, bạn có hai cách:
+
+- **Mở trực tiếp tệp báo cáo**: tìm nó trong thư mục `reports/` bằng số thứ tự trong bảng.
+- **Dùng dashboard**: chạy `./dashboard/career-dashboard` từ thư mục dự án để duyệt tất cả báo cáo trong giao diện terminal. Bạn có thể lọc theo điểm và trạng thái, và mở bất kỳ báo cáo nào mà không cần rời terminal.
+
+## Làm gì tiếp theo
+
+Khi `/career-ops pipeline` chạy xong, mỗi tin tuyển dụng có một điểm từ 1 đến 5. Bạn có thể tìm báo cáo đầy đủ của bất kỳ vị trí nào trong thư mục `reports/`. Điểm cho biết vị trí đó khớp với hồ sơ của bạn đến đâu.
+
+Hãy dùng điểm số làm điểm khởi đầu:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Điểm              | Hành động đề xuất |
+    | ----------------- | ----------------- |
+    | **4.5 trở lên**   | Rất phù hợp. Chạy `/career-ops apply` ngay. |
+    | **4.0 – 4.4**     | Phù hợp tốt. Chạy `/career-ops apply`. Bạn cũng có thể chạy `/career-ops contacto` trước để liên hệ một người trong nhóm trước khi ứng tuyển. |
+    | **3.5 – 3.9**     | Còn tùy. Chạy `/career-ops deep` để tìm hiểu thêm trước khi quyết định. |
+    | **Dưới 3.5**      | Bỏ qua, trừ khi bạn có lý do cụ thể để ứng tuyển. |
+  </div>
+</div>
+
+Ý nghĩa của từng lệnh:
+
+- **`/career-ops apply`**: Mở biểu mẫu ứng tuyển và soạn câu trả lời phù hợp với hồ sơ của bạn. Nó dừng lại trước khi nộp để bạn xem lại mọi thứ trước. Nó soạn và điền, nhưng không bao giờ nộp. Bạn là người bấm Nộp.
+- **`/career-ops contacto`**: Tìm một hiring manager hoặc thành viên trong nhóm trên LinkedIn và soạn một tin nhắn làm quen ngắn để bạn gửi.
+- **`/career-ops deep`**: Nghiên cứu sâu về công ty và vị trí. Dùng khi bạn còn phân vân và muốn có thêm thông tin trước khi quyết định.
+- **`/career-ops tracker`**: Hiển thị trạng thái của mọi vị trí trong pipeline của bạn. Chạy bất cứ lúc nào bạn muốn xem tình hình hiện tại.
+
+<Callout title="Mẹo">
+  Bạn không bắt buộc phải đi theo thứ tự. Nếu một vị trí được 4.8 điểm nhưng bạn chưa từng nghe đến công ty đó, hãy chạy `/career-ops deep` trước. Các lệnh hoạt động độc lập, hãy dùng lệnh nào phù hợp với tình huống của bạn.
+</Callout>

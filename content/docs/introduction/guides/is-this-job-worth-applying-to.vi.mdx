@@ -1,0 +1,181 @@
+---
+title: "Có nên ứng tuyển vị trí này không?"
+description: "Quyết định trước khi nộp đơn. career-ops chấm điểm một tin tuyển dụng từ 1 đến 5 dựa trên CV và mục tiêu của bạn, trình bày lập luận, và để bạn tự quyết định."
+seoTitle: "Có nên ứng tuyển vị trí này không? Quyết định trước khi nộp đơn với career-ops: điểm 1-5 và lập luận đi kèm"
+icon: Scale
+translationHash: fb4701ecac039924
+localized: true
+translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
+---
+
+Một vị trí đáng ứng tuyển khi nó đủ phù hợp với CV, cấp bậc và điều kiện của bạn để việc nộp đơn xứng đáng với công sức bỏ ra. career-ops đọc tin tuyển dụng đối chiếu với CV và mục tiêu của bạn, rồi cho điểm từ 1 đến 5 kèm lập luận; dưới 4.0, nó khuyên không nên ứng tuyển, trừ khi bạn có lý do cụ thể. Quyết định là của bạn.
+
+Để kiểm tra một tin tuyển dụng trước khi nộp đơn, hãy chạy `/career-ops oferta` rồi dán tin đó vào. Nó đánh giá và soạn nháp; bạn quyết định và gửi. career-ops không bao giờ nộp đơn thay bạn.
+
+**Trong trang này:** [Quyết định trước khi nộp đơn](#decide-before-you-apply) · [Cách kiểm tra một vị trí](#how-do-i-check-a-job-before-i-apply) · [Điểm số được quyết định thế nào](#how-does-career-ops-decide-the-score) · [Điều không làm thay đổi điểm](#what-does-not-change-the-score) · [Dưới 4.0](#what-happens-below-40) · [Bản đánh giá gồm những gì](#what-does-the-evaluation-give-you) · [Một ví dụ hư cấu](#a-fictional-example) · [Cho nó biết bạn là ai](#the-first-evaluations-are-rough-until-you-tell-it-who-you-are) · [Đối chiếu điểm với kết quả của bạn](#is-the-score-right-for-you) · [So sánh hai offer ngoài mức lương](#compare-two-offers-beyond-salary) · [Thương lượng bằng số liệu của chính bạn](#negotiate-with-your-own-numbers) · [Câu hỏi thường gặp](#frequently-asked-questions)
+
+## Quyết định trước khi nộp đơn
+
+career-ops được xây dựng quanh một quyết định: một tin tuyển dụng có xứng đáng để bạn nộp đơn hay không. Hãy dán tin tuyển dụng mà tối nay bạn định ứng tuyển, và nó sẽ cho bạn biết buổi tối đó có đáng không. Nó không thể cho bạn biết ai sẽ phản hồi. Nó cho bạn biết vị trí này phù hợp đến đâu với CV và điều bạn muốn, trước khi bạn dành cả đêm cho một đơn ứng tuyển có thể chỉ nhận lại sự im lặng.
+
+career-ops được thiết kế vì chất lượng, không phải số lượng. Nó hướng bạn đến ít đơn hơn nhưng tốt hơn, và nói thẳng khi một tin tuyển dụng không đạt. Một kết quả ghi *không nên ứng tuyển* chính là sản phẩm đang làm đúng việc của nó.
+
+Ít đơn hơn nhưng tốt hơn cũng là chuyện tôn trọng cả hai phía. Thời gian của nhà tuyển dụng đáng được tôn trọng. Thời gian của bạn cũng vậy.
+
+> I built career-ops for my own 2026 job search. My funnel: 740 evaluated → 68 applied → 12 interviews → 1 offer. — Santiago Fernández de Valderrama Aparicio
+
+Tạm dịch: tôi xây dựng career-ops cho đợt tìm việc năm 2026 của chính mình. Phễu của tôi: 740 tin tuyển dụng đã đánh giá → 68 đơn đã nộp → 12 buổi phỏng vấn → 1 offer.
+
+## Làm sao kiểm tra một vị trí trước khi nộp đơn?
+
+<Callout title="Trước khi bắt đầu">
+  Cài đặt career-ops theo [Quick Start](/docs) và mở nó trong một trong các [CLI được hỗ trợ](/docs/supported-clis). Cho đến khi bạn cho nó biết bạn là ai, các bản đánh giá sẽ chấm điểm theo hồ sơ mặc định đi kèm, vốn nhắm đến các vị trí AI: xem [các bản đánh giá đầu tiên còn thô](/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
+</Callout>
+
+career-ops có một chế độ chỉ đánh giá để bạn quyết định trước. Mở CLI lập trình AI của bạn trong thư mục career-ops, chạy lệnh dưới đây, rồi dán mô tả công việc hoặc URL của nó:
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+Chế độ `oferta` chạy phần đánh giá và ghi báo cáo, không tự động tạo PDF. Nếu bạn dán thẳng một tin tuyển dụng vào `/career-ops`, nó sẽ chạy toàn bộ pipeline, trong đó có cả việc điều chỉnh CV (mặc định là một file PDF) bất kể điểm số ra sao. Hãy dùng `oferta` khi bạn muốn có kết luận trước mọi thứ khác. Nếu sau đó bạn quyết định ứng tuyển, `/career-ops pdf` sẽ điều chỉnh CV của bạn, còn `/career-ops apply` soạn nháp câu trả lời cho các câu hỏi trong biểu mẫu ứng tuyển để bạn xem lại và tự nộp.
+
+Trong Codex, lệnh slash không được đảm bảo: hãy gọi tên chế độ trong prompt, ví dụ `Run the career-ops oferta mode on this job: {URL}`.
+
+career-ops chạy một vài bước kiểm tra trước khi chấm điểm. Khi bạn đưa URL, nó trước hết xác nhận tin tuyển dụng còn hoạt động; liên kết hỏng sẽ dừng quá trình trước khi đánh giá, không có báo cáo và không có CV. Văn bản dán vào thì không kiểm tra theo cách đó được, và báo cáo sẽ ghi chú điều này. Nếu bạn giữ danh sách công ty không ứng tuyển của riêng mình trong `data/blacklist.md`, một công ty có trong danh sách sẽ dừng quá trình: career-ops trích lại lý do bạn đã ghi và hỏi bạn có còn muốn đánh giá hay không. Nếu tin tuyển dụng có vẻ đến từ một công ty trung gian, nó hỏi đó là công ty nào trước khi viết bất cứ thứ gì.
+
+Việc nghiên cứu trong một bản đánh giá có giới hạn. Nghiên cứu về mức lương và độ xác thực của tin tuyển dụng gộp lại được giới hạn ở năm lượt tìm kiếm web, và điều gì không tìm được sẽ được đánh dấu là không có sẵn. Để tìm hiểu sâu hơn về một công ty, hãy chạy `/career-ops deep` riêng.
+
+## career-ops quyết định điểm số như thế nào?
+
+Điểm của career-ops là một đánh giá tổng thể, được dẫn dắt bởi năm chiều:
+
+| Chiều                | Nó xem xét điều gì                                                              |
+| -------------------- | ------------------------------------------------------------------------------- |
+| Match with CV        | Kỹ năng, kinh nghiệm và bằng chứng của bạn khớp với công việc đến đâu           |
+| North Star alignment | Vị trí phù hợp đến đâu với các vai trò mục tiêu trong hồ sơ của bạn             |
+| Comp                 | Mức lương mà tin tuyển dụng nêu, đối chiếu với nghiên cứu thị trường            |
+| Cultural signals     | Văn hóa công ty, cơ hội phát triển, sự ổn định và chính sách làm việc từ xa     |
+| Red flags            | Các yếu tố cản trở và cảnh báo, kéo điểm số xuống                               |
+
+Điểm tổng thể của career-ops tích hợp năm chiều này thành một con số từ 1 đến 5, không dùng công thức số học. Các phần của báo cáo không được lấy trung bình để ra điểm này. Cùng một điểm số được ghi vào tiêu đề báo cáo và tracker của bạn.
+
+Sự phù hợp về văn hóa không thể ẩn sau một CV khớp tốt. Nếu bạn đặt yêu cầu về văn hóa trong `config/profile.yml` và bằng chứng trong tin tuyển dụng mâu thuẫn với chúng, báo cáo sẽ nêu rõ điều còn thiếu và giới hạn chiều Cultural signals. Một vị trí đạt 4.5 trở lên nhưng độ phù hợp văn hóa yếu sẽ kèm cảnh báo rõ ràng là hãy xác minh trước khi ứng tuyển.
+
+career-ops đối chiếu quyền làm việc hợp pháp với hồ sơ của bạn. Nếu tin tuyển dụng không nhắc gì đến bảo lãnh visa, điểm số không giảm. Một câu chung chung kiểu "must be authorized to work in X" cũng không làm giảm điểm, khi X là quốc gia mà bạn được phép làm việc. Một dòng nói rõ không bảo lãnh, chẳng hạn "no visa sponsorship" hoặc "must have existing work authorization", cho một vị trí mà bạn không thể nhận từ quốc gia nơi bạn được phép làm việc, sẽ được ghi nhận là rào cản cứng, và báo cáo trích nguyên văn lời của tin tuyển dụng.
+
+## Điều gì không làm thay đổi điểm số?
+
+Mức độ tin cậy của tin tuyển dụng không bao giờ thay đổi điểm 1-5. Bước kiểm tra độ tin cậy của tin tuyển dụng (Block G trong báo cáo) xem xét các tín hiệu như tuổi của tin, nút ứng tuyển còn hoạt động hay không, mức độ cụ thể của phần mô tả, tin tức sa thải gần đây, và việc cùng một vị trí có bị đăng lại nhiều lần không. Kết quả là một trong ba mức: High Confidence, Proceed with Caution hoặc Suspicious. Nó trình bày những gì đã thấy, không bao giờ buộc tội ai, nêu các lý giải hợp lý cho một tín hiệu đáng lo, và để việc phán đoán cho bạn. Khi không có ngày đăng và không có điều gì đáng lo khác, mức mặc định là Proceed with Caution, không bao giờ là Suspicious. Phần nghiên cứu về công ty đứng sau bước kiểm tra này, chẳng hạn tin tức về sự ổn định của công ty, vẫn có thể ảnh hưởng đến chiều Cultural signals.
+
+Mức độ quan trọng của yêu cầu được gắn nhãn, không được đếm. Báo cáo liệt kê các yêu cầu quan trọng của tin tuyển dụng, tối đa 12 dòng, và không bao giờ bỏ một yêu cầu critical hay high để cho vừa. Với mỗi yêu cầu, nó đánh dấu mức độ quan trọng trong tin tuyển dụng này, từ critical đến low signal, và cho biết điều đó dựa trên chính cách diễn đạt của tin, cấu trúc của tin, hay một ước đoán có gắn nhãn. Mức độ quan trọng được điền chỉ dựa trên tin tuyển dụng, trước khi CV của bạn được đọc, để một yêu cầu không bị đánh giá là quan trọng chỉ vì bạn tình cờ giỏi nó. Mỗi yêu cầu critical hoặc high mà bạn thiếu hoặc chỉ đáp ứng một phần đều đi kèm một rủi ro phỏng vấn cụ thể và kế hoạch chuẩn bị. Các nhãn mức độ quan trọng không làm thay đổi điểm 1-5.
+
+Lịch sử của chính bạn với một công ty được hiển thị, không được chấm điểm. Nếu trước đây bạn từng nộp đơn vào đó mà không nhận được phản hồi, hoặc một lần có phản hồi và một lần im lặng, báo cáo sẽ thêm một ghi chú nói điều đó. Ghi chú này không phải là tín hiệu về độ tin cậy và không thay đổi điểm số hay mức độ tin cậy. Nó có đó để bạn tự quyết định nên đầu tư bao nhiêu công sức.
+
+Danh sách đen của bạn không bao giờ thay đổi bất kỳ điểm số nào: nó là một cổng chặn dừng quá trình cho đến khi bạn trả lời, và không có gì được tự thêm vào đó thay bạn.
+
+## Điều gì xảy ra khi điểm dưới 4.0?
+
+Dưới 4.0, career-ops khuyên không nên ứng tuyển, trừ khi bạn có lý do cụ thể. Bạn có thể bỏ qua khuyến nghị đó, và nó sẽ ghi nhận điều này.
+
+Mốc 4.0 là một khuyến nghị. Quyết định vẫn thuộc về bạn, và mỗi đơn ứng tuyển cũng vậy: career-ops soạn tài liệu, bạn xem lại, và bạn gửi. Ở đầu kia của thang điểm, một tin tuyển dụng đạt 4.5 trở lên còn được soạn nháp câu trả lời cho biểu mẫu ứng tuyển.
+
+## Bản đánh giá gồm những gì?
+
+career-ops ghi mỗi bản đánh giá thành một báo cáo trong `reports/` và thêm một dòng vào tracker của bạn, `data/applications.md`, với trạng thái Evaluated. Tiêu đề báo cáo có điểm số, mức độ tin cậy của tin tuyển dụng và tình trạng quyền làm việc hợp pháp, và bên dưới là một bản tóm tắt dạng máy đọc được. Các phần chính theo thứ tự:
+
+- A) Role Summary
+- B) Match with CV
+- C) Level and Strategy
+- D) Comp and Demand
+- E) Customization Plan
+- F) Interview Plan
+- G) Posting Legitimacy
+- Risk Summary, tập hợp các tín hiệu rủi ro trên một màn hình mà không chấm điểm lại bất cứ điều gì
+- H) Draft Application Answers, chỉ khi điểm từ 4.5 trở lên
+
+Bản thân tin tuyển dụng được lưu nguyên văn trong báo cáo (tin quá dài sẽ được đưa vào một file `jds/` mà báo cáo trỏ tới), nên bạn vẫn giữ được các yêu cầu sau khi tin tuyển dụng bị gỡ xuống. Một bản nháp thư xin việc đầu tiên được thêm vào để bạn hoàn thiện bằng `/career-ops cover {slug}`.
+
+## Một ví dụ hư cấu
+
+<Callout title="Ví dụ hư cấu">
+  Acme Freight, vị trí và ứng viên dưới đây đều là bịa ra. Đây không phải một bản đánh giá thật và cũng không dựa trên bản nào. Nó chỉ cho thấy lập luận được trình bày ra sao.
+</Callout>
+
+Trong ví dụ bịa ra này, Maya là một kỹ sư backend đã cho career-ops biết cô muốn gì: vị trí backend cho sản phẩm, đội nhỏ, làm việc từ xa. Cô dán URL của tin tuyển dụng vị trí Senior Platform Engineer tại Acme Freight. Qua năm chiều, lập luận diễn ra như sau:
+
+- **Match with CV:** mạnh ở phần cốt lõi của công việc, dịch vụ Go và Postgres. Một yêu cầu critical, vận hành Kubernetes trên môi trường production, chỉ khớp một phần, nên báo cáo nêu rõ rủi ro phỏng vấn và cách chuẩn bị.
+- **North Star alignment:** gần với mục tiêu của cô, nhưng vị trí thiên về hạ tầng nhiều hơn là công việc backend cho sản phẩm mà cô đã yêu cầu.
+- **Comp:** tin tuyển dụng không nêu mức lương. Báo cáo nói rõ điều đó, phân loại kiểu công ty, đánh giá độ tin cậy của dữ liệu lương công khai đối với kiểu công ty đó, rồi dừng lại ở đó.
+- **Cultural signals:** cô muốn một đội nhỏ; tin tuyển dụng lại mô tả một tổ chức nền tảng lớn với nhiều tầng quản lý. Báo cáo nêu rõ khoảng cách này thay vì để CV khớp tốt che khuất nó.
+- **Red flags:** không có gì cản trở việc ứng tuyển.
+
+**Điểm (hư cấu): 3.6/5.** Dưới 4.0, career-ops khuyên không nên ứng tuyển, trừ khi cô có lý do cụ thể.
+
+Riêng biệt, mức độ tin cậy của tin tuyển dụng trong ví dụ này là Proceed with Caution: trang tin không ghi ngày đăng và không có điều gì đáng lo khác. Mức này không làm thay đổi điểm số.
+
+Maya có một lý do mà báo cáo không thể thấy: cô quen người quản lý kỹ thuật, và người đó cho cô biết đội đang được tách thành các nhóm nhỏ hơn. career-ops đã nói với cô rằng nó khuyên không nên ứng tuyển. Cô vẫn tiến hành; quyết định là của cô. Cô xem lại những gì career-ops đã soạn và tự gửi đơn.
+
+## Những bản đánh giá đầu tiên còn thô cho đến khi bạn cho nó biết bạn là ai
+
+career-ops chấm điểm dựa trên hồ sơ mà nó đang có, và hồ sơ mặc định đi kèm không phải của bạn. Các vai trò mục tiêu mặc định của hồ sơ đó đều là vị trí AI. Cho đến khi bạn cá nhân hóa `modes/_profile.md`, các bản đánh giá được chấm theo định hướng của tác giả mẫu, và chạy `node doctor.mjs` sẽ cảnh báo điều đó. Khi hồ sơ của bạn đã liệt kê các vai trò mục tiêu riêng, mỗi vị trí được phân loại theo chúng: một vị trí không khớp vai trò nào sẽ nhận 1 điểm ở North Star alignment, và báo cáo nói rõ nó không phải mục tiêu thay vì gán nó vào loại vai trò gần nhất.
+
+Vài lần chạy đầu sẽ còn thô. Nó chưa biết bạn. Hãy trò chuyện với nó: CV của bạn, điều bạn muốn, điều bạn từ chối. Ở lần khởi chạy đầu tiên, nó hỏi tất cả những điều đó ngay trong khung chat. Để đổi các vai trò mục tiêu, cứ nói bằng lời thường, ví dụ "Change the archetypes to backend engineering roles". Sau bất kỳ bản đánh giá nào, hãy nói cho nó biết nó sai ở đâu, chẳng hạn "this score is too high" hoặc "you missed my experience in X", và nó sẽ cập nhật các file hồ sơ của bạn.
+
+## Điểm số có đúng với bạn không?
+
+career-ops không mặc định rằng điểm của nó dự đoán được kết quả của bạn; nó để bạn tự kiểm chứng. Hãy ghi lại điều đã xảy ra với từng đơn ứng tuyển bằng `/career-ops outcome`. Khi đã có kết quả, hãy chạy:
+
+```bash
+node calibrate.mjs
+```
+
+Báo cáo `calibrate` đặt ra một câu hỏi: với bạn, các đơn có điểm cao hơn có biến thành phỏng vấn và offer thường xuyên hơn không? Nó chỉ mang tính tham khảo. Nó không bao giờ sửa cách chấm điểm, các ngưỡng hay cấu hình của bạn, và không có gì tự điều chỉnh một cách tự động. Nó giữ lại mọi tỷ lệ mà mẫu quá nhỏ và loại các đơn ứng tuyển còn đang diễn ra. Nếu kết quả của bạn cho thấy mốc điểm đang đặt sai chỗ với bạn, điều mà bằng chứng có thể hỗ trợ là thay đổi mức điểm mà cá nhân bạn dùng để nộp đơn, hoặc các vai trò bạn nhắm tới. Quyết định đó là của bạn.
+
+## So sánh hai offer ngoài mức lương
+
+Để so sánh hai offer ngoài mức lương, hãy so sánh các vị trí bằng `/career-ops ofertas`, rồi đọc từng thư offer bằng `/career-ops offer-prep`. Chế độ `ofertas` làm việc dựa trên các tin tuyển dụng: không chiều nào trong mười chiều của nó bao quát các điều khoản của một thư offer mà bạn đã nhận, và nó không có chiều nào về quãng đường đi làm hay chất lượng cuộc sống ngoài chất lượng làm việc từ xa.
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+Chế độ `ofertas` nhận hai tin tuyển dụng trở lên: văn bản của chúng, URL của chúng, hoặc các vị trí bạn đã đánh giá trong tracker. Nó chấm mỗi vị trí từ 1 đến 5 trên mười chiều và trả về một bảng xếp hạng cùng khuyến nghị có tính đến thời gian đi đến offer.
+
+Mức lương, dưới dạng thu nhập ước tính, là một trong mười chiều mà `ofertas` chấm. Chín chiều còn lại là North Star alignment, CV match, level, growth trajectory, remote quality, company reputation, tech stack modernity, time-to-offer speed và cultural signals.
+
+Khác với điểm đánh giá 1-5, vốn không có công thức số học, phép so sánh của `ofertas` dùng các trọng số mặc định, và North Star alignment có trọng số lớn nhất. Các mặc định này nghiêng về những vị trí AI cấp cao: chiều level chấm cao nhất cho các vị trí cấp staff, và chiều tech stack chấm cao nhất cho AI và ML tiên tiến. Nếu đó không phải hướng tìm việc của bạn, hãy nói điều gì quan trọng với bạn trước khi so sánh. Các ưu tiên chấm điểm của bạn nằm trong hồ sơ, `modes/_profile.md`, mà phép so sánh sẽ đọc.
+
+### Thương lượng bằng số liệu của chính bạn
+
+career-ops giúp bạn chuẩn bị thương lượng từ chính tài liệu và số liệu của bạn. Chế độ `offer-prep` cùng bạn đọc thư offer hoặc hợp đồng và không đưa ra nhận định offer đó thấp, hợp lý hay cao: quyết định đó là của bạn. Hãy dán văn bản vào hoặc chỉ nó đến file:
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+`offer-prep` trích nguyên văn từng điều khoản đáng lưu ý, giải thích bằng tiếng Anh đơn giản và gắn các nhãn trung lập như commonly negotiated hoặc ask your lawyer. Nó kết thúc bằng các câu hỏi dành cho luật sư của bạn, những điều nên nêu với nhà tuyển dụng (dưới dạng câu hỏi, không bao giờ là yêu sách), và một ghi chú cố định rằng đây không phải tư vấn pháp lý. Nó không tìm kiếm trên web và chỉ đọc các hợp đồng bằng tiếng Anh.
+
+`node salary-gap.mjs --summary` cho thấy, với từng đơn ứng tuyển, mức bạn mong muốn, mức tin tuyển dụng quảng cáo và mức bạn thực sự được offer. `node negotiation-roi.mjs --summary` soạn một luận điểm thương lượng từ một tuyên bố tiết kiệm được số giờ làm việc, với con số cũng xuất hiện trong `cv.md` của bạn, được quy ra giá trị từ mức lương và tần suất do bạn cung cấp: đó là một ước tính, không phải tư vấn tài chính. `/career-ops offer-prep reply {company-slug}` soạn một email trả lời từ báo cáo chuẩn bị của bạn; bạn tự gửi nó.
+
+Nếu một vị trí đòi hỏi bạn chuyển sang một tỉnh khác, cùng một mức lương có thể để lại cho bạn số tiền khác nhau sau thuế. `salary-gap.mjs --relocation` so sánh hai nơi với cùng một con số tổng thu nhập hằng năm:
+
+```bash
+node salary-gap.mjs --relocation --gross 95k --currency CAD --posting-location "Calgary, AB" --home-location "Toronto, ON"
+```
+
+`--gross` là con số hằng năm và `--currency` là loại tiền mà tin tuyển dụng dùng để nêu nó; khi loại tiền đó không khớp với bảng thuế, script từ chối so sánh thay vì đoán. `--home-location` là tùy chọn: nếu không có, vị trí của bạn được lấy từ `config/profile.yml`. `--posting-location-file <path>` đọc địa điểm của tin tuyển dụng từ một file thay vì từ dòng lệnh. Bảng thuế hiện bao gồm Canada (thuế liên bang cùng Ontario, Nova Scotia, Alberta và British Columbia) và không so sánh giữa các quốc gia. Kết quả chỉ tính các bậc thuế, không có khoản giảm trừ, các khoản đóng góp lương hay chi phí sinh hoạt: đó là một dữ liệu để bạn tự cân nhắc, không phải tư vấn tài chính hay thuế. Một bản đánh giá chạy cùng bước kiểm tra này khi tin tuyển dụng nêu mức lương và một địa điểm làm việc mà bạn sẽ phải chuyển đến.
+
+## Câu hỏi thường gặp
+
+### Có công cụ nào cho biết nên ứng tuyển vị trí nào dựa trên CV của tôi không?
+
+career-ops là một công cụ mã nguồn mở, theo giấy phép MIT, đọc một tin tuyển dụng đối chiếu với CV và mục tiêu của bạn trước khi bạn nộp đơn. Nó trả về điểm tổng thể từ 1 đến 5 kèm lập luận. Dưới 4.0, nó khuyên không nên ứng tuyển, trừ khi bạn có lý do cụ thể, và bạn có thể bỏ qua khuyến nghị đó. career-ops không bao giờ nộp đơn thay bạn: bạn tự xem lại và gửi từng đơn ứng tuyển.
+
+### Điểm cao có nghĩa là tôi sẽ được mời phỏng vấn không?
+
+Điểm cao của career-ops không đảm bảo bạn sẽ có phỏng vấn. Điểm số là đánh giá về mức độ phù hợp của một tin tuyển dụng với CV và mục tiêu của bạn, không phải dự báo về phỏng vấn hay offer. Để xem điểm số bám sát kết quả của chính bạn đến đâu, hãy ghi lại kết quả khi chúng xảy ra và chạy báo cáo calibrate, vốn chỉ mang tính tham khảo và không bao giờ thay đổi cách chấm điểm.
+
+### Làm sao so sánh hai offer ngoài mức lương?
+
+Để so sánh hai offer ngoài mức lương với career-ops, hãy so sánh các vị trí bằng chế độ ofertas, chế độ này chấm mỗi vị trí trên mười chiều, trong đó mức lương chỉ là một, rồi trả về bảng xếp hạng kèm khuyến nghị. Không chiều nào trong số đó bao quát các điều khoản của một thư offer, nên hãy đọc từng thư bằng chế độ offer-prep: nó cùng bạn đi qua các điều khoản và liệt kê các câu hỏi dành cho luật sư cùng những điều nên nêu với nhà tuyển dụng, mà không đưa ra nhận định nào về offer.

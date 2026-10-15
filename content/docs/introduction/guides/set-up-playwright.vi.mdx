@@ -1,0 +1,147 @@
+---
+title: Cài đặt Playwright
+description: Cài đặt và cấu hình Playwright để tự động hóa trình duyệt.
+seoTitle: "Cài đặt Playwright cho career-ops — thu thập tin tuyển dụng và xuất CV sang PDF"
+icon: Globe
+translationHash: 4bcbad1e28e7d6f3
+localized: true
+translatedFrom: /docs/introduction/guides/set-up-playwright
+---
+
+Hướng dẫn này đi qua ba bước cài đặt giúp career-ops có khả năng tự động hóa trình duyệt:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Cài đặt gói Playwright">
+        Cài đặt gói Node của Playwright
+      </Step>
+      <Step title="Tải Chromium">
+        Tải trình duyệt Chromium mà Playwright điều khiển
+      </Step>
+      <Step title="Cấu hình Playwright MCP">
+        Cấu hình Playwright MCP để Claude có thể thao tác trên trình duyệt ở bước apply
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+<Callout title="Trước khi bắt đầu">
+  Hoàn thành hướng dẫn [Bắt đầu nhanh](/docs). Bạn cần cài sẵn Node.js 22.13 trở lên (với Node 23 thì cần 23.4 trở lên) và đang đứng trong thư mục gốc của career-ops.
+</Callout>
+
+---
+
+## Cài đặt gói Playwright
+
+Chạy `npm install` từ thư mục gốc của career-ops:
+
+```bash title="Terminal"
+npm install
+```
+
+Lệnh này cài Playwright cùng mọi phụ thuộc khác của dự án được khai báo trong `package.json`. Bạn có thể bỏ qua bước này nếu đã chạy nó trong lúc cài đặt ban đầu.
+
+## Tải Chromium
+
+Playwright cần một bản Chromium riêng để điều khiển. Thông thường trình cài đặt sẽ tự tải bản này ngay sau khi cài các phụ thuộc; nếu `npm run doctor` báo thiếu, hãy tải bằng lệnh:
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+Đây là bước chỉ làm một lần. Bạn không cần lặp lại sau khi cập nhật `npm`.
+
+## Cấu hình Playwright MCP
+
+Playwright MCP cho phép Claude điều khiển trực tiếp trình duyệt trong bước `/career-ops apply` — mở các biểu mẫu ứng tuyển, đọc nhãn của từng trường và gợi ý câu trả lời.
+
+### Đăng ký MCP server
+
+Chạy lệnh sau từ thư mục gốc của career-ops để đăng ký Playwright MCP với Claude Code:
+
+```bash title="Terminal"
+claude mcp add --scope project playwright -- npx @playwright/mcp@latest
+```
+
+Đây là cách đăng ký một bước trong [tài liệu Playwright MCP](https://playwright.dev/docs/getting-started-mcp), có thêm `--scope project` để Claude Code ghi mục server vào `.mcp.json` ở thư mục gốc career-ops, một trong những tệp mà `npm run doctor` kiểm tra. Lần tới khi khởi động Claude Code tại đó, hãy chấp thuận server khi được hỏi.
+
+Nếu muốn dùng cho mọi dự án, hãy chạy lệnh với `--scope user`. `npm run doctor` không đọc các server ở phạm vi người dùng, nên nó sẽ cảnh báo rằng không phát hiện được MCP dù Claude Code vẫn tải nó bình thường.
+
+### Cấu hình thủ công (cách thay thế)
+
+Nếu muốn tự cấu hình, hãy thêm mục sau vào `.mcp.json` ở thư mục gốc career-ops (tạo tệp nếu chưa có):
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+Hãy khởi động lại Claude Code sau khi lưu tệp và chấp thuận server khi được hỏi. Khi đó career-ops sẽ dùng được `browser_navigate` và `browser_snapshot` trong các phiên apply.
+
+---
+
+## Kiểm tra cài đặt
+
+Chạy script doctor để xác nhận cả ba thành phần đã sẵn sàng:
+
+```bash title="Terminal"
+npm run doctor
+```
+
+Hãy tìm xác nhận rằng Playwright, Chromium và MCP server đều đã sẵn sàng. Nếu bước kiểm tra thành công, bạn đã cài đặt xong.
+
+---
+
+## Xem trình duyệt điền biểu mẫu
+
+Theo mặc định, Playwright MCP mở một cửa sổ trình duyệt hiển thị (phần cài đặt ở trên không truyền `--headless`), nên bạn có thể thấy từng trang nó đọc và từng trường nó điền.
+
+Để nó mở đơn ứng tuyển trong cửa sổ đó và điền toàn bộ biểu mẫu, hãy thêm một chỉ dẫn vào lệnh apply:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name} open up with playwright the browser and fill out the entire form
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+</Tabs>
+
+Nó soạn và điền, nhưng không bao giờ nộp. Bạn là người bấm Nộp.
+
+Với Ashby, Playwright có thể kiểm tra biểu mẫu và giúp soạn câu trả lời, nhưng hãy hoàn tất và nộp đơn trong trình duyệt thông thường của hệ thống. Hãy xác minh trang thành công hoặc email xác nhận trước khi đánh dấu đơn ứng tuyển là đã nộp.
+
+Nếu không có chỉ dẫn đó, career-ops vẫn dùng Playwright và MCP để đọc biểu mẫu và soạn câu trả lời cho bạn, trong cùng cửa sổ hiển thị đó.
+
+## Từng thành phần làm được gì
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Thành phần         | Mục đích                                                                                                          |
+    | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+    | Gói Playwright     | Thư viện lõi điều khiển việc tự động hóa trình duyệt                                                              |
+    | Chromium           | Hiển thị trang, tạo PDF chất lượng in qua `/career-ops pdf`, kiểm tra tin tuyển dụng còn mở hay không và vận hành các lượt quét ATS đầy đủ |
+    | Playwright MCP     | Cho phép career-ops mở biểu mẫu và gợi ý câu trả lời cho từng trường trong `/career-ops apply`                    |
+  </div>
+</div>

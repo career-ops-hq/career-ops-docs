@@ -1,0 +1,149 @@
+---
+title: Nộp đơn ứng tuyển
+description: Dùng career-ops để điền đơn ứng tuyển với câu trả lời được điều chỉnh theo hồ sơ của bạn và vị trí bạn muốn ứng tuyển.
+seoTitle: "Cách ứng tuyển với career-ops — soạn câu trả lời cho ATS, điều chỉnh CV theo từng vị trí"
+icon: FileInput
+translationHash: 48ee253fe9b589dd
+localized: true
+translatedFrom: /docs/introduction/guides/apply-for-a-job
+---
+
+Hướng dẫn này giúp bạn dùng `/career-ops apply` để điền biểu mẫu ứng tuyển với các câu trả lời được điều chỉnh theo hồ sơ, các bằng chứng năng lực của bạn và vị trí cụ thể bạn đang ứng tuyển.
+
+<Callout title="Trước khi bắt đầu">
+  Hãy chắc chắn bạn đã hoàn thành hướng dẫn [Quét cổng việc làm](/docs/introduction/guides/scan-job-portals). Lệnh `apply` phụ thuộc vào một báo cáo đánh giá đã có sẵn. Nếu chưa có báo cáo cho vị trí này, hãy chạy pipeline trước.
+</Callout>
+
+## Chạy lệnh apply
+
+Mở CLI tác tử AI của bạn trong thư mục gốc của career-ops và gõ:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name}
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+</Tabs>
+
+Ví dụ:
+
+```bash title="Claude Code"
+/career-ops apply Anthropic
+```
+
+career-ops tìm báo cáo tương ứng trong `reports/`, dùng Playwright để mở một cửa sổ trình duyệt và đọc biểu mẫu. Sau đó nó soạn câu trả lời cho các trường văn bản và trường tự luận được hỗ trợ. Hãy kiểm tra giới hạn của từng trường trước khi dán. Với Ashby, bạn cần dùng trình duyệt thông thường của hệ thống để hoàn tất và gửi đơn ứng tuyển.
+
+<Callout title="Lưu ý">
+  Nếu không có Playwright, career-ops sẽ chuyển sang dùng WebFetch để đọc biểu mẫu. Xem [Cài đặt Playwright](/docs/introduction/guides/set-up-playwright) nếu bạn muốn bật trải nghiệm đầy đủ dựa trên trình duyệt.
+</Callout>
+
+**Nếu bạn chạy lệnh `/career-ops apply` mà không có đối số**, hệ thống sẽ yêu cầu bạn cung cấp ngữ cảnh thủ công:
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Tùy chọn                      | Cách làm                                                                                           |
+    | ----------------------------- | -------------------------------------------------------------------------------------------------- |
+    | Chia sẻ ảnh chụp màn hình     | Chụp màn hình biểu mẫu và gửi vào cuộc trò chuyện. career-ops đọc trực tiếp được hình ảnh.         |
+    | Dán các câu hỏi               | Sao chép các câu hỏi của biểu mẫu dưới dạng văn bản và dán vào cuộc trò chuyện.                    |
+    | Nêu tên công ty và vị trí     | Gõ tên công ty và chức danh công việc. career-ops tìm trong `reports/` để khớp báo cáo.             |
+    | Chia sẻ URL của đơn ứng tuyển | Dán URL và career-ops sẽ điều hướng đến biểu mẫu.                                                  |
+  </div>
+</div>
+
+## Điền biểu mẫu
+
+Hệ thống trả về một danh sách đánh số các câu trả lời, mỗi trường một câu, theo đúng thứ tự của biểu mẫu. Hãy đi qua danh sách từ trên xuống dưới. Với mỗi câu trả lời dạng văn bản tự do, hãy đối chiếu số ký tự hoặc số từ `used/allowed` với trường thực tế trước khi dán. `limit unknown` nghĩa là bạn phải tự kiểm tra giới hạn trong biểu mẫu; nếu một câu trả lời không thể vừa giới hạn mà không mất các thông tin thiết yếu, hãy sửa lại trước khi dán.
+
+Kết quả gồm hai phần:
+
+**Câu trả lời** — mọi trường trong biểu mẫu, theo thứ tự:
+
+```
+1. Name
+   Andres Urdaneta
+
+2. Email
+   andres@example.com
+
+...
+
+12. Cover Letter (optional)
+    I've spent 5+ years shipping production Rails applications...
+```
+
+Các trường đơn giản như họ tên, email và câu hỏi có/không đứng đầu. Các trường văn bản tự do như thư xin việc nằm ở cuối.
+
+**Ghi chú chính** — một khối ngắn sau phần câu trả lời, nêu những điều đáng lưu ý trước khi bạn nộp:
+
+```
+Key notes:
+- No salary field — you'll negotiate at offer. Anchor to $160K–$175K at offer stage.
+- Add github.com/yourhandle to your resume PDF before uploading.
+- Cover letter is optional but the draft above is tight — worth including.
+```
+
+Mỗi câu trả lời được xây dựng từ một nguồn cụ thể, chủ yếu là báo cáo đánh giá của bạn:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Loại trường                   | Nguồn                                                 |
+    | ----------------------------- | ----------------------------------------------------- |
+    | Thư xin việc, "vì sao chọn vị trí này" | Các bằng chứng năng lực ở Block B + các câu chuyện STAR ở Block F |
+    | Câu hỏi văn bản tự do ngắn    | Bằng chứng năng lực hoặc câu chuyện liên quan nhất đến câu hỏi đó |
+    | Danh sách thả xuống, có/không | Câu trả lời lấy trực tiếp từ hồ sơ của bạn            |
+    | Nhà tuyển dụng cũ, chức danh, thời gian, mô tả công việc, kỹ năng, học vấn | CV đã được điều chỉnh cho báo cáo này, để biểu mẫu khớp với CV bạn tải lên. Nếu không tìm thấy, career-ops sẽ báo và dùng `cv.md` |
+    | Họ tên, thông tin liên hệ, tình trạng giấy phép lao động, mức lương | `config/profile.yml`, không CV nào ghi đè được |
+  </div>
+</div>
+
+<Callout title="Trường tải tệp lên">
+  Dùng tệp trong `output/` được tạo khi báo cáo được tạo. Nếu chưa có PDF, hãy chạy `/career-ops pdf` trước, rồi quay lại biểu mẫu. Xem [chế độ pdf](/docs/reference/modes/pdf).
+</Callout>
+
+## Nộp đơn ứng tuyển
+
+Hãy xem lại mọi câu trả lời, rồi tự bạn gửi biểu mẫu. Nó soạn và điền, nhưng không bao giờ nộp. Bạn là người bấm Nộp. career-ops không bao giờ nộp đơn thay bạn. Với Ashby, hãy hoàn tất và gửi đơn trong trình duyệt thông thường của hệ thống, không phải phiên Playwright. Hãy xác nhận đã thấy trang thành công hoặc email xác nhận trước khi báo cho career-ops rằng đơn đã được nộp.
+
+Sau khi nộp, hãy xác nhận trong cuộc trò chuyện:
+
+> "Submitted."
+
+career-ops sẽ:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Cập nhật trạng thái đơn ứng tuyển">
+        Cập nhật `data/applications.md` — đổi trạng thái từ `Evaluated` sang `Applied`
+      </Step>
+      <Step title="Lưu câu trả lời vào báo cáo">
+        Lưu các câu trả lời cuối cùng vào mục `## Application Answers` của báo cáo để tham khảo về sau
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## Việc cần làm tiếp theo
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Điểm              | Bước tiếp theo                                                                                                                                                                                   |
+    | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | **4.0 trở lên**   | Chạy `/career-ops contacto`. career-ops tìm một hiring manager hoặc thành viên trong nhóm trên LinkedIn và soạn tin nhắn tiếp cận. Gửi tin này trước khi đơn của bạn được xem xét sẽ giúp bạn dễ được chú ý hơn. |
+    | **Mọi mức điểm**  | Chạy `/career-ops tracker` để xem trạng thái hiện tại của mọi thứ trong pipeline của bạn.                                                                                                        |
+  </div>
+</div>

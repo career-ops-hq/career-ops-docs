@@ -1,0 +1,52 @@
+---
+title: deep
+description: "Tạo tài liệu nghiên cứu sâu về một công ty: lịch sử gọi vốn, đội ngũ lãnh đạo, tin tức báo chí gần đây, hướng phát triển sản phẩm, tín hiệu về khung lương và các dấu hiệu đáng ngại. Dùng trước khi ứng tuyển vào công ty từ Series B trở lên mà bạn chưa biết rõ."
+seoTitle: "Nghiên cứu sâu về công ty trước khi ứng tuyển với career-ops deep"
+icon: Search
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: cef52678d1e8b67a
+localized: true
+translatedFrom: /docs/reference/modes/deep
+---
+
+## Chế độ này làm gì
+
+Chế độ `deep` tạo ra một prompt nghiên cứu có cấu trúc cho công ty mà bạn đang cân nhắc, xoay quanh sáu trục: chiến lược AI của công ty, các động thái trong sáu tháng gần đây, văn hóa kỹ thuật, những thách thức kỹ thuật có thể họ đang gặp, đối thủ cạnh tranh và điểm khác biệt, và góc nhìn của bạn với tư cách ứng viên. Bạn dán prompt đó vào một công cụ nghiên cứu như Perplexity, Claude hoặc ChatGPT, và nó trả về một bản tóm tắt để bạn đọc trước buổi phỏng vấn. deep cá nhân hóa từng trục theo vị trí và công ty cụ thể.
+
+## Khi nào nên dùng
+
+Hãy dùng deep khi ứng tuyển vào công ty từ Series B trở lên, nơi quyết định có nộp đơn hay không, hoặc cách chuẩn bị phỏng vấn, cần nhiều thông tin hơn những gì JD cho bạn biết. Trục góc nhìn ứng viên lấy dữ liệu từ cv.md và profile.yml của bạn, nên bản tóm tắt trả về sẽ kết thúc bằng những gì riêng bạn mang lại, thay vì chỉ liệt kê các thông tin chung về công ty.
+
+## Một lần chạy trông như thế nào
+
+Đưa cho deep một công ty và một vị trí, nó sẽ viết ra prompt nghiên cứu sẵn sàng để dán. Mỗi trục trong sáu trục là một danh sách câu hỏi mà công cụ nghiên cứu cần trả lời, và trục cuối cùng đưa các phát hiện quay lại với chính bạn.
+
+```txt title="Example"
+> /career-ops deep notion
+
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
+```
+
+## Lưu ý
+
+Bản tóm tắt chỉ tốt bằng lượng thông tin công khai mà công cụ nghiên cứu tìm được. Các startup còn ở chế độ ẩn danh (stealth) sẽ cho kết quả sơ sài, và công cụ nào cũng có thể bịa ra một vòng gọi vốn hay tên một lãnh đạo. Hãy đối chiếu mọi thông tin với nguồn gốc trước khi đưa ra quyết định quan trọng dựa trên chúng.
+
+## Liên quan
+
+- [oferta](/docs/reference/modes/oferta)
+- [contacto](/docs/reference/modes/contacto)
+- [interview-prep](/docs/reference/modes/interview-prep)

@@ -113,6 +113,14 @@ canon_por_idioma:
     embudo: "740 个职位已评估 → 68 个已投递 → 12 次面试 → 1 份 offer"
     hitl: ["它起草、填写，但从不提交。由你点击提交。", "career-ops 从不替你提交申请。"]
     categoria: "开源的 AI 求职智能体"
+  vi:
+    # Fila VI (15-oct-2026). Vietnamita con «bạn». «tin tuyển dụng» es el anuncio
+    # y la oferta final es «offer» en latín (uso estándar del sector IT vietnamita).
+    # La restricción es el canon del sitio; el core no tiene README.vi.
+    anuncio_oferta: "tin tuyển dụng → offer"
+    embudo: "740 tin tuyển dụng đã đánh giá → 68 đơn đã nộp → 12 buổi phỏng vấn → 1 offer"
+    hitl: ["career-ops không bao giờ nộp đơn thay bạn", "Bạn là người bấm Nộp."]
+    categoria: "tác tử AI mã nguồn mở để tìm việc"
 
 rules:
   general: >

@@ -1,0 +1,37 @@
+---
+title: Các CLI AI được hỗ trợ
+seoTitle: "career-ops chạy được với CLI AI nào? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
+description: "career-ops không phụ thuộc vào một AI cụ thể: nó chạy trên mọi CLI lập trình AI lớn, nên bạn dùng trợ lý đang trả phí mà không bị khóa vào một nhà cung cấp. Danh sách đầy đủ và luôn được cập nhật nằm trong repo lõi."
+icon: Terminal
+translationHash: aba388df8b32db03
+localized: true
+translatedFrom: /docs/supported-clis
+---
+
+**career-ops chạy trên mọi CLI lập trình AI lớn, bạn không bị khóa vào bất kỳ nhà cung cấp nào.** career-ops cung cấp các file prompt để CLI thực thi (nó không đi kèm model riêng), nên bạn chỉ cần trỏ nó vào trợ lý lập trình AI mà bạn đang dùng và nó chạy trên engine đó mà không cần thay đổi gì. Khi có model tốt hơn ra mắt, bạn đổi CLI mà vẫn giữ nguyên pipeline, dữ liệu và thiết lập của mình.
+
+<Callout title="Dùng thứ bạn đã có">
+CLI tốt nhất cho career-ops là CLI bạn đang trả phí. Nếu bạn đã trả phí cho Claude Code, career-ops không cần thiết lập thêm gì. Nếu muốn chạy miễn phí, hãy xem [Thiết lập engine AI miễn phí](/docs/free-ai-engine).
+</Callout>
+
+## Những CLI nào được hỗ trợ?
+
+career-ops hỗ trợ trực tiếp **Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent và GitHub Copilot CLI**, tức mười một CLI lập trình AI đang được duy trì tích cực. (Gemini CLI chỉ còn là lớp bao tương thích cũ, đã chuyển sang Antigravity CLI.) Kiến trúc của career-ops dùng chung cho mọi CLI: một file `AGENTS.md` chuẩn duy nhất điều khiển logic, còn các file đầu vào mỏng cho từng CLI xử lý những khác biệt khi gọi từng công cụ.
+
+**Danh sách chuẩn, luôn được cập nhật, kèm lệnh chính xác để gọi career-ops trong từng CLI, nằm trong repo lõi** để không bao giờ lỗi thời:
+
+- [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md): bảng đầy đủ các CLI được hỗ trợ, các file đầu vào và cách gọi chúng (tương tác và headless/batch).
+
+## Pi
+
+Pi không cần file bao. Nó đọc `AGENTS.md` trong thư mục career-ops và tự tìm skill dùng chung, nên bạn chỉ cần chạy `pi` trong thư mục đó và gọi career-ops bằng `/skill:career-ops`, theo sau là chế độ bạn muốn. Với một lần chạy không cần giám sát, hãy dùng `pi -p "your prompt"`.
+
+Một số bản Pi yêu cầu bạn tin cậy dự án trước khi nạp các skill của nó. Nếu `/skill:career-ops` không khả dụng, hãy chạy `/trust` một lần trong thư mục rồi khởi động lại `pi`: quyết định tin cậy chỉ áp dụng cho các phiên Pi được bắt đầu sau đó. Để cài Pi, hãy làm theo [hướng dẫn của chính Pi](https://github.com/earendil-works/pi).
+
+## Nên chọn CLI nào?
+
+- **Nếu bạn đã trả phí cho Claude Code, Codex hoặc Copilot, hãy dùng CLI đó.** career-ops chạy ngay trên đó mà không cần thiết lập thêm: chỉ cần mở CLI trong thư mục career-ops.
+- **Để chạy career-ops với chi phí $0,** hãy dùng [OpenCode với nhà cung cấp miễn phí, model chạy cục bộ qua Ollama, hoặc trình chạy OpenRouter tích hợp sẵn](/docs/free-ai-engine).
+- **Nếu bạn cần một model hoặc nhà cung cấp cụ thể,** hãy trỏ bất kỳ CLI nào trong số này vào endpoint tương thích OpenAI hoặc model chạy cục bộ: career-ops không phụ thuộc vào model nào, và không có gì trong career-ops phải thay đổi.
+
+Dù bạn chọn CLI nào, [14 chế độ](/docs/reference/modes) của career-ops vẫn hoạt động như nhau: CLI là engine, còn career-ops là cấu trúc đặt trên đó.

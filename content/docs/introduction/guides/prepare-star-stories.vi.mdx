@@ -1,0 +1,168 @@
+---
+title: Chuẩn bị câu chuyện phỏng vấn bằng phương pháp STAR
+description: "Bị đơ khi nghe câu \"Hãy kể về một lần bạn…\"? career-ops soạn các câu chuyện STAR từ CV của bạn khi bạn đánh giá tin tuyển dụng, và giúp bạn luyện lại trước vòng phỏng vấn."
+seoTitle: "Cách chuẩn bị câu chuyện phỏng vấn STAR từ CV của bạn với career-ops"
+icon: NotebookPen
+translationHash: b992c17341a033d9
+localized: true
+translatedFrom: /docs/introduction/guides/prepare-star-stories
+---
+
+Để chuẩn bị câu chuyện STAR, hãy viết mỗi câu trả lời theo bốn phần Situation (Tình huống), Task (Nhiệm vụ), Action (Hành động) và Result (Kết quả), cộng thêm phần Reflection (Đúc kết) về điều bạn đã học được (STAR+R). career-ops soạn các câu chuyện này từ kinh nghiệm thật trong CV của bạn mỗi lần bạn đánh giá một tin tuyển dụng; bạn kiểm tra số liệu, chỉnh sửa và luyện lại trước vòng phỏng vấn.
+
+Nếu bạn hay bị đơ khi nghe "Hãy kể về một lần bạn…", đây là cách khắc phục. career-ops lưu các câu chuyện vào một kho câu chuyện (story bank), `interview-prep/story-bank.md`, và tạo tệp đó ngay lần đầu có câu chuyện để thêm vào. Nó tìm câu chuyện có điểm khớp cao nhất với một câu hỏi viết sẵn và cho bạn luyện trong một buổi phỏng vấn thử bằng văn bản.
+
+**Trong trang này:** [STAR+R](#what-is-a-star-story-and-what-does-the-r-add) · [Tạo kho câu chuyện](#how-do-you-start-your-story-bank) · [Câu chuyện đến từ đâu](#where-do-your-stories-come-from) · [Kho câu chuyện nằm ở đâu](#where-does-the-story-bank-live) · [Cấu trúc một mục](#what-does-a-star-story-entry-look-like) · [Giữ số liệu trung thực](#how-do-you-keep-the-numbers-in-your-stories-honest) · [Tìm câu chuyện phù hợp](#how-do-you-find-the-right-story-for-a-written-question) · [Ánh xạ câu chuyện theo công ty](#how-do-you-map-your-stories-to-a-companys-interviews) · [Luyện tập](#how-do-you-rehearse-your-stories-before-the-round) · [Sau buổi phỏng vấn](#what-happens-to-your-stories-after-the-interview) · [Các lệnh](#commands-at-a-glance) · [Câu hỏi thường gặp](#frequently-asked-questions)
+
+Trang này nói về các câu chuyện. Về toàn bộ vòng lặp lập kế hoạch, luyện tập và rút kinh nghiệm, xem [Chuẩn bị cho buổi phỏng vấn](/docs/introduction/guides/interview-modes).
+
+<Callout title="Trước khi bắt đầu">
+  career-ops cần có sẵn `cv.md` và `config/profile.yml`; phần [Bắt đầu nhanh](/docs) sẽ thiết lập cả hai. Các lệnh slash chạy trong phiên AI CLI của bạn; các lệnh `npm` và `node` chạy trong terminal ở thư mục career-ops. Nếu môi trường không có lệnh slash (ví dụ Codex không đảm bảo hỗ trợ), hãy yêu cầu cùng chế độ đó theo tên.
+</Callout>
+
+## STAR là gì, và chữ R thêm vào điều gì? [#what-is-a-star-story-and-what-does-the-r-add]
+
+Câu chuyện STAR là một câu trả lời phỏng vấn được kể theo bốn phần: Situation, Task, Action và Result. career-ops thêm phần thứ năm, Reflection, và gọi định dạng này là STAR+R. Reflection là điều bạn đã học được hoặc sẽ làm khác đi. career-ops thêm phần này vì nó thể hiện độ chín chắn: ứng viên junior mô tả chuyện đã xảy ra, ứng viên senior rút ra bài học.
+
+## Làm sao để tạo kho câu chuyện? [#how-do-you-start-your-story-bank]
+
+<Steps>
+  <Step title="Đánh giá một tin tuyển dụng">
+    Dán URL hoặc nội dung tin tuyển dụng sau `/career-ops` để chạy toàn bộ pipeline, hoặc chạy `/career-ops oferta` nếu chỉ cần phần đánh giá. Dù theo cách nào, phần đánh giá cũng soạn các câu chuyện STAR+R cho tin đó và thêm câu chuyện mới vào kho của bạn. Nếu `interview-prep/story-bank.md` chưa có trong thư mục dữ liệu của bạn (thư mục chứa `cv.md`), career-ops sẽ tạo nó trước từ mẫu kho câu chuyện.
+  </Step>
+  <Step title="Kiểm tra các câu chuyện mới">
+    Phần đánh giá thêm mỗi câu chuyện mới thành một mục theo cấu trúc nêu [bên dưới](#what-does-a-star-story-entry-look-like), đúng cấu trúc mà bộ so khớp câu chuyện đọc được, và bỏ qua mọi câu chuyện có tiêu đề đã nằm trong kho. Chạy `npm run star -- --list` để xem chúng, rồi sửa những gì bạn sẽ không nói trong buổi phỏng vấn.
+  </Step>
+  <Step title="So khớp với một câu hỏi">
+    Chạy `npm run star -- "<question>"` trong terminal để xem câu chuyện có điểm khớp cao nhất với câu hỏi đó.
+  </Step>
+</Steps>
+
+## Các câu chuyện của bạn đến từ đâu? [#where-do-your-stories-come-from]
+
+career-ops tạo câu chuyện của bạn ở ba nơi, mỗi nơi gắn với một tin tuyển dụng hoặc một buổi phỏng vấn:
+
+- **Khi bạn đánh giá một tin tuyển dụng.** Phần STAR+R của báo cáo đánh giá ([Block F](/docs/reference/modes/oferta)) viết 6 đến 10 câu chuyện từ CV của bạn, ánh xạ theo yêu cầu của tin tuyển dụng, và thêm các câu chuyện mới vào `interview-prep/story-bank.md` theo cấu trúc mục, tạo tệp nếu chưa có. Các lần chạy theo lô (batch) không được thiết lập để thêm vào kho.
+- **Khi bạn chuẩn bị cho một công ty.** Với mỗi câu hỏi có khả năng xuất hiện mà chưa có câu chuyện phù hợp, hồ sơ công ty chỉ ra một kinh nghiệm trong CV của bạn có thể trở thành câu chuyện, và soạn nó cùng bạn nếu bạn muốn.
+- **Sau một buổi phỏng vấn thật.** Nếu bạn đã kể một kinh nghiệm chưa có trong kho, phần rút kinh nghiệm (debrief) đề nghị biến nó thành câu chuyện STAR+R khi ký ức còn mới, và thêm vào nếu bạn đồng ý.
+
+Không có lệnh nào chuyển cả CV thành các câu chuyện chỉ bằng một lần.
+
+career-ops được chỉ dẫn phải hỏi bạn về mọi nhận định mà các tệp của chính bạn (`cv.md`, `article-digest.md`, `config/profile.yml`) không có cơ sở, và bỏ nó đi nếu bạn không bổ sung. Quy tắc đó nằm trong chỉ dẫn của career-ops, không nằm trong mã, vì vậy hãy kiểm tra các số liệu trong kho của bạn bằng bước kiểm tra nguồn gốc bên dưới.
+
+Phần đánh giá dựng mỗi câu chuyện theo loại vị trí bạn nhắm tới, và các loại vị trí mặc định là vị trí AI và công nghệ, vì vậy hãy nói cho career-ops biết về vị trí của bạn. Vài lần chạy đầu sẽ còn thô. Nó chưa biết bạn. Hãy trò chuyện với nó: CV của bạn, điều bạn muốn, điều bạn từ chối.
+
+<Callout title="Lưu ý">
+  `/career-ops interview` là buổi phỏng vấn làm quen để điền CV và hồ sơ của bạn. Để luyện tập, dùng `/career-ops interview/practice`.
+</Callout>
+
+## Kho câu chuyện nằm ở đâu? [#where-does-the-story-bank-live]
+
+Kho câu chuyện là `interview-prep/story-bank.md`, một tệp Markdown thường trong thư mục dữ liệu của bạn, cạnh `cv.md`. Nó thuộc lớp người dùng (user layer), nơi các bản cập nhật của career-ops không bao giờ động tới, và những gì bạn đặt trong `interview-prep/` được giữ ngoài git. Không có telemetry: khi career-ops xử lý các câu chuyện của bạn, chúng được gửi đến nhà cung cấp AI bạn đã chọn, và không đến đâu khác.
+
+## Một mục câu chuyện STAR trông như thế nào? [#what-does-a-star-story-entry-look-like]
+
+Hãy viết mỗi câu chuyện theo cấu trúc này. Bộ so khớp câu chuyện (`npm run star`) chỉ đọc các mục theo đúng cấu trúc đó. Giữ các nhãn bằng tiếng Anh, dù bạn viết câu chuyện bằng ngôn ngữ nào. Đừng dán nguyên ví dụ này vào kho của bạn: bộ so khớp sẽ tính nó là một câu chuyện. Các câu chuyện do career-ops thêm vào dùng nhãn dài, như `**S (Situation):**` và `**A (Action):**`; bộ so khớp đọc được cả hai dạng.
+
+```md title="Story entry shape (example)"
+### [Theme] Short title of the story
+**Source:** {where the story comes from: your CV, an evaluation, a debrief}
+**Situation:** {the context: as long as you need, on one line}
+**Task:** {what you had to do, on one line}
+**Action:** {what you did, on one line}
+**Result:** {what changed; a number only if your CV has it}
+**Reflection:** {what you learned or would do differently}
+**Best for questions about:** {comma-separated tags, e.g. conflict, deadline, stakeholders}
+**Provenance:** {add only after checking: source: cv.md if every number is in your CV, or user-stated YYYY-MM-DD}
+```
+
+Giữ mỗi trường trên một dòng: bộ so khớp chỉ đọc một trường đến hết dòng, và bỏ qua câu chuyện không có dòng Action. Một trường có thể là cả một đoạn văn miễn là nó nằm trên một dòng. Quy ước đầy đủ được mô tả ở phần đầu của [`story-provenance-check.mjs`](https://github.com/career-ops-hq/career-ops/blob/2b9fe7ea48b8ca98cf7f6b2b660654844c885adf/story-provenance-check.mjs#L72-L91).
+
+Hãy bỏ dòng Provenance cho đến khi bạn đã kiểm tra số liệu của câu chuyện. Một dấu hiệu bao trùm mọi số liệu trong câu chuyện, và bước kiểm tra nguồn gốc tin vào nó mà không đối chiếu những số đó với `cv.md`.
+
+## Làm sao giữ số liệu trong câu chuyện cho trung thực? [#how-do-you-keep-the-numbers-in-your-stories-honest]
+
+Theo quy tắc của career-ops, một con số hay nhận định về phạm vi trong kho câu chuyện chỉ được coi là sự thật nếu nó truy được về một tệp do bạn viết, chẳng hạn CV của bạn, hoặc câu chuyện của nó có dòng Provenance đã xác minh: `source: cv.md` hoặc `user-stated YYYY-MM-DD`. Các chế độ plan, practice và debrief vẫn đọc kho khi gợi ý câu trả lời, vì vậy hãy kiểm tra nó trước khi luyện tập:
+
+```bash
+node story-provenance-check.mjs --summary
+```
+
+Bước kiểm tra nguồn gốc là một script cục bộ chỉ đọc và báo cáo; nó không sửa tệp của bạn và không chặn gì cả. Nó chỉ đối chiếu số liệu trong các câu chuyện với `cv.md`, và báo cáo mọi con số mà `cv.md` không chứa cũng không hỗ trợ theo ngữ cảnh là derived-unverified, trừ khi câu chuyện của nó mang một trong hai dấu hiệu đã xác minh, mà bước kiểm tra tin theo đúng như được viết. Nó bỏ sót các con số viết bằng chữ, số tiền và các con số trơn.
+
+Với mỗi con số bị gắn cờ, bạn quyết định: xác nhận nó (thêm `**Provenance:** user-stated YYYY-MM-DD` vào câu chuyện), sửa lại, giữ câu chuyện mà bỏ con số, hoặc đặt dòng Provenance của câu chuyện thành `user-cannot-confirm` nếu bạn không biết. Dấu hiệu này bao trùm mọi con số trong câu chuyện đó.
+
+Khi bạn thừa nhận trong buổi luyện tập hoặc debrief rằng một nhận định sẽ không đứng vững, career-ops đề nghị thêm nó vào `interview-prep/retracted-claims.md`, và các chế độ plan, practice và debrief sẽ không dùng lại nó. Hồ sơ công ty, câu trả lời biểu mẫu và bộ so khớp câu chuyện không đọc tệp đó, vì vậy hãy gỡ nhận định ấy khỏi kho câu chuyện của bạn nữa.
+
+## Làm sao tìm câu chuyện phù hợp cho một câu hỏi viết sẵn? [#how-do-you-find-the-right-story-for-a-written-question]
+
+Bộ so khớp câu chuyện, `npm run star`, tìm trong kho của bạn câu chuyện có điểm khớp cao nhất với một câu hỏi viết sẵn, chẳng hạn một câu hỏi mở trong biểu mẫu ứng tuyển. Chạy nó trong terminal từ thư mục career-ops:
+
+```bash
+npm run star -- "Tell me about a time you disagreed with a decision"
+```
+
+Bộ so khớp câu chuyện là một script cục bộ: nó không gọi mô hình AI của bạn và không mở trình duyệt. Nó chấm điểm mỗi câu chuyện theo các từ khóa chung với câu hỏi. Một từ được tính nhiều nhất khi khớp với một tag của câu chuyện, ít hơn khi khớp với tiêu đề hoặc chủ đề, và ít nhất khi khớp với Action hoặc Result. Việc so khớp dùng đúng từ nguyên văn, nên "led" không khớp với "leadership": hãy viết tag bằng những từ mà các câu hỏi hay dùng.
+
+Bộ so khớp in ra câu chuyện có điểm cao nhất của bạn, các trường được nối lại như đã viết, tối đa 500 từ, kèm cảnh báo nếu dưới 250 từ. Khi không có câu chuyện nào được điểm, nó vẫn in một câu chuyện, theo sau là cảnh báo "No strong match found": hãy coi đó là một khoảng trống cần lấp.
+
+`npm run star` chạy `match-star.mjs`, nên bạn cũng có thể gọi trực tiếp script: `--jd` cho thêm trọng số với các câu chuyện có tag xuất hiện trong mô tả công việc đã lưu, `--top 2` hiển thị hai câu chuyện tốt nhất, và `--list` liệt kê mọi câu chuyện cùng tag của chúng.
+
+```bash
+node match-star.mjs "Describe a conflict you resolved" --jd jds/acme.md
+node match-star.mjs "Give an example of handling ambiguity" --top 2
+node match-star.mjs --list
+```
+
+Bộ so khớp đọc `interview-prep/story-bank.md` trong thư mục dữ liệu của bạn, thư mục chứa `cv.md`, nên nó theo cả thư mục dữ liệu riêng được đặt bằng `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` hoặc tệp `.career-ops-data`. Các phiên bản trước career-ops v1.36.0 chỉ đọc thư mục career-ops; `node update-system.mjs apply --confirm` sẽ cập nhật bản của bạn.
+
+Kết quả của bộ so khớp là câu chuyện của chính bạn, không phải câu trả lời viết riêng cho câu hỏi đó: hãy chỉnh sửa trước khi dán. Với cả một biểu mẫu ứng tuyển, career-ops soạn câu trả lời bằng `/career-ops apply`, dựa trên phần đánh giá và các câu chuyện STAR của nó. Nó đánh giá và soạn; bạn quyết định và gửi. career-ops không bao giờ nộp đơn thay bạn.
+
+## Làm sao ánh xạ câu chuyện của bạn theo buổi phỏng vấn của một công ty? [#how-do-you-map-your-stories-to-a-companys-interviews]
+
+Hồ sơ công ty, do `/career-ops interview-prep` tạo ra, ánh xạ mỗi câu hỏi có khả năng xuất hiện với câu chuyện tốt nhất của bạn, đánh giá mức phù hợp là mạnh, một phần hoặc không có, và chỉ ra một kinh nghiệm trong CV của bạn cho mỗi khoảng trống. Hãy cho nó biết công ty và vị trí. Với vị trí bạn chưa từng đánh giá, hãy yêu cầu chuẩn bị bằng URL của tin tuyển dụng (`/career-ops interview-prep <URL>`); nếu đã có báo cáo đánh giá, báo cáo đó được ưu tiên.
+
+Trong hồ sơ, mỗi câu hỏi được ghi nhận đều dẫn nguồn công khai, và các câu hỏi suy ra từ mô tả công việc được gắn `[inferred from JD]`. [Tài liệu tham khảo interview-prep](/docs/reference/modes/interview-prep) giải thích phần còn lại của tài liệu, được lưu tại `interview-prep/{company-slug}-{role-slug}.md`.
+
+Nếu bạn dán thư mời phỏng vấn, hồ sơ sẽ ghi chú nền tảng cuộc gọi, và thêm một khối ghi chú ngắn cho vòng có khả năng do người phỏng vấn AI thực hiện khi thư mời trỏ tới nền tảng người phỏng vấn AI duy nhất mà career-ops hiện đánh dấu. Việc đánh dấu chỉ ở mức cố gắng hết sức: nền tảng đó cũng gửi thư mời cho các vòng do người thật phỏng vấn, và liên kết Zoom, Teams hoặc Google Meet trong cùng thư mời được ưu tiên, nên sẽ không có ghi chú nào xuất hiện. Đó là một thông báo, không phải một chế độ chuẩn bị riêng.
+
+## Làm sao luyện các câu chuyện trước vòng phỏng vấn? [#how-do-you-rehearse-your-stories-before-the-round]
+
+Bắt đầu với `/career-ops interview/plan`. Đưa cho nó mô tả công việc và ngày giờ phỏng vấn, và kế hoạch chia theo khung giờ của nó sẽ có một khối cho các câu chuyện hành vi: ánh xạ câu chuyện của bạn với các dạng câu hỏi có khả năng xuất hiện, luyện bản hai phút của từng câu chuyện, và chuẩn bị từng phần Reflection.
+
+Buổi phỏng vấn thử, `/career-ops interview/practice`, là một phiên bằng văn bản: career-ops đóng vai người phỏng vấn, hỏi từng câu một, phản hồi sau mỗi câu trả lời, chỉ ra câu chuyện bạn dùng lặp lại và yêu cầu bổ sung phần Reflection còn thiếu. Trong phiên gõ chữ nó không thể bấm giờ cho bạn, nên nó kiểm tra cấu trúc thay vào đó; nhịp độ và từ đệm chỉ đánh giá được khi nói thành tiếng, vì vậy hãy tự ghi âm. [Chuẩn bị cho buổi phỏng vấn](/docs/introduction/guides/interview-modes) trình bày đầy đủ cả hai chế độ.
+
+Việc chuẩn bị câu chuyện không đảm bảo bạn có thêm buổi phỏng vấn hay một offer.
+
+## Điều gì xảy ra với các câu chuyện sau buổi phỏng vấn? [#what-happens-to-your-stories-after-the-interview]
+
+Phần debrief, `/career-ops interview/debrief`, biến một vòng phỏng vấn thật thành tư liệu cho vòng sau. Dán bản ghi (transcript), mà nó coi là dữ liệu trích dẫn chứ không bao giờ là chỉ dẫn, hoặc điểm lại các câu hỏi theo trí nhớ. Nó chấm từng câu trả lời, cập nhật `interview-prep/question-bank.md` (tạo mới ở lần đầu) và đề nghị biến bất kỳ kinh nghiệm nào bạn đã kể nhưng chưa từng viết ra thành một câu chuyện STAR+R. Khi bạn biết hình thức của vòng tiếp theo, nó dự đoán các câu hỏi có khả năng xuất hiện, mỗi câu được gắn nhãn `[inferred]`.
+
+Debrief cũng lưu vòng phỏng vấn thành một bản ghi có gắn nhãn người nói trong `interview-prep/sessions/`, được dựng lại từ lời kể của bạn nếu bạn debrief theo trí nhớ; các bản ghi này được giữ ngoài git vì chúng chứa tên thật.
+
+## Tóm tắt các lệnh [#commands-at-a-glance]
+
+| Lệnh                                        | Chức năng                                                                                                 |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `/career-ops <job URL or text>`             | Đánh giá tin tuyển dụng; thêm các câu chuyện STAR+R của nó vào kho, tạo tệp nếu cần                       |
+| `/career-ops interview-prep`                | Hồ sơ công ty: nghiên cứu có dẫn nguồn, câu hỏi có khả năng xuất hiện, câu chuyện của bạn đã ánh xạ, khoảng trống |
+| `/career-ops interview/plan`                | Kế hoạch chia theo khung giờ, có một khối cho các câu chuyện hành vi                                      |
+| `/career-ops interview/practice`            | Phỏng vấn thử bằng văn bản, từng câu một, phản hồi sau mỗi câu trả lời                                    |
+| `/career-ops interview/debrief`             | Sau một vòng thật: chấm các câu trả lời, kho câu hỏi, câu chuyện mới nếu bạn đồng ý                       |
+| `/career-ops interview-redflag`             | Dấu hiệu cảnh báo từ lượt nói của người phỏng vấn trong mọi phiên đã lưu; các phiên luyện tập cũng được tính, nên chỉ tin các phát hiện từ vòng thật |
+| `npm run star -- "<question>"`              | Tìm câu chuyện có điểm cao nhất cho một câu hỏi viết sẵn                                                  |
+| `node story-provenance-check.mjs --summary` | Phân loại các con số trong câu chuyện theo việc CV hoặc dòng Provenance đã xác minh có hỗ trợ chúng hay không |
+
+## Câu hỏi thường gặp [#frequently-asked-questions]
+
+### career-ops tạo câu chuyện STAR từ CV của tôi như thế nào?
+
+career-ops tạo các câu chuyện STAR+R từ kinh nghiệm trong CV của bạn cho mỗi tin tuyển dụng bạn đánh giá. Mỗi lần đánh giá chạy trong một phiên sẽ viết các câu chuyện ánh xạ theo tin đó và thêm câu chuyện mới vào interview-prep/story-bank.md, tạo tệp ở lần đầu tiên. Phần chuẩn bị phỏng vấn gợi ý các kinh nghiệm từ CV của bạn cho những câu hỏi mà bạn chưa có câu chuyện, và một buổi debrief có thể biến điều bạn kể trong buổi phỏng vấn thật thành câu chuyện mới.
+
+### Làm sao chuẩn bị câu chuyện STAR cho buổi phỏng vấn hành vi vào tuần tới?
+
+Để chuẩn bị câu chuyện STAR cho buổi phỏng vấn hành vi với career-ops, hãy đánh giá tin tuyển dụng trước: phần đánh giá soạn các câu chuyện STAR+R từ CV của bạn và thêm chúng vào interview-prep/story-bank.md, tạo tệp nếu chưa có. Sau đó /career-ops interview-prep ánh xạ các câu hỏi có khả năng xuất hiện với câu chuyện của bạn và chỉ ra các khoảng trống, /career-ops interview/plan chia thời gian còn lại thành các khối chuẩn bị, và /career-ops interview/practice cho bạn luyện bằng văn bản, từng câu hỏi một. Về nhịp độ, hãy tự ghi âm khi trả lời thành tiếng.
+
+### Các câu hỏi phỏng vấn trong career-ops đến từ đâu?
+
+career-ops lấy câu hỏi phỏng vấn từ các báo cáo phỏng vấn công khai, mô tả công việc và các vòng bạn đã debrief, với các bộ câu hỏi chung làm phương án dự phòng. Hồ sơ công ty dẫn nguồn cho từng câu hỏi được ghi nhận và gắn thẻ inferred from the JD cho các câu hỏi suy ra từ mô tả công việc. Buổi phỏng vấn thử dùng trước hết các câu hỏi từ debrief của bạn, rồi đến câu hỏi trong hồ sơ, rồi đến các bộ câu hỏi chung theo loại vòng. Hãy dùng chúng để chuẩn bị câu chuyện của bạn, không phải như một kịch bản.

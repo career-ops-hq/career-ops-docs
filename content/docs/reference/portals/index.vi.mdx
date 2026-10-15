@@ -1,0 +1,18 @@
+---
+title: Cổng tuyển dụng
+description: "Ba trong số các hệ thống quản lý tin tuyển dụng (ATS) mà career-ops quét, được trình bày chi tiết: Greenhouse, Ashby và Lever. Bản thân việc quét không tiêu tốn token AI nào."
+icon: Radar
+translationHash: 7861539d2cd00351
+localized: true
+translatedFrom: /docs/reference/portals
+---
+
+career-ops quét các hệ thống quản lý tin tuyển dụng (ATS) này thông qua API bảng tin tuyển dụng công khai của chúng, nên bản thân việc quét không tiêu tốn token AI nào. Mỗi trang trình bày bộ quét làm gì, career-ops giao tiếp với hệ thống đó ra sao và những điểm cần lưu ý.
+
+Đây chỉ là ba trong số nhiều hệ thống. Bộ quét còn đọc được cả những ATS và trang tuyển dụng khác; danh sách đầy đủ nằm ở mục [Supported Job Boards](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md) trong kho mã nguồn chính.
+
+- **[Greenhouse](/docs/reference/portals/greenhouse)** — career-ops gọi trực tiếp API bảng tin tuyển dụng công khai của Greenhouse. Không cần cào HTML, không có rủi ro vượt giới hạn tốc độ, và bản thân việc quét không tiêu tốn token AI nào.
+- **[Ashby](/docs/reference/portals/ashby)** — Ashby là lựa chọn ATS hiện đại của các startup vòng Series A–C trong lĩnh vực AI và công cụ cho lập trình viên. career-ops gọi trực tiếp API bảng tin tuyển dụng công khai.
+- **[Lever](/docs/reference/portals/lever)** — Lever là ATS lâu đời dành cho các công ty quy mô vừa và giai đoạn tăng trưởng. career-ops gọi trực tiếp API tin đăng công khai của Lever.
+
+Để quét đồng thời trên tất cả các cổng này, xem [Quét cổng tuyển dụng](/docs/introduction/guides/scan-job-portals).

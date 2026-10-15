@@ -1,0 +1,67 @@
+---
+title: interview-prep
+description: "career-ops interview-prep tạo một tài liệu thông tin phỏng vấn riêng cho từng công ty và vị trí, chia theo người ngồi đối diện bạn — nhà tuyển dụng, quản lý tuyển dụng, đồng nghiệp kỹ thuật hoặc hội đồng phỏng vấn — kèm các câu hỏi có thể gặp, ý chính nên nói và những câu chuyện STAR lấy từ chính hồ sơ của bạn."
+seoTitle: "Chuẩn bị phỏng vấn theo từng vòng với career-ops interview-prep"
+icon: GraduationCap
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 9f9b6324137f1386
+localized: true
+translatedFrom: /docs/reference/modes/interview-prep
+---
+
+**interview-prep** của career-ops biến một buổi phỏng vấn đã lên lịch thành một tài liệu làm việc có đầy đủ thông tin. Bạn nêu tên công ty và vị trí — hoặc đưa vào một tin tuyển dụng mà bạn chưa từng đánh giá chính thức — rồi nó tìm hiểu quy trình tuyển dụng, phân loại từng vòng theo người phụ trách (vòng sàng lọc với nhà tuyển dụng, quản lý tuyển dụng, đồng nghiệp kỹ thuật hoặc hội đồng phỏng vấn), và soạn các câu hỏi mỗi vòng có khả năng đặt ra, kèm câu trả lời nháp lấy từ chính kinh nghiệm của bạn. Mỗi câu hỏi hoặc được lấy từ các bài đánh giá phỏng vấn công khai tìm được qua web search (ví dụ trên Glassdoor hay Blind), hoặc được gắn thẻ `[inferred from JD]`. Kết quả là một tài liệu chuẩn bị được lưu lại, không phải một cuộc trò chuyện.
+
+## Nó làm gì
+
+interview-prep đọc bối cảnh về công ty (tốt nhất là đã được bổ sung qua `deep` hoặc `oferta`), mô tả công việc và hồ sơ của bạn, sau đó tạo ra một tài liệu chuẩn bị duy nhất, giới hạn trong các vòng mà quy trình của công ty được cho là có. Tài liệu gồm các dạng câu hỏi dự kiến theo từng đối tượng phỏng vấn, các ý chính riêng cho kinh nghiệm của bạn, và những câu chuyện STAR viết sẵn để bạn điều chỉnh ngay khi phỏng vấn. Khi đã có báo cáo đánh giá cho vị trí đó, báo cáo ấy là nguồn chuẩn; khi bạn đưa URL của một vị trí chưa từng đánh giá, interview-prep tự lấy JD — ưu tiên API ATS có cấu trúc, sau đó đến Playwright, với phương án headless dự phòng — và yêu cầu bạn dán nội dung tin tuyển dụng nếu tin đã đóng.
+
+## Khi nào nên dùng
+
+Hãy chạy interview-prep khi đã có lịch một vòng phỏng vấn — nó tạo ra một tài liệu duy nhất, mỗi đối tượng trong quy trình có một phần riêng: phần dành cho nhà tuyển dụng gồm chuẩn bị đàm phán lương, phần quản lý tuyển dụng nói về mức độ phù hợp với vị trí, phần đồng nghiệp kỹ thuật bao gồm kiến trúc và lập trình, còn phần hội đồng phỏng vấn nói về tín hiệu lãnh đạo. career-ops cũng được chỉ dẫn chạy mode này khi một vị trí đạt điểm từ 4.0 trở lên chuyển sang `Interview` trong tracker của bạn.
+
+interview-prep là bước **nghiên cứu** — tài liệu thông tin bạn đọc trước buổi phỏng vấn. Nó khác với các mode luyện phỏng vấn tương tác là `plan`, `practice` và `debrief`, những mode giúp bạn tập trực tiếp và xem lại một vòng sau khi kết thúc; chúng liên kết với nhau (kết quả debrief sẽ quay lại làm tư liệu cho interview-prep ở lần sau). Về các mode luyện tập này, xem [hướng dẫn các mode phỏng vấn](/docs/introduction/guides/interview-modes).
+
+## Một lần chạy trông như thế nào
+
+Bạn nêu tên công ty và vị trí, mode trả về một báo cáo thông tin phỏng vấn giới hạn trong các vòng mà quy trình của công ty được cho là có. Nó tìm hiểu quy trình, phân loại từng vòng theo đối tượng — vòng sàng lọc với nhà tuyển dụng, quản lý tuyển dụng, đồng nghiệp kỹ thuật hoặc hội đồng phỏng vấn — và soạn các câu hỏi có thể gặp, gắn mỗi câu với một nguồn trích dẫn hoặc nhãn `[inferred from JD]`.
+
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
+```
+
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
+```
+
+Báo cáo cũng ghép các câu chuyện trong `story-bank.md` của bạn với từng câu hỏi có thể gặp, và đánh dấu những chỗ trống mà bạn chưa chuẩn bị câu chuyện nào. Nếu muốn lấp chỗ trống, nó cùng bạn soạn câu chuyện STAR+R còn thiếu và lưu vào `interview-prep/story-bank.md` theo đúng cấu trúc mục mà bộ ghép câu chuyện (`npm run star`) đọc được, đồng thời tạo kho câu chuyện từ mẫu nếu chưa có.
+
+## Khi nào nên dùng đến nó
+
+Hãy dùng interview-prep khi một vòng phỏng vấn đã được lên lịch và bạn muốn có một tài liệu làm việc thay vì lời khuyên chung chung. Vài điều giúp kết quả sắc nét hơn:
+
+- Chạy `oferta` hoặc `deep` cho công ty đó trước. Bước chuẩn bị đọc báo cáo đánh giá để lấy archetype, các điểm còn thiếu và những bằng chứng phù hợp, nên càng nhiều ngữ cảnh thì câu hỏi càng cụ thể.
+- Dán tên người phỏng vấn hoặc lịch phỏng vấn khi bạn có. Với hội đồng phỏng vấn, mode sẽ lập nhận định riêng cho từng người và soạn một câu hỏi kết thúc phù hợp cho từng vị trí.
+- Nếu bạn đã nêu một mức lương mong muốn cho vị trí này, phần dành cho nhà tuyển dụng sẽ đưa mức đó vào — career-ops đọc con số bạn đã nói để phần chuẩn bị đàm phán lương dựa trên những gì bạn thực sự đã nói, không phải phỏng đoán.
+- Đọc các thẻ gắn kèm: câu hỏi có nguồn sẽ trích dẫn bài đánh giá mà nó lấy từ đó, câu hỏi suy luận mang nhãn `[inferred from JD]`. Hãy coi câu hỏi suy luận là có khả năng xảy ra, không phải là những gì chắc chắn bạn sẽ được hỏi.
+
+## Liên quan
+
+- [deep](/docs/reference/modes/deep)
+- [contacto](/docs/reference/modes/contacto)
+- [oferta](/docs/reference/modes/oferta)
