@@ -65,8 +65,9 @@ export const homeIt: HomeDict = {
       Ashby e Lever, scansiona oltre 150 fonti di annunci senza consumare token e
       segue il funnel in una dashboard da terminale scritta in Go. Tutto resta sul
       tuo computer: {brand('niente cloud')}, {brand('niente telemetria')},{' '}
-      {brand('niente account')}. Licenza MIT e gratis per sempre; l&rsquo;unico
-      costo è la CLI di programmazione AI che paghi già. Creato da Santiago
+      {brand('niente account')}. Licenza MIT e gratis per sempre; l&rsquo;unica
+      cosa che potresti pagare è il motore AI che scegli, e funzionano anche i modelli
+      gratuiti e locali. Creato da Santiago
       Fernández de Valderrama Aparicio dopo una vera ricerca di lavoro nel 2026:
       740 annunci, 68 candidature, 12 colloqui e una proposta di assunzione.
     </>
@@ -286,7 +287,7 @@ export const homeIt: HomeDict = {
           computer tramite la CLI di programmazione AI che usi già e pubblica la
           griglia di valutazione completa. Una persona decide ogni candidatura;
           career-ops non invia mai nulla da solo. Non c&rsquo;è account, telemetria né abbonamento
-          di career-ops; l&rsquo;unico costo ricorrente è la CLI AI che scegli. Per
+          di career-ops; l&rsquo;unico costo ricorrente, se c&rsquo;è, è il motore AI che scegli. Per
           confronti onesti, fianco a fianco, con strumenti specifici, vedi{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare
