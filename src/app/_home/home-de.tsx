@@ -63,8 +63,8 @@ export const homeDe: HomeDict = {
       Jobquellen ohne Token-Verbrauch und verfolgt deine Pipeline in einem
       Terminal-Dashboard, geschrieben in Go. Alles bleibt auf deinem Rechner:{' '}
       {brand('keine Cloud')}, {brand('keine Telemetrie')}, {brand('kein Konto')}.
-      MIT-lizenziert und für immer kostenlos; du zahlst nur die KI-Coding-CLI,
-      die du ohnehin nutzt. Entwickelt von Santiago Fernández de Valderrama
+      MIT-lizenziert und für immer kostenlos; bezahlen musst du höchstens die
+      KI-Engine, die du wählst, und kostenlose und lokale Modelle funktionieren auch. Entwickelt von Santiago Fernández de Valderrama
       Aparicio nach einer echten Jobsuche im Jahr 2026: 740 Stellenanzeigen, 68
       Bewerbungen, 12 Vorstellungsgespräche und ein Jobangebot.
     </>

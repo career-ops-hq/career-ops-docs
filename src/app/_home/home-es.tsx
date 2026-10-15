@@ -58,8 +58,8 @@ export const homeEs: HomeDict = {
       150 fuentes de empleo sin gastar tokens y hace el seguimiento del
       pipeline en un panel de terminal escrito en Go. Todo vive en tu máquina:{' '}
       {brand('sin nube')}, {brand('sin telemetría')}, {brand('sin cuenta')}. Con
-      licencia MIT y gratis para siempre; el único coste es el CLI de IA que ya
-      pagas. Lo creó Santiago Fernández de Valderrama Aparicio tras una búsqueda
+      licencia MIT y gratis para siempre; lo único que podrías pagar es el motor de
+      IA que elijas, y los modelos gratuitos y locales también funcionan. Lo creó Santiago Fernández de Valderrama Aparicio tras una búsqueda
       de empleo real en 2026: 740 vacantes evaluadas, 68 candidaturas, 12
       entrevistas y una oferta.
     </>

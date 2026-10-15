@@ -66,8 +66,8 @@ export const homePt: HomeDict = {
       Ashby e do Lever, varre mais de 150 fontes de vagas sem gastar tokens e
       acompanha o funil em um painel no terminal escrito em Go. Tudo fica no seu
       computador: {brand('sem nuvem')}, {brand('sem telemetria')},{' '}
-      {brand('sem conta')}. Licença MIT e gratuito para sempre; o único custo é a
-      CLI de programação com IA que você já paga. Criado por Santiago Fernández
+      {brand('sem conta')}. Licença MIT e gratuito para sempre; a única coisa que você talvez pague é o
+      motor de IA que escolher, e modelos gratuitos e locais também funcionam. Criado por Santiago Fernández
       de Valderrama Aparicio depois de uma busca de emprego real em 2026: 740
       vagas, 68 candidaturas, 12 entrevistas e uma proposta.
     </>

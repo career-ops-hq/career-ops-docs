@@ -65,8 +65,9 @@ export const homeIt: HomeDict = {
       Ashby e Lever, scansiona oltre 150 fonti di annunci senza consumare token e
       segue il funnel in una dashboard da terminale scritta in Go. Tutto resta sul
       tuo computer: {brand('niente cloud')}, {brand('niente telemetria')},{' '}
-      {brand('niente account')}. Licenza MIT e gratis per sempre; l&rsquo;unico
-      costo è la CLI di programmazione AI che paghi già. Creato da Santiago
+      {brand('niente account')}. Licenza MIT e gratis per sempre; l&rsquo;unica
+      cosa che potresti pagare è il motore AI che scegli, e funzionano anche i modelli
+      gratuiti e locali. Creato da Santiago
       Fernández de Valderrama Aparicio dopo una vera ricerca di lavoro nel 2026:
       740 annunci, 68 candidature, 12 colloqui e una proposta di assunzione.
     </>

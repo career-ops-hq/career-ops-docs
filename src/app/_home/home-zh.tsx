@@ -63,8 +63,8 @@ export const homeZh: HomeDict = {
       分）的评分标准，对照你的简历评估职位，为每个职位生成针对 ATS 优化的定制 PDF 简历，为
       Greenhouse、Ashby 和 Lever 表单中的开放式问题起草答案，零 token 扫描 150 多个职位来源，并在一个用
       Go 编写的终端仪表板里跟踪整个求职流程。你的文件默认保存在你的电脑上：{brand('没有云端')}、
-      {brand('没有遥测')}、{brand('不用注册账号')}。采用 MIT 许可证，永久免费；唯一的成本是你已经在付费的
-      AI 编程 CLI。由 Santiago Fernández de Valderrama Aparicio 在 2026 年一次真实的求职之后打造：740
+      {brand('没有遥测')}、{brand('不用注册账号')}。采用 MIT 许可证，永久免费；你唯一可能需要付费的是你选择的 AI
+      引擎，而且免费模型和本地模型也能用。由 Santiago Fernández de Valderrama Aparicio 在 2026 年一次真实的求职之后打造：740
       个职位、68 份申请、12 次面试、1 份 offer。
     </>
   ),

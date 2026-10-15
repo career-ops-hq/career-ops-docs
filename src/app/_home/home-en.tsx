@@ -52,8 +52,8 @@ export const homeEn: HomeDict = {
       forms, scans 150+ job sources zero-token, and tracks the pipeline in a
       Go-based terminal dashboard. Everything lives on your machine:{' '}
       {brand('no cloud')}, {brand('no telemetry')}, {brand('no account')}.
-      MIT-licensed and free forever; the only cost is whichever AI coding CLI you
-      already pay for. Built by Santiago Fernández de Valderrama Aparicio after a
+      MIT-licensed and free forever; the only thing you might pay for is the AI
+      engine you choose, and free and local models work too. Built by Santiago Fernández de Valderrama Aparicio after a
       real 2026 job search of 740 listings, 68 applications, 12 interviews, and
       one offer.
     </>
