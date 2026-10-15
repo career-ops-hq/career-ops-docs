@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     description: CAREEROPS_DEFINITION_ES,
     images: [
       {
-        url: 'https://career-ops.org/og-manifesto.png',
+        url: 'https://career-ops.org/og-manifesto.es.png',
         width: 1200,
         height: 630,
         alt: 'El Manifiesto CareerOps. ¿De qué lado está tu agente?',
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'El Manifiesto CareerOps',
     description: CAREEROPS_DEFINITION_ES,
-    images: ['https://career-ops.org/og-manifesto.png'],
+    images: ['https://career-ops.org/og-manifesto.es.png'],
   },
   robots: { index: true, follow: true },
 };

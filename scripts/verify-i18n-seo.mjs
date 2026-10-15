@@ -24,6 +24,11 @@
 //     the noindex variant away from Googlebot;
 //   - /index, /docs/index and every /<locale>/docs/index answer 308 to their
 //     canonical URL;
+//   - share cards in the page's language: a translated page whose og:image is
+//     an English card fails, and so does a home whose card is byte for byte
+//     the English home card (until 15 Oct 2026 /fr, /de, /pt, /it and /zh all
+//     shared the English one under their own URL); og-banner.<locale>.jpg, the
+//     fallback card of each language, must be byte for byte its home card;
 //   - share-card URLs already out in the world (cached by social networks,
 //     linked from pages) still end in an image, directly or after one redirect:
 //     a route moved into a group changes the generated image's path (Oct 2026);
@@ -44,6 +49,7 @@
 // Node builtins only, so CI runs the selftest before npm ci.
 
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const SITE = 'https://career-ops.org';
@@ -69,6 +75,13 @@ const ALLOWED_EN_REMOVALS = [];
 // Public image URLs that must keep working: the EN home's share card under its
 // pre-October-2026 name, and a signatory's wide card at its stable path. Both
 // are cached by social networks and the second is linked from /manifesto.
+// English share cards. A page under /<locale>/ must not use any of them.
+const ENGLISH_CARDS = [
+  /\/og-banner\.jpg$/,
+  /\/og-manifesto\.png$/,
+  /^https:\/\/career-ops\.org\/opengraph-image/,
+  /\/og\/docs\/(?:.*\/)?image\.png$/,
+];
 const STABLE_IMAGE_URLS = ['/opengraph-image-12gd74.jpg', '/manifesto/s/santifer/opengraph-image'];
 
 // ---------------------------------------------------------------- parsing
@@ -196,6 +209,11 @@ function check(snap, opts = {}) {
       fail('share-image', path, `no ${[!h.ogImage && 'og:image', !h.twitterImage && 'twitter:image'].filter(Boolean).join(' or ')}`);
     }
 
+    // share card in the page's language
+    if (locale !== DEFAULT_LOCALE && h.ogImage && ENGLISH_CARDS.some((re) => re.test(h.ogImage))) {
+      fail('share-image-language', path, `og:image is an English card (${pathOf(h.ogImage)})`);
+    }
+
     // canonical
     if (h.canonical !== loc) fail('canonical', path, `canonical is ${h.canonical ?? '(none)'}, expected ${loc}`);
 
@@ -278,6 +296,21 @@ function check(snap, opts = {}) {
     }
   }
 
+  // each home's card is its own, and og-banner.<locale>.jpg is a copy of it
+  if (snap.cardHashes) {
+    for (const l of locales) {
+      const home = snap.cardHashes[`/${l}`];
+      if (!home) fail('share-image-language', `/${l}`, 'the home card could not be fetched');
+      else if (home === snap.cardHashes['/']) fail('share-image-language', `/${l}`, 'the home card is byte for byte the English home card');
+    }
+    for (const l of [DEFAULT_LOCALE, ...locales]) {
+      const banner = snap.bannerHashes?.[l];
+      const home = snap.cardHashes[l === DEFAULT_LOCALE ? '/' : `/${l}`];
+      const file = l === DEFAULT_LOCALE ? '/og-banner.jpg' : `/og-banner.${l}.jpg`;
+      if (!banner || banner !== home) fail('og-banner-copy', file, banner ? 'differs from the home card of its language' : 'could not be fetched');
+    }
+  }
+
   // share cards that must still end in an image
   for (const path of STABLE_IMAGE_URLS) {
     const r = snap.stableImages?.[path];
@@ -357,6 +390,23 @@ async function collect() {
     if (isDocs(p, locales)) snap.mdTwins[p] = await fetchOne(`${p}.md`);
   });
   await pool(indexRedirects(locales), async ([from]) => { snap.redirects[from] = await fetchOne(from); });
+  const hashOf = async (url) => {
+    try {
+      const res = await fetch(`${BASE}${pathOf(url).replace(/^https?:\/\/[^/]+/, '')}`);
+      return res.ok ? createHash('sha1').update(Buffer.from(await res.arrayBuffer())).digest('hex') : null;
+    } catch {
+      return null;
+    }
+  };
+  snap.cardHashes = {};
+  snap.bannerHashes = {};
+  await pool(['/', ...locales.map((l) => `/${l}`)], async (p) => {
+    const og = snap.pages[p]?.status === 200 ? parseHead(snap.pages[p].body).ogImage : null;
+    snap.cardHashes[p] = og ? await hashOf(og) : null;
+  });
+  await pool([DEFAULT_LOCALE, ...locales], async (l) => {
+    snap.bannerHashes[l] = await hashOf(l === DEFAULT_LOCALE ? '/og-banner.jpg' : `/og-banner.${l}.jpg`);
+  });
   snap.stableImages = {};
   await pool(STABLE_IMAGE_URLS, async (p) => {
     let r = await fetchOne(p);
@@ -418,12 +468,13 @@ function fixture() {
     entry(`${S}/docs/faq`, clusterFaq), entry(`${S}/de/docs/faq`, clusterFaq),
     entry(`${S}/about`, null),
   ].join('')}</urlset>`;
+  const card = (lang) => (lang === 'en' ? 'og-banner.jpg' : `og-banner.${lang}.jpg`);
   const html = ({ lang, canonical, cluster, og, meta }) => `<!DOCTYPE html><html lang="${lang}"><head>` +
     (meta ? `<meta http-equiv="content-language" content="${meta}"/>` : '') +
     `<link rel="canonical" href="${canonical}"/>` +
     (cluster ? Object.entries(cluster).map(([k, v]) => `<link rel="alternate" hrefLang="${k}" href="${v}"/>`).join('') : '') +
     (og ? `<meta property="og:locale" content="${og}"/>` : '') +
-    `<meta property="og:image" content="${S}/og-banner.jpg"/><meta name="twitter:image" content="${S}/og-banner.jpg"/>` +
+    `<meta property="og:image" content="${S}/${card(lang)}"/><meta name="twitter:image" content="${S}/${card(lang)}"/>` +
     '</head><body>x</body></html>';
   const ok = (body, extra = {}) => ({ status: 200, headers: { 'content-type': 'text/html; charset=utf-8', vary: 'rsc, Accept', ...extra }, body });
   const md = { status: 200, headers: { 'content-type': 'text/markdown; charset=utf-8', vary: 'Accept', 'x-robots-tag': 'noindex' }, body: '# x' };
@@ -444,6 +495,8 @@ function fixture() {
       '/de/index': redirect('/de'), '/de/docs/index': redirect('/de/docs'),
     },
     prodSitemap: sitemap,
+    cardHashes: { '/': 'card-en', '/de': 'card-de' },
+    bannerHashes: { en: 'card-en', de: 'card-de' },
     stableImages: Object.fromEntries(STABLE_IMAGE_URLS.map((p) => [p, { status: 200, type: 'image/png', first: 308, hops: 1 }])),
   };
 }
@@ -477,6 +530,9 @@ const SABOTAGE = [
   ['md-noindex', (s) => { delete s.negotiated['/docs/faq'].headers['x-robots-tag']; }],
   ['md-twin-noindex', (s) => { delete s.mdTwins['/de/docs/faq'].headers['x-robots-tag']; }],
   ['head', (s) => edit(s, '/about', '</head>', '')],
+  ['share-image-language', (s) => edit(s, '/de/docs/faq', '<meta property="og:image" content="https://career-ops.org/og-banner.de.jpg"', '<meta property="og:image" content="https://career-ops.org/og-banner.jpg"')],
+  ['share-image-language', (s) => { s.cardHashes['/de'] = 'card-en'; s.bannerHashes.de = 'card-en'; }],
+  ['og-banner-copy', (s) => { s.bannerHashes.de = 'card-de-old'; }],
   ['share-image', (s) => edit(s, '/about', '<meta property="og:image"', '<meta property="og:image:alt"')],
   ['x-default-missing', (s) => {
     s.sitemap = s.sitemap.split('<xhtml:link rel="alternate" hreflang="x-default" href="https://career-ops.org/docs/faq"/>').join('');

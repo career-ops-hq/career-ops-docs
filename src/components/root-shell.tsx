@@ -11,7 +11,7 @@ import { LocaleRootProvider, type SiteLocale } from '@/components/locale-root-pr
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { UI } from '@/lib/ui-strings';
-import { DEFAULT_OG_IMAGE } from '@/lib/shared';
+import { OG_IMAGE_BY_LOCALE } from '@/lib/shared';
 
 import type { Metadata } from 'next';
 
@@ -28,10 +28,16 @@ import type { Metadata } from 'next';
 // metadata one key deep, so a page that defines openGraph WITHOUT images
 // drops this fallback; verify-i18n-seo fails any sitemap URL left without
 // og:image or twitter:image, which catches that case.
-export const rootMetadata: Metadata = {
-  metadataBase: new URL('https://career-ops.org'),
-  openGraph: { images: [DEFAULT_OG_IMAGE] },
-};
+// The fallback card is the one of the page's language (rootMetadataFor), so a
+// Chinese page without a card of its own shares the Chinese home card.
+export function rootMetadataFor(locale: SiteLocale): Metadata {
+  return {
+    metadataBase: new URL('https://career-ops.org'),
+    openGraph: { images: [OG_IMAGE_BY_LOCALE[locale]] },
+  };
+}
+
+export const rootMetadata: Metadata = rootMetadataFor('en');
 
 // Social brand marks as inline SVG (the installed lucide-react 1.8.0
 // predates Lucide's brand-icon set; using canonical brand paths keeps
