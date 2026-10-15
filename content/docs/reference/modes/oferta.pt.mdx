@@ -5,7 +5,7 @@ seoTitle: "Modo oferta do career-ops: avalie uma vaga de emprego antes de se can
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-10-14"
-translationHash: 9a968f6bcb8dda55
+translationHash: b83fcc555a6b78e7
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -20,7 +20,7 @@ Use o oferta para fazer a triagem rápida de uma vaga que deixa você em dúvida
 
 ## Como é uma execução
 
-Você entrega uma vaga ao modo e ele devolve a avaliação em sete blocos — os Blocos A a F e um Bloco G com a leitura de legitimidade, além do Bloco H com rascunhos de respostas quando a nota é 4,5 ou mais — com uma nota e o raciocínio citado. Cole o texto da vaga diretamente ou passe uma URL: nesse caso, o modo primeiro confirma que a vaga continua aberta, para que um link morto nunca consuma uma avaliação completa.
+Você entrega uma vaga ao modo e ele devolve a avaliação em sete blocos (os Blocos A a F e um Bloco G com a leitura de legitimidade, além do Bloco H com rascunhos de respostas quando a nota é 4,5 ou mais), com uma nota e o raciocínio citado. Logo depois do Bloco G, um bloco sem letra, Verdict (lead), dá a decisão em uma frase: Apply, Consider, Research first ou Skip. Cole o texto da vaga diretamente ou passe uma URL: nesse caso, o modo primeiro confirma que a vaga continua aberta, para que um link morto nunca consuma uma avaliação completa.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -43,6 +43,9 @@ Você entrega uma vaga ao modo e ele devolve a avaliação em sete blocos — os
 ## G) Posting Legitimacy
 Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
+
+## Verdict (lead)
+**Apply.** Strong match on the role's core axis with no hard stops, and Block G returned High Confidence.
 ```
 
 Os Blocos B a F cobrem a aderência do currículo e as lacunas, a estratégia de nível, a remuneração e a demanda, um plano de personalização e histórias de entrevista no formato STAR+R mapeadas para os requisitos da vaga.

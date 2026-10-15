@@ -5,7 +5,7 @@ seoTitle: "career-ops oferta-Modus — eine einzelne Stellenanzeige bewerten, be
 icon: Target
 date: "2026-05-18"
 lastModified: "2026-10-14"
-translationHash: 9a968f6bcb8dda55
+translationHash: 6999cd4e3beceb29
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
@@ -20,7 +20,7 @@ Nutze oferta, wenn du bei einer Stellenanzeige unschlüssig bist und sie schnell
 
 ## So sieht ein Durchlauf aus
 
-Du gibst dem Modus eine Stellenanzeige und bekommst die Bewertung in sieben Blöcken zurück, mit Score und belegter Begründung. Die Blöcke A bis F bilden den Kern, Block G schätzt ein, ob die Anzeige echt ist. Liegt die Bewertung bei 4,5 oder höher, kommen in Block H noch Antwortentwürfe hinzu. Du kannst den Text der Stellenbeschreibung direkt einfügen oder eine URL übergeben. Bei einer URL prüft der Modus zuerst, ob die Anzeige noch online ist. So verbraucht ein toter Link nie eine komplette Bewertung.
+Du gibst dem Modus eine Stellenanzeige und bekommst die Bewertung in sieben Blöcken zurück, mit Score und belegter Begründung. Die Blöcke A bis F bilden den Kern, Block G schätzt ein, ob die Anzeige echt ist. Liegt die Bewertung bei 4,5 oder höher, kommen in Block H noch Antwortentwürfe hinzu. Direkt nach Block G nennt ein Block ohne Buchstaben, Verdict (lead), die Entscheidung in einem Satz: Apply, Consider, Research first oder Skip. Du kannst den Text der Stellenbeschreibung direkt einfügen oder eine URL übergeben. Bei einer URL prüft der Modus zuerst, ob die Anzeige noch online ist. So verbraucht ein toter Link nie eine komplette Bewertung.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -43,6 +43,9 @@ Du gibst dem Modus eine Stellenanzeige und bekommst die Bewertung in sieben Blö
 ## G) Posting Legitimacy
 Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
+
+## Verdict (lead)
+**Apply.** Strong match on the role's core axis with no hard stops, and Block G returned High Confidence.
 ```
 
 Die Blöcke B bis F behandeln fünf Themen. Sie gleichen die Stelle mit deinem Lebenslauf ab und zeigen Lücken auf. Sie entwickeln eine Strategie für die Einstufung und prüfen Vergütung und Nachfrage. Dazu kommen ein Plan, wie du deine Unterlagen anpasst, und STAR+R-Geschichten für das Vorstellungsgespräch, die auf die Anforderungen der Stelle zugeschnitten sind.
