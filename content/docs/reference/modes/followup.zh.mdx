@@ -1,0 +1,53 @@
+---
+title: followup
+description: "根据你配置的跟进节奏规则，标记出已超过跟进时间的申请和面试，并起草跟进消息，供你审阅后自行发送。"
+seoTitle: "career-ops followup 模式：追踪超期未跟进的申请，并起草跟进消息"
+icon: CalendarClock
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: b1eb8003f10d7ed3
+localized: true
+translatedFrom: /docs/reference/modes/followup
+---
+
+## 它能做什么
+
+followup 模式会读取你的申请 tracker，把最后一次联系的日期与你配置的跟进节奏进行比对（默认：申请后 7 天发送第一次跟进提醒，面试后 1 天发送感谢信），并标记出已超期或紧急的条目。对每个被标记的条目，它都会以对应的报告和你的简历为依据，起草一条贴合具体情境的跟进消息。
+
+## 什么时候使用
+
+把 followup 当作每周一早上的固定习惯来运行。每到周一，它都会列出本周到期的跟进事项，并附上可以直接发送的草稿。它的设计偏保守：只有在明显超过节奏阈值之后，才会标记某个条目，因此仪表盘上的列表始终很短，上面的每一项都确实该跟进了。
+
+## 实际运行效果
+
+followup 会对你的 tracker 运行一个跟进节奏脚本，输出一个按紧急程度排序的仪表盘，并为每一行超期或紧急的记录起草一条消息。草稿开头先摆出一个具体的成果佐证，而不是先提请求，而且从不写“只是来问问进展”这类客套话。
+
+```txt title="Terminal"
+> /career-ops followup
+
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
+```
+
+## 注意事项
+
+状态为 Applied 的申请最多跟进两次；如果第二次跟进仍然没有回复，followup 会停止起草，并建议你关闭该条目，或者通过 `contacto` 换一个联系人试试。想要比默认 7 天更紧凑的节奏？与其手动修改草稿，不如给跟进节奏脚本传一个参数：`node followup-cadence.mjs --applied-days 5`。
+
+## 相关链接
+
+- [tracker](/zh/docs/reference/modes/tracker)
+- [patterns](/zh/docs/reference/modes/patterns)

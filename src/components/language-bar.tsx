@@ -26,7 +26,7 @@ import { UI } from '@/lib/ui-strings';
 // one exists (es) or the locale home otherwise (fr, de and pt have none yet), and
 // any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it';
+type Code = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh';
 const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'en', label: 'EN', name: 'English' },
   { code: 'es', label: 'ES', name: 'Español' },
@@ -34,6 +34,7 @@ const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'de', label: 'DE', name: 'Deutsch' },
   { code: 'pt', label: 'PT', name: 'Português' },
   { code: 'it', label: 'IT', name: 'Italiano' },
+  { code: 'zh', label: 'ZH', name: '简体中文' },
 ];
 // Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
 const MANIFESTO_LOCALES: Code[] = ['es'];
@@ -114,6 +115,22 @@ function FlagBR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+// No national flag for Chinese: the content is Simplified (mainland
+// conventions), but Taiwan and Hong Kong readers are ~75% of the Chinese-language
+// clicks, and a PRC flag would speak to only some of them. A neutral disc with
+// 中 ("Chinese") instead, the same size as the flags (search-ops F1, 15-oct).
+function FlagZH({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
+        <rect width="16" height="16" fill="#52525b" />
+        <text x="8" y="12" textAnchor="middle" fontSize="11" fontWeight="600" fill="#fff">
+          中
+        </text>
+      </g>
+    </svg>
+  );
+}
 const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   en: FlagEN,
   es: FlagES,
@@ -121,15 +138,17 @@ const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   de: FlagDE,
   pt: FlagBR,
   it: FlagIT,
+  zh: FlagZH,
 };
 
-/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de, /pt or /it.) */
+/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de, /pt, /it or /zh.) */
 function localeOf(pathname: string): Code {
   if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
   if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
   if (pathname === '/de' || pathname.startsWith('/de/')) return 'de';
   if (pathname === '/pt' || pathname.startsWith('/pt/')) return 'pt';
   if (pathname === '/it' || pathname.startsWith('/it/')) return 'it';
+  if (pathname === '/zh' || pathname.startsWith('/zh/')) return 'zh';
   return 'en';
 }
 
@@ -137,7 +156,7 @@ function localeOf(pathname: string): Code {
 function baseOf(pathname: string): string {
   const loc = localeOf(pathname);
   if (loc === 'en') return pathname;
-  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de', '/pt' or '/it'
+  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de', '/pt', '/it' or '/zh'
 }
 
 /** The URL for `target` locale of the page whose EN-relative path is `base`.
@@ -182,6 +201,7 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
   de: { question: 'Lieber auf Deutsch?', cta: 'Auf Deutsch ansehen' },
   pt: { question: 'Prefere português?', cta: 'Ver em português' },
   it: { question: 'Preferisci l\u2019italiano?', cta: 'Leggi in italiano' },
+  zh: { question: '更想看中文？', cta: '查看中文版' },
 };
 
 /**

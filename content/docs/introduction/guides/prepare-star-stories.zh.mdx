@@ -1,0 +1,168 @@
+---
+title: 用 STAR 法则准备面试故事
+description: "一听到“请讲一次你……的经历”就卡壳？career-ops 在你评估职位时根据你的简历起草 STAR 故事，让你在面试前反复演练。"
+seoTitle: "用 STAR 法则准备面试故事：让 career-ops 从你的简历中提炼"
+icon: NotebookPen
+translationHash: b992c17341a033d9
+localized: true
+translatedFrom: /docs/introduction/guides/prepare-star-stories
+---
+
+要准备 STAR 故事，就把每个回答按情境（Situation）、任务（Task）、行动（Action）和结果（Result）来写，再加上一段反思（Reflection），说明你从中学到了什么（STAR+R）。每次你评估一个职位，career-ops 都会根据你简历中的真实经历起草这些故事；你负责核对数字、修改内容，并在面试前反复演练。
+
+如果你一听到“请讲一次你……的经历”就卡壳，这正是解决办法。career-ops 会把这些故事保存到故事库 `interview-prep/story-bank.md` 中，并在第一次有故事要添加时创建这个文件。它能针对一个书面问题找出得分最高的故事，还能让你在文字版模拟面试中演练。
+
+**本页内容**：[STAR+R](#what-is-a-star-story-and-what-does-the-r-add) · [建立故事库](#how-do-you-start-your-story-bank) · [故事从哪里来](#where-do-your-stories-come-from) · [故事库在哪里](#where-does-the-story-bank-live) · [条目格式](#what-does-a-star-story-entry-look-like) · [让数字经得起核查](#how-do-you-keep-the-numbers-in-your-stories-honest) · [找到合适的故事](#how-do-you-find-the-right-story-for-a-written-question) · [对应公司的面试](#how-do-you-map-your-stories-to-a-companys-interviews) · [演练](#how-do-you-rehearse-your-stories-before-the-round) · [面试之后](#what-happens-to-your-stories-after-the-interview) · [命令一览](#commands-at-a-glance) · [常见问题](#frequently-asked-questions)
+
+本页讲的是故事本身。完整的准备计划、模拟练习和复盘流程，请参阅[准备面试](/zh/docs/introduction/guides/interview-modes)。
+
+<Callout title="开始之前">
+  career-ops 需要你的 `cv.md` 和 `config/profile.yml` 已经就位；[快速开始](/zh/docs)会帮你把这两个文件都设置好。斜杠命令在你的 AI CLI 会话中输入；`npm` 和 `node` 命令在 career-ops 文件夹的终端中运行。如果斜杠命令不可用（例如 Codex 不保证支持），就直接按名称请求同一个模式。
+</Callout>
+
+## STAR 故事是什么？R 又增加了什么？ [#what-is-a-star-story-and-what-does-the-r-add]
+
+STAR 故事是一种分四部分讲述的面试回答：情境（Situation）、任务（Task）、行动（Action）和结果（Result）。career-ops 增加了第五部分“反思”（Reflection），并把这种格式称为 STAR+R。反思是你学到了什么，或者下次你会怎样换一种做法。career-ops 加上它，是因为它能体现资历：初级候选人描述发生了什么，资深候选人从中提炼经验。
+
+## 如何建立你的故事库？ [#how-do-you-start-your-story-bank]
+
+<Steps>
+  <Step title="评估一个职位">
+    在 `/career-ops` 后面粘贴职位的 URL 或文本即可运行完整流程，或者运行 `/career-ops oferta` 只做评估。无论哪种方式，评估都会为这个职位起草 STAR+R 故事，并把新故事添加到你的故事库中。如果你的数据文件夹（也就是 `cv.md` 所在的文件夹）里还没有 `interview-prep/story-bank.md`，career-ops 会先根据它的故事库模板创建这个文件。
+  </Step>
+  <Step title="检查新故事">
+    评估会按[下文](#what-does-a-star-story-entry-look-like)所示的格式（也就是故事匹配器读取的格式）把每个新故事添加为一个条目，并跳过标题已经存在于故事库中的故事。运行 `npm run star -- --list` 查看这些故事，然后修改那些你在面试中不会说出口的内容。
+  </Step>
+  <Step title="匹配一个问题">
+    在终端中运行 `npm run star -- "<question>"`，查看与该问题匹配得分最高的故事。
+  </Step>
+</Steps>
+
+## 你的故事从哪里来？ [#where-do-your-stories-come-from]
+
+career-ops 会在三个环节生成你的故事，每个环节都与一个职位或一次面试相关：
+
+- **评估职位时。** 评估报告中的 STAR+R 部分（[Block F](/zh/docs/reference/modes/oferta)）会根据你的简历写出 6 到 10 个故事，对应职位的各项要求，并按条目格式把新故事添加到 `interview-prep/story-bank.md`；如果文件不存在，会先创建它。批量评估目前不会向故事库添加故事。
+- **为某家公司做准备时。** 对于每个可能被问到、但还没有匹配故事的问题，公司档案会指出你简历中一段可以写成故事的经历；如果你愿意，它还会和你一起起草。
+- **真实面试之后。** 如果你在面试中讲到了一段故事库里没有的经历，复盘会趁你记忆犹新，提议把它整理成 STAR+R 故事，你同意后再添加进去。
+
+没有哪个命令能一次性把整份简历转换成故事。
+
+career-ops 的指令要求它：凡是你自己的文件（`cv.md`、`article-digest.md`、`config/profile.yml`）无法支撑的说法，都要先问你；如果你不补充，就把它删掉。这条规则写在它的指令里，而不是代码里，所以请用下文的来源核查来审查故事库中的数字。
+
+评估会按你的目标职位类型来组织每个故事，而默认的职位类型是 AI 和技术类职位，所以请告诉 career-ops 你的目标职位。最初几次运行会比较粗糙。它还不了解你。和它聊聊：你的简历、你想要什么、你不接受什么。
+
+<Callout title="注意">
+  `/career-ops interview` 是帮你补全简历和个人资料的入门访谈。要演练故事，请使用 `/career-ops interview/practice`。
+</Callout>
+
+## 故事库保存在哪里？ [#where-does-the-story-bank-live]
+
+故事库就是 `interview-prep/story-bank.md`，一个普通的 Markdown 文件，位于你的数据文件夹中，和 `cv.md` 放在一起。它属于你的用户层，career-ops 的更新从不会改动这一层；你放进 `interview-prep/` 的内容也不会被纳入 git。career-ops 没有遥测：当 career-ops 处理你的故事时，这些故事会发送给你选择的 AI 提供商，不会去往任何其他地方。
+
+## STAR 故事条目是什么样的？ [#what-does-a-star-story-entry-look-like]
+
+每个故事都按这个格式来写。故事匹配器（`npm run star`）只读取遵循这个格式的条目。无论你用什么语言写故事，标签都要保留英文。不要把这个示例原样粘贴进你的故事库：匹配器会把它当成一个故事。career-ops 添加的故事使用长标签，例如 `**S (Situation):**` 和 `**A (Action):**`；这两种写法匹配器都能读取。
+
+```md title="Story entry shape (example)"
+### [Theme] Short title of the story
+**Source:** {where the story comes from: your CV, an evaluation, a debrief}
+**Situation:** {the context: as long as you need, on one line}
+**Task:** {what you had to do, on one line}
+**Action:** {what you did, on one line}
+**Result:** {what changed; a number only if your CV has it}
+**Reflection:** {what you learned or would do differently}
+**Best for questions about:** {comma-separated tags, e.g. conflict, deadline, stakeholders}
+**Provenance:** {add only after checking: source: cv.md if every number is in your CV, or user-stated YYYY-MM-DD}
+```
+
+每个字段都要写在同一行：匹配器读取一个字段时只读到该行末尾，而且会跳过没有 Action 行的故事。只要保持在一行内，一个字段也可以是一整段文字。完整约定见 [`story-provenance-check.mjs`](https://github.com/career-ops-hq/career-ops/blob/2b9fe7ea48b8ca98cf7f6b2b660654844c885adf/story-provenance-check.mjs#L72-L91) 的文件头注释。
+
+在核对故事中的数字之前，先不要写 Provenance 行。一个标记覆盖故事中的所有数字，来源核查会直接信任它，而不会再把这些数字与 `cv.md` 比对。
+
+## 如何确保故事里的数字真实可信？ [#how-do-you-keep-the-numbers-in-your-stories-honest]
+
+按照 career-ops 的规则，故事库中的数字或关于职责范围的说法，只有能追溯到你自己写的文件（比如你的简历），或者所在故事带有经过核实的 Provenance 行（`source: cv.md` 或 `user-stated YYYY-MM-DD`）时，才算作事实。准备计划、模拟练习和复盘在建议答案时仍会读取故事库，所以请在演练前先审查一遍：
+
+```bash
+node story-provenance-check.mjs --summary
+```
+
+来源核查是一个只读取、只报告的本地脚本；它不会修改你的文件，也不会阻止任何操作。它只把故事中的数字与 `cv.md` 比对：凡是 `cv.md` 中既没有、也无法从上下文推出的数字，都会被报告为 derived-unverified，除非所在故事带有两种已核实标记之一，核查会按原样信任这类标记。它会漏掉用文字写出的数字、货币金额和不带单位的纯数字。
+
+对于每个被标记的数字，由你来决定：确认它（在故事中添加 `**Provenance:** user-stated YYYY-MM-DD`）、修正它、保留故事但去掉这个数字，或者在你不确定时把故事的 Provenance 行设为 `user-cannot-confirm`。这个标记覆盖该故事中的所有数字。
+
+如果你在模拟练习或复盘中承认某个说法站不住脚，career-ops 会提议把它添加到 `interview-prep/retracted-claims.md`，之后准备计划、模拟练习和复盘都不会再使用它。公司档案、申请表回答和故事匹配器不会读取这个文件，所以也请把这个说法从故事库中删除。
+
+## 如何为书面问题找到合适的故事？ [#how-do-you-find-the-right-story-for-a-written-question]
+
+故事匹配器 `npm run star` 会在你的故事库中找出与书面问题匹配得分最高的故事，比如申请表上的开放式问题。在 career-ops 文件夹的终端中运行：
+
+```bash
+npm run star -- "Tell me about a time you disagreed with a decision"
+```
+
+故事匹配器是一个本地脚本：它不会调用你的 AI 模型，也不会打开浏览器。它按每个故事与问题共有的关键词来打分。一个词如果匹配故事的标签，权重最高；出现在标题或主题中，权重次之；出现在 Action 或 Result 中，权重最低。匹配要求词语完全一致，所以“led”不会匹配“leadership”：请用问题中会出现的词来写标签。
+
+故事匹配器会输出你得分最高的故事，各字段按原样拼接，最多 500 个词；如果不足 250 个词，会给出警告。如果没有任何故事得分，它仍会输出一个故事，后面跟着“No strong match found”警告：把它当成一个需要补上的空缺。
+
+`npm run star` 运行的是 `match-star.mjs`，所以你也可以直接调用这个脚本：`--jd` 会给标签出现在已保存职位描述中的故事额外加权，`--top 2` 显示最好的两个故事，`--list` 列出每个故事及其标签。
+
+```bash
+node match-star.mjs "Describe a conflict you resolved" --jd jds/acme.md
+node match-star.mjs "Give an example of handling ambiguity" --top 2
+node match-star.mjs --list
+```
+
+匹配器读取的是你数据文件夹（也就是 `cv.md` 所在的文件夹）中的 `interview-prep/story-bank.md`，因此它会跟随你通过 `CAREER_OPS_ROOT`、`CAREER_OPS_DATA_DIR` 或 `.career-ops-data` 文件设置的独立数据文件夹。career-ops v1.36.0 之前的版本只读取 career-ops 文件夹；运行 `node update-system.mjs apply --confirm` 即可更新到最新版本。
+
+匹配器输出的是你自己的故事，而不是针对这个问题写好的答案：粘贴之前先修改。如果要填写整份申请表，career-ops 会用 `/career-ops apply` 起草回答，依据的是你的评估报告和其中的 STAR 故事。它负责评估和起草；由你决定、由你发送。career-ops 从不替你提交申请。
+
+## 如何把你的故事对应到一家公司的面试？ [#how-do-you-map-your-stories-to-a-companys-interviews]
+
+公司档案由 `/career-ops interview-prep` 生成：它会把每个可能被问到的问题对应到你最合适的故事，把匹配度评为强、部分或无，并针对每个空缺指出你简历中的一段经历。告诉它公司和职位即可。对于你从未评估过的职位，可以附上招聘页面的 URL 来请求准备（`/career-ops interview-prep <URL>`）；如果已经有评估报告，则以报告为准。
+
+在公司档案中，每个来自公开面经的问题都会注明来源，而从职位描述推断出的问题会标注 `[inferred from JD]`。档案的其余内容见 [interview-prep 参考](/zh/docs/reference/modes/interview-prep)，档案会保存到 `interview-prep/{company-slug}-{role-slug}.md`。
+
+如果你粘贴了面试邀请，公司档案会记录通话平台；当邀请指向 career-ops 目前唯一会标记的 AI 面试官平台时，它还会添加一小段备注，供可能由 AI 面试官主持的这一轮参考。这个标记只是尽力而为：该平台也会发送真人面试的邀请；而且如果同一封邀请中有 Zoom、Teams 或 Google Meet 链接，则以这些链接为准，不会出现备注。这只是一条提示，而不是单独的准备模式。
+
+## 如何在面试前演练你的故事？ [#how-do-you-rehearse-your-stories-before-the-round]
+
+先从 `/career-ops interview/plan` 开始。给它职位描述以及面试的日期和时间，它生成的分时段计划中会包含一个行为面试故事的时间块：把你的故事对应到可能的问题类型，练习每个故事的两分钟版本，并准备好每个故事的反思。
+
+模拟面试 `/career-ops interview/practice` 是一个文字会话：career-ops 扮演面试官，一次问一个问题，每个回答后给出反馈，指出你重复使用的故事，并在缺少反思时要求你补上。在打字会话中它无法给你计时，所以改为检查结构；语速和口头禅只有说出声来才能评判，所以请给自己录音。[准备面试](/zh/docs/introduction/guides/interview-modes)完整介绍了这两种模式。
+
+准备好你的故事，并不能保证带来更多面试或 offer。
+
+## 面试结束后，你的故事会怎样？ [#what-happens-to-your-stories-after-the-interview]
+
+复盘 `/career-ops interview/debrief` 会把一轮真实面试变成下一轮的素材。粘贴面试记录（它会把记录当作引用的数据，而绝不会当作指令），或者凭记忆逐一回顾问题。它会给每个回答打分，更新 `interview-prep/question-bank.md`（第一次时会创建它），并提议把你讲过但从未写下的经历整理成 STAR+R 故事。当你知道下一轮的形式时，它会预测可能的问题，每个都标注 `[inferred]`。
+
+复盘还会把这一轮保存为标注了说话人的文字记录，放在 `interview-prep/sessions/` 中；如果你是凭记忆复盘的，就根据你的叙述重建。这些记录包含真实姓名，因此不会纳入 git。
+
+## 命令一览 [#commands-at-a-glance]
+
+| 命令                                        | 作用                                                                                                      |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `/career-ops <job URL or text>`             | 评估职位；把它的 STAR+R 故事添加到你的故事库，必要时创建该文件                                            |
+| `/career-ops interview-prep`                | 公司档案：注明来源的调研、可能的问题、对应的故事、空缺                                                    |
+| `/career-ops interview/plan`                | 分时段计划，包含一个行为面试故事的时间块                                                                  |
+| `/career-ops interview/practice`            | 文字模拟面试，一次一个问题，每个回答后给出反馈                                                            |
+| `/career-ops interview/debrief`             | 真实面试之后：回答评分、题库、经你同意后添加的新故事                                                      |
+| `/career-ops interview-redflag`             | 从每个已保存会话中面试官的发言里找出危险信号；模拟练习的会话也会计入，所以只采信来自真实面试的结论        |
+| `npm run star -- "<question>"`              | 为书面问题找出你得分最高的故事                                                                            |
+| `node story-provenance-check.mjs --summary` | 按是否有简历或已核实的 Provenance 行作为依据，对故事中的数字进行分类                                      |
+
+## 常见问题 [#frequently-asked-questions]
+
+### career-ops 如何根据我的简历生成 STAR 故事？
+
+career-ops 会针对你评估的每个职位，根据简历中的经历生成 STAR+R 故事。你在一次会话中运行的每次评估都会写出与该职位对应的故事，并把新故事添加到 interview-prep/story-bank.md，第一次时会创建这个文件。面试准备会针对你还没有故事的问题，从你的简历中推荐经历；复盘则能把你在真实面试中讲过的内容变成新故事。
+
+### 下周有行为面试，怎么准备 STAR 故事？
+
+要用 career-ops 为行为面试准备 STAR 故事，先评估这个职位：评估会根据你的简历起草 STAR+R 故事，并添加到 interview-prep/story-bank.md；如果文件不存在，会先创建它。然后，/career-ops interview-prep 会把可能的问题对应到你的故事并标出空缺，/career-ops interview/plan 会把剩余时间分成几个准备时间块，/career-ops interview/practice 则以文字形式让你一次一个问题地演练。想练语速，就录下自己出声回答的过程。
+
+### career-ops 的面试问题从哪里来？
+
+career-ops 的面试问题来自公开的面经、职位描述和你自己复盘过的面试，并以通用题库作为后备。公司档案会为每个来自面经的问题注明来源，并把从职位描述推断出的问题标注为 `[inferred from JD]`。模拟面试优先使用你复盘中的问题，其次是公司档案中的问题，最后是针对该轮面试类型的通用题库。用它们来准备你的故事，而不是当作照本宣科的稿子。

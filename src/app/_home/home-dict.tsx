@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { instrumentSerif } from '@/lib/fonts';
+import type { SiteLocale } from '@/components/locale-root-provider';
 
 // Home copy dictionary: the shared type and helpers. Each language's copy
 // lives in its own file (home-en.tsx, home-es.tsx, home-fr.tsx, home-de.tsx, home-pt.tsx),
@@ -24,7 +25,10 @@ export type HomeDict = {
   heroH1: ReactNode;
   runItNow: string;
   // Page language, for the star button's click event (its label stays English).
-  locale: 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it';
+  // Derived from SiteLocale: this file is part of every home's date (HOME_TRUNK
+  // in home-date.ts), so listing the languages here moved the lastmod of all
+  // the homes each time a language was added.
+  locale: SiteLocale;
   // Locale-aware destination for the "get started" / docs CTAs: EN '/docs',
   // ES '/es/docs'. Keeps the Spanish home sending users into the Spanish docs
   // (which now has a translated landing) instead of dropping them into English.
@@ -103,6 +107,11 @@ const HOOK_TURN = 'text-[#59592a] dark:text-[#b7af7e]';
 const HOOK_ACTION = 'text-[#26261a] dark:text-[#e4e2d0]';
 const HOOK_ACCENT = 'text-[#a55212] dark:text-[#dd7627]';
 
+// No space after full-width punctuation (the Chinese 。): the glyph carries its
+// own gap, so a space after it reads as a double gap. Every other language
+// keeps its space.
+const gapAfter = (s: string) => (/[\u3000-\u303f\uff00-\uffef]$/.test(s) ? null : ' ');
+
 export function heroLine(t: {
   more: string;
   silencePre: string;
@@ -116,7 +125,8 @@ export function heroLine(t: {
   return (
     <>
       <span className={`block ${HOOK_PAIN}`}>
-        <span className="inline-block">{t.more}</span>{' '}
+        <span className="inline-block">{t.more}</span>
+        {gapAfter(t.more)}
         <span className="inline-block">
           {t.silencePre}
           <span className={instrumentSerif.className}>{t.silence}</span>
@@ -124,7 +134,8 @@ export function heroLine(t: {
         </span>
       </span>
       <span className="block max-md:mt-[0.25em]">
-        <span className={`inline-block ${HOOK_TURN}`}>{t.stop}</span>{' '}
+        <span className={`inline-block ${HOOK_TURN}`}>{t.stop}</span>
+        {gapAfter(t.stop)}
         <span className={`inline-block ${HOOK_ACTION}`}>
           {t.startPre}
           <span className={HOOK_ACCENT}>{t.choose}</span>

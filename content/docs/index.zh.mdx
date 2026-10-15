@@ -1,0 +1,278 @@
+---
+title: 快速开始
+description: "大约十五分钟上手 career-ops：安装这个开源的 AI 求职系统，打开你的 AI CLI，评估你的第一个职位。无需编程。"
+seoTitle: "career-ops 快速上手：几分钟完成安装，用 AI 扫描你的第一个职位"
+icon: Rocket
+translationHash: 3dc0cfbde93edb50
+localized: true
+translatedFrom: /docs
+---
+
+第一次使用时，跟着这份指南，大约十五分钟就能从零开始完成第一个职位的评估。你将搭建工作区，打开你的 AI 编程助手，然后粘贴一则职位信息。智能体会先完成必要的初始引导，然后给你一份完整的报告、一个评分和一份定制的 PDF 简历。
+
+## 准备工作
+
+你不需要会写代码，只需要能自如地打开终端并运行命令。
+
+<Callout title="第一次用终端？">
+  如果你从来没有用过命令行，完全没关系，但这份指南并不适合用来学习命令行。想快速入门，可以阅读 freeCodeCamp 的[命令行入门手册（Command Line for Beginners）](https://www.freecodecamp.org/news/command-line-for-beginners/)，它涵盖了跟上本指南所需的全部内容。等你能自如地打开终端并运行命令后，再回来从第 1 步继续。
+</Callout>
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+      ### AI 编程助手
+
+      安装 **[Claude Code](https://claude.ai/code)**、**[Codex](https://developers.openai.com/codex/cli)**、**[OpenCode](https://opencode.ai/)**、**[Qwen Code](https://qwen.ai/qwencode)** 或 **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**，也就是运行这套系统的 AI 编程助手。career-ops [对十一款 CLI 提供一等支持](/zh/docs/supported-clis)；安装其中任意一款并登录后再继续。
+      </Step>
+      <Step>
+        ### Node.js 22.13+
+
+        安装 **[Node.js](https://nodejs.org)**，版本需为 **22.13 或更高**（如果用的是 Node 23，则需 **23.4 或更高**）。它负责运行辅助脚本并生成 PDF。更旧的版本无法通过设置检查，因为 tracker 的 SQLite 索引需要较新的 Node。用 `node --version` 查看你的版本。
+      </Step>
+      <Step>
+        ### Git
+
+        安装 **[Git](https://git-scm.com/)**，脚手架工具会在内部用到它。大多数电脑已经装好了。要确认的话，打开终端运行 `git --version`。
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## 第 1 步：搭建工作区
+
+在你想存放 career-ops 的文件夹中打开终端。推荐方式只需一条命令；下面还有一种使用 `git clone` 的进阶方式。如果缺少 Node（22.13+，Node 23 则需 23.4+）或 Git，`npx` 将拒绝运行，请先把两者都装好（见上方的准备工作）。
+
+### 推荐方式：一条命令
+
+```bash title="Terminal"
+npx @santifer/career-ops init
+```
+
+这条命令会把最新版本克隆到 `./career-ops`，安装依赖，并搭建工作区的目录结构。它还会检测你安装了哪款 AI 编程 CLI，并告诉你该用哪条命令启动。它只会安装到一个新文件夹中：如果 `./career-ops` 已经存在且不为空，命令会报错退出，不做任何改动，因此再次运行它并不能修复或更新现有的工作区。
+
+完成后，进入工作区：
+
+```bash title="Terminal"
+cd career-ops
+```
+
+<details>
+<summary>进阶：自己克隆仓库</summary>
+
+如果你想跟踪某个特定分支、回馈贡献，或者在安装依赖之前先审查代码，请使用这种方式。
+
+```bash title="Terminal"
+git clone https://github.com/career-ops-hq/career-ops.git
+cd career-ops
+npm install
+```
+
+</details>
+
+### 无头浏览器（只需一次）
+
+career-ops 在多项任务中会用到无头 Chromium：渲染 PDF、检查职位是否仍在招聘，以及运行完整的 ATS 扫描。安装程序会在安装依赖后自动配置它；如果这一步在你的电脑上失败了，请手动安装：
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+## 第 2 步：打开你的 AI 助手
+
+在 `career-ops` 文件夹中，启动你安装的 AI 编程 CLI。
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
+  <Tab value="Claude Code">
+    ```bash title="Terminal"
+    claude
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash title="Terminal"
+    codex
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash title="Terminal"
+    opencode
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash title="Terminal"
+    copilot
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash title="Terminal"
+    agy
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash title="Terminal"
+    pi
+    ```
+  </Tab>
+</Tabs>
+
+<Callout title="需要用到你的个人资料时，才会开始初始引导">
+  在你第一次评估职位，或运行其他需要你个人资料的工作流之前，career-ops 智能体会检查你的设置，必要时进行一段简短的初始引导对话。你也可以直接让它开始初始引导。它会询问你的简历、你的目标职位类型、薪资范围以及工作地点偏好。你用日常语言回答，智能体会替你写好配置文件。整个过程大约需要两到三分钟。浏览工作区、审查代码或诊断你的设置，都不会触发初始引导，也不会创建个人资料文件。
+
+  开发者须知：设置检查的命令是 `node doctor.mjs --json`，它只读取、不写入。初始引导会通过 `node doctor.mjs --json --init-templates`，根据模板创建缺失的个性化文件（`modes/_profile.md`、`modes/_custom.md`、`modes/_brief.md` 和 `voice-dna.md`），并且绝不会覆盖你已有的文件。
+</Callout>
+
+<Callout title="你可能会看到一个无关的提示">
+  有些 CLI（例如 Claude Code）在你第一次打开一个新文件夹时，会询问你是否信任其中的文件。这个提示来自 CLI 本身，而不是 career-ops。选择“是”即可继续。接受它并不会启动 career-ops 的初始引导。
+</Callout>
+
+<Callout type="warn" title="在付费使用 Claude Pro 或 Max？先看看这次会话从哪里计费">
+  在第一次评估之前，先在 `career-ops` 文件夹中运行 `node doctor.mjs`。它会用一行信息告诉你当前的计费来源。
+
+  如果你的环境中设置了 `ANTHROPIC_API_KEY`，**你的 CLI 就会使用它并按 token 计费，即使你正在付费订阅 Pro 或 Max**。这个优先级是 Claude Code 决定的，而不是 career-ops：doctor 只负责检测并告诉你。如果想改用你的订阅，请从 `~/.zshrc`、`~/.bashrc`、`~/.profile` 或项目的 `.env` 中删除 `export ANTHROPIC_API_KEY=...` 这一行，重启终端，然后运行 `/login`。如果你本来就打算使用 API 额度，那就一切正常。
+
+  其他 CLI 各有自己的订阅与 API key 优先规则，career-ops 不会检查这些规则。完整说明请参阅[常见问题](/zh/docs/faq)。
+</Callout>
+
+## 第 3 步：运行你的第一次评估
+
+复制任意一个职位的链接，粘贴到对话中。如果你的个人资料还没准备好，智能体会先完成初始引导。使用 Claude Code、Antigravity CLI 或 Pi 时，在链接前加上明确的命令；使用其他 CLI 时，粘贴链接并让智能体运行 auto-pipeline：
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash
+    /career-ops https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash
+    /skill:career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+</Tabs>
+
+如果你没有链接，可以改为把完整的职位描述文本粘贴到对话中。无论哪种输入，智能体都会将其识别为职位信息，并自动运行完整的流水线，这就是 **auto-pipeline**。
+
+### 接下来会发生什么
+
+粘贴职位之后，career-ops 会自行完成以下步骤：
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        ### 读取职位描述
+        理解职位内容、要求和薪资待遇。
+      </Step>
+      <Step>
+        ### 读取你的简历
+        从 `cv.md` 中提取信息，找出你与该职位的匹配点和差距。
+      </Step>
+      <Step>
+        ### 为职位打分
+        从多个维度以 1-5 分为这个职位打分，例如职位匹配度、薪资和远程办公政策。
+      </Step>
+      <Step>
+        ### 撰写报告
+        把详细的分析保存到 `reports/` 文件夹。
+      </Step>
+      <Step>
+        ### 生成定制的 PDF 简历
+        将一份专门针对这个职位定制的简历输出到 `output/` 文件夹。
+      </Step>
+      <Step>
+        ### 在 tracker 中新增一行
+        把这次申请记录到 `data/applications.md` 中。
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+整个过程大约需要一到两分钟。完成后，career-ops 会向你展示评分和报告摘要。
+
+## 解读评估结果
+
+报告在 Risk Summary（风险摘要）之后包含 **Score Evidence**（评分依据）部分。它涵盖五个维度：简历匹配度、North Star 契合度、薪资、文化信号和危险信号。每一行都会记录一个依据状态（`supported`、`partial` 或 `unknown`）、一条具体的来源或观察，以及一个尚未解决的问题。这一部分最后会给出依据可信度等级（`High`、`Medium` 或 `Low`）及其理由，以及最多三项需要优先核实的事项。
+
+打开 `reports/` 中的报告文件。文件名遵循 `{number}-{company}-{date}.md` 的格式。你会在里面看到：
+
+- **评分**：1-5 之间的一个数字。低于 4.0 说明这个职位很可能不太适合你。
+- **Block A**：用通俗易懂的语言写成的职位摘要。
+- **Block B**：一张表格，展示你的简历如何对应每一项职位要求，以及存在的差距。
+- **Block C**：策略建议，告诉你在申请这个职位时该如何定位自己。
+- **Block D**：薪资调研，将这个职位给出的薪资与市场行情进行对比。
+- **Block E**：针对你这次申请的个性化建议。
+- **Block F**：面试准备，包含针对这个职位定制的 STAR 故事。
+- **Block G**：职位发布的可信度，即用启发式方法检查一些信号，例如职位是否仍在招聘、是否被反复重新发布。它只报告发现，判断留给你自己。
+- **Block H**：申请表的回答草稿，只有在评分达到 4.5 或以上时才会生成。
+
+定制的 PDF 简历在 `output/` 文件夹中。发送到任何地方之前，请先检查一遍：没有你的批准，career-ops 从不提交任何东西。
+
+## 接下来做什么
+
+完成第一次评估后，你还可以试试下面这些：
+
+- **完善你的个人资料**。告诉智能体关于你的新信息，例如：“*补充一点背景：我刚刚上线了 X。*”它会更新你的个人资料，之后的评估也会更准确。
+- **评估更多职位**。粘贴更多链接或职位描述，每一个都会记录到你的 tracker 中。
+- **扫描招聘网站**。输入 `/career-ops scan`，一次搜索几十个预先配置好的公司招聘页面。
+- **比较职位**。如果你已经有好几份报告，输入 `/career-ops ofertas`，即可得到一份排好名次的对比。
+
+## 常见问题排查
+
+<Accordions>
+  <Accordion title="智能体没有启动初始引导">
+    只有当你请求评估职位或运行其他需要个人资料的工作流，并且设置尚未完成时，才会自动开始初始引导。如果想直接启动它，请在 `career-ops` 文件夹内启动你的 CLI（运行 `pwd` 确认当前位置），然后对智能体说：“*请运行首次使用的初始引导。*”
+  </Accordion>
+  <Accordion title="报告没有生成">
+    确认根目录中存在 `cv.md`，并且里面有内容。如果初始引导已经完成，但 `cv.md` 是空的，可以问智能体：“*我的 cv.md 好像是空的，你能帮我填写吗？*”
+  </Accordion>
+  <Accordion title="PDF 没有生成">
+    再运行一次 `npx playwright install chromium`。如果问题仍未解决，运行 `node --version`，确认 Node.js 版本为 22.13 或更高（Node 23 则需 23.4 或更高）。
+  </Accordion>
+  <Accordion title="评分好像不准">
+    最初几次评估会比较粗糙，因为系统还不太了解你。每次评估之后，告诉你的 AI 助手它哪里判断错了。例如：“*这个分数太高了，我没有任何 Kubernetes 经验。*”它会从中学习并做出调整。
+  </Accordion>
+  <Accordion title="其他问题">
+    直接问你的 AI 助手：“*我的设置出了什么问题？*”如果它无法诊断，运行 `npm run doctor` 进行全面的健康检查。
+  </Accordion>
+</Accordions>
+
+## 发现 bug 或有疑问？
+
+如果某个功能没有按本指南所说的那样工作，请告诉我们。你的 bug 报告会帮到之后的每一位用户。
+
+- **报告 bug**：在 [GitHub 仓库](https://github.com/career-ops-hq/career-ops/issues)上开一个 issue。说明你预期会发生什么、实际发生了什么，并粘贴你看到的所有错误信息。
+- **提问**：加入 [Discord 社区](https://discord.gg/8pRpHETxa4)。这是从其他用户和作者那里获得帮助最快的方式。
+- **贡献修复**：如果你知道如何自己修复这个问题，请在提交 pull request 之前阅读 [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md)。简而言之：如果是新功能、新的模式或命令，或者架构上的改动，请先开一个 issue。Bug 修复、新的免认证扫描器数据源、文档和翻译可以直接提交 pull request。
+
+<StarOnGitHub locale="zh" />

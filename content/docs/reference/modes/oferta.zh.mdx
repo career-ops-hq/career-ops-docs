@@ -1,0 +1,71 @@
+---
+title: oferta
+description: "对单个职位运行 A–H 评估，并记入你的 tracker，但不生成 PDF。如果你只需要评分结论、不需要跑完整条流程，就用它。"
+seoTitle: "career-ops oferta 模式：申请前先给一个职位打分"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 9a968f6bcb8dda55
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## 它能做什么
+
+oferta 模式读取单个职位描述（JD，可以是 URL，也可以是粘贴的文本），按评分标准打分（五个维度加一个整体综合评分），每项判断都引用依据，然后写出评估报告。它不生成 PDF，但会在 tracker 中新增一行，状态为 Evaluated。速度快，成本低。
+
+## 何时使用
+
+如果一个职位处在临界线上，可以用 oferta 快速筛一遍。如果评分超过 4.0，而且你决定申请，再升级到 auto-pipeline 或 apply 模式。
+
+## 运行示例
+
+你交给这个模式一个职位，它会返回由七个部分组成的评估：Block A 到 Block F，再加上 Block G 的职位可信度判断；评分达到 4.5 或以上时，还会附上 Block H 的回答草稿。评估会给出评分，以及引用了依据的理由。你可以直接粘贴职位描述文本，也可以传入一个 URL。传入 URL 时，这个模式会先确认职位仍在招聘，这样失效的链接就不会白白耗掉一次完整评估。
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+
+Block B 到 Block F 依次涵盖简历匹配度与差距、职级策略、薪酬与市场需求、定制方案，以及对应职位各项要求的 STAR+R 面试故事。
+
+## 适用场景
+
+想快速给单个职位打分、又不想跑完整条流程时，就用 oferta。你需要知道的：
+
+- 传入 URL 时，会先运行一道职位有效性检查：已过期或返回 404 的职位会在 Block A 之前被拦下，所以你永远不会把一次运行浪费在并不存在的内容上。
+- 如果 LinkedIn 页面的职位描述一直停留在加载骨架屏，这算作无法获取职位描述，而不是职位已关闭：oferta 会在 Block A 之前停下，请你粘贴职位文本，或者提供同一职位在雇主官网或 ATS 上的链接。
+- 职位原型（archetype）会对照你自己的目标职位来分类，也就是 `modes/_profile.md` 中的 *Your Target Roles* 部分；只有在你一个目标职位都没有定义时，才会使用默认的职位类型。如果一个职位与你的任何目标都不匹配，它在 North Star 契合度上得 1 分，其他维度的评估照常进行，报告中的 Archetype 一行会显示 `Not a target — closest default: {default role type}` 或 `Not a target — no close match`。
+- 公司和薪酬调研最多只做五次网络搜索；这是评估，不是深度调研。想更全面地了解一家公司时，请另外运行 `/career-ops deep`。
+- Block G 会给出三个等级之一：High Confidence（高可信）、Proceed with Caution（谨慎推进）或 Suspicious（可疑），这样可能的幽灵职位会在你投入面试精力之前就暴露出来。
+- 如果职位描述明确说明这是固定期限岗位，例如 18 个月的合同或临时职位，Block G 会加上一条固定期限合同提示，引用相关原文，并附上一个可选的谈薪话题。它只是提示信息：从不改变评分、可信度等级或推荐结论。
+
+## Score Evidence
+
+报告在 Risk Summary（风险摘要）之后包含 **Score Evidence**（评分依据）部分。它涵盖五个维度：简历匹配度、North Star 契合度、薪酬、文化信号和危险信号。每一行都会记录一个依据状态（`supported`、`partial` 或 `unknown`）、一个具体的来源或观察，以及一个尚未解决的问题。这一部分最后给出依据可信度等级（`High`、`Medium` 或 `Low`）、评定理由，以及最多三个需要优先核实的事项。
+
+这个等级描述的是 Global Score（综合评分）背后的依据。它既不是被录用的概率，也不是 Block G 的职位可信度等级，也不会改变数字评分。Machine Summary 会把五个状态保存在 `score_evidence` 中，把等级保存在 `confidence` 中，把优先核实事项保存在 `confidence_gaps` 中。没有剩余的优先事项时，`confidence_gaps` 为空列表。
+
+## 相关页面
+
+- [auto-pipeline](/zh/docs/reference/modes/auto-pipeline)
+- [ofertas](/zh/docs/reference/modes/ofertas)
+- [pdf](/zh/docs/reference/modes/pdf)

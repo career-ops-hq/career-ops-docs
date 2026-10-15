@@ -1,0 +1,56 @@
+---
+title: ofertas
+description: "当你手里有两个或更多相互竞争的 offer，需要从薪酬、职位匹配度、成长轨迹和危险信号几个方面做一次统一标准的比较时使用。输出一份排好名次的建议。"
+seoTitle: "career-ops ofertas 模式：手里有多个 offer 怎么选？并排逐项对比"
+icon: GitCompare
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: b51253649996ab03
+localized: true
+translatedFrom: /docs/reference/modes/ofertas
+---
+
+## 它能做什么
+
+`ofertas` 模式会读取多份职位描述（JD）评估（这些评估已由 oferta 或 auto-pipeline 生成），按五个维度加一个整体综合评分，并借助一个统一标准的决策矩阵，把它们相互比较、排出名次。输出是一份并排对比报告和一份排好名次的建议。
+
+## 什么时候使用
+
+当你同时进入多个职位的后期面试，需要一种有条理的方式在它们之间做决定时，就用 ofertas。对于 staff 级别的 offer 尤其有用，因为这类 offer 的薪酬方案和成长路径往往差别很大。
+
+## 实际运行效果
+
+你给这个模式两个或更多 offer，它会按十个加权维度给每一个打分，然后排出名次。权重最高的是 North Star 契合度（25%），其次是简历匹配度和职级（各占 15%）；薪酬和成长轨迹各占 10%，其余权重由公司声誉、远程办公质量、技术栈、拿到 offer 所需的时间和文化信号分担。
+
+```bash title="Terminal"
+/career-ops ofertas
+```
+
+```txt title="Comparison excerpt"
+# Offer Comparison — 3 roles
+
+| Dimension (weight)       | Acme | Globex | Initech |
+|--------------------------|------|--------|---------|
+| North Star align (25%)   | 5    | 3      | 4       |
+| CV match (15%)           | 4    | 4      | 3       |
+| Compensation (10%)       | 3    | 5      | 4       |
+| Growth trajectory (10%)  | 5    | 3      | 3       |
+| ...                      |      |        |         |
+| Weighted total           | 4.4  | 3.6    | 3.5     |
+
+Recommendation: Acme — strongest North Star fit and growth path.
+Globex pays more but ranks lower on trajectory and time-to-offer.
+```
+
+## 适用场景
+
+当你手里有两个或更多相互竞争的 offer，需要一种统一标准的方式来做选择时，就该用 ofertas。它在 staff 级别最有用：这个级别的薪酬方案和成长路径差异大到凭直觉判断很容易出错。
+
+- 你可以用粘贴文本或 URL 的形式提供这些职位，也可以引用 tracker 中已有的职位；如果上下文里一个都没有，这个模式会向你询问。
+- 先用 `oferta` 或 `auto-pipeline` 逐一给每个 offer 打分，这样对比排序的是口径一致的评估，而不是把深浅不一的评估混在一起。
+- 由于 North Star 契合度的权重是 25%，光靠更高的薪水并不能排到第一；一个符合你目标发展轨迹的职位，得分可以超过一个薪水更高却偏离方向的选择。
+
+## 相关链接
+
+- [oferta](/zh/docs/reference/modes/oferta)
+- [auto-pipeline](/zh/docs/reference/modes/auto-pipeline)

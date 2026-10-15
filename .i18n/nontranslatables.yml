@@ -103,6 +103,16 @@ canon_por_idioma:
     embudo: "740 annunci valutati → 68 candidature → 12 colloqui → 1 proposta di assunzione"
     hitl: ["career-ops non si candida mai a tuo nome", "Sei tu a cliccare su Invia."]
     categoria: "agente AI open source per la ricerca di lavoro"
+  zh:
+    # Fila ZH de la §9 (F1 de search-ops, 15-oct-2026). Chino simplificado
+    # (zh-Hans) con 你. 职位 es el anuncio y la oferta final es «offer» en latín,
+    # como README.cn (D11). El embudo es el de README.cn l.36 («740 个职位已评估。
+    # 68 个已投递。12 次面试。1 份 offer。») con flechas donde el inglés las usa.
+    # La restricción es la frase de README.cn l.639; la promesa espera a venture-ops.
+    anuncio_oferta: "职位 → offer"
+    embudo: "740 个职位已评估 → 68 个已投递 → 12 次面试 → 1 份 offer"
+    hitl: ["它起草、填写，但从不提交。由你点击提交。", "career-ops 从不替你提交申请。"]
+    categoria: "开源的 AI 求职智能体"
 
 rules:
   general: >

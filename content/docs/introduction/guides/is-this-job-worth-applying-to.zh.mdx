@@ -1,0 +1,179 @@
+---
+title: "这个职位值得申请吗？"
+description: "申请之前先做决定。career-ops 对照你的简历和求职目标为职位打出 1-5 分，展示打分理由，最终由你拍板。"
+seoTitle: "这个职位值得申请吗？用 career-ops 在申请前做决定：1-5 分评分与理由"
+icon: Scale
+translationHash: fb4701ecac039924
+localized: true
+translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
+---
+
+一个职位值不值得申请，要看它与你的简历、你的职级和你的条件是否足够契合，足以让这次申请物有所值。career-ops 会对照你的简历和求职目标阅读职位描述，给出 1-5 分的评分，并附上理由；低于 4.0 时，除非你有具体的理由，否则它建议不要申请。由你决定。
+
+要在申请前检查一个职位，运行 `/career-ops oferta` 并粘贴职位描述即可。它负责评估和起草，由你决定并发送。career-ops 从不替你提交申请。
+
+**本页内容：** [申请前先做决定](#decide-before-you-apply) · [如何评估一个职位](#how-do-i-check-a-job-before-i-apply) · [评分如何确定](#how-does-career-ops-decide-the-score) · [哪些因素不会改变评分](#what-does-not-change-the-score) · [低于 4.0](#what-happens-below-40) · [评估会给你什么](#what-does-the-evaluation-give-you) · [一个虚构的例子](#a-fictional-example) · [告诉它你是谁](#the-first-evaluations-are-rough-until-you-tell-it-who-you-are) · [用你的结果检验评分](#is-the-score-right-for-you) · [不只看薪资，比较两份 offer](#compare-two-offers-beyond-salary) · [用你自己的数字谈判](#negotiate-with-your-own-numbers) · [常见问题](#frequently-asked-questions)
+
+## 申请前先做决定 [#decide-before-you-apply]
+
+career-ops 围绕一个决定而设计：这个职位到底值不值得申请。把你今晚正打算申请的职位粘贴进来，它会告诉你这个晚上花得值不值。它无法告诉你谁会回复你。它会在你把整个晚上花在一份可能石沉大海的申请之前，告诉你这个岗位与你的简历、与你想要的东西有多契合。
+
+career-ops 追求的是质量，而不是数量。它引导你提交更少但更好的申请，当一个职位达不到要求时，它会直截了当地说出来。结果显示*不要申请*，正说明这个产品在尽职尽责。
+
+更少但更好的申请，也关乎招聘双方的尊严。招聘者的时间值得尊重，你的时间也一样。
+
+> 我为自己 2026 年的求职打造了 career-ops。我的漏斗：740 个职位已评估 → 68 个已投递 → 12 次面试 → 1 份 offer。—— Santiago Fernández de Valderrama Aparicio
+
+## 申请之前，如何评估一个职位？ [#how-do-i-check-a-job-before-i-apply]
+
+<Callout title="开始之前">
+  按照[快速开始](/zh/docs)安装 career-ops，并在任一[支持的 CLI](/zh/docs/supported-clis) 中打开它。在你告诉它你是谁之前，评估会按照自带的个人资料打分，而这份资料瞄准的是 AI 岗位：参见[最初的评估比较粗糙](/zh/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are)。
+</Callout>
+
+career-ops 有一个只做评估的模式，让你先做决定。在 career-ops 文件夹中打开你的 AI 编程 CLI，运行下面的命令，然后粘贴职位描述或它的 URL：
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+`oferta` 模式会运行评估并写出报告，不会自动生成 PDF。如果你直接把职位粘贴给 `/career-ops`，它会运行完整流程，无论评分高低，都会同时定制一份简历（默认为 PDF）。想在做其他事之前先拿到结论，就用 `oferta`。如果你随后决定申请，`/career-ops pdf` 会为你定制简历，`/career-ops apply` 会为申请表中的问题起草答案，由你审阅后自己提交。
+
+在 Codex 中，斜杠命令不一定可用：请改为在提示词中写明模式名称，例如 `Run the career-ops oferta mode on this job: {URL}`。
+
+career-ops 在打分之前会先做几项检查。当你提供 URL 时，它会先确认职位是否仍在招聘；如果链接已失效，运行会在评估之前停止，既不生成报告，也不生成简历。粘贴的文本无法这样检查，报告会注明这一点。如果你在 `data/blacklist.md` 中维护了自己的「不申请」名单，名单上的公司会让运行停下：career-ops 会引用你记录的原因，并询问你是否仍要评估。如果职位看起来是通过招聘中介发布的，它会在写任何内容之前先问你是哪家中介。
+
+评估中的调研是有上限的。薪资调研和职位可信度调研加起来最多进行五次网络搜索，找不到的信息会标为不可用。想更深入地了解一家公司，请单独运行 `/career-ops deep`。
+
+## career-ops 如何确定评分？ [#how-does-career-ops-decide-the-score]
+
+career-ops 的评分是一个综合判断，由五个维度引导：
+
+| 维度                                        | 考察内容                                         |
+| ------------------------------------------- | ------------------------------------------------ |
+| Match with CV（与简历的匹配度）             | 你的技能、经验和可佐证的成果与这个职位的契合程度 |
+| North Star alignment（与北极星目标的契合度） | 这个岗位与你个人资料中目标岗位的契合程度         |
+| Comp（薪酬）                                | 职位标明的薪资，对照市场调研来看                 |
+| Cultural signals（文化信号）                | 公司文化、成长空间、稳定性和远程办公政策         |
+| Red flags（危险信号）                       | 阻碍因素和警示，会拉低评分                       |
+
+career-ops 的综合评分把五个维度整合为一个 1-5 分的数字，不使用任何算术公式。它不是报告各部分的平均值。同一个评分会写入报告开头和你的 tracker。
+
+文化契合度不会被简历的高匹配度掩盖。如果你在 `config/profile.yml` 中设定了文化方面的要求，而职位中的证据与之相悖，报告会指出缺少什么，并给 Cultural signals 维度设定上限。评分在 4.5 或以上、但文化契合度较弱的岗位，会附带一条明确的警告，提醒你在申请前先核实。
+
+career-ops 会对照你的个人资料检查工作许可。如果职位对签证担保只字未提，评分不会下降。一句笼统的“must be authorized to work in X”（须具备在 X 工作的许可），只要 X 是你拥有工作许可的国家，也不会拉低评分。如果职位明确写明不提供担保，例如“no visa sponsorship”（不提供签证担保）或“must have existing work authorization”（须已具备工作许可），而这个岗位你无法在自己拥有工作许可的国家任职，这就会被记为硬性阻碍，报告会原文引用职位的措辞。
+
+## 哪些因素不会改变评分？ [#what-does-not-change-the-score]
+
+职位可信度等级从不改变 1-5 分的评分。职位可信度检查（报告中的 Block G）会查看一些信号，例如职位发布了多久、申请按钮是否仍然有效、职位描述是否具体、近期是否有裁员新闻，以及同一岗位是否反复重新发布。它会给出三个等级之一：High Confidence（高可信）、Proceed with Caution（谨慎推进）或 Suspicious（可疑）。它只呈现自己看到的情况，从不指责任何人，会注明可疑信号背后可能存在的正当解释，并把判断留给你。如果职位没有发布日期，也没有其他可疑之处，默认等级是 Proceed with Caution，绝不会是 Suspicious。这项检查背后的公司调研（例如有关公司稳定性的新闻）仍然可以为 Cultural signals 维度提供参考。
+
+要求的重要程度只做标注，不计入评分。报告会列出职位中的重要要求，最多 12 行，绝不会为了控制行数而删掉关键或高重要度的要求。对每一项，它都会标出该要求在这个职位中的重要程度（从关键到弱信号），并说明这一判断来自职位本身的措辞、职位描述的结构，还是一个已标明的估计。重要程度只根据职位描述填写，在读取你的简历之前完成，这样就不会仅仅因为你恰好擅长某项要求，就把它评为重要。对于你未满足或只部分满足的每一项关键或高重要度要求，报告都会给出具体的面试风险和相应的准备计划。重要程度标签不会改变 1-5 分的评分。
+
+你自己与某家公司的过往记录只做展示，不计入评分。如果你以前申请过这家公司却杳无音讯，或者一次收到了回复、另一次却没有，报告会加一条说明。这条说明不是可信度信号，既不改变评分，也不改变等级。它的作用是帮你决定要投入多少精力。
+
+你的黑名单从不改变任何评分：它是一道关卡，会让运行停下，直到你作答；而且它从不会替你往名单里添加任何内容。
+
+## 低于 4.0 会怎样？ [#what-happens-below-40]
+
+评分低于 4.0 时，除非你有具体的理由，否则 career-ops 建议不要申请。你可以推翻这个建议，它也会明确告诉你这一点。
+
+4.0 这条线只是一个建议。决定权在你手里，每一份申请也是如此：career-ops 起草材料，由你审阅，由你发送。在评分的另一端，得分 4.5 或以上的职位还会附带申请表的答案草稿。
+
+## 评估会给你哪些内容？ [#what-does-the-evaluation-give-you]
+
+career-ops 会把每次评估写成 `reports/` 中的一份报告，并在你的 tracker（`data/applications.md`）中添加一行，状态为 Evaluated。报告开头列出评分、可信度等级和工作许可状态，下方是一段机器可读的摘要。随后依次是以下主要部分：
+
+- A) Role Summary（岗位概要）
+- B) Match with CV（与简历的匹配度）
+- C) Level and Strategy（级别与策略）
+- D) Comp and Demand（薪酬与需求）
+- E) Customization Plan（定制计划）
+- F) Interview Plan（面试计划）
+- G) Posting Legitimacy（职位可信度）
+- Risk Summary（风险汇总），把风险信号集中在一屏内展示，不会重新打分
+- H) Draft Application Answers（申请答案草稿），仅在评分为 4.5 或以上时出现
+
+职位描述本身会原文存档在报告中（特别长的会存到 `jds/` 下的一个文件里，由报告指向它），这样即使招聘广告下线，你仍然保有其中的要求。报告末尾还会附上一份求职信初稿，你可以用 `/career-ops cover {slug}` 把它完成。
+
+## 一个虚构的例子 [#a-fictional-example]
+
+<Callout title="虚构示例">
+  下文中的 Acme Freight、这个岗位和这位候选人都是虚构的。这不是一次真实的评估，也不是根据真实评估改编的。它只是展示打分理由读起来是什么样子。
+</Callout>
+
+在这个虚构的例子中，Maya 是一名后端工程师，她已经告诉 career-ops 自己想要什么：产品后端岗位、小团队、远程办公。她粘贴了 Acme Freight 一个 Senior Platform Engineer 职位的 URL。在五个维度上，打分理由是这样展开的：
+
+- **Match with CV**：在职位的核心部分（Go 服务和 Postgres）匹配度很高。有一项关键要求，即在生产环境中运行 Kubernetes，只是部分匹配，因此报告指出了相应的面试风险和准备方法。
+- **North Star alignment**：接近她的目标，但这个岗位更偏向基础设施，而不是她想要的产品后端工作。
+- **Comp**：职位没有标明薪资。报告如实说明这一点，对公司类型进行归类，评估公开薪资数据对这类公司有多可靠，然后就此打住。
+- **Cultural signals**：她想要小团队；职位描述的却是一个大型平台组织，有好几层管理。报告直接点出了这个差距，而不是让简历的高匹配度把它掩盖过去。
+- **Red flags**：没有任何会阻碍申请的问题。
+
+**评分（虚构）：3.6/5**。低于 4.0，除非她有具体的理由，否则 career-ops 建议不要申请。
+
+另外，这个例子中的可信度等级是 Proceed with Caution：职位页面没有显示日期，也没有其他可疑之处。这个等级不会改变评分。
+
+Maya 有一个报告看不到的理由：她认识这个团队的工程经理，对方告诉她团队正在拆分成更小的小组。career-ops 已经告诉她，它建议不要申请。她还是决定申请；这是她自己的决定。她审阅了 career-ops 起草的内容，然后亲自发送了申请。
+
+## 在你告诉它你是谁之前，最初的评估会比较粗糙 [#the-first-evaluations-are-rough-until-you-tell-it-who-you-are]
+
+career-ops 根据它手上的个人资料打分，而自带的个人资料不是你的。自带资料默认的目标岗位全都是 AI 岗位。在你个性化 `modes/_profile.md` 之前，评估都是按照模板作者的求职方向来打分的，运行 `node doctor.mjs` 会标出这个问题。一旦你的个人资料列出了你自己的目标岗位，每个职位都会对照它们进行归类：一个与所有目标岗位都不匹配的岗位，在 North Star alignment 上得 1 分，报告会说明它不是目标岗位，而不是硬把它套到最接近的岗位类型上。
+
+最初几次运行会比较粗糙，因为它还不了解你。跟它聊聊：你的简历、你想要什么、你拒绝什么。首次启动时，它会在对话中向你询问这些信息。要更改目标岗位，直接用大白话说就行，例如“把岗位原型（archetypes）改成后端工程类岗位”。每次评估之后，告诉它哪里判断错了，比如“这个评分太高了”或“你漏掉了我在 X 方面的经验”，它就会更新你的个人资料文件。
+
+## 这个评分对你来说准不准？ [#is-the-score-right-for-you]
+
+career-ops 不会假定它的评分能预测你的结果，而是让你自己去检验。用 `/career-ops outcome` 记录每份申请的结果。有了结果数据之后，运行：
+
+```bash
+node calibrate.mjs
+```
+
+`calibrate` 报告只回答一个问题：对你来说，评分更高的申请是否更常转化为面试和 offer？它只提供参考。它从不修改评分方式、阈值或你的配置，也不会有任何东西自动调整。样本太少时，它不会给出相应的比率，仍在进行中的申请也不会计入。如果你的结果表明这条线的位置并不适合你，证据所能支持的做法是：调整你自己决定申请的分数线，或者调整你的目标岗位。这个决定由你来做。
+
+## 不只看薪资，比较两份 offer [#compare-two-offers-beyond-salary]
+
+要在薪资之外比较两份 offer，先用 `/career-ops ofertas` 比较这些岗位，再用 `/career-ops offer-prep` 逐一阅读每份 offer letter。`ofertas` 模式以职位描述为依据：它的十个维度都不涉及你收到的 offer letter 中的条款，除了远程办公质量之外，也没有通勤或生活质量方面的维度。
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+`ofertas` 模式接受两个或更多职位：可以是职位文本、URL，或你在 tracker 中已经评估过的岗位。它在十个维度上为每个岗位打出 1-5 分，并给出排名和建议，建议会把拿到 offer 所需的时间考虑在内。
+
+薪资（以估算薪酬的形式）是 `ofertas` 评分的十个维度之一。其余九个是 North Star alignment（与北极星目标的契合度）、CV match（简历匹配度）、level（级别）、growth trajectory（成长路径）、remote quality（远程办公质量）、company reputation（公司声誉）、tech stack modernity（技术栈的先进程度）、time-to-offer speed（拿到 offer 的速度）和 cultural signals（文化信号）。
+
+1-5 分的评估评分不使用算术公式，`ofertas` 的比较则不同：它使用默认权重，其中 North Star alignment 的权重最大。默认设置偏向资深 AI 岗位：级别维度给 staff 级岗位的评分最高，技术栈维度给前沿 AI 和 ML 的评分最高。如果这不是你的求职方向，请在比较之前说明你看重什么。你的评分偏好保存在你的个人资料 `modes/_profile.md` 中，比较时会读取它。
+
+### 用你自己的数字谈判 [#negotiate-with-your-own-numbers]
+
+career-ops 帮你基于自己的文件和自己的数字做好谈判准备。`offer-prep` 模式会和你一起阅读 offer letter 或合同，但不评判这份 offer 是偏低、合理还是偏高：这个判断由你来做。粘贴文本，或者告诉它文件在哪里：
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+`offer-prep` 会逐字引用每一条值得注意的条款，用通俗易懂的语言解释它，并贴上中性的标签，例如 commonly negotiated（通常可协商）或 ask your lawyer（请咨询律师）。最后，它会列出要问律师的问题、要向雇主提出的事项（以提问的方式，绝不是要求），以及一条固定声明，说明这不构成法律建议。它不进行任何网络搜索，并且只能阅读英文合同。
+
+`node salary-gap.mjs --summary` 会按申请逐一列出你期望的薪资、职位标明的薪资，以及你实际拿到的 offer 金额。`node negotiation-roi.mjs --summary` 会根据一条关于节省工时的陈述（其中的数字也出现在你的 `cv.md` 中）起草一个谈判要点，并按你提供的工资标准和发生频率估算其价值：这只是估算，不是财务建议。`/career-ops offer-prep reply {company-slug}` 会根据你的准备报告起草一封回复邮件；由你自己发送。
+
+如果一个岗位意味着要搬到另一个省，同样的薪资在税后到手的金额可能并不相同。`salary-gap.mjs --relocation` 会针对同一个税前年薪数字比较两个地方：
+
+```bash
+node salary-gap.mjs --relocation --gross 95k --currency CAD --posting-location "Calgary, AB" --home-location "Toronto, ON"
+```
+
+`--gross` 是年薪数字，`--currency` 是职位标明薪资所用的货币；如果这种货币与税率表不匹配，脚本会拒绝比较，而不是去猜。`--home-location` 是可选的：不提供时，你的所在地取自 `config/profile.yml`。`--posting-location-file <path>` 会从文件而不是命令行读取职位的工作地点。税率表目前覆盖加拿大（联邦税，以及安大略省、新斯科舍省、艾伯塔省和不列颠哥伦比亚省），不支持跨国比较。结果只计算税率档位，不考虑税收抵免、工资代扣的社保缴款或生活成本：它只是供你自己判断的一个数据点，不是财务或税务建议。当职位标明了薪资、且工作地点需要你搬迁时，评估也会运行同样的检查。
+
+## 常见问题 [#frequently-asked-questions]
+
+### 有没有工具能根据我的简历，告诉我哪些职位值得申请？
+
+career-ops 是一个开源、采用 MIT 许可证的工具，会在你申请之前，对照你的简历和求职目标阅读职位描述。它会给出一个 1-5 分的综合评分，并附上理由。低于 4.0 时，除非你有具体的理由，否则它建议不要申请，而你可以推翻这个建议。career-ops 从不替你提交申请：每一份申请都由你自己审阅并发送。
+
+### 评分高就一定能拿到面试吗？
+
+career-ops 的高评分并不保证你能拿到面试。评分判断的是一个职位与你的简历和求职目标有多契合，而不是对面试或 offer 的预测。想了解评分与你自己的结果是否吻合，就在结果出现时及时记录，然后运行 calibrate 报告；这份报告只供参考，从不改变评分方式。
+
+### 除了薪资，如何比较两份 offer？
+
+要用 career-ops 在薪资之外比较两份 offer，先用 ofertas 模式比较这些岗位：它在十个维度上为每个岗位打分（薪资只是其中之一），并给出排名和建议。这些维度都不涉及 offer letter 中的条款，所以再用 offer-prep 模式逐一阅读每份 offer letter：它会和你一起逐条过一遍条款，列出要问律师的问题和要向雇主提出的事项，但不会对这份 offer 下任何结论。

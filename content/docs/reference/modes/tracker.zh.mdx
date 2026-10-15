@@ -1,0 +1,104 @@
+---
+title: tracker
+description: "快速查看每份申请目前进展到哪一步。适合作为每天的例行检查，或在准备每周复盘时使用。完整的键盘操作界面在 Go TUI 仪表盘里；这个模式提供的是聊天窗口中的摘要。"
+seoTitle: "career-ops tracker 模式：一眼看清每份求职申请的进度"
+icon: LayoutGrid
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: c95cd399167d223d
+localized: true
+translatedFrom: /docs/reference/modes/tracker
+---
+
+## 它能做什么
+
+`tracker` 模式会读取 reports/ 中的每个文件，生成一份按阶段分组的结构化摘要：已投递、已评估、面试、被拒、已放弃。各阶段的数量、近期动态以及已超期的跟进事项，都会在同一条回复中列出。
+
+## 什么时候使用
+
+如果只想每天花十五秒快速确认一下进度，就用 tracker；需要深入查看细节时，就用 Go TUI 仪表盘。
+
+## 示例
+
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+
+## 实际运行效果
+
+运行一次 tracker，它会在同一条回复中输出完整的申请表格和一个统计区块，让你一眼看清整个求职的全貌。每一行是一份申请，列出公司、职位、评分、当前状态，以及是否已生成定制 PDF 和评估报告。
+
+```txt title="Example"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
+
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
+```
+
+申请会在一组固定的状态之间流转：Evaluated（报告已写好，尚待决定）、Applied（你已提交申请）、Responded（公司已回复，但还没有安排面试）、Interview（面试流程正在进行），最后进入一个终态：Offer、Rejected、Discarded，或者用于不合适职位的 SKIP。要记录状态变更，可以直接在聊天中提出，也可以自己运行 `node set-status.mjs <report#|company> <state>`；如果变更发生在更早的某一天，再加上 `--on YYYY-MM-DD`。这条命令会拒绝未知状态，在写入时锁定 tracker，并把这次状态转换记录到 `data/status-log.tsv`，也就是 funnel-velocity（漏斗速度）统计所读取的台账。所以请用它，而不要手动编辑那一行。
+
+如果想修正一条备注，而不是再追加一条，就用 `--replace-note` 传入旧备注，用 `--note` 传入新内容。不加 `--replace-note` 时，`--note` 只会追加，这样该行就会留下像 `not applied; applied` 这样自相矛盾的内容。匹配的是以 `; ` 分隔的一整条备注；如果 Notes 单元格中既没有旧备注也没有新内容，就不会写入任何东西：
+
+```bash
+node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applied via referral"
+```
+
+另外还有三个参数，主要供 Go TUI 仪表盘使用，它现在也通过 `set-status.mjs` 记录状态变更。`--report-link N` 会选中 Report 单元格中恰好只有一个指向报告 `N` 的链接的那一行；遇到格式错误的单元格会直接拒绝，而不是去猜。`--repair-status-log` 和 `--repair-followup` 适用于对一个已是 Applied 的行再次执行 Applied 变更的情况：它们会补上第一次执行时没能写入的台账记录或跟进提醒；如果已经存在，就什么也不添加。
+
+## 修复失效的报告链接
+
+当某一行的 Report 单元格链接的文件已不存在时，`node verify-pipeline.mjs` 会报告 `Report not found`。`npm run fix-report-links` 会修复这些行，只把那个单元格改成 tracker 中通常表示“无报告”的标记。它不会重新生成丢失的报告。建议先预览：
+
+```bash
+npm run fix-report-links -- --dry-run  # list the affected rows, write nothing
+npm run fix-report-links               # apply; the tracker is backed up to .bak first
+```
+
+其他所有单元格、行的顺序和换行符都保持原样。如果某个 Report 单元格里的内容不是恰好一个链接，它会被列出来留给你手动检查，并且不做任何改动。重复运行时，第二次不会再做任何改动。
+
+## 查看累计数据
+
+如果需要累计数据，比如完整的漏斗、扫描器总数、招聘门户覆盖情况以及跟进的执行情况，这个模式会运行 `node stats.mjs --summary`，并原样展示它的输出。这条命令读取的是你的本地文件，不消耗任何 token，因此这些数字绝不会靠手算或凭记忆估计。想每天快速看一眼，就用上面的聊天摘要；想看整个求职期间的累计总数，就用这条统计命令。
+
+## 导出修复后的副本
+
+表格到了几百行的规模，markdown 难免会出问题：乱码占位符、跑到状态列里的评分、重复的 id、多余的竖线。`node tracker.mjs sync` 会在它的 SQLite 索引 `data/applications.db` 中找出并修复这些问题，而不会改动 markdown 文件。`tracker.mjs` 需要 Node 22.13 或更高版本（如果用的是 Node 23，则需要 23.4 或更高版本）才能使用这个索引；没有这个索引，markdown tracker 也能照常工作。要把这份修复后的副本用作你自己的 tracker，就用 `node tracker.mjs export`：
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+除非你把 `data/applications.md` 作为 `--out` 的参数传入，否则 `export` 绝不会改动它。
+
+它保留的是它读到的版式，而不只是数值：你的表头行、career-ops 不映射的列（`Location`、`Via`、`URL` 或你自定义的列）、标题、表格前的所有内容和末尾的行，以及换行符用的是 CRLF 还是 LF。额外的列会回到原来的位置，不过 `query` 无法按这些列筛选。
+
+任何它无法还原的内容都会在 stderr 上逐一列出。如果这个列表不为空，`--out` 遇到已有文件时会拒绝写入（退出码为 `1`，不写入任何内容），直到你加上 `--force` 重新运行；如果列表为空，`--out` 会先备份已有文件，再覆盖它。会被报告的情况包括：
+
+| 报告的内容 | 为什么无法重建 |
+| --- | --- |
+| 位于表头所声明的列之外的单元格 | 表头中没有可以放它的列 |
+| 夹在第一行和最后一行表格行之间的行，例如一个标题或第二张表格的表头 | 重建后的单张表格没有地方放它 |
+| 属于后面另一张表格的行，例如 `## Archive` 部分中的行 | 它是按第一张表格的表头建立索引的，重新输出会把归档数据移进当前使用的表格 |
+| 为了能作为单元格保留下来而不得不改写其值的单元格（多余的 `\|` 会变成 `│`） | 值本身已经改变 |
+
+没有报告任何丢失，并不代表输出与原文件逐字节一致。`export` 会输出 `sync` 做过的修复，其中有些是静默完成的：`aplicado` 在 `templates/states.yml` 中是 `Applied` 的一个已识别别名，所以 `sync --check` 不会报告任何损坏，但导出结果里仍然会写成 `Applied`。原本按列对齐的单元格，导出后也只保留单个空格。在采用一份导出结果之前，先把它和它要替换的文件 diff 一下：
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+完整的命令参考，包括 `sync`、`query` 和 `history`，见核心仓库的[脚本指南](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker)。
+
+## 注意事项
+
+状态保存在 tracker（`data/applications.md`）的 Status 列中，而不是在报告文件里。手动修改它会绕过 `data/status-log.tsv`：funnel-velocity 仍然能看到新的状态，却不知道它是什么时候发生的，所以这次变更不会计入各阶段的速度统计；而且如果某一行后来以 Rejected 结束，它经历过的那些阶段也会丢失。请使用 `set-status.mjs`、聊天，或者 Go TUI 仪表盘的状态选择器（它运行的是同一条命令）。
+
+## 相关链接
+
+- [followup](/zh/docs/reference/modes/followup)
+- [patterns](/zh/docs/reference/modes/patterns)
