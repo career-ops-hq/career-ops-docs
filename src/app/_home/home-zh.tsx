@@ -47,7 +47,7 @@ export const homeZh: HomeDict = {
   worthApplyingHref: '/zh/docs/introduction/guides/is-this-job-worth-applying-to',
   authorTagline: '，曾经营企业 16 年，career-ops 的创建者',
   // No thesisTranslation for ZH: the English thesis stands alone, as in FR, DE, PT and IT.
-  nowSignedManifesto: <>现已成为一份签名宣言 ·</>,
+  nowSignedManifesto: <>现已成为一份联署宣言 ·</>,
   readIt: '阅读 →',
   whatIsHeading: (
     <>
@@ -59,8 +59,8 @@ export const homeZh: HomeDict = {
     <>
       career-ops 是一个开源的 AI 求职智能体，在你的电脑上本地运行，可用于任意一款 AI
       编程 CLI：Claude Code、OpenCode、Codex、GitHub Copilot 等。career-ops
-      从不替你提交申请。由你点击提交。它用一套五个维度加一个整体综合评分的评分标准（1-5
-      分）对照你的简历评估职位，为每个职位生成针对 ATS 优化的定制 PDF 简历，为
+      从不替你提交申请。由你点击提交。它采用一套含五个维度及一项整体综合评分（1-5
+      分）的评分标准，对照你的简历评估职位，为每个职位生成针对 ATS 优化的定制 PDF 简历，为
       Greenhouse、Ashby 和 Lever 表单中的开放式问题起草答案，零 token 扫描 150 多个职位来源，并在一个用
       Go 编写的终端仪表板里跟踪整个求职流程。你的文件默认保存在你的电脑上：{brand('没有云端')}、
       {brand('没有遥测')}、{brand('不用注册账号')}。采用 MIT 许可证，永久免费；唯一的成本是你已经在付费的
@@ -106,7 +106,7 @@ export const homeZh: HomeDict = {
     <>
       Greenhouse、Ashby 和 Lever 的表单会问&ldquo;为什么想做这个职位？&rdquo;和&ldquo;介绍一个你做过的项目&rdquo;。
       <code className="font-mono text-brand">/career-ops apply</code>{' '}
-      会读取表单，根据你的简历和职位描述写出每一个答案，交给你直接粘贴。
+      会读取表单，根据你的简历和职位描述写出每一个答案，方便你直接粘贴。
     </>
   ),
   // Canon string (search-ops doctrine §20): transcreated, not calqued. 替你
@@ -129,7 +129,7 @@ export const homeZh: HomeDict = {
   featCommunityTitle: '与社区一起打造。',
   featCommunityBody: (
     <>
-      career-ops 在真正求职的人提交的 pull request 中成长。Issue 在 Discord
+      career-ops 借助真实求职者提交的 pull request 不断成长。Issue 在 Discord
       里处理，修复在同一周内发布。你不只是在用这个工具，也在参与决定它会变成什么样。
     </>
   ),
@@ -137,7 +137,7 @@ export const homeZh: HomeDict = {
   openSourceTitle: '100% 开源。',
   starsWord: 'stars',
   forksWord: 'forks',
-  repoOfDay: '当日第 1 名仓库',
+  repoOfDay: '当日热门仓库第 1 名',
   builtByDek: (
     <>
       由{' '}
@@ -226,7 +226,7 @@ export const homeZh: HomeDict = {
             Santiago Fernández de Valderrama Aparicio
           </a>{' '}
           打造，他做产品已经超过 16 年。2009 年他在西班牙创办并经营一家手机维修公司，直到 2025
-          年将其出售。2026 年初，他为了管理自己在 AI 时代的求职做了 career-ops，并在自己不再需要它之后以 MIT
+          年将其出售。2026 年初，他为了管理自己在 AI 时代的求职而打造了 career-ops，并在自己不再需要它之后以 MIT
           许可证开源。那时他已经用它评估了 740 个职位，并拿下了一个 Head of Applied AI 职位。拿下那个职位六个月后，他离开了这个职位，全职投入
           career-ops 的开发。
         </>
@@ -236,8 +236,8 @@ export const homeZh: HomeDict = {
       q: 'career-ops 是 Claude Code 的一个 skill，还是独立工具？',
       a: (
         <>
-          career-ops 不依赖任何特定的 CLI。它可用于 Claude Code、OpenCode、Codex、GitHub Copilot
-          等你已经在付费的 AI 编程智能体。skill 文件（
+          career-ops 不依赖任何特定的 CLI。它可用于你已经在付费使用的多款 AI 编程智能体，如 Claude Code、OpenCode、Codex、GitHub
+          Copilot 等。skill 文件（
           <code className="font-mono text-fd-foreground">modes/</code>）以普通 Markdown
           提示词的形式放在仓库里；任何能加载 skill 的智能体都可以调用它们。它不依赖 Anthropic 的任何特定组件。Claude
           Code 最常用，因为它自带 skill 加载器，但同样的模式无需修改也能在其他 CLI 上运行。
