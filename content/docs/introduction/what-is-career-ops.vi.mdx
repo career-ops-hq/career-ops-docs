@@ -1,0 +1,35 @@
+---
+title: career-ops là gì?
+description: "career-ops là hệ thống tìm việc bằng AI, miễn phí và mã nguồn mở, chạy ngay trên máy bạn bên trong AI CLI bạn đang dùng — chấm điểm tin tuyển dụng, điều chỉnh CV theo từng vị trí, theo dõi các đơn ứng tuyển."
+seoTitle: "career-ops là gì? Hệ thống tìm việc bằng AI mã nguồn mở, chạy cục bộ"
+icon: CircleQuestionMark
+date: 2026-04-20
+lastModified: 2026-10-11
+translationHash: 0433d1c8c30d103b
+localized: true
+translatedFrom: /docs/introduction/what-is-career-ops
+---
+
+career-ops là tác tử AI mã nguồn mở để tìm việc, chạy bên trong trợ lý lập trình AI của bạn. career-ops là một bộ lọc: nó giúp bạn ứng tuyển tốt hơn vào ít vị trí hơn, còn mọi quyết định đều do bạn đưa ra. Bạn đưa cho nó URL hoặc văn bản thô của một tin tuyển dụng, nó sẽ đọc mô tả công việc, chấm điểm vị trí đó so với nền tảng của bạn theo năm tiêu chí cùng một điểm tổng thể, tạo CV dạng PDF được điều chỉnh riêng và trích dẫn các dòng cụ thể trong CV của bạn, rồi ghi lại toàn bộ vào một tracker đơn ứng tuyển cục bộ — tất cả chỉ trong một lệnh, không cần bảng tính, không cần tài khoản, và không có backend nào của chúng tôi: CV của bạn đi từ máy bạn đến nhà cung cấp AI mà bạn đã chọn, và không đi đâu khác. career-ops được [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) xây dựng để quản lý một hành trình tìm việc thực tế trong thời đại AI vào đầu năm 2026: 740 tin tuyển dụng đã được đánh giá theo một bộ tiêu chí rõ ràng, và anh đã nhận được một vị trí Head of Applied AI. Anh đã mở mã nguồn dự án theo giấy phép MIT khi không còn cần đến nó nữa, để bất kỳ ai đang tìm việc một cách bài bản đều có thể dùng cùng một hệ thống miễn phí, trên máy của mình, với mô hình AI mà họ vốn đã trả tiền. Sáu tháng sau khi nhận vị trí đó, anh nghỉ việc để toàn tâm xây dựng career-ops.
+
+## Triết lý
+
+### Mã nguồn mở, thực sự nghiêm túc
+
+career-ops không có gói trả phí, không có danh sách chờ, không cần tài khoản và không có telemetry. Bạn clone repo và chạy cục bộ với bất kỳ AI CLI dành cho lập trình nào bạn đang dùng. CV của bạn nằm trong markdown thuần và cấu hình nằm trong YAML: đó là những tệp của bạn, bạn có thể chỉnh sửa bất cứ lúc nào. Trong lúc cài đặt, bạn không cần động đến chúng, vì bạn trả lời bằng ngôn ngữ thường ngày và tác tử sẽ viết chúng giúp bạn. Hồ sơ và lịch sử ứng tuyển của bạn được lưu trong các tệp ngay trên máy bạn. Nhà cung cấp AI mà bạn chọn sẽ đọc những gì CLI của bạn gửi đến, và chúng không đi đâu khác trừ khi chính bạn đẩy chúng đi nơi nào đó. Dự án phát triển nhờ những đóng góp của cộng đồng, được xem xét công khai: khi ai đó thêm một scraper cho cổng tuyển dụng của một công ty, cải thiện bộ tiêu chí chấm điểm hoặc sửa một lỗi, cải tiến đó sẽ đến với mọi người ở bản phát hành kế tiếp. Đó là toàn bộ mô hình kinh doanh — không có chiêu bán thêm, không có gói doanh nghiệp, không có kế hoạch bán dữ liệu. Hệ thống được cấp phép MIT mãi mãi; ngay cả khi người duy trì ngừng phát hành, bộ tiêu chí, các prompt và các scraper vẫn là của bạn để fork, kiểm tra và chạy.
+
+<Callout title="Bạn muốn đóng góp?">
+  Hãy đọc [hướng dẫn đóng góp](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) trước khi mở pull request. Tóm tắt ngắn gọn: hãy mở issue trước nếu bạn muốn thêm tính năng mới, một mode hoặc lệnh mới, hay thay đổi kiến trúc. Sửa lỗi, thêm nhà cung cấp scanner mới không cần xác thực, tài liệu và bản dịch có thể gửi thẳng pull request. Các maintainer sẽ xem xét nhanh chóng.
+</Callout>
+
+### Tích hợp AI và không phụ thuộc nền tảng
+
+career-ops không đi kèm mô hình AI riêng. Nó chạy dưới dạng một tập hợp các lệnh slash và tệp prompt bên trong bất kỳ AI CLI dành cho lập trình nào bạn đã tin dùng — Claude Code, Codex, OpenCode, Qwen, GitHub Copilot và [nhiều công cụ khác](/docs/supported-clis). AI đảm nhận phần suy luận; career-ops cung cấp cấu trúc, bộ tiêu chí chấm điểm, các scraper cho cổng tuyển dụng của công ty và hợp đồng dữ liệu giúp các tệp của bạn luôn thuộc về bạn. Kiến trúc này có nghĩa là bạn không bị ràng buộc vào lộ trình hay mức giá của một nhà cung cấp nào — khi có mô hình tốt hơn ra mắt, bạn chỉ cần đổi CLI và career-ops vẫn chạy nguyên vẹn bên trên. Cùng một bộ tiêu chí — năm tiêu chí chấm điểm cùng một điểm tổng thể — cho ra cách suy luận có thể so sánh được dù bạn dùng mô hình Claude, OpenAI, Gemini hay Qwen — hãy chọn engine phù hợp với chi phí, chất lượng và mức độ riêng tư của bạn, và đổi tùy ý khi bức tranh công nghệ thay đổi.
+
+## Khi nào nên dùng career-ops
+
+career-ops là công cụ phù hợp khi bạn đang tìm việc một cách chủ động và có hệ thống — chứ không phải chỉ lướt xem cho biết. Nó hiệu quả nhất với những ứng viên đã có một bản CV ưng ý và muốn điều chỉnh theo từng đơn ứng tuyển mà không phải viết lại thủ công mỗi lần, đang theo dõi nhiều đơn ứng tuyển và muốn có một nguồn dữ liệu duy nhất thay cho bảng tính rối rắm, chỉ muốn ứng tuyển vào những vị trí thực sự phù hợp thay vì mọi thứ có chút liên quan, và thoải mái khi chạy lệnh trong terminal dù không làm lập trình chuyên nghiệp. career-ops có lẽ không phải thứ bạn cần nếu bạn chỉ gửi một hai đơn rồi xong. Phần cài đặt — clone repo, cấu hình hồ sơ, thêm CV — mất khoảng mười lăm phút, một khoản đầu tư chỉ đáng giá khi bạn đánh giá nhiều hơn một vài vị trí.
+
+## career-ops không phải là gì
+
+career-ops không nộp đơn thay bạn. Hệ thống đánh giá, chấm điểm, tạo tài liệu và theo dõi — nhưng mọi lần nộp đơn đều là quyết định của bạn, được đưa ra khi phần suy luận của tác tử hiển thị rõ ở từng bước, và không có gì được gửi đi nếu bạn chưa chấp thuận rõ ràng. Nó soạn và điền, nhưng không bao giờ nộp. Bạn là người bấm Nộp. career-ops cũng không phải công cụ tạo CV hay tối ưu LinkedIn; bạn mang theo bản CV sẵn có, và hệ thống đảm bảo mỗi phiên bản của nó được điều chỉnh phù hợp với vị trí đang đứng trước mặt bạn. Nó là một quy trình, không phải một nhà máy sản xuất nội dung. Ranh giới giữa mã nguồn hệ thống (được cập nhật theo mỗi bản phát hành) và dữ liệu người dùng (không bao giờ bị ghi đè) được bảo đảm bởi DATA_CONTRACT.md trong repository: CV, hồ sơ và lịch sử ứng tuyển của bạn là bất khả xâm phạm — career-ops sẽ đọc chúng, nhưng sẽ không bao giờ âm thầm viết lại hay xóa những gì bạn đã đặt ở đó, qua bất kỳ bản phát hành nào.

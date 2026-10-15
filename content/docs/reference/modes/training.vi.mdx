@@ -1,0 +1,57 @@
+---
+title: training
+description: "Bạn có nên bỏ 4.000 USD cho khóa học ML systems? Chuyên ngành trên Coursera? Chứng chỉ AWS đắt đỏ? Chế độ training chấm điểm một khoản đầu tư học tập dựa trên định hướng nghề nghiệp bạn đã đặt ra, rồi cho bạn thấy mức hoàn vốn thực tế về thời gian và tiền bạc."
+seoTitle: "Chế độ training của career-ops: khóa học hay chứng chỉ này có đáng học không?"
+icon: BookOpen
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: f9ba1d91483777d9
+localized: true
+translatedFrom: /docs/reference/modes/training
+---
+
+## Chế độ này làm gì
+
+Chế độ `training` đọc thông tin về khóa học hoặc chứng chỉ (giáo trình, thời lượng, chi phí), đọc phần North Star trong config/profile.yml của bạn, rồi chấm điểm khoản đầu tư theo ba tiêu chí: mức độ lấp khoảng trống kỹ năng, giá trị tín hiệu với các vị trí mục tiêu, và chi phí cơ hội.
+
+## Khi nào nên dùng
+
+Hãy dùng training khi bạn đang phân vân trước một khóa học nhưng chưa chắc nó có thực sự đưa bạn đến gần hơn với định hướng đã đặt ra hay không. Chế độ này đặc biệt hữu ích với các chứng chỉ và bootcamp đắt tiền.
+
+## Ví dụ
+
+```
+`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
+```
+
+## Một lần chạy trông như thế nào
+
+Một lần chạy training chấm điểm khóa học hoặc chứng chỉ theo sáu tiêu chí và trả về một trong ba kết luận, để bạn thấy mức hoàn vốn về thời gian và tiền bạc trước khi quyết định theo học. Bạn đưa cho nó khóa học cần đánh giá, gồm giáo trình, số tuần, số giờ mỗi tuần và chi phí, rồi nó đối chiếu với định hướng nghề nghiệp bạn đã đặt ra.
+
+```txt title="Example"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+
+Kết luận DO đi kèm một kế hoạch từ bốn đến mười hai tuần, có sản phẩm bàn giao và bảng theo dõi theo từng tuần. Kết luận DON'T DO chỉ ra một lựa chọn thay thế tốt hơn và giải thích lý do. DO WITH TIMEBOX giới hạn số tuần và rút kế hoạch về phần cốt lõi. Đây là kết quả thường gặp với những khóa học hữu ích nhưng bị kéo dài không cần thiết.
+
+## Khóa học nào được điểm cao nhất
+
+Chế độ này ưu tiên những khóa học xây dựng uy tín trong AI cấp production hơn là các chứng chỉ chung chung. Theo thứ tự ưu tiên, đó là: đánh giá và kiểm thử LLM, observability và giám sát, đánh đổi giữa chi phí và độ tin cậy, quản trị và an toàn AI, kiến trúc AI cho doanh nghiệp. Khóa học kết thúc bằng một sản phẩm có thể trình diễn, chẳng hạn một eval harness hay một bản triển khai có giám sát, sẽ được điểm cao hơn khóa chỉ cấp chứng chỉ, vì sản phẩm là thứ mà người tuyển dụng thực sự nhìn thấy được.
+
+## Lưu ý
+
+Chế độ này thiên về North Star mà bạn đã đặt ra. Nếu bạn chưa điền phần North Star trong config/profile.yml một cách cẩn thận, kết quả đánh giá sẽ khá nông.
+
+## Xem thêm
+
+- [project](/docs/reference/modes/project)

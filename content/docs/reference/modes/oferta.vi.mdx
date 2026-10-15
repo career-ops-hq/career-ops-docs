@@ -1,0 +1,71 @@
+---
+title: oferta
+description: "Chạy bước đánh giá A–H cho một tin tuyển dụng và ghi kết quả vào tracker của bạn, không tạo PDF. Dùng khi bạn chỉ cần quyết định dựa trên điểm số chứ không cần chạy cả pipeline."
+seoTitle: "Chế độ oferta của career-ops — chấm điểm một tin tuyển dụng trước khi ứng tuyển"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 9a968f6bcb8dda55
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## Chế độ này làm gì
+
+Chế độ oferta đọc một JD (URL hoặc văn bản dán vào), chấm điểm theo thang tiêu chí — năm khía cạnh cộng với một điểm tổng thể — kèm bằng chứng được trích dẫn, rồi viết báo cáo đánh giá. Không có PDF, nhưng chế độ này thêm một dòng vào tracker với trạng thái Evaluated. Nhanh và rẻ.
+
+## Khi nào nên dùng
+
+Dùng oferta để sàng lọc nhanh một tin tuyển dụng còn lưỡng lự. Nếu điểm vượt 4.0 và bạn quyết định nộp đơn, hãy chuyển sang chế độ auto-pipeline hoặc apply.
+
+## Một lần chạy trông như thế nào
+
+Bạn đưa cho chế độ này một tin tuyển dụng và nhận lại bản đánh giá gồm bảy khối — Khối A đến F cùng Khối G đánh giá độ tin cậy của tin đăng, kèm Khối H gồm các câu trả lời nháp khi điểm từ 4.5 trở lên — có điểm số và lập luận được trích dẫn. Bạn có thể dán thẳng nội dung JD, hoặc đưa URL để chế độ này kiểm tra trước xem tin còn mở hay không, nhờ vậy một đường link chết sẽ không tốn của bạn một lượt đánh giá đầy đủ.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+```
+
+Các Khối B đến F bao gồm mức độ khớp giữa CV và vị trí cùng các điểm còn thiếu, chiến lược về cấp bậc, mức lương và nhu cầu thị trường, kế hoạch tùy chỉnh hồ sơ, và các câu chuyện phỏng vấn theo phương pháp STAR+R được ánh xạ với yêu cầu của vị trí.
+
+## Khi nào nên dùng oferta
+
+Hãy dùng oferta để chấm điểm nhanh một tin tuyển dụng mà không cần chạy cả pipeline. Một vài điều cần biết:
+
+- Khi bạn đưa URL, bước kiểm tra tin còn mở hay không sẽ chạy trước — tin đã hết hạn hoặc trả về 404 sẽ bị chặn trước Khối A, nên bạn không phải tốn một lượt chạy cho nội dung không còn tồn tại.
+- Một trang LinkedIn có phần mô tả cứ mãi ở trạng thái khung tải được tính là JD không khả dụng, chứ không phải tin đã đóng: oferta dừng trước Khối A và yêu cầu bạn dán nội dung tin, hoặc đưa link của nhà tuyển dụng hay của ATS cho cùng vị trí đó.
+- Archetype được phân loại dựa trên các vị trí mục tiêu của chính bạn, tức phần *Your Target Roles* trong `modes/_profile.md`; các loại vị trí mặc định chỉ được áp dụng khi bạn chưa định nghĩa loại nào. Một vị trí không khớp với mục tiêu nào của bạn sẽ được 1 điểm ở tiêu chí phù hợp với North Star, bản đánh giá vẫn tiếp tục với các khía cạnh còn lại, và dòng Archetype trong báo cáo ghi `Not a target — closest default: {default role type}` hoặc `Not a target — no close match`.
+- Việc tìm hiểu về công ty và mức lương bị giới hạn tối đa năm lượt tìm kiếm trên web; đây là một bản đánh giá, không phải nghiên cứu chuyên sâu. Hãy chạy riêng `/career-ops deep` khi bạn muốn có bức tranh đầy đủ hơn về công ty.
+- Khối G trả về một trong ba mức — High Confidence, Proceed with Caution hoặc Suspicious — để những tin tuyển dụng có khả năng là "ghost job" lộ ra trước khi bạn tốn công chuẩn bị phỏng vấn.
+- Khi tin đăng nêu rõ đây là vị trí có thời hạn cố định, chẳng hạn hợp đồng 18 tháng hoặc vị trí tạm thời, Khối G sẽ thêm một ghi chú về hợp đồng có thời hạn, trích nguyên cụm từ đó, kèm một gợi ý tùy chọn để bạn dùng khi trao đổi về lương. Ghi chú này chỉ mang tính thông tin: nó không bao giờ thay đổi điểm số, mức độ tin cậy của tin đăng hay khuyến nghị.
+
+## Score Evidence
+
+Báo cáo có phần **Score Evidence** đặt sau Risk Summary. Phần này bao quát năm khía cạnh: mức khớp CV, sự phù hợp với North Star, mức lương, tín hiệu về văn hóa và các dấu hiệu cảnh báo. Mỗi dòng ghi lại trạng thái bằng chứng (`supported`, `partial` hoặc `unknown`), một nguồn hoặc quan sát cụ thể, và một câu hỏi chưa được giải đáp. Phần này kết thúc bằng mức độ tin cậy của bằng chứng (`High`, `Medium` hoặc `Low`), lý do của mức đó, và tối đa ba ưu tiên cần xác minh.
+
+Mức này mô tả bằng chứng đằng sau Global Score; nó không phải xác suất được tuyển, cũng không phải mức độ tin cậy của tin đăng ở Khối G, và nó không làm thay đổi điểm số. Machine Summary giữ nguyên năm trạng thái trong `score_evidence`, mức độ tin cậy trong `confidence`, và các ưu tiên trong `confidence_gaps`. Khi không còn ưu tiên nào, `confidence_gaps` là một danh sách rỗng.
+
+## Liên quan
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [ofertas](/docs/reference/modes/ofertas)
+- [pdf](/docs/reference/modes/pdf)

@@ -1,0 +1,57 @@
+---
+title: Lever
+description: "Lever là ATS quen thuộc của các công ty tầm trung và giai đoạn tăng trưởng. career-ops gọi thẳng API tin tuyển dụng công khai của Lever."
+seoTitle: "Quét tin tuyển dụng trên Lever với career-ops, không tốn token cho việc quét ATS"
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 535b6f24a4a180f6
+localized: true
+translatedFrom: /docs/reference/portals/lever
+---
+
+## Nó làm gì
+
+Provider `lever` trong `providers/lever.mjs` gửi các HTTP request đến `api.lever.co/v0/postings/{slug}` rồi phân tích phản hồi JSON. Slug là mã định danh trang tin tuyển dụng của công ty trên Lever (ví dụ `figma` cho Figma).
+
+## Khi nào nên dùng
+
+Hãy dùng chế độ quét Lever cho các công ty ở giai đoạn từ Series C đến trước IPO chưa chuyển sang Greenhouse hoặc Ashby. Figma, Brex và nhiều công ty fintech vẫn đang dùng Lever.
+
+## Ví dụ
+
+```
+In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
+```
+
+## Trình quét làm gì
+
+Trình quét đọc các slug Lever đang bật trong `portals.yml`, gọi API tin tuyển dụng công khai của Lever cho từng slug, rồi gộp các vị trí mới có tiêu đề khớp vào pipeline của bạn. Quá trình này không cần phiên trình duyệt và không tốn token LLM nào cho bước tải dữ liệu. Cùng một lần chạy `node scan.mjs` cũng quét luôn các board Greenhouse và Ashby của bạn, sau đó lọc toàn bộ kết quả theo các từ khóa tiêu đề bạn đã cấu hình.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 33 total
+Filtered by title: 5 relevant
+Duplicates: 2 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Figma | AI Product Engineer | lever
+  + Brex  | Applied AI Engineer | lever
+```
+
+## career-ops làm việc với Lever như thế nào
+
+career-ops gọi `api.lever.co/v0/postings/{slug}` (hoặc host `api.eu.lever.co` đối với các board ở EU) và đọc mảng JSON chứa các tin tuyển dụng. Với mỗi vị trí, nó lấy trường `text` làm tiêu đề và `hostedUrl` làm đường dẫn, rồi dùng `applyUrl` thay thế khi không có `hostedUrl`. Vì Lever trả về toàn bộ board trong một phản hồi có cấu trúc, mỗi công ty chỉ cần một request HTTPS GET công khai, nằm trong giới hạn rate limit và không tốn token của mô hình. Chi phí token chỉ bắt đầu về sau, khi bạn đánh giá một vị trí muốn theo đuổi. Bạn có thể chạy lại lần quét một cách an toàn: mọi URL đều được loại trùng với lịch sử quét, các đơn ứng tuyển đã đánh giá và pipeline hiện tại, nên một vị trí bạn đã thấy sẽ không bao giờ được thêm hai lần.
+
+## Lưu ý
+
+API của Lever trả về đầy đủ JD trong phản hồi postings. Một số board Lever có kèm metadata nội bộ của vị trí, và career-ops dùng chúng như tín hiệu bổ sung khi chấm điểm.
+
+## Liên quan
+
+- [greenhouse](/docs/reference/portals/greenhouse)
+- [ashby](/docs/reference/portals/ashby)

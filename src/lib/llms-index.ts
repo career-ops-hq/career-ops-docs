@@ -136,6 +136,7 @@ Full documentation and a home page in each language; same content, same facts.
 - Português (Brasil): https://career-ops.org/pt · docs https://career-ops.org/pt/docs
 - Italiano: https://career-ops.org/it · docs https://career-ops.org/it/docs
 - 简体中文: https://career-ops.org/zh · docs https://career-ops.org/zh/docs
+- Tiếng Việt: https://career-ops.org/vi · docs https://career-ops.org/vi/docs
 
 ## License
 

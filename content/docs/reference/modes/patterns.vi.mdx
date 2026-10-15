@@ -1,0 +1,52 @@
+---
+title: patterns
+description: "Đọc các đơn ứng tuyển bị từ chối hoặc bị loại của bạn và chỉ ra các quy luật: dạng JD điểm cao nhưng không bao giờ chuyển đổi, lệch archetype, vấn đề khung lương. Kết quả là tín hiệu để bạn hiệu chỉnh bộ lọc nhắm mục tiêu."
+seoTitle: "Chế độ patterns của career-ops: tìm hiểu vì sao đơn ứng tuyển của bạn không có kết quả"
+icon: TrendingDown
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: ec2b5cac4a6478d7
+localized: true
+translatedFrom: /docs/reference/modes/patterns
+---
+
+## Chế độ này làm gì
+
+Chế độ `patterns` đọc mọi báo cáo ở các giai đoạn bị từ chối (rejected) và bị loại (discarded), tìm các đặc điểm chung (ngành, quy mô công ty, cấp bậc, từ khóa cụ thể), rồi tạo ra một bản phân tích có cấu trúc về điều gì đang hiệu quả và điều gì không trong cách bạn nhắm mục tiêu.
+
+## Khi nào nên dùng
+
+Hãy chạy patterns sau mỗi 20–30 lần bị từ chối để hiệu chỉnh lại. Chế độ này chỉ ra những điểm mù trong hồ sơ của bạn và giúp bạn tránh gửi đơn vào những hướng đã chứng tỏ không hiệu quả.
+
+## Một lần chạy trông như thế nào
+
+Bạn chạy chế độ này sau một loạt kết quả và nhận lại một báo cáo phân tích quy luật có ghi ngày, cùng bản tóm tắt ngắn về ba phát hiện quan trọng nhất. Bên trong, nó chạy `analyze-patterns.mjs` trên tracker và các báo cáo của bạn, rồi đọc lại phễu chuyển đổi, bảng so sánh điểm với kết quả, các yếu tố cản trở hàng đầu và mức điểm sàn được đề xuất.
+
+```bash title="Terminal"
+/career-ops patterns
+```
+
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+
+Full report: reports/pattern-analysis-2026-05-18.md
+```
+
+Sau khi trình bày bản tóm tắt, chế độ này đề nghị hành động dựa trên các phát hiện: cập nhật bộ lọc trong `portals.yml`, đặt ngưỡng điểm, hoặc điều chỉnh lại trọng số các archetype bạn nhắm tới.
+
+## Khi nào nên dùng đến nó
+
+Hãy dùng patterns khi đã có đủ đơn ứng tuyển vượt qua giai đoạn đánh giá để kết quả mang tín hiệu. Điều kiện bắt buộc là có năm mục với trạng thái cho biết đơn đã thực sự được gửi: Applied, Responded, Interview, Offer, Hired hoặc Rejected. Các dòng Discarded và SKIP không được tính. Dưới mức đó, chế độ này sẽ dừng lại và đề nghị bạn quay lại khi có thêm dữ liệu. Càng nhiều kết quả thì quy luật càng rõ, nên nó phát huy giá trị sau khoảng một tháng ứng tuyển đều đặn.
+
+- Nếu bạn lưu bản ghi các buổi phỏng vấn trong `interview-prep/sessions/`, chế độ này sẽ bổ sung một tín hiệu nhắm mục tiêu: những chỗ các câu trả lời trôi chảy và cụ thể nhất của bạn tập trung, giúp phát hiện khi loại vai trò mạnh nhất của bạn khác với loại bạn vẫn đang ứng tuyển.
+- Báo cáo không bao giờ nêu tên người phỏng vấn hay công ty thật từ các buổi đó. Nó chỉ tóm tắt các nhóm năng lực, nên mọi thứ bạn commit vẫn được giữ riêng tư.
+
+## Liên quan
+
+- [tracker](/docs/reference/modes/tracker)
+- [followup](/docs/reference/modes/followup)

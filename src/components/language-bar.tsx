@@ -26,7 +26,7 @@ import { UI } from '@/lib/ui-strings';
 // one exists (es) or the locale home otherwise (fr, de and pt have none yet), and
 // any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh';
+type Code = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh' | 'vi';
 const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'en', label: 'EN', name: 'English' },
   { code: 'es', label: 'ES', name: 'Español' },
@@ -35,6 +35,7 @@ const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'pt', label: 'PT', name: 'Português' },
   { code: 'it', label: 'IT', name: 'Italiano' },
   { code: 'zh', label: 'ZH', name: '简体中文' },
+  { code: 'vi', label: 'VI', name: 'Tiếng Việt' },
 ];
 // Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
 const MANIFESTO_LOCALES: Code[] = ['es'];
@@ -131,6 +132,19 @@ function FlagZH({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+function FlagVN({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <g>
+        <rect width="16" height="16" fill="#da251d" />
+        <polygon
+          points="8,3.2 9.1,6.6 12.6,6.6 9.8,8.7 10.8,12.1 8,10 5.2,12.1 6.2,8.7 3.4,6.6 6.9,6.6"
+          fill="#ff0"
+        />
+      </g>
+    </svg>
+  );
+}
 const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   en: FlagEN,
   es: FlagES,
@@ -139,9 +153,10 @@ const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   pt: FlagBR,
   it: FlagIT,
   zh: FlagZH,
+  vi: FlagVN,
 };
 
-/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de, /pt, /it or /zh.) */
+/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de, /pt, /it, /zh or /vi.) */
 function localeOf(pathname: string): Code {
   if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
   if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
@@ -149,6 +164,7 @@ function localeOf(pathname: string): Code {
   if (pathname === '/pt' || pathname.startsWith('/pt/')) return 'pt';
   if (pathname === '/it' || pathname.startsWith('/it/')) return 'it';
   if (pathname === '/zh' || pathname.startsWith('/zh/')) return 'zh';
+  if (pathname === '/vi' || pathname.startsWith('/vi/')) return 'vi';
   return 'en';
 }
 
@@ -156,7 +172,7 @@ function localeOf(pathname: string): Code {
 function baseOf(pathname: string): string {
   const loc = localeOf(pathname);
   if (loc === 'en') return pathname;
-  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de', '/pt', '/it' or '/zh'
+  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de', '/pt', '/it', '/zh' or '/vi'
 }
 
 /** The URL for `target` locale of the page whose EN-relative path is `base`.
@@ -202,6 +218,7 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
   pt: { question: 'Prefere português?', cta: 'Ver em português' },
   it: { question: 'Preferisci l\u2019italiano?', cta: 'Leggi in italiano' },
   zh: { question: '更想看中文？', cta: '查看中文版' },
+  vi: { question: 'Bạn muốn đọc bằng tiếng Việt?', cta: 'Xem bản tiếng Việt' },
 };
 
 /**

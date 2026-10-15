@@ -1,0 +1,66 @@
+---
+title: Chuẩn bị cho phỏng vấn
+description: Dùng các mode phỏng vấn — lập kế hoạch, luyện tập, rút kinh nghiệm — để chuẩn bị cho một vòng phỏng vấn cụ thể, diễn tập với người phỏng vấn AI và biến mỗi buổi phỏng vấn thật thành thông tin hữu ích cho vòng sau.
+seoTitle: "Chuẩn bị phỏng vấn với career-ops — chuẩn bị theo từng vòng"
+icon: GraduationCap
+translationHash: f200ca2ca0715a2e
+localized: true
+translatedFrom: /docs/introduction/guides/interview-modes
+---
+
+Các mode phỏng vấn là hệ thống chuẩn bị phỏng vấn của career-ops, ra mắt từ v1.16.0: `interview/plan` lập kế hoạch chuẩn bị theo từng khung giờ cho một vòng cụ thể, `interview/practice` chạy một buổi phỏng vấn thử bằng văn bản, mỗi lần một câu hỏi, và `interview/debrief` ghi lại những gì thực sự đã diễn ra để vòng tiếp theo bắt đầu tốt hơn. Ba mode này tạo thành một vòng lặp — lập kế hoạch, luyện tập, phỏng vấn, rút kinh nghiệm, rồi lặp lại — và hiệu quả được cộng dồn qua cả quy trình tuyển dụng.
+
+Chúng bổ sung cho [mode `interview-prep`](/docs/reference/modes/interview-prep) có từ trước, mode xây dựng nền tảng lâu dài cho bạn (kho câu chuyện, kho câu hỏi). Ba mode chuyên biệt này tập trung vào *một vòng sắp diễn ra cụ thể*.
+
+<Callout title="Bạn cần chuẩn bị gì trước">
+Một workspace đã có sẵn `cv.md` và `config/profile.yml` ([Bắt đầu nhanh](/docs) sẽ thiết lập cả hai). Các mode đọc hai tệp này để mọi kế hoạch và mọi nhận xét đều dựa trên kinh nghiệm thực của bạn — không phải lời khuyên phỏng vấn chung chung.
+</Callout>
+
+## Tổng quan vòng lặp
+
+| Mode | Khi nào | Bạn nhận được gì |
+| --- | --- | --- |
+| `interview/plan` | Ngay khi vòng phỏng vấn được lên lịch | Kế hoạch chuẩn bị theo khung giờ, vừa với số giờ bạn thực sự có |
+| `interview/practice` | Trước vòng phỏng vấn | Buổi phỏng vấn thử bằng văn bản, kèm nhận xét có cấu trúc cho từng câu trả lời |
+| `interview/debrief` | Ngay sau buổi phỏng vấn thật | Đánh giá trung thực từng câu hỏi + kho câu hỏi được cập nhật |
+
+## Lập kế hoạch: biến một ngày hẹn thành lịch chuẩn bị
+
+Hãy đưa cho `interview/plan` mô tả công việc (JD), ngày giờ phỏng vấn, cùng loại vòng và người phỏng vấn nếu bạn biết. Mode này đọc CV và hồ sơ của bạn, đánh giá mức độ phù hợp một cách trung thực — những điểm mạnh nên làm trụ cột, những khoảng trống có khả năng bị hỏi — rồi chia số giờ còn lại thành các khối chuẩn bị cụ thể.
+
+```txt title="Example"
+/career-ops interview/plan
+
+→ Inputs: JD (pasted), interview Thursday 14:00, HM screen with Ana (Eng Manager)
+→ Fit assessment: 4 strengths to anchor · 2 gaps ranked by test likelihood
+→ Plan (9 hours available):
+   Block 1 — Lock your narrative (~1.5h): timeline, "why us", strongest proof point
+   Block 2 — Gap: event-driven architectures (~3h)
+   Block 3 — Behavioral stories, STAR+R (~2h)
+   Block 4 — Mock run + comp answer (~1.5h)
+```
+
+Kế hoạch được điều chỉnh theo từng loại vòng: vòng sàng lọc với nhà tuyển dụng thiên về logistics và câu chuyện của bạn, không đi sâu vào kỹ thuật nội bộ; vòng chuyên môn với người làm nghề thì đào sâu kỹ năng cốt lõi trong JD. Nếu đã có kho câu hỏi từ vòng trước, bất cứ điều gì bạn trả lời chưa tốt sẽ được dành riêng một khối — dữ liệu về phần thể hiện thực tế quan trọng hơn rủi ro suy đoán.
+
+## Luyện tập: diễn tập từng câu hỏi với người phỏng vấn giống thật [#practice-rehearse-against-a-realistic-interviewer]
+
+`interview/practice` đóng vai người phỏng vấn — theo tên và vai trò nếu bạn cung cấp — và hỏi từng câu một, giữ đúng vai, với các câu hỏi đào sâu tự nhiên như khi người phỏng vấn thật muốn hỏi thêm. Sau mỗi câu trả lời, bạn nhận được nhận xét có cấu trúc: điều gì đã tốt, điều gì cần chặt chẽ hơn, và một phiên bản câu trả lời mạnh hơn dựa trên CV và kho câu chuyện thực tế của bạn.
+
+Mode này cũng theo dõi cả buổi như một người phỏng vấn thật: nếu bạn dùng lại cùng một câu chuyện hai lần, nó sẽ báo rằng bộ ví dụ của bạn còn mỏng; nếu câu trả lời kết thúc ở sai lĩnh vực so với vị trí, nó sẽ chỉ cho bạn nên chốt ở đâu.
+
+<Callout>
+Phần luyện tập thẳng thắn về giới hạn của chính nó: nếu bạn chưa xây dựng kho câu hỏi hoặc ghi chú chuẩn bị riêng cho vị trí, nó sẽ nói rõ và đề nghị chạy `interview-prep` hoặc `interview/plan` trước, thay vì lặng lẽ chạy một buổi luyện tập chung chung.
+</Callout>
+
+## Rút kinh nghiệm: đừng để mất thông tin quý từ buổi phỏng vấn
+
+Hãy chạy `interview/debrief` ngay sau buổi phỏng vấn thật, khi trí nhớ còn mới. Mode này dẫn bạn đi qua từng câu hỏi bạn còn nhớ, ghi lại phản ứng của người phỏng vấn và đưa ra đánh giá trung thực cho từng câu. Sau đó nó làm phần việc cộng dồn giá trị:
+
+- **Cập nhật kho câu hỏi** — mỗi câu hỏi được đánh dấu ✅ / 🟡 / 🔴 dựa trên phần thể hiện thực tế, không phải cảm tính.
+- **Lấp các khoảng trống** — với mỗi câu 🔴, nó giải thích câu trả lời đúng kèm ví dụ minh họa và gắn với một câu chuyện bạn đã có.
+- **Rút ra câu chuyện mới** — nếu bạn kể điều gì đó trong buổi phỏng vấn mà kho câu chuyện chưa có, nó đề nghị dựng thành câu chuyện STAR+R và thêm vào nếu bạn đồng ý.
+- **Dự đoán vòng tiếp theo** — nếu bạn biết hình thức, nó liệt kê các câu hỏi có khả năng xuất hiện, mỗi câu gắn nhãn `[inferred]`, dựa trên vai trò của người phỏng vấn và những gì vòng này đã đề cập.
+
+## Vì sao vòng lặp này hiệu quả
+
+Việc chuẩn bị phỏng vấn thường quay về con số không sau mỗi vòng. Các mode phỏng vấn biến nó thành thứ tích lũy: những gì người phỏng vấn thật đã hỏi trở thành tín hiệu chuẩn bị ưu tiên cao nhất cho vòng sau, được lưu trong các tệp Markdown thông thường (`interview-prep/question-bank.md`, `story-bank.md`) do bạn sở hữu, nằm trên máy của bạn, như mọi thứ khác trong career-ops.

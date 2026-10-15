@@ -1,0 +1,30 @@
+---
+title: career-ops trên Windows
+seoTitle: "career-ops có chạy trên Windows không? Có — hỗ trợ đầy đủ, trình cài đặt lo phần thiết lập"
+description: "career-ops chạy tốt trên Windows. Điểm lưu ý duy nhất của nền tảng này là symlink, và trình cài đặt tự xử lý: không cần quyền admin, không cần mklink, không yêu cầu phiên bản hệ điều hành tối thiểu."
+icon: MonitorCheck
+translationHash: e3486e8615e2cdac
+localized: true
+translatedFrom: /docs/windows
+---
+
+**Có — career-ops chạy tốt trên Windows.** Chỉ có một điểm lưu ý riêng của Windows, và trình cài đặt sẽ tự xử lý giúp bạn: không cần bật Developer Mode, không cần chạy `mklink` thủ công, không yêu cầu phiên bản hệ điều hành tối thiểu. Nếu máy đã cài Node, bạn cài và chạy career-ops trên Windows giống hệt như trên các nền tảng khác.
+
+## Điểm lưu ý duy nhất trên Windows, đã được xử lý sẵn
+
+Mặc định Windows không tạo symlink, nên sau khi checkout Git mới, các điểm vào skill của CLI (`.claude/skills/`, `.opencode/skills/`, v.v.) chỉ là những tệp trỏ thông thường thay vì symlink thật. Đây chính là nguyên nhân gây ra lỗi "skills aren't loading" mà nhiều người gặp trên các công cụ khác.
+
+career-ops tự động phát hiện tình huống này. Khi bạn chạy trình cài đặt hoặc trình cập nhật — `npx @santifer/career-ops init` với bản cài mới, hoặc `node update-system.mjs apply --confirm` khi cập nhật — bước `materializeSkillEntrypoints` sẽ thay các tệp trỏ đó bằng nội dung skill đầy đủ. Nếu bạn chạy từ một Git worktree được liên kết, `node update-system.mjs apply --confirm` sẽ sửa lỗi này trong bản checkout `main` của bạn. Hãy chạy `git merge main` trong worktree để lấy bản sửa; các worktree được tạo từ `main` đã cập nhật sẽ có sẵn. Khi đặt `CAREER_OPS_UPDATE_IN_WORKTREE=1`, `apply` chỉ sửa nhánh của worktree đó, còn `main` vẫn chưa được sửa. Bạn không cần quyền admin, Developer Mode hay bất kỳ lệnh `mklink` thủ công nào.
+
+<Callout title="Không yêu cầu phiên bản hệ điều hành tối thiểu">
+career-ops không đòi hỏi phiên bản Windows (hay macOS) cụ thể nào. Nếu Node chạy được thì career-ops chạy được. Mọi thông tin về phiên bản hệ điều hành tối thiểu mà bạn có thể đã thấy ở nơi khác đều không chính xác.
+</Callout>
+
+## Tài liệu thiết lập chuẩn
+
+Chi tiết kỹ thuật — hành vi chính xác của trình cài đặt, các biến thể lệnh cho PowerShell và CMD, cùng phần còn lại của FAQ — nằm trong repo lõi và luôn được cập nhật ở đó:
+
+- [docs/FAQ.md — "Skills aren't loading on Windows"](https://github.com/career-ops-hq/career-ops/blob/main/docs/FAQ.md) — câu trả lời chuẩn, luôn đồng bộ với trình cài đặt.
+- [docs/SETUP.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SETUP.md) — hướng dẫn thiết lập đầy đủ.
+
+Sau khi cài đặt xong, hãy chọn công cụ AI của bạn trong [Thiết lập công cụ AI miễn phí](/docs/free-ai-engine) hoặc dùng bất kỳ [CLI được hỗ trợ](/docs/supported-clis) nào, rồi tiếp tục với [Bắt đầu nhanh](/docs).

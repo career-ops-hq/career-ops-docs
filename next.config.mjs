@@ -121,11 +121,11 @@ const config = {
         // had no markdown twin at all. See the route header for why the locale
         // is an explicit path segment rather than an optional prefix.
         {
-          source: '/:lang(es|fr|de|pt|it|zh)/docs.md',
+          source: '/:lang(es|fr|de|pt|it|zh|vi)/docs.md',
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr|de|pt|it|zh)/docs/:slug(.*).md',
+          source: '/:lang(es|fr|de|pt|it|zh|vi)/docs/:slug(.*).md',
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
         },
         // Accept negotiation for the locale docs. NOT done in src/proxy.ts:
@@ -138,13 +138,13 @@ const config = {
         // These must stay AFTER the `.md` rules above, or `:slug(.*)` would
         // swallow `<url>.md` before the explicit markdown rewrite sees it.
         {
-          source: '/:lang(es|fr|de|pt|it|zh)/docs',
+          source: '/:lang(es|fr|de|pt|it|zh|vi)/docs',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr|de|pt|it|zh)/docs/:slug(.*)',
+          source: '/:lang(es|fr|de|pt|it|zh|vi)/docs/:slug(.*)',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
@@ -201,11 +201,11 @@ const config = {
       // Translated routes also declare their language over HTTP, which Bing
       // reads. Their <html lang> comes from each locale's own root layout.
       {
-        source: '/:lang(es|fr|de|pt|it|zh)',
+        source: '/:lang(es|fr|de|pt|it|zh|vi)',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {
-        source: '/:lang(es|fr|de|pt|it|zh)/:path*',
+        source: '/:lang(es|fr|de|pt|it|zh|vi)/:path*',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       // Chinese declares its script, as its <html lang> does (root-shell.tsx):
