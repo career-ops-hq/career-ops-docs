@@ -124,12 +124,34 @@ export const LATEST_RELEASE_FALLBACK = 'career-ops-v1.31.0';
 // images included, so every page that set a title and description for sharing
 // was silently shipping without a picture: /about, /sustain, the blog. Since
 // 29-sep it is the English share card Santiago approved (the same one as the
-// repo's GitHub social preview), at a stable URL. The homes carry their own
-// card as opengraph-image.jpg in their route folders (en, es; fr uses the
-// English card until a natively reviewed French one exists).
+// repo's GitHub social preview), at a stable URL. Each home carries its own
+// card as opengraph-image.jpg in its route folder, with the hero of that
+// language (15-oct: fr, de, pt, it and zh got theirs; until then they showed the
+// English card). OG_IMAGE_BY_LOCALE is the same card at a stable URL, the
+// fallback for every other page of that language: a share of a Spanish blog
+// post or of any future page in Chinese shows the card in its own language.
+// Each og-banner.<loc>.jpg is byte for byte that home's opengraph-image.jpg
+// (verify-i18n-seo checks it).
 export const DEFAULT_OG_IMAGE = {
   url: 'https://career-ops.org/og-banner.jpg',
   width: 1200,
   height: 630,
   alt: 'More applications. More silence. Stop guessing. Start choosing. career-ops, AI job search agent.',
 };
+
+const ogBanner = (loc: string, alt: string) => ({
+  url: `https://career-ops.org/og-banner.${loc}.jpg`,
+  width: 1200,
+  height: 630,
+  alt,
+});
+
+export const OG_IMAGE_BY_LOCALE = {
+  en: DEFAULT_OG_IMAGE,
+  es: ogBanner('es', 'Más candidaturas. Más silencio. Deja de adivinar. Empieza a elegir. career-ops, agente de búsqueda de empleo con IA.'),
+  fr: ogBanner('fr', 'Plus de candidatures. Encore plus de silence. Arrêtez de deviner. Commencez à choisir. career-ops, agent de recherche d’emploi par IA.'),
+  de: ogBanner('de', 'Mehr Bewerbungen. Mehr Funkstille. Nicht mehr raten. Selbst entscheiden. career-ops, KI-Agent für die Jobsuche.'),
+  pt: ogBanner('pt', 'Mais candidaturas. Mais vácuo. Pare de adivinhar. Comece a escolher. career-ops, agente de IA para busca de emprego.'),
+  it: ogBanner('it', 'Più candidature. Più silenzio. Smetti di tirare a indovinare. Inizia a scegliere. career-ops, agente AI per la ricerca di lavoro.'),
+  zh: ogBanner('zh', '简历越投越多。全都石沉大海。别再瞎猜。开始挑选。career-ops，AI 求职智能体。'),
+} as const;

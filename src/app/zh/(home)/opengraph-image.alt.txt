@@ -1,1 +1,1 @@
-career-ops，开源的 AI 求职智能体。卡片上是英文标语：“More applications. More silence. Stop guessing. Start choosing.”
+简历越投越多。全都石沉大海。别再瞎猜。开始挑选。career-ops，AI 求职智能体。
