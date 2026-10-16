@@ -5,7 +5,7 @@ seoTitle: "Mode apply de career-ops — brouillons automatiques de réponses aux
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-10-14"
-translationHash: 7cdeaddd88619799
+translationHash: 43f7be9c5fa520be
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -58,6 +58,13 @@ Les champs d'expérience proviennent du CV adapté généré pour ce rapport, et
 Lorsque le rapport ou la description du poste indique explicitement qu'il s'agit d'un poste à durée déterminée, apply affiche un unique **Fixed-term role reminder** avant la première réponse, en citant la formule employée et la durée éventuelle, et vous suggère de vérifier les conditions de renouvellement, les avantages et les modalités de fin de contrat. Ce rappel est purement informatif : il ne modifie jamais aucun champ, ne bloque jamais la candidature et ne demande aucune confirmation.
 
 Avant chaque clic sur Enregistrer, Suivant ou Continuer dans un formulaire en plusieurs étapes, et avant de vous laisser le formulaire pour l'envoi, apply relit toute l'étape et vérifie que chaque champ obligatoire contient une valeur, y compris ceux qui n'apparaissent qu'après une autre réponse. Si un champ obligatoire ne peut pas être rempli à partir de vos propres fichiers, il s'arrête et vous pose la question.
+
+## Quand le poste a changé
+
+Si le poste du formulaire n'est pas celui que votre rapport a évalué, apply vous indique l'ancien intitulé et le nouveau, puis vous demande s'il faut réévaluer ou adapter les réponses au nouvel intitulé. Aucun des deux choix ne modifie à la main le tableau du tracker.
+
+- **Réévaluer.** apply relance l'évaluation complète et met à jour le rapport sur place : le rapport garde donc son numéro. Le nouvel intitulé arrive dans le tracker via `node merge-tracker.mjs` : l'intitulé du poste de la ligne est remplacé, et la ligne garde son `#` et son statut.
+- **Adapter.** Les réponses sont ajustées au nouvel intitulé sans nouvelle évaluation, et seulement après que vous avez accepté l'écart. La ligne garde l'intitulé que le rapport a évalué, et une note sur la ligne consigne que l'offre avait changé d'intitulé au moment de la candidature.
 
 ## Particularités connues des ATS
 
