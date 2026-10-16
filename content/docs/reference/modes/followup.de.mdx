@@ -4,15 +4,15 @@ description: "Markiert Bewerbungen und Vorstellungsgespräche, bei denen ein Fol
 seoTitle: "career-ops followup-Modus — überfällige Follow-ups im Blick behalten und die Nachrichten entwerfen"
 icon: CalendarClock
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: b1eb8003f10d7ed3
+lastModified: "2026-10-16"
+translationHash: 7853e38229463e38
 localized: true
 translatedFrom: /docs/reference/modes/followup
 ---
 
 ## Was er macht
 
-Der Modus followup liest deinen Bewerbungs-Tracker und vergleicht das Datum des letzten Kontakts mit dem eingestellten Rhythmus. Standardmäßig ist eine erste Erinnerung 7 Tage nach deiner Bewerbung fällig und eine Dankesnachricht 1 Tag nach einem Vorstellungsgespräch. Einträge, die überfällig oder dringend sind, markiert er. Für jeden markierten Eintrag entwirft er eine passende Follow-up-Nachricht, die auf dem jeweiligen Bericht und deinem Lebenslauf basiert.
+Der Modus followup liest deinen Bewerbungs-Tracker und vergleicht das Datum des letzten Kontakts mit dem eingestellten Rhythmus. Standardmäßig ist eine erste Erinnerung 7 Tage nach deiner Bewerbung fällig und eine Dankesnachricht 1 Tag nach einem Vorstellungsgespräch. Eine Zeile mit dem Status Assessment, also ein Online-Test oder ein asynchrones Screening, bekommt die erste Nachfrage nach 1 Tag und danach alle 3 Tage eine weitere. Einträge, die überfällig oder dringend sind, markiert er. Für jeden markierten Eintrag entwirft er eine passende Follow-up-Nachricht, die auf dem jeweiligen Bericht und deinem Lebenslauf basiert.
 
 ## Wann du ihn einsetzt
 
@@ -46,6 +46,17 @@ Draft — Notion (overdue):
 ## Stolperfallen
 
 Eine Bewerbung mit dem Status Applied bekommt höchstens zwei Follow-ups. Bleibt auch das zweite unbeantwortet, entwirft followup keine weiteren Nachrichten. Stattdessen schlägt er vor, den Eintrag zu schließen oder es über `contacto` bei einer anderen Kontaktperson zu versuchen. Dir sind die standardmäßigen sieben Tage zu lang? Dann gib dem Rhythmus-Script ein Flag mit, zum Beispiel `node followup-cadence.mjs --applied-days 5`, statt die Entwürfe von Hand anzupassen.
+
+## Follow-ups abschalten
+
+Follow-ups sind standardmäßig aktiv. Um sie abzuschalten, trag Folgendes in `config/profile.yml` ein:
+
+```yaml
+follow_ups:
+  enabled: false
+```
+
+Mit dieser Einstellung bricht der Modus ab, bevor er das Rhythmus-Script startet, und sagt dir, wie du Follow-ups wieder einschaltest. Außerdem wird nichts mehr eingeplant, wenn eine Zeile auf Applied wechselt. Der Modus `contacto` ist eine erste Kontaktaufnahme und kein Follow-up, deshalb funktioniert er weiter. Nur ein ausdrückliches `false` schaltet sie ab: Setz `enabled: true` oder entferne den Block, um sie wieder einzuschalten.
 
 ## Siehe auch
 

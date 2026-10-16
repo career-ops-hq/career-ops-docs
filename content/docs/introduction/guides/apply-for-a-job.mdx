@@ -47,7 +47,7 @@ For example:
 career-ops finds the matching report in `reports/`, uses Playwright to open a browser window, and reads the form. It then drafts answers for supported text and free-response fields. Check their field limits before pasting. For Ashby, you will need your ordinary system browser to finish and submit the application.
 
 <Callout title="Note">
-  If Playwright is not available, career-ops falls back to WebFetch to read the form. See [Set up Playwright](/docs/introduction/guides/set-up-playwright) if you want to enable the full browser-based experience.
+  If Playwright is not available, career-ops cannot open the form itself: it asks you for a screenshot, the questions as text, or the company and role (the options below). See [Set up Playwright](/docs/introduction/guides/set-up-playwright) if you want to enable the full browser-based experience.
 </Callout>
 
 **If you run the command `/career-ops apply` without arguments**, the system prompts you to provide context manually:
@@ -58,7 +58,6 @@ career-ops finds the matching report in `reports/`, uses Playwright to open a br
     | Share a screenshot        | Take a screenshot of the form and share it in the chat. career-ops reads images directly. |
     | Paste the questions       | Copy the form questions as text and paste them into the chat.                            |
     | Name the company and role | Type the company name and job title. career-ops searches `reports/` for the match.        |
-    | Share the application URL | Paste the URL and career-ops navigates to the form.                                       |
   </div>
 </div>
 
@@ -109,7 +108,7 @@ Each answer is built from a specific source, mostly your evaluation report:
 </div>
 
 <Callout title="Upload fields">
-  Use the file in `output/` generated when the report was created. If no PDF exists yet, run `/career-ops pdf` first, then return to the form. See the [pdf mode](/docs/reference/modes/pdf).
+  Upload the tailored CV that the `pdf` mode built for this report: `cv/tailored/vNNN/cv.pdf` in the application's bundle, or the PDF in `output/` for a one-off CV. If no PDF exists yet, run `/career-ops pdf` first, then return to the form. See the [pdf mode](/docs/reference/modes/pdf).
 </Callout>
 
 ## Submit the application
@@ -130,6 +129,9 @@ career-ops will:
       </Step>
       <Step title="Save answers to the report">
         Save the final answers to the report's `## Application Answers` section for future reference
+      </Step>
+      <Step title="Schedule the first follow-up">
+        Schedule the first follow-up from the day you applied. This step is skipped when `config/profile.yml` sets `follow_ups.enabled: false`; see [followup](/docs/reference/modes/followup)
       </Step>
     </Steps>
   </div>

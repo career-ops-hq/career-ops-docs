@@ -4,15 +4,15 @@ description: "Lecture rapide de l'état de chaque candidature. Utile comme point
 seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidature"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: c95cd399167d223d
+lastModified: "2026-10-16"
+translationHash: ef85d61f0db91378
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
 
 ## Ce que fait ce mode
 
-Le mode `tracker` lit chaque fichier de reports/ et produit un résumé structuré, groupé par étape : applied, evaluated, interview, rejected, discarded. Le nombre de candidatures par étape, l'activité récente et les relances en retard apparaissent dans une seule réponse.
+Le mode `tracker` lit votre tracker, `data/applications.md`, et affiche chaque candidature avec son statut actuel dans une seule réponse. Un bloc de statistiques suit : le total, le nombre de candidatures par statut, le score moyen, le nombre de lignes qui disposent d'un PDF sur mesure et d'un rapport et, dès que vous avez postulé quelque part, la vitesse à laquelle vos candidatures passent d'une étape à l'autre.
 
 ## Quand l'utiliser
 
@@ -38,7 +38,7 @@ Total: 3   Applied: 1   Interview: 1   Evaluated: 1
 Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-Une candidature traverse un ensemble fixe d'états : Evaluated (rapport rédigé, décision en attente), Applied (vous avez postulé), Responded (l'entreprise a répondu mais pas encore d'entretien), Interview (un processus actif), puis un état terminal — Offer, Rejected, Discarded, ou SKIP pour les postes qui ne conviennent pas. Pour enregistrer un changement de statut, demandez-le dans le chat ou lancez vous-même `node set-status.mjs <report#|company> <state>`, en ajoutant `--on YYYY-MM-DD` si le changement a eu lieu à une date antérieure. La commande rejette les états inconnus, verrouille le tracker pendant l'écriture et consigne la transition dans `data/status-log.tsv`, le journal que lisent les statistiques de funnel-velocity : utilisez-la plutôt que de modifier la ligne à la main.
+Une candidature traverse un ensemble fixe d'états : Evaluated (rapport rédigé, décision en attente), Applied (vous avez postulé), Responded (l'entreprise a répondu mais pas encore d'entretien), Assessment (une évaluation en ligne ou une présélection asynchrone est en cours), Interview (un processus actif), puis un état terminal : Offer, Rejected, Discarded, SKIP pour les postes qui ne conviennent pas, ou Hired une fois que vous avez accepté une offre. Pour enregistrer un changement de statut, demandez-le dans le chat ou lancez vous-même `node set-status.mjs --report <report#> <state>`, en ajoutant `--on YYYY-MM-DD` si le changement a eu lieu à une date antérieure. Une ligne sans rapport se sélectionne plutôt par son entreprise, `node set-status.mjs "<company>" <state>`, avec `--role` quand plusieurs lignes partagent la même entreprise. La commande rejette les états inconnus, verrouille le tracker pendant l'écriture et consigne la transition dans `data/status-log.tsv`, le journal que lisent les statistiques de funnel-velocity : utilisez-la plutôt que de modifier la ligne à la main.
 
 Pour corriger une note plutôt que d'en ajouter une autre, passez l'ancienne note avec `--replace-note` et le nouveau texte avec `--note`. Sans cette option, `--note` ne fait qu'ajouter, ce qui laisse dans la ligne des contradictions comme `not applied; applied`. La correspondance porte sur une note entière entre séparateurs `; `, et si aucun des deux textes ne figure dans la cellule Notes, rien n'est écrit :
 
@@ -58,6 +58,19 @@ npm run fix-report-links               # apply; the tracker is backed up to .bak
 ```
 
 Toutes les autres cellules, l'ordre des lignes et les fins de ligne restent tels quels. Une cellule Report qui contient autre chose qu'exactement un lien est listée pour que vous la vérifiiez à la main, et reste inchangée. Le lancer deux fois ne change rien la seconde fois.
+
+## Vérifier si les annonces sont toujours ouvertes
+
+Des annonces ferment pendant que leurs lignes restent en Evaluated ou en Applied. `node check-liveness.mjs --tracker` vérifie l'annonce de chaque ligne en Evaluated et en Applied ; `--status=` permet de choisir d'autres statuts. Il prend chaque annonce dans la cellule URL de la ligne ou dans la ligne `**URL:**` de son rapport, et liste par numéro les lignes qui n'ont ni l'une ni l'autre.
+
+Pour faire le ménage dans les lignes en Evaluated dont l'annonce a fermé, prévisualisez d'abord :
+
+```bash
+node check-liveness.mjs --tracker --discard-expired          # dry run: lists the rows it would move
+node check-liveness.mjs --tracker --discard-expired --apply  # moves them
+```
+
+Seule une annonce jugée `expired` fait passer sa ligne d'Evaluated à Discarded, avec la note `posting closed YYYY-MM-DD`. Une ligne au verdict incertain reste telle quelle, tout comme chaque ligne en Applied.
 
 ## Lire les chiffres cumulés
 

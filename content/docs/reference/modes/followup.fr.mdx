@@ -4,15 +4,15 @@ description: "Signale les candidatures et les entretiens dont la relance est en 
 seoTitle: "Mode followup de career-ops — suivre les relances en retard et rédiger les messages"
 icon: CalendarClock
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: b1eb8003f10d7ed3
+lastModified: "2026-10-16"
+translationHash: 7853e38229463e38
 localized: true
 translatedFrom: /docs/reference/modes/followup
 ---
 
 ## Ce que fait ce mode
 
-Le mode followup lit votre tracker de candidatures, compare la date du dernier contact avec la cadence configurée (par défaut : une première relance 7 jours après votre candidature, et 1 jour après un entretien pour un message de remerciement), et signale les entrées en retard ou urgentes. Pour chaque entrée signalée, il rédige un message de relance contextuel, fondé sur le rapport correspondant et sur votre CV.
+Le mode followup lit votre tracker de candidatures, compare la date du dernier contact avec la cadence configurée (par défaut : une première relance 7 jours après votre candidature, et 1 jour après un entretien pour un message de remerciement ; une ligne Assessment, c'est-à-dire un test en ligne ou une présélection asynchrone, reçoit une première relance au bout de 1 jour, puis une tous les 3 jours), et signale les entrées en retard ou urgentes. Pour chaque entrée signalée, il rédige un message de relance contextuel, fondé sur le rapport correspondant et sur votre CV.
 
 ## Quand l'utiliser
 
@@ -46,6 +46,17 @@ Draft — Notion (overdue):
 ## Pièges à éviter
 
 Une candidature au statut Applied reçoit au maximum deux relances ; si la seconde reste sans réponse, followup cesse de rédiger et vous suggère de clore l'entrée ou d'essayer un autre contact via `contacto`. Vous voulez un rythme plus serré que les sept jours par défaut ? Passez un flag au script de cadence — `node followup-cadence.mjs --applied-days 5` — plutôt que de modifier les brouillons à la main.
+
+## Désactiver les relances
+
+Les relances sont activées par défaut. Pour les désactiver, indiquez ceci dans `config/profile.yml` :
+
+```yaml
+follow_ups:
+  enabled: false
+```
+
+Avec ce réglage, le mode s'arrête avant d'exécuter le script de cadence et vous indique comment réactiver les relances, et rien n'est planifié lorsqu'une ligne passe au statut Applied. Le mode `contacto` est une première prise de contact, pas une relance : il continue donc de fonctionner. Seul un `false` explicite les désactive : indiquez `enabled: true`, ou supprimez le bloc, pour les réactiver.
 
 ## Pages associées
 

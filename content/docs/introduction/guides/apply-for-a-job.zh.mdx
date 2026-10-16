@@ -3,7 +3,7 @@ title: 申请职位
 description: "用 career-ops 填写职位申请表，根据你的个人资料和目标职位生成量身定制的回答。"
 seoTitle: "如何用 career-ops 申请职位：起草 ATS 申请表回答，定制你的简历"
 icon: FileInput
-translationHash: 48ee253fe9b589dd
+translationHash: b97afb2d886c6928
 localized: true
 translatedFrom: /docs/introduction/guides/apply-for-a-job
 ---
@@ -50,7 +50,7 @@ translatedFrom: /docs/introduction/guides/apply-for-a-job
 career-ops 会在 `reports/` 中找到对应的报告，用 Playwright 打开一个浏览器窗口并读取表单，然后为支持的文本字段和自由作答字段起草回答。粘贴之前，请先核对这些字段的字数限制。如果是 Ashby，你需要在系统自带的普通浏览器中完成并提交申请。
 
 <Callout title="说明">
-  如果无法使用 Playwright，career-ops 会改用 WebFetch 读取表单。如果你想启用完整的浏览器体验，请参阅[设置 Playwright](/zh/docs/introduction/guides/set-up-playwright)。
+  如果无法使用 Playwright，career-ops 就不能自己打开表单：它会请你提供截图、文本形式的问题，或者公司和职位（即下方的几种方式）。如果你想启用完整的浏览器体验，请参阅[设置 Playwright](/zh/docs/introduction/guides/set-up-playwright)。
 </Callout>
 
 **如果你运行 `/career-ops apply` 时不带参数**，系统会提示你手动提供上下文：
@@ -61,7 +61,6 @@ career-ops 会在 `reports/` 中找到对应的报告，用 Playwright 打开一
     | 分享截图                  | 截取表单的屏幕截图并发到对话中。career-ops 可以直接读取图片。                            |
     | 粘贴问题                  | 把表单中的问题以文本形式复制，粘贴到对话中。                                             |
     | 说出公司和职位            | 输入公司名称和职位名称。career-ops 会在 `reports/` 中搜索匹配的报告。                    |
-    | 分享申请链接              | 粘贴链接，career-ops 会自动打开对应的表单。                                              |
   </div>
 </div>
 
@@ -112,7 +111,7 @@ Key notes:
 </div>
 
 <Callout title="文件上传字段">
-  使用创建报告时在 `output/` 中生成的文件。如果还没有 PDF，请先运行 `/career-ops pdf`，再回到表单。参见 [pdf 模式](/zh/docs/reference/modes/pdf)。
+  上传 `pdf` 模式为这份报告生成的定制简历：申请资料包中的 `cv/tailored/vNNN/cv.pdf`；如果是单次生成的简历，则上传 `output/` 中的 PDF。如果还没有 PDF，请先运行 `/career-ops pdf`，再回到表单。参见 [pdf 模式](/zh/docs/reference/modes/pdf)。
 </Callout>
 
 ## 提交申请
@@ -133,6 +132,9 @@ career-ops 会：
       </Step>
       <Step title="将回答保存到报告">
         把最终回答保存到报告的 `## Application Answers` 部分，方便日后参考
+      </Step>
+      <Step title="安排第一次跟进">
+        从你提交申请的那天起，安排第一次跟进。如果 `config/profile.yml` 设置了 `follow_ups.enabled: false`，则跳过这一步；参见 [followup](/zh/docs/reference/modes/followup)
       </Step>
     </Steps>
   </div>
