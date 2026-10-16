@@ -1,15 +1,15 @@
 ---
 title: auto-pipeline
-description: "Default flow when you paste a job description URL or raw text. Runs the A–H evaluation, generates the report, exports a tailored PDF, and writes a tracker entry — without manual intervention between steps."
+description: "Default flow when you paste a job description URL or raw text. Runs the A–H evaluation, generates the report, exports a tailored PDF, and writes a tracker entry in one run, stopping only when it needs an answer from you."
 seoTitle: "career-ops auto-pipeline — evaluate a job and build CV + tracker from one URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-10-14"
+lastModified: "2026-10-16"
 ---
 
 ## What it does
 
-career-ops invokes auto-pipeline whenever you drop a JD URL or pasted text into the prompt. The mode reads the listing, scores it against the rubric — five dimensions plus a holistic global score — writes the evaluation to reports/, generates the tailored PDF via Playwright, and updates the tracker entry — all in a single agent turn.
+career-ops invokes auto-pipeline whenever you drop a JD URL or pasted text into the prompt. The mode reads the listing, scores it against the rubric (five dimensions plus a holistic global score), writes the evaluation to reports/, generates the tailored PDF via Playwright, and updates the tracker entry, all in one run. It stops to ask you only when the company is on your blacklist, or when the posting comes through an agency and it needs you to confirm which one.
 
 ## When to use it
 
@@ -37,6 +37,8 @@ Updated data/applications.md (Report and PDF marked done).
 - A liveness gate runs before the evaluation. If the link is dead or the page is an empty "position filled" shell, the mode stops there instead of scoring phantom content — and if the entry came from `data/pipeline.md`, it marks that row closed.
 - A LinkedIn page whose description stays a loading skeleton is not a closed job, and not a job description either: auto-pipeline stops before the evaluation, the report, the PDF and any tracker write, and asks you to paste the job text or give an employer or ATS link for the same role.
 - Draft application answers are written only when the score is 4.5 or higher, so low-fit roles do not spend tokens on copy you will not send.
+- The saved report uses the [oferta](/docs/reference/modes/oferta) format, including the one-line verdict after Block G and the recruiter checks Block G runs when a recruiter brought you the role.
+- In a CLI that lets the agent rename its own session, the session takes the posting's name, such as `VP Infrastructure, Acme Health`, once the job description is read. Set `session_title: off` in `config/profile.yml` to keep your own session titles.
 
 ## Gotchas
 
