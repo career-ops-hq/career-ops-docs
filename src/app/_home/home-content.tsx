@@ -342,7 +342,14 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
 
         <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-br from-brand/10 via-transparent to-transparent min-h-[300px] flex flex-col">
           <h3 className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}>{dict.featCommunityTitle}</h3>
-          <p className="mb-6">{dict.featCommunityBody}</p>
+          <p className="mb-6">
+            {dict.featCommunityBody}
+            {dict.featCommunityMembers && (
+              <span className="block mt-2">
+                {dict.featCommunityMembers((Math.floor(stats.discordMembers / 100) * 100).toLocaleString('en-US'))}
+              </span>
+            )}
+          </p>
           <Link href="/community" className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit mt-auto')}>
             {dict.joinDiscord((Math.floor(stats.discordMembers / 100) * 100).toLocaleString('en-US'))}
           </Link>
