@@ -5,7 +5,7 @@ seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebens
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: 9984c0907b44e26b
+translationHash: eac0ef25bd170d12
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -58,7 +58,7 @@ Der Modus `ats` beantwortet eine andere Frage als pdf: Liest der Parser eines Be
 
 Die Korrektur: Deine Kernkompetenzen wandern als eine kommagetrennte Zeile in den Skills-Abschnitt. Der gestaltete Lebenslauf zeigt Kompetenzen als Tags, zwischen denen nur ein Abstand liegt. Ein Parser, der den Text liest, zieht sie deshalb zusammen. Außerdem stehen sie unter „Core Competencies“, einer Überschrift, die Parser nicht erkennen, und so fällt oft der ganze Block weg. „Skills“ wird erkannt. Die Verschiebung erfindet nichts, und ein zweiter Lauf ändert nichts mehr.
 
-Die drei Befunde werden gemeldet und nie angewendet, weder vom Script noch vom Agenten:
+Die drei Befunde werden gemeldet, aber nicht automatisch angewendet: Weder das Script noch der Agent ändert etwas, bevor du entschieden hast.
 
 - `employer-in-role`: der Name eines Arbeitgebers in einem Jobtitel, häufig in der Beratung und bei Agenturen. Der Parser erfasst ihn als Arbeitgeber, den du nie hattest.
 - `parenthetical-in-company`: ein Unternehmen in der Schreibweise `Globex (Cloud Platform Division)`. Der Parser behält die Klammer als Teil des Arbeitgebernamens, und eine Suche nach dem Arbeitgeber findet dich deshalb nicht.

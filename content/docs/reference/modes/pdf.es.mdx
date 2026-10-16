@@ -5,7 +5,7 @@ seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: 9984c0907b44e26b
+translationHash: eac0ef25bd170d12
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -58,7 +58,7 @@ El modo `ats` responde a una pregunta distinta a la de pdf: ¿leerá bien este C
 
 La corrección: tus competencias pasan a la sección Skills como una sola línea separada por comas. El CV con estilo dibuja las competencias como etiquetas separadas solo por espacio, así que un parser que lee el texto las junta. Además van bajo "Core Competencies", un encabezado que los parsers no reconocen, por lo que a menudo se descarta el bloque entero. "Skills" sí se reconoce. El cambio no inventa nada, y ejecutarlo dos veces no cambia nada.
 
-Los tres hallazgos se informan y nunca se aplican, ni por el script ni por el agente:
+Los tres hallazgos se informan, pero no se aplican automáticamente: ni el script ni el agente cambian nada hasta que tú decidas.
 
 - `employer-in-role`: el nombre de un empleador dentro del título de un puesto, habitual en consultoría y en agencias. El parser lo registra como un empleador que nunca tuviste.
 - `parenthetical-in-company`: una empresa escrita como `Globex (Cloud Platform Division)`. El parser conserva el paréntesis como parte del nombre del empleador, así que una búsqueda por el empleador no te encuentra.

@@ -55,7 +55,7 @@ The `ats` mode answers a different question from pdf: will an applicant tracking
 
 The fix: your competencies move into the Skills section as one comma-separated line. The styled CV draws competencies as tags with only spacing between them, so a parser reading the text runs them together. They also sit under "Core Competencies", a heading parsers do not recognize, so the whole block is often dropped. "Skills" is recognized. The move invents nothing, and running it twice changes nothing.
 
-The three findings are reported and never applied, by the script or by the agent:
+The three findings are reported, not applied automatically: neither the script nor the agent changes anything until you decide.
 
 - `employer-in-role`: an employer name inside a job title, common in consulting and agency work. A parser records it as an employer you never had.
 - `parenthetical-in-company`: a company written as `Globex (Cloud Platform Division)`. The parser keeps the parenthetical as part of the employer name, so a search for the employer does not find you.

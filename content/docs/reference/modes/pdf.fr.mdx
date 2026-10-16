@@ -5,7 +5,7 @@ seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible A
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: 9984c0907b44e26b
+translationHash: eac0ef25bd170d12
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -58,7 +58,7 @@ Le mode `ats` répond à une autre question que pdf : le parseur d'un logiciel d
 
 La correction : vos compétences clés passent dans la section Skills sous la forme d'une seule ligne séparée par des virgules. Le CV mis en forme affiche ces compétences comme des étiquettes séparées seulement par un espacement, si bien qu'un parseur qui lit le texte les colle les unes aux autres. Elles figurent en outre sous « Core Competencies », un titre que les parseurs ne reconnaissent pas, et le bloc entier est donc souvent écarté. « Skills » est reconnu. Ce déplacement n'invente rien, et l'exécuter deux fois ne change rien.
 
-Les trois constats sont signalés et jamais appliqués, ni par le script ni par l'agent :
+Les trois constats sont signalés, mais pas appliqués automatiquement : ni le script ni l'agent ne modifient quoi que ce soit avant votre décision.
 
 - `employer-in-role` : le nom d'un employeur dans l'intitulé d'un poste, fréquent dans le conseil et en agence. Le parseur l'enregistre comme un employeur que vous n'avez jamais eu.
 - `parenthetical-in-company` : une entreprise écrite `Globex (Cloud Platform Division)`. Le parseur conserve la parenthèse dans le nom de l'employeur, et une recherche sur l'employeur ne vous trouve donc pas.
