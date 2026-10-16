@@ -4,15 +4,15 @@ description: "对单个职位运行 A–H 评估，并记入你的 tracker，但
 seoTitle: "career-ops oferta 模式：申请前先给一个职位打分"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 9a968f6bcb8dda55
+lastModified: "2026-10-16"
+translationHash: 424400a232c7b66d
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## 它能做什么
 
-oferta 模式读取单个职位描述（JD，可以是 URL，也可以是粘贴的文本），按评分标准打分（五个维度加一个整体综合评分），每项判断都引用依据，然后写出评估报告。它不生成 PDF，但会在 tracker 中新增一行，状态为 Evaluated。速度快，成本低。
+oferta 模式读取单个职位描述（JD，可以是 URL，也可以是粘贴的文本），按评分标准打分（五个维度加一个整体综合评分），每项判断都引用依据，然后写出评估报告。它不生成 PDF，但会把这个职位记入你的 tracker，状态为 Evaluated；再次评估同一家公司的同一职位时，会更新那一行，而不是再新增一行。速度快，成本低。
 
 ## 何时使用
 
@@ -20,7 +20,7 @@ oferta 模式读取单个职位描述（JD，可以是 URL，也可以是粘贴�
 
 ## 运行示例
 
-你交给这个模式一个职位，它会返回由七个部分组成的评估：Block A 到 Block F，再加上 Block G 的职位可信度判断；评分达到 4.5 或以上时，还会附上 Block H 的回答草稿。评估会给出评分，以及引用了依据的理由。你可以直接粘贴职位描述文本，也可以传入一个 URL。传入 URL 时，这个模式会先确认职位仍在招聘，这样失效的链接就不会白白耗掉一次完整评估。
+你交给这个模式一个职位，它会返回评估结果，给出评分以及引用了依据的理由：Block A 到 Block F、Block G 的职位可信度判断和一句话结论；评分达到 4.5 或以上时，还会附上 Block H 的回答草稿。你可以直接粘贴职位描述文本，也可以传入一个 URL。传入 URL 时，这个模式会先确认职位仍在招聘，这样失效的链接就不会白白耗掉一次完整评估。
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -43,9 +43,15 @@ oferta 模式读取单个职位描述（JD，可以是 URL，也可以是粘贴�
 ## G) Posting Legitimacy
 Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
+
+## Verdict (lead)
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
 ```
 
 Block B 到 Block F 依次涵盖简历匹配度与差距、职级策略、薪酬与市场需求、定制方案，以及对应职位各项要求的 STAR+R 面试故事。
+
+结论紧跟在 Block G 之后：用粗体给出判断（Apply、Consider、Research first 或 Skip），并附上一条从前面各部分得出的理由。它只是复述报告的 Machine Summary 中记录的决定，从不加入新的判断，所以即使你读到这里就停下，也已经拿到了答案。
 
 ## 适用场景
 
@@ -56,7 +62,10 @@ Block B 到 Block F 依次涵盖简历匹配度与差距、职级策略、薪酬
 - 职位原型（archetype）会对照你自己的目标职位来分类，也就是 `modes/_profile.md` 中的 *Your Target Roles* 部分；只有在你一个目标职位都没有定义时，才会使用默认的职位类型。如果一个职位与你的任何目标都不匹配，它在 North Star 契合度上得 1 分，其他维度的评估照常进行，报告中的 Archetype 一行会显示 `Not a target — closest default: {default role type}` 或 `Not a target — no close match`。
 - 公司和薪酬调研最多只做五次网络搜索；这是评估，不是深度调研。想更全面地了解一家公司时，请另外运行 `/career-ops deep`。
 - Block G 会给出三个等级之一：High Confidence（高可信）、Proceed with Caution（谨慎推进）或 Suspicious（可疑），这样可能的幽灵职位会在你投入面试精力之前就暴露出来。
+- 如果这个职位是招聘人员主动找到你的（通过 LinkedIn 私信、邮件或电话），而不是你自己发现的职位发布，Block G 还会核查这位招聘人员。共五项检查：公司自己的招聘页面上是否列出了这个职位；一个陌生的名字是否挂靠在知名品牌上；招聘人员是否用公司控制的域名发信；是否有公开的诈骗举报；以及对方是否要求你运行发来的代码、共享屏幕、转到 Telegram、WhatsApp 或 Discord 上沟通，或者为任何东西付费。单纯有招聘人员联系你，本身算作中性。如果有两项检查结果令人担忧，且其中一项是招聘页面上没有这个职位或存在诈骗举报，等级就会变为 Suspicious，并加上一条招聘人员身份提示。career-ops 从不克隆或运行招聘人员发来的代码。
 - 如果职位描述明确说明这是固定期限岗位，例如 18 个月的合同或临时职位，Block G 会加上一条固定期限合同提示，引用相关原文，并附上一个可选的谈薪话题。它只是提示信息：从不改变评分、可信度等级或推荐结论。
+
+- 在允许智能体重命名自身会话的 CLI 中，读完职位描述后，会话会以这个职位命名，例如 `VP Infrastructure, Acme Health`。如果想保留你自己的会话标题，请在 `config/profile.yml` 中设置 `session_title: off`。
 
 ## Score Evidence
 

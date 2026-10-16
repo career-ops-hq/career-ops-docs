@@ -3,7 +3,7 @@ title: Guida rapida
 description: "Inizia a usare career-ops in circa quindici minuti: installa il sistema AI open source per la ricerca di lavoro, apri la tua CLI AI e valuta il tuo primo annuncio. Non serve saper programmare."
 seoTitle: "Guida rapida a career-ops: installalo e valuta il tuo primo annuncio di lavoro con l'AI in pochi minuti"
 icon: Rocket
-translationHash: 3dc0cfbde93edb50
+translationHash: a1ac86db5bf5c50e
 localized: true
 translatedFrom: /docs
 ---
@@ -78,6 +78,8 @@ career-ops usa un Chromium headless per diversi compiti: generare i PDF, verific
 ```bash title="Terminal"
 npx playwright install chromium
 ```
+
+`npm install` salta quel download se nel tuo ambiente `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` ha un valore diverso da vuoto, `0` o `false`; in quel caso, esegui tu il comando qui sopra. Su NixOS salta questo passaggio: lì i browser scaricati non riescono ad avviarsi, e al loro posto la dev shell del flake del repository ne fornisce di funzionanti, come spiega la [guida NixOS](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) del core (in inglese).
 
 ## Passo 2: Apri il tuo assistente AI
 
@@ -235,6 +237,8 @@ Apri il file del report in `reports/`. Il nome del file segue lo schema `{number
 - **Blocco F**: preparazione al colloquio di lavoro, con storie costruite con il metodo STAR su misura per questo annuncio.
 - **Blocco G**: attendibilità dell'annuncio, cioè un controllo euristico di segnali come il fatto che l'annuncio sia ancora aperto o che venga ripubblicato di continuo. Riporta ciò che trova e lascia il giudizio a te.
 - **Blocco H**: bozze di risposta per il modulo di candidatura, scritte solo quando il punteggio è 4,5 o superiore.
+
+Subito dopo il Blocco G, il **verdetto** riporta la decisione in grassetto (Apply, Consider, Research first o Skip) e una sola motivazione tratta dai blocchi precedenti, così conosci la risposta prima di leggere il resto.
 
 Il tuo curriculum in PDF su misura è nella cartella `output/`. Rileggilo prima di mandarlo a chiunque: career-ops non invia mai nulla senza la tua approvazione.
 

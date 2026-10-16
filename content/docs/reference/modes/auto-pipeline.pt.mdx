@@ -1,18 +1,18 @@
 ---
 title: auto-pipeline
-description: "Fluxo padrão quando você cola a URL de uma vaga ou o texto bruto da descrição. Executa a avaliação A–H, gera o relatório, exporta um PDF personalizado e registra a entrada no tracker, sem intervenção manual entre as etapas."
+description: "Fluxo padrão quando você cola a URL de uma vaga ou o texto bruto da descrição. Executa a avaliação A–H, gera o relatório, exporta um PDF personalizado e registra a entrada no tracker em uma única execução, parando só quando precisa de uma resposta sua."
 seoTitle: "career-ops auto-pipeline — avalie uma vaga e gere currículo + tracker a partir de uma URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 233c7fa8819747b5
+lastModified: "2026-10-16"
+translationHash: 618e23f3b4b2c9d2
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
 
 ## O que o auto-pipeline faz
 
-O career-ops aciona o auto-pipeline sempre que você cola no prompt a URL de uma vaga ou o texto da descrição. O modo lê a vaga, pontua de acordo com a rubrica (cinco dimensões mais uma nota global holística), grava a avaliação em reports/, gera o PDF personalizado via Playwright e atualiza a entrada no tracker, tudo em um único turno do agente.
+O career-ops aciona o auto-pipeline sempre que você cola no prompt a URL de uma vaga ou o texto da descrição. O modo lê a vaga, pontua de acordo com a rubrica (cinco dimensões mais uma nota global holística), grava a avaliação em reports/, gera o PDF personalizado via Playwright e atualiza a entrada no tracker, tudo em uma única execução. Ele só para e pergunta a você quando a empresa está na sua lista de empresas bloqueadas, ou quando a vaga chega por meio de uma agência e ele precisa que você confirme qual é.
 
 ## Quando usar
 
@@ -40,6 +40,8 @@ Updated data/applications.md (Report and PDF marked done).
 - Uma verificação de vaga ativa roda antes da avaliação. Se o link estiver quebrado ou a página for só uma casca vazia de "vaga preenchida", o modo para ali em vez de pontuar um conteúdo fantasma. E, se a entrada veio de `data/pipeline.md`, ele marca essa linha como encerrada.
 - Uma página do LinkedIn cuja descrição fica presa em um esqueleto de carregamento não é uma vaga encerrada, mas também não é a descrição de uma vaga: o auto-pipeline para antes da avaliação, do relatório, do PDF e de qualquer registro no tracker, e pede que você cole o texto da vaga ou informe um link do site da empresa ou do ATS para a mesma vaga.
 - Os rascunhos de respostas para a candidatura só são escritos quando a nota é 4,5 ou mais, para que vagas com pouca aderência não gastem tokens em um texto que você não vai enviar.
+- O relatório salvo usa o formato do [oferta](/pt/docs/reference/modes/oferta), incluindo o veredito de uma linha depois do Bloco G e as verificações de recrutador que o Bloco G executa quando foi um recrutador que trouxe a vaga até você.
+- Em uma CLI que permite ao agente renomear a própria sessão, a sessão recebe o nome da vaga, como `VP Infrastructure, Acme Health`, assim que a descrição da vaga é lida. Defina `session_title: off` em `config/profile.yml` para manter os seus próprios títulos de sessão.
 
 ## Pontos de atenção
 

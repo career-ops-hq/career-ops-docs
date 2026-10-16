@@ -3,7 +3,7 @@ title: Schnellstart
 description: "Starte in etwa fünfzehn Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: 3dc0cfbde93edb50
+translationHash: a1ac86db5bf5c50e
 localized: true
 translatedFrom: /docs
 ---
@@ -78,6 +78,8 @@ career-ops braucht ein headless Chromium für mehrere Aufgaben: Es rendert PDFs,
 ```bash title="Terminal"
 npx playwright install chromium
 ```
+
+`npm install` überspringt diesen Download, wenn `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` in deiner Umgebung auf einen Wert gesetzt ist, der weder leer noch `0` noch `false` ist. Führe den Befehl oben dann selbst aus. Unter NixOS lässt du diesen Schritt weg: Die heruntergeladenen Browser starten dort nicht, und die Flake-Dev-Shell des Repositorys stellt stattdessen funktionierende bereit, wie die [NixOS-Anleitung](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) des Core-Repositorys erklärt.
 
 ## Schritt 2: KI-Assistenten öffnen
 
@@ -235,6 +237,8 @@ Der Bericht enthält nach der Risk Summary den Abschnitt **Score Evidence**. Er 
 - **Block F**: Vorbereitung auf das Vorstellungsgespräch mit STAR-Geschichten, die auf diese Stelle zugeschnitten sind.
 - **Block G**: Seriosität der Anzeige. Eine heuristische Prüfung achtet auf Signale, etwa ob die Anzeige noch offen ist und ob sie immer wieder neu veröffentlicht wird. Der Block berichtet, was er findet, und überlässt das Urteil dir.
 - **Block H**: Antwortentwürfe für das Bewerbungsformular. Sie werden nur geschrieben, wenn die Bewertung bei 4,5 oder höher liegt.
+
+Direkt nach Block G nennt der Abschnitt **Verdict** die Entscheidung fett gedruckt (Apply, Consider, Research first oder Skip) und einen Grund, der sich auf die Blöcke darüber stützt. So kennst du die Antwort, bevor du den Rest liest.
 
 Deinen maßgeschneiderten Lebenslauf als PDF findest du im Ordner `output/`. Sieh ihn dir an, bevor du ihn verschickst. career-ops schickt nie etwas ohne deine Zustimmung ab.
 
