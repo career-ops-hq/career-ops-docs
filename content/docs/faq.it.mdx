@@ -3,7 +3,7 @@ title: Domande frequenti
 description: "Domande frequenti su career-ops: costi, privacy, CLI AI supportate, scan e scan:full, limiti di token, configurazione su Windows e ciò che career-ops non fa mai a tuo nome."
 seoTitle: "Domande frequenti su career-ops: costi, privacy, Claude Code e uso gratuito"
 icon: CircleQuestionMark
-translationHash: e38fef5efe601151
+translationHash: ab5c2392fe4d1d61
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -49,6 +49,12 @@ In career-ops solo la valutazione ha un costo, e la valutazione può costare 0 $
 ## Dove vengono salvati i miei dati?
 
 career-ops conserva i tuoi dati sulla tua macchina, in semplici file che ti appartengono: il tuo curriculum, il profilo, la pipeline e i report sono file Markdown/YAML locali. Niente gira sui server di career-ops. Gli aggiornamenti di sistema non toccano mai il tuo livello dati (`cv.md`, `config/`, `data/`, `reports/`, `output/`): questa separazione è il **Data Contract**, e ogni aggiornamento lo rispetta.
+
+## Il mio agente lavora in un worktree Git. Dove finisce un aggiornamento di career-ops?
+
+Un aggiornamento di career-ops avviato da un worktree Git collegato finisce su `main`, nel checkout in cui `main` è attivo, e non sul branch del worktree. Agenti come Claude Code possono eseguire ogni sessione in un worktree collegato, su un branch usa e getta. Quando `node update-system.mjs` viene eseguito lì, `check`, `apply`, `rollback` e `dismiss` si rieseguono nel checkout di `main`: l'aggiornamento viene quindi committato su `main`, e i worktree creati dal `main` aggiornato ce l'hanno già. Per aggiornare poi il worktree in cui ti trovi, esegui al suo interno `git merge main` (oppure `git rebase main`).
+
+Se nessun checkout ha `main` attivo, oppure il checkout di `main` ha modifiche non committate a file tracciati, `apply` e `rollback` si rifiutano senza cambiare nulla e ti dicono cosa sistemare. Per aggiornare invece il branch del worktree stesso, imposta `CAREER_OPS_UPDATE_IN_WORKTREE=1`. Avviare l'updater dal tuo checkout principale funziona esattamente come prima. Questo è il comportamento da career-ops v1.36.0; la descrizione completa è in [docs/SCRIPTS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md) nel repo core.
 
 ## Come carico il mio curriculum in career-ops?
 
