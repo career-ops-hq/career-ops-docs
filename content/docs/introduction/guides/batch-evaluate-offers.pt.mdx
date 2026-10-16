@@ -3,7 +3,7 @@ title: Avaliar vagas em lote
 description: Processe 10 ou mais vagas em uma única sessão, com workers de IA em paralelo e PDFs personalizados.
 seoTitle: "Avaliar vagas em lote com o career-ops — pontue várias de uma vez"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: 2a76790d1f5059cd
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -163,6 +163,8 @@ Este script:
 ```bash title="Terminal"
 node merge-tracker.mjs --dry-run
 ```
+
+Se um arquivo de resumo estiver malformado, o script o ignora: ele mostra um aviso `Skipping` que indica o arquivo e o problema, e não adiciona nenhuma linha para essa vaga. A prévia mostra os mesmos avisos, então você pode corrigir o arquivo antes que qualquer coisa seja arquivada. Uma execução real ainda move o arquivo ignorado para `batch/tracker-additions/merged/` junto com os outros: para recuperá-lo, corrija-o, mova-o de volta para `batch/tracker-additions/` e execute `node merge-tracker.mjs` de novo.
 
 ## O que fazer depois
 
