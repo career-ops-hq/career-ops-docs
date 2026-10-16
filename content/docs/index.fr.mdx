@@ -3,7 +3,7 @@ title: Démarrage rapide
 description: "Démarrez avec career-ops en une quinzaine de minutes : installez le système open source de recherche d'emploi par IA, ouvrez votre CLI d'IA et évaluez votre première offre. Aucune connaissance en code requise."
 seoTitle: "career-ops Démarrage rapide — installez et lancez votre premier scan d'offres par IA en quelques minutes"
 icon: Rocket
-translationHash: 3dc0cfbde93edb50
+translationHash: a1ac86db5bf5c50e
 localized: true
 translatedFrom: /docs
 ---
@@ -78,6 +78,8 @@ career-ops utilise un Chromium headless pour plusieurs tâches : générer les P
 ```bash title="Terminal"
 npx playwright install chromium
 ```
+
+`npm install` saute ce téléchargement lorsque `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` est définie dans votre environnement avec une valeur autre que vide, `0` ou `false` ; dans ce cas, lancez vous-même la commande ci-dessus. Sous NixOS, sautez cette étape : les navigateurs téléchargés ne peuvent pas y démarrer, et le dev shell du flake du dépôt en fournit à la place qui fonctionnent, comme l'explique le [guide NixOS](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) du dépôt principal.
 
 ## Étape 2 : ouvrir votre assistant IA
 
@@ -235,6 +237,8 @@ Ouvrez le fichier de rapport dans `reports/`. Le nom du fichier suit le motif `{
 - **Bloc F** — une préparation à l'entretien avec des histoires STAR adaptées à cette offre.
 - **Bloc G** — légitimité de l'annonce : une vérification heuristique de signaux comme le fait que l'offre soit toujours ouverte ou republiée à répétition. Il rapporte ce qu'il trouve et vous laisse juger.
 - **Bloc H** — des brouillons de réponses pour le formulaire de candidature, rédigés uniquement lorsque le score atteint au moins 4.5.
+
+Juste après le Bloc G, le **Verdict** donne la décision en gras (Apply, Consider, Research first ou Skip) et une raison tirée des blocs précédents, pour que vous connaissiez la réponse avant de lire le reste.
 
 Votre CV PDF sur mesure se trouve dans le dossier `output/`. Relisez-le avant de l'envoyer où que ce soit — career-ops ne soumet jamais rien sans votre accord.
 

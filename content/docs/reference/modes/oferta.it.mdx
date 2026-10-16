@@ -4,15 +4,15 @@ description: "Esegue la valutazione A–H su un singolo annuncio e la registra n
 seoTitle: "Modalità oferta di career-ops: valuta un singolo annuncio di lavoro prima di candidarti"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 9a968f6bcb8dda55
+lastModified: "2026-10-16"
+translationHash: 424400a232c7b66d
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## Cosa fa
 
-La modalità oferta legge una singola JD (URL o testo incollato), le assegna un punteggio in base alla griglia di valutazione (cinque dimensioni più un punteggio globale olistico) citando le prove a supporto, e scrive il report di valutazione. Niente PDF, ma aggiunge una riga al tracker con lo stato Evaluated. Veloce ed economica.
+La modalità oferta legge una singola JD (URL o testo incollato), le assegna un punteggio in base alla griglia di valutazione (cinque dimensioni più un punteggio globale olistico) citando le prove a supporto, e scrive il report di valutazione. Niente PDF, ma registra l'annuncio nel tuo tracker con lo stato Evaluated; se valuti di nuovo la stessa azienda e lo stesso ruolo, quella riga viene aggiornata invece di aggiungerne una seconda. Veloce ed economica.
 
 ## Quando usarla
 
@@ -20,7 +20,7 @@ Usa oferta per fare rapidamente una prima scrematura di un annuncio su cui hai d
 
 ## Come si presenta un'esecuzione
 
-Passi alla modalità un annuncio e ti restituisce la valutazione in sette blocchi (i blocchi da A a F e un blocco G sulla legittimità dell'annuncio, più le bozze di risposta del blocco H quando il punteggio è pari o superiore a 4,5), con un punteggio e la motivazione corredata di prove. Incolla direttamente il testo della JD oppure passa un URL: in quel caso la modalità verifica prima che l'annuncio sia ancora attivo, così un link morto non ti fa mai sprecare una valutazione completa.
+Passi alla modalità un annuncio e ti restituisce la valutazione, con un punteggio e la motivazione corredata di prove: i blocchi da A a F, un blocco G sulla legittimità dell'annuncio e un verdetto di una riga, più le bozze di risposta del blocco H quando il punteggio è pari o superiore a 4,5. Incolla direttamente il testo della JD oppure passa un URL: in quel caso la modalità verifica prima che l'annuncio sia ancora attivo, così un link morto non ti fa mai sprecare una valutazione completa.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -43,9 +43,15 @@ Passi alla modalità un annuncio e ti restituisce la valutazione in sette blocch
 ## G) Posting Legitimacy
 Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
+
+## Verdict (lead)
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
 ```
 
 I blocchi da B a F coprono la corrispondenza con il CV e le lacune, la strategia di livello, la retribuzione e la domanda di mercato, un piano di personalizzazione e le storie STAR+R per il colloquio di lavoro, associate ai requisiti della posizione.
+
+Il verdetto arriva subito dopo il blocco G: la decisione in grassetto (Apply, Consider, Research first o Skip) e una sola motivazione tratta dai blocchi precedenti. Riprende la decisione registrata nella Machine Summary del report e non aggiunge mai un nuovo giudizio, così anche chi si ferma lì ha già la risposta.
 
 ## Quando conviene usarla
 
@@ -56,7 +62,10 @@ Ricorri a oferta per valutare rapidamente un singolo annuncio senza impegnarti n
 - L'archetipo viene classificato in base ai tuoi ruoli target, cioè la sezione *Your Target Roles* di `modes/_profile.md`; i tipi di ruolo predefiniti si applicano solo quando non ne hai definito nessuno. Un ruolo che non corrisponde a nessuno dei tuoi target ottiene 1 nell'allineamento con la North Star, la valutazione prosegue sulle altre dimensioni e la riga Archetype del report riporta `Not a target — closest default: {default role type}` oppure `Not a target — no close match`.
 - La ricerca sull'azienda e sulla retribuzione è limitata a un massimo di cinque ricerche web: è una valutazione, non una ricerca approfondita. Esegui `/career-ops deep` a parte quando vuoi un quadro più completo dell'azienda.
 - Il blocco G restituisce uno di tre livelli (High Confidence, Proceed with Caution o Suspicious), così i probabili annunci fantasma emergono prima che tu investa energie nei colloqui.
+- Quando il ruolo ti è arrivato tramite un recruiter (un messaggio su LinkedIn, un'email o una telefonata) invece che da un annuncio trovato da te, il blocco G verifica anche il recruiter. Cinque controlli: se la pagina carriere dell'azienda riporta la posizione, se un nome sconosciuto è associato a un marchio noto, se il recruiter scrive da un dominio controllato dall'azienda, eventuali segnalazioni pubbliche di truffa e le richieste di eseguire codice che ti mandano, condividere lo schermo, spostarti su Telegram, WhatsApp o Discord o pagare qualcosa. Il contatto da parte di un recruiter, di per sé, conta come neutro. Due controlli preoccupanti, di cui uno sia una pagina carriere senza la posizione o una segnalazione di truffa, portano il livello a Suspicious e aggiungono una nota sull'identità del recruiter. career-ops non clona né esegue mai codice inviato da un recruiter.
 - Quando l'annuncio descrive esplicitamente una posizione a tempo determinato, come un contratto di 18 mesi o un incarico temporaneo, il blocco G aggiunge una nota sul contratto a tempo determinato che cita la frase, più un eventuale spunto da usare quando si parla di retribuzione. È solo informativa: non modifica mai il punteggio, il livello di legittimità né la raccomandazione.
+
+- In una CLI che permette all'agente di rinominare la propria sessione, la sessione prende il nome dell'annuncio, ad esempio `VP Infrastructure, Acme Health`, non appena la JD è stata letta. Imposta `session_title: off` in `config/profile.yml` per mantenere i titoli di sessione che scegli tu.
 
 ## Score Evidence
 

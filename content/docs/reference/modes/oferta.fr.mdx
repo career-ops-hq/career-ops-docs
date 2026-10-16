@@ -4,15 +4,15 @@ description: "Exécute l'évaluation A–H sur une seule annonce. Saute la gén�
 seoTitle: "Mode oferta de career-ops — noter une offre d'emploi avant de postuler"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 9a968f6bcb8dda55
+lastModified: "2026-10-16"
+translationHash: 424400a232c7b66d
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## Ce que fait ce mode
 
-Le mode oferta lit une seule fiche de poste (URL ou texte collé), la note selon la grille — cinq dimensions plus un score global holistique — avec des preuves citées à l'appui, puis rédige le rapport d'évaluation. Pas de PDF, mais une ligne est ajoutée au tracker avec le statut Evaluated. Rapide et peu coûteux.
+Le mode oferta lit une seule fiche de poste (URL ou texte collé), la note selon la grille (cinq dimensions plus un score global holistique) avec des preuves citées à l'appui, puis rédige le rapport d'évaluation. Pas de PDF, mais l'annonce est inscrite dans votre tracker avec le statut Evaluated ; évaluer à nouveau la même entreprise et le même poste met à jour cette ligne au lieu d'en ajouter une seconde. Rapide et peu coûteux.
 
 ## Quand l'utiliser
 
@@ -20,7 +20,7 @@ Utilisez oferta pour trancher rapidement le cas d'une annonce limite. Si le scor
 
 ## À quoi ressemble une exécution
 
-Vous confiez une annonce au mode et il renvoie l'évaluation en sept blocs — les blocs A à F, plus un bloc G de lecture de légitimité, ainsi que des brouillons de réponses en bloc H lorsque le score atteint au moins 4.5 — avec un score et un raisonnement sourcé. Collez directement le texte de la fiche de poste, ou passez une URL : le mode confirme alors d'abord que l'annonce est toujours en ligne, pour qu'un lien mort ne consomme jamais une évaluation complète.
+Vous confiez une annonce au mode et il renvoie l'évaluation, avec un score et un raisonnement sourcé : les blocs A à F, un bloc G de lecture de légitimité et un verdict d'une ligne, ainsi que des brouillons de réponses en bloc H lorsque le score atteint au moins 4.5. Collez directement le texte de la fiche de poste, ou passez une URL : le mode confirme alors d'abord que l'annonce est toujours en ligne, pour qu'un lien mort ne consomme jamais une évaluation complète.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -43,9 +43,15 @@ Vous confiez une annonce au mode et il renvoie l'évaluation en sept blocs — l
 ## G) Posting Legitimacy
 Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
+
+## Verdict (lead)
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
 ```
 
 Les blocs B à F couvrent l'adéquation du CV et ses lacunes, la stratégie de niveau, la rémunération et la demande du marché, un plan de personnalisation, et des histoires d'entretien STAR+R alignées sur les exigences du poste.
+
+Le verdict arrive juste après le bloc G : la décision en gras (Apply, Consider, Research first ou Skip) et une raison tirée des blocs précédents. Il reprend la décision consignée dans le Machine Summary du rapport et n'ajoute jamais de nouveau jugement, si bien qu'un lecteur qui s'arrête là repart tout de même avec la réponse.
 
 ## Quand y recourir
 
@@ -56,7 +62,10 @@ Recourez à oferta pour noter rapidement une seule annonce sans vous engager dan
 - L'archétype est classé par rapport à vos propres rôles cibles, définis dans la section *Your Target Roles* de `modes/_profile.md` ; les types de rôle par défaut ne s'appliquent que si vous n'en avez défini aucun. Un rôle qui ne correspond à aucune de vos cibles obtient 1 en alignement avec North Star, l'évaluation se poursuit sur les autres dimensions, et la ligne Archetype du rapport indique `Not a target — closest default: {default role type}` ou `Not a target — no close match`.
 - La recherche sur l'entreprise et la rémunération est limitée à cinq recherches web au maximum ; il s'agit d'une évaluation, pas d'une recherche approfondie. Lancez `/career-ops deep` séparément quand vous voulez un tableau plus complet de l'entreprise.
 - Le bloc G renvoie l'un de trois niveaux — High Confidence, Proceed with Caution ou Suspicious — de sorte que les probables offres fantômes ressortent avant que vous n'investissiez des efforts de préparation d'entretien.
+- Lorsque le poste vous est parvenu par un recruteur (un message LinkedIn, un e-mail ou un appel) plutôt que par une annonce que vous avez trouvée vous-même, le bloc G vérifie aussi le recruteur. Cinq vérifications : si la page carrières de l'entreprise elle-même mentionne le poste, si un nom inconnu est associé à une marque connue, si le recruteur écrit depuis un domaine que contrôle l'entreprise, les signalements publics d'arnaque, et les demandes d'exécuter du code qu'il envoie, de partager votre écran, de passer sur Telegram, WhatsApp ou Discord, ou de payer quoi que ce soit. Le simple fait d'être contacté par un recruteur est considéré comme neutre. Deux vérifications préoccupantes, dont l'une est une page carrières sans le poste ou un signalement d'arnaque, font passer le niveau à Suspicious et ajoutent une note sur l'identité du recruteur. career-ops ne clone ni n'exécute jamais le code envoyé par un recruteur.
 - Lorsque l'annonce décrit explicitement un poste à durée déterminée, comme un contrat de 18 mois ou un poste temporaire, le bloc G ajoute une note sur le contrat à durée déterminée qui cite la formulation, ainsi qu'un argument facultatif pour la discussion sur la rémunération. Cette note est purement informative : elle ne modifie jamais le score, le niveau de légitimité ni la recommandation.
+
+- Dans une CLI qui permet à l'agent de renommer sa propre session, la session prend le nom de l'annonce, par exemple `VP Infrastructure, Acme Health`, une fois la fiche de poste lue. Définissez `session_title: off` dans `config/profile.yml` pour conserver vos propres titres de session.
 
 ## Score Evidence
 
