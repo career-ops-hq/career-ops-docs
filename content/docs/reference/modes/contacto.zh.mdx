@@ -1,0 +1,53 @@
+---
+title: contacto
+description: "LinkedIn 上的杀手锏。给出公司名称和你的人脉背景，contacto 会找出可能有交情的联系人（共同联系人、二度人脉），并针对你正在申请的职位起草一条简短的联系消息。"
+seoTitle: "career-ops contacto：在 LinkedIn 上找到熟人人脉，起草联系消息"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## 它能做什么
+
+contacto 模式会读取公司名称和 JD 内容，然后通过 WebSearch 找出值得联系的对象并给出建议：用人经理、负责该职位的招聘专员、两三位团队同事，以及一位已知的面试官。它会起草一条简短的消息，三句话，不超过 300 个字符，并根据职位和联系人的身份量身定制。
+
+**先查已保存的联系人。** 在任何搜索之前，contacto 会对你保存在 `data/contacts.tsv` 里的联系人运行 `node contact-lookup.mjs --company "<company>" --summary`，列出你在这家公司已经认识的人，并注明你是在之前哪次申请中和他们建立联系的。如果你选中其中一位，它会跳过搜索，起草一条**内部推荐**（Internal Referral）消息：点出你们之间真实的过往接触，用一句话说明新职位为什么适合你，并直接请对方内推。这和发给团队同事的消息正好相反，后者从不开口要工作。只有在你确认与某位已保存的联系人确实有过真实交往之后，这位联系人才会被标记为内部推荐；仅仅在同一家公司工作是不够的。要从招聘专员或面试官的回复中保存联系人，把回复粘贴到一个文件里，然后运行 `node contact-extract.mjs --file <email.txt>`，它在写入之前会先征求你的同意。每条消息都由 contacto 起草，发不发由你决定。
+
+## 何时使用
+
+当你已经申请了某个职位，想找到一条内推途径时，就用 contacto。也可以在申请之前用：如果有熟人引荐，你就有机会从招聘专员手里那一大摞简历中脱颖而出。默认用法是 LinkedIn 上的杀手锏；如果平台有严格的字数限制，比如招聘网站的聊天框、陌生邮件的开场白、BOSS 直聘的「打招呼」，就说你要一条「greeting」，contacto 会只写一条超短的首次联系消息，不再查找联系人。
+
+## 运行示例
+
+给 contacto 一家公司，它会找出值得联系的人，从中挑出最能因你的加入而受益的那一位，并针对这类角色写一条消息：招聘专员看到的是硬性要求一一满足，用人经理看到的是你能带来的影响。
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## 注意事项
+
+contacto 不会抓取 LinkedIn 数据（issue #238 已否决这一做法）。它依据你提供的背景信息工作，包括你的简历、你以前的雇主、你提到的共同联系人，再加上公开的 WebSearch 结果。智能体无法访问你在 LinkedIn 上的私人人脉关系。每条消息都控制在 LinkedIn 人脉邀请 300 个字符的上限以内，而且从不包含你的手机号。
+
+## 相关页面
+
+- [deep](/zh/docs/reference/modes/deep)
+- [interview-prep](/zh/docs/reference/modes/interview-prep)

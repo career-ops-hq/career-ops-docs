@@ -4,8 +4,8 @@ description: "Ashby es el ATS moderno preferido por las startups Serie A–C del
 seoTitle: "Escanea ofertas de Ashby con career-ops — escaneo de portales ATS con cero tokens"
 icon: Sparkles
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 8e0f69ac9571b6b9
+lastModified: "2026-10-16"
+translationHash: b44a43aefbce9bb4
 localized: true
 translatedFrom: /docs/reference/portals/ashby
 ---
@@ -16,7 +16,7 @@ El provider ashby de providers/ashby.mjs hace peticiones HTTP a api.ashbyhq.com/
 
 ## Cuándo usarlo
 
-Usa el escaneo de Ashby cuando tengas en el punto de mira labs de IA, empresas de infraestructura y startups modernas. ElevenLabs, Deepgram, Sierra, Decagon y n8n están entre los 40 boards de Ashby preconfigurados en templates/portals.example.yml.
+Usa el escaneo de Ashby cuando tengas en el punto de mira labs de IA, empresas de infraestructura y startups modernas. ElevenLabs, Deepgram, Sierra, Decagon y n8n están entre los boards de Ashby preconfigurados en templates/portals.example.yml.
 
 ## Ejemplo
 
@@ -37,14 +37,16 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 41 total
-Filtered by title: 6 relevant
-Duplicates: 3 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      41
+Filtered by title:     35 removed
+Duplicates:            3 skipped
+New offers added:      3
 
-  + ElevenLabs | Applied AI Engineer | ashby
-  + Deepgram   | Inference Engineer  | ashby
+New offers:
+  + ElevenLabs | Applied AI Engineer | London, UK
+  + Deepgram | Inference Engineer | Remote
+  + Sierra | Agent Engineer | San Francisco, CA
 ```
 
 ## Cómo se comunica career-ops con Ashby
@@ -54,6 +56,15 @@ career-ops llama a la API pública de publicaciones de Ashby en `api.ashbyhq.com
 ## A tener en cuenta
 
 La API del job board de Ashby devuelve directamente el texto completo de la descripción del puesto, sin necesidad de una petición adicional. Cada board tarda unos diez segundos en responder, así que un escaneo con muchos boards de Ashby tarda algo más que con el mismo número de boards de Greenhouse o Lever.
+
+Algunas empresas desactivan la API de publicaciones de Ashby aunque su board siga activo: la API responde 404 aunque las vacantes sigan publicadas. Para esos casos, añade `ashby: { embed: true }` a su entrada y career-ops leerá el board desde la página que Ashby sirve para incrustarlo en las páginas de empleo de las empresas. Si el `careers_url` de la entrada es el sitio propio de la empresa y no una dirección `jobs.ashbyhq.com`, indica también el board con `ashby: { board: <slug> }`. Con esa fuente, cada vacante llega sin descripción ni fecha de publicación, y su rango salarial se queda como texto tal como se muestra, sin convertirse en un salario parseado. Hay que activarlo expresamente porque un 404 suele indicar un board cerrado o un slug mal escrito, y eso debe seguir siendo un error.
+
+```yaml title="portals.yml"
+- name: Example Co
+  careers_url: https://jobs.ashbyhq.com/exampleco
+  ashby: { embed: true }
+  enabled: true
+```
 
 ## Relacionado
 

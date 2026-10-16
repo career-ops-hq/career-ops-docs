@@ -1,0 +1,66 @@
+---
+title: 准备面试
+description: 使用面试模式（规划、练习、复盘）为某一轮具体面试做准备，与 AI 面试官一起模拟演练，并把每一场真实面试变成下一轮的情报。
+seoTitle: "如何准备面试：用 career-ops 逐轮备战"
+icon: GraduationCap
+translationHash: f200ca2ca0715a2e
+localized: true
+translatedFrom: /docs/introduction/guides/interview-modes
+---
+
+面试模式是 career-ops 的面试准备系统，随 v1.16.0 发布。`interview/plan` 为某一轮具体面试制定按时间分块的准备计划。`interview/practice` 以文字形式进行模拟面试，一次只问一个问题。`interview/debrief` 记录面试中实际发生的情况，让下一轮从更高的起点开始。三者构成一个循环：规划、练习、面试、复盘，然后再来一轮。准备成果会在整个招聘流程中不断积累。
+
+它们与更早的 [`interview-prep` 模式](/zh/docs/reference/modes/interview-prep)互为补充。后者帮你打下长期可用的基础（故事库、题库），而这三个专注型模式针对的是*即将到来的某一轮具体面试*。
+
+<Callout title="开始之前你需要准备">
+一个已经放好 `cv.md` 和 `config/profile.yml` 的工作区（[快速开始](/zh/docs)会帮你把两者都配置好）。这些模式会读取这两个文件，让每一份计划、每一条反馈都基于你的真实经历，而不是泛泛的面试建议。
+</Callout>
+
+## 循环概览
+
+| 模式 | 何时使用 | 你会得到什么 |
+| --- | --- | --- |
+| `interview/plan` | 某一轮面试刚确定时 | 一份按时间分块的准备计划，按你实际拥有的时间来安排 |
+| `interview/practice` | 正式面试之前 | 一场文字模拟面试，每个回答都有结构化反馈 |
+| `interview/debrief` | 真实面试刚结束时 | 如实的逐题评估 + 更新后的题库 |
+
+## 规划：把面试日期变成准备日程
+
+把职位描述（JD）和面试的日期、时间交给 `interview/plan`。如果你知道面试轮次的类型和面试官是谁，也一并提供。它会读取你的简历和个人资料，做一次如实的匹配度评估：哪些优势可以作为立足点，哪些短板可能会被考察。然后，它会把你剩下的时间拆分成具体的准备时段。
+
+```txt title="Example"
+/career-ops interview/plan
+
+→ Inputs: JD (pasted), interview Thursday 14:00, HM screen with Ana (Eng Manager)
+→ Fit assessment: 4 strengths to anchor · 2 gaps ranked by test likelihood
+→ Plan (9 hours available):
+   Block 1 — Lock your narrative (~1.5h): timeline, "why us", strongest proof point
+   Block 2 — Gap: event-driven architectures (~3h)
+   Block 3 — Behavioral stories, STAR+R (~2h)
+   Block 4 — Mock run + comp answer (~1.5h)
+```
+
+计划会根据轮次进行调整。HR 初筛侧重流程安排和个人叙事，不会深挖技术细节；由一线从业者主导的深度面试，则会围绕 JD 中的核心技能深入准备。如果之前某一轮已经留下了题库，你当时答得吃力的题目都会获得一个专门的准备时段。毕竟，真实表现数据比推测出来的风险更有参考价值。
+
+## 练习：一次一题地模拟演练 [#practice-rehearse-against-a-realistic-interviewer]
+
+`interview/practice` 会扮演面试官。如果你提供了面试官的姓名和职位，它就按这个身份来扮演。它一次只问一个问题，全程保持角色，并在真实面试官会继续深挖的地方自然地追问。每答完一个问题，你都会得到结构化反馈：哪些地方答到了点子上，哪些地方需要再精炼，以及一个基于你真实简历和故事库的更好版本。
+
+它还会像面试官一样关注整场模拟。如果你两次讲了同一个故事，它会提醒你案例储备显得单薄；如果你的回答最后落在了与这个职位不相关的领域，它会告诉你应该把落点放在哪里。
+
+<Callout>
+练习模式会坦诚说明自己的局限。如果你还没有建立题库，也没有针对这个职位的准备笔记，它会直接告诉你，并建议先运行 `interview-prep` 或 `interview/plan`，而不是悄悄给你来一场泛泛的模拟。
+</Callout>
+
+## 复盘：每一场面试的信息都不白费
+
+真实面试一结束，趁记忆还新鲜，就运行 `interview/debrief`。它会带你逐一回顾你能想起来的每个问题，记录面试官的反应，并给出如实的逐题评估。接下来，它会把这些信息沉淀下来，供以后的面试使用：
+
+- **更新题库**：每个问题都会根据真实表现标记为 ✅ / 🟡 / 🔴，而不是凭感觉打分。
+- **补上短板**：对于每个 🔴，它会通过一个完整的示例讲解正确答案，并把它和你已有的某个故事联系起来。
+- **提炼新故事**：如果你在面试中讲了一段故事库里还没有的经历，它会主动提出帮你整理成 STAR+R 故事，你同意的话就加入故事库。
+- **预测下一轮**：如果你知道下一轮的形式，它会根据面试官的角色和这一轮已经覆盖的内容，列出可能被问到的问题，每个问题都标注 `[inferred]`。
+
+## 为什么这个循环有效
+
+面试准备通常每一轮都要从零开始。面试模式让准备可以累积：真实面试官实际问过的问题，会成为下一轮最高优先级的准备信号。这些问题保存在纯 Markdown 文件中（`interview-prep/question-bank.md`、`story-bank.md`）。这些文件归你所有，和 career-ops 中的其他内容一样，默认保存在你自己的电脑上。

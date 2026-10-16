@@ -4,7 +4,7 @@ description: "Ashby is the modern ATS choice for Series A–C startups in the AI
 seoTitle: "Scan Ashby jobs with career-ops — zero-token ATS portal scanning"
 icon: Sparkles
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-10-16"
 ---
 
 ## What it does
@@ -13,7 +13,7 @@ The ashby provider in providers/ashby.mjs makes HTTP requests to api.ashbyhq.com
 
 ## When to use it
 
-Use Ashby scanning when targeting AI labs, infrastructure companies, and modern startups. ElevenLabs, Deepgram, Sierra, Decagon and n8n are among the 40 Ashby boards pre-configured in templates/portals.example.yml.
+Use Ashby scanning when targeting AI labs, infrastructure companies, and modern startups. ElevenLabs, Deepgram, Sierra, Decagon and n8n are among the Ashby boards pre-configured in templates/portals.example.yml.
 
 ## Example
 
@@ -34,14 +34,16 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 41 total
-Filtered by title: 6 relevant
-Duplicates: 3 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      41
+Filtered by title:     35 removed
+Duplicates:            3 skipped
+New offers added:      3
 
-  + ElevenLabs | Applied AI Engineer | ashby
-  + Deepgram   | Inference Engineer  | ashby
+New offers:
+  + ElevenLabs | Applied AI Engineer | London, UK
+  + Deepgram | Inference Engineer | Remote
+  + Sierra | Agent Engineer | San Francisco, CA
 ```
 
 ## How career-ops talks to Ashby
@@ -51,6 +53,15 @@ career-ops calls Ashby's public posting API at `api.ashbyhq.com/posting-api/job-
 ## Gotchas
 
 Ashby's job board API returns full JD text directly, no follow-up request needed. Each board takes around ten seconds to answer, so a scan with many Ashby boards takes a little longer than the same number of Greenhouse or Lever boards.
+
+Some companies turn Ashby's posting API off while their board stays live: the API answers 404 even though the jobs are still published. For one of those, add `ashby: { embed: true }` to its entry, and career-ops reads the board from the page Ashby serves to embed it on careers sites instead. If the entry's `careers_url` is the company's own site rather than a `jobs.ashbyhq.com` address, also name the board with `ashby: { board: <slug> }`. On that source a posting comes without a description or a publish date, and its pay range stays as display text rather than a parsed salary. It is opt-in because a 404 usually means a closed board or a mistyped slug, which should stay an error.
+
+```yaml title="portals.yml"
+- name: Example Co
+  careers_url: https://jobs.ashbyhq.com/exampleco
+  ashby: { embed: true }
+  enabled: true
+```
 
 ## Related
 

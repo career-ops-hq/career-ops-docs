@@ -1,0 +1,55 @@
+---
+title: auto-pipeline
+description: "粘贴职位描述的 URL 或原始文本时的默认流程。它会运行 A–H 评估、生成报告、导出定制版 PDF，并写入一条 tracker 记录，一次运行全部完成，只在需要你回答时才会停下。"
+seoTitle: "career-ops auto-pipeline：用一个职位链接完成评估、定制简历和 tracker 记录"
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: 618e23f3b4b2c9d2
+localized: true
+translatedFrom: /docs/reference/modes/auto-pipeline
+---
+
+## 它能做什么
+
+只要你在提示框里放入职位描述（JD）的 URL 或粘贴的文本，career-ops 就会调用 auto-pipeline。这个模式会读取职位信息，按评分标准打分（五个维度加一个整体综合评分），把评估写入 reports/，通过 Playwright 生成定制版 PDF，并更新 tracker 记录。这些都在一次运行中完成。只有两种情况它会停下来问你：这家公司在你的黑名单上，或者职位是通过招聘中介发布的，需要你确认是哪一家中介。
+
+## 何时使用
+
+如果你想让整条流程自动跑完，就用 auto-pipeline。对于新进入你求职流程的职位，它是默认模式。
+
+## 运行示例
+
+粘贴一个职位 URL，不加任何子命令，auto-pipeline 就会从头到尾跑完整条链路：提取职位描述、确认职位仍在招聘、打分、保存报告、导出定制版 PDF，并在你的 tracker 中记下这一条。
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+
+## 你需要知道的
+
+- 粘贴一个 URL，auto-pipeline 就会替你完成提取：首先用 Playwright 处理 Lever、Ashby、Greenhouse 和 Workday 这类单页应用门户，其次用 WebFetch 处理静态页面，最后才用 WebSearch 兜底。
+- 评估之前会先运行一道职位有效性检查。如果链接已失效，或者页面只是一个写着「职位已招满」的空壳，这个模式会就此停止，不会给并不存在的内容打分。如果这一条来自 `data/pipeline.md`，它还会把那一行标记为已关闭。
+- 如果 LinkedIn 页面的职位描述一直停留在加载骨架屏，这既不代表职位已关闭，也不能算作职位描述。auto-pipeline 会在评估、报告、PDF 以及任何 tracker 写入之前停下，请你粘贴职位文本，或者提供同一职位在雇主官网或 ATS 上的链接。
+- 只有评分达到 4.5 或以上，才会起草申请表问题的回答，这样匹配度低的职位就不会把 token 浪费在你根本不会发送的文案上。
+- 保存的报告采用 [oferta](/zh/docs/reference/modes/oferta) 的格式，包括紧跟在 Block G 之后的一句话结论；如果这个职位是招聘人员找到你的，还包括 Block G 对这位招聘人员的核查。
+- 在允许智能体重命名自身会话的 CLI 中，读完职位描述后，会话会以这个职位命名，例如 `VP Infrastructure, Acme Health`。如果想保留你自己的会话标题，请在 `config/profile.yml` 中设置 `session_title: off`。
+
+## 注意事项
+
+如果你只想要评估、不需要 PDF（更快、更省），请改用 `/career-ops oferta`。auto-pipeline 会跑完整条链路，所以消耗的 token 更多。
+
+## 相关页面
+
+- [pipeline](/zh/docs/reference/modes/pipeline)
+- [oferta](/zh/docs/reference/modes/oferta)
+- [pdf](/zh/docs/reference/modes/pdf)
+- [tracker](/zh/docs/reference/modes/tracker)

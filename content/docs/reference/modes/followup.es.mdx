@@ -4,15 +4,15 @@ description: "Marca las candidaturas y entrevistas con el seguimiento vencido se
 seoTitle: "Modo followup de career-ops — controla los seguimientos vencidos y redacta los mensajes"
 icon: CalendarClock
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: b1eb8003f10d7ed3
+lastModified: "2026-10-16"
+translationHash: 7853e38229463e38
 localized: true
 translatedFrom: /docs/reference/modes/followup
 ---
 
 ## Qué hace
 
-El modo followup lee tu tracker de candidaturas, compara la fecha del último contacto con la cadencia configurada (por defecto: un primer toque 7 días después de aplicar, y 1 día después de una entrevista para la nota de agradecimiento) y marca las entradas vencidas o urgentes. Para cada entrada marcada redacta un mensaje de seguimiento contextual, basado en ese informe y en tu CV.
+El modo followup lee tu tracker de candidaturas, compara la fecha del último contacto con la cadencia configurada (por defecto: un primer toque 7 días después de aplicar, y 1 día después de una entrevista para la nota de agradecimiento; una fila en estado Assessment, es decir, una prueba en línea o una preselección asíncrona, recibe su primer seguimiento al cabo de 1 día y después uno cada 3 días) y marca las entradas vencidas o urgentes. Para cada entrada marcada redacta un mensaje de seguimiento contextual, basado en ese informe y en tu CV.
 
 ## Cuándo usarlo
 
@@ -46,6 +46,17 @@ Draft — Notion (overdue):
 ## Cosas a tener en cuenta
 
 Un puesto en estado Applied recibe como máximo dos seguimientos; cuando el segundo queda sin respuesta, followup deja de redactar borradores y sugiere cerrar la entrada o probar con otro contacto a través de `contacto`. ¿Quieres un ritmo más ajustado que los siete días por defecto? Pasa un flag al script de cadencia — `node followup-cadence.mjs --applied-days 5` — en lugar de editar los borradores a mano.
+
+## Desactivar los seguimientos
+
+Los seguimientos están activados por defecto. Para desactivarlos, pon esto en `config/profile.yml`:
+
+```yaml
+follow_ups:
+  enabled: false
+```
+
+Con esa configuración, el modo se detiene antes de ejecutar el script de cadencia y te indica cómo volver a activar los seguimientos, y no se programa nada cuando una fila pasa a Applied. El modo `contacto` es un primer acercamiento, no un seguimiento, así que sigue funcionando. Solo un `false` explícito los desactiva: pon `enabled: true`, o elimina el bloque, para volver a activarlos.
 
 ## Relacionado
 

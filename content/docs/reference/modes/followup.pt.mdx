@@ -4,15 +4,15 @@ description: "Sinaliza candidaturas e entrevistas com o acompanhamento atrasado,
 seoTitle: "Modo followup do career-ops — acompanhe candidaturas sem resposta e redija as mensagens"
 icon: CalendarClock
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: b1eb8003f10d7ed3
+lastModified: "2026-10-16"
+translationHash: 7853e38229463e38
 localized: true
 translatedFrom: /docs/reference/modes/followup
 ---
 
 ## O que ele faz
 
-O modo followup lê o seu tracker de candidaturas, compara a data do último contato com a cadência configurada (por padrão: um primeiro lembrete 7 dias depois de você se candidatar e, 1 dia depois de uma entrevista, uma mensagem de agradecimento) e sinaliza as entradas atrasadas ou urgentes. Para cada entrada sinalizada, ele redige uma mensagem de acompanhamento contextualizada, com base no relatório daquela vaga e no seu currículo.
+O modo followup lê o seu tracker de candidaturas, compara a data do último contato com a cadência configurada (por padrão: um primeiro lembrete 7 dias depois de você se candidatar e, 1 dia depois de uma entrevista, uma mensagem de agradecimento; uma linha com status Assessment, ou seja, um teste online ou uma triagem assíncrona, recebe o primeiro contato depois de 1 dia e, a partir daí, um a cada 3 dias) e sinaliza as entradas atrasadas ou urgentes. Para cada entrada sinalizada, ele redige uma mensagem de acompanhamento contextualizada, com base no relatório daquela vaga e no seu currículo.
 
 ## Quando usar
 
@@ -46,6 +46,17 @@ Draft — Notion (overdue):
 ## Pontos de atenção
 
 Uma vaga com status Applied recebe no máximo dois acompanhamentos; se o segundo ficar sem resposta, o followup para de redigir e sugere que você encerre a entrada ou tente outro contato pelo `contacto`. Quer um ritmo mais apertado do que o padrão de sete dias? Passe uma flag para o script de cadência — `node followup-cadence.mjs --applied-days 5` — em vez de editar os rascunhos à mão.
+
+## Como desativar os acompanhamentos
+
+Os acompanhamentos vêm ativados por padrão. Para desativá-los, defina isto em `config/profile.yml`:
+
+```yaml
+follow_ups:
+  enabled: false
+```
+
+Com essa configuração, o modo para antes de rodar o script de cadência e explica como reativar os acompanhamentos, e nada é agendado quando uma linha passa para Applied. O modo `contacto` é um primeiro contato, não um acompanhamento, por isso continua funcionando. Só um `false` explícito desativa os acompanhamentos: defina `enabled: true`, ou remova o bloco, para reativá-los.
 
 ## Veja também
 

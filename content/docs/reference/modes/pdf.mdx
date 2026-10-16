@@ -1,10 +1,10 @@
 ---
 title: pdf
-description: "Generates a tailored PDF resume against a specific JD using Playwright to render markdown through a clean typographic template. The output is structurally simple — no tables, no columns, no graphics — exactly what ATS parsers handle reliably."
+description: "Generates a tailored PDF resume against a specific JD: career-ops builds the CV as HTML from a clean typographic template and Playwright prints it to PDF. The output is structurally simple (no tables, no columns, no graphics), exactly what ATS parsers handle reliably."
 seoTitle: "career-ops pdf mode — generate an ATS-friendly tailored resume"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-14"
+lastModified: "2026-10-16"
 ---
 
 ## What it does
@@ -31,6 +31,8 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
 The layout stays single-column with standard section headers and selectable text — the structure ATS parsers read cleanly — and keywords are woven into real achievements, never invented.
+
+Keyword coverage is measured against the keyword section of the listing's evaluation report. If the report has none, career-ops scores the skills it finds in the report's archived job description instead and tells you which source it used. A report without a keyword section is a defect to fix in the report, not a pass.
 
 ## When to reach for it
 

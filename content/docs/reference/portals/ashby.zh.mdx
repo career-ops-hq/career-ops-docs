@@ -1,0 +1,72 @@
+---
+title: Ashby
+description: "Ashby 是 AI 和开发者工具领域 A 轮到 C 轮初创公司首选的现代 ATS。career-ops 直接调用它公开的招聘页面 API。"
+seoTitle: "用 career-ops 扫描 Ashby 职位：零 token 消耗的 ATS 招聘门户扫描"
+icon: Sparkles
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: b44a43aefbce9bb4
+localized: true
+translatedFrom: /docs/reference/portals/ashby
+---
+
+## 功能说明
+
+providers/ashby.mjs 中的 ashby 适配器会向 api.ashbyhq.com/posting-api/job-board/`{slug}` 发送 HTTP 请求，并解析返回的 JSON。slug 是该公司在 Ashby 上的招聘页面标识符（例如 ElevenLabs 对应 'elevenlabs'）。career-ops 会根据条目中的 `careers_url`（`https://jobs.ashbyhq.com/<slug>`）或显式指定的 `api:` 字段来选用这个适配器。
+
+## 适用场景
+
+如果你的目标是 AI 实验室、基础设施公司和新兴初创公司，就用 Ashby 扫描。templates/portals.example.yml 中预配置了多个 Ashby 招聘页面，ElevenLabs、Deepgram、Sierra、Decagon 和 n8n 都在其中。
+
+## 示例
+
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
+```
+
+下次扫描时就会抓取 ElevenLabs 当前在招的职位。
+
+## 扫描器做什么
+
+扫描器从 portals.yml 读取你已启用的 Ashby slug，逐个调用 Ashby 公开的招聘页面 API，再把新职位合并进你的 pipeline：不需要浏览器，不需要登录，抓取本身也不消耗任何 LLM token。运行一次 `node scan.mjs`，就能同时覆盖你的 Ashby、Greenhouse 和 Lever 招聘页面，然后按你配置的职位名称关键词过滤结果。
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Companies scanned:     12
+Total jobs found:      41
+Filtered by title:     35 removed
+Duplicates:            3 skipped
+New offers added:      3
+
+New offers:
+  + ElevenLabs | Applied AI Engineer | London, UK
+  + Deepgram | Inference Engineer | Remote
+  + Sierra | Agent Engineer | San Francisco, CA
+```
+
+## career-ops 如何对接 Ashby
+
+career-ops 调用 Ashby 公开的职位发布 API `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true`，直接从 JSON 响应中读取 `jobs` 列表。对每个职位，它会读取标题、作为申请链接的公开 `jobUrl`、工作地点（主地点加上所有次要地点，远程职位还会加上“Remote”）、纯文本描述、发布日期，以及招聘页面公布薪资时的年化薪资范围。由于这是结构化的 API 调用，而不是抓取网页，扫描既不需要浏览器，也不消耗模型 token。Ashby 的公开 API 响应较慢，每个招聘页面最快也要 10 秒左右，而且会对重复请求限流，因此 career-ops 对每个招聘页面最多等待 30 秒，并按退避策略重试。只有之后进入评估步骤、你决定某个职位值得细看时，才会消耗 token。重复运行扫描是安全的：每个 URL 都会与你的扫描历史、已评估的申请记录以及当前 pipeline 进行去重比对，所以你已经见过的职位绝不会被重复添加。
+
+## 注意事项
+
+Ashby 的招聘页面 API 会直接返回完整的 JD 文本，不需要再发后续请求。每个招聘页面大约需要 10 秒才能响应，因此扫描大量 Ashby 招聘页面时，耗时会比同等数量的 Greenhouse 或 Lever 招聘页面稍长一些。
+
+有些公司会关闭 Ashby 的职位发布 API，但招聘页面仍然在线：职位明明还在发布，API 却返回 404。遇到这种公司，在它的条目中加上 `ashby: { embed: true }`，career-ops 就会改为从 Ashby 提供给公司招聘网站嵌入用的页面读取招聘页面。如果条目中的 `careers_url` 是公司自己的网站，而不是 `jobs.ashbyhq.com` 地址，还要用 `ashby: { board: <slug> }` 指明招聘页面。通过这个来源获取的职位不含描述和发布日期，薪资范围也只保留为展示文本，不会解析成薪资数据。这个选项需要手动开启，因为 404 通常意味着招聘页面已关闭或 slug 拼错了，这种情况应该继续报错。
+
+```yaml title="portals.yml"
+- name: Example Co
+  careers_url: https://jobs.ashbyhq.com/exampleco
+  ashby: { embed: true }
+  enabled: true
+```
+
+## 相关页面
+
+- [greenhouse](/zh/docs/reference/portals/greenhouse)
+- [lever](/zh/docs/reference/portals/lever)

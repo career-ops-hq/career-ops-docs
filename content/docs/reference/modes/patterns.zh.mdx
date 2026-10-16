@@ -1,0 +1,52 @@
+---
+title: patterns
+description: "读取你 tracker 中的每一份申请及其结果，找出其中的规律：评分很高却始终没有转化的 JD 类型、岗位原型不匹配、薪资区间问题。输出结果是一个信号，用来校准你筛选目标职位的标准。"
+seoTitle: "career-ops patterns 模式：找出你的申请为什么没有转化"
+icon: TrendingDown
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: e64bea9a156c3def
+localized: true
+translatedFrom: /docs/reference/modes/patterns
+---
+
+## 它能做什么
+
+`patterns` 模式会读取你 tracker 中的每一份申请及其报告，把取得进展的申请与停滞不前、被拒或已放弃的申请进行对比，从中寻找共同特征（行业、公司规模、职级、特定关键词），然后生成一份结构化分析，说明你的目标定位中哪些做法有效、哪些无效。
+
+## 什么时候使用
+
+每累积 20–30 次被拒，就运行一次 patterns，重新校准。这个模式会揭示你个人资料中的盲点，帮你避免一再把申请发往同样行不通的方向。
+
+## 实际运行效果
+
+在一批结果出来之后运行这个模式，它会返回一份带日期的规律分析报告，外加一段简短摘要，列出最重要的三项发现。在底层，它会对你的 tracker 和报告运行 `analyze-patterns.mjs`，然后读回转化漏斗、评分与结果对照表、主要阻碍因素，以及建议的评分下限。
+
+```bash title="Terminal"
+/career-ops patterns
+```
+
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+
+Full report: reports/pattern-analysis-2026-05-18.md
+```
+
+展示摘要之后，这个模式会主动提出根据这些发现采取行动：更新 `portals.yml` 中的筛选条件、设定评分阈值，或者调整你所针对的各个岗位原型的权重。
+
+## 什么时候值得运行
+
+当足够多的申请已经走过评估阶段、结果开始具有参考价值时，就可以运行 patterns 了。硬性门槛是至少五条状态表明申请确实已经发出的记录：Applied、Responded、Assessment、Interview、Offer、Hired 或 Rejected。Discarded 和 SKIP 的记录不计入。不足五条时，这个模式会直接退出，请你积累更多数据后再来。结果越多，规律就越清晰，所以在持续申请一个月之后，它才真正物有所值。
+
+- 如果你在 `interview-prep/sessions/` 中保存了面试记录，这个模式还会多提供一个目标定位信号：你最流畅、最具体的回答集中在哪些方面。这样，当你最擅长的岗位类型与你一直在申请的岗位类型不一致时，它就能发现。
+- 报告从不点名这些记录中真实的面试官或公司，只按能力领域进行归纳汇总，因此即使报告被 commit，私密信息也不会外泄。
+
+## 相关链接
+
+- [tracker](/zh/docs/reference/modes/tracker)
+- [followup](/zh/docs/reference/modes/followup)

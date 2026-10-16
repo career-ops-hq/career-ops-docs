@@ -1,11 +1,11 @@
 ---
 title: pdf
-description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnittenen PDF-Lebenslauf und rendert dafür Markdown mit Playwright über ein schlichtes typografisches Template. Das Ergebnis ist strukturell einfach – keine Tabellen, keine Spalten, keine Grafiken – und damit genau das, was ATS-Parser zuverlässig verarbeiten."
+description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnittenen PDF-Lebenslauf: career-ops baut den Lebenslauf als HTML aus einem schlichten typografischen Template, und Playwright druckt ihn als PDF. Das Ergebnis ist strukturell einfach (keine Tabellen, keine Spalten, keine Grafiken) und damit genau das, was ATS-Parser zuverlässig verarbeiten."
 seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebenslauf erstellen"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 2078ebec96362d1c
+lastModified: "2026-10-16"
+translationHash: 7beee71faa4b3f08
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -34,6 +34,8 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
 Das Layout bleibt einspaltig, mit Standard-Abschnittsüberschriften und markierbarem Text. Genau diese Struktur lesen ATS-Parser sauber aus. Die Keywords werden in echte Erfolge eingearbeitet und nie erfunden.
+
+Die Keyword-Abdeckung wird am Keyword-Abschnitt im Bewertungsbericht der Stellenanzeige gemessen. Hat der Bericht keinen, wertet career-ops stattdessen die Fähigkeiten aus, die in der archivierten Stellenbeschreibung des Berichts stehen, und sagt dir, welche Quelle verwendet wurde. Ein Bericht ohne Keyword-Abschnitt ist ein Fehler, den du im Bericht beheben solltest; er gilt nicht als bestanden.
 
 ## Wann du darauf zurückgreifst
 
