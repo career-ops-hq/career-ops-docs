@@ -4,15 +4,15 @@ description: "Lectura rápida del estado de cada candidatura. Útil como chequeo
 seoTitle: "Modo tracker de career-ops — consulta el estado de cada candidatura"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 2e14d5328088de55
+lastModified: "2026-10-16"
+translationHash: 4e4e50db3f4e9283
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
 
 ## Qué hace
 
-El modo `tracker` lee todos los archivos de reports/ y produce un resumen estructurado agrupado por etapa: aplicadas, evaluadas, en entrevista, rechazadas, descartadas. Los recuentos por etapa, la actividad reciente y los seguimientos vencidos aparecen en una sola respuesta.
+El modo `tracker` lee tu tracker, `data/applications.md`, y muestra cada candidatura con su estado actual en una sola respuesta. Después viene un bloque de estadísticas: el total, el recuento por estado, la puntuación media, cuántas filas tienen un PDF adaptado y un informe y, cuando ya hayas enviado alguna candidatura, la rapidez con la que tus candidaturas avanzan de una etapa a otra.
 
 ## Cuándo usarlo
 
@@ -38,7 +38,7 @@ Total: 3   Applied: 1   Interview: 1   Evaluated: 1
 Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escrito, decisión pendiente), Applied (la has enviado), Responded (la empresa respondió pero aún sin entrevista), Interview (un proceso activo), y después un estado terminal de Offer, Rejected, Discarded o SKIP para los puestos que no encajan. Para registrar un cambio de estado, pídelo en el chat o ejecuta tú mismo `node set-status.mjs <report#|company> <state>`, y añade `--on YYYY-MM-DD` si ocurrió en una fecha anterior. El comando rechaza los estados desconocidos, bloquea el tracker mientras escribe y registra la transición en `data/status-log.tsv`, el registro que leen las estadísticas de funnel-velocity, así que úsalo en lugar de editar la fila a mano.
+Una candidatura avanza por un conjunto fijo de estados: Evaluated (informe escrito, decisión pendiente), Applied (la has enviado), Responded (la empresa respondió pero aún sin entrevista), Assessment (hay en curso una prueba en línea o una preselección asíncrona), Interview (un proceso activo), y después un estado terminal: Offer, Rejected, Discarded, SKIP para los puestos que no encajan, o Hired cuando aceptas una oferta. Para registrar un cambio de estado, pídelo en el chat o ejecuta tú mismo `node set-status.mjs --report <report#> <state>`, y añade `--on YYYY-MM-DD` si ocurrió en una fecha anterior. Una fila sin informe se selecciona, en cambio, por su empresa, `node set-status.mjs "<company>" <state>`, con `--role` si varias filas comparten la empresa. El comando rechaza los estados desconocidos, bloquea el tracker mientras escribe y registra la transición en `data/status-log.tsv`, el registro que leen las estadísticas de funnel-velocity, así que úsalo en lugar de editar la fila a mano.
 
 Para corregir una nota en lugar de añadir otra, pasa la nota antigua con `--replace-note` y el texto nuevo con `--note`. Sin esa opción, `--note` solo añade al final, lo que deja contradicciones como `not applied; applied` en la fila. La coincidencia se busca sobre una nota completa entre separadores `; `, y si ninguno de los dos textos está en la celda Notes, no se escribe nada:
 
@@ -52,7 +52,7 @@ Hay tres flags más pensadas sobre todo para el dashboard TUI en Go, que ahora r
 
 Las demás columnas también tienen quien las escriba, así que la tabla no se edita a mano.
 
-- **Notas.** `node set-status.mjs <report#|company> <state> --note "..."` añade una nota a la fila. Pasa el estado que la fila ya tiene para añadir solo la nota: el estado se queda como está y no se escribe nada en `data/status-log.tsv`.
+- **Notas.** `node set-status.mjs --report <report#> <state> --note "..."` añade una nota a la fila. Pasa el estado que la fila ya tiene para añadir solo la nota: el estado se queda como está y no se escribe nada en `data/status-log.tsv`.
 - **Fecha, puntuación, informe, empresa y puesto.** Salen de una evaluación, así que cambian cuando el puesto se evalúa de nuevo. `node merge-tracker.mjs` empareja la evaluación nueva con la fila que ya está en el tracker y actualiza esa fila en lugar de añadir otra. La fecha, la puntuación y el enlace al informe se sustituyen, y una nota `Re-eval` deja constancia de la puntuación anterior y de la nueva. Cuando la coincidencia es por el informe o por la URL de la oferta, también se sustituyen la empresa y el título del puesto. La fila conserva su `#` y su estado. Una reevaluación que no produjo puntuación (`N/A`, `—` o `-`) se omite cuando la fila ya tiene una, y la fila se queda como está.
 - **PDF.** Cada fusión también cambia la columna PDF de una fila de ❌ a ✅ cuando ya se ha generado un CV para su informe.
 
@@ -74,6 +74,19 @@ npm run fix-report-links               # apply; the tracker is backed up to .bak
 ```
 
 Todas las demás celdas, el orden de las filas y los finales de línea se quedan como estaban. Una celda Report que contenga cualquier cosa distinta de exactamente un enlace se lista para que la revises a mano y se deja sin cambios. Ejecutarlo dos veces no cambia nada la segunda vez.
+
+## Comprobar si las vacantes siguen abiertas
+
+Las vacantes se cierran mientras sus filas siguen en Evaluated o Applied. `node check-liveness.mjs --tracker` comprueba la vacante de cada fila en Evaluated y Applied; `--status=` elige otros estados. Toma cada vacante de la celda URL de la fila o de la línea `**URL:**` de su informe, y lista por número las filas que no tienen ninguna de las dos.
+
+Para quitar las filas en Evaluated cuya vacante ya cerró, previsualiza primero:
+
+```bash
+node check-liveness.mjs --tracker --discard-expired          # dry run: lists the rows it would move
+node check-liveness.mjs --tracker --discard-expired --apply  # moves them
+```
+
+Solo una vacante que se considera `expired` mueve su fila, de Evaluated a Discarded, con la nota `posting closed YYYY-MM-DD`. Una fila con un veredicto incierto se queda como está, igual que todas las filas en Applied.
 
 ## Cómo leer las cifras acumuladas
 

@@ -4,12 +4,12 @@ description: "Flags applications and interviews that are overdue for followup ba
 seoTitle: "career-ops followup mode — track overdue follow-ups and draft the messages"
 icon: CalendarClock
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-10-16"
 ---
 
 ## What it does
 
-followup mode reads your application tracker, checks the date of last contact against the configured cadence (default: a first nudge 7 days after you apply, and 1 day after an interview for a thank-you note), and flags the entries that are overdue or urgent. For each flagged entry it drafts a contextual followup message grounded in that report and your CV.
+followup mode reads your application tracker, checks the date of last contact against the configured cadence (default: a first nudge 7 days after you apply, and 1 day after an interview for a thank-you note; an Assessment row, an online test or asynchronous screening, gets its first check-in after 1 day and then one every 3 days), and flags the entries that are overdue or urgent. For each flagged entry it drafts a contextual followup message grounded in that report and your CV.
 
 ## When to use it
 
@@ -43,6 +43,17 @@ Draft — Notion (overdue):
 ## Gotchas
 
 An Applied role gets at most two follow-ups; after the second goes unanswered, followup stops drafting and suggests you close the entry or try a different contact through `contacto`. Want a tighter schedule than the seven-day default? Pass a flag to the cadence script — `node followup-cadence.mjs --applied-days 5` — rather than editing the drafts by hand.
+
+## Turning follow-ups off
+
+Follow-ups are on by default. To turn them off, set this in `config/profile.yml`:
+
+```yaml
+follow_ups:
+  enabled: false
+```
+
+With that setting the mode stops before running the cadence script and tells you how to turn follow-ups back on, and nothing is scheduled when a row moves to Applied. The `contacto` mode is a first outreach, not a follow-up, so it keeps working. Only an explicit `false` turns them off: set `enabled: true`, or remove the block, to turn them back on.
 
 ## Related
 

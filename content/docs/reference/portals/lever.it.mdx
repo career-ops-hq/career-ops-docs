@@ -4,25 +4,29 @@ description: "Lever è l'ATS consolidato delle aziende di medie dimensioni e in 
 seoTitle: "Cercare annunci su Lever con career-ops: scansione dei portali ATS a zero token"
 icon: Wrench
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 535b6f24a4a180f6
+lastModified: "2026-10-16"
+translationHash: c4bc88a2232f7c33
 localized: true
 translatedFrom: /docs/reference/portals/lever
 ---
 
 ## Che cosa fa
 
-Il provider lever in providers/lever.mjs invia richieste HTTP a api.lever.co/v0/postings/`{slug}` e analizza la risposta JSON. Lo slug è l'identificativo degli annunci dell'azienda su Lever (ad es. 'figma' per Figma).
+Il provider lever in providers/lever.mjs invia richieste HTTP a api.lever.co/v0/postings/`{slug}` e analizza la risposta JSON. Lo slug è l'identificativo degli annunci dell'azienda su Lever (ad es. 'mistral' per Mistral AI).
 
 ## Quando usarlo
 
-Usa la scansione di Lever per le aziende tra la Serie C e la fase pre-IPO che non sono passate a Greenhouse o Ashby. Figma, Brex e molte aziende fintech usano ancora Lever.
+Usa la scansione di Lever quando le aziende che ti interessano pubblicano le loro posizioni su Lever. Mistral AI, Palantir e Spotify sono tra le bacheche di Lever già configurate in templates/portals.example.yml.
 
 ## Esempio
 
+```yaml title="portals.yml"
+- name: Mistral AI
+  careers_url: https://jobs.lever.co/mistral
+  enabled: true
 ```
-In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
-```
+
+Alla scansione successiva career-ops rileva le posizioni aperte di Mistral AI.
 
 ## Come funziona la scansione
 
@@ -33,23 +37,25 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 33 total
-Filtered by title: 5 relevant
-Duplicates: 2 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      33
+Filtered by title:     28 removed
+Duplicates:            2 skipped
+New offers added:      3
 
-  + Figma | AI Product Engineer | lever
-  + Brex  | Applied AI Engineer | lever
+New offers:
+  + Mistral AI | Applied AI Engineer | Paris, France
+  + Palantir | Forward Deployed Engineer | London, UK
+  + Spotify | ML Engineer, Search | Stockholm, Sweden
 ```
 
 ## Come career-ops comunica con Lever
 
-career-ops interroga `api.lever.co/v0/postings/{slug}`, oppure l'host `api.eu.lever.co` per le bacheche europee, e legge l'array JSON degli annunci. Per ogni posizione prende il campo `text` come titolo e `hostedUrl` come link, ripiegando su `applyUrl` quando `hostedUrl` manca. Poiché Lever restituisce l'intera bacheca in un'unica risposta strutturata, la scansione è una sola richiesta HTTPS GET pubblica per azienda, che resta entro i limiti di frequenza e non consuma token del modello. Il costo in token inizia solo dopo, quando valuti una posizione che ti interessa. Rilanciare la scansione è sicuro: ogni URL viene deduplicato rispetto alla cronologia delle scansioni, alle candidature già valutate e alla pipeline corrente, quindi una posizione che hai già visto non viene mai aggiunta due volte.
+career-ops interroga `api.lever.co/v0/postings/{slug}`, oppure l'host `api.eu.lever.co` per le bacheche europee, e legge l'array JSON degli annunci. Per ogni posizione prende il campo `text` come titolo, `hostedUrl` come link, la località, la data di creazione e la descrizione completa. Poiché Lever restituisce l'intera bacheca in un'unica risposta strutturata, la scansione è una sola richiesta HTTPS GET pubblica per azienda, che resta entro i limiti di frequenza e non consuma token del modello. Il costo in token inizia solo dopo, quando valuti una posizione che ti interessa. Rilanciare la scansione è sicuro: ogni URL viene deduplicato rispetto alla cronologia delle scansioni, alle candidature già valutate e alla pipeline corrente, quindi una posizione che hai già visto non viene mai aggiunta due volte.
 
 ## Cose da sapere
 
-L'API di Lever espone il testo completo dell'annuncio nella risposta. Alcune bacheche di Lever includono metadati interni della posizione, che career-ops usa come segnale aggiuntivo durante il calcolo del punteggio.
+L'API di Lever espone il testo completo dell'annuncio nella risposta: l'introduzione, ogni sezione a elenco (come requisiti e responsabilità) e il testo di chiusura. I filtri sui contenuti in `portals.yml` (`content_filter` e `visa_filter`) leggono tutto questo testo, quindi una frase che compare solo nell'elenco dei requisiti di una posizione su Lever fa comunque scattare il filtro.
 
 ## Vedi anche
 

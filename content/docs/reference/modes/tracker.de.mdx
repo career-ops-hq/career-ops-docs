@@ -4,15 +4,15 @@ description: "Schneller Überblick darüber, wo jede Bewerbung gerade steht. Nü
 seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 2e14d5328088de55
+lastModified: "2026-10-16"
+translationHash: 4e4e50db3f4e9283
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
 
 ## Was er macht
 
-Der Modus `tracker` liest jede Datei in reports/ und erstellt eine strukturierte Zusammenfassung, gruppiert nach Phase: beworben, bewertet, Vorstellungsgespräch, abgelehnt, verworfen. Die Anzahl pro Phase, die jüngsten Aktivitäten und überfällige Follow-ups siehst du gebündelt in einer einzigen Antwort.
+Der Modus `tracker` liest deinen Tracker, `data/applications.md`, und zeigt jede Bewerbung mit ihrem aktuellen Status in einer einzigen Antwort. Danach folgt ein Statistikblock: die Gesamtzahl, die Anzahl pro Status, der durchschnittliche Score, wie viele Zeilen ein zugeschnittenes PDF und einen Bericht haben und, sobald du dich irgendwo beworben hast, wie schnell deine Bewerbungen von Phase zu Phase vorankommen.
 
 ## Wann du ihn nutzt
 
@@ -38,7 +38,7 @@ Total: 3   Applied: 1   Interview: 1   Evaluated: 1
 Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded oder SKIP für Rollen, die nicht passen. Um eine Statusänderung festzuhalten, bittest du im Chat darum oder führst selbst `node set-status.mjs <report#|company> <state>` aus. Ist sie an einem früheren Tag passiert, ergänzt du `--on YYYY-MM-DD`. Der Befehl lehnt unbekannte Zustände ab, sperrt den Tracker, während er schreibt, und protokolliert den Übergang in `data/status-log.tsv`, dem Protokoll, aus dem die funnel-velocity-Statistiken lesen. Nutze ihn also, statt die Zeile von Hand zu bearbeiten.
+Eine Bewerbung durchläuft eine feste Reihe von Zuständen: Evaluated (Bericht geschrieben, Entscheidung offen), Applied (du hast sie abgeschickt), Responded (das Unternehmen hat geantwortet, aber noch kein Vorstellungsgespräch), Assessment (ein Online-Assessment oder ein asynchrones Screening ist im Gange), Interview (ein laufender Prozess) und schließlich ein Endzustand: Offer, Rejected, Discarded, SKIP für Rollen, die nicht passen, oder Hired, sobald du ein Jobangebot annimmst. Um eine Statusänderung festzuhalten, bittest du im Chat darum oder führst selbst `node set-status.mjs --report <report#> <state>` aus. Ist sie an einem früheren Tag passiert, ergänzt du `--on YYYY-MM-DD`. Eine Zeile ohne Bericht wählst du stattdessen über ihr Unternehmen aus, `node set-status.mjs "<company>" <state>`, mit `--role`, wenn sich mehrere Zeilen dasselbe Unternehmen teilen. Der Befehl lehnt unbekannte Zustände ab, sperrt den Tracker, während er schreibt, und protokolliert den Übergang in `data/status-log.tsv`, dem Protokoll, aus dem die funnel-velocity-Statistiken lesen. Nutze ihn also, statt die Zeile von Hand zu bearbeiten.
 
 Um eine Notiz zu korrigieren, statt eine weitere hinzuzufügen, übergibst du die alte Notiz mit `--replace-note` und den neuen Text mit `--note`. Ohne diese Option hängt `--note` nur an, was Widersprüche wie `not applied; applied` in der Zeile hinterlässt. Abgeglichen wird eine ganze Notiz zwischen den Trennzeichen `; `. Steht keiner der beiden Texte in der Notes-Zelle, wird nichts geschrieben:
 
@@ -52,7 +52,7 @@ Drei weitere Flags gibt es vor allem für das Go-TUI-Dashboard, das seine Status
 
 Auch für die anderen Spalten gibt es Befehle, die sie schreiben. Die Tabelle bearbeitest du also nicht von Hand.
 
-- **Notizen.** `node set-status.mjs <report#|company> <state> --note "..."` hängt eine Notiz an die Zeile an. Gib den Zustand an, den die Zeile schon hat, wenn du nur eine Notiz ergänzen willst: Der Status bleibt, wie er ist, und in `data/status-log.tsv` wird nichts geschrieben.
+- **Notizen.** `node set-status.mjs --report <report#> <state> --note "..."` hängt eine Notiz an die Zeile an. Gib den Zustand an, den die Zeile schon hat, wenn du nur eine Notiz ergänzen willst: Der Status bleibt, wie er ist, und in `data/status-log.tsv` wird nichts geschrieben.
 - **Datum, Score, Bericht, Unternehmen und Rolle.** Sie stammen aus einer Bewertung und ändern sich deshalb, wenn die Rolle erneut bewertet wird. `node merge-tracker.mjs` ordnet die neue Bewertung der Zeile zu, die schon im Tracker steht, und aktualisiert diese Zeile, statt eine zweite anzulegen. Datum, Score und Berichtslink werden ersetzt, und eine `Re-eval`-Notiz hält den alten und den neuen Score fest. Läuft die Zuordnung über den Bericht oder über die URL der Stellenanzeige, werden auch das Unternehmen und der Rollentitel ersetzt. Die Zeile behält ihre `#` und ihren Status. Eine erneute Bewertung, die keinen Score ergeben hat (`N/A`, `—` oder `-`), wird übersprungen, wenn die Zeile schon einen hat, und die Zeile bleibt, wie sie ist.
 - **PDF.** Jeder Merge setzt außerdem die PDF-Spalte einer Zeile von ❌ auf ✅, sobald für ihren Bericht ein CV erzeugt wurde.
 
@@ -74,6 +74,19 @@ npm run fix-report-links               # apply; the tracker is backed up to .bak
 ```
 
 Alle anderen Zellen, die Reihenfolge der Zeilen und die Zeilenenden bleiben, wie sie waren. Eine Report-Zelle, die etwas anderes als genau einen Link enthält, wird aufgelistet, damit du sie von Hand prüfst, und bleibt unverändert. Ein zweiter Durchlauf ändert nichts mehr.
+
+## Prüfen, ob Stellenanzeigen noch offen sind
+
+Stellenanzeigen werden geschlossen, während ihre Zeilen noch auf Evaluated oder Applied stehen. `node check-liveness.mjs --tracker` prüft die Stellenanzeige jeder Zeile mit Evaluated oder Applied; mit `--status=` wählst du andere Status. Jede Stellenanzeige nimmt der Befehl aus der URL-Zelle der Zeile oder aus der Zeile `**URL:**` ihres Berichts, und die Zeilen, die beides nicht haben, listet er mit ihrer Nummer auf.
+
+Um die Evaluated-Zeilen auszusortieren, deren Stellenanzeige geschlossen ist, sieh dir zuerst eine Vorschau an:
+
+```bash
+node check-liveness.mjs --tracker --discard-expired          # dry run: lists the rows it would move
+node check-liveness.mjs --tracker --discard-expired --apply  # moves them
+```
+
+Nur eine Stellenanzeige, die als `expired` eingestuft wird, verschiebt ihre Zeile, von Evaluated nach Discarded, mit der Notiz `posting closed YYYY-MM-DD`. Eine Zeile mit unsicherem Urteil bleibt, wie sie ist, ebenso jede Applied-Zeile.
 
 ## Die Gesamtzahlen lesen
 

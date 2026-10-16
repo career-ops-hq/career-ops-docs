@@ -4,12 +4,12 @@ description: "Quick read of where every application stands. Useful as a daily ch
 seoTitle: "career-ops tracker mode — see where every job application stands"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-10-14"
+lastModified: "2026-10-16"
 ---
 
 ## What it does
 
-The `tracker` mode reads every file in reports/ and produces a structured summary grouped by stage: applied, evaluated, interview, rejected, discarded. Counts per stage, recent activity, and overdue followups are surfaced in a single response.
+The `tracker` mode reads your tracker, `data/applications.md`, and shows every application with its current status in a single response. A statistics block follows: the total, the count per status, the average score, how many rows have a tailored PDF and a report, and, once you have applied somewhere, how fast your applications move from stage to stage.
 
 ## When to use it
 
@@ -35,7 +35,7 @@ Total: 3   Applied: 1   Interview: 1   Evaluated: 1
 Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Interview (an active process), and then a terminal state of Offer, Rejected, Discarded, or SKIP for roles that do not fit. To record a status change, ask for it in the chat or run `node set-status.mjs <report#|company> <state>` yourself, adding `--on YYYY-MM-DD` when it happened on an earlier day. The command rejects unknown states, locks the tracker while it writes, and logs the transition in `data/status-log.tsv`, the ledger the funnel-velocity statistics read, so use it instead of hand-editing the row.
+An application moves through a fixed set of states: Evaluated (report written, decision pending), Applied (you submitted it), Responded (the company replied but no interview yet), Assessment (an online assessment or asynchronous screening is in progress), Interview (an active process), and then a terminal state: Offer, Rejected, Discarded, SKIP for roles that do not fit, or Hired once you accept an offer. To record a status change, ask for it in the chat or run `node set-status.mjs --report <report#> <state>` yourself, adding `--on YYYY-MM-DD` when it happened on an earlier day. A row without a report is selected by its company instead, `node set-status.mjs "<company>" <state>`, with `--role` when several rows share the company. The command rejects unknown states, locks the tracker while it writes, and logs the transition in `data/status-log.tsv`, the ledger the funnel-velocity statistics read, so use it instead of hand-editing the row.
 
 To correct a note rather than add another one, pass the old note with `--replace-note` and the new text with `--note`. Without it, `--note` only appends, which leaves contradictions like `not applied; applied` in the row. The match is on a whole note between `; ` separators, and if neither text is in the Notes cell nothing is written:
 
@@ -49,7 +49,7 @@ Three more flags exist mainly for the Go TUI dashboard, which now records its st
 
 The other columns have writers too, so the table is not something you edit by hand.
 
-- **Notes.** `node set-status.mjs <report#|company> <state> --note "..."` appends a note to the row. Pass the state the row already has to add a note on its own: the status stays as it is and nothing is written to `data/status-log.tsv`.
+- **Notes.** `node set-status.mjs --report <report#> <state> --note "..."` appends a note to the row. Pass the state the row already has to add a note on its own: the status stays as it is and nothing is written to `data/status-log.tsv`.
 - **Date, score, report, company and role.** These come from an evaluation, so they change when the role is evaluated again. `node merge-tracker.mjs` matches the new evaluation to the row already in the tracker and updates that row instead of adding a second one. The date, the score and the report link are replaced, and a `Re-eval` note records the old and the new score. When the match is on the report or on the posting URL, the company and the role title are replaced too. The row keeps its `#` and its status. A re-evaluation that produced no score (`N/A`, `—` or `-`) is skipped when the row already has one, and the row is left as it is.
 - **PDF.** Each merge also flips a row's PDF column from ❌ to ✅ once a CV has been generated for its report.
 
@@ -71,6 +71,19 @@ npm run fix-report-links               # apply; the tracker is backed up to .bak
 ```
 
 Every other cell, the row order and the line endings stay as they were. A Report cell holding anything other than exactly one link is listed for you to check by hand and left unchanged. Running it twice changes nothing the second time.
+
+## Checking whether postings are still open
+
+Postings close while their rows sit in Evaluated or Applied. `node check-liveness.mjs --tracker` checks the posting of every Evaluated and Applied row; `--status=` chooses other statuses. It takes each posting from the row's URL cell or from its report's `**URL:**` line, and lists by number the rows that have neither.
+
+To clear out the Evaluated rows whose posting has closed, preview first:
+
+```bash
+node check-liveness.mjs --tracker --discard-expired          # dry run: lists the rows it would move
+node check-liveness.mjs --tracker --discard-expired --apply  # moves them
+```
+
+Only a posting judged `expired` moves its row, from Evaluated to Discarded, with the note `posting closed YYYY-MM-DD`. A row with an uncertain verdict stays as it is, and so does every Applied row.
 
 ## Reading the lifetime numbers
 

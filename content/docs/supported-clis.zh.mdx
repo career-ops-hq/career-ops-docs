@@ -1,0 +1,37 @@
+---
+title: 支持的 AI CLI
+seoTitle: "career-ops 支持哪些 AI CLI？Claude Code、Codex、Gemini、OpenCode、Qwen、Copilot"
+description: "career-ops 不绑定任何 AI 厂商：它能在所有主流 AI 编程 CLI 上运行，你可以直接使用已经付费的助手，永远不会被锁定在某一家厂商。完整且始终最新的列表保存在核心仓库中。"
+icon: Terminal
+translationHash: aba388df8b32db03
+localized: true
+translatedFrom: /docs/supported-clis
+---
+
+**career-ops 可以在所有主流 AI 编程 CLI 上运行，你不会被锁定在任何一家厂商**。career-ops 提供的是由 CLI 执行的提示词文件（它不自带模型），所以你只需把它交给你已经在用的 AI 编程助手，它就能原样运行在那个引擎之上。有更好的模型发布时，你可以换用别的 CLI，同时保留你的 pipeline、数据和配置。
+
+<Callout title="用你已有的就好">
+最适合 career-ops 的 CLI，就是你已经在付费的那个。如果你已经在为 Claude Code 付费，career-ops 不需要任何其他配置。如果你想免费运行，请参阅[配置免费的 AI 引擎](/zh/docs/free-ai-engine)。
+</Callout>
+
+## career-ops 支持哪些 CLI？
+
+career-ops 完整支持 **Claude Code、Cursor、Codex、OpenCode、Pi、Antigravity CLI、Grok Build CLI、Qwen、Kimi、Hermes Agent 和 GitHub Copilot CLI**，共 11 个持续维护的 AI 编程 CLI。（Gemini CLI 仅作为旧版封装保留，已过渡到 Antigravity CLI。）career-ops 的架构在各个 CLI 之间共享：由唯一的规范文件 `AGENTS.md` 驱动逻辑，再由每个 CLI 对应的轻量入口文件处理各工具在调用方式上的差异。
+
+**规范且始终最新的列表（包括在每个 CLI 中调用 career-ops 的确切命令）保存在核心仓库中**，因此永远不会过时：
+
+- [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md)：完整的支持矩阵，列出所有支持的 CLI、入口文件及其调用方式（交互式和无头/批处理模式）。
+
+## Pi
+
+Pi 不需要封装文件。它会读取 career-ops 文件夹中的 `AGENTS.md`，并自行找到共享的 skill。所以你只需在该文件夹中启动 `pi`，然后输入 `/skill:career-ops` 加上你想要的模式，就能调用 career-ops。如果只想无人值守地运行一次，使用 `pi -p "your prompt"`。
+
+部分 Pi 版本会要求你先信任项目，然后才会加载其中的 skill。如果 `/skill:career-ops` 不可用，请在该文件夹中运行一次 `/trust`，然后重启 `pi`：信任设置只对之后启动的 Pi 会话生效。安装 Pi 请按照 [Pi 官方的说明](https://github.com/earendil-works/pi)操作。
+
+## 应该选哪一个？
+
+- **如果你已经在为 Claude Code、Codex 或 Copilot 付费，就用那个 CLI**。career-ops 直接运行在它之上，无需任何额外配置：在 career-ops 文件夹中打开该 CLI 即可。
+- **想零成本运行 career-ops**，可以使用[搭配免费服务商的 OpenCode、通过 Ollama 运行的本地模型，或内置的 OpenRouter 运行器](/zh/docs/free-ai-engine)。
+- **如果你需要特定的模型或服务商**，可以把上述任意 CLI 指向任何兼容 OpenAI 的端点或本地模型：career-ops 不绑定特定模型，career-ops 本身无需任何改动。
+
+无论你选择哪个 CLI，career-ops 的 [14 种模式](/zh/docs/reference/modes)表现都完全一致：CLI 是引擎，career-ops 是建立在它之上的结构。

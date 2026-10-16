@@ -3,7 +3,7 @@ title: Configurar o Playwright
 description: Instale e configure o Playwright para a automação do navegador.
 seoTitle: "Como configurar o Playwright no career-ops — coleta de vagas e exportação do currículo em PDF"
 icon: Globe
-translationHash: 4bcbad1e28e7d6f3
+translationHash: 52b5ed2304ef9e82
 localized: true
 translatedFrom: /docs/introduction/guides/set-up-playwright
 ---
@@ -52,6 +52,8 @@ npx playwright install chromium
 
 Esta etapa é feita uma única vez. Você não precisa repeti-la depois de atualizações do `npm`.
 
+O `npm install` pula o download automático quando `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` está definida no seu ambiente com qualquer valor diferente de vazio, `0` ou `false`; nesse caso, execute você mesmo o comando acima. No NixOS, pule esta etapa por completo: os navegadores baixados não conseguem iniciar ali, e o dev shell do flake do repositório fornece, no lugar deles, navegadores que funcionam e o servidor MCP do Playwright, como explica o [guia do NixOS](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) do core.
+
 ## Configurar o MCP do Playwright
 
 O MCP do Playwright permite que o Claude controle o navegador diretamente durante a etapa `/career-ops apply`: navegar até os formulários de candidatura, ler os rótulos dos campos e sugerir respostas.
@@ -66,7 +68,7 @@ claude mcp add --scope project playwright -- npx @playwright/mcp@latest
 
 Este é o método de registro em uma única etapa da [documentação do Playwright MCP](https://playwright.dev/docs/getting-started-mcp), com `--scope project` adicionado para que o Claude Code grave a entrada do servidor em `.mcp.json` na raiz do career-ops, um dos arquivos que `npm run doctor` verifica. Na próxima vez que você iniciar o Claude Code ali, aprove o servidor quando ele pedir.
 
-Para usá-lo em todos os projetos, execute o comando com `--scope user`. O `npm run doctor` não lê servidores com escopo de usuário, então ele vai avisar que não consegue detectar o MCP, mesmo que o Claude Code o carregue.
+Para usá-lo em todos os projetos, execute o comando com `--scope user`. O `npm run doctor` também o encontra ali: ele lê os servidores que o Claude Code mantém para o seu usuário e para este projeto, não apenas o `.mcp.json`.
 
 ### Configuração manual (alternativa)
 

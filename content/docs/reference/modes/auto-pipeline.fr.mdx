@@ -1,18 +1,18 @@
 ---
 title: auto-pipeline
-description: "Flux par défaut lorsque vous collez l'URL d'une description de poste ou son texte brut. Exécute l'évaluation A–H, génère le rapport, exporte un PDF personnalisé et écrit une entrée dans le tracker — sans intervention manuelle entre les étapes."
+description: "Flux par défaut lorsque vous collez l'URL d'une description de poste ou son texte brut. Exécute l'évaluation A–H, génère le rapport, exporte un PDF personnalisé et écrit une entrée dans le tracker en une seule exécution, en ne s'arrêtant que lorsqu'il a besoin d'une réponse de votre part."
 seoTitle: "career-ops auto-pipeline — évaluer une offre et générer CV + tracker à partir d'une seule URL"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 233c7fa8819747b5
+lastModified: "2026-10-16"
+translationHash: 618e23f3b4b2c9d2
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
 
 ## Ce que fait ce mode
 
-career-ops invoque auto-pipeline dès que vous déposez l'URL d'une description de poste (JD) ou un texte collé dans le prompt. Le mode lit l'annonce, la note selon la grille d'évaluation — cinq dimensions plus un score global holistique — écrit l'évaluation dans reports/, génère le PDF personnalisé via Playwright et met à jour l'entrée du tracker — le tout en un seul tour d'agent.
+career-ops invoque auto-pipeline dès que vous déposez l'URL d'une description de poste (JD) ou un texte collé dans le prompt. Le mode lit l'annonce, la note selon la grille d'évaluation (cinq dimensions plus un score global holistique), écrit l'évaluation dans reports/, génère le PDF personnalisé via Playwright et met à jour l'entrée du tracker, le tout en une seule exécution. Il ne s'arrête pour vous poser une question que lorsque l'entreprise figure sur votre liste noire, ou lorsque l'annonce passe par une agence et qu'il a besoin que vous confirmiez laquelle.
 
 ## Quand l'utiliser
 
@@ -40,6 +40,8 @@ Updated data/applications.md (Report and PDF marked done).
 - Un contrôle de disponibilité (liveness gate) s'exécute avant l'évaluation. Si le lien est mort ou si la page n'est qu'une coquille vide « poste pourvu », le mode s'arrête là au lieu de noter un contenu fantôme — et si l'entrée provenait de `data/pipeline.md`, il marque cette ligne comme fermée.
 - Une page LinkedIn dont la description reste un squelette de chargement n'est ni une offre fermée ni une description de poste : auto-pipeline s'arrête avant l'évaluation, le rapport, le PDF et toute écriture dans le tracker, et vous demande de coller le texte de l'annonce ou de fournir un lien vers le site de l'employeur ou vers un ATS pour le même poste.
 - Les brouillons de réponses de candidature ne sont rédigés que lorsque le score atteint 4.5 ou plus, afin que les postes peu pertinents ne consomment pas de tokens pour un texte que vous n'enverrez pas.
+- Le rapport enregistré suit le format d'[oferta](/fr/docs/reference/modes/oferta), y compris le verdict d'une ligne après le bloc G et les vérifications du recruteur qu'effectue le bloc G lorsque le poste vous est parvenu par un recruteur.
+- Dans une CLI qui permet à l'agent de renommer sa propre session, la session prend le nom de l'annonce, par exemple `VP Infrastructure, Acme Health`, une fois la description de poste lue. Définissez `session_title: off` dans `config/profile.yml` pour conserver vos propres titres de session.
 
 ## Pièges à éviter
 
