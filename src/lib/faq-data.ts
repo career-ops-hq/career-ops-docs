@@ -29,7 +29,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Where does my data live?",
       answer:
-        "career-ops keeps your data on your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers. System updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract, and every update honors it.",
+        "career-ops keeps your data on your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers. System updates preserve user-owned files in your data layer (cv.md, config/, data/, reports/, output/). The updater may create or replace only the system-owned .gitkeep scaffolds in the folders of your data layer; it never modifies your other files there. That separation is the Data Contract, and every update honors it.",
     },
     {
       question: "How do I give career-ops my CV?",
@@ -96,7 +96,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Wo liegen meine Daten?",
       answer:
-        "career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates rühren deine Datenschicht (cv.md, config/, data/, reports/, output/) nie an: Diese Trennung ist der Data Contract, und jedes Update hält sich daran.",
+        "career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates lassen nutzereigene Dateien in deiner Datenschicht unangetastet (cv.md, config/, data/, reports/, output/). Der Updater darf nur die systemeigenen .gitkeep-Platzhalter in den Ordnern deiner Datenschicht erstellen oder ersetzen; andere Dateien dort verändert er nie. Diese Trennung ist der Data Contract, und jedes Update hält sich daran.",
     },
     {
       question: "Wie gebe ich career-ops meinen Lebenslauf?",
@@ -163,7 +163,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "¿Dónde se guardan mis datos? ¿career-ops es privado?",
       answer:
-        "career-ops guarda tus datos en tu máquina, en archivos planos que son tuyos — tu CV, tu perfil, tu pipeline y tus informes son Markdown/YAML locales. Nada corre en servidores de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos (cv.md, config/, data/, reports/, output/): esa separación es el Data Contract, y todas las actualizaciones lo respetan.",
+        "career-ops guarda tus datos en tu máquina, en archivos planos que son tuyos — tu CV, tu perfil, tu pipeline y tus informes son Markdown/YAML locales. Nada corre en servidores de career-ops. Las actualizaciones del sistema conservan los archivos que te pertenecen en tu capa de datos (cv.md, config/, data/, reports/, output/). El actualizador solo puede crear o reemplazar los archivos .gitkeep del sistema en las carpetas de tu capa de datos; nunca modifica tus otros archivos allí. Esa separación es el Data Contract, y todas las actualizaciones lo respetan.",
     },
     {
       question: "¿Cómo le doy mi CV a career-ops?",
@@ -230,7 +230,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?",
       answer:
-        "career-ops conserve vos données sur votre machine, dans des fichiers en clair qui vous appartiennent — votre CV, votre profil, votre pipeline et vos rapports sont des fichiers Markdown/YAML locaux. Rien ne s'exécute sur des serveurs career-ops. Les mises à jour du système ne touchent jamais votre couche de données (cv.md, config/, data/, reports/, output/) : cette séparation est le Data Contract, et chaque mise à jour la respecte.",
+        "career-ops conserve vos données sur votre machine, dans des fichiers en clair qui vous appartiennent — votre CV, votre profil, votre pipeline et vos rapports sont des fichiers Markdown/YAML locaux. Rien ne s'exécute sur des serveurs career-ops. Les mises à jour du système préservent les fichiers qui vous appartiennent dans votre couche de données (cv.md, config/, data/, reports/, output/). Le programme de mise à jour peut uniquement créer ou remplacer les fichiers .gitkeep appartenant au système dans les dossiers de votre couche de données ; il ne modifie jamais vos autres fichiers dans ces dossiers. Cette séparation est le Data Contract, et chaque mise à jour la respecte.",
     },
     {
       question: "Comment importer mon CV dans career-ops ?",
