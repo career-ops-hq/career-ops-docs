@@ -1,0 +1,69 @@
+---
+title: pdf
+description: "针对特定 JD 生成一份定制的 PDF 简历：career-ops 用简洁的排版模板把简历构建为 HTML，再由 Playwright 打印成 PDF。输出的结构很简单，没有表格、没有分栏、没有图形，正是 ATS 解析器能稳定处理的格式。"
+seoTitle: "career-ops pdf 模式：生成适配 ATS 的定制简历"
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: ac18633cc823dce2
+localized: true
+translatedFrom: /docs/reference/modes/pdf
+---
+
+## 它能做什么
+
+pdf 模式会读取你的主简历 cv.md 和 JD 上下文，先执行定制步骤（改写要点、调整各部分的顺序、融入优先关键词），再通过 Playwright 配合一个遵循 ATS 解析惯例的 CSS 模板导出为 PDF。生成的文件可以直接上传。
+
+## 什么时候使用
+
+如果你已经评估过这个职位并决定申请，只想要定制好的 PDF，而不想重新运行评估步骤，就用 pdf。
+
+## 实际运行效果
+
+把这个模式指向一个你已经评估过的职位，它就会生成一份定制的、适配 ATS 的 PDF，不会重新评估。它会从 JD 中提取 15-20 个关键词，根据公司所在地选择纸张尺寸，围绕该职位改写你的个人简介并调整要点顺序，然后把 HTML 渲染为 PDF，并报告关键词覆盖率。
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+
+版面始终保持单栏，使用标准的分节标题和可选中的文本，这正是 ATS 解析器能干净读取的结构；关键词会融入你真实的成就之中，绝不凭空编造。
+
+关键词覆盖率是对照该职位评估报告中的关键词部分来计算的。如果报告中没有这一部分，career-ops 会改为对报告中存档的职位描述里找到的技能进行评分，并告诉你它用的是哪个来源。缺少关键词部分的报告属于缺陷，应该在报告中修复，而不是算作通过。
+
+## 适用场景
+
+当你已经决定申请、只想要定制简历而跳过评估步骤时，就选用 pdf。有几个行为值得了解：
+
+- 纸张尺寸会自动跟随公司所在地：美国和加拿大的职位用 `letter`，其他地区一律用 `a4`。
+- 关键词注入以事实为依据。该模式会用 JD 的原词改写你的真实经历，但绝不会添加你不具备的技能。
+- 在 DACH 地区（德国、奥地利、瑞士）以及欧洲大陆的大部分地区，你可以在 `config/profile.yml` 中设置 `candidate.photo` 来加入照片；留空则不显示照片，简历的渲染结果逐像素保持不变，这在美国、英国以及以 ATS 为先的市场中是更稳妥的默认选择。
+
+## 注意事项
+
+需要在本地安装 Playwright。在缺少系统字体的精简 Linux 环境中，构建脚本可能会失败。运行 `npm run doctor` 进行诊断。
+
+如果你的工作经历（Work Experience）条目没有按从新到旧排列，PDF 生成就会中止，错误信息会列出那段开始时间晚于上一条的经历的日期。把各段经历恢复为倒序排列后重新运行即可：定制简历应该通过个人简介和要点来完成，而不是挪动经历的顺序。如果你确实想用别的顺序，可以给 `generate-pdf.mjs` 传入 `--allow-nonchronological`，它会照常渲染，只给出一条警告。使用 `--batch` 时，只有顺序错乱的那份简历会失败，其余的仍会正常渲染。
+
+`generate-pdf.mjs` 会把它写出的每个 PDF 记录到 `data/pdf-index.tsv` 中，career-ops 会读取这个文件来查找某份报告对应的简历。每一行都带有一个 `kind`，取值为 `cv` 或 `cover`，每份报告每种各保留一行。重新生成 PDF 时，只会替换与它同类的那一行。
+
+如果不传 `--kind`，类型就由输出文件名决定。以 `cv-` 开头的文件名视为简历，以 `cover-` 开头或以 `-cover` 结尾的视为求职信。其他任何文件名都按简历归档。
+
+cover 模式无论文件名是什么，都会把它生成的求职信归为 `cover`，所以只有当你自己运行 `generate-pdf.mjs` 时，文件名规则才有影响。一封用 `--report=008` 渲染到 `acme-letter.pdf` 的求职信，会替换报告 008 的简历那一行，之后查找这份简历时返回的就是那封求职信。当文件名看不出它属于哪一类时，请传入 `--kind=cover`：
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind` 只接受 `cv` 或 `cover`，任何其他值（包括空值）都会让运行在渲染任何内容之前就中止。`--batch` 不接受这个参数；请改为在批处理文件的条目上设置 `"kind"`。`data/pdf-index.tsv` 由 `generate-pdf.mjs` 负责维护，文件的表头行注明了不要手动编辑。
+
+## 相关链接
+
+- [auto-pipeline](/zh/docs/reference/modes/auto-pipeline)

@@ -1,0 +1,30 @@
+---
+title: 在 Windows 上使用 career-ops
+seoTitle: "career-ops 支持 Windows 吗？完整支持，安装程序自动完成配置"
+description: "career-ops 完整支持 Windows。唯一与平台相关的注意事项是符号链接，安装程序会自动处理：无需管理员模式，无需 mklink，也没有最低系统版本要求。"
+icon: MonitorCheck
+translationHash: e3486e8615e2cdac
+localized: true
+translatedFrom: /docs/windows
+---
+
+**是的，career-ops 完整支持 Windows。** Windows 上只有一个特有的注意事项，安装程序会自动帮你处理：无需开启开发者模式，无需手动运行 `mklink`，也没有最低系统版本要求。只要装好了 Node，你在 Windows 上安装和运行 career-ops 的方式就和在其他任何平台上完全一样。
+
+## Windows 上唯一的注意事项，已自动为你处理
+
+Windows 默认不创建符号链接，所以全新检出的 Git 仓库会把各 CLI 的 skill 入口（`.claude/skills/`、`.opencode/skills/` 等）留成普通的指针文件，而不是真正的符号链接。人们在其他工具上遇到的“skill 无法加载”错误，正是这个原因造成的。
+
+career-ops 会自动检测到这种情况。运行安装程序或更新程序时（全新安装时运行 `npx @santifer/career-ops init`，更新时运行 `node update-system.mjs apply --confirm`），会执行一个 `materializeSkillEntrypoints` 步骤，用完整的 skill 内容替换这些指针文件。如果你在一个链接的 Git worktree 中运行 `node update-system.mjs apply --confirm`，这项修复会在你的 `main` 检出中完成。在该 worktree 中运行 `git merge main` 即可获取修复；基于更新后的 `main` 创建的 worktree 已经包含这项修复。如果设置了 `CAREER_OPS_UPDATE_IN_WORKTREE=1`，`apply` 则只修复该 worktree 所在的分支，`main` 仍保持未修复状态。你不需要管理员权限，不需要开发者模式，也不需要手动运行任何 `mklink` 命令。
+
+<Callout title="没有最低系统版本要求">
+career-ops 不要求特定的 Windows（或 macOS）版本。只要 Node 能运行，career-ops 就能运行。你在其他地方看到的任何关于最低系统版本的说法都不准确。
+</Callout>
+
+## 权威安装参考
+
+技术细节，包括安装程序的具体行为、PowerShell 和 CMD 的命令写法，以及 FAQ 的其余内容，都在核心仓库中维护，并始终在那里保持最新：
+
+- [docs/FAQ.md 中的“Skills aren't loading on Windows”](https://github.com/career-ops-hq/career-ops/blob/main/docs/FAQ.md)：权威解答，与安装程序保持同步。
+- [docs/SETUP.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SETUP.md)：完整的安装指南。
+
+安装完成后，在[配置免费的 AI 引擎](/zh/docs/free-ai-engine)中选择你的引擎，或者使用任意一个[受支持的 CLI](/zh/docs/supported-clis)，然后继续阅读[快速开始](/zh/docs)。

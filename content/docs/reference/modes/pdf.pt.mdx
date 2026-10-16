@@ -1,11 +1,11 @@
 ---
 title: pdf
-description: "Gera um currículo em PDF sob medida para uma vaga específica, usando o Playwright para renderizar o markdown em um template tipográfico limpo. O resultado tem estrutura simples — sem tabelas, sem colunas, sem gráficos — exatamente o que os parsers de ATS leem de forma confiável."
+description: "Gera um currículo em PDF sob medida para uma vaga específica: o career-ops monta o currículo em HTML a partir de um template tipográfico limpo e o Playwright o imprime em PDF. O resultado tem estrutura simples (sem tabelas, sem colunas, sem gráficos), exatamente o que os parsers de ATS leem de forma confiável."
 seoTitle: "Modo pdf do career-ops — gere um currículo sob medida e compatível com ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 61f561d97321e237
+lastModified: "2026-10-16"
+translationHash: ac18633cc823dce2
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -34,6 +34,8 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
 O layout continua em coluna única, com títulos de seção padrão e texto selecionável — a estrutura que os parsers de ATS leem sem problemas — e as palavras-chave são incorporadas a conquistas reais, nunca inventadas.
+
+A cobertura de palavras-chave é medida em relação à seção de palavras-chave do relatório de avaliação da vaga. Se o relatório não tiver essa seção, o career-ops pontua as habilidades que encontra na descrição da vaga arquivada no relatório e informa qual fonte usou. Um relatório sem seção de palavras-chave é um defeito a corrigir no relatório, não algo aceitável.
 
 ## Em que situações recorrer a ele
 

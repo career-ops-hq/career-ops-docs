@@ -1,0 +1,57 @@
+---
+title: training
+description: "那门 4,000 美元的 ML 系统课程该不该报？Coursera 的专项课程呢？昂贵的 AWS 认证呢？training 模式会对照你设定的职业方向给一项学习投入打分，帮你看清时间和金钱的实际回报。"
+seoTitle: "career-ops training 模式：这门课程或认证值不值得投入？"
+icon: BookOpen
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 02f484e92b4c5f63
+localized: true
+translatedFrom: /docs/reference/modes/training
+---
+
+## 它能做什么
+
+`training` 模式会读取课程或认证的详细信息（课程大纲、时间投入、费用），再读取 config/profile.yml 中你的 North Star 部分，然后从六个维度给这项投入打分：与你的 North Star 的契合度、招聘方信号、时间与精力、机会成本、风险，以及能否留下作品集成果。
+
+## 什么时候使用
+
+当你被某个学习项目吸引，却不确定它是否真的能让你朝既定方向迈进时，就用 training。对于昂贵的认证和训练营尤其有用。
+
+## 示例
+
+```
+`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
+```
+
+## 实际运行效果
+
+一次 training 运行会从六个维度给一门课程或一项认证打分，并给出三种结论之一，让你在投入时间或金钱之前就先看清回报。你把这个学习项目的信息交给它——课程大纲、周数、每周小时数和费用——它就会对照你设定的职业方向进行评分。
+
+```txt title="Example"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+
+DO 结论会附带一份为期四到十二周的计划，包含每周交付物和一个计分板。DON'T DO 结论会指出一个更好的替代方案，并说明原因。DO WITH TIMEBOX 会限定周数，并把计划精简到只剩核心内容；对于有用但内容注水的课程，这是最常见的结果。
+
+## 哪些项目得分最高
+
+这个模式更看重能在生产级 AI 上建立可信度的项目，而不是泛泛的证书。按优先级排列，依次是：LLM 评估与测试、可观测性与监控、成本与可靠性之间的权衡、AI 治理与安全，以及企业级 AI 架构。一门以可展示成果收尾的课程——比如一套评估框架（eval harness）、一次带监控的部署——得分会高于只发一张证书的课程，因为成果才是用人经理真正能看到的东西。
+
+## 注意事项
+
+这个模式会偏向你设定的 North Star。如果你没有认真填写 config/profile.yml 中的 North Star 部分，评估结果就会流于表面。
+
+## 相关链接
+
+- [project](/zh/docs/reference/modes/project)

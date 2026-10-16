@@ -1,0 +1,173 @@
+---
+title: 批量评估职位
+description: 在一次会话中用并行的 AI 工作进程处理 10 个以上职位，并为每个职位生成定制的 PDF。
+seoTitle: "用 career-ops 批量评估职位：一次为多个职位打分"
+icon: FileStack
+translationHash: 537bf031e6d66d7e
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+如果你手上有 10 个或更多职位要看，想在一次会话里全部处理完，而不是一个一个来，就按这份指南操作。
+
+每个职位都会分配一个独立的 Claude 工作进程。这个工作进程会读取你的简历、给匹配度打分、写一份完整报告，并保存一份定制的 PDF，全程无需你动手。
+
+## 第 1 步：把职位添加到输入文件
+
+批处理系统会从一个名为 **`batch/batch-input.tsv`** 的文件中读取职位 URL。你可以把它看作评估器的待办清单。
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        用任意文本编辑器打开 **`batch/batch-input.tsv`**。
+      </Step>
+      <Step>
+        每个职位添加一行。每行有四列，用制表符（Tab）分隔：
+
+        | 列 | 填写内容 |
+        |--------|---------------|
+        | `id` | 这个职位的唯一编号（1、2、3……） |
+        | `url` | 完整的职位发布 URL |
+        | `source` | 你在哪里找到它（例如 `LinkedIn`、`Greenhouse`） |
+        | `notes` | 可选备注，没有就留空 |
+      </Step>
+      <Step>
+        保存文件。
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**示例：**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="提示">
+  每个 ID 都必须是唯一的编号。不要跳号，也不要重复。
+</Callout>
+
+## 第 2 步：预览批次（推荐）
+
+正式处理之前，先快速检查一下有多少职位在排队。这一步还不会评估任何内容，只是预览。
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+你会看到待处理职位及其 ID 的列表。如果发现问题，现在就修正输入文件，免得在一份有误的清单上浪费时间。
+
+## 第 3 步：运行批处理
+
+准备好后就启动批处理。你可以一次处理一个职位，也可以同时处理多个。
+
+**一次一个（最慢，占用内存最少）：**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**一次两个（比较稳妥的默认选择）：**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**一次三个（更快，但电脑负担更重）：**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**跳过评分低于某个阈值的职位（例如低于 4.0，满分 5 分）：**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+批处理运行时，留意终端输出。每一行都会告诉你正在处理哪个职位，以及它是已完成还是失败了。
+
+如果某个被委派的工作进程遇到一则由招聘中介发布、需要你确认的职位，它会在写入报告、简历、申请草稿或 tracker 行之前停下，并把该职位标记为 `needs_confirmation`。请在父交互会话中回答显示的问题；只有在你明确作答之后，该会话才会继续处理这个被挂起的职位。`--retry-failed` 和 `--resume-paused` 都不会恢复这类等待确认的职位。
+
+## 第 4 步：边运行边查看结果
+
+你不必等整个批处理结束。每个职位处理完成后，结果就会出现。
+
+**完整评估报告** → `reports/`
+
+每份报告都是一个文件，命名类似 `042-company-name-2026-04-14.md`。打开它可以看到：
+
+- 职位概要
+- 你的简历与职位的匹配程度
+- 薪资调研
+- 建议的面试准备计划
+
+每份报告还包含一个 **Risk Summary**（风险摘要）。其中的 **Fixed-term contract**（固定期限合同）一行会引用职位描述中明确提到固定期限的原文；如果没有相关表述，则显示 `✅ no fixed term disclosed`；如果无法获取职位描述，则标记为未评估。对应的 Machine Summary 字段是 `risk_summary.fixed_term`，取值只能是以下之一：
+
+| 值 | 含义 |
+|-------|---------|
+| `detected` | 职位描述明确说明这是固定期限岗位 |
+| `not_detected` | 未发现明确的固定期限表述 |
+| `not_evaluated` | 无法获取职位描述，未进行此项检查 |
+
+**Tracker 条目** → `batch/tracker-additions/`
+
+每个职位还会在这里留下一个简短的摘要文件：一行列名表头，加上一行数值。它们会在第 6 步合并进你的主 tracker。
+
+### Score Evidence
+
+报告在 Risk Summary 之后包含 **Score Evidence**（评分依据）部分。它涵盖五个维度：简历匹配度、North Star 契合度、薪酬、文化信号和危险信号（red flags）。每一行都会记录一个证据状态（`supported`、`partial` 或 `unknown`）、一个具体的来源或观察，以及一个尚未解决的问题。该部分最后给出证据可信度等级（`High`、`Medium` 或 `Low`）、评定理由，以及最多三个需要优先核实的事项。
+
+这个等级描述的是 Global Score（综合评分）背后的证据。它既不是录用概率，也不是 Block G 的职位真实性等级，也不会改变数字评分。Machine Summary 会把五个状态保存在 `score_evidence` 中，把等级保存在 `confidence` 中，把优先核实事项保存在 `confidence_gaps` 中。没有剩余的优先事项时，`confidence_gaps` 为空列表。
+
+## 第 5 步：重试失败的职位
+
+工作进程有时会失败，例如某个职位链接已经打不开了。失败的职位会显示在终端中，并附带一条简短的错误信息。
+
+**只重试失败的职位：**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**把最大尝试次数从默认的 2 次提高到 3 次：**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+批处理会跳过所有已经成功完成的职位，所以重复运行这条命令始终是安全的。
+
+## 第 6 步：把结果合并进你的 tracker
+
+批处理结束后，运行下面这条命令，把所有新的评估结果添加到 `data/applications.md`：
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+这个脚本会：
+
+1. 从 `batch/tracker-additions/` 读取摘要文件
+2. 检查重复项，确保同一个职位不会出现两行
+3. 把新条目添加到你的申请 tracker
+4. 把已处理的文件归档到 `batch/tracker-additions/merged/`
+
+**只预览改动、不写入任何内容：**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## 下一步
+
+打开 **`data/applications.md`**，在一张表格里查看你的所有评估结果。接下来你可以：
+
+- 按评分排序，找出最匹配的职位
+- 打开 `reports/` 中的单份报告，深入查看完整内容
+- 用 `/career-ops apply` 为你最看好的职位开始申请流程

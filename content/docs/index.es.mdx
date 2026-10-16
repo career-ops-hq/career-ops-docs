@@ -3,7 +3,7 @@ title: Guía rápida
 description: "Empieza con career-ops en unos quince minutos: instala el sistema open source de búsqueda de empleo con IA, abre tu CLI de IA y evalúa tu primera oferta. Sin necesidad de programar."
 seoTitle: "career-ops Guía rápida — instala y ejecuta tu primer análisis de ofertas con IA en minutos"
 icon: Rocket
-translationHash: 3dc0cfbde93edb50
+translationHash: a1ac86db5bf5c50e
 localized: true
 translatedFrom: /docs
 ---
@@ -78,6 +78,8 @@ career-ops usa un Chromium headless para varias tareas: renderizar PDFs, comprob
 ```bash title="Terminal"
 npx playwright install chromium
 ```
+
+`npm install` se salta esa descarga cuando `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` está definida en tu entorno con cualquier valor que no sea vacío, `0` o `false`; en ese caso, ejecuta tú mismo el comando de arriba. En NixOS, sáltate este paso: los navegadores descargados no pueden arrancar ahí, y en su lugar el dev shell del flake del repositorio proporciona navegadores que sí funcionan, como explica la [guía de NixOS](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) del core.
 
 ## Paso 2: Abre tu asistente de IA
 
@@ -235,6 +237,8 @@ Abre el archivo de informe en `reports/`. El nombre sigue el patrón `{número}-
 - **Block F** — preparación de entrevista con historias STAR adaptadas a esta oferta.
 - **Block G** — legitimidad del anuncio: una comprobación heurística de señales como si la oferta sigue abierta o si se vuelve a publicar una y otra vez. Informa de lo que encuentra y deja el juicio en tus manos.
 - **Block H** — borradores de respuesta para el formulario de candidatura, solo cuando la puntuación es 4.5 o más.
+
+Justo después del Block G, el **Verdict** da la decisión en negrita (Apply, Consider, Research first o Skip) y un motivo sacado de los bloques anteriores, para que sepas la respuesta antes de leer el resto.
 
 Tu PDF de CV adaptado está en la carpeta `output/`. Revísalo antes de enviarlo a ningún sitio — career-ops nunca envía nada sin tu aprobación.
 

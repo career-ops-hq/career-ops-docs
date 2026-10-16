@@ -22,7 +22,7 @@ The build is the real check: a page that renders in `dev` can still fail the pro
 
 - Fixes to guides and reference pages when the core has changed and the docs did not.
 - Typos, broken links, clearer wording, missing steps.
-- Translations. The site is English, Spanish, French, German, Brazilian Portuguese and Italian. Translated pages sit next to the English one as `page.es.mdx`, `page.fr.mdx`, `page.de.mdx`, `page.pt.mdx` and `page.it.mdx` and carry a `translationHash` of the English source. If you change the English text, you don't have to translate it: say in the pull request which translations are now stale and we'll update them. If you do update a translation, restamp only that one with `node .i18n/hash.mjs <path>`; restamping a translation you didn't change hides that it's out of date.
+- Translations. The site is English, Spanish, French, German, Brazilian Portuguese, Italian and Simplified Chinese. Translated pages sit next to the English one as `page.es.mdx`, `page.fr.mdx`, `page.de.mdx`, `page.pt.mdx`, `page.it.mdx` and `page.zh.mdx` and carry a `translationHash` of the English source. If you change the English text, you don't have to translate it: say in the pull request which translations are now stale and we'll update them. If you do update a translation, restamp only that one with `node .i18n/hash.mjs <path>`; restamping a translation you didn't change hides that it's out of date.
 
 ## What we do not accept without talking first
 

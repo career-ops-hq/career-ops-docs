@@ -1,0 +1,67 @@
+---
+title: interview-prep
+description: "career-ops interview-prep 针对具体公司和职位生成一份面试情报文档，按面试官身份分段（招聘专员、用人经理、同行技术面或小组面），列出可能被问到的问题、谈话要点，以及从你自己的档案中提炼的 STAR 故事。"
+seoTitle: "career-ops interview-prep：按公司和轮次准备面试"
+icon: GraduationCap
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 9f9b6324137f1386
+localized: true
+translatedFrom: /docs/reference/modes/interview-prep
+---
+
+career-ops **interview-prep** 会把一场已经约好的面试变成一份可以直接上手的情报文档。你给出公司和职位，或者交给它一份你从未正式评估过的职位的招聘启事。它会调研这家公司的招聘流程，按每一轮由谁主持来分类（招聘专员初筛、用人经理、同行技术面或小组面），并起草每一轮可能被问到的问题，每个问题都附有一份从你自身背景中提炼的参考答案。每个问题要么出自网络搜索找到的公开面试评价（例如 Glassdoor 或 Blind 上的评价），要么标注为 `[inferred from JD]`。最终产出的是一份保存下来的准备文档，而不是一段聊天记录。
+
+## 它能做什么
+
+interview-prep 会读取公司背景（最好已经通过 `deep` 或 `oferta` 补充过）、职位描述和你的个人档案，然后生成一份准备文档。文档只覆盖公开评价显示该公司招聘流程包含的那几轮面试，内容包括：按面试官类型划分的常见提问模式、针对你背景的谈话要点，以及可以在现场灵活调整的预写 STAR 故事。如果这个职位已经有评估报告，以那份报告为准。如果你传入的是一个从未评估过的职位的 URL，interview-prep 会自己抓取 JD：优先调用结构化的 ATS API，其次用 Playwright，最后以无头模式兜底；如果职位已经关闭，它会请你粘贴招聘启事的文本。
+
+## 什么时候使用
+
+一旦某一轮面试排上了日程，就运行 interview-prep。它会生成一份文档，招聘流程涉及的每类面试官各占一节：招聘专员初筛一节涵盖薪资谈判准备，用人经理一节涵盖岗位匹配度，同行技术面一节涵盖架构和编码，小组面一节涵盖领导力信号。career-ops 的规则还要求：当你 tracker 中某个评分 4.0 或以上的职位移到 `Interview` 状态时，也要运行这个模式。
+
+interview-prep 是**调研**环节，产出的是你事先研读的那份情报文档。它与交互式的 `plan`、`practice` 和 `debrief` 面试演练是不同的模式：这几个演练模式会现场陪你排练，并在每一轮结束后帮你复盘。两者相互衔接，复盘的结果会进入 interview-prep 下次读取的材料。关于这些演练，详见[面试模式指南](/zh/docs/introduction/guides/interview-modes)。
+
+## 实际运行效果
+
+你给出公司和职位，这个模式就会返回一份面试情报报告，覆盖公开评价显示该公司招聘流程包含的各轮面试。它会调研招聘流程，按面试官类型给每一轮分类（招聘专员初筛、用人经理、同行技术面或小组面），并起草可能被问到的问题，每个问题都附上来源引用或 `[inferred from JD]` 标签。
+
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
+```
+
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
+```
+
+报告还会把你 `story-bank.md` 中的故事对应到每个可能被问到的问题上，并标出你还没有准备故事的空缺。如果你想填补某个空缺，它会和你一起起草缺失的 STAR+R 故事，并按故事匹配器（`npm run star`）读取的条目格式保存到 `interview-prep/story-bank.md`。如果故事库还不存在，它会先根据模板创建。
+
+## 怎样让它更有用
+
+当某一轮面试已经确定，而你想要一份能直接用的文档、而不是泛泛的建议时，就用 interview-prep。以下几点能让输出更精准：
+
+- 先针对这家公司运行 `oferta` 或 `deep`。准备文档会读取评估报告中的岗位原型（archetype）、差距和匹配上的经历亮点（proof points），所以背景信息越多，问题就越具体。
+- 如果你拿到了面试官的名字或面试日程，把它们粘贴进来。对于小组面，这个模式会逐一分析每位面试官，并为每个时段起草一个量身定制的反问问题。
+- 如果你已经就这个职位报过一个薪资数字，招聘专员初筛一节会把它纳入进来：career-ops 会读取你给出的数字，让薪资谈判准备基于你实际说过的话，而不是凭空猜测。
+- 留意标签：有来源的问题会注明出自哪条评价，推断出的问题则带有 `[inferred from JD]`。推断出的问题只是可能会问，不代表一定会被问到。
+
+## 相关链接
+
+- [deep](/zh/docs/reference/modes/deep)
+- [contacto](/zh/docs/reference/modes/contacto)
+- [oferta](/zh/docs/reference/modes/oferta)
