@@ -21,7 +21,7 @@ Run this command from the project folder:
 cp templates/portals.example.yml portals.yml
 ```
 
-Open `portals.yml` in any text editor. The file has three sections. The steps below walk through each one.
+Open `portals.yml` in any text editor. The steps below walk through the three sections you edit first: the title filter, the companies to track, and the search queries.
 
 ### Configure your title filter
 
@@ -137,6 +137,16 @@ search_queries:
 
 To turn off a query you do not need, set `enabled: false`. To add a new one, copy an existing entry, give it a new `name`, and update the `query` text.
 
+### Choose the language of postings (optional)
+
+Some job boards publish the same posting in several languages. If you apply in only some of them, list those languages in order of preference:
+
+```yaml title="portals.yml"
+preferred_languages: [en]
+```
+
+When a posting has versions in those languages, the scan keeps the one in the language that comes first in your list; otherwise it keeps the posting's default version. It is an order of preference, not a filter: no posting is dropped, and you still get one row per posting. Regional variants count as one language, so `en-GB` is `en`. To set the language for one company only, add the board's own parameter to its `careers_url`: `?language=xx` on Personio, `?lang=xx` on Recruitee.
+
 ## Run a scan
 
 There are two ways to run a scan. Use the one that fits what you need.
@@ -192,6 +202,14 @@ Use this option when:
 - You want to discover new companies, not just check known ones
 - The script scan missed something you expected to see
 
+If the script missed a posting you found yourself, ask it why first:
+
+```bash title="Terminal"
+node coverage-check.mjs <url> --company "<company>" --title "<job title>"
+```
+
+It reads your `portals.yml` and scan history without going online, says why the posting was missed (the company is not tracked, its entry is disabled, no provider reads its job site, or a title or location filter dropped it) and proposes the one change that would have caught it. It never edits `portals.yml` for you.
+
 <Callout title="Tip">
   Option B uses AI model tokens and takes longer than the script. Whether those tokens are billed to an API key or count toward your subscription depends on how your CLI is set up ([see the FAQ](/docs/faq#i-pay-for-claude-pro-or-max-why-is-career-ops-billing-my-api-credits)). For a quick daily check, Option A is faster.
 </Callout>
@@ -239,7 +257,7 @@ If **New offers added** is 0, first look for this warning in the scan output:
 ⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
 ```
 
-It means that company's portal never answered successfully, so the zero does not prove its board is empty. The company is recorded as `unverified_zero` in `data/portal-health.tsv` and counts toward its failure streak. Check that portal before you change your filters.
+It means that company's portal never answered successfully, so the zero does not prove its board is empty. The company is recorded as `unverified_zero` in `data/portal-health.tsv` and counts toward its failure streak. Check that portal before you change your filters. A slow board can also run out of time before it answers: the scanner waits 10 seconds per request by default, and `CAREER_OPS_HTTP_TIMEOUT_MS=30000 npm run scan` gives it 30.
 
 If there is no such warning, your title filter may be too strict. Try adding a keyword to your `positive` list and run the scan again.
 
