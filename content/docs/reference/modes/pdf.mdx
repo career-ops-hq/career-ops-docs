@@ -42,6 +42,25 @@ Reach for pdf when you've decided to apply and want only the tailored resume, sk
 - Keyword injection is truth-based. The mode rewords real experience into the JD's exact vocabulary but never adds a skill you do not have.
 - For DACH and much of continental Europe you can opt into a photo by setting `candidate.photo` in `config/profile.yml`; leave it empty and the CV renders pixel-for-pixel identical without one, which is the safer default for US, UK, and ATS-first markets.
 
+## An ATS-parseable copy with `--ats`
+
+Some application forms never read your PDF as you designed it: they ask you to paste your CV into text fields, or they parse the upload and pre-fill the form from whatever they manage to extract. Add `--ats` and pdf mode renders a second, parser-friendly copy of the same tailored CV. You paste from the ATS copy and attach the styled PDF.
+
+```bash title="Terminal"
+/career-ops pdf acme --ats
+
+PDF:  output/cv-jane-doe-acme-2026-05-18.pdf
+ATS:  output/cv-jane-doe-acme-ats.html
+```
+
+- It is off by default. Pass `--ats` for a single run, or turn it on for every run with a house rule in your own `modes/_custom.md`.
+- It is the same tailored CV, not a second tailoring pass. Once the styled PDF is done, pdf mode runs the payload stage described in [Before the HTML: one fix, three findings](#before-the-html-one-fix-three-findings) on a copy of the tailored content: the competencies move into a comma-separated `Skills` line, and any of the three findings are shown to you. The styled CV keeps its competency grid.
+- A fix works differently here than in the `ats` mode. Under `--ats`, a change you choose for a finding is made in this CV's tailored content, not in `cv.md`, and both copies are rebuilt from it.
+- pdf mode runs the fact gate (`verify-cv-facts.mjs`) on the ATS copy as well as on the styled CV. The gate compares metrics and named facts, such as employers, titles, tools and authorship claims, with `cv.md`, `article-digest.md` and `config/cv-facts.json`. It runs a second time because a gate failure on the styled CV can be fixed directly in its HTML, and that fix does not reach the data the copy is built from. If the copy fails, the fix goes into the tailored content, and both copies are rebuilt and checked again.
+- The file is always written to `output/` with an `-ats` suffix. It is something you paste, not something you attach, so it does not count as the application's PDF: your tracker's PDF column still points at the styled one.
+- There is no ATS PDF by default, because you copy the text straight out of the HTML. If a form needs an uploadable file, ask for one. It is rendered without `--report`, so it is not indexed against the report, and the styled CV keeps its row in `data/pdf-index.tsv`.
+- If a step of the ATS pass fails, the styled HTML and PDF stay as they are.
+
 ## Gotchas
 
 Requires Playwright installed locally. The build script may fail on minimal Linux installs missing system fonts. Run `npm run doctor` to diagnose.
@@ -64,3 +83,4 @@ node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
 ## Related
 
 - [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [apply](/docs/reference/modes/apply)

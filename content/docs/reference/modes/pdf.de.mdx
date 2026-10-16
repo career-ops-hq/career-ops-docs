@@ -5,7 +5,7 @@ seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebens
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: ac18633cc823dce2
+translationHash: 7beee71faa4b3f08
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -45,6 +45,25 @@ Greif zu pdf, wenn du dich für eine Bewerbung entschieden hast und nur den zuge
 - Beim Einbauen der Keywords bleibt der Modus bei der Wahrheit. Er beschreibt deine echte Erfahrung mit den Begriffen aus der Stellenbeschreibung, fügt aber nie eine Fähigkeit hinzu, die du nicht hast.
 - Für den DACH-Raum und große Teile Kontinentaleuropas kannst du ein Foto einbinden, indem du `candidate.photo` in `config/profile.yml` setzt. Lässt du das Feld leer, sieht der Lebenslauf ohne Foto pixelgenau gleich aus. Für die USA, Großbritannien und Märkte, in denen zuerst ein ATS filtert, ist das die sicherere Standardeinstellung.
 
+## Eine ATS-lesbare Kopie mit `--ats`
+
+Manche Bewerbungsformulare lesen dein PDF nie so, wie du es gestaltet hast: Du sollst den Lebenslauf in Textfelder einfügen, oder das Formular wertet die hochgeladene Datei aus und füllt sich mit dem, was es daraus extrahieren kann. Mit `--ats` rendert der pdf-Modus eine zweite, parserfreundliche Kopie desselben zugeschnittenen Lebenslaufs. Du fügst den Text aus der ATS-Kopie ein und hängst das gestaltete PDF an.
+
+```bash title="Terminal"
+/career-ops pdf acme --ats
+
+PDF:  output/cv-jane-doe-acme-2026-05-18.pdf
+ATS:  output/cv-jane-doe-acme-ats.html
+```
+
+- Die Option ist standardmäßig aus. Übergib `--ats` für einen einzelnen Durchlauf oder schalte sie mit einer eigenen Regel in deiner `modes/_custom.md` für jeden Durchlauf ein.
+- Es ist derselbe zugeschnittene Lebenslauf, kein zweiter Anpassungsdurchgang. Sobald das gestaltete PDF steht, führt der pdf-Modus die Payload-Stufe aus [Vor dem HTML: eine Korrektur, drei Befunde](#vor-dem-html-eine-korrektur-drei-befunde) auf einer Kopie des zugeschnittenen Inhalts aus: Die Kompetenzen wandern in eine kommagetrennte `Skills`-Zeile, und jeder der drei Befunde, der auftritt, wird dir gezeigt. Der gestaltete Lebenslauf behält sein Kompetenzraster.
+- Eine Korrektur läuft hier anders als im `ats`-Modus. Mit `--ats` landet eine Änderung, die du für einen Befund wählst, im zugeschnittenen Inhalt dieses Lebenslaufs, nicht in `cv.md`, und beide Kopien werden daraus neu gebaut.
+- Der pdf-Modus führt die Faktenprüfung (`verify-cv-facts.mjs`) zusätzlich zum gestalteten Lebenslauf auch auf der ATS-Kopie aus. Sie vergleicht Kennzahlen und benannte Fakten wie Arbeitgeber, Stellenbezeichnungen, Tools und Urheberschaftsangaben mit `cv.md`, `article-digest.md` und `config/cv-facts.json`. Sie läuft ein zweites Mal, weil ein Fehler im gestalteten Lebenslauf direkt in dessen HTML behoben werden kann, und diese Korrektur erreicht die Daten nicht, aus denen die Kopie gebaut wird. Fällt die Kopie durch, kommt die Korrektur in den zugeschnittenen Inhalt, und beide Kopien werden neu gebaut und erneut geprüft.
+- Die Datei wird immer mit dem Suffix `-ats` nach `output/` geschrieben. Du fügst sie ein, du hängst sie nicht an. Deshalb zählt sie nicht als PDF der Bewerbung: Die PDF-Spalte in deinem Tracker verweist weiterhin auf das gestaltete PDF.
+- Standardmäßig gibt es kein PDF der ATS-Kopie, weil du den Text direkt aus dem HTML kopierst. Braucht ein Formular eine Datei zum Hochladen, frag danach. Sie wird ohne `--report` gerendert, wird also nicht dem Bericht zugeordnet, und der gestaltete Lebenslauf behält seine Zeile in `data/pdf-index.tsv`.
+- Schlägt ein Schritt des ATS-Durchgangs fehl, bleiben das gestaltete HTML und PDF unverändert.
+
 ## Stolperfallen
 
 Playwright muss lokal installiert sein. Auf minimalen Linux-Installationen ohne Systemschriftarten kann das Build-Script fehlschlagen. Mit `npm run doctor` findest du die Ursache.
@@ -67,3 +86,4 @@ node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
 ## Siehe auch
 
 - [auto-pipeline](/de/docs/reference/modes/auto-pipeline)
+- [apply](/de/docs/reference/modes/apply)
