@@ -3,7 +3,7 @@ title: "Vale la pena candidarsi a questo annuncio?"
 description: "Decidi prima di candidarti. career-ops assegna a un annuncio un punteggio da 1 a 5 in base al tuo curriculum e ai tuoi obiettivi, mostra il suo ragionamento e lascia a te la decisione."
 seoTitle: "Vale la pena candidarsi a questo annuncio? Decidi prima di candidarti con career-ops — un punteggio da 1 a 5 e il suo ragionamento"
 icon: Scale
-translationHash: fb4701ecac039924
+translationHash: b1e264742d31f2d3
 localized: true
 translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
 ---
@@ -64,7 +64,7 @@ career-ops confronta l'autorizzazione al lavoro con il tuo profilo. Se un annunc
 
 ## Che cosa non cambia il punteggio? [#what-does-not-change-the-score]
 
-Il livello di legittimità dell'annuncio non cambia mai il punteggio da 1 a 5. Il controllo di legittimità dell'annuncio (Blocco G del report) considera segnali come l'età dell'annuncio, se il pulsante per candidarsi è ancora attivo, quanto è specifica la descrizione, notizie recenti su licenziamenti e se lo stesso ruolo continua a essere ripubblicato. Restituisce uno di tre livelli: High Confidence, Proceed with Caution o Suspicious. Presenta ciò che ha visto, non accusa mai nessuno, riporta le spiegazioni legittime di un segnale preoccupante e lascia a te il giudizio. Senza una data di pubblicazione e senza altri elementi preoccupanti, il livello predefinito è Proceed with Caution, mai Suspicious. La ricerca sull'azienda alla base del controllo, come le notizie sulla sua stabilità, può comunque contribuire alla dimensione Segnali culturali.
+Il livello di legittimità dell'annuncio non cambia mai il punteggio da 1 a 5. Il controllo di legittimità dell'annuncio (Blocco G del report) considera segnali come l'età dell'annuncio, se il pulsante per candidarsi è ancora attivo, quanto è specifica la descrizione, notizie recenti su licenziamenti e se lo stesso ruolo continua a essere ripubblicato. Restituisce uno di tre livelli: High Confidence, Proceed with Caution o Suspicious. Presenta ciò che ha visto, non accusa mai nessuno, riporta le spiegazioni legittime di un segnale preoccupante e lascia a te il giudizio. Senza una data di pubblicazione e senza altri elementi preoccupanti, il livello predefinito è Proceed with Caution, mai Suspicious. Quando il ruolo ti è arrivato tramite un messaggio o una telefonata di un recruiter, il controllo verifica anche il recruiter: la pagina "Lavora con noi" dell'azienda stessa, il dominio dell'email del recruiter, le segnalazioni pubbliche di truffe ed eventuali richieste di eseguire codice che ti inviano, di spostarti su un'app di chat o di pagare qualcosa. Il contatto da parte di un recruiter, di per sé, è neutro, e questi controlli possono spostare il livello, mai il punteggio. La ricerca sull'azienda alla base del controllo, come le notizie sulla sua stabilità, può comunque contribuire alla dimensione Segnali culturali.
 
 L'importanza dei requisiti viene etichettata, non conteggiata. Il report elenca i requisiti significativi dell'annuncio, fino a 12 righe, e non ne scarta mai uno critico o alto per includerli tutti. Per ciascuno indica quanto pesa in questo annuncio, da critico a segnale debole, e se questo deriva dalle parole stesse dell'annuncio, dalla sua struttura o da una stima dichiarata come tale. L'importanza viene compilata a partire dal solo annuncio, prima di leggere il tuo CV, così un requisito non viene giudicato importante solo perché è un tuo punto di forza. Ogni requisito critico o alto che non soddisfi, o che soddisfi solo in parte, è accompagnato da un rischio specifico per il colloquio di lavoro e da un piano per prepararti. Le etichette di importanza non spostano il punteggio da 1 a 5.
 
@@ -89,7 +89,9 @@ career-ops scrive ogni valutazione in un report in `reports/` e aggiunge una rig
 - E) Piano di personalizzazione
 - F) Piano per i colloqui
 - G) Legittimità dell'annuncio
+- Verdetto, la decisione in grassetto (Apply, Consider, Research first o Skip) con un motivo tratto dai blocchi precedenti
 - Riepilogo dei rischi, che raccoglie i segnali di rischio in un'unica schermata senza ricalcolare alcun punteggio
+- Evidenze del punteggio, quanto è supportata ciascuna delle cinque dimensioni, con un livello di affidabilità delle evidenze
 - H) Bozza delle risposte per la candidatura, solo quando il punteggio è 4,5 o più
 
 L'annuncio stesso viene archiviato integralmente nel report (uno molto lungo finisce in un file in `jds/` a cui il report rimanda), così conservi i requisiti anche dopo che l'annuncio è stato rimosso. In coda trovi una prima bozza della lettera di presentazione, da completare con `/career-ops cover {slug}`.
