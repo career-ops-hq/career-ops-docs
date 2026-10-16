@@ -208,7 +208,7 @@ export const homeZh: HomeDict = {
       a: (
         <>
           <span className="block mb-4">
-            你的简历、个人资料、求职进度和报告都以普通的 Markdown 和 YAML 文件保存在自己的电脑上，归你所有。career-ops 通过你选择的 AI CLI 在本机运行，无需注册账号，也没有遥测。系统更新不会修改你的数据；这种程序与数据分离的约定称为 Data Contract。
+            求职资料保存在自己的电脑上，归你所有。个人资料、求职记录等以普通的 Markdown 和 YAML 文件保存，定制简历则可生成为 PDF。career-ops 通过你选择的 AI CLI 在本机运行，无需注册账号，也没有遥测。系统更新不会修改你的数据；这种程序与数据分离的约定称为 Data Contract。
           </span>
           只有你选择的 AI CLI 发送给其模型提供商的内容会离开本机；求职资料不会上传至 career-ops 服务器。
         </>
@@ -267,7 +267,7 @@ export const homeZh: HomeDict = {
       ),
     },
   ],
-  finalCta: <>让 AI 帮你筛选，<span className="inline-block">从合适的职位开始。</span></>,
+  finalCta: <>让 AI 帮你筛选，<span className="inline-block max-w-full">从合适的职位开始。</span></>,
   yourTurn: '立即试试',
   followWhatWeShip: '或者关注我们发布的新版本。',
   releaseBlurb: (
