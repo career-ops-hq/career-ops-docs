@@ -4,25 +4,29 @@ description: "career-ops 直接调用 Greenhouse 的公开 boards API：不抓�
 seoTitle: "用 career-ops 扫描 Greenhouse 职位：零 token 消耗的 ATS 招聘门户扫描"
 icon: Leaf
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 7b6f2cf40aacd803
+lastModified: "2026-10-16"
+translationHash: c1461d4b6a8ef9e5
 localized: true
 translatedFrom: /docs/reference/portals/greenhouse
 ---
 
 ## 功能简介
 
-providers/greenhouse.mjs 中的 greenhouse provider 会向 boards-api.greenhouse.io/v1/boards/`{slug}`/jobs 发送 HTTP 请求，并把返回的 JSON 解析成 career-ops 的职位格式。slug 是公司在 Greenhouse 上的招聘页面标识符（例如 Notion 对应 'notion'）。
+providers/greenhouse.mjs 中的 greenhouse provider 会向 boards-api.greenhouse.io/v1/boards/`{slug}`/jobs 发送 HTTP 请求，并把返回的 JSON 解析成 career-ops 的职位格式。slug 是公司在 Greenhouse 上的招聘页面标识符（例如 Anthropic 对应 'anthropic'）。
 
 ## 适用场景
 
-如果你的目标公司用 Greenhouse 作为 ATS，就用 Greenhouse 扫描。员工规模在 50–10,000 人之间的美国科技公司大多都用它。templates/portals.example.yml 自带 70 多个预先配置好的 Greenhouse slug，你可以直接启用。
+如果你的目标公司用 Greenhouse 作为 ATS，就用 Greenhouse 扫描。员工规模在 50–10,000 人之间的美国科技公司大多都用它。templates/portals.example.yml 自带预先配置好的 Greenhouse 招聘页面，你可以直接启用。
 
 ## 示例
 
+```yaml title="portals.yml"
+- name: Anthropic
+  careers_url: https://job-boards.greenhouse.io/anthropic
+  enabled: true
 ```
-In your portals.yml: `- provider: greenhouse\n  slug: notion\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.
-```
+
+下次扫描时，就会抓取 Anthropic 所有开放的职位。
 
 ## 扫描器做了什么
 
@@ -33,23 +37,25 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 58 total
-Filtered by title: 9 relevant
-Duplicates: 6 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      58
+Filtered by title:     49 removed
+Duplicates:            6 skipped
+New offers added:      3
 
-  + Notion | AI Product Engineer | greenhouse
-  + OpenAI | Applied Engineer    | greenhouse
+New offers:
+  + Anthropic | Applied AI Engineer | San Francisco, CA
+  + Intercom | AI Product Engineer | Dublin, Ireland
+  + Vercel | Forward Deployed Engineer | Remote
 ```
 
 ## career-ops 如何对接 Greenhouse
 
-career-ops 请求 `boards-api.greenhouse.io/v1/boards/{slug}/jobs`，从 JSON 中读取 `jobs` 数组，取出每个职位的标题和 `absolute_url`。这个 boards 端点只返回职位的元数据（标题、地点和部门），不包含完整的职位描述。因此，career-ops 会在评估步骤中为每个职位再发一次请求来获取完整的职位文本；如果该招聘页面支持，也可以在请求后追加 `?content=true`。扫描本身只是对公开端点发起一次普通的 HTTPS GET 请求，所以不会超出速率限制，也不消耗任何模型 token。重复运行扫描是安全的：每个 URL 都会与你的扫描历史、已评估的申请以及当前的 pipeline 进行去重，你已经看过的职位绝不会被重复添加。
+career-ops 请求 `boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=true`，从 JSON 中读取 `jobs` 数组，取出每个职位的标题、`absolute_url`、地点和完整的职位描述。完整描述就在同一个响应里返回，所以不需要为每个职位单独发请求。如果某个招聘页面只用工作模式（例如 Remote）来标注职位地点，career-ops 会再向该招聘页面的办公地点列表发一次请求，补上办公室名称。扫描本身只是对公开端点发起一次普通的 HTTPS GET 请求，所以不会超出速率限制，也不消耗任何模型 token。重复运行扫描是安全的：每个 URL 都会与你的扫描历史、已评估的申请以及当前的 pipeline 进行去重，你已经看过的职位绝不会被重复添加。
 
 ## 注意事项
 
-通过 Greenhouse API 获取的职位，在 boards 端点中只包含标题、地点和部门。完整的 JD 文本需要针对每个职位再发一次请求，career-ops 会在评估步骤中自动处理。
+由于每个职位都附带完整描述，在 Greenhouse 招聘页面上，`portals.yml` 中的内容过滤器（`content_filter`、`visa_filter` 和国家资格限制）会读取完整的职位文本，而不只是标题。职位很多的招聘页面只会返回一个大响应，而不是许多小响应。
 
 ## 相关页面
 

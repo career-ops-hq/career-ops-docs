@@ -3,7 +3,7 @@ title: Scansionare i portali di lavoro
 description: Configura ed esegui lo scanner dei portali per trovare automaticamente nuove posizioni aperte.
 seoTitle: "Scansionare i portali di lavoro con career-ops — Greenhouse, Ashby, Lever, zero token"
 icon: ScanEye
-translationHash: 78fcbe0327045b1d
+translationHash: e9fa0fe2337f7f18
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -24,7 +24,7 @@ Esegui questo comando dalla cartella del progetto:
 cp templates/portals.example.yml portals.yml
 ```
 
-Apri `portals.yml` in un qualsiasi editor di testo. Il file ha tre sezioni. I passaggi qui sotto le spiegano una per una.
+Apri `portals.yml` in un qualsiasi editor di testo. I passaggi qui sotto spiegano le tre sezioni da modificare per prime: il filtro sui titoli, le aziende da monitorare e le query di ricerca.
 
 ### Impostare il filtro sui titoli
 
@@ -140,6 +140,16 @@ search_queries:
 
 Per disattivare una query che non ti serve, imposta `enabled: false`. Per aggiungerne una nuova, copia una voce esistente, dalle un nuovo `name` e aggiorna il testo di `query`.
 
+### Scegliere la lingua degli annunci (facoltativo)
+
+Alcuni portali di lavoro pubblicano lo stesso annuncio in più lingue. Se ti candidi solo in alcune di queste lingue, elencale in ordine di preferenza:
+
+```yaml title="portals.yml"
+preferred_languages: [en]
+```
+
+Quando un annuncio ha versioni in quelle lingue, la scansione tiene quella nella lingua che compare per prima nel tuo elenco; altrimenti tiene la versione predefinita dell'annuncio. È un ordine di preferenza, non un filtro: nessun annuncio viene scartato e continui ad avere una riga per annuncio. Le varianti regionali contano come una sola lingua, quindi `en-GB` vale `en`. Per impostare la lingua di una sola azienda, aggiungi al suo `careers_url` il parametro del portale stesso: `?language=xx` su Personio, `?lang=xx` su Recruitee.
+
 ## Avviare una scansione
 
 Ci sono due modi per avviare una scansione. Usa quello più adatto a ciò che ti serve.
@@ -195,6 +205,14 @@ Usa questa opzione quando:
 - Vuoi scoprire nuove aziende, non solo controllare quelle che conosci già
 - La scansione con lo script non ha trovato qualcosa che ti aspettavi di vedere
 
+Se lo script non ha trovato un annuncio che hai trovato tu, chiedigli prima il perché:
+
+```bash title="Terminal"
+node coverage-check.mjs <url> --company "<company>" --title "<job title>"
+```
+
+Legge il tuo `portals.yml` e la cronologia delle scansioni senza collegarsi a internet, ti dice perché l'annuncio è sfuggito (l'azienda non è monitorata, la sua voce è disattivata, nessun provider legge il suo sito carriere, oppure un filtro sul titolo o sulla località l'ha scartato) e propone l'unica modifica che l'avrebbe intercettato. Non modifica mai `portals.yml` al posto tuo.
+
 <Callout title="Suggerimento">
   L'Opzione B consuma token del modello AI e richiede più tempo dello script. Se quei token vengono addebitati su una chiave API o rientrano nel tuo abbonamento dipende da come è configurata la tua CLI ([vedi le FAQ](/it/docs/faq#pago-claude-pro-o-max-perche-career-ops-consuma-i-miei-crediti-api)). Per un controllo quotidiano veloce, l'Opzione A è più rapida.
 </Callout>
@@ -242,7 +260,7 @@ Se **New offers added** è 0, cerca prima di tutto questo avviso nel risultato d
 ⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
 ```
 
-Significa che il portale di quell'azienda non ha mai risposto correttamente, quindi lo zero non dimostra che non abbia posizioni aperte. L'azienda viene registrata come `unverified_zero` in `data/portal-health.tsv` e l'episodio si aggiunge alla sua serie di errori consecutivi. Controlla quel portale prima di cambiare i filtri.
+Significa che il portale di quell'azienda non ha mai risposto correttamente, quindi lo zero non dimostra che non abbia posizioni aperte. L'azienda viene registrata come `unverified_zero` in `data/portal-health.tsv` e l'episodio si aggiunge alla sua serie di errori consecutivi. Controlla quel portale prima di cambiare i filtri. Un portale lento può anche esaurire il tempo a disposizione prima di rispondere: per impostazione predefinita lo scanner attende 10 secondi per richiesta, e `CAREER_OPS_HTTP_TIMEOUT_MS=30000 npm run scan` gliene concede 30.
 
 Se l'avviso non c'è, il tuo filtro sui titoli potrebbe essere troppo restrittivo. Prova ad aggiungere una parola chiave all'elenco `positive` e avvia di nuovo la scansione.
 

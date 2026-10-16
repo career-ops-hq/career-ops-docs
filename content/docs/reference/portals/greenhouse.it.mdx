@@ -4,25 +4,29 @@ description: "career-ops interroga direttamente l'API pubblica dei board di Gree
 seoTitle: "Scansionare gli annunci di Greenhouse con career-ops: portali ATS a zero token"
 icon: Leaf
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 7b6f2cf40aacd803
+lastModified: "2026-10-16"
+translationHash: c1461d4b6a8ef9e5
 localized: true
 translatedFrom: /docs/reference/portals/greenhouse
 ---
 
 ## Cosa fa
 
-Il provider greenhouse in providers/greenhouse.mjs invia richieste HTTP a boards-api.greenhouse.io/v1/boards/`{slug}`/jobs e converte la risposta JSON nel formato degli annunci di career-ops. Lo slug è l'identificatore del board Greenhouse dell'azienda (ad es. 'notion' per Notion).
+Il provider greenhouse in providers/greenhouse.mjs invia richieste HTTP a boards-api.greenhouse.io/v1/boards/`{slug}`/jobs e converte la risposta JSON nel formato degli annunci di career-ops. Lo slug è l'identificatore del board Greenhouse dell'azienda (ad es. 'anthropic' per Anthropic).
 
 ## Quando usarlo
 
-Usa la scansione di Greenhouse quando le aziende che ti interessano usano Greenhouse come ATS. È il caso della maggior parte delle aziende tech statunitensi tra i 50 e i 10.000 dipendenti. templates/portals.example.yml include oltre 70 slug di Greenhouse già configurati che puoi attivare.
+Usa la scansione di Greenhouse quando le aziende che ti interessano usano Greenhouse come ATS. È il caso della maggior parte delle aziende tech statunitensi tra i 50 e i 10.000 dipendenti. templates/portals.example.yml include board di Greenhouse già configurati che puoi attivare.
 
 ## Esempio
 
+```yaml title="portals.yml"
+- name: Anthropic
+  careers_url: https://job-boards.greenhouse.io/anthropic
+  enabled: true
 ```
-In your portals.yml: `- provider: greenhouse\n  slug: notion\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.
-```
+
+La scansione successiva rileva quindi tutte le posizioni aperte di Anthropic.
 
 ## Come funziona la scansione
 
@@ -33,23 +37,25 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 58 total
-Filtered by title: 9 relevant
-Duplicates: 6 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      58
+Filtered by title:     49 removed
+Duplicates:            6 skipped
+New offers added:      3
 
-  + Notion | AI Product Engineer | greenhouse
-  + OpenAI | Applied Engineer    | greenhouse
+New offers:
+  + Anthropic | Applied AI Engineer | San Francisco, CA
+  + Intercom | AI Product Engineer | Dublin, Ireland
+  + Vercel | Forward Deployed Engineer | Remote
 ```
 
 ## Come career-ops comunica con Greenhouse
 
-career-ops interroga `boards-api.greenhouse.io/v1/boards/{slug}/jobs` e legge l'array `jobs` del JSON, prendendo di ogni posizione il titolo e il relativo `absolute_url`. Questo endpoint dei board restituisce i metadati dell'annuncio (titolo, sede e reparto), ma non la descrizione completa: per questo career-ops recupera il testo integrale dell'annuncio con una richiesta aggiuntiva per ogni posizione durante la fase di valutazione, oppure aggiungendo `?content=true` dove il board lo supporta. La scansione in sé è una semplice GET HTTPS verso un endpoint pubblico, ed è per questo che resta entro i rate limit e non consuma token del modello. Rilanciare la scansione è sicuro: ogni URL viene deduplicato rispetto alla cronologia delle scansioni, alle candidature già valutate e alla pipeline corrente, quindi una posizione che hai già visto non viene mai aggiunta due volte.
+career-ops interroga `boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=true` e legge l'array `jobs` del JSON, prendendo di ogni posizione il titolo, il relativo `absolute_url`, la sede e la descrizione completa, che arriva nella stessa risposta: quindi non serve una richiesta per ogni posizione. Quando un board indica la sede di una posizione solo come modalità di lavoro, ad esempio Remote, career-ops fa un'ulteriore richiesta all'elenco delle sedi del board per aggiungere i nomi degli uffici. La scansione in sé è una semplice GET HTTPS verso un endpoint pubblico, ed è per questo che resta entro i rate limit e non consuma token del modello. Rilanciare la scansione è sicuro: ogni URL viene deduplicato rispetto alla cronologia delle scansioni, alle candidature già valutate e alla pipeline corrente, quindi una posizione che hai già visto non viene mai aggiunta due volte.
 
 ## Cose da sapere
 
-Gli annunci ottenuti dall'API di Greenhouse includono, nell'endpoint dei board, solo titolo, sede e reparto. Il testo completo dell'annuncio richiede una richiesta aggiuntiva per ogni annuncio, che career-ops gestisce automaticamente durante la fase di valutazione.
+Poiché ogni annuncio arriva con la descrizione completa, sui board di Greenhouse i filtri sui contenuti in `portals.yml` (`content_filter`, `visa_filter` e l'idoneità per paese) leggono l'intero testo dell'annuncio, non solo il titolo. Un board grande produce una sola risposta voluminosa invece di molte risposte piccole.
 
 ## Vedi anche
 

@@ -4,8 +4,8 @@ description: "Ashby 是 AI 和开发者工具领域 A 轮到 C 轮初创公司�
 seoTitle: "用 career-ops 扫描 Ashby 职位：零 token 消耗的 ATS 招聘门户扫描"
 icon: Sparkles
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 8e0f69ac9571b6b9
+lastModified: "2026-10-16"
+translationHash: b44a43aefbce9bb4
 localized: true
 translatedFrom: /docs/reference/portals/ashby
 ---
@@ -16,7 +16,7 @@ providers/ashby.mjs 中的 ashby 适配器会向 api.ashbyhq.com/posting-api/job
 
 ## 适用场景
 
-如果你的目标是 AI 实验室、基础设施公司和新兴初创公司，就用 Ashby 扫描。templates/portals.example.yml 中预配置了 40 个 Ashby 招聘页面，ElevenLabs、Deepgram、Sierra、Decagon 和 n8n 都在其中。
+如果你的目标是 AI 实验室、基础设施公司和新兴初创公司，就用 Ashby 扫描。templates/portals.example.yml 中预配置了多个 Ashby 招聘页面，ElevenLabs、Deepgram、Sierra、Decagon 和 n8n 都在其中。
 
 ## 示例
 
@@ -37,14 +37,16 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 41 total
-Filtered by title: 6 relevant
-Duplicates: 3 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      41
+Filtered by title:     35 removed
+Duplicates:            3 skipped
+New offers added:      3
 
-  + ElevenLabs | Applied AI Engineer | ashby
-  + Deepgram   | Inference Engineer  | ashby
+New offers:
+  + ElevenLabs | Applied AI Engineer | London, UK
+  + Deepgram | Inference Engineer | Remote
+  + Sierra | Agent Engineer | San Francisco, CA
 ```
 
 ## career-ops 如何对接 Ashby
@@ -54,6 +56,15 @@ career-ops 调用 Ashby 公开的职位发布 API `api.ashbyhq.com/posting-api/j
 ## 注意事项
 
 Ashby 的招聘页面 API 会直接返回完整的 JD 文本，不需要再发后续请求。每个招聘页面大约需要 10 秒才能响应，因此扫描大量 Ashby 招聘页面时，耗时会比同等数量的 Greenhouse 或 Lever 招聘页面稍长一些。
+
+有些公司会关闭 Ashby 的职位发布 API，但招聘页面仍然在线：职位明明还在发布，API 却返回 404。遇到这种公司，在它的条目中加上 `ashby: { embed: true }`，career-ops 就会改为从 Ashby 提供给公司招聘网站嵌入用的页面读取招聘页面。如果条目中的 `careers_url` 是公司自己的网站，而不是 `jobs.ashbyhq.com` 地址，还要用 `ashby: { board: <slug> }` 指明招聘页面。通过这个来源获取的职位不含描述和发布日期，薪资范围也只保留为展示文本，不会解析成薪资数据。这个选项需要手动开启，因为 404 通常意味着招聘页面已关闭或 slug 拼错了，这种情况应该继续报错。
+
+```yaml title="portals.yml"
+- name: Example Co
+  careers_url: https://jobs.ashbyhq.com/exampleco
+  ashby: { embed: true }
+  enabled: true
+```
 
 ## 相关页面
 
