@@ -4,8 +4,8 @@ description: "O Ashby é o ATS moderno preferido por startups de Série A a C na
 seoTitle: "Buscar vagas no Ashby com o career-ops — varredura de portais ATS sem gastar tokens"
 icon: Sparkles
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 8e0f69ac9571b6b9
+lastModified: "2026-10-16"
+translationHash: b44a43aefbce9bb4
 localized: true
 translatedFrom: /docs/reference/portals/ashby
 ---
@@ -16,7 +16,7 @@ O provider ashby em providers/ashby.mjs faz requisições HTTP para api.ashbyhq.
 
 ## Quando usar
 
-Use a varredura do Ashby quando o seu alvo forem laboratórios de IA, empresas de infraestrutura e startups modernas. ElevenLabs, Deepgram, Sierra, Decagon e n8n estão entre os 40 quadros de vagas do Ashby pré-configurados em templates/portals.example.yml.
+Use a varredura do Ashby quando o seu alvo forem laboratórios de IA, empresas de infraestrutura e startups modernas. ElevenLabs, Deepgram, Sierra, Decagon e n8n estão entre os quadros de vagas do Ashby pré-configurados em templates/portals.example.yml.
 
 ## Exemplo
 
@@ -37,14 +37,16 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 41 total
-Filtered by title: 6 relevant
-Duplicates: 3 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      41
+Filtered by title:     35 removed
+Duplicates:            3 skipped
+New offers added:      3
 
-  + ElevenLabs | Applied AI Engineer | ashby
-  + Deepgram   | Inference Engineer  | ashby
+New offers:
+  + ElevenLabs | Applied AI Engineer | London, UK
+  + Deepgram | Inference Engineer | Remote
+  + Sierra | Agent Engineer | San Francisco, CA
 ```
 
 ## Como o career-ops se comunica com o Ashby
@@ -54,6 +56,15 @@ O career-ops chama a API pública de vagas do Ashby em `api.ashbyhq.com/posting-
 ## Pontos de atenção
 
 A API de quadro de vagas do Ashby retorna o texto completo da descrição da vaga diretamente, sem precisar de uma segunda requisição. Cada quadro leva cerca de dez segundos para responder, então uma varredura com muitos quadros do Ashby demora um pouco mais do que a mesma quantidade de quadros do Greenhouse ou do Lever.
+
+Algumas empresas desativam a API pública de vagas do Ashby, mas mantêm o quadro de vagas no ar: a API responde 404 mesmo com as vagas ainda publicadas. Nesse caso, adicione `ashby: { embed: true }` à entrada da empresa, e o career-ops passa a ler o quadro a partir da página que o Ashby fornece para incorporá-lo em sites de carreiras. Se o `careers_url` da entrada for o site próprio da empresa, e não um endereço `jobs.ashbyhq.com`, indique também o quadro com `ashby: { board: <slug> }`. Nessa fonte, cada vaga vem sem descrição e sem data de publicação, e a faixa salarial fica como texto de exibição, em vez de um salário estruturado. A opção vem desativada por padrão porque um 404 normalmente indica um quadro encerrado ou um slug digitado errado, e isso deve continuar sendo tratado como erro.
+
+```yaml title="portals.yml"
+- name: Example Co
+  careers_url: https://jobs.ashbyhq.com/exampleco
+  ashby: { embed: true }
+  enabled: true
+```
 
 ## Relacionados
 

@@ -1,11 +1,11 @@
 ---
 title: pdf
-description: "Génère un CV PDF adapté à une JD précise en utilisant Playwright pour rendre le markdown à travers un modèle typographique épuré. Le résultat est structurellement simple — pas de tableaux, pas de colonnes, pas de graphiques — exactement ce que les parseurs ATS traitent de manière fiable."
+description: "Génère un CV PDF adapté à une JD précise : career-ops construit le CV en HTML à partir d'un modèle typographique épuré, puis Playwright l'imprime en PDF. Le résultat est structurellement simple (pas de tableaux, pas de colonnes, pas de graphiques), exactement ce que les parseurs ATS traitent de manière fiable."
 seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-09"
-translationHash: ac6b7dc3c06568ee
+lastModified: "2026-10-16"
+translationHash: 9984c0907b44e26b
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -34,6 +34,8 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
 La mise en page reste sur une seule colonne, avec des en-têtes de section standard et du texte sélectionnable — la structure que les parseurs ATS lisent sans difficulté — et les mots-clés sont intégrés à de véritables réalisations, jamais inventés.
+
+La couverture des mots-clés est mesurée par rapport à la section des mots-clés du rapport d'évaluation de l'annonce. Si le rapport n'en contient pas, career-ops note à la place les compétences qu'il trouve dans la description de poste archivée avec le rapport, et vous indique quelle source il a utilisée. Un rapport sans section de mots-clés est un défaut à corriger dans le rapport, pas un feu vert.
 
 ## Quand y recourir
 

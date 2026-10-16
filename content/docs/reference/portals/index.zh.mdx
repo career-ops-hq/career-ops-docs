@@ -1,0 +1,18 @@
+---
+title: 招聘门户
+description: "深入介绍 career-ops 所扫描的招聘管理系统（ATS）中的三个：Greenhouse、Ashby 和 Lever。扫描过程本身不消耗任何 AI token。"
+icon: Radar
+translationHash: 7861539d2cd00351
+localized: true
+translatedFrom: /docs/reference/portals
+---
+
+career-ops 通过这些招聘管理系统的公开招聘板 API 进行扫描，所以扫描本身不消耗任何 AI token。每个页面都会介绍扫描器做了什么、career-ops 如何与该系统通信，以及值得了解的注意事项。
+
+这只是其中三个。扫描器还能读取其他招聘管理系统和招聘网站，完整列表见核心仓库中的 [Supported Job Boards](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md)。
+
+- **[Greenhouse](/zh/docs/reference/portals/greenhouse)**：career-ops 直接调用 Greenhouse 的公开招聘板 API。不抓取 HTML，没有触发速率限制的风险，扫描过程本身也不消耗任何 AI token。
+- **[Ashby](/zh/docs/reference/portals/ashby)**：在 AI 和开发者工具领域，Ashby 是 A 轮到 C 轮初创公司青睐的新一代 ATS。career-ops 直接调用它的公开招聘板 API。
+- **[Lever](/zh/docs/reference/portals/lever)**：Lever 是中型企业和成长期公司常用的老牌 ATS。career-ops 直接调用 Lever 的公开职位发布 API。
+
+要对所有门户运行一次扫描，请参阅[扫描招聘门户](/zh/docs/introduction/guides/scan-job-portals)。

@@ -63,8 +63,9 @@ export const homeFr: HomeDict = {
       d’emploi sans consommer de jetons et suit votre pipeline dans un
       tableau de bord en terminal écrit en Go. Tout vit sur votre machine :{' '}
       {brand('sans cloud')}, {brand('sans télémétrie')}, {brand('sans compte')}.
-      Sous licence MIT et gratuit pour toujours ; le seul coût est le CLI d’IA
-      que vous payez déjà. Créé par Santiago Fernández de Valderrama Aparicio
+      Sous licence MIT et gratuit pour toujours ; la seule chose que vous pourriez
+      payer est le moteur d’IA que vous choisissez, et les modèles gratuits et locaux
+      fonctionnent aussi. Créé par Santiago Fernández de Valderrama Aparicio
       après une vraie recherche d’emploi en 2026 : 740 annonces évaluées, 68
       candidatures, 12 entretiens et une offre.
     </>
@@ -287,7 +288,7 @@ export const homeFr: HomeDict = {
           publie sa grille d’évaluation complète. Un humain garde la main sur
           chaque candidature ; il n’envoie jamais tout seul. Pas de compte, pas de
           télémétrie, pas d’abonnement à career-ops lui-même ; le seul coût
-          récurrent est le CLI d’IA que vous choisissez. Pour des comparaisons
+          récurrent, s’il y en a un, est le moteur d’IA que vous choisissez. Pour des comparaisons
           honnêtes, côte à côte, avec des outils précis, voyez{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

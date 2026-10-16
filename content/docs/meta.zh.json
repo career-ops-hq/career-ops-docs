@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "---入门---",
+    "index",
+    "free-ai-engine",
+    "supported-clis",
+    "claude-code",
+    "windows",
+    "introduction/what-is-career-ops",
+    "introduction/guides",
+    "faq",
+    "---参考---",
+    "reference/modes",
+    "reference/portals",
+    "reference/glossary"
+  ]
+}

@@ -135,6 +135,7 @@ Full documentation and a home page in each language; same content, same facts.
 - Deutsch: https://career-ops.org/de · docs https://career-ops.org/de/docs
 - Português (Brasil): https://career-ops.org/pt · docs https://career-ops.org/pt/docs
 - Italiano: https://career-ops.org/it · docs https://career-ops.org/it/docs
+- 简体中文: https://career-ops.org/zh · docs https://career-ops.org/zh/docs
 
 ## License
 
@@ -182,7 +183,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror — the same content as the HTML page, ~20-100x fewer tokens — with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\` or \`/it/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all six languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror: the same content as the HTML page in ~20-100x fewer tokens, with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\`, \`/it/docs\` or \`/zh/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all seven languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 

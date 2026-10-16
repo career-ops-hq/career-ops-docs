@@ -1,18 +1,18 @@
 ---
 title: auto-pipeline
-description: "Standardablauf, wenn du die URL oder den Rohtext einer Stellenanzeige einfügst. Führt die A–H-Bewertung aus, erstellt den Bericht, exportiert ein zugeschnittenes PDF und schreibt einen Tracker-Eintrag, ohne dass du zwischen den Schritten eingreifen musst."
+description: "Standardablauf, wenn du die URL oder den Rohtext einer Stellenanzeige einfügst. Führt die A–H-Bewertung aus, erstellt den Bericht, exportiert ein zugeschnittenes PDF und schreibt einen Tracker-Eintrag in einem einzigen Durchlauf. Angehalten wird nur, wenn eine Antwort von dir nötig ist."
 seoTitle: "career-ops auto-pipeline — eine Stelle bewerten und Lebenslauf + Tracker aus einer einzigen URL erstellen"
 icon: Zap
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 233c7fa8819747b5
+lastModified: "2026-10-16"
+translationHash: 618e23f3b4b2c9d2
 localized: true
 translatedFrom: /docs/reference/modes/auto-pipeline
 ---
 
 ## Was der Modus macht
 
-career-ops ruft auto-pipeline immer dann auf, wenn du die URL einer Stellenbeschreibung oder eingefügten Text in den Prompt gibst. Der Modus liest die Stellenanzeige und bewertet sie nach dem Bewertungsschema, das aus fünf Dimensionen und einer ganzheitlichen Gesamtbewertung besteht. Dann schreibt er die Bewertung nach reports/, erzeugt über Playwright das zugeschnittene PDF und aktualisiert den Tracker-Eintrag. Das alles passiert in einem einzigen Durchlauf des Agenten.
+career-ops ruft auto-pipeline immer dann auf, wenn du die URL einer Stellenbeschreibung oder eingefügten Text in den Prompt gibst. Der Modus liest die Stellenanzeige und bewertet sie nach dem Bewertungsschema, das aus fünf Dimensionen und einer ganzheitlichen Gesamtbewertung besteht. Dann schreibt er die Bewertung nach reports/, erzeugt über Playwright das zugeschnittene PDF und aktualisiert den Tracker-Eintrag. Das alles passiert in einem einzigen Durchlauf. Der Modus hält nur in zwei Fällen an, um dich zu fragen: wenn das Unternehmen auf deiner Blacklist steht oder wenn die Stelle über eine Personalvermittlung kommt und du bestätigen musst, über welche.
 
 ## Wann du ihn nutzt
 
@@ -40,6 +40,8 @@ Updated data/applications.md (Report and PDF marked done).
 - Vor der Bewertung prüft der Modus, ob die Anzeige noch online ist. Ist der Link tot oder die Seite nur eine leere Hülle mit dem Hinweis „Stelle besetzt“, bricht er an dieser Stelle ab und bewertet keine Phantominhalte. Stammt der Eintrag aus `data/pipeline.md`, markiert er diese Zeile als geschlossen.
 - Eine LinkedIn-Seite, deren Beschreibung dauerhaft nur ein Ladeplatzhalter bleibt, ist weder eine geschlossene Stelle noch eine Stellenbeschreibung. auto-pipeline hält dann vor der Bewertung, dem Bericht, dem PDF und jedem Tracker-Eintrag an. Der Modus bittet dich, den Text der Stellenanzeige einzufügen oder für dieselbe Stelle einen Link zur Karriereseite des Arbeitgebers oder zum ATS anzugeben.
 - Entwürfe für Antworten im Bewerbungsformular entstehen nur ab einer Bewertung von 4,5. So verbrauchen schlecht passende Stellen keine Tokens für Texte, die du ohnehin nicht abschickst.
+- Der gespeicherte Bericht folgt dem Format von [oferta](/de/docs/reference/modes/oferta). Dazu gehören das einzeilige Fazit nach Block G und die Recruiter-Prüfungen, die Block G durchführt, wenn dir ein Recruiter die Stelle vermittelt hat.
+- In einer CLI, in der der Agent seine eigene Sitzung umbenennen kann, bekommt die Sitzung den Namen der Stellenanzeige, etwa `VP Infrastructure, Acme Health`, sobald die Stellenbeschreibung gelesen ist. Setze `session_title: off` in `config/profile.yml`, wenn du deine eigenen Sitzungstitel behalten willst.
 
 ## Stolperfallen
 

@@ -22,6 +22,7 @@ const HOME_ROUTE = {
   de: ['src/app/de/(home)/page.tsx', 'src/app/_home/home-de.tsx'],
   pt: ['src/app/pt/(home)/page.tsx', 'src/app/_home/home-pt.tsx'],
   it: ['src/app/it/(home)/page.tsx', 'src/app/_home/home-it.tsx'],
+  zh: ['src/app/zh/(home)/page.tsx', 'src/app/_home/home-zh.tsx'],
 } as const;
 
 export function homeLastModified(locale: keyof typeof HOME_ROUTE): Date | undefined {

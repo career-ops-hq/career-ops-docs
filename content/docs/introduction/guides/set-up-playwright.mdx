@@ -49,6 +49,8 @@ npx playwright install chromium
 
 This is a one-time step. You do not need to repeat it after `npm` updates.
 
+`npm install` skips the automatic download when `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` is set in your environment to anything other than empty, `0` or `false`; in that case, run the command above yourself. On NixOS, skip it altogether: the downloaded browsers cannot start there, and the repository's flake dev shell provides working ones and the Playwright MCP server instead, as the core's [NixOS guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) explains.
+
 ## Configure the Playwright MCP
 
 The Playwright MCP lets Claude control the browser directly during the `/career-ops apply` step — navigating to job application forms, reading field labels, and suggesting answers.
@@ -63,7 +65,7 @@ claude mcp add --scope project playwright -- npx @playwright/mcp@latest
 
 This is the one-step registration method from the [Playwright MCP docs](https://playwright.dev/docs/getting-started-mcp), with `--scope project` added so Claude Code writes the server entry to `.mcp.json` in the career-ops root, one of the files `npm run doctor` checks. The next time you start Claude Code there, approve the server when it asks.
 
-To use it in every project instead, run the command with `--scope user`. `npm run doctor` does not read user-scoped servers, so it will then warn that it cannot detect the MCP even though Claude Code loads it.
+To use it in every project instead, run the command with `--scope user`. `npm run doctor` finds it there too: it reads the servers Claude Code keeps for your user and for this project, not only `.mcp.json`.
 
 ### Manual configuration (alternative)
 

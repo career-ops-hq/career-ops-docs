@@ -76,6 +76,8 @@ career-ops uses a headless Chromium for several jobs: rendering PDFs, checking w
 npx playwright install chromium
 ```
 
+`npm install` skips that download when `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` is set in your environment to anything other than empty, `0` or `false`; in that case, run the command above yourself. On NixOS, skip this step: the downloaded browsers cannot start there, and the repository's flake dev shell provides working ones instead, as the core's [NixOS guide](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) explains.
+
 ## Step 2: Open your AI assistant
 
 From inside the `career-ops` folder, launch the AI coding CLI you installed.
@@ -232,6 +234,8 @@ Open the report file in `reports/`. The filename follows the pattern `{number}-{
 - **Block F** — interview preparation with STAR stories tailored to this job.
 - **Block G** — posting legitimacy: a heuristic check of signals such as whether the posting is still open and whether it keeps being reposted. It reports what it finds and leaves the judgment to you.
 - **Block H** — draft answers for the application form, written only when the score is 4.5 or higher.
+
+Right after Block G, the **Verdict** gives the call in bold (Apply, Consider, Research first or Skip) and one reason drawn from the blocks above, so you know the answer before reading the rest.
 
 Your tailored PDF resume is in the `output/` folder. Review it before sending it anywhere — career-ops never submits anything without your approval.
 

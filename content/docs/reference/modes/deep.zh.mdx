@@ -1,0 +1,52 @@
+---
+title: deep
+description: "为你正在评估的公司生成一份结构化的调研提示词，涵盖 AI 战略、近期动向、工程文化、可能面临的挑战、竞争对手，以及你作为候选人的切入角度。在申请一家你还不太了解的 B 轮及以后的公司之前，把它粘贴到 Perplexity、Claude 或 ChatGPT 中使用。"
+seoTitle: "career-ops deep 模式：申请之前先生成公司调研提示词"
+icon: Search
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: cef52678d1e8b67a
+localized: true
+translatedFrom: /docs/reference/modes/deep
+---
+
+## 它能做什么
+
+`deep` 模式会为你正在评估的公司生成一份结构化的调研提示词，围绕六个方面展开：它的 AI 战略、它最近六个月的动向、它的工程文化、它可能面临的技术挑战、它的竞争对手和差异化优势，以及你作为候选人的切入角度。你把这份提示词粘贴到 Perplexity、Claude 或 ChatGPT 这类调研工具中，它会返回一份简报，供你在面试前阅读。deep 会结合具体的职位和公司，为每个方面定制问题。
+
+## 什么时候使用
+
+当你申请一家 B 轮及以后的公司，而要决定是否申请、或者怎样准备面试，光靠 JD 提供的信息还不够时，就用 deep。“候选人切入角度”这一项会读取你的 cv.md 和 profile.yml，所以返回的简报最后落在你具体能带来什么上，而不是停留在泛泛的公司信息。
+
+## 实际运行效果
+
+告诉 deep 一家公司和一个职位，它就会写出一份可以直接粘贴的调研提示词。六个方面各是一份问题清单，供调研工具逐一回答，最后一个方面则把调研结果重新落回到你身上。
+
+```txt title="Example"
+> /career-ops deep notion
+
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
+```
+
+## 注意事项
+
+简报的质量取决于调研工具能找到的公开信息。处于隐身模式的初创公司往往只能得到很少的结果，而且任何工具都可能凭空编造一轮融资或一位高管的名字。在据此做出重大决定之前，请对照一手来源核实所有内容。
+
+## 相关链接
+
+- [oferta](/zh/docs/reference/modes/oferta)
+- [contacto](/zh/docs/reference/modes/contacto)
+- [interview-prep](/zh/docs/reference/modes/interview-prep)

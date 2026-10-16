@@ -1,0 +1,63 @@
+---
+title: Lever
+description: "Lever 是中型企业和成长期公司常用的老牌 ATS。career-ops 直接调用 Lever 的公开职位发布 API。"
+seoTitle: "用 career-ops 扫描 Lever 职位：零 token 消耗的 ATS 招聘门户扫描"
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: c4bc88a2232f7c33
+localized: true
+translatedFrom: /docs/reference/portals/lever
+---
+
+## 它能做什么
+
+providers/lever.mjs 中的 lever provider 会向 api.lever.co/v0/postings/`{slug}` 发送 HTTP 请求，并解析返回的 JSON。slug 是该公司在 Lever 上的职位发布标识符（例如 Mistral AI 对应 'mistral'）。
+
+## 什么时候使用
+
+如果你的目标公司在 Lever 上发布职位，就用 Lever 扫描。Mistral AI、Palantir 和 Spotify 都在 templates/portals.example.yml 预先配置好的 Lever 招聘板之列。
+
+## 示例
+
+```yaml title="portals.yml"
+- name: Mistral AI
+  careers_url: https://jobs.lever.co/mistral
+  enabled: true
+```
+
+下一次扫描就会抓取 Mistral AI 当前开放的职位。
+
+## 扫描器做了什么
+
+扫描器会从 portals.yml 读取你启用的 Lever slug，逐个调用 Lever 的公开职位发布 API，再把新出现且职位名称匹配的职位合并到你的 pipeline 中。整个过程不需要浏览器会话，抓取环节也不消耗任何 LLM token。同一次 `node scan.mjs` 运行还会覆盖你的 Greenhouse 和 Ashby 招聘板，然后用你配置的职位名称关键词过滤所有结果。
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Companies scanned:     12
+Total jobs found:      33
+Filtered by title:     28 removed
+Duplicates:            2 skipped
+New offers added:      3
+
+New offers:
+  + Mistral AI | Applied AI Engineer | Paris, France
+  + Palantir | Forward Deployed Engineer | London, UK
+  + Spotify | ML Engineer, Search | Stockholm, Sweden
+```
+
+## career-ops 如何与 Lever 通信
+
+career-ops 请求 `api.lever.co/v0/postings/{slug}`（欧盟的招聘板则使用 `api.eu.lever.co` 主机），并读取返回的职位 JSON 数组。对每个职位，它把 `text` 字段作为职位名称，把 `hostedUrl` 作为链接，同时读取工作地点、创建日期和完整的职位描述。由于 Lever 在一次结构化响应中返回整个招聘板，每家公司的扫描只需一次公开的 HTTPS GET 请求，不会超出速率限制，也不消耗任何模型 token。只有之后你评估某个想要争取的职位时，才会开始消耗 token。重复运行扫描是安全的：每个 URL 都会与你的扫描历史、已评估的申请和当前的 pipeline 进行去重，所以你已经看过的职位绝不会被重复添加。
+
+## 注意事项
+
+Lever 的 API 会在职位发布响应中提供完整的职位描述（JD）：开头的介绍、每个列表部分（例如任职要求和工作职责）以及结尾的文字。`portals.yml` 中的内容过滤器（`content_filter` 和 `visa_filter`）会读取全部内容，所以即使某个短语只出现在 Lever 职位的任职要求列表中，也照样能匹配上。
+
+## 相关链接
+
+- [greenhouse](/zh/docs/reference/portals/greenhouse)
+- [ashby](/zh/docs/reference/portals/ashby)
