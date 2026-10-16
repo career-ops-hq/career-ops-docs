@@ -1,18 +1,18 @@
 ---
 title: patterns
-description: "读取你被拒和已放弃的申请，找出其中的规律：评分很高却始终没有转化的 JD 类型、岗位原型不匹配、薪资区间问题。输出结果是一个信号，用来校准你筛选目标职位的标准。"
+description: "读取你 tracker 中的每一份申请及其结果，找出其中的规律：评分很高却始终没有转化的 JD 类型、岗位原型不匹配、薪资区间问题。输出结果是一个信号，用来校准你筛选目标职位的标准。"
 seoTitle: "career-ops patterns 模式：找出你的申请为什么没有转化"
 icon: TrendingDown
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: ec2b5cac4a6478d7
+lastModified: "2026-10-16"
+translationHash: e64bea9a156c3def
 localized: true
 translatedFrom: /docs/reference/modes/patterns
 ---
 
 ## 它能做什么
 
-`patterns` 模式会读取处于被拒（rejected）和已放弃（discarded）阶段的每一份报告，从中寻找共同特征（行业、公司规模、职级、特定关键词），然后生成一份结构化分析，说明你的目标定位中哪些做法有效、哪些无效。
+`patterns` 模式会读取你 tracker 中的每一份申请及其报告，把取得进展的申请与停滞不前、被拒或已放弃的申请进行对比，从中寻找共同特征（行业、公司规模、职级、特定关键词），然后生成一份结构化分析，说明你的目标定位中哪些做法有效、哪些无效。
 
 ## 什么时候使用
 
@@ -41,7 +41,7 @@ Full report: reports/pattern-analysis-2026-05-18.md
 
 ## 什么时候值得运行
 
-当足够多的申请已经走过评估阶段、结果开始具有参考价值时，就可以运行 patterns 了。硬性门槛是至少五条状态表明申请确实已经发出的记录：Applied、Responded、Interview、Offer、Hired 或 Rejected。Discarded 和 SKIP 的记录不计入。不足五条时，这个模式会直接退出，请你积累更多数据后再来。结果越多，规律就越清晰，所以在持续申请一个月之后，它才真正物有所值。
+当足够多的申请已经走过评估阶段、结果开始具有参考价值时，就可以运行 patterns 了。硬性门槛是至少五条状态表明申请确实已经发出的记录：Applied、Responded、Assessment、Interview、Offer、Hired 或 Rejected。Discarded 和 SKIP 的记录不计入。不足五条时，这个模式会直接退出，请你积累更多数据后再来。结果越多，规律就越清晰，所以在持续申请一个月之后，它才真正物有所值。
 
 - 如果你在 `interview-prep/sessions/` 中保存了面试记录，这个模式还会多提供一个目标定位信号：你最流畅、最具体的回答集中在哪些方面。这样，当你最擅长的岗位类型与你一直在申请的岗位类型不一致时，它就能发现。
 - 报告从不点名这些记录中真实的面试官或公司，只按能力领域进行归纳汇总，因此即使报告被 commit，私密信息也不会外泄。

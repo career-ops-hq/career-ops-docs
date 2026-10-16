@@ -4,15 +4,15 @@ description: "Segnala le candidature e i colloqui per cui è ora di farsi risent
 seoTitle: "Modalità followup di career-ops: follow-up in ritardo e bozze dei messaggi"
 icon: CalendarClock
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: b1eb8003f10d7ed3
+lastModified: "2026-10-16"
+translationHash: 7853e38229463e38
 localized: true
 translatedFrom: /docs/reference/modes/followup
 ---
 
 ## Cosa fa
 
-La modalità followup legge il tracker delle tue candidature, confronta la data dell'ultimo contatto con la cadenza configurata (per impostazione predefinita: un primo sollecito 7 giorni dopo la candidatura e, 1 giorno dopo un colloquio, un messaggio di ringraziamento) e segnala le voci in ritardo o urgenti. Per ogni voce segnalata prepara la bozza di un messaggio di follow-up contestualizzato, basato sul relativo report e sul tuo curriculum.
+La modalità followup legge il tracker delle tue candidature, confronta la data dell'ultimo contatto con la cadenza configurata (per impostazione predefinita: un primo sollecito 7 giorni dopo la candidatura e, 1 giorno dopo un colloquio, un messaggio di ringraziamento; una riga in stato Assessment, cioè un test online o uno screening asincrono, riceve il primo sollecito dopo 1 giorno e poi uno ogni 3 giorni) e segnala le voci in ritardo o urgenti. Per ogni voce segnalata prepara la bozza di un messaggio di follow-up contestualizzato, basato sul relativo report e sul tuo curriculum.
 
 ## Quando usarla
 
@@ -46,6 +46,17 @@ Draft — Notion (overdue):
 ## A cosa fare attenzione
 
 Una candidatura in stato Applied riceve al massimo due follow-up; se anche il secondo resta senza risposta, followup smette di preparare bozze e ti suggerisce di chiudere la voce o di provare con un altro contatto tramite `contacto`. Vuoi una cadenza più stretta dei sette giorni predefiniti? Passa un flag allo script di cadenza (`node followup-cadence.mjs --applied-days 5`) invece di modificare le bozze a mano.
+
+## Come disattivare i follow-up
+
+I follow-up sono attivi per impostazione predefinita. Per disattivarli, imposta questo in `config/profile.yml`:
+
+```yaml
+follow_ups:
+  enabled: false
+```
+
+Con questa impostazione la modalità si ferma prima di eseguire lo script di cadenza e ti spiega come riattivare i follow-up, e non viene programmato nulla quando una riga passa allo stato Applied. La modalità `contacto` è un primo contatto, non un follow-up, quindi continua a funzionare. Solo un `false` esplicito li disattiva: per riattivarli, imposta `enabled: true` oppure rimuovi il blocco.
 
 ## Vedi anche
 

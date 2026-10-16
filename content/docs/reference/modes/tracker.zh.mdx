@@ -4,15 +4,15 @@ description: "快速查看每份申请目前进展到哪一步。适合作为每
 seoTitle: "career-ops tracker 模式：一眼看清每份求职申请的进度"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: c95cd399167d223d
+lastModified: "2026-10-16"
+translationHash: ef85d61f0db91378
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
 
 ## 它能做什么
 
-`tracker` 模式会读取 reports/ 中的每个文件，生成一份按阶段分组的结构化摘要：已投递、已评估、面试、被拒、已放弃。各阶段的数量、近期动态以及已超期的跟进事项，都会在同一条回复中列出。
+`tracker` 模式会读取你的 tracker，也就是 `data/applications.md`，并在同一条回复中列出每份申请及其当前状态。随后是一个统计区块：总数、各状态的数量、平均评分、有多少行已生成定制 PDF 和报告，以及在你投递过申请之后，你的申请在各阶段之间推进的速度。
 
 ## 什么时候使用
 
@@ -38,7 +38,7 @@ Total: 3   Applied: 1   Interview: 1   Evaluated: 1
 Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-申请会在一组固定的状态之间流转：Evaluated（报告已写好，尚待决定）、Applied（你已提交申请）、Responded（公司已回复，但还没有安排面试）、Interview（面试流程正在进行），最后进入一个终态：Offer、Rejected、Discarded，或者用于不合适职位的 SKIP。要记录状态变更，可以直接在聊天中提出，也可以自己运行 `node set-status.mjs <report#|company> <state>`；如果变更发生在更早的某一天，再加上 `--on YYYY-MM-DD`。这条命令会拒绝未知状态，在写入时锁定 tracker，并把这次状态转换记录到 `data/status-log.tsv`，也就是 funnel-velocity（漏斗速度）统计所读取的台账。所以请用它，而不要手动编辑那一行。
+申请会在一组固定的状态之间流转：Evaluated（报告已写好，尚待决定）、Applied（你已提交申请）、Responded（公司已回复，但还没有安排面试）、Assessment（在线测评或异步筛选正在进行）、Interview（面试流程正在进行），最后进入一个终态：Offer、Rejected、Discarded、用于不合适职位的 SKIP，或者在你接受 offer 之后的 Hired。要记录状态变更，可以直接在聊天中提出，也可以自己运行 `node set-status.mjs --report <report#> <state>`；如果变更发生在更早的某一天，再加上 `--on YYYY-MM-DD`。没有报告的行则改为按公司选中：`node set-status.mjs "<company>" <state>`；如果有多行属于同一家公司，再加上 `--role`。这条命令会拒绝未知状态，在写入时锁定 tracker，并把这次状态转换记录到 `data/status-log.tsv`，也就是 funnel-velocity（漏斗速度）统计所读取的台账。所以请用它，而不要手动编辑那一行。
 
 如果想修正一条备注，而不是再追加一条，就用 `--replace-note` 传入旧备注，用 `--note` 传入新内容。不加 `--replace-note` 时，`--note` 只会追加，这样该行就会留下像 `not applied; applied` 这样自相矛盾的内容。匹配的是以 `; ` 分隔的一整条备注；如果 Notes 单元格中既没有旧备注也没有新内容，就不会写入任何东西：
 
@@ -58,6 +58,19 @@ npm run fix-report-links               # apply; the tracker is backed up to .bak
 ```
 
 其他所有单元格、行的顺序和换行符都保持原样。如果某个 Report 单元格里的内容不是恰好一个链接，它会被列出来留给你手动检查，并且不做任何改动。重复运行时，第二次不会再做任何改动。
+
+## 检查职位是否仍在招聘
+
+职位常常在对应的行还停留在 Evaluated 或 Applied 时就已关闭。`node check-liveness.mjs --tracker` 会检查每一个 Evaluated 和 Applied 行对应的职位；用 `--status=` 可以选择其他状态。它从该行的 URL 单元格或其报告中的 `**URL:**` 行获取每个职位的链接，并按编号列出两者都没有的行。
+
+要清理那些职位已关闭的 Evaluated 行，建议先预览：
+
+```bash
+node check-liveness.mjs --tracker --discard-expired          # dry run: lists the rows it would move
+node check-liveness.mjs --tracker --discard-expired --apply  # moves them
+```
+
+只有被判定为 `expired` 的职位才会让对应的行从 Evaluated 移到 Discarded，并附上备注 `posting closed YYYY-MM-DD`。判定结果不确定的行保持原样，所有 Applied 行也一样。
 
 ## 查看累计数据
 
