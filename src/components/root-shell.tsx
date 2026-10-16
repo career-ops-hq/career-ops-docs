@@ -11,7 +11,7 @@ import { LocaleRootProvider, type SiteLocale } from '@/components/locale-root-pr
 import { FooterLocaleLink } from '@/components/footer-locale-link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { UI } from '@/lib/ui-strings';
-import { DEFAULT_OG_IMAGE } from '@/lib/shared';
+import { OG_IMAGE_BY_LOCALE } from '@/lib/shared';
 
 import type { Metadata } from 'next';
 
@@ -28,10 +28,16 @@ import type { Metadata } from 'next';
 // metadata one key deep, so a page that defines openGraph WITHOUT images
 // drops this fallback; verify-i18n-seo fails any sitemap URL left without
 // og:image or twitter:image, which catches that case.
-export const rootMetadata: Metadata = {
-  metadataBase: new URL('https://career-ops.org'),
-  openGraph: { images: [DEFAULT_OG_IMAGE] },
-};
+// The fallback card is the one of the page's language (rootMetadataFor), so a
+// Chinese page without a card of its own shares the Chinese home card.
+export function rootMetadataFor(locale: SiteLocale): Metadata {
+  return {
+    metadataBase: new URL('https://career-ops.org'),
+    openGraph: { images: [OG_IMAGE_BY_LOCALE[locale]] },
+  };
+}
+
+export const rootMetadata: Metadata = rootMetadataFor('en');
 
 // Social brand marks as inline SVG (the installed lucide-react 1.8.0
 // predates Lucide's brand-icon set; using canonical brand paths keeps
@@ -74,20 +80,28 @@ const inter = Inter({
 });
 
 // The document shell every root layout renders: (en)/layout.tsx for English
-// and es/, fr/ and de/layout.tsx for each translation. One root layout per
+// and es/, fr/, de/, pt/, it/ and zh/layout.tsx for each translation. One root layout per
 // locale is what lets the server render <html lang> right for every page
 // (search-ops D1): with a single root layout it was "en" everywhere and a
 // script corrected it in the browser, which crawlers that read raw HTML never
 // saw.
+// The language tag each locale declares in <html lang>, the content-language
+// meta and the Content-Language header (next.config.mjs). The URL code and the
+// hreflang stay two letters; Chinese names its script, zh-Hans, so browsers on
+// a Japanese system pick Simplified glyphs rather than Japanese forms (search-ops
+// F1, 15-oct). Keep in sync with LANG_TAG in scripts/verify-i18n-seo.mjs.
+const LANG_TAG: Partial<Record<SiteLocale, string>> = { zh: 'zh-Hans' };
+
 export async function RootShell({ locale, children }: { locale: SiteLocale; children: ReactNode }) {
   const schema = await siteSchema();
+  const lang = LANG_TAG[locale] ?? locale;
   return (
-    <html lang={locale} className={inter.className} suppressHydrationWarning>
+    <html lang={lang} className={inter.className} suppressHydrationWarning>
       <head>
         {/* Bing reads <meta http-equiv="content-language"> before <html lang>
             and the HTTP header; it is also the signal search-ops' i18n_check
             requires on every translated page (i18n SEO audit, 30-sep). */}
-        {locale !== 'en' && <meta httpEquiv="content-language" content={locale} />}
+        {locale !== 'en' && <meta httpEquiv="content-language" content={lang} />}
         {/* Brand entity disambiguation — added 2026-05-25 against the
             typosquat careerops.org (no hyphen). application-name + the
             iOS variant tell browsers and entity reconcilers that the

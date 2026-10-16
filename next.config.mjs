@@ -61,6 +61,8 @@ const config = {
   outputFileTracingIncludes: {
     '/icon': ['./src/app/_fonts/*.ttf'],
     '/apple-icon': ['./src/app/_fonts/*.ttf'],
+    // The Chinese docs cards read their glyphs from disk (route.tsx, #190).
+    '/og/docs/\\[...slug\\]': ['./src/app/_fonts/og-zh/*.ttf'],
     '/manifesto/s/\\[username\\]/opengraph-image*': [
       './src/app/(en)/manifesto/s/[username]/*.ttf',
     ],
@@ -119,11 +121,11 @@ const config = {
         // had no markdown twin at all. See the route header for why the locale
         // is an explicit path segment rather than an optional prefix.
         {
-          source: '/:lang(es|fr|de|pt|it)/docs.md',
+          source: '/:lang(es|fr|de|pt|it|zh)/docs.md',
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr|de|pt|it)/docs/:slug(.*).md',
+          source: '/:lang(es|fr|de|pt|it|zh)/docs/:slug(.*).md',
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
         },
         // Accept negotiation for the locale docs. NOT done in src/proxy.ts:
@@ -136,13 +138,13 @@ const config = {
         // These must stay AFTER the `.md` rules above, or `:slug(.*)` would
         // swallow `<url>.md` before the explicit markdown rewrite sees it.
         {
-          source: '/:lang(es|fr|de|pt|it)/docs',
+          source: '/:lang(es|fr|de|pt|it|zh)/docs',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/content.md',
         },
         {
-          source: '/:lang(es|fr|de|pt|it)/docs/:slug(.*)',
+          source: '/:lang(es|fr|de|pt|it|zh)/docs/:slug(.*)',
           has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/llms.mdx/i18n/:lang/docs/:slug/content.md',
@@ -199,12 +201,23 @@ const config = {
       // Translated routes also declare their language over HTTP, which Bing
       // reads. Their <html lang> comes from each locale's own root layout.
       {
-        source: '/:lang(es|fr|de|pt|it)',
+        source: '/:lang(es|fr|de|pt|it|zh)',
         headers: [{ key: 'Content-Language', value: ':lang' }],
       },
       {
-        source: '/:lang(es|fr|de|pt|it)/:path*',
+        source: '/:lang(es|fr|de|pt|it|zh)/:path*',
         headers: [{ key: 'Content-Language', value: ':lang' }],
+      },
+      // Chinese declares its script, as its <html lang> does (root-shell.tsx):
+      // the URL code is zh, the content is Simplified. Same key, later rule:
+      // this one wins for /zh.
+      {
+        source: '/zh',
+        headers: [{ key: 'Content-Language', value: 'zh-Hans' }],
+      },
+      {
+        source: '/zh/:path*',
+        headers: [{ key: 'Content-Language', value: 'zh-Hans' }],
       },
       {
         source: '/:path*',

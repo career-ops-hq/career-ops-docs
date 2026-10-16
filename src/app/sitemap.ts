@@ -54,9 +54,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     de: `${SITE_URL}/de`,
     pt: `${SITE_URL}/pt`,
     it: `${SITE_URL}/it`,
+    zh: `${SITE_URL}/zh`,
     'x-default': `${SITE_URL}/`,
   };
-  const DOCS_LOCALES = ['es', 'fr', 'de', 'pt', 'it'] as const;
+  const DOCS_LOCALES = ['es', 'fr', 'de', 'pt', 'it', 'zh'] as const;
   // Source-derived (search-ops drift contract): a page has a twin iff
   // getPage(slug, loc) resolves, which with fallbackLanguage:null happens only
   // for a real .<loc>.mdx, never an English fallback.
@@ -192,7 +193,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Localized homes (es, fr, de, pt, it): same cluster as the English home.
+  // Localized homes (es, fr, de, pt, it, zh): same cluster as the English home.
   entries.push({
     url: `${SITE_URL}/es`,
     lastModified: homeLastModified('es'),
@@ -218,6 +219,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: homeLastModified('it'),
     alternates: { languages: homeCluster },
   });
+  entries.push({
+    url: `${SITE_URL}/zh`,
+    lastModified: homeLastModified('zh'),
+    alternates: { languages: homeCluster },
+  });
 
   // Spanish (es) manifesto — /es/manifesto. Standalone TSX article (like the
   // home), so it is listed explicitly with its bidirectional hreflang pair.
@@ -233,7 +239,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   });
 
-  // Localized docs (es, fr, de, pt, it): one entry per existing twin, each carrying the
+  // Localized docs (es, fr, de, pt, it, zh): one entry per existing twin, each carrying the
   // same cluster as its English page (see docsCluster above).
   for (const enPage of source.getPages('en')) {
     const c = docsCluster(enPage);

@@ -3,7 +3,7 @@ title: Auf eine Stelle bewerben
 description: Nutze career-ops, um Bewerbungsformulare mit maßgeschneiderten Antworten auszufüllen, die auf deinem Profil und deiner Wunschrolle basieren.
 seoTitle: "Mit career-ops auf eine Stelle bewerben – ATS-Antworten entwerfen, Lebenslauf anpassen"
 icon: FileInput
-translationHash: 48ee253fe9b589dd
+translationHash: b97afb2d886c6928
 localized: true
 translatedFrom: /docs/introduction/guides/apply-for-a-job
 ---
@@ -50,7 +50,7 @@ Zum Beispiel:
 career-ops sucht den passenden Bericht in `reports/`, öffnet mit Playwright ein Browserfenster und liest das Formular aus. Danach entwirft es Antworten für unterstützte Text- und Freitextfelder. Prüfe vor dem Einfügen deren Feldlimits. Für Ashby brauchst du deinen gewohnten System-Browser, um die Bewerbung abzuschließen und abzusenden.
 
 <Callout title="Hinweis">
-  Falls Playwright nicht verfügbar ist, liest career-ops das Formular stattdessen mit WebFetch. Wenn du den vollen browserbasierten Ablauf nutzen möchtest, sieh dir [Playwright einrichten](/de/docs/introduction/guides/set-up-playwright) an.
+  Falls Playwright nicht verfügbar ist, kann career-ops das Formular nicht selbst öffnen. Es bittet dich dann um einen Screenshot, die Fragen als Text oder das Unternehmen und die Stelle (die Optionen unten). Wenn du den vollen browserbasierten Ablauf nutzen möchtest, sieh dir [Playwright einrichten](/de/docs/introduction/guides/set-up-playwright) an.
 </Callout>
 
 **Wenn du den Befehl `/career-ops apply` ohne Argumente ausführst**, bittet dich das System, den Kontext selbst anzugeben:
@@ -61,7 +61,6 @@ career-ops sucht den passenden Bericht in `reports/`, öffnet mit Playwright ein
     | Screenshot teilen             | Mach einen Screenshot des Formulars und teile ihn im Chat. career-ops kann Bilder direkt lesen.    |
     | Fragen einfügen               | Kopiere die Fragen aus dem Formular als Text und füge sie in den Chat ein.                         |
     | Unternehmen und Stelle nennen | Gib den Namen des Unternehmens und die Stellenbezeichnung ein. career-ops sucht in `reports/` nach dem passenden Bericht. |
-    | Bewerbungs-URL teilen         | Füge die URL ein, dann öffnet career-ops das Formular.                                             |
   </div>
 </div>
 
@@ -112,7 +111,7 @@ Jede Antwort stützt sich auf eine bestimmte Quelle, meist auf deinen Evaluierun
 </div>
 
 <Callout title="Upload-Felder">
-  Nimm die Datei in `output/`, die zusammen mit dem Bericht erstellt wurde. Gibt es noch kein PDF, führe zuerst `/career-ops pdf` aus und geh dann zurück zum Formular. Mehr dazu unter [pdf-Modus](/de/docs/reference/modes/pdf).
+  Lade den angepassten Lebenslauf hoch, den der `pdf`-Modus für diesen Bericht erstellt hat: `cv/tailored/vNNN/cv.pdf` im Bundle der Bewerbung oder das PDF in `output/` bei einem einmaligen Lebenslauf. Gibt es noch kein PDF, führe zuerst `/career-ops pdf` aus und geh dann zurück zum Formular. Mehr dazu unter [pdf-Modus](/de/docs/reference/modes/pdf).
 </Callout>
 
 ## Die Bewerbung absenden
@@ -133,6 +132,9 @@ Daraufhin erledigt career-ops Folgendes:
       </Step>
       <Step title="Antworten im Bericht speichern">
         Speichert die endgültigen Antworten im Abschnitt `## Application Answers` des Berichts, damit du später darauf zurückgreifen kannst
+      </Step>
+      <Step title="Erstes Follow-up einplanen">
+        Plant das erste Follow-up ab dem Tag deiner Bewerbung ein. Dieser Schritt entfällt, wenn in `config/profile.yml` `follow_ups.enabled: false` gesetzt ist; siehe [followup](/de/docs/reference/modes/followup)
       </Step>
     </Steps>
   </div>

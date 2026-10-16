@@ -3,7 +3,7 @@ title: Primeiros passos
 description: "Comece a usar o career-ops em cerca de quinze minutos: instale o sistema de IA de código aberto para busca de emprego, abra a sua CLI de IA e avalie a sua primeira vaga. Não precisa saber programar."
 seoTitle: "Primeiros passos com o career-ops — instale e avalie sua primeira vaga com IA em minutos"
 icon: Rocket
-translationHash: d72e728139455f71
+translationHash: a1ac86db5bf5c50e
 localized: true
 translatedFrom: /docs
 ---
@@ -78,6 +78,8 @@ O career-ops usa um Chromium headless para várias tarefas: renderizar PDFs, ver
 ```bash title="Terminal"
 npx playwright install chromium
 ```
+
+O `npm install` pula esse download quando `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` está definida no seu ambiente com qualquer valor que não seja vazio, `0` ou `false`; nesse caso, execute você mesmo o comando acima. No NixOS, pule esta etapa: os navegadores baixados não conseguem iniciar nesse sistema, e o dev shell do flake do repositório fornece navegadores que funcionam, como explica o [guia do NixOS](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) do repositório principal (em inglês).
 
 ## Passo 2: Abra o seu assistente de IA
 
@@ -234,8 +236,9 @@ Abra o arquivo do relatório em `reports/`. O nome do arquivo segue o padrão `{
 - **Bloco E** — notas de personalização para a sua candidatura.
 - **Bloco F** — preparação para entrevistas, com histórias no método STAR feitas sob medida para essa vaga.
 - **Bloco G** — legitimidade da vaga: uma verificação heurística de sinais, como se a vaga continua aberta e se ela vem sendo republicada repetidamente. O bloco relata o que encontra e deixa a decisão com você.
-- **Verdict (lead)**: a decisão em uma frase (Apply, Consider, Research first ou Skip), com um motivo que o relatório já dá.
 - **Bloco H** — rascunhos de respostas para o formulário de candidatura, escritos somente quando a nota é 4,5 ou superior.
+
+Logo depois do Bloco G, o **veredito** traz a decisão em negrito (Apply, Consider, Research first ou Skip) e um motivo tirado dos blocos acima, para que você saiba a resposta antes de ler o resto.
 
 O seu currículo em PDF sob medida está na pasta `output/`. Revise-o antes de enviá-lo para qualquer lugar — o career-ops nunca envia nada sem a sua aprovação.
 

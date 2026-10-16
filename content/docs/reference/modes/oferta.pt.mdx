@@ -4,15 +4,15 @@ description: "Executa a avaliação A–H de uma única vaga e a registra no seu
 seoTitle: "Modo oferta do career-ops: avalie uma vaga de emprego antes de se candidatar"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: b83fcc555a6b78e7
+lastModified: "2026-10-16"
+translationHash: 424400a232c7b66d
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## O que o modo faz
 
-O modo oferta lê uma única descrição de vaga (URL ou texto colado), pontua a vaga segundo a rubrica — cinco dimensões mais uma nota global holística — com evidências citadas, e escreve o relatório de avaliação. Não gera PDF, mas adiciona uma linha ao tracker com o status Evaluated. Rápido e barato.
+O modo oferta lê uma única descrição de vaga (URL ou texto colado), pontua a vaga segundo a rubrica (cinco dimensões mais uma nota global holística) com evidências citadas, e escreve o relatório de avaliação. Não gera PDF, mas registra a vaga no seu tracker com o status Evaluated; avaliar de novo a mesma empresa e o mesmo cargo atualiza essa linha em vez de adicionar uma segunda. Rápido e barato.
 
 ## Quando usar
 
@@ -20,7 +20,7 @@ Use o oferta para fazer a triagem rápida de uma vaga que deixa você em dúvida
 
 ## Como é uma execução
 
-Você entrega uma vaga ao modo e ele devolve a avaliação em sete blocos (os Blocos A a F e um Bloco G com a leitura de legitimidade, além do Bloco H com rascunhos de respostas quando a nota é 4,5 ou mais), com uma nota e o raciocínio citado. Logo depois do Bloco G, um bloco sem letra, Verdict (lead), dá a decisão em uma frase: Apply, Consider, Research first ou Skip. Cole o texto da vaga diretamente ou passe uma URL: nesse caso, o modo primeiro confirma que a vaga continua aberta, para que um link morto nunca consuma uma avaliação completa.
+Você entrega uma vaga ao modo e ele devolve a avaliação, com uma nota e o raciocínio citado: os Blocos A a F, um Bloco G com a leitura de legitimidade e um veredito de uma linha, além do Bloco H com rascunhos de respostas quando a nota é 4,5 ou mais. Cole o texto da vaga diretamente ou passe uma URL: nesse caso, o modo primeiro confirma que a vaga continua aberta, para que um link morto nunca consuma uma avaliação completa.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -45,10 +45,13 @@ Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
 
 ## Verdict (lead)
-**Apply.** Strong match on the role's core axis with no hard stops, and Block G returned High Confidence.
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
 ```
 
 Os Blocos B a F cobrem a aderência do currículo e as lacunas, a estratégia de nível, a remuneração e a demanda, um plano de personalização e histórias de entrevista no formato STAR+R mapeadas para os requisitos da vaga.
+
+O veredito vem logo depois do Bloco G: a decisão em negrito (Apply, Consider, Research first ou Skip) e um motivo tirado dos blocos acima. Ele repete a decisão registrada no Machine Summary do relatório e nunca acrescenta um julgamento novo, então quem para de ler ali já sai com a resposta.
 
 ## Quando vale a pena usar
 
@@ -59,7 +62,10 @@ Recorra ao oferta para pontuar rapidamente uma única vaga sem se comprometer co
 - O arquétipo é classificado com base nos seus próprios cargos-alvo, definidos na seção *Your Target Roles* de `modes/_profile.md`; os tipos de cargo padrão só valem quando você não definiu nenhum. Uma vaga que não corresponde a nenhum dos seus cargos-alvo recebe nota 1 em alinhamento com o North Star, a avaliação continua nas outras dimensões e a linha Archetype do relatório mostra `Not a target — closest default: {default role type}` ou `Not a target — no close match`.
 - A pesquisa sobre a empresa e a remuneração é limitada a no máximo cinco buscas na web; isto é uma avaliação, não uma pesquisa aprofundada. Execute `/career-ops deep` separadamente quando quiser um retrato mais completo da empresa.
 - O Bloco G devolve um de três níveis — High Confidence, Proceed with Caution ou Suspicious — para que prováveis vagas fantasma apareçam antes de você investir esforço em entrevistas.
+- Quando a vaga chegou até você por meio de um recrutador (uma mensagem no LinkedIn, um e-mail ou uma ligação), e não por um anúncio que você encontrou por conta própria, o Bloco G também verifica o recrutador. São cinco verificações: se a página de carreiras da própria empresa lista a vaga, se um nome desconhecido aparece associado a uma marca conhecida, se o recrutador escreve de um domínio que a empresa controla, denúncias públicas de golpe e pedidos para executar código enviado por ele, compartilhar sua tela, passar a conversa para Telegram, WhatsApp ou Discord ou pagar por qualquer coisa. O contato de um recrutador, por si só, conta como neutro. Duas verificações preocupantes, sendo uma delas uma página de carreiras sem a vaga ou uma denúncia de golpe, tornam o nível Suspicious e acrescentam uma observação sobre a identidade do recrutador. O career-ops nunca clona nem executa código enviado por um recrutador.
 - Quando a vaga descreve explicitamente uma posição por prazo determinado, como um contrato de 18 meses ou uma vaga temporária, o Bloco G acrescenta uma observação sobre contrato por prazo determinado que cita o trecho, além de um argumento opcional para a conversa sobre remuneração. É apenas informativa: nunca altera a nota, o nível de legitimidade nem a recomendação.
+
+- Em uma CLI que permite ao agente renomear a própria sessão, a sessão passa a ter o nome da vaga, como `VP Infrastructure, Acme Health`, assim que a descrição da vaga é lida. Defina `session_title: off` em `config/profile.yml` para manter seus próprios títulos de sessão.
 
 ## Score Evidence
 

@@ -32,7 +32,9 @@ export const i18n = defineI18n({
   // the next language by demand; the core ships modes/pt. Full parity.
   // 'it' added 2026-10-13: Italian ("tu"), the core ships all ten modes in
   // modes/it. Full parity.
-  languages: ['en', 'es', 'fr', 'de', 'pt', 'it'],
+  // 'zh' added 2026-10-15: Simplified Chinese (zh-Hans content, code 'zh'),
+  // as the core's README.cn and modes/zh. Full parity.
+  languages: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh'],
   parser: 'dot',
   hideLocale: 'default-locale',
   fallbackLanguage: null,

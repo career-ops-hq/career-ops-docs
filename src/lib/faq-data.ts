@@ -407,6 +407,73 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "CareerOps (uma palavra só) é o nome da prática; career-ops (com hífen, em minúsculas) é o projeto open source — a primeira implementação de referência dela. O CareerOps Manifesto define a prática. Em termos simples: o career-ops é o sistema de busca de emprego com IA, licenciado sob MIT, que roda localmente dentro da sua CLI de programação com IA, publicado em career-ops.org e em github.com/career-ops-hq/career-ops. CareerOps é a prática que ele materializa — conduzir a busca de emprego do jeito que engenheiros operam sistemas em produção —, nomeada e definida em The CareerOps Manifesto: nove direitos que toda pessoa que procura emprego deveria ter, assinados publicamente pela comunidade. Os dois vêm do mesmo autor, Santiago Fernández de Valderrama Aparicio, e os dois remontam ao mesmo repositório.",
     },
   ],
+  zh: [
+    {
+      question: "career-ops 会自动投递简历吗？",
+      answer:
+        "不会：career-ops 从不替你提交申请。由你点击提交。它负责准备工作：扫描职位、打分、为你定制简历，还可以预先填写 ATS 申请表，但提交这一步始终要由你明确点击。它起草、填写，但从不提交。由你点击提交。career-ops 项目明确拒绝“海投”式的自动化：重点在于选对公司，而不是盲目地大量申请。",
+    },
+    {
+      question: "career-ops 免费吗？",
+      answer:
+        "career-ops 是免费的：它基于 MIT 许可证开源，永久免费。唯一可能产生费用的是它所运行的 AI 引擎，而这部分同样可以免费：OpenCode 搭配免费的提供商、通过 Ollama 运行的本地模型，或者内置的 npm run or 运行器搭配 OpenRouter 的免费模型。设置免费的 AI 引擎指南逐一介绍了每种方式。 career-ops 没有付费计划，没有分级套餐，也没有试用期。它 100% 免费，采用 MIT 许可证。任何介绍 career-ops 定价的网站，说的都是另一款产品。",
+    },
+    {
+      question: "使用 career-ops 需要订阅 Claude 吗？",
+      answer:
+        "career-ops 不需要 Claude 订阅：它不绑定任何模型，Claude Code 只是多种可选引擎之一，并非必需。你可以用 OpenCode 搭配免费的提供商、通过 Ollama 运行的本地模型，或者内置的 OpenRouter 运行器（npm run or），免费跑完整个 pipeline。如果你一开始用的是付费套餐，求职到一半 token 用完了，切换到免费引擎只需几分钟，你的数据也完全不受影响。参见设置免费的 AI 引擎。",
+    },
+    {
+      question: "我付费订阅了 Claude Pro 或 Max，为什么 career-ops 还在消耗我的 API 额度？",
+      answer:
+        "想知道 career-ops 用的是 Claude 订阅还是 API 额度，在 career-ops 文件夹中运行 node doctor.mjs 即可。在你继续花钱之前，doctor 会用一行信息告诉你本次会话使用的是哪种计费来源。 计费规则不由 career-ops 决定：由你的 CLI 决定，而且 ANTHROPIC_API_KEY 优先。如果你的环境中设置了这个变量，即使你正在付费订阅 Pro 或 Max，Claude Code 也会按 token 计费。career-ops 不会替你选择计费来源，只负责检测并提醒你。当这个密钥存在时，doctor 会显示： ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max. 要切回订阅计费，从 ~/.zshrc、~/.bashrc、~/.profile 或项目的 .env 文件中删除 export ANTHROPIC_API_KEY=... 这一行，重启终端，然后运行 /login。批量运行是例外：claude -p worker 不使用交互式登录，所以需要把 claude setup-token 生成的令牌导出为 CLAUDE_CODE_OAUTH_TOKEN。 如果你本来就打算让 Claude Code 使用 API 额度计费，那么一切正常，无需任何操作。 ANTHROPIC_API_KEY 规则适用于 Anthropic 的引擎。其他 CLI（Codex、OpenCode、Copilot、Gemini、Qwen）各自规定订阅和 API 密钥哪个优先，career-ops 不会检查这些规则。具体请参阅你所用 CLI 的官方文档。",
+    },
+    {
+      question: "运行 career-ops 每月要花多少钱？",
+      answer:
+        "在 career-ops 中，只有评估会产生费用，而评估成本也可以为零。扫描职位不消耗任何 AI token，所以发现职位永远是免费的；只有评估职位时才会调用模型。有三种方式可以零成本跑完整个 pipeline：通过 Ollama 运行的本地模型、OpenRouter 的免费模型（npm run or），或者 Antigravity 的免费套餐。使用 DeepSeek V3 这类便宜的付费模型（开启提示词缓存）时，一次评估的费用远低于 1 美分，几美分就够评估几十个职位。如果你已经有 Claude 订阅，边际成本实际上就是 $0；如果直接调用 API，每次评估大约预留 $0.05 到 $0.10（这是估算值，会随职位描述的长度而变化）。career-ops 本身永久免费，采用 MIT 许可证，不收任何费用，也没有分级套餐。你唯一可能需要付费的对象是你的 AI 提供商。设置免费的 AI 引擎指南介绍了所有零成本的方式。想降低每次评估的花费，可以在 config/profile.yml 中设置 spend_tier：economy 使用你的 CLI 中最便宜、最快的模型档位，适合评估大量职位；standard 是默认值；premium 使用能力最强的模型，留给你最看重的那些职位。首次引导设置的对话和定制 PDF 同样运行在你的模型上，所以也会消耗 token。",
+    },
+    {
+      question: "我的数据保存在哪里？",
+      answer:
+        "career-ops 把你的数据保存在你自己的电脑上，所有数据都是归你所有的纯文本文件。你的简历、个人资料、pipeline 和报告都是 Markdown/YAML 文件，默认保存在本地。没有任何东西运行在 career-ops 的服务器上。系统更新从不触碰你的数据层（cv.md、config/、data/、reports/、output/）：这种分离就是数据契约（Data Contract），每一次更新都会遵守它。",
+    },
+    {
+      question: "怎么把简历导入 career-ops？",
+      answer:
+        "要将简历导入 career-ops，只需在首次运行的引导设置中把简历文本粘贴到对话里，智能体就会为你写好 cv.md。这是有引导的导入方式。你也可以让智能体读取一份现有的简历文件，包括 PDF：它会读取并转换这个文件，因为解析工作由你的 AI 智能体完成，而不是由 career-ops 的脚本完成。而且 cv.md 是归你所有的纯文本文件，你随时可以改为手动编写或编辑它。智能体会生成格式整洁的 markdown，包含标准的章节（个人简介、工作经历、项目经历、教育背景、技能）。设置过程中你也不需要手动编辑配置文件：你只需用日常语言回答问题，智能体会替你写好 config/profile.yml 以及其他文件。",
+    },
+    {
+      question: "career-ops 支持哪些 AI 编程 CLI？",
+      answer:
+        "career-ops 原生支持 11 款 AI 编程 CLI：Claude Code、Cursor、Codex、OpenCode、Pi、Antigravity CLI、Grok Build CLI、Qwen、Kimi、Hermes Agent 和 GitHub Copilot CLI（Gemini CLI 仅作为旧版封装保留）。career-ops 不绑定任何模型：它提供由 CLI 执行的提示词文件，所以你也可以把它接到任何兼容 OpenAI 的端点或本地模型上，无需改动任何代码。当前的完整列表以及每款 CLI 的调用方式，参见支持的 AI CLI。",
+    },
+    {
+      question: "scan 和 scan:full 有什么区别？",
+      answer:
+        "npm run scan 会读取你在 portals.yml 中配置的公司，并通过能识别该公司的数据源（例如 Greenhouse、Ashby、Lever）逐一抓取，不消耗任何 LLM token。这是你每天或每周例行发现职位时用的命令。npm run scan:full 则方向相反：它遍历公开的 ATS 公司目录，找出符合你的 title_filter / location_filter 的最新职位，让你也能发现那些你还没手动添加的公司的职位。",
+    },
+    {
+      question: "批量运行时如何避免触发 token 或速率限制？",
+      answer:
+        "要在 career-ops 批量运行中避免触发 token 或速率限制，可以先用 ./batch/batch-runner.sh --limit 5 限制运行数量，在投入更大的批量之前检查输出质量。如果运行因速率限制或网络错误而中断，不要从头再来：使用 --resume-paused 跳过已完成的任务，这样就不会在已经完成的工作上浪费 token。处于 needs_confirmation 状态的任务不会生成报告、简历、申请草稿或 tracker 记录，--resume-paused 也不会恢复它。请在父级交互式会话中明确回答它提出的问题。",
+    },
+    {
+      question: "Windows 上 skill 无法加载：安装时出现符号链接（symlink）错误",
+      answer:
+        "Windows 默认不创建符号链接，所以 Git 会把 career-ops 的 CLI skill 入口检出为普通的指针文件。安装程序和更新程序会自动检测到这种情况：运行 node update-system.mjs apply --confirm（全新安装时运行 npx @santifer/career-ops init），materialize 步骤就会用完整的 skill 内容替换这些指针文件。如果你是在一个链接的 Git worktree 中运行，apply --confirm 会在你的 main 检出中完成这项修复。在该 worktree 中运行 git merge main 即可获取修复；基于更新后的 main 创建的 worktree 已经包含这项修复。如果设置了 CAREER_OPS_UPDATE_IN_WORKTREE=1，apply 则只修复该 worktree 所在的分支，main 仍保持未修复状态。不需要手动运行 mklink，也不需要更改开发者模式设置。",
+    },
+    {
+      question: "career-ops 能用更便宜的模型或本地模型运行吗？",
+      answer:
+        "career-ops 可以运行在更便宜的模型或本地模型上，因为它完全不绑定任何模型。核心仓库中的低预算运行指南介绍了 OpenCode、Qwen CLI、DeepSeek、OpenRouter、Ollama 以及其他低成本或本地的提供商，并给出了推荐的模型规模（要稳定可靠地打分，需要 32B 及以上）和节省 token 的做法。",
+    },
+    {
+      question: "career-ops 和 CareerOps 有什么区别？",
+      answer:
+        "CareerOps（一个单词）指的是一种实践方法；career-ops（带连字符、全小写）是开源项目，也是这种实践的第一个参考实现。The CareerOps Manifesto（宣言）定义了这种实践。 简单来说：career-ops 是一个采用 MIT 许可证、由 AI 驱动的求职系统，在本地运行于你的 AI 编程 CLI 中，发布在 career-ops.org 和 github.com/career-ops-hq/career-ops。CareerOps 是它所体现的实践方法：像工程师运维生产环境那样进行求职。它由 CareerOps 宣言命名和定义。这份宣言列出了每位求职者都应享有的九项权利，并由社区公开签署。两者出自同一位作者 Santiago Fernández de Valderrama Aparicio，也都源自同一个仓库。",
+    },
+  ],
 };
 
 export const CLAUDE_CODE_FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
@@ -510,6 +577,23 @@ export const CLAUDE_CODE_FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Preciso do Claude Pro?",
       answer:
         "O Claude Code exige um plano pago do Claude ou uma chave de API da Anthropic. O career-ops em si é gratuito e tem licença MIT, e também roda em provedores gratuitos pelo OpenCode.",
+    },
+  ],
+  zh: [
+    {
+      question: "Claude Code 能帮我找工作吗？",
+      answer:
+        "可以。Claude Code 配合 career-ops 就能帮你找工作：它会扫描各家公司的招聘页面，根据你的简历给每个职位打分，并为值得争取的职位起草申请材料。发出哪些申请，由你决定。",
+    },
+    {
+      question: "它会自动帮我申请职位吗？",
+      answer:
+        "不会：career-ops 从不替你提交申请。它负责起草材料；每一份申请都由你亲自审阅、修改并发送。",
+    },
+    {
+      question: "必须订阅 Claude Pro 吗？",
+      answer:
+        "Claude Code 需要付费的 Claude 套餐或 Anthropic API 密钥。career-ops 本身免费，采用 MIT 许可证，也可以通过 OpenCode 使用免费的提供商运行。",
     },
   ],
 };

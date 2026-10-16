@@ -4,15 +4,15 @@ description: "Führt die A–H-Bewertung für eine einzelne Stellenanzeige aus u
 seoTitle: "career-ops oferta-Modus — eine einzelne Stellenanzeige bewerten, bevor du dich bewirbst"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: 6999cd4e3beceb29
+lastModified: "2026-10-16"
+translationHash: 424400a232c7b66d
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## Was er macht
 
-Der Modus oferta liest eine einzelne Stellenbeschreibung, entweder als URL oder als eingefügten Text. Er bewertet sie nach dem Bewertungsschema, das aus fünf Dimensionen und einer ganzheitlichen Gesamtbewertung besteht, und belegt jede Einschätzung mit Zitaten aus der Anzeige. Danach schreibt er den Bewertungsbericht. Ein PDF erzeugt er nicht, aber er legt im Tracker eine Zeile mit dem Status Evaluated an. Das geht schnell und kostet wenig.
+Der Modus oferta liest eine einzelne Stellenbeschreibung, entweder als URL oder als eingefügten Text. Er bewertet sie nach dem Bewertungsschema, das aus fünf Dimensionen und einer ganzheitlichen Gesamtbewertung besteht, und belegt jede Einschätzung mit Zitaten aus der Anzeige. Danach schreibt er den Bewertungsbericht. Ein PDF erzeugt er nicht, aber er trägt die Stellenanzeige mit dem Status Evaluated in deinen Tracker ein. Bewertest du dieselbe Stelle bei demselben Unternehmen erneut, aktualisiert er diese Zeile, statt eine zweite anzulegen. Das geht schnell und kostet wenig.
 
 ## Wann du ihn einsetzt
 
@@ -20,7 +20,7 @@ Nutze oferta, wenn du bei einer Stellenanzeige unschlüssig bist und sie schnell
 
 ## So sieht ein Durchlauf aus
 
-Du gibst dem Modus eine Stellenanzeige und bekommst die Bewertung in sieben Blöcken zurück, mit Score und belegter Begründung. Die Blöcke A bis F bilden den Kern, Block G schätzt ein, ob die Anzeige echt ist. Liegt die Bewertung bei 4,5 oder höher, kommen in Block H noch Antwortentwürfe hinzu. Direkt nach Block G nennt ein Block ohne Buchstaben, Verdict (lead), die Entscheidung in einem Satz: Apply, Consider, Research first oder Skip. Du kannst den Text der Stellenbeschreibung direkt einfügen oder eine URL übergeben. Bei einer URL prüft der Modus zuerst, ob die Anzeige noch online ist. So verbraucht ein toter Link nie eine komplette Bewertung.
+Du gibst dem Modus eine Stellenanzeige und bekommst die Bewertung zurück, mit Score und belegter Begründung. Die Blöcke A bis F bilden den Kern, Block G schätzt ein, ob die Anzeige echt ist, und ein einzeiliges Fazit fasst das Ergebnis zusammen. Liegt die Bewertung bei 4,5 oder höher, kommen in Block H noch Antwortentwürfe hinzu. Du kannst den Text der Stellenbeschreibung direkt einfügen oder eine URL übergeben. Bei einer URL prüft der Modus zuerst, ob die Anzeige noch online ist. So verbraucht ein toter Link nie eine komplette Bewertung.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -45,10 +45,13 @@ Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
 
 ## Verdict (lead)
-**Apply.** Strong match on the role's core axis with no hard stops, and Block G returned High Confidence.
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
 ```
 
 Die Blöcke B bis F behandeln fünf Themen. Sie gleichen die Stelle mit deinem Lebenslauf ab und zeigen Lücken auf. Sie entwickeln eine Strategie für die Einstufung und prüfen Vergütung und Nachfrage. Dazu kommen ein Plan, wie du deine Unterlagen anpasst, und STAR+R-Geschichten für das Vorstellungsgespräch, die auf die Anforderungen der Stelle zugeschnitten sind.
+
+Das Fazit folgt direkt auf Block G: die Entscheidung in Fettdruck (Apply, Consider, Research first oder Skip) und ein Grund, der sich aus den Blöcken davor ergibt. Es wiederholt die Entscheidung, die in der Machine Summary des Berichts festgehalten ist, und fügt nie eine neue Einschätzung hinzu. Liest du nur bis dahin, hast du trotzdem schon die Antwort.
 
 ## Wann du zu oferta greifst
 
@@ -59,7 +62,10 @@ Greif zu oferta, wenn du eine einzelne Stellenanzeige schnell bewerten willst, o
 - Der Archetyp wird anhand deiner eigenen Zielrollen eingeordnet, also anhand des Abschnitts *Your Target Roles* in `modes/_profile.md`. Die Standard-Rollentypen gelten nur, wenn du keine eigenen festgelegt hast. Passt eine Stelle zu keiner deiner Zielrollen, bekommt sie bei der North-Star-Ausrichtung eine 1, die Bewertung läuft für die übrigen Dimensionen weiter, und die Archetype-Zeile im Bericht lautet `Not a target — closest default: {default role type}` oder `Not a target — no close match`.
 - Die Recherche zu Unternehmen und Vergütung ist auf höchstens fünf Websuchen begrenzt. Das hier ist eine Bewertung, keine Tiefenrecherche. Führ `/career-ops deep` separat aus, wenn du ein vollständigeres Bild vom Unternehmen willst.
 - Block G liefert eine von drei Stufen: High Confidence, Proceed with Caution oder Suspicious. So fallen wahrscheinliche Ghost Jobs auf, bevor du Zeit und Mühe in die Vorbereitung auf ein Vorstellungsgespräch steckst.
+- Hat dich die Stelle über einen Recruiter erreicht (eine LinkedIn-Nachricht, eine E-Mail oder ein Anruf) und nicht über eine Anzeige, die du selbst gefunden hast, prüft Block G auch den Recruiter. Es sind fünf Prüfungen: ob die Karriereseite des Unternehmens selbst die Stelle aufführt, ob ein unbekannter Name an eine bekannte Marke gehängt wird, ob der Recruiter von einer Domain schreibt, die das Unternehmen kontrolliert, ob es öffentliche Meldungen über Betrug gibt und ob er dich auffordert, von ihm geschickten Code auszuführen, deinen Bildschirm zu teilen, zu Telegram, WhatsApp oder Discord zu wechseln oder für irgendetwas zu bezahlen. Der Kontakt durch einen Recruiter allein gilt als neutral. Schlagen zwei Prüfungen an und ist eine davon eine Karriereseite ohne die Stelle oder eine Meldung über Betrug, setzt Block G die Stufe auf Suspicious und ergänzt einen Hinweis zur Identität des Recruiters. career-ops klont nie Code, den ein Recruiter geschickt hat, und führt ihn nie aus.
 - Beschreibt die Anzeige ausdrücklich eine befristete Stelle, etwa einen Vertrag über 18 Monate oder eine Aushilfsstelle, ergänzt Block G einen Hinweis auf die Befristung, der die betreffende Formulierung zitiert, dazu optional ein Argument für das Gespräch über die Vergütung. Der Hinweis dient nur der Information: Er ändert nie den Score, die Legitimitätsstufe oder die Empfehlung.
+
+- In einer CLI, in der der Agent seine eigene Session umbenennen kann, übernimmt die Session den Namen der Stellenanzeige, etwa `VP Infrastructure, Acme Health`, sobald die Stellenbeschreibung gelesen ist. Setz `session_title: off` in `config/profile.yml`, wenn du deine eigenen Session-Titel behalten willst.
 
 ## Score Evidence
 

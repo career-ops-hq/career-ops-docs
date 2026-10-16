@@ -4,15 +4,15 @@ description: "Una lettura rapida dello stato di ogni candidatura. Utile come con
 seoTitle: "Modalità tracker di career-ops: a che punto è ogni candidatura di lavoro"
 icon: LayoutGrid
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: c95cd399167d223d
+lastModified: "2026-10-16"
+translationHash: ef85d61f0db91378
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
 
 ## Cosa fa
 
-La modalità `tracker` legge tutti i file in reports/ e produce un riepilogo strutturato, raggruppato per fase: candidature inviate, valutate, in colloquio, rifiutate, scartate. In un'unica risposta trovi i conteggi per fase, l'attività recente e i followup in ritardo.
+La modalità `tracker` legge il tuo tracker, `data/applications.md`, e mostra in un'unica risposta ogni candidatura con il suo stato attuale. Segue un blocco di statistiche: il totale, il conteggio per stato, il punteggio medio, quante righe hanno un PDF su misura e un report e, dopo la tua prima candidatura, la velocità con cui le candidature passano da una fase all'altra.
 
 ## Quando usarla
 
@@ -38,7 +38,7 @@ Total: 3   Applied: 1   Interview: 1   Evaluated: 1
 Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
 ```
 
-Una candidatura attraversa un insieme fisso di stati: Evaluated (report scritto, decisione in sospeso), Applied (l'hai inviata tu), Responded (l'azienda ha risposto, ma non c'è ancora un colloquio), Interview (un processo di selezione in corso) e infine uno stato finale tra Offer, Rejected, Discarded o SKIP per i ruoli che non fanno per te. Per registrare un cambio di stato, chiedilo in chat oppure esegui tu stesso `node set-status.mjs <report#|company> <state>`, aggiungendo `--on YYYY-MM-DD` se è avvenuto in un giorno precedente. Il comando rifiuta gli stati sconosciuti, blocca il tracker mentre scrive e registra la transizione in `data/status-log.tsv`, il registro da cui leggono le statistiche funnel-velocity: usalo quindi al posto di modificare la riga a mano.
+Una candidatura attraversa un insieme fisso di stati: Evaluated (report scritto, decisione in sospeso), Applied (l'hai inviata tu), Responded (l'azienda ha risposto, ma non c'è ancora un colloquio), Assessment (è in corso un test online o uno screening asincrono), Interview (un processo di selezione in corso) e infine uno stato finale: Offer, Rejected, Discarded, SKIP per i ruoli che non fanno per te, oppure Hired quando accetti una proposta di assunzione. Per registrare un cambio di stato, chiedilo in chat oppure esegui tu stesso `node set-status.mjs --report <report#> <state>`, aggiungendo `--on YYYY-MM-DD` se è avvenuto in un giorno precedente. Una riga senza report si seleziona invece in base all'azienda, `node set-status.mjs "<company>" <state>`, aggiungendo `--role` quando più righe hanno la stessa azienda. Il comando rifiuta gli stati sconosciuti, blocca il tracker mentre scrive e registra la transizione in `data/status-log.tsv`, il registro da cui leggono le statistiche funnel-velocity: usalo quindi al posto di modificare la riga a mano.
 
 Per correggere una nota invece di aggiungerne un'altra, passa la nota vecchia con `--replace-note` e il nuovo testo con `--note`. Senza questo flag, `--note` si limita ad aggiungere, e nella riga restano contraddizioni come `not applied; applied`. La corrispondenza avviene su una nota intera tra separatori `; `, e se nessuno dei due testi si trova nella cella Notes non viene scritto nulla:
 
@@ -58,6 +58,19 @@ npm run fix-report-links               # apply; the tracker is backed up to .bak
 ```
 
 Tutte le altre celle, l'ordine delle righe e i fine riga restano com'erano. Una cella Report che contiene qualcosa di diverso da esattamente un link viene elencata perché tu la controlli a mano, e resta invariata. Se lo esegui una seconda volta, non cambia nulla.
+
+## Verificare se gli annunci sono ancora aperti
+
+Gli annunci si chiudono mentre le loro righe restano in Evaluated o Applied. `node check-liveness.mjs --tracker` controlla l'annuncio di ogni riga in Evaluated e Applied; con `--status=` scegli altri stati. Prende ciascun annuncio dalla cella URL della riga o dalla riga `**URL:**` del suo report, ed elenca per numero le righe che non hanno né l'una né l'altra.
+
+Per togliere di mezzo le righe in Evaluated il cui annuncio è stato chiuso, prima fai un'anteprima:
+
+```bash
+node check-liveness.mjs --tracker --discard-expired          # dry run: lists the rows it would move
+node check-liveness.mjs --tracker --discard-expired --apply  # moves them
+```
+
+Solo un annuncio giudicato `expired` sposta la sua riga, da Evaluated a Discarded, con la nota `posting closed YYYY-MM-DD`. Una riga con un verdetto incerto resta com'è, e lo stesso vale per ogni riga in Applied.
 
 ## Leggere i numeri complessivi
 

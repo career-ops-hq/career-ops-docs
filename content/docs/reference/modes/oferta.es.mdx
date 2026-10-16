@@ -4,15 +4,15 @@ description: "Ejecuta la evaluación A–H sobre un único anuncio. Omite la gen
 seoTitle: "Modo oferta de career-ops — puntúa una oferta de empleo antes de aplicar"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-14"
-translationHash: b83fcc555a6b78e7
+lastModified: "2026-10-16"
+translationHash: 424400a232c7b66d
 localized: true
 translatedFrom: /docs/reference/modes/oferta
 ---
 
 ## Qué hace
 
-El modo oferta lee una única JD (URL o texto pegado), la puntúa contra la rúbrica — cinco dimensiones más una puntuación global holística — con evidencia citada, y escribe el informe de evaluación. Sin PDF, pero añade una fila al tracker con el estado Evaluated. Rápido y barato.
+El modo oferta lee una única JD (URL o texto pegado), la puntúa contra la rúbrica (cinco dimensiones más una puntuación global holística) con evidencia citada, y escribe el informe de evaluación. Sin PDF, pero registra el anuncio en el tracker con el estado Evaluated; si evalúas de nuevo la misma empresa y el mismo puesto, se actualiza esa fila en lugar de añadir una segunda. Rápido y barato.
 
 ## Cuándo usarlo
 
@@ -20,7 +20,7 @@ Usa oferta para hacer un triaje rápido de un anuncio dudoso. Si la puntuación 
 
 ## Cómo es una ejecución
 
-Le pasas al modo un anuncio y devuelve la evaluación de siete bloques (los Bloques A a F más una lectura de legitimidad en el Bloque G, y además borradores de respuestas en el Bloque H cuando la puntuación es de 4.5 o más), con puntuación y razonamiento citado. Justo después del Bloque G, un bloque sin letra, Verdict (lead), da la decisión en una frase: Apply, Consider, Research first o Skip. Pega el texto de la JD directamente, o pasa una URL y el modo confirma primero que la publicación sigue activa, de modo que un enlace muerto nunca quema una evaluación completa.
+Le pasas al modo un anuncio y devuelve la evaluación, con puntuación y razonamiento citado: los Bloques A a F, una lectura de legitimidad en el Bloque G y un veredicto de una línea, y además borradores de respuestas en el Bloque H cuando la puntuación es de 4.5 o más. Pega el texto de la JD directamente, o pasa una URL y el modo confirma primero que la publicación sigue activa, de modo que un enlace muerto nunca quema una evaluación completa.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -45,10 +45,13 @@ Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
 
 ## Verdict (lead)
-**Apply.** Strong match on the role's core axis with no hard stops, and Block G returned High Confidence.
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
 ```
 
 Los Bloques B a F cubren el encaje del CV y sus carencias, la estrategia de nivel, compensación y demanda, un plan de personalización, e historias de entrevista STAR+R mapeadas a los requisitos del puesto.
+
+El veredicto va justo después del Bloque G: la decisión en negrita (Apply, Consider, Research first o Skip) y un motivo extraído de los bloques anteriores. Repite la decisión registrada en el Machine Summary del informe y nunca añade un juicio nuevo, de modo que quien se detenga ahí se lleva igualmente la respuesta.
 
 ## Cuándo recurrir a él
 
@@ -59,7 +62,10 @@ Recurre a oferta para puntuar un único anuncio rápidamente sin comprometerte c
 - El arquetipo se clasifica según tus propios puestos objetivo, la sección *Your Target Roles* de `modes/_profile.md`; los tipos de puesto por defecto solo se aplican cuando no has definido ninguno. Un puesto que no coincide con ninguno de tus objetivos obtiene un 1 en alineación con North Star, la evaluación continúa con las demás dimensiones y la línea Archetype del informe muestra `Not a target — closest default: {default role type}` o `Not a target — no close match`.
 - La investigación de empresa y compensación está acotada a un máximo de cinco búsquedas web; esto es una evaluación, no una investigación en profundidad. Ejecuta `/career-ops deep` por separado cuando quieras la imagen más completa de la empresa.
 - El Bloque G devuelve uno de tres niveles — High Confidence, Proceed with Caution o Suspicious — de modo que los probables ghost jobs salen a la luz antes de que inviertas esfuerzo en la entrevista.
+- Cuando el puesto te llegó a través de un reclutador (un mensaje de LinkedIn, un correo electrónico o una llamada) en lugar de una publicación que encontraste tú, el Bloque G también comprueba al reclutador. Son cinco comprobaciones: si la propia página de empleo de la empresa publica el puesto, si un nombre desconocido aparece vinculado a una marca conocida, si el reclutador escribe desde un dominio que controla la empresa, si hay denuncias públicas de estafa, y si te piden ejecutar código que te envían, compartir tu pantalla, pasar a Telegram, WhatsApp o Discord, o pagar por algo. El contacto de un reclutador por sí solo cuenta como neutral. Dos comprobaciones preocupantes, si una de ellas es una página de empleo sin el puesto o una denuncia de estafa, ponen el nivel en Suspicious y añaden una nota sobre la identidad del reclutador. career-ops nunca clona ni ejecuta código que te haya enviado un reclutador.
 - Cuando la publicación describe explícitamente un puesto de duración determinada, como un contrato de 18 meses o un puesto temporal, el Bloque G añade una nota de contrato de duración determinada que cita la frase, además de un argumento opcional para la conversación sobre compensación. Es solo informativa: nunca cambia la puntuación, el nivel de legitimidad ni la recomendación.
+
+- En una CLI que permite al agente renombrar su propia sesión, la sesión toma el nombre de la publicación, como `VP Infrastructure, Acme Health`, una vez leída la JD. Pon `session_title: off` en `config/profile.yml` para conservar tus propios títulos de sesión.
 
 ## Score Evidence
 

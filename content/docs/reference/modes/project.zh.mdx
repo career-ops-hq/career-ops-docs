@@ -1,0 +1,61 @@
+---
+title: project
+description: "想法总是攒得比做出来的快。project 模式会对照你的目标职位、你现有的作品集和所需的时间投入，为一个作品集项目的想法打分，告诉你它到底值不值得做。"
+seoTitle: "career-ops project 模式：对照目标职位给作品集项目打分"
+icon: Lightbulb
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 974b5ecbe5ade3b0
+localized: true
+translatedFrom: /docs/reference/modes/project
+---
+
+## 它能做什么
+
+project 模式会读取项目想法的描述、config/profile.yml 中你设定的目标职位原型，以及你现有作品集的情况，然后从六个加权维度为这个项目打分：对目标职位的信号、独特性、可演示性、指标潜力、到 MVP 的时间，以及 STAR 故事潜力。
+
+## 什么时候使用
+
+当你手上有三四个业余项目的想法，想从中挑出一个真正能推动求职进展的项目时，就用 project。它相当于业余项目版的 oferta 模式。
+
+## 运行示例
+
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+
+## 实际运行效果
+
+一次 project 运行会返回一个可信度判断、一个基于六个维度的加权评分，以及一个明确的结论。你把一个想法交给这个模式，它会像用人经理在你的作品集里看到这个项目时那样去评判它，而不是判断代码能不能编译通过。
+
+```txt title="Example"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+
+结论只会是三种之一：BUILD（做），附带每周的里程碑；SKIP（跳过），并告诉你应该改做什么；或者 PIVOT TO（转向）另一个对你瞄准的职位更有信号价值的替代方案。六个维度各有权重，所以一个演示效果好、能产出清晰指标的项目，可能会排在一个更新颖、却看不到明显回报的想法前面。
+
+## 面试资料包
+
+每个通过评估的项目都会附带一份面试资料包，因为真正要交付的是故事，而不是代码仓库。资料包分三部分：一份一页纸文档，涵盖产品、架构、指标和评估方案；一个演示，可以是在线 URL，也可以是两分钟的录屏讲解；以及一份复盘，说明哪些做法有效、哪些没有，以及你是怎么补救的。一个做出来却没有配套叙事的项目，很少能推动求职；而一个规模不大、但取舍故事讲得清楚的项目，往往能做到。80/20 计划正体现了这一点：第一周做出带核心指标的 MVP，第二周打磨，并完成资料包本身。
+
+## 注意事项
+
+这个模式不会验证技术可行性，只评估对求职的信号价值。请另外单独做一次技术范围评估。
+
+## 相关链接
+
+- [training](/zh/docs/reference/modes/training)

@@ -4,12 +4,12 @@ description: "Runs the A–H evaluation against one listing and records it in yo
 seoTitle: "career-ops oferta mode — score a single job listing before you apply"
 icon: Target
 date: "2026-05-18"
-lastModified: "2026-10-14"
+lastModified: "2026-10-16"
 ---
 
 ## What it does
 
-oferta mode reads a single JD (URL or pasted text), scores it against the rubric — five dimensions plus a holistic global score — with cited evidence, and writes the evaluation report. No PDF, but it adds a tracker row with the status Evaluated. Fast and cheap.
+oferta mode reads a single JD (URL or pasted text), scores it against the rubric (five dimensions plus a holistic global score) with cited evidence, and writes the evaluation report. No PDF, but it records the listing in your tracker with the status Evaluated; evaluating the same company and role again updates that row instead of adding a second one. Fast and cheap.
 
 ## When to use it
 
@@ -17,7 +17,7 @@ Use oferta to triage a borderline listing quickly. If the score clears 4.0 and y
 
 ## What a run looks like
 
-You hand the mode one listing and it returns the seven-block evaluation (Blocks A through F and a Block G legitimacy read, plus Block H draft answers when the score is 4.5 or higher), with a score and cited reasoning. Right after Block G, an unlettered Verdict (lead) block gives the call in one sentence: Apply, Consider, Research first or Skip. Paste JD text directly, or pass a URL and the mode first confirms the posting is still live so a dead link never burns a full evaluation.
+You hand the mode one listing and it returns the evaluation, with a score and cited reasoning: Blocks A through F, a Block G legitimacy read and a one-line verdict, plus Block H draft answers when the score is 4.5 or higher. Paste JD text directly, or pass a URL and the mode first confirms the posting is still live so a dead link never burns a full evaluation.
 
 ```bash title="Terminal"
 /career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
@@ -42,10 +42,13 @@ Assessment: High Confidence — posted 3 days ago, apply button active,
 JD names specific tools and first-6-month scope.
 
 ## Verdict (lead)
-**Apply.** Strong match on the role's core axis with no hard stops, and Block G returned High Confidence.
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
 ```
 
 Blocks B through F cover CV match and gaps, level strategy, comp and demand, a customization plan, and STAR+R interview stories mapped to the job's requirements.
+
+The verdict comes right after Block G: the call in bold (Apply, Consider, Research first or Skip) and one reason drawn from the blocks above. It restates the decision recorded in the report's machine summary and never adds a new judgment, so a reader who stops there still leaves with the answer.
 
 ## When to reach for it
 
@@ -56,7 +59,10 @@ Reach for oferta to score a single listing quickly without committing to the ful
 - The archetype is classified against your own target roles, the *Your Target Roles* section of `modes/_profile.md`; the default role types apply only when you have defined none. A role that matches none of your targets scores 1 on North Star alignment, the evaluation continues on the other dimensions, and the report's Archetype line reads `Not a target — closest default: {default role type}` or `Not a target — no close match`.
 - Company and comp research is bounded to at most five web searches; this is an evaluation, not deep research. Run `/career-ops deep` separately when you want the fuller company picture.
 - Block G returns one of three tiers — High Confidence, Proceed with Caution, or Suspicious — so likely ghost jobs surface before you invest interview effort.
+- When the role reached you through a recruiter (a LinkedIn message, an email or a call) instead of a posting you found yourself, Block G also checks the recruiter. Five checks: whether the company's own careers page lists the role, whether an unfamiliar name is attached to a known brand, whether the recruiter writes from a domain the company controls, public scam reports, and requests to run code they send, share your screen, move to Telegram, WhatsApp or Discord, or pay for anything. Recruiter contact on its own counts as neutral. Two concerning checks, one of them a careers page without the role or a scam report, make the tier Suspicious and add a recruiter identity note. career-ops never clones or runs code a recruiter sent.
 - When the posting explicitly describes a fixed-term role, such as an 18-month contract or a temporary position, Block G adds a fixed-term contract note that quotes the phrase, plus an optional talking point for the compensation conversation. It is informational only: it never changes the score, the legitimacy tier or the recommendation.
+
+- In a CLI that lets the agent rename its own session, the session takes the posting's name, such as `VP Infrastructure, Acme Health`, once the job description is read. Set `session_title: off` in `config/profile.yml` to keep your own session titles.
 
 ## Score Evidence
 
