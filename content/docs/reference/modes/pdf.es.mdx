@@ -1,11 +1,11 @@
 ---
 title: pdf
-description: "Genera un CV en PDF adaptado a una JD concreta usando Playwright para renderizar markdown con una plantilla tipográfica limpia. El resultado es estructuralmente simple — sin tablas, sin columnas, sin gráficos — exactamente lo que los parsers ATS procesan de forma fiable."
+description: "Genera un CV en PDF adaptado a una JD concreta: career-ops construye el CV como HTML a partir de una plantilla tipográfica limpia y Playwright lo imprime a PDF. El resultado es estructuralmente simple (sin tablas, sin columnas, sin gráficos), exactamente lo que los parsers ATS procesan de forma fiable."
 seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 61f561d97321e237
+lastModified: "2026-10-16"
+translationHash: ac18633cc823dce2
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -34,6 +34,8 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
 El layout se mantiene a una sola columna, con cabeceras de sección estándar y texto seleccionable — la estructura que los parsers ATS leen sin problemas — y las keywords se entretejen en logros reales, nunca se inventan.
+
+La cobertura de keywords se mide contra la sección de keywords del informe de evaluación de la oferta. Si el informe no tiene ninguna, career-ops puntúa en su lugar las habilidades que encuentra en la JD archivada en el informe y te indica qué fuente usó. Un informe sin sección de keywords es un defecto que hay que corregir en el informe, no algo que se dé por bueno.
 
 ## Cuándo recurrir a él
 

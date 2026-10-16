@@ -3,7 +3,7 @@ title: Jobportale scannen
 description: Richte den Portal-Scanner ein und starte ihn, um automatisch neue Stellenanzeigen zu finden.
 seoTitle: "Jobportale mit career-ops scannen – Greenhouse, Ashby, Lever, ohne Token-Verbrauch"
 icon: ScanEye
-translationHash: 78fcbe0327045b1d
+translationHash: e9fa0fe2337f7f18
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -24,7 +24,7 @@ Führe diesen Befehl im Projektordner aus:
 cp templates/portals.example.yml portals.yml
 ```
 
-Öffne `portals.yml` in einem beliebigen Texteditor. Die Datei hat drei Abschnitte. Die folgenden Schritte gehen sie einzeln durch.
+Öffne `portals.yml` in einem beliebigen Texteditor. Die folgenden Schritte gehen die drei Abschnitte durch, die du zuerst bearbeitest: den Titelfilter, die zu beobachtenden Unternehmen und die Suchanfragen.
 
 ### Titelfilter konfigurieren
 
@@ -140,6 +140,16 @@ search_queries:
 
 Um eine Suchanfrage abzuschalten, die du nicht brauchst, setz `enabled: false`. Um eine neue hinzuzufügen, kopier einen vorhandenen Eintrag, gib ihm einen neuen `name` und pass den `query`-Text an.
 
+### Sprache der Stellenanzeigen wählen (optional)
+
+Manche Jobbörsen veröffentlichen dieselbe Stellenanzeige in mehreren Sprachen. Wenn du dich nur in einigen davon bewirbst, trag diese Sprachen in der Reihenfolge deiner Präferenz ein:
+
+```yaml title="portals.yml"
+preferred_languages: [en]
+```
+
+Gibt es eine Stellenanzeige in diesen Sprachen, behält der Scan die Version in der Sprache, die in deiner Liste zuerst steht; andernfalls behält er die Standardversion der Anzeige. Es ist eine Rangfolge, kein Filter: Keine Stellenanzeige fällt weg, und du bekommst weiterhin eine Zeile pro Anzeige. Regionale Varianten zählen als eine Sprache, `en-GB` ist also `en`. Um die Sprache nur für ein einzelnes Unternehmen festzulegen, häng den Parameter der jeweiligen Jobbörse an seine `careers_url` an: `?language=xx` bei Personio, `?lang=xx` bei Recruitee.
+
 ## Einen Scan starten
 
 Es gibt zwei Wege, einen Scan zu starten. Nimm den, der zu dem passt, was du brauchst.
@@ -195,6 +205,14 @@ Nimm diese Option, wenn:
 - du neue Unternehmen entdecken und nicht nur bekannte prüfen willst
 - der Script-Scan etwas übersehen hat, das du erwartet hättest
 
+Hat das Script eine Stellenanzeige übersehen, die du selbst gefunden hast, frag es zuerst nach dem Grund:
+
+```bash title="Terminal"
+node coverage-check.mjs <url> --company "<company>" --title "<job title>"
+```
+
+Es liest deine `portals.yml` und den Scan-Verlauf, ohne online zu gehen, nennt den Grund, warum die Anzeige übersehen wurde (das Unternehmen wird nicht beobachtet, sein Eintrag ist deaktiviert, kein Provider liest seine Karriereseite aus, oder ein Titel- oder Standortfilter hat sie aussortiert), und schlägt die eine Änderung vor, mit der sie erfasst worden wäre. `portals.yml` bearbeitet es nie für dich.
+
 <Callout title="Tipp">
   Option B verbraucht KI-Tokens und dauert länger als das Script. Ob diese Tokens über einen API-Key abgerechnet oder auf dein Abo angerechnet werden, hängt davon ab, wie deine CLI eingerichtet ist ([siehe FAQ](/de/docs/faq#ich-zahle-fuer-claude-pro-oder-max-warum-belastet-career-ops-meine-api-credits)). Für einen schnellen täglichen Check ist Option A schneller.
 </Callout>
@@ -242,7 +260,7 @@ Steht bei **New offers added** eine 0, such zuerst in der Scan-Ausgabe nach dies
 ⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
 ```
 
-Sie bedeutet, dass das Portal dieses Unternehmens nie erfolgreich geantwortet hat. Die Null beweist also nicht, dass es dort keine Stellen gibt. Das Unternehmen wird in `data/portal-health.tsv` als `unverified_zero` vermerkt und zählt für seine Fehlerserie. Prüf dieses Portal, bevor du deine Filter änderst.
+Sie bedeutet, dass das Portal dieses Unternehmens nie erfolgreich geantwortet hat. Die Null beweist also nicht, dass es dort keine Stellen gibt. Das Unternehmen wird in `data/portal-health.tsv` als `unverified_zero` vermerkt und zählt für seine Fehlerserie. Prüf dieses Portal, bevor du deine Filter änderst. Ein langsames Portal kann auch ins Zeitlimit laufen, bevor es antwortet: Der Scanner wartet standardmäßig 10 Sekunden pro Anfrage, und mit `CAREER_OPS_HTTP_TIMEOUT_MS=30000 npm run scan` gibst du ihm 30.
 
 Erscheint keine solche Warnung, ist dein Titelfilter vielleicht zu streng. Füg deiner `positive`-Liste ein Keyword hinzu und starte den Scan erneut.
 

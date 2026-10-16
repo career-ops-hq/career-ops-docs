@@ -3,7 +3,7 @@ title: 配置 Playwright
 description: 安装并配置 Playwright，用于浏览器自动化。
 seoTitle: "为 career-ops 配置 Playwright：职位抓取与 PDF 简历导出"
 icon: Globe
-translationHash: 4bcbad1e28e7d6f3
+translationHash: 52b5ed2304ef9e82
 localized: true
 translatedFrom: /docs/introduction/guides/set-up-playwright
 ---
@@ -52,6 +52,8 @@ npx playwright install chromium
 
 这一步只需执行一次。`npm` 更新后无需重复。
 
+如果你的环境中设置了 `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD`，且其值不是空、`0` 或 `false`，`npm install` 会跳过自动下载；这种情况下，请自己运行上面的命令。在 NixOS 上则完全跳过这一步：下载的浏览器在那里无法启动，仓库的 flake 开发 shell 会改为提供可用的浏览器和 Playwright MCP 服务器，详见核心仓库的 [NixOS 指南](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md)。
+
 ## 配置 Playwright MCP
 
 Playwright MCP 让 Claude 在 `/career-ops apply` 步骤中直接控制浏览器：打开职位申请表单、读取字段标签并给出建议答案。
@@ -66,7 +68,7 @@ claude mcp add --scope project playwright -- npx @playwright/mcp@latest
 
 这是 [Playwright MCP 文档](https://playwright.dev/docs/getting-started-mcp)中的一步注册方法，只是额外加上了 `--scope project`，让 Claude Code 把服务器条目写入 career-ops 根目录下的 `.mcp.json`，这是 `npm run doctor` 会检查的文件之一。下次你在该目录启动 Claude Code 时，它会询问是否启用该服务器，请批准。
 
-如果想在所有项目中使用它，请改用 `--scope user` 运行该命令。`npm run doctor` 不会读取用户级的服务器，因此即使 Claude Code 已经加载了它，doctor 仍会警告无法检测到该 MCP。
+如果想在所有项目中使用它，请改用 `--scope user` 运行该命令。`npm run doctor` 同样能在那里找到它：它会读取 Claude Code 为你的用户和当前项目保存的服务器配置，而不只是 `.mcp.json`。
 
 ### 手动配置（备选）
 

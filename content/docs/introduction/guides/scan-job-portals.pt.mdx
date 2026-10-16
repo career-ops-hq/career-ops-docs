@@ -3,7 +3,7 @@ title: Varredura de portais de vagas
 description: Configure e execute o scanner de portais para encontrar novas vagas automaticamente.
 seoTitle: "Varredura de portais de vagas com o career-ops — Greenhouse, Ashby, Lever, zero tokens"
 icon: ScanEye
-translationHash: 78fcbe0327045b1d
+translationHash: e9fa0fe2337f7f18
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -24,7 +24,7 @@ Execute este comando na pasta do projeto:
 cp templates/portals.example.yml portals.yml
 ```
 
-Abra o `portals.yml` em qualquer editor de texto. O arquivo tem três seções. Os passos abaixo explicam cada uma delas.
+Abra o `portals.yml` em qualquer editor de texto. Os passos abaixo explicam as três seções que você edita primeiro: o filtro de títulos, as empresas para acompanhar e as consultas de busca.
 
 ### Configure o filtro de títulos
 
@@ -140,6 +140,16 @@ search_queries:
 
 Para desativar uma consulta de que você não precisa, defina `enabled: false`. Para adicionar uma nova, copie uma entrada existente, dê a ela um novo `name` e atualize o texto de `query`.
 
+### Escolha o idioma das vagas (opcional)
+
+Alguns portais de vagas publicam a mesma vaga em vários idiomas. Se você se candidata só em alguns deles, liste esses idiomas em ordem de preferência:
+
+```yaml title="portals.yml"
+preferred_languages: [en]
+```
+
+Quando uma vaga tem versões nesses idiomas, a varredura fica com a do idioma que aparece primeiro na sua lista; caso contrário, fica com a versão padrão da vaga. É uma ordem de preferência, não um filtro: nenhuma vaga é descartada, e você continua recebendo uma linha por vaga. Variantes regionais contam como um único idioma, então `en-GB` é `en`. Para definir o idioma de uma única empresa, adicione o parâmetro do próprio portal à `careers_url` dela: `?language=xx` no Personio, `?lang=xx` no Recruitee.
+
 ## Execute uma varredura
 
 Há duas formas de executar uma varredura. Use a que atende à sua necessidade.
@@ -195,6 +205,14 @@ Use esta opção quando:
 - Você quer descobrir empresas novas, e não apenas verificar as que já conhece
 - A varredura pelo script deixou passar algo que você esperava ver
 
+Se o script deixou passar uma vaga que você mesmo encontrou, pergunte primeiro a ele por quê:
+
+```bash title="Terminal"
+node coverage-check.mjs <url> --company "<company>" --title "<job title>"
+```
+
+Ele lê o seu `portals.yml` e o histórico de varreduras sem acessar a internet, explica por que a vaga ficou de fora (a empresa não está na sua lista de acompanhamento, a entrada dela está desativada, nenhum provedor lê o site de vagas dela ou um filtro de títulos ou de localização a descartou) e propõe a única mudança que a teria encontrado. Ele nunca edita o `portals.yml` por você.
+
 <Callout title="Dica">
   A Opção B consome tokens do modelo de IA e demora mais do que o script. Se esses tokens são cobrados de uma chave de API ou entram na sua assinatura depende de como a sua CLI está configurada ([veja as perguntas frequentes](/pt/docs/faq#eu-pago-o-claude-pro-ou-o-max-por-que-o-career-ops-esta-cobrando-dos-meus-creditos-de-api)). Para uma verificação diária rápida, a Opção A é mais ágil.
 </Callout>
@@ -242,7 +260,7 @@ Se **New offers added** for 0, procure primeiro este aviso no resultado da varre
 ⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
 ```
 
-Ele significa que o portal dessa empresa não chegou a responder com sucesso, então o zero não prova que não há vagas publicadas ali. A empresa é registrada como `unverified_zero` em `data/portal-health.tsv` e conta para a sequência de falhas dela. Verifique esse portal antes de mexer nos seus filtros.
+Ele significa que o portal dessa empresa não chegou a responder com sucesso, então o zero não prova que não há vagas publicadas ali. A empresa é registrada como `unverified_zero` em `data/portal-health.tsv` e conta para a sequência de falhas dela. Verifique esse portal antes de mexer nos seus filtros. Um portal lento também pode esgotar o tempo antes de responder: por padrão, o scanner espera 10 segundos por requisição, e com `CAREER_OPS_HTTP_TIMEOUT_MS=30000 npm run scan` ele espera 30.
 
 Se não houver esse aviso, seu filtro de títulos pode estar rígido demais. Tente adicionar uma palavra-chave à sua lista `positive` e execute a varredura de novo.
 
