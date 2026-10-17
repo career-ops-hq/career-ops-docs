@@ -10,7 +10,7 @@ translatedFrom: /docs/free-ai-engine
 
 **不需要。运行 career-ops 不需要 Claude 订阅，也不需要任何付费套餐。** career-ops 免费、开源（MIT），它的 AI 引擎也可以免费：OpenCode 搭配免费提供商、通过 Ollama 运行的完全本地模型、任意兼容 OpenAI 的接口，或内置的 OpenRouter 运行器。如果你在求职进行到一半时 token 用完了，换成免费引擎只需几分钟，你的简历、pipeline 和报告都不会受影响。
 
-career-ops 没有付费套餐，没有版本分级，也没有试用期，它 100% 免费，采用 MIT 许可证。任何声称 career-ops 收费的网站，说的都是另一款产品。career-ops 唯一需要的是一个用来「思考」的 **AI 引擎**：一个读取它的提示词并完成工作的 AI 编程助手。这个引擎同样可以免费。
+career-ops 没有付费套餐，没有版本分级，也没有试用期，它 100% 免费，采用 MIT 许可证。任何声称 career-ops 收费的网站，说的都是另一款产品。career-ops 唯一需要的是一个用来「思考」的 **AI 引擎**：也就是一个读取 career-ops 的提示词、替你完成工作的 AI 编程助手。这个引擎同样可以免费。
 
 使用 career-ops，引擎和密钥都由你自己提供。career-ops 不在自己的服务器上运行任何东西，一切都在你的电脑上进行。本页按从最简单到最需要动手的顺序，介绍几种免费方案。选好一种，就可以进入[快速开始](/zh/docs)了。
 
@@ -24,14 +24,14 @@ career-ops 没有付费套餐，没有版本分级，也没有试用期，它 10
 | --- | --- | --- | --- |
 | 最简单的免费起步 | **OpenCode + 免费提供商** | 是 | 否 |
 | 100% 离线、完全私密 | **Ollama（本地模型）** | 是 | 是，16GB 以上显存 |
-| 继续用你已有的 CLI | **它自带的免费额度** | 如果有的话 | 否 |
+| 继续用你已有的 CLI | **它自带的免费额度** | 视 CLI 而定 | 否 |
 | 一条命令搞定的捷径 | **`npm run or`** | 是 | 否 |
 
 大多数人应该从 OpenCode 加免费提供商开始；其他方案可在需要时选用。
 
 ## 方案 1：OpenCode + 免费提供商（推荐）
 
-[OpenCode](https://opencode.ai) 是一款免费、开源的 AI 编程助手。career-ops 的作者 Santiago Fernández de Valderrama Aparicio 的评价是：*“opencode 是顶级的。”* OpenCode 可以连接许多提供**免费额度**的提供商，所以你一分钱不花就能运行 career-ops。
+[OpenCode](https://opencode.ai) 是一款免费、开源的 AI 编程助手。career-ops 的作者 Santiago Fernández de Valderrama Aparicio 的评价是：*“opencode 是顶级的。”* OpenCode 可以接入许多带**免费额度**的提供商，所以你一分钱不花就能运行 career-ops。
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
   <div className="rounded-xl bg-fd-background p-3">
@@ -40,7 +40,7 @@ career-ops 没有付费套餐，没有版本分级，也没有试用期，它 10
         按照 [opencode.ai](https://opencode.ai) 上的一行命令完成安装。它和其他 AI CLI 一样，在终端里运行。
       </Step>
       <Step title="选择一个免费提供商">
-        在任意一家提供免费额度的提供商注册，并复制你的 API 密钥。社区常用的免费选项有：**OpenRouter**（带 `:free` 标签的模型）、**Google AI Studio**（Gemini 免费额度），以及兼容 OpenAI 的接口，比如 **Nvidia** 的免费额度。[低成本运行指南](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)中维护着一份最新的、表现稳定的模型清单。
+        在任意一家有免费额度的提供商注册，并复制你的 API 密钥。社区常用的免费选项有：**OpenRouter**（带 `:free` 标签的模型）、**Google AI Studio**（Gemini 免费额度），以及兼容 OpenAI 的接口，比如 **Nvidia** 的免费额度。[低成本运行指南](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)中维护着一份最新的、表现稳定的模型清单。
       </Step>
       <Step title="配置 OpenCode">
         在 career-ops 文件夹中打开 OpenCode：
