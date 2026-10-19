@@ -4,22 +4,26 @@ description: "Lever is the established ATS for mid-market and growth-stage compa
 seoTitle: "Scan Lever jobs with career-ops — zero-token ATS portal scanning"
 icon: Wrench
 date: "2026-05-18"
-lastModified: "2026-05-18"
+lastModified: "2026-10-16"
 ---
 
 ## What it does
 
-The lever provider in providers/lever.mjs makes HTTP requests to api.lever.co/v0/postings/`{slug}` and parses the JSON response. The slug is the company's Lever postings identifier (e.g. 'figma' for Figma).
+The lever provider in providers/lever.mjs makes HTTP requests to api.lever.co/v0/postings/`{slug}` and parses the JSON response. The slug is the company's Lever postings identifier (e.g. 'mistral' for Mistral AI).
 
 ## When to use it
 
-Use Lever scanning for companies in the Series C+ to pre-IPO range that have not migrated to Greenhouse or Ashby. Figma, Brex, and many fintech companies still use Lever.
+Use Lever scanning when your target companies post their roles on Lever. Mistral AI, Palantir and Spotify are among the Lever boards pre-configured in templates/portals.example.yml.
 
 ## Example
 
+```yaml title="portals.yml"
+- name: Mistral AI
+  careers_url: https://jobs.lever.co/mistral
+  enabled: true
 ```
-In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
-```
+
+The next scan then picks up active Mistral AI roles.
 
 ## What the scanner does
 
@@ -30,23 +34,25 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 33 total
-Filtered by title: 5 relevant
-Duplicates: 2 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      33
+Filtered by title:     28 removed
+Duplicates:            2 skipped
+New offers added:      3
 
-  + Figma | AI Product Engineer | lever
-  + Brex  | Applied AI Engineer | lever
+New offers:
+  + Mistral AI | Applied AI Engineer | Paris, France
+  + Palantir | Forward Deployed Engineer | London, UK
+  + Spotify | ML Engineer, Search | Stockholm, Sweden
 ```
 
 ## How career-ops talks to Lever
 
-career-ops requests `api.lever.co/v0/postings/{slug}`, or the `api.eu.lever.co` host for EU boards, and reads the JSON array of postings. For each role it takes the `text` field as the title and the `hostedUrl` as the link, falling back to `applyUrl` when `hostedUrl` is absent. Because Lever returns the whole board in one structured response, the scan is a single public HTTPS GET per company that stays inside rate limits and spends no model tokens. Token cost only begins later, when you evaluate a role you want to pursue. Re-running the scan is safe: every URL is deduplicated against your scan history, your evaluated applications, and the current pipeline, so a role you have already seen is never added twice.
+career-ops requests `api.lever.co/v0/postings/{slug}`, or the `api.eu.lever.co` host for EU boards, and reads the JSON array of postings. For each role it takes the `text` field as the title, the `hostedUrl` as the link, the location, the creation date, and the full description. Because Lever returns the whole board in one structured response, the scan is a single public HTTPS GET per company that stays inside rate limits and spends no model tokens. Token cost only begins later, when you evaluate a role you want to pursue. Re-running the scan is safe: every URL is deduplicated against your scan history, your evaluated applications, and the current pipeline, so a role you have already seen is never added twice.
 
 ## Gotchas
 
-Lever's API exposes the full JD in the postings response. Some Lever boards include role internal metadata that career-ops surfaces as additional signal during scoring.
+Lever's API exposes the full JD in the postings response: the intro, every list section (such as requirements and responsibilities) and the closing text. The content filters in `portals.yml` (`content_filter` and `visa_filter`) read all of it, so a phrase that appears only in a Lever role's requirements list still matches.
 
 ## Related
 

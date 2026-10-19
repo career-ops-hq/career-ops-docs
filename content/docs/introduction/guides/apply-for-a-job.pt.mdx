@@ -3,7 +3,7 @@ title: Candidatar-se a uma vaga
 description: Use o career-ops para preencher formulários de candidatura com respostas sob medida para o seu perfil e para a vaga que você quer.
 seoTitle: "Como se candidatar a uma vaga com o career-ops — rascunhe respostas para o ATS, adapte seu currículo"
 icon: FileInput
-translationHash: 48ee253fe9b589dd
+translationHash: b97afb2d886c6928
 localized: true
 translatedFrom: /docs/introduction/guides/apply-for-a-job
 ---
@@ -50,7 +50,7 @@ Por exemplo:
 O career-ops encontra o relatório correspondente em `reports/`, usa o Playwright para abrir uma janela do navegador e lê o formulário. Em seguida, rascunha respostas para os campos de texto e de resposta livre compatíveis. Confira o limite de cada campo antes de colar. No Ashby, você vai precisar do navegador comum do seu sistema para concluir e enviar a candidatura.
 
 <Callout title="Observação">
-  Se o Playwright não estiver disponível, o career-ops recorre ao WebFetch para ler o formulário. Veja [Configurar o Playwright](/pt/docs/introduction/guides/set-up-playwright) se quiser ativar a experiência completa com navegador.
+  Se o Playwright não estiver disponível, o career-ops não consegue abrir o formulário sozinho: ele pede uma captura de tela, as perguntas como texto ou a empresa e o cargo (as opções abaixo). Veja [Configurar o Playwright](/pt/docs/introduction/guides/set-up-playwright) se quiser ativar a experiência completa com navegador.
 </Callout>
 
 **Se você rodar o comando `/career-ops apply` sem argumentos**, o sistema pede que você forneça o contexto manualmente:
@@ -61,7 +61,6 @@ O career-ops encontra o relatório correspondente em `reports/`, usa o Playwrigh
     | Enviar uma captura de tela      | Tire uma captura de tela do formulário e envie no chat. O career-ops lê imagens diretamente.       |
     | Colar as perguntas              | Copie as perguntas do formulário como texto e cole no chat.                                        |
     | Informar a empresa e o cargo    | Digite o nome da empresa e o título da vaga. O career-ops procura a correspondência em `reports/`. |
-    | Enviar a URL da candidatura     | Cole a URL e o career-ops navega até o formulário.                                                 |
   </div>
 </div>
 
@@ -112,7 +111,7 @@ Cada resposta é construída a partir de uma fonte específica, principalmente o
 </div>
 
 <Callout title="Campos de upload">
-  Use o arquivo em `output/` gerado quando o relatório foi criado. Se ainda não existir um PDF, rode `/career-ops pdf` primeiro e depois volte ao formulário. Veja o [modo pdf](/pt/docs/reference/modes/pdf).
+  Anexe o currículo sob medida que o modo `pdf` gerou para este relatório: `cv/tailored/vNNN/cv.pdf` no pacote da candidatura, ou o PDF em `output/` no caso de um currículo avulso. Se ainda não existir um PDF, rode `/career-ops pdf` primeiro e depois volte ao formulário. Veja o [modo pdf](/pt/docs/reference/modes/pdf).
 </Callout>
 
 ## Como enviar a candidatura
@@ -133,6 +132,9 @@ O career-ops vai:
       </Step>
       <Step title="Salvar as respostas no relatório">
         Salvar as respostas finais na seção `## Application Answers` do relatório para consulta futura
+      </Step>
+      <Step title="Agendar o primeiro acompanhamento">
+        Agendar o primeiro acompanhamento a partir do dia em que você se candidatou. Esta etapa é pulada quando `config/profile.yml` define `follow_ups.enabled: false`; veja [followup](/pt/docs/reference/modes/followup)
       </Step>
     </Steps>
   </div>

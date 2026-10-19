@@ -1,4 +1,4 @@
-import { DEFAULT_OG_IMAGE } from '@/lib/shared';
+import { OG_IMAGE_BY_LOCALE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { blogSource, blogTwin } from '@/lib/blog-source';
@@ -31,7 +31,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       languages: { en: enUrl, es: url, 'x-default': enUrl },
     },
     openGraph: {
-      images: [DEFAULT_OG_IMAGE],
+      images: [OG_IMAGE_BY_LOCALE.es],
       type: 'article',
       url,
       siteName: 'career-ops',
@@ -41,7 +41,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       publishedTime: data.date,
       modifiedTime: data.lastModified || data.date,
     },
-    twitter: { images: [DEFAULT_OG_IMAGE.url], card: 'summary_large_image' },
+    twitter: { images: [OG_IMAGE_BY_LOCALE.es.url], card: 'summary_large_image' },
     robots: { index: true, follow: true },
   };
 }

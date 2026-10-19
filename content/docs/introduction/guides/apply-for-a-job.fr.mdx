@@ -3,7 +3,7 @@ title: Postuler à une offre d'emploi
 description: Utilisez career-ops pour remplir vos candidatures avec des réponses adaptées à votre profil et au poste visé.
 seoTitle: "Comment postuler à un emploi avec career-ops — rédigez vos réponses ATS, adaptez votre CV"
 icon: FileInput
-translationHash: 48ee253fe9b589dd
+translationHash: b97afb2d886c6928
 localized: true
 translatedFrom: /docs/introduction/guides/apply-for-a-job
 ---
@@ -50,7 +50,7 @@ Par exemple :
 career-ops trouve le rapport correspondant dans `reports/`, utilise Playwright pour ouvrir une fenêtre de navigateur et lit le formulaire. Il prépare ensuite des réponses pour les champs de texte et de réponse libre pris en charge. Vérifiez les limites de chaque champ avant de coller. Pour Ashby, vous devrez utiliser votre navigateur habituel pour terminer et envoyer la candidature.
 
 <Callout title="Remarque">
-  Si Playwright n'est pas disponible, career-ops se rabat sur WebFetch pour lire le formulaire. Consultez [Configurer Playwright](/fr/docs/introduction/guides/set-up-playwright) si vous souhaitez activer l'expérience complète via le navigateur.
+  Si Playwright n'est pas disponible, career-ops ne peut pas ouvrir le formulaire lui-même : il vous demande une capture d'écran, les questions sous forme de texte, ou l'entreprise et le poste (les options ci-dessous). Consultez [Configurer Playwright](/fr/docs/introduction/guides/set-up-playwright) si vous souhaitez activer l'expérience complète via le navigateur.
 </Callout>
 
 **Si vous lancez la commande `/career-ops apply` sans arguments**, le système vous invite à fournir le contexte manuellement :
@@ -61,7 +61,6 @@ career-ops trouve le rapport correspondant dans `reports/`, utilise Playwright p
     | Partager une capture d'écran        | Faites une capture d'écran du formulaire et partagez-la dans le chat. career-ops lit les images directement. |
     | Coller les questions                | Copiez les questions du formulaire sous forme de texte et collez-les dans le chat.                          |
     | Indiquer l'entreprise et le poste   | Tapez le nom de l'entreprise et l'intitulé du poste. career-ops recherche la correspondance dans `reports/`. |
-    | Partager l'URL de la candidature    | Collez l'URL et career-ops navigue jusqu'au formulaire.                                                     |
   </div>
 </div>
 
@@ -112,7 +111,7 @@ Chaque réponse est construite à partir d'une source précise, le plus souvent 
 </div>
 
 <Callout title="Champs d'upload">
-  Utilisez le fichier dans `output/` généré lors de la création du rapport. Si aucun PDF n'existe encore, lancez d'abord `/career-ops pdf`, puis revenez au formulaire. Consultez le [mode pdf](/fr/docs/reference/modes/pdf).
+  Joignez le CV adapté que le mode `pdf` a créé pour ce rapport : `cv/tailored/vNNN/cv.pdf` dans le dossier de la candidature, ou le PDF dans `output/` pour un CV ponctuel. Si aucun PDF n'existe encore, lancez d'abord `/career-ops pdf`, puis revenez au formulaire. Consultez le [mode pdf](/fr/docs/reference/modes/pdf).
 </Callout>
 
 ## Envoyer la candidature
@@ -133,6 +132,9 @@ career-ops va alors :
       </Step>
       <Step title="Enregistrer les réponses dans le rapport">
         Enregistrer les réponses finales dans la section `## Application Answers` du rapport pour référence ultérieure
+      </Step>
+      <Step title="Planifier la première relance">
+        Planifier la première relance à partir du jour où vous avez postulé. Cette étape est ignorée lorsque `config/profile.yml` définit `follow_ups.enabled: false` ; consultez [followup](/fr/docs/reference/modes/followup)
       </Step>
     </Steps>
   </div>

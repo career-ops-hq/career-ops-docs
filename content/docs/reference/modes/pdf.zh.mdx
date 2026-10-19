@@ -1,11 +1,11 @@
 ---
 title: pdf
-description: "针对特定 JD 生成一份定制的 PDF 简历：用 Playwright 把 markdown 套进简洁的排版模板渲染出来。输出的结构很简单，没有表格、没有分栏、没有图形，正是 ATS 解析器能稳定处理的格式。"
+description: "针对特定 JD 生成一份定制的 PDF 简历：career-ops 用简洁的排版模板把简历构建为 HTML，再由 Playwright 打印成 PDF。输出的结构很简单，没有表格、没有分栏、没有图形，正是 ATS 解析器能稳定处理的格式。"
 seoTitle: "career-ops pdf 模式：生成适配 ATS 的定制简历"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 61f561d97321e237
+lastModified: "2026-10-16"
+translationHash: ac18633cc823dce2
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -34,6 +34,8 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
 版面始终保持单栏，使用标准的分节标题和可选中的文本，这正是 ATS 解析器能干净读取的结构；关键词会融入你真实的成就之中，绝不凭空编造。
+
+关键词覆盖率是对照该职位评估报告中的关键词部分来计算的。如果报告中没有这一部分，career-ops 会改为对报告中存档的职位描述里找到的技能进行评分，并告诉你它用的是哪个来源。缺少关键词部分的报告属于缺陷，应该在报告中修复，而不是算作通过。
 
 ## 适用场景
 

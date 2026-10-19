@@ -4,25 +4,29 @@ description: "O Lever é o ATS consolidado entre empresas de médio porte e em f
 seoTitle: "Como buscar vagas no Lever com o career-ops — varredura de portais ATS sem gastar tokens"
 icon: Wrench
 date: "2026-05-18"
-lastModified: "2026-05-18"
-translationHash: 535b6f24a4a180f6
+lastModified: "2026-10-16"
+translationHash: c4bc88a2232f7c33
 localized: true
 translatedFrom: /docs/reference/portals/lever
 ---
 
 ## O que faz
 
-O provider lever, em providers/lever.mjs, faz requisições HTTP para api.lever.co/v0/postings/`{slug}` e interpreta a resposta em JSON. O slug é o identificador das vagas da empresa no Lever (por exemplo, 'figma' para a Figma).
+O provider lever, em providers/lever.mjs, faz requisições HTTP para api.lever.co/v0/postings/`{slug}` e interpreta a resposta em JSON. O slug é o identificador das vagas da empresa no Lever (por exemplo, 'mistral' para a Mistral AI).
 
 ## Quando usar
 
-Use a varredura do Lever para empresas que estão entre a Série C e o pré-IPO e que ainda não migraram para o Greenhouse ou o Ashby. A Figma, a Brex e muitas fintechs continuam usando o Lever.
+Use a varredura do Lever quando as empresas que você tem como alvo publicam suas vagas no Lever. A Mistral AI, a Palantir e o Spotify estão entre os painéis do Lever pré-configurados em templates/portals.example.yml.
 
 ## Exemplo
 
+```yaml title="portals.yml"
+- name: Mistral AI
+  careers_url: https://jobs.lever.co/mistral
+  enabled: true
 ```
-In your portals.yml: `- provider: lever\n  slug: figma\n  careers_url: https://jobs.lever.co/figma` — scan picks up active Figma roles.
-```
+
+A próxima varredura passa a captar as vagas ativas da Mistral AI.
 
 ## O que o scanner faz
 
@@ -33,23 +37,25 @@ node scan.mjs
 ```
 
 ```txt title="Output"
-Portal Scan - 2026-07-06
-Offers found: 33 total
-Filtered by title: 5 relevant
-Duplicates: 2 (already evaluated or in pipeline)
-New added to pipeline.md: 3
+Companies scanned:     12
+Total jobs found:      33
+Filtered by title:     28 removed
+Duplicates:            2 skipped
+New offers added:      3
 
-  + Figma | AI Product Engineer | lever
-  + Brex  | Applied AI Engineer | lever
+New offers:
+  + Mistral AI | Applied AI Engineer | Paris, France
+  + Palantir | Forward Deployed Engineer | London, UK
+  + Spotify | ML Engineer, Search | Stockholm, Sweden
 ```
 
 ## Como o career-ops se comunica com o Lever
 
-O career-ops consulta `api.lever.co/v0/postings/{slug}`, ou o host `api.eu.lever.co` no caso de painéis da UE, e lê o array JSON de vagas. Para cada vaga, ele usa o campo `text` como título e o `hostedUrl` como link, recorrendo ao `applyUrl` quando o `hostedUrl` não existe. Como o Lever devolve o painel inteiro em uma única resposta estruturada, a varredura é um único GET HTTPS público por empresa, que fica dentro dos limites de requisições e não gasta tokens de modelo. O custo em tokens só começa depois, quando você avalia uma vaga que quer levar adiante. Rodar a varredura de novo é seguro: cada URL é comparada com o seu histórico de varreduras, com as candidaturas que você já avaliou e com o pipeline atual, de modo que uma vaga que você já viu nunca é adicionada duas vezes.
+O career-ops consulta `api.lever.co/v0/postings/{slug}`, ou o host `api.eu.lever.co` no caso de painéis da UE, e lê o array JSON de vagas. Para cada vaga, ele usa o campo `text` como título, o `hostedUrl` como link, a localização, a data de criação e a descrição completa. Como o Lever devolve o painel inteiro em uma única resposta estruturada, a varredura é um único GET HTTPS público por empresa, que fica dentro dos limites de requisições e não gasta tokens de modelo. O custo em tokens só começa depois, quando você avalia uma vaga que quer levar adiante. Rodar a varredura de novo é seguro: cada URL é comparada com o seu histórico de varreduras, com as candidaturas que você já avaliou e com o pipeline atual, de modo que uma vaga que você já viu nunca é adicionada duas vezes.
 
 ## Pontos de atenção
 
-A API do Lever expõe a descrição completa da vaga na resposta. Alguns painéis do Lever incluem metadados internos da vaga, que o career-ops aproveita como sinal adicional na hora de pontuar.
+A API do Lever expõe a descrição completa da vaga na resposta: a introdução, cada seção de lista (como requisitos e responsabilidades) e o texto de encerramento. Os filtros de conteúdo do `portals.yml` (`content_filter` e `visa_filter`) leem tudo isso, de modo que uma expressão que aparece apenas na lista de requisitos de uma vaga do Lever continua sendo encontrada.
 
 ## Relacionados
 

@@ -1,11 +1,11 @@
 ---
 title: pdf
-description: "Genera un curriculum in PDF su misura per una JD specifica, usando Playwright per impaginare il markdown con un template tipografico pulito. Il risultato ha una struttura semplice (niente tabelle, niente colonne, niente grafica), proprio quella che i parser ATS leggono in modo affidabile."
+description: "Genera un curriculum in PDF su misura per una JD specifica: career-ops costruisce il CV in HTML a partire da un template tipografico pulito e Playwright lo stampa in PDF. Il risultato ha una struttura semplice (niente tabelle, niente colonne, niente grafica), proprio quella che i parser ATS leggono in modo affidabile."
 seoTitle: "Modalità pdf di career-ops: genera un curriculum su misura compatibile con gli ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-06"
-translationHash: 61f561d97321e237
+lastModified: "2026-10-16"
+translationHash: ac18633cc823dce2
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -34,6 +34,8 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
 L'impaginazione resta a colonna singola, con titoli di sezione standard e testo selezionabile (la struttura che i parser ATS leggono senza problemi), e le parole chiave vengono inserite in risultati reali, mai inventate.
+
+La copertura delle parole chiave si misura rispetto alla sezione delle parole chiave del report di valutazione dell'annuncio. Se il report non ce l'ha, career-ops misura invece le competenze che trova nella JD archiviata nel report e ti dice quale fonte ha usato. Un report senza sezione delle parole chiave è un difetto da correggere nel report, non un via libera.
 
 ## Quando conviene usarla
 

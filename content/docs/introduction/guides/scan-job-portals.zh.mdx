@@ -3,7 +3,7 @@ title: 扫描招聘门户
 description: 配置并运行招聘门户扫描器，自动发现新的在招职位。
 seoTitle: "用 career-ops 扫描招聘网站：Greenhouse、Ashby、Lever，零 token 消耗"
 icon: ScanEye
-translationHash: e9fbece900af577b
+translationHash: e9fa0fe2337f7f18
 localized: true
 translatedFrom: /docs/introduction/guides/scan-job-portals
 ---
@@ -24,7 +24,7 @@ translatedFrom: /docs/introduction/guides/scan-job-portals
 cp templates/portals.example.yml portals.yml
 ```
 
-用任意文本编辑器打开 `portals.yml`。文件分为三个部分，下面的步骤会逐一说明。
+用任意文本编辑器打开 `portals.yml`。下面的步骤会逐一说明你首先要编辑的三个部分：职位名称过滤器、要跟踪的公司和搜索查询。
 
 ### 配置职位名称过滤器
 
@@ -140,6 +140,16 @@ search_queries:
 
 不需要的查询，设置 `enabled: false` 即可关闭。要新增一条，复制已有条目，给它起一个新的 `name`，再修改 `query` 的内容。
 
+### 选择职位的语言（可选）
+
+有些招聘平台会用多种语言发布同一则职位。如果你只用其中几种语言申请，就按优先顺序列出这些语言：
+
+```yaml title="portals.yml"
+preferred_languages: [en]
+```
+
+如果某则职位有这些语言的版本，扫描会保留其中语言在你列表中排得最靠前的那个版本；否则保留该职位的默认版本。这是优先顺序，而不是过滤条件：不会丢掉任何职位，每则职位仍然只占一行。同一语言的地区变体算作一种语言，所以 `en-GB` 就是 `en`。如果只想为某一家公司设置语言，就在它的 `careers_url` 中加上该招聘平台自己的参数：Personio 用 `?language=xx`，Recruitee 用 `?lang=xx`。
+
 ## 运行扫描
 
 运行扫描有两种方式，按需选择即可。
@@ -195,8 +205,16 @@ npm run scan:dayforce
 - 你想发现新公司，而不只是检查已知的公司
 - 脚本扫描漏掉了你预期会看到的职位
 
+如果脚本漏掉了一个你自己找到的职位，先让它告诉你原因：
+
+```bash title="Terminal"
+node coverage-check.mjs <url> --company "<company>" --title "<job title>"
+```
+
+它会读取你的 `portals.yml` 和扫描历史，全程无需联网，说明这个职位为什么被漏掉（公司没有被跟踪、它的条目已停用、没有适配器能读取它的招聘网站，或者被职位名称或地点过滤器排除了），并给出本可以让它被扫描到的那一处修改。它从不替你编辑 `portals.yml`。
+
 <Callout title="提示">
-  方式 B 会消耗 Claude API token，耗时也比脚本长。如果只是每天快速看一眼，方式 A 更快。
+  方式 B 会消耗 AI 模型的 token，耗时也比脚本长。这些 token 是按 API 密钥计费，还是计入你的订阅额度，取决于你的 CLI 如何配置（[请参阅常见问题](/zh/docs/faq#i-pay-for-claude-pro-or-max-why-is-career-ops-billing-my-api-credits)）。如果只是每天快速看一眼，方式 A 更快。
 </Callout>
 
 ## 看懂扫描结果
@@ -242,7 +260,7 @@ New offers:
 ⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
 ```
 
-这表示该公司的招聘门户一直没有成功响应，所以这个 0 并不能证明它没有在招职位。该公司会在 `data/portal-health.tsv` 中被记为 `unverified_zero`，并计入它的连续失败次数。在修改过滤条件之前，先检查一下那个招聘门户。
+这表示该公司的招聘门户一直没有成功响应，所以这个 0 并不能证明它没有在招职位。该公司会在 `data/portal-health.tsv` 中被记为 `unverified_zero`，并计入它的连续失败次数。在修改过滤条件之前，先检查一下那个招聘门户。响应慢的招聘页面也可能还没来得及响应就超时了：扫描器默认每个请求等待 10 秒，运行 `CAREER_OPS_HTTP_TIMEOUT_MS=30000 npm run scan` 可以把等待时间延长到 30 秒。
 
 如果没有这条警告，可能是你的职位名称过滤器太严格了。试着在 `positive` 列表中加一个关键词，再扫描一次。
 

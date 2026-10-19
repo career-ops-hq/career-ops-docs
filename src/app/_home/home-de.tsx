@@ -63,8 +63,8 @@ export const homeDe: HomeDict = {
       Jobquellen ohne Token-Verbrauch und verfolgt deine Pipeline in einem
       Terminal-Dashboard, geschrieben in Go. Alles bleibt auf deinem Rechner:{' '}
       {brand('keine Cloud')}, {brand('keine Telemetrie')}, {brand('kein Konto')}.
-      MIT-lizenziert und für immer kostenlos; du zahlst nur die KI-Coding-CLI,
-      die du ohnehin nutzt. Entwickelt von Santiago Fernández de Valderrama
+      MIT-lizenziert und für immer kostenlos; bezahlen musst du höchstens die
+      KI-Engine, die du wählst, und kostenlose und lokale Modelle funktionieren auch. Entwickelt von Santiago Fernández de Valderrama
       Aparicio nach einer echten Jobsuche im Jahr 2026: 740 Stellenanzeigen, 68
       Bewerbungen, 12 Vorstellungsgespräche und ein Jobangebot.
     </>
@@ -290,7 +290,7 @@ export const homeDe: HomeDict = {
           veröffentlicht sein vollständiges Bewertungsraster. Bei jeder
           Bewerbung entscheidet ein Mensch; es verschickt nie etwas von selbst.
           Kein Konto, keine Telemetrie und kein Abo für career-ops selbst; die
-          einzigen laufenden Kosten sind die der KI-CLI, die du wählst. Ehrliche
+          einzigen laufenden Kosten, falls überhaupt, sind die der KI-Engine, die du wählst. Ehrliche
           Vergleiche mit konkreten Tools, Seite an Seite, findest du unter{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

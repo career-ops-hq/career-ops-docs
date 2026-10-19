@@ -661,7 +661,7 @@ export function manifestoSchemaEs() {
         articleSection: 'Manifiesto',
         image: {
           '@type': 'ImageObject',
-          url: 'https://career-ops.org/og-manifesto.png',
+          url: 'https://career-ops.org/og-manifesto.es.png',
           width: 1200,
           height: 630,
         },

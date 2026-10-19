@@ -3,7 +3,7 @@ title: 快速开始
 description: "大约十五分钟上手 career-ops：安装这个开源的 AI 求职系统，打开你的 AI CLI，评估你的第一个职位。无需编程。"
 seoTitle: "career-ops 快速上手：几分钟完成安装，用 AI 扫描你的第一个职位"
 icon: Rocket
-translationHash: 3dc0cfbde93edb50
+translationHash: a1ac86db5bf5c50e
 localized: true
 translatedFrom: /docs
 ---
@@ -78,6 +78,8 @@ career-ops 在多项任务中会用到无头 Chromium：渲染 PDF、检查职�
 ```bash title="Terminal"
 npx playwright install chromium
 ```
+
+如果你的环境中设置了 `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD`，且它的值不是空、`0` 或 `false`，`npm install` 就会跳过这次下载；这种情况下，请自己运行上面的命令。在 NixOS 上请跳过这一步：下载的浏览器在那里无法启动，仓库的 flake 开发 shell 会改为提供可用的浏览器，详见核心仓库的 [NixOS 指南](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md)。
 
 ## 第 2 步：打开你的 AI 助手
 
@@ -235,6 +237,8 @@ npx playwright install chromium
 - **Block F**：面试准备，包含针对这个职位定制的 STAR 故事。
 - **Block G**：职位发布的可信度，即用启发式方法检查一些信号，例如职位是否仍在招聘、是否被反复重新发布。它只报告发现，判断留给你自己。
 - **Block H**：申请表的回答草稿，只有在评分达到 4.5 或以上时才会生成。
+
+紧跟在 Block G 之后，**Verdict**（结论）会用粗体给出判断（Apply（申请）、Consider（考虑）、Research first（先调研）或 Skip（跳过）），并附上一条取自上面各个 Block 的理由，让你在读其余部分之前就知道答案。
 
 定制的 PDF 简历在 `output/` 文件夹中。发送到任何地方之前，请先检查一遍：没有你的批准，career-ops 从不提交任何东西。
 

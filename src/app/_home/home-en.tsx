@@ -52,8 +52,8 @@ export const homeEn: HomeDict = {
       forms, scans 150+ job sources zero-token, and tracks the pipeline in a
       Go-based terminal dashboard. Everything lives on your machine:{' '}
       {brand('no cloud')}, {brand('no telemetry')}, {brand('no account')}.
-      MIT-licensed and free forever; the only cost is whichever AI coding CLI you
-      already pay for. Built by Santiago Fernández de Valderrama Aparicio after a
+      MIT-licensed and free forever; the only thing you might pay for is the AI
+      engine you choose, and free and local models work too. Built by Santiago Fernández de Valderrama Aparicio after a
       real 2026 job search of 740 listings, 68 applications, 12 interviews, and
       one offer.
     </>
@@ -258,8 +258,8 @@ export const homeEn: HomeDict = {
           machine through whichever AI coding CLI you already use, and publishes
           its full evaluation rubric. A human stays in the loop on every
           application; it never auto-submits. There is no account, no telemetry,
-          and no subscription to career-ops itself; the only recurring cost is the
-          AI CLI you choose. For honest, side-by-side comparisons with specific
+          and no subscription to career-ops itself; the only recurring cost, if any, is
+          the AI engine you choose. For honest, side-by-side comparisons with specific
           tools, see{' '}
           <a href="/compare" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/compare

@@ -13,6 +13,7 @@ import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { SiteLink } from '@/components/mdx-link';
 import { gitConfig } from '@/lib/shared';
 import { docsBreadcrumbSchema, docsTechArticleSchema } from '@/lib/schema';
+import { NATIVE_REVIEWERS } from '@/lib/native-reviewers';
 import { gitLastMod } from '@/lib/git-date';
 import { CLAUDE_CODE_FAQ_BY_LOCALE, FAQ_BY_LOCALE, type FaqEntry } from '@/lib/faq-data';
 import { GLOSSARY_TERMS } from '@/lib/glossary-data';
@@ -111,6 +112,16 @@ function extraSchemaFor(slug: string[] | undefined, locale: string, url: string)
 // link point at the right source per language.
 const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr', de: 'de', pt: 'pt-BR', it: 'it', zh: 'zh-CN', vi: 'vi' } as const;
 const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le', de: 'Aktualisiert am', pt: 'Atualizado em', it: 'Aggiornato il', zh: '更新于', vi: 'Cập nhật ngày' } as const;
+// Credit line for a locale's native-speaker reviewers (src/lib/native-reviewers.ts).
+const NATIVE_REVIEW_LABEL = {
+  es: 'Revisión nativa:',
+  fr: 'Relecture native :',
+  de: 'Muttersprachliche Prüfung:',
+  pt: 'Revisão nativa:',
+  it: 'Revisione madrelingua:',
+  zh: '母语审校：',
+  vi: 'Hiệu đính bản địa:',
+} as const;
 
 export function DocsPageView({ page }: { page: DocsPageType }) {
   const MDX = page.data.body;
@@ -184,6 +195,19 @@ export function DocsPageView({ page }: { page: DocsPageType }) {
           })}
         />
       </DocsBody>
+      {locale !== 'en' && (NATIVE_REVIEWERS[locale]?.length ?? 0) > 0 && (
+        <p className="mt-10 border-t pt-4 text-xs text-fd-muted-foreground">
+          {NATIVE_REVIEW_LABEL[locale]}{locale === 'zh' ? '' : ' '}
+          {NATIVE_REVIEWERS[locale]!.map((r, i) => (
+            <span key={r.github}>
+              {i > 0 && (locale === 'zh' ? '、' : ', ')}
+              <a href={`https://github.com/${r.github}`} rel="noopener" className="text-fd-foreground hover:underline">
+                {r.name}
+              </a>
+            </span>
+          ))}
+        </p>
+      )}
     </DocsPage>
   );
 }
