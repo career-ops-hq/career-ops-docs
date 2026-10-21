@@ -69,7 +69,7 @@ export async function GET() {
 
 The latest release of **career-ops** is **${latest.version}**, published ${formatDate(latest.date)}. career-ops is an open-source, local-first AI job-search tool that ships several times a week; this page is generated from the project's GitHub Releases and updates itself.
 
-Updates never touch your data. The system layer (scripts, modes, templates, docs) is replaceable; your layer (\`cv.md\`, \`config/profile.yml\`, \`data/*\`, \`reports/*\`, \`output/*\`) is not touched by an update. See the Data Contract: https://career-ops.org/docs
+Updates preserve your user-owned data. The system layer (scripts, modes, templates, docs) is replaceable; your layer (\`cv.md\`, \`config/profile.yml\`, \`data/*\`, \`reports/*\`, \`output/*\`) is protected from updates. The updater may create or replace only system-owned \`.gitkeep\` scaffolds in the folders of your data layer; it does not modify other files there. See the Data Contract: https://career-ops.org/docs
 
 Canonical release history: ${GITHUB_RELEASES}
 HTML version of this page: https://career-ops.org/changelog
