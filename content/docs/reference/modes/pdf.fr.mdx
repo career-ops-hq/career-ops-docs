@@ -4,8 +4,8 @@ description: "Génère un CV PDF adapté à une JD précise : career-ops constru
 seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-16"
-translationHash: ac18633cc823dce2
+lastModified: "2026-10-20"
+translationHash: 276805aefe6c9d60
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -44,6 +44,29 @@ Recourez à pdf lorsque vous avez décidé de postuler et que vous souhaitez uni
 - Le format de papier suit automatiquement la localisation de l'entreprise : `letter` pour les postes aux États-Unis et au Canada, `a4` partout ailleurs.
 - L'injection de mots-clés repose sur la vérité. Le mode reformule une expérience réelle dans le vocabulaire exact de la JD, mais n'ajoute jamais une compétence que vous ne possédez pas.
 - Pour la région DACH et une grande partie de l'Europe continentale, vous pouvez opter pour une photo en renseignant `candidate.photo` dans `config/profile.yml` ; laissez ce champ vide et le CV s'affiche à l'identique, au pixel près, sans photo — le choix par défaut le plus sûr pour les États-Unis, le Royaume-Uni et les marchés centrés sur les ATS.
+
+## Ce qu'il vérifie avant le rendu
+
+Le mode pdf peut reformuler votre expérience, mais il ne doit rien inventer. Deux vérifications ont lieu avant que le PDF n'existe : l'une porte sur les intitulés de poste, l'autre sur les faits.
+
+La vérification des intitulés passe en premier, sur le CV personnalisé, avant la construction du HTML. `cv-title-check.mjs` associe chaque poste du CV personnalisé à l'entrée de `cv.md` qui a la même entreprise et les mêmes dates, puis compare les deux intitulés. Seules la casse et les espaces sont ignorées : « Backend Engineer » et « Senior Backend Engineer » ne correspondent donc pas. Pour chaque écart, career-ops vous montre les deux intitulés et vous demande s'il faut garder le nouveau ou revenir à celui de `cv.md` :
+
+```text title="Terminal"
+CV Title Consistency Check
+────────────────────────────────────────
+Entries compared: 3
+⚠️  1 title mismatch(es) found:
+
+  Acme (2021-2024)
+    cv.md:        "Backend Engineer"
+    tailored CV:  "Senior Backend Engineer"
+```
+
+La vérification des intitulés avertit et ne bloque jamais, car reformuler un intitulé relève parfois de votre choix. Un poste qu'elle ne parvient pas à associer, par exemple parce que ses dates ne sont pas écrites comme dans `cv.md`, est signalé comme non vérifié : vérifiez cet intitulé vous-même. Si la vérification ne peut pas s'exécuter du tout, parce que `cv.md` est illisible ou qu'un poste n'a pas d'entreprise, d'intitulé ou de dates, career-ops s'arrête et corrige d'abord l'entrée.
+
+La vérification des faits a lieu dans `generate-pdf.mjs`, sur le HTML, avant toute impression. Un chiffre ou une affirmation absent de `cv.md` et de `article-digest.md` bloque le PDF. Pour corriger, retirez l'affirmation du CV ou ajoutez la preuve à vos sources. `config/cv-facts.json` ajoute vos propres listes : `allow_metrics` et `allow_facts` pour les affirmations vérifiées ailleurs, `forbidden_phrases`, qui bloquent, et `warn_phrases`, qui ne font qu'avertir. Sans ce fichier, les vérifications de formulations ne s'exécutent pas et la sortie l'indique. `--skip-fact-check` désactive ce contrôle.
+
+Aucune des deux ne juge la reformulation. Une puce peut exagérer ce que vous avez fait sans nouveau chiffre ni nouvel intitulé : relisez donc chaque CV avant de l'envoyer.
 
 ## Pièges à connaître
 

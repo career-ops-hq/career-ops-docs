@@ -4,8 +4,8 @@ description: "Gera um currículo em PDF sob medida para uma vaga específica: o 
 seoTitle: "Modo pdf do career-ops — gere um currículo sob medida e compatível com ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-16"
-translationHash: ac18633cc823dce2
+lastModified: "2026-10-20"
+translationHash: 276805aefe6c9d60
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -44,6 +44,29 @@ Recorra ao pdf quando você já decidiu se candidatar e quer apenas o currículo
 - O tamanho do papel segue automaticamente a localização da empresa: `letter` para vagas nos EUA e no Canadá, `a4` em todos os outros lugares.
 - A inserção de palavras-chave se baseia na verdade. O modo reescreve experiências reais com o vocabulário exato da descrição da vaga, mas nunca acrescenta uma habilidade que você não tem.
 - Para a região DACH e boa parte da Europa continental, você pode optar por incluir uma foto definindo `candidate.photo` em `config/profile.yml`; deixe o campo vazio e o currículo é renderizado pixel a pixel idêntico, sem foto, que é o padrão mais seguro para os EUA, o Reino Unido e os mercados em que o ATS vem primeiro.
+
+## O que ele verifica antes de renderizar
+
+O modo pdf pode reformular sua experiência, mas não pode inventar nada. Duas verificações rodam antes de o PDF existir: uma de cargos e outra de fatos.
+
+A verificação de cargos roda primeiro, sobre o currículo sob medida, antes de o HTML ser montado. O `cv-title-check.mjs` pareia cada experiência do currículo sob medida com a entrada do `cv.md` que tem a mesma empresa e as mesmas datas e compara os dois cargos. Só maiúsculas, minúsculas e espaços são ignorados, então "Backend Engineer" e "Senior Backend Engineer" não batem. Para cada divergência, o career-ops mostra os dois cargos e pergunta se você quer manter o novo ou voltar ao do `cv.md`:
+
+```text title="Terminal"
+CV Title Consistency Check
+────────────────────────────────────────
+Entries compared: 3
+⚠️  1 title mismatch(es) found:
+
+  Acme (2021-2024)
+    cv.md:        "Backend Engineer"
+    tailored CV:  "Senior Backend Engineer"
+```
+
+A verificação de cargos avisa e nunca bloqueia, porque reformular um cargo às vezes é decisão sua. Uma experiência que ela não consegue parear, por exemplo porque as datas estão escritas de outro jeito que no `cv.md`, aparece como não verificada; confira esse cargo por conta própria. Se a verificação nem consegue rodar, porque o `cv.md` não pode ser lido ou falta empresa, cargo ou datas em uma experiência, o career-ops para e corrige a entrada primeiro.
+
+A verificação de fatos roda no `generate-pdf.mjs`, sobre o HTML, antes de qualquer impressão. Um número ou afirmação que não está no `cv.md` nem no `article-digest.md` bloqueia o PDF. Para corrigir, tire a afirmação do currículo ou acrescente a evidência às suas fontes. O `config/cv-facts.json` acrescenta suas próprias listas: `allow_metrics` e `allow_facts` para afirmações que você comprovou em outro lugar, `forbidden_phrases`, que bloqueiam, e `warn_phrases`, que só avisam. Sem esse arquivo, as verificações de frases não rodam e a saída avisa. `--skip-fact-check` desliga a verificação.
+
+Nenhuma das duas julga a reformulação. Um bullet pode exagerar o que você fez sem número novo nem cargo novo, então leia cada currículo antes de enviar.
 
 ## Pontos de atenção
 

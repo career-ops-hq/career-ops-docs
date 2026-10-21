@@ -4,8 +4,8 @@ description: "Genera un CV en PDF adaptado a una JD concreta: career-ops constru
 seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-16"
-translationHash: ac18633cc823dce2
+lastModified: "2026-10-20"
+translationHash: 276805aefe6c9d60
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -44,6 +44,29 @@ Recurre a pdf cuando has decidido aplicar y solo quieres el CV adaptado, saltán
 - El tamaño de papel sigue automáticamente la ubicación de la empresa: `letter` para puestos en EE. UU. y Canadá, `a4` en el resto del mundo.
 - La inyección de keywords se basa en la verdad. El modo reformula experiencia real con el vocabulario exacto de la JD, pero nunca añade una habilidad que no tienes.
 - Para DACH y buena parte de la Europa continental puedes optar por incluir foto configurando `candidate.photo` en `config/profile.yml`; déjalo vacío y el CV se renderiza píxel a píxel idéntico pero sin ella, que es la opción por defecto más segura para EE. UU., Reino Unido y mercados ATS-first.
+
+## Qué comprueba antes de renderizar
+
+El modo pdf puede reformular tu experiencia, pero no debe inventar nada. Antes de que exista el PDF se ejecutan dos comprobaciones: una de cargos y otra de hechos.
+
+La comprobación de cargos va primero, sobre el CV adaptado y antes de construir el HTML. `cv-title-check.mjs` empareja cada puesto del CV adaptado con la entrada de `cv.md` que tiene la misma empresa y las mismas fechas, y compara los dos cargos. Solo ignora mayúsculas y espacios, así que "Backend Engineer" y "Senior Backend Engineer" no coinciden. Por cada diferencia, career-ops te muestra los dos cargos y te pregunta si quieres mantener el nuevo o volver al de `cv.md`:
+
+```text title="Terminal"
+CV Title Consistency Check
+────────────────────────────────────────
+Entries compared: 3
+⚠️  1 title mismatch(es) found:
+
+  Acme (2021-2024)
+    cv.md:        "Backend Engineer"
+    tailored CV:  "Senior Backend Engineer"
+```
+
+La comprobación de cargos avisa y nunca bloquea, porque reformular un cargo a veces es decisión tuya. Un puesto que no puede emparejar, por ejemplo porque sus fechas están escritas de otra forma que en `cv.md`, se marca como no comprobado, así que revisa ese cargo directamente. Si la comprobación no puede ejecutarse, porque no se puede leer `cv.md` o a un puesto le falta la empresa, el cargo o las fechas, career-ops se detiene y corrige primero la entrada.
+
+La comprobación de hechos se ejecuta en `generate-pdf.mjs`, sobre el HTML, antes de imprimir nada. Una cifra o afirmación que no está en `cv.md` ni en `article-digest.md` bloquea el PDF. Para corregirlo, quita la afirmación del CV o añade la evidencia a tus fuentes. `config/cv-facts.json` añade tus propias listas: `allow_metrics` y `allow_facts` para afirmaciones que has verificado en otro sitio, `forbidden_phrases` que bloquean y `warn_phrases` que solo avisan. Sin ese archivo, las comprobaciones de frases no se ejecutan y la salida lo indica. `--skip-fact-check` desactiva la comprobación.
+
+Ninguna de las dos juzga la reformulación. Un bullet puede exagerar lo que hiciste sin una cifra nueva ni un cargo nuevo, así que lee cada CV antes de enviarlo.
 
 ## Posibles problemas
 

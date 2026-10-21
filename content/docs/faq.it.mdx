@@ -3,7 +3,7 @@ title: Domande frequenti
 description: "Domande frequenti su career-ops: costi, privacy, CLI AI supportate, scan e scan:full, limiti di token, configurazione su Windows e ciò che career-ops non fa mai a tuo nome."
 seoTitle: "Domande frequenti su career-ops: costi, privacy, Claude Code e uso gratuito"
 icon: CircleQuestionMark
-translationHash: e38fef5efe601151
+translationHash: 4fcba7339b2ca9b2
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -17,6 +17,10 @@ Questa pagina raccoglie in un unico posto le risposte alle domande più comuni s
 ## career-ops invia le candidature in automatico?
 
 No: career-ops non si candida mai a tuo nome. Prepara, cioè scansiona gli annunci, assegna un punteggio, adatta il tuo curriculum e può precompilare i moduli di candidatura degli ATS, ma l'invio è sempre un tuo clic esplicito. Redige e compila; non invia mai. Sei tu a cliccare su Invia. Il progetto career-ops rifiuta esplicitamente l'automazione delle candidature a tappeto: lo scopo è scegliere bene le aziende, non candidarsi alla cieca e in massa.
+
+## Il CV su misura può inventare cose?
+
+career-ops non deve inventare nulla in un CV su misura: i prompt dicono riformulare, mai inventare, e due controlli lo garantiscono. `generate-pdf.mjs` blocca un CV i cui numeri o fatti non compaiono nelle tue fonti (`cv.md` e `article-digest.md`), a meno che tu non passi `--skip-fact-check`. La [modalità pdf](/it/docs/reference/modes/pdf) esegue anche `cv-title-check.mjs`, che confronta ogni titolo di ruolo del CV su misura con quello che `cv.md` dà allo stesso ruolo, abbinati per azienda e date, e ti chiede se tenere o ripristinare ogni titolo diverso. Il controllo dei titoli avvisa invece di bloccare, perché riformulare un titolo a volte è una tua scelta. Nulla giudica ancora la riformulazione, quindi leggi ogni CV prima di inviarlo.
 
 ## career-ops è gratis?
 

@@ -4,7 +4,7 @@ description: "Generates a tailored PDF resume against a specific JD: career-ops 
 seoTitle: "career-ops pdf mode — generate an ATS-friendly tailored resume"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-16"
+lastModified: "2026-10-20"
 ---
 
 ## What it does
@@ -41,6 +41,29 @@ Reach for pdf when you've decided to apply and want only the tailored resume, sk
 - Paper size follows the company's location automatically: `letter` for US and Canada roles, `a4` everywhere else.
 - Keyword injection is truth-based. The mode rewords real experience into the JD's exact vocabulary but never adds a skill you do not have.
 - For DACH and much of continental Europe you can opt into a photo by setting `candidate.photo` in `config/profile.yml`; leave it empty and the CV renders pixel-for-pixel identical without one, which is the safer default for US, UK, and ATS-first markets.
+
+## What it checks before rendering
+
+pdf mode may reword your experience, but it must not invent any. Two checks run before the PDF exists: one for job titles and one for facts.
+
+The title check runs first, on the tailored CV before any HTML is built. `cv-title-check.mjs` pairs each role in the tailored CV with the `cv.md` entry that has the same company and dates, then compares the two titles. Only case and spacing are ignored, so "Backend Engineer" and "Senior Backend Engineer" are a mismatch. For each mismatch, career-ops shows you both titles and asks whether to keep the new title or go back to the one in `cv.md`:
+
+```text title="Terminal"
+CV Title Consistency Check
+────────────────────────────────────────
+Entries compared: 3
+⚠️  1 title mismatch(es) found:
+
+  Acme (2021-2024)
+    cv.md:        "Backend Engineer"
+    tailored CV:  "Senior Backend Engineer"
+```
+
+The title check warns and never blocks, because reframing a title is sometimes your call. A role it cannot pair, for example because its dates are written differently from `cv.md`, is reported as not checked, so check that title yourself. If the check cannot run at all, because `cv.md` cannot be read or a role is missing its company, title or dates, career-ops stops and fixes the input first.
+
+The fact check runs in `generate-pdf.mjs`, on the HTML, before anything is printed. A number or claim that is not in `cv.md` or `article-digest.md` blocks the PDF. To fix it, take the claim out of the CV or add the evidence to your sources. `config/cv-facts.json` adds your own lists: `allow_metrics` and `allow_facts` for claims you have verified elsewhere, `forbidden_phrases` that block, and `warn_phrases` that only warn. Without that file, the phrase checks do not run and the output says so. `--skip-fact-check` turns the gate off.
+
+Neither check judges rewording. A bullet can overstate what you did without a new number or a new title, so read every CV before you send it.
 
 ## Gotchas
 

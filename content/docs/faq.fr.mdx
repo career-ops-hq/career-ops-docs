@@ -3,7 +3,7 @@ title: FAQ
 description: Questions fréquentes sur career-ops — coût, confidentialité, CLI d'IA pris en charge, scan vs scan:full, limites de tokens, installation sous Windows, et ce que career-ops ne fera jamais à votre place.
 seoTitle: "FAQ career-ops — coût, confidentialité, CLI pris en charge, Windows et utilisation gratuite"
 icon: CircleQuestionMark
-translationHash: e38fef5efe601151
+translationHash: 4fcba7339b2ca9b2
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -73,6 +73,10 @@ career-ops peut fonctionner avec un modèle moins cher ou local, car il est enti
 ## career-ops postule-t-il à ma place ?
 
 Vous décidez et vous envoyez, toujours. career-ops ne soumet aucune candidature automatiquement : il fait tout le travail en amont — il scanne les offres, les évalue, adapte votre CV et peut pré-remplir les formulaires de candidature des ATS — mais l'envoi final passe toujours par votre clic explicite. Le projet career-ops rejette explicitement l'automatisation « spray-and-pray » : l'objectif est de bien choisir les entreprises, pas de postuler à l'aveugle en masse.
+
+## Le CV personnalisé peut-il inventer des choses ?
+
+career-ops ne doit rien inventer dans un CV personnalisé : les prompts disent reformuler, jamais fabriquer, et deux vérifications le garantissent. `generate-pdf.mjs` bloque un CV dont les chiffres ou les faits sont absents de vos sources (`cv.md` et `article-digest.md`), sauf si vous passez `--skip-fact-check`. Le [mode pdf](/fr/docs/reference/modes/pdf) exécute aussi `cv-title-check.mjs`, qui compare chaque intitulé de poste du CV personnalisé à celui que `cv.md` donne au même poste, associés par entreprise et par dates, et vous demande de garder ou d'annuler tout intitulé différent. La vérification des intitulés avertit au lieu de bloquer, car reformuler un intitulé relève parfois de votre choix. Rien ne juge encore la reformulation : relisez donc chaque CV avant de l'envoyer.
 
 ## Quelle est la différence entre career-ops et CareerOps ?
 
