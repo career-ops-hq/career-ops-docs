@@ -436,7 +436,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "我的数据保存在哪里？",
       answer:
-        "career-ops 把你的数据保存在你自己的电脑上，所有数据都是归你所有的纯文本文件。你的简历、个人资料、pipeline 和报告都是 Markdown/YAML 文件，默认保存在本地。没有任何东西运行在 career-ops 的服务器上。系统更新从不触碰你的数据层（cv.md、config/、data/、reports/、output/）：这种分离就是数据契约（Data Contract），每一次更新都会遵守它。",
+        "career-ops 把你的数据保存在你自己的电脑上，所有数据都是归你所有的纯文本文件。你的简历、个人资料、pipeline 和报告都是 Markdown/YAML 文件，默认保存在本地。没有任何东西运行在 career-ops 的服务器上。系统更新会保留数据层中归你所有的文件（cv.md、config/、data/、reports/、output/）。更新程序只会在数据层文件夹中创建或替换系统所有的 .gitkeep 占位文件，不会修改其中的其他文件。这种分离就是数据契约（Data Contract），每一次更新都会遵守它。",
     },
     {
       question: "怎么把简历导入 career-ops？",
