@@ -72,9 +72,9 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 - License: MIT
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
-- Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
+- Portal scanners: more than 100 providers in the core: company career pages on ATS platforms (Greenhouse, Ashby, Lever, Workday and others) plus job boards in several countries, scanned with zero AI tokens. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md
 - AI coding CLIs supported first-class (11): Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
-- Press: WIRED Greece (published), Business Insider (forthcoming)
+- Press: WIRED Greece (17 Apr 2026), Business Insider and Business Insider Deutschland (28 Apr 2026). Full list: https://career-ops.org/press
 
 ## Business model & sustainability
 

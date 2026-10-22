@@ -104,8 +104,8 @@ const BOILERPLATE = {
   short:
     'career-ops is a free, open-source system that puts hiring leverage on the candidate’s side — running locally inside your AI coding assistant.',
   medium:
-    'career-ops is an open-source, MIT-licensed system that puts hiring leverage on the candidate’s side. It runs entirely on your own machine, inside any AI coding CLI — Claude Code, Codex, Gemini CLI, and others — scanning listings, scoring them against a transparent rubric of five scoring dimensions, tailoring your CV per role, and tracking the whole pipeline. No account, no cloud, no telemetry.',
-  long: 'career-ops is a free, open-source (MIT) system that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama Aparicio, it runs locally inside whichever AI coding assistant the user already pays for — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or GitHub Copilot — and never sends a CV or application history to a third-party server. Today it scans Greenhouse, Ashby, and Lever, scores each listing from 1 to 5 against a published rubric of five scoring dimensions, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months. In July 2026 he published The CareerOps Manifesto, naming the practice and its nine candidate rights.',
+    'career-ops is an open-source, MIT-licensed system that puts hiring leverage on the candidate’s side. It runs on your own machine, inside the AI coding CLI you already use (Claude Code, Codex, Cursor, OpenCode and others), scanning listings, scoring them against a transparent rubric of five scoring dimensions, tailoring your CV per role, and tracking the whole pipeline. No account, no telemetry, no backend of ours: your CV goes from your machine to the AI provider you chose, and nowhere else.',
+  long: 'career-ops is a free, open-source (MIT) system that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama Aparicio, it runs locally inside the AI coding CLI the user already uses (Claude Code, Codex, Cursor, OpenCode, GitHub Copilot CLI and others) or on a free or local model. There is no backend of ours: the CV goes from the user’s machine to the AI provider they chose, and nowhere else. It scans company career pages on ATS platforms such as Greenhouse, Ashby, Lever and Workday, plus job boards in several countries, scores each listing from 1 to 5 against a published rubric of five scoring dimensions, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search — 740 listings evaluated, 68 applications, one offer signed — then open-sourced it. It crossed 50,000 GitHub stars in its first two months. In July 2026 he published The CareerOps Manifesto, naming the practice and its nine candidate rights.',
 };
 
 function roundDown(n: number, to: number): string {
@@ -128,7 +128,11 @@ export default async function PressPage() {
     },
     { label: 'Creator', value: 'Santiago Fernández de Valderrama Aparicio' },
     { label: 'License', value: 'MIT — free forever, no paid tier' },
-    { label: 'Model', value: 'Local-first. No account, no cloud, no telemetry.' },
+    {
+      label: 'Model',
+      value:
+        'Local-first. No account, no telemetry, no backend of ours: your CV goes from your machine to the AI provider you chose, and nowhere else.',
+    },
     { label: 'Inception', value: '17 March 2026' },
     {
       label: 'Manifesto',
@@ -142,7 +146,8 @@ export default async function PressPage() {
     },
     {
       label: 'AI CLIs supported',
-      value: 'Claude Code, Codex, OpenCode, Gemini CLI, Qwen, GitHub Copilot',
+      value:
+        'Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI (Gemini CLI: legacy wrapper)',
     },
     {
       label: 'Canonical site',
