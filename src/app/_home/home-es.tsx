@@ -50,7 +50,7 @@ export const homeEs: HomeDict = {
   ),
   whatIsBody: (
     <>
-      career-ops es un sistema open source de búsqueda de empleo con IA que se
+      career-ops es un agente de IA de código abierto para la búsqueda de empleo que se
       ejecuta en local, en tu propia máquina, dentro de cualquier CLI de
       programación con IA — Claude Code, OpenCode, Codex, GitHub Copilot y más.
       Evalúa ofertas frente a tu CV con una rúbrica de cinco dimensiones más una

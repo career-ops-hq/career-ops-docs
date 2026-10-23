@@ -45,7 +45,7 @@ export const homeEn: HomeDict = {
   ),
   whatIsBody: (
     <>
-      career-ops is an open-source AI-powered job search system that runs
+      career-ops is an open-source AI job search agent that runs
       locally on your machine inside any AI coding CLI — Claude Code, OpenCode,
       Codex, GitHub Copilot, and more. It evaluates job listings against your CV
       using a five-dimension rubric plus a holistic global score, scoring
