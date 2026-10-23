@@ -1,0 +1,84 @@
+---
+title: "Built on career-ops: community plugins and job boards by country"
+seoTitle: "career-ops plugins and job boards by country"
+description: "The plugins the community has published for career-ops, the job boards by country its contributors added to the scanner, and how to write your own."
+icon: Blocks
+---
+
+career-ops is open source (MIT) and free for candidates, and a large part of what it does was written by the people who use it. This page lists what the community has built on it: plugins that add job sources, search and exports, and job boards for markets beyond the companies' own career pages.
+
+{/* generated:numbers:start (scripts/community-snapshot.mjs) */}
+**By the numbers** (as of 22 Oct 2026, core commit [97f67c6](https://github.com/career-ops-hq/career-ops/tree/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812)): 11 community plugins in the registry, by 6 authors; 110 job source providers in the core scanner.
+{/* generated:numbers:end */}
+
+## Community plugins
+
+A plugin is a separate repository that career-ops loads through hooks: `provider` adds a job source, `search` adds a search engine, `ingest` brings data in (job alerts, calendars), `notify` sends alerts and `export` writes your data somewhere else. There is no hook that submits an application. Every plugin in the registry was reviewed by the core maintainers and is pinned to an exact commit. Each row links the plugin's own repository, where its README explains setup.
+
+{/* generated:plugins:start (scripts/community-snapshot.mjs) */}
+| Plugin | Author | What it does | Hooks | Listed |
+| --- | --- | --- | --- | --- |
+| [commute](https://github.com/bullitt186/career-ops-plugin-commute) | [@bullitt186](https://github.com/bullitt186) | Drive time from home to each posting's workplace for evaluation and triage; home stays coordinates, routing runs on your own OSRM/Valhalla | `ingest`, `search` | 11 Oct 2026 |
+| [docx](https://github.com/rubicon/career-ops-plugin-docx) | [@rubicon](https://github.com/rubicon) | Export your cv.md to a clean, ATS-friendly Word .docx, honoring #### nested sub-roles for fractional, interim, and umbrella engagements. | `export` | 8 Jul 2026 |
+| [google-calendar](https://github.com/Schlaflied/career-ops-plugin-google-calendar) | [@Schlaflied](https://github.com/Schlaflied) | Google Calendar ingest: detect upcoming interview events and surface them in the career-ops pipeline. | `ingest` | 8 Jul 2026 |
+| [linkedin-alerts](https://github.com/Schlaflied/career-ops-plugin-linkedin-alerts) | [@Schlaflied](https://github.com/Schlaflied) | LinkedIn job alert ingest: parse LinkedIn alert emails from your Gmail inbox, normalize tracking links to canonical job URLs, and surface them in the career-ops pipeline. | `ingest` | 8 Jul 2026 |
+| [markdown](https://github.com/rubicon/career-ops-plugin-markdown) | [@rubicon](https://github.com/rubicon) | Export your cv.md to a clean, markdownlint-compliant Markdown resume, honoring #### nested sub-roles for fractional, interim, and umbrella engagements. | `export` | 8 Jul 2026 |
+| [obsidian](https://github.com/Schlaflied/career-ops-plugin-obsidian) | [@Schlaflied](https://github.com/Schlaflied) | Obsidian export: mirror the tracker into your vault as frontmatter notes queryable by Dataview/Bases; frontmatter belongs to the machine, the note body belongs to you. | `export` | 8 Jul 2026 |
+| [outlook-interviews](https://github.com/Schlaflied/career-ops-plugin-outlook-interviews) | [@Schlaflied](https://github.com/Schlaflied) | Outlook interview ingest: detect interview invitation emails via Microsoft Graph, extract company / role / meeting link, and surface them in the career-ops pipeline. | `ingest` | 8 Jul 2026 |
+| [serper](https://github.com/d-ulker/career-ops-plugin-serper) | [@d-ulker](https://github.com/d-ulker) | Google Search provider via Serper.dev: drop-in replacement for the discontinued serpapi provider, with isFallback detect so free ATS providers are never shadowed. | `provider` | 10 Jul 2026 |
+| [startup-boards](https://github.com/giacomoguidotto/career-ops-plugin-startup-boards) | [@giacomoguidotto](https://github.com/giacomoguidotto) | Opt-in scanner provider for startup job boards such as Getro and Consider. | `provider` | 8 Jul 2026 |
+| [tavily](https://github.com/Schlaflied/career-ops-plugin-tavily) | [@Schlaflied](https://github.com/Schlaflied) | Tavily search/extract for job scanning, liveness checks, and company research. | `search` | 8 Jul 2026 |
+| [workspace-mcp](https://github.com/theridgerugby/career-ops-plugin-workspace-mcp) | [@theridgerugby](https://github.com/theridgerugby) | Read-only MCP access to application rows with scores and the absolute paths and byte sizes of reports, CVs and cover letters. | `export` | 14 Oct 2026 |
+{/* generated:plugins:end */}
+
+## Write yours
+
+The plugin guide is [PLUGINS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/PLUGINS.md) in the core repository. To start a new one from the template, run this in your career-ops folder:
+
+```bash
+node plugins.mjs new my-plugin
+```
+
+To list it in the registry, file a plugin registration issue and then a registry pull request in the core repository, as the guide describes.
+
+## Job boards by country [#job-boards-by-country]
+
+Besides the applicant tracking systems that many companies share (Greenhouse, Ashby, Lever, Workday and others, covered in [Portals](/docs/reference/portals)), the scanner reads job boards that serve one market, most of them added by contributors. The table lists the boards whose market the core's own list names; boards without a stated market are only in the full list.
+
+{/* generated:boards:start (scripts/community-snapshot.mjs) */}
+| Market | Board | What it covers | Added by |
+| --- | --- | --- | --- |
+| Belgium | [VDAB](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/vdab.mjs) | Public employment service of Flanders | [@nikolaysm](https://github.com/nikolaysm) |
+| Brazil | [Gupy](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/gupy.mjs) | Search across the thousands of employers hosted on the Gupy ATS | [@felipe-NR](https://github.com/felipe-NR) |
+| Canada | [Job Bank](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/jobbankca.mjs) | The federal job-search service | [@Zoubeir23](https://github.com/Zoubeir23) |
+| Canada | [PrevueAPS](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/prevueaps.mjs) | Credit unions, colleges and public-sector employers | [@Schlaflied](https://github.com/Schlaflied) |
+| Germany | [Arbeitsagentur](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/arbeitsagentur.mjs) | The federal employment agency job search | [@cluebbers](https://github.com/cluebbers) |
+| Germany | [Interamt.de](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/scan-interamt.mjs) | Federal, state and municipal public-sector jobs | [@jalejoa](https://github.com/jalejoa) |
+| Mexico | [OCC Mundial](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/occ.mjs) | The largest general job board in Mexico | [@VictorMeneses77](https://github.com/VictorMeneses77) |
+| Poland | [Just Join IT](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/justjoin.mjs) | Tech roles in Poland and the EU | [@BorisSavage](https://github.com/BorisSavage) |
+| Poland | [No Fluff Jobs](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/nofluffjobs.mjs) | Tech roles in Poland and the EU | [@BorisSavage](https://github.com/BorisSavage) |
+| Senegal | [Senjob](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/senjob.mjs) | Dakar and the regions | [@Zoubeir23](https://github.com/Zoubeir23) |
+| Singapore | [MyCareersFuture](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/mycareersfuture.mjs) | The national job bank | [@Zoubeir23](https://github.com/Zoubeir23) |
+| Spain | [getManfred](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/manfred.mjs) | Tech roles in Spain and the EU, with published salary ranges | [@Zoubeir23](https://github.com/Zoubeir23) |
+| Sweden | [Platsbanken](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/platsbanken.mjs) | The national public employment service | [@gdut4140](https://github.com/gdut4140) |
+| Switzerland | [joinup.ch](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/joinup.mjs) | Swiss startup jobs | [@eliador90](https://github.com/eliador90) |
+| Taiwan | [Yourator](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/yourator.mjs) | Startup and digital roles | [@HeiTang](https://github.com/HeiTang) |
+| United States | [Built In](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/builtin.mjs) | Tech roles, with a board per city | [@pwilinchery](https://github.com/pwilinchery) |
+| Vietnam | [ITviec](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/itviec.mjs) | The largest IT job board in Vietnam | [@vnk8071](https://github.com/vnk8071) |
+| Vietnam | [CareerViet](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/careerviet.mjs) | Broad-coverage board | [@vnk8071](https://github.com/vnk8071) |
+| Europe | [Arbeitnow](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/arbeitnow.mjs) | EU and DACH roles, newest first | [@Scott-Emberson](https://github.com/Scott-Emberson) |
+| Europe | [Landing.jobs](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/landingjobs.mjs) | Tech roles in Europe | [@Scott-Emberson](https://github.com/Scott-Emberson) |
+| Latin America | [Get on Board](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/getonbrd.mjs) | Remote and Latin American tech roles | [@gunjanjaswal](https://github.com/gunjanjaswal) |
+| Nordics | [The Hub](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/thehub.mjs) | Nordic and EU startups | [@Scott-Emberson](https://github.com/Scott-Emberson) |
+| South-East Asia | [Kalibrr](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/kalibrr.mjs) | Mostly Indonesia, then the Philippines and Thailand | [@rafifshaf-fun](https://github.com/rafifshaf-fun) |
+| South-East Asia | [Tech in Asia](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/techinasia.mjs) | Startup roles, mostly Indonesia | [@rafifshaf-fun](https://github.com/rafifshaf-fun) |
+| South-East Asia, Australia and New Zealand | [Jobstreet and SEEK](https://github.com/career-ops-hq/career-ops/blob/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812/providers/jobstreet.mjs) | One provider for the Jobstreet and SEEK sites | [@rafifshaf-fun](https://github.com/rafifshaf-fun) |
+{/* generated:boards:end */}
+
+The full list of sources, with how each one is read, is [Supported Job Boards](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md). To add a board for your market, follow [ADDING_A_PROVIDER.md](https://github.com/career-ops-hq/career-ops/blob/main/providers/ADDING_A_PROVIDER.md).
+
+## Community projects
+
+Projects built on career-ops outside the plugin registry. They are community-built, not maintained by career-ops.
+
+- **[career-ops-dashboard](https://github.com/LexLeontiev/career-ops-dashboard)** by [@LexLeontiev](https://github.com/LexLeontiev): a read-only local dashboard for your career-ops data. MIT.
