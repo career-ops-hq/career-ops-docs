@@ -30,6 +30,8 @@ export const homeEs: HomeDict = {
   memberOf: 'Miembro de',
   worthApplyingLabel: 'Cómo saber si una oferta merece tu candidatura →',
   worthApplyingHref: '/es/docs/introduction/guides/is-this-job-worth-applying-to',
+  aiJobSearchLabel: '¿Qué es la búsqueda de empleo con IA?',
+  aiJobSearchHref: '/es/manifesto#what-is-ai-job-search',
   authorTagline: ', operador durante 16 años y creador de career-ops',
   // Versión «yo» oficial del README.es (superficie personal = home). El
   // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo

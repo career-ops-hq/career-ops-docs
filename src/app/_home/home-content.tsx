@@ -261,6 +261,13 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
                   </Link>
                 </p>
               )}
+              {dict.aiJobSearchLabel && dict.aiJobSearchHref && (
+                <p className="mt-2">
+                  <Link href={dict.aiJobSearchHref} className="text-sm font-medium text-brand-text hover:underline underline-offset-2">
+                    {dict.aiJobSearchLabel}
+                  </Link>
+                </p>
+              )}
               <p className="font-mono text-xs text-fd-muted-foreground mt-8 tracking-wide">
                 <span className="text-fd-foreground/40">{'//'}</span>{' '}
                 <span className="mr-1">{formatK(stats.stars)}</span>{dict.statsComment}
