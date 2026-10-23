@@ -3,14 +3,14 @@ title: Valutare più annunci in batch
 description: Elabora 10 o più annunci di lavoro in un'unica sessione, con worker AI in parallelo e PDF su misura.
 seoTitle: "Valutare tanti annunci di lavoro in una volta con career-ops: la valutazione in batch"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: ec171c2cf58a6f48
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
 
 Usa questa guida quando hai 10 o più annunci di lavoro da esaminare e vuoi elaborarli tutti in un'unica sessione invece che uno alla volta.
 
-Ogni annuncio ha il suo worker Claude. Quel worker legge il tuo curriculum, calcola il punteggio di corrispondenza, scrive un report completo e salva un PDF su misura, senza che tu debba muovere un dito.
+Ogni annuncio ha il suo worker, una sessione headless di Claude Code se non [scegli un'altra CLI](#run-the-batch-on-another-cli). Quel worker legge il tuo curriculum, calcola il punteggio di corrispondenza, scrive un report completo e salva un PDF su misura, senza che tu debba muovere un dito.
 
 ## Passo 1: aggiungi gli annunci al file di input
 
@@ -64,24 +64,24 @@ Vedrai l'elenco degli annunci in sospeso con i relativi ID. Se qualcosa non torn
 
 ## Passo 3: avvia il batch
 
-Quando sei pronto, avvia il batch. Puoi elaborare un annuncio alla volta oppure più annunci insieme.
+Quando sei pronto, avvia il batch. Con i worker Claude Code, l'impostazione predefinita, il runner valuta tre annunci alla volta; `--parallel` cambia questo numero.
 
-**Uno alla volta (il più lento, usa meno memoria):**
+**Tre alla volta (l'impostazione predefinita; più veloce, ma più pesante per il tuo computer):**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh
 ```
 
-**Due alla volta (una buona impostazione predefinita):**
+**Due alla volta:**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --parallel 2
 ```
 
-**Tre alla volta (più veloce, ma più pesante per il tuo computer):**
+**Uno alla volta (il più lento, usa meno memoria):**
 
 ```bash title="Terminal"
-./batch/batch-runner.sh --parallel 3
+./batch/batch-runner.sh --parallel 1
 ```
 
 **Salta gli annunci con un punteggio inferiore a una soglia (ad es. sotto 4,0 su 5):**
@@ -91,6 +91,18 @@ Quando sei pronto, avvia il batch. Puoi elaborare un annuncio alla volta oppure 
 ```
 
 Tieni d'occhio il terminale mentre il batch è in esecuzione. Ogni riga ti dice quale annuncio è in elaborazione e se è stato completato o è fallito.
+
+Quando un worker Claude incontra un limite di frequenza, il runner aspetta e riprova lo stesso annuncio nella stessa esecuzione, senza attendere più di `--rate-limit-sleep` secondi (300 per impostazione predefinita), ed elabora il resto del batch con un solo worker. Ognuno di questi nuovi tentativi nella stessa esecuzione consuma uno dei tentativi `--max-retries` dell'annuncio. Un limite di sessione o di utilizzo invece mette in pausa il batch; riprendilo più tardi con `--resume-paused`.
+
+### Esegui il batch con un'altra CLI [#run-the-batch-on-another-cli]
+
+Il runner usa Claude Code a meno che tu non passi `--cli`. Accetta quattro valori: `claude` (predefinito), `opencode`, `gemini` e `qwen`. `--model` sceglie il modello di quella CLI:
+
+```bash title="Terminal"
+./batch/batch-runner.sh --cli opencode --model qwen2.5:32b
+```
+
+I worker in parallelo e i nuovi tentativi nella stessa esecuzione dopo un limite di frequenza esistono solo con Claude. Con qualsiasi altro `--cli`, il runner valuta un annuncio alla volta (riporta `--parallel` a 1 con un avviso) e fa un solo tentativo per annuncio a ogni esecuzione. Se quel tentativo fallisce, l'annuncio viene segnato come fallito e aspetta un'esecuzione successiva, che lo riprova come descritto al Passo 5. Vedi [CLI AI supportate](/it/docs/supported-clis#which-clis-can-run-a-batch) per capire in cosa questo elenco differisce dalle CLI supportate da career-ops.
 
 Se un worker delegato trova un annuncio di un'agenzia che richiede la tua conferma, si ferma prima di scrivere un report, un CV, una bozza di candidatura o una riga del tracker e contrassegna il job come `needs_confirmation`. Rispondi alla domanda mostrata nella sessione interattiva principale: quella sessione riprende l'annuncio in sospeso solo dopo la tua risposta esplicita. `--retry-failed` e `--resume-paused` non riprendono gli annunci in attesa di conferma.
 
@@ -128,6 +140,8 @@ Questo livello descrive l'evidenza alla base del Global Score: non è una probab
 ## Passo 5: riprova gli annunci falliti
 
 A volte un worker fallisce, per esempio se l'URL di un annuncio ha smesso di caricarsi. Gli annunci falliti compaiono nel terminale con un breve messaggio di errore.
+
+Questi sono nuovi tentativi in esecuzioni successive e funzionano allo stesso modo con qualsiasi CLI: l'esecuzione seguente riprende ogni annuncio fallito finché non ha esaurito i suoi tentativi `--max-retries`. Sono diversi dai nuovi tentativi nella stessa esecuzione dopo un limite di frequenza, descritti al Passo 3, che fanno solo i worker Claude, anche se entrambi contano sullo stesso limite `--max-retries`. Un semplice `./batch/batch-runner.sh` riprova gli annunci falliti insieme a quelli in sospeso.
 
 **Riprova solo gli annunci falliti:**
 

@@ -3,7 +3,7 @@ title: 支持的 AI CLI
 seoTitle: "career-ops 支持哪些 AI CLI？Claude Code、Codex、Gemini、OpenCode、Qwen、Copilot"
 description: "career-ops 不绑定任何 AI 厂商：它能在所有主流 AI 编程 CLI 上运行，你可以直接使用已经付费的助手，永远不会被锁定在某一家厂商。完整且始终最新的列表保存在核心仓库中。"
 icon: Terminal
-translationHash: aba388df8b32db03
+translationHash: e1d9f01f9679ce09
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -21,6 +21,21 @@ career-ops 完整支持 **Claude Code、Cursor、Codex、OpenCode、Pi、Antigra
 **规范且始终最新的列表（包括在每个 CLI 中调用 career-ops 的确切命令）保存在核心仓库中**，因此永远不会过时：
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md)：完整的支持矩阵，列出所有支持的 CLI、入口文件及其调用方式（交互式和无头/批处理模式）。
+
+## 哪些 CLI 可以运行批处理？ [#which-clis-can-run-a-batch]
+
+[批处理运行器](/zh/docs/introduction/guides/batch-evaluate-offers)（`batch/batch-runner.sh`）会启动自己的无头工作进程，它的 `--cli` 参数接受的列表比上面那份更短：
+
+| `--cli` 值 | 工作进程命令 | 批处理的运行方式 |
+|---|---|---|
+| `claude`（默认） | `claude -p` | 默认一次三个职位（`--parallel`）；遇到速率限制的职位会在同一次运行中重试 |
+| `opencode` | `opencode run`；未安装 `opencode` 时使用 `ollama launch opencode` | 一次一个职位，每次运行中每个职位尝试一次 |
+| `gemini` | `gemini -p` | 一次一个职位，每次运行中每个职位尝试一次 |
+| `qwen` | `qwen -p` | 一次一个职位，每次运行中每个职位尝试一次 |
+
+无论使用哪个值，失败的职位都会在之后的运行中重试，最多到 `--max-retries`。
+
+被运行器接受并不等于受支持。运行器仍然接受 `gemini`，但 Gemini CLI 是一个已过渡到 Antigravity CLI 的旧版封装，因此不在受支持的 CLI 列表中。反过来也一样：Cursor、Codex、Pi、Antigravity CLI、Grok Build CLI、Kimi、Hermes Agent 和 GitHub Copilot CLI 都受支持，但批处理运行器不会把它们作为工作进程启动。
 
 ## Pi
 

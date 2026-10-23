@@ -3,14 +3,14 @@ title: 批量评估职位
 description: 在一次会话中用并行的 AI 工作进程处理 10 个以上职位，并为每个职位生成定制的 PDF。
 seoTitle: "用 career-ops 批量评估职位：一次为多个职位打分"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: ec171c2cf58a6f48
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
 
 如果你手上有 10 个或更多职位要看，想在一次会话里全部处理完，而不是一个一个来，就按这份指南操作。
 
-每个职位都会分配一个独立的 Claude 工作进程。这个工作进程会读取你的简历、给匹配度打分、写一份完整报告，并保存一份定制的 PDF，全程无需你动手。
+每个职位都会分配一个独立的工作进程：默认是一个无头（headless）Claude Code 会话，除非你[选择其他 CLI](#run-the-batch-on-another-cli)。这个工作进程会读取你的简历、给匹配度打分、写一份完整报告，并保存一份定制的 PDF，全程无需你动手。
 
 ## 第 1 步：把职位添加到输入文件
 
@@ -64,24 +64,24 @@ id	url	source	notes
 
 ## 第 3 步：运行批处理
 
-准备好后就启动批处理。你可以一次处理一个职位，也可以同时处理多个。
+准备好后就启动批处理。默认使用 Claude Code 工作进程时，运行器一次评估三个职位；`--parallel` 可以修改这个数量。
 
-**一次一个（最慢，占用内存最少）：**
+**一次三个（默认设置；更快，但电脑负担更重）：**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh
 ```
 
-**一次两个（比较稳妥的默认选择）：**
+**一次两个：**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --parallel 2
 ```
 
-**一次三个（更快，但电脑负担更重）：**
+**一次一个（最慢，占用内存最少）：**
 
 ```bash title="Terminal"
-./batch/batch-runner.sh --parallel 3
+./batch/batch-runner.sh --parallel 1
 ```
 
 **跳过评分低于某个阈值的职位（例如低于 4.0，满分 5 分）：**
@@ -91,6 +91,18 @@ id	url	source	notes
 ```
 
 批处理运行时，留意终端输出。每一行都会告诉你正在处理哪个职位，以及它是已完成还是失败了。
+
+当 Claude 工作进程遇到速率限制时，运行器会等待，并在同一次运行中重试同一个职位，等待时间不超过 `--rate-limit-sleep` 秒（默认 300），同时把批处理的剩余部分改为只用一个工作进程。每一次这样的运行内重试都会消耗该职位的一次 `--max-retries` 尝试。而遇到会话或用量上限时，批处理会暂停；之后用 `--resume-paused` 继续。
+
+### 用其他 CLI 运行批处理 [#run-the-batch-on-another-cli]
+
+除非你传入 `--cli`，运行器都会使用 Claude Code。它接受四个值：`claude`（默认）、`opencode`、`gemini` 和 `qwen`。`--model` 用来选择该 CLI 的模型：
+
+```bash title="Terminal"
+./batch/batch-runner.sh --cli opencode --model qwen2.5:32b
+```
+
+并行工作进程和运行内的速率限制重试只适用于 Claude。使用其他任何 `--cli` 时，运行器一次只评估一个职位（它会把 `--parallel` 重置为 1 并给出警告），并且每次运行中对每个职位只尝试一次。如果这次尝试失败，该职位会被标记为失败，等待之后的某次运行按第 5 步所述重试。参阅[支持的 AI CLI](/zh/docs/supported-clis#which-clis-can-run-a-batch)，了解这份列表与 career-ops 支持的 CLI 有何不同。
 
 如果某个被委派的工作进程遇到一则由招聘中介发布、需要你确认的职位，它会在写入报告、简历、申请草稿或 tracker 行之前停下，并把该职位标记为 `needs_confirmation`。请在父交互会话中回答显示的问题；只有在你明确作答之后，该会话才会继续处理这个被挂起的职位。`--retry-failed` 和 `--resume-paused` 都不会恢复这类等待确认的职位。
 
@@ -128,6 +140,8 @@ id	url	source	notes
 ## 第 5 步：重试失败的职位
 
 工作进程有时会失败，例如某个职位链接已经打不开了。失败的职位会显示在终端中，并附带一条简短的错误信息。
+
+这些是在之后的运行中进行的重试，对任何 CLI 都一样：下一次运行会重新处理每个失败的职位，直到它用完 `--max-retries` 次尝试。它们与第 3 步中只有 Claude 工作进程才会进行的运行内速率限制重试不同，不过两者都计入同一个 `--max-retries` 上限。直接运行 `./batch/batch-runner.sh` 也会把失败的职位和待处理的职位一起重试。
 
 **只重试失败的职位：**
 
