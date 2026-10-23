@@ -3,7 +3,7 @@ title: 常见问题
 description: "关于 career-ops 的常见问题：费用、隐私、支持的 AI CLI、scan 与 scan:full 的区别、token 限制、Windows 安装，以及 career-ops 永远不会替你做的事。"
 seoTitle: "career-ops 常见问题：费用、隐私、支持的 CLI、Windows 安装与免费运行"
 icon: CircleQuestionMark
-translationHash: e38fef5efe601151
+translationHash: c1b942c44dd01a32
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -48,7 +48,7 @@ career-ops 不需要 Claude 订阅：它不绑定任何模型，Claude Code 只�
 
 ## 我的数据保存在哪里？
 
-career-ops 把你的数据保存在你自己的电脑上，所有数据都是归你所有的纯文本文件。你的简历、个人资料、pipeline 和报告都是 Markdown/YAML 文件，默认保存在本地。没有任何东西运行在 career-ops 的服务器上。系统更新从不触碰你的数据层（`cv.md`、`config/`、`data/`、`reports/`、`output/`）：这种分离就是**数据契约**（Data Contract），每一次更新都会遵守它。
+career-ops 把你的数据保存在你自己的电脑上，所有数据都是归你所有的纯文本文件。你的简历、个人资料、pipeline 和报告都是 Markdown/YAML 文件，默认保存在本地。没有任何东西运行在 career-ops 的服务器上。系统更新会保留数据层中归你所有的文件（`cv.md`、`config/`、`data/`、`reports/`、`output/`）。更新程序只会在数据层文件夹中创建或替换系统所有的 `.gitkeep` 占位文件，不会修改其中的其他文件。这种分离就是**数据契约**（Data Contract），每一次更新都会遵守它。
 
 ## 怎么把简历导入 career-ops？
 
