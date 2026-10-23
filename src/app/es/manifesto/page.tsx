@@ -3,7 +3,12 @@ import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { manifestoSchemaEs } from '@/lib/schema';
 import { hreflangManifesto } from '@/lib/i18n-map';
-import { CAREEROPS_DEFINITION_ES, MANIFESTO_SIGNATURE_ES } from '@/lib/shared';
+import {
+  AI_JOB_SEARCH_DEFINITION_ES,
+  AI_JOB_SEARCH_IN_THE_MANIFESTO_ES,
+  CAREEROPS_DEFINITION_ES,
+  MANIFESTO_SIGNATURE_ES,
+} from '@/lib/shared';
 import {
   getLedgerLastSignedAt,
   getSignatures,
@@ -337,6 +342,27 @@ export default async function ManifestoPageEs() {
             .
           </p>
         </div>
+
+        {/* Bloque de definición: mobiliario de la página, NO forma parte del
+            texto firmado. Mismas cadenas que la FAQ de manifestoSchemaEs()
+            y que llms.txt. Ancla compartida con la página EN. */}
+        <section
+          id="what-is-ai-job-search"
+          className="mt-12 scroll-mt-24 rounded-lg border border-fd-border bg-fd-secondary/40 p-5 leading-relaxed"
+        >
+          <h2 className="text-fd-foreground text-lg font-medium tracking-tight">
+            ¿Qué es la búsqueda de empleo con IA?
+          </h2>
+          <p className="mt-1 text-xs text-fd-muted-foreground">
+            No forma parte del texto firmado.
+          </p>
+          <p className="mt-3 text-fd-foreground/90">
+            {AI_JOB_SEARCH_DEFINITION_ES}
+          </p>
+          <p className="mt-3 text-fd-foreground/90">
+            {AI_JOB_SEARCH_IN_THE_MANIFESTO_ES}
+          </p>
+        </section>
 
         <hr className="my-12 border-t border-fd-border" />
 
