@@ -1,0 +1,98 @@
+---
+title: Thiết lập một công cụ AI miễn phí
+seoTitle: "Chạy career-ops miễn phí (không cần gói Claude) — OpenRouter, Ollama, mô hình chạy cục bộ"
+description: Chạy career-ops với chi phí 0 đồng — không cần gói Claude hay bất kỳ gói trả phí nào. Các công cụ AI miễn phí cho career-ops gồm OpenCode với nhà cung cấp miễn phí, mô hình cục bộ qua Ollama, mọi endpoint tương thích OpenAI, hoặc trình chạy OpenRouter tích hợp sẵn — và cách xử lý khi bạn hết token giữa chừng lúc tìm việc.
+icon: Sparkles
+translationHash: 27392ae8d171293d
+localized: true
+translatedFrom: /docs/free-ai-engine
+---
+
+**Không, bạn không cần gói Claude — hay bất kỳ gói trả phí nào — để chạy career-ops.** career-ops là phần mềm miễn phí và mã nguồn mở (MIT), và công cụ AI của nó cũng có thể miễn phí: OpenCode với nhà cung cấp miễn phí, mô hình chạy hoàn toàn cục bộ qua Ollama, mọi endpoint tương thích OpenAI, hoặc trình chạy OpenRouter tích hợp sẵn. Nếu bạn đã hết token giữa chừng lúc tìm việc, chuyển sang một công cụ miễn phí chỉ mất vài phút và giữ nguyên CV, pipeline cùng các báo cáo của bạn.
+
+career-ops không có gói trả phí, không chia bậc, không có bản dùng thử — nó miễn phí 100% và theo giấy phép MIT. Bất kỳ trang nào nói về giá của career-ops đều đang nói về một sản phẩm khác. Thứ duy nhất career-ops cần để "suy nghĩ" là một **công cụ AI** — một trợ lý lập trình AI đọc các prompt của nó và thực hiện công việc. Công cụ đó cũng có thể miễn phí.
+
+Với career-ops, bạn tự mang công cụ và khóa API của mình. Không có gì chạy trên máy chủ của career-ops. Trang này giới thiệu các cách miễn phí, từ dễ nhất đến cần tự tay làm nhiều nhất. Chọn một cách là bạn có thể bắt đầu với [Bắt đầu nhanh](/docs).
+
+<Callout title="Thực chất mình đang thiết lập gì?">
+Hãy coi career-ops là công thức và công cụ AI là đầu bếp. Công thức miễn phí mãi mãi. Trang này nói về việc tìm một đầu bếp miễn phí — dù đó là mô hình trên đám mây có gói miễn phí hay mô hình chạy hoàn toàn trên máy tính của bạn.
+</Callout>
+
+## Nên chọn cách nào?
+
+| Nếu bạn muốn… | Hãy dùng | Miễn phí? | Cần máy mạnh? |
+| --- | --- | --- | --- |
+| Cách bắt đầu miễn phí dễ nhất | **OpenCode + nhà cung cấp miễn phí** | Có | Không |
+| Chạy hoàn toàn ngoại tuyến và riêng tư | **Ollama (mô hình cục bộ)** | Có | Có — VRAM từ 16GB trở lên |
+| Dùng lại một CLI bạn đã có | **Gói miễn phí của chính CLI đó** | Nếu CLI đó có | Không |
+| Lối tắt chỉ với một lệnh | **`npm run or`** | Có | Không |
+
+Hầu hết mọi người nên bắt đầu với OpenCode và một nhà cung cấp miễn phí; các cách còn lại có sẵn khi bạn cần.
+
+## Cách 1 — OpenCode + nhà cung cấp miễn phí (khuyên dùng)
+
+[OpenCode](https://opencode.ai) là một trợ lý lập trình AI miễn phí, mã nguồn mở. Theo lời Santiago Fernández de Valderrama Aparicio, người tạo ra career-ops: *"opencode is top."* OpenCode kết nối được với nhiều nhà cung cấp có **gói miễn phí**, nên bạn có thể chạy career-ops mà không tốn đồng nào.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Cài đặt OpenCode">
+        Làm theo hướng dẫn cài đặt một dòng lệnh trên [opencode.ai](https://opencode.ai). Nó chạy trong terminal của bạn, giống các AI CLI khác.
+      </Step>
+      <Step title="Chọn một nhà cung cấp miễn phí">
+        Đăng ký bất kỳ nhà cung cấp nào có gói miễn phí và sao chép khóa API của bạn. Các lựa chọn miễn phí phổ biến trong cộng đồng: **OpenRouter** (các mô hình gắn thẻ `:free`), **Google AI Studio** (gói miễn phí của Gemini), và các endpoint tương thích OpenAI như gói miễn phí của **Nvidia**. [Hướng dẫn tiết kiệm chi phí](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) luôn cập nhật danh sách các mô hình hoạt động tốt.
+      </Step>
+      <Step title="Trỏ OpenCode tới nhà cung cấp đó">
+        Mở OpenCode trong thư mục career-ops:
+        ```bash title="Terminal"
+        opencode
+        ```
+        Trong OpenCode, chạy `/connect`, chọn nhà cung cấp của bạn (ví dụ **OpenRouter**) và dán khóa vào. Sau đó chạy `/models` và chọn một mô hình miễn phí — trên OpenRouter là mô hình gắn thẻ `:free`. OpenCode bỏ qua `OPENAI_API_BASE` và `OPENAI_BASE_URL`; việc thiết lập được thực hiện bằng `/connect` và `/models`.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+Vậy là xong — OpenCode giờ là công cụ AI của bạn. Hãy chuyển sang [Bắt đầu nhanh](/docs).
+
+## Cách 2 — Một CLI bạn đã có
+
+Nếu bạn đã dùng một [CLI được hỗ trợ](/docs/supported-clis) — **Claude Code, OpenCode, Codex, GitHub Copilot CLI và nhiều hơn nữa** — career-ops hoạt động được với CLI đó, và một số CLI trong số này có gói miễn phí. Hãy mở CLI của bạn trong thư mục career-ops; cách này không cần thiết lập thêm.
+
+## Cách 3 — Chạy 100% cục bộ với Ollama (hoàn toàn ngoại tuyến)
+
+Muốn không dùng đám mây, không tốn phí và riêng tư tuyệt đối, hãy chạy công cụ AI của career-ops ngay trên máy của bạn với [Ollama](https://ollama.com). Dữ liệu không rời khỏi máy tính của bạn.
+
+Cái giá của việc chạy career-ops cục bộ là phần cứng. career-ops yêu cầu mô hình chấm điểm các tin tuyển dụng theo nhiều tiêu chí và điều chỉnh CV của bạn — các mô hình nhỏ khó đáp ứng được việc này.
+
+<Callout type="warn" title="Hãy chọn mô hình đủ lớn">
+Với career-ops chạy trên mô hình cục bộ, hãy bỏ qua các mô hình nhỏ cỡ 7–8B — chúng không giữ đúng định dạng chấm điểm và tạo ra những bản CV chung chung. Hãy dùng **mô hình 32B trở lên** (ví dụ Qwen 2.5 Coder 32B), cần GPU có **16–24GB VRAM** (RTX 3090/4090, hoặc máy Mac Apple Silicon có từ 32GB bộ nhớ hợp nhất). Nếu không có máy như vậy, OpenCode với nhà cung cấp miễn phí (Cách 1) là lựa chọn miễn phí tốt hơn.
+</Callout>
+
+```bash title="Terminal"
+# Install Ollama from ollama.com, then pull a capable model:
+ollama pull qwen2.5-coder:32b
+```
+
+Sau khi tải mô hình về, hãy trỏ AI CLI của bạn (OpenCode dùng rất tốt ở đây) tới endpoint Ollama cục bộ, hoặc dùng trình đánh giá cục bộ tích hợp sẵn được mô tả trong [hướng dẫn tiết kiệm chi phí](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md).
+
+## Cách 4 — Lối tắt một lệnh: `npm run or`
+
+career-ops có sẵn một trình chạy định tuyến tới **các mô hình miễn phí của OpenRouter với cơ chế tự động chuyển dự phòng** — không cần cấu hình CLI phức tạp. Sau khi đã clone career-ops và đặt khóa OpenRouter, chỉ một lệnh là chạy được toàn bộ pipeline:
+
+```bash title="Terminal"
+export OPENROUTER_API_KEY="your_free_key_here"
+npm run or            # runs the full pipeline on free models
+```
+
+Trình chạy `npm run or` còn có các biến thể riêng — `npm run or:scan`, `or:eval`, `or:apply` — để chạy từng bước riêng lẻ.
+
+---
+
+<Callout title="Dành cho lập trình viên — tinh chỉnh mô hình và chi phí">
+Hướng dẫn **[Running on a Budget](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** trong repo career-ops đi sâu vào các đề xuất mô hình luôn được cập nhật, ví dụ theo từng nhà cung cấp, các trình đánh giá chạy độc lập (`node openai-eval.mjs`, `node ollama-eval.mjs`) và các cờ giúp tiết kiệm token. career-ops hoàn toàn không phụ thuộc vào mô hình cụ thể — bạn có thể trỏ nó tới bất kỳ endpoint tương thích OpenAI nào mà không cần sửa mã.
+</Callout>
+
+## Bạn đã sẵn sàng
+
+Khi công cụ AI đã được thiết lập, hãy tiếp tục với **[Bắt đầu nhanh](/docs)** — bạn sẽ clone career-ops, thêm CV và chạy lần quét miễn phí đầu tiên.

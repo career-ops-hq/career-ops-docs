@@ -170,4 +170,6 @@ export const OG_IMAGE_BY_LOCALE = {
   pt: ogBanner('pt', 'Mais candidaturas. Mais vácuo. Pare de adivinhar. Comece a escolher. career-ops, agente de IA para busca de emprego.'),
   it: ogBanner('it', 'Più candidature. Più silenzio. Smetti di tirare a indovinare. Inizia a scegliere. career-ops, agente AI per la ricerca di lavoro.'),
   zh: ogBanner('zh', '简历越投越多。全都石沉大海。别再瞎猜。开始挑选。career-ops，AI 求职智能体。'),
+  // No Vietnamese card yet: the English one stands in until /vi gets its own.
+  vi: DEFAULT_OG_IMAGE,
 } as const;

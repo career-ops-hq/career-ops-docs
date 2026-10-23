@@ -456,11 +456,12 @@ const UNAVAILABLE = {
   pt: { text: 'O assistente de IA n\u00e3o est\u00e1 dispon\u00edvel no momento.', action: 'Pesquisar na documenta\u00e7\u00e3o' },
   it: { text: 'L\u2019assistente AI non \u00e8 disponibile al momento.', action: 'Cerca nella documentazione' },
   zh: { text: 'AI 助手暂时不可用。', action: '改为搜索文档' },
+  vi: { text: 'Trợ lý AI hiện không khả dụng.', action: 'Tìm trong tài liệu' },
 } as const;
 
 function AssistantUnavailable() {
   const pathname = usePathname() ?? '';
-  const locale = (/^\/(es|fr|de|pt|it|zh)(\/|$)/.exec(pathname)?.[1] ?? 'en') as keyof typeof UNAVAILABLE;
+  const locale = (/^\/(es|fr|de|pt|it|zh|vi)(\/|$)/.exec(pathname)?.[1] ?? 'en') as keyof typeof UNAVAILABLE;
   const t = UNAVAILABLE[locale];
   const { setOpenSearch } = useSearchContext();
   const { setOpen } = useAISearchContext();

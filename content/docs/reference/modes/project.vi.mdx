@@ -1,0 +1,61 @@
+---
+title: project
+description: "Người làm sản phẩm luôn nảy ra ý tưởng nhanh hơn khả năng hoàn thành. Chế độ project chấm điểm một ý tưởng dự án portfolio dựa trên vị trí mục tiêu, portfolio hiện có và thời gian đầu tư, để bạn biết nó có đáng làm hay không."
+seoTitle: "Chế độ project của career-ops: chấm điểm dự án portfolio theo vị trí mục tiêu"
+icon: Lightbulb
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 87b86e456dd18f90
+localized: true
+translatedFrom: /docs/reference/modes/project
+---
+
+## Chức năng
+
+Chế độ project đọc mô tả ý tưởng dự án, các nhóm vị trí mục tiêu của bạn trong config/profile.yml và bối cảnh portfolio hiện có, rồi chấm điểm dự án theo ba tiêu chí: giá trị tín hiệu với các vị trí mục tiêu, mức độ khác biệt so với portfolio hiện có, và thời gian ước tính để ra bản dùng được.
+
+## Khi nào nên dùng
+
+Hãy dùng project khi bạn có ba, bốn ý tưởng dự án cá nhân và muốn chọn ra dự án thực sự đưa việc tìm việc của bạn tiến lên. Đây là chế độ tương đương chế độ oferta, nhưng dành cho dự án cá nhân.
+
+## Ví dụ
+
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+
+## Một lần chạy trông như thế nào
+
+Một lần chạy project trả về đánh giá độ tin cậy, điểm có trọng số trên sáu tiêu chí và một kết luận rõ ràng. Bạn đưa cho chế độ này một ý tưởng, và nó chấm ý tưởng đó theo cách một nhà tuyển dụng đọc portfolio của bạn, chứ không phải xét xem code có chạy được hay không.
+
+```txt title="Example"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+
+Kết luận luôn là một trong ba: BUILD, kèm các mốc theo tuần; SKIP, kèm gợi ý nên làm gì thay thế; hoặc PIVOT TO một phương án khác mang nhiều tín hiệu hơn cho các vị trí bạn đang nhắm tới. Sáu tiêu chí có trọng số khác nhau, nên một dự án demo tốt và cho ra số liệu rõ ràng có thể xếp trên một ý tưởng mới lạ hơn nhưng không có kết quả nhìn thấy được.
+
+## Bộ hồ sơ phỏng vấn
+
+Mỗi dự án được duyệt đều đi kèm một bộ hồ sơ phỏng vấn, vì câu chuyện mới là sản phẩm bàn giao, không phải repository. Bộ hồ sơ gồm ba phần: một trang tóm tắt về sản phẩm, kiến trúc, số liệu và kế hoạch đánh giá; một bản demo, là URL chạy trực tiếp hoặc video quay hai phút; và một bản tổng kết điều gì đã hiệu quả, điều gì không, và bạn đã khắc phục ra sao. Một dự án đã làm xong nhưng không có câu chuyện đi kèm hiếm khi giúp ích cho việc tìm việc, trong khi một dự án khiêm tốn với câu chuyện đánh đổi rõ ràng thường làm được. Kế hoạch 80/20 phản ánh điều này: tuần đầu là MVP với số liệu cốt lõi, tuần thứ hai là hoàn thiện và làm bộ hồ sơ.
+
+## Lưu ý
+
+Chế độ này không kiểm tra tính khả thi về kỹ thuật, chỉ đánh giá giá trị tín hiệu cho sự nghiệp. Hãy chạy một bước đánh giá phạm vi kỹ thuật riêng.
+
+## Liên quan
+
+- [training](/docs/reference/modes/training)

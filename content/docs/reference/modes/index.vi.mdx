@@ -1,0 +1,46 @@
+---
+title: Các chế độ
+description: "14 chế độ career-ops mà bạn có thể gọi trực tiếp: đánh giá, điều chỉnh CV, ứng tuyển, theo dõi và chuẩn bị phỏng vấn. Mỗi chế độ là một skill markdown chạy trong bất kỳ CLI lập trình AI nào được hỗ trợ."
+seoTitle: "Các chế độ của career-ops: 14 lệnh tìm việc (đánh giá, điều chỉnh CV, ứng tuyển, theo dõi, chuẩn bị phỏng vấn)"
+icon: Layers
+translationHash: bb322a1cf17f35c3
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## 14 chế độ của career-ops
+
+career-ops có **14 chế độ** mà bạn có thể gọi trực tiếp. Mỗi chế độ là một skill viết bằng markdown thuần: tác tử AI nạp và chạy skill đó ngay trong CLI lập trình AI mà bạn đang dùng, như Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot hay [một CLI khác được hỗ trợ](/docs/supported-clis). Bạn gọi một chế độ bằng `/career-ops <mode>`, và mỗi chế độ đảm nhận một giai đoạn của quá trình tìm việc: đánh giá một tin tuyển dụng theo bộ tiêu chí (năm chiều đánh giá cộng với một điểm tổng thể), điều chỉnh CV, soạn đơn ứng tuyển, theo dõi kết quả hoặc chuẩn bị phỏng vấn. Theo [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md), các chế độ thuộc System Layer: bản cập nhật sẽ thay chúng bằng phiên bản mới nhất, và không bản cập nhật nào sửa `cv.md`, hồ sơ hay báo cáo của bạn.
+
+## Đánh giá
+
+Vòng chấm điểm cốt lõi: đọc một tin tuyển dụng và chấm điểm theo năm chiều đánh giá cộng với một điểm tổng thể, trước khi bạn bỏ công sức vào nó.
+
+- **[auto-pipeline](/docs/reference/modes/auto-pipeline)**: luồng mặc định. Dán URL hoặc nội dung JD; chế độ này chạy toàn bộ đánh giá A–H, ghi báo cáo, xuất PDF đã điều chỉnh và ghi một mục vào tracker mà không cần thao tác thủ công ở giữa.
+- **[pipeline](/docs/reference/modes/pipeline)**: chạy auto-pipeline cho mọi URL đang chờ trong `data/pipeline.md`, để cả một ngày tin tuyển dụng được xử lý gọn trong một phiên.
+- **[oferta](/docs/reference/modes/oferta)**: đánh giá A–H cho một tin tuyển dụng, khi bạn chỉ cần quyết định theo điểm số chứ không cần chạy cả pipeline.
+- **[ofertas](/docs/reference/modes/ofertas)**: xếp hạng hai hoặc nhiều offer đang cân nhắc theo mức lương thưởng, độ phù hợp, cơ hội phát triển và dấu hiệu cảnh báo, gói thành một ma trận quyết định.
+- **[deep](/docs/reference/modes/deep)**: tài liệu nghiên cứu sâu về công ty (vốn đầu tư, ban lãnh đạo, báo chí, tín hiệu về lương thưởng, dấu hiệu cảnh báo) trước khi bạn ứng tuyển vào một công ty chưa hiểu rõ.
+
+## Điều chỉnh CV và ứng tuyển
+
+Biến một vị trí điểm cao thành đơn ứng tuyển đã nộp.
+
+- **[pdf](/docs/reference/modes/pdf)**: tạo CV PDF đã điều chỉnh theo một JD cụ thể, chuẩn ATS, thông qua Playwright.
+- **[apply](/docs/reference/modes/apply)**: đọc các câu hỏi mở trong biểu mẫu ứng tuyển đang mở và soạn câu trả lời dựa trên CV của bạn và JD.
+- **[contacto](/docs/reference/modes/contacto)**: tìm những liên hệ LinkedIn có khả năng quen biết và soạn một tin nhắn làm quen ngắn, riêng cho vị trí đó.
+- **[followup](/docs/reference/modes/followup)**: đánh dấu những đơn ứng tuyển và buổi phỏng vấn đã quá hạn theo dõi, rồi soạn tin nhắn cho bạn.
+
+## Theo dõi và cải thiện
+
+Giữ cho quá trình tìm việc có tổ chức và hiệu chỉnh nó theo thời gian.
+
+- **[tracker](/docs/reference/modes/tracker)**: bản tóm tắt trạng thái ngay trong khung chat, gom mọi đơn ứng tuyển theo giai đoạn.
+- **[patterns](/docs/reference/modes/patterns)**: đọc các đơn ứng tuyển bị từ chối và bị loại bỏ của bạn để chỉ ra các quy luật trong cách chọn mục tiêu và những điểm mù.
+- **[interview-prep](/docs/reference/modes/interview-prep)**: tài liệu chuẩn bị theo từng vòng (nhà tuyển dụng, quản lý tuyển dụng, kỹ thuật với đồng nghiệp, hội đồng phỏng vấn) kèm các câu hỏi có khả năng gặp và câu chuyện theo phương pháp STAR.
+- **[training](/docs/reference/modes/training)**: chấm điểm một khóa học hoặc chứng chỉ dựa trên định hướng nghề nghiệp bạn đã nêu và chi phí cơ hội của nó.
+- **[project](/docs/reference/modes/project)**: chấm điểm một ý tưởng dự án portfolio dựa trên các vị trí mục tiêu của bạn và thời gian cần để xây dựng.
+
+## Portal tuyển dụng
+
+Greenhouse, Ashby và Lever, ba trong số các hệ thống mà trình quét zero-token đọc, có [tài liệu tham khảo về portal](/docs/reference/portals) riêng.

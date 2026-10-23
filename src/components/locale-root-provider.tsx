@@ -11,7 +11,7 @@ import type { ReactNode } from 'react';
 // locale (see root-shell.tsx). Only `locale` and the UI labels are passed: a
 // `locales` list would make Fumadocs render its own language picker next to
 // ours.
-type Loc = 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh';
+type Loc = 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh' | 'vi';
 export type SiteLocale = 'en' | Loc;
 
 const translations = {
@@ -86,6 +86,18 @@ const translations = {
     previousPage: '上一页',
     chooseTheme: '主题',
     editOnGithub: '在 GitHub 上编辑',
+  },
+  vi: {
+    search: 'Tìm kiếm',
+    searchNoResult: 'Không có kết quả',
+    toc: 'Trong trang này',
+    tocNoHeadings: 'Không có tiêu đề',
+    lastUpdate: 'Cập nhật lần cuối:',
+    chooseLanguage: 'Chọn ngôn ngữ',
+    nextPage: 'Trang tiếp theo',
+    previousPage: 'Trang trước',
+    chooseTheme: 'Giao diện',
+    editOnGithub: 'Sửa trên GitHub',
   },
 } satisfies Record<Loc, Translations>;
 

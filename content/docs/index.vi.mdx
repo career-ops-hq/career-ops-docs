@@ -1,0 +1,278 @@
+---
+title: Bắt đầu nhanh
+description: "Bắt đầu với career-ops trong khoảng mười lăm phút: cài hệ thống tìm việc bằng AI mã nguồn mở, mở CLI AI của bạn và đánh giá tin tuyển dụng đầu tiên. Không cần biết lập trình."
+seoTitle: "Hướng dẫn bắt đầu nhanh career-ops — cài đặt và quét việc bằng AI chỉ trong vài phút"
+icon: Rocket
+translationHash: 3dc0cfbde93edb50
+localized: true
+translatedFrom: /docs
+---
+
+Hướng dẫn này đưa bạn từ con số không đến tin tuyển dụng đầu tiên được đánh giá trong khoảng mười lăm phút ở lần đầu thực hiện. Bạn sẽ thiết lập workspace, mở trợ lý lập trình AI và dán một tin tuyển dụng. Tác tử AI hoàn tất phần onboarding cần thiết, rồi gửi cho bạn báo cáo đầy đủ, điểm số và một bản CV PDF được điều chỉnh riêng cho vị trí đó.
+
+## Bạn cần chuẩn bị gì
+
+Bạn không cần biết lập trình. Bạn chỉ cần thấy thoải mái khi mở terminal và chạy một lệnh.
+
+<Callout title="Chưa quen với terminal?">
+  Nếu bạn chưa từng dùng dòng lệnh, cũng không sao — nhưng hướng dẫn này không phải nơi để học việc đó. Để nhanh chóng nắm cơ bản, hãy đọc cuốn cẩm nang [Command Line for Beginners](https://www.freecodecamp.org/news/command-line-for-beginners/) của freeCodeCamp. Cuốn này bao quát mọi thứ bạn cần để làm theo ở đây. Khi đã quen với việc mở terminal và chạy một lệnh, hãy quay lại và tiếp tục từ Bước 1.
+</Callout>
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+      ### Trợ lý lập trình AI
+
+      Cài đặt **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** hoặc **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)** — trợ lý lập trình AI vận hành hệ thống này. career-ops hỗ trợ trực tiếp [mười một CLI](/docs/supported-clis); hãy cài một CLI bất kỳ và đăng nhập trước khi tiếp tục.
+      </Step>
+      <Step>
+        ### Node.js 22.13+
+
+        Cài đặt **[Node.js](https://nodejs.org)** — phiên bản **22.13 trở lên** (với Node 23 thì cần **23.4 trở lên**). Node.js chạy các script hỗ trợ và tạo file PDF. Các phiên bản cũ hơn sẽ không qua được bước kiểm tra cài đặt, vì chỉ mục SQLite của tracker cần Node mới hơn. Kiểm tra phiên bản bằng `node --version`.
+      </Step>
+      <Step>
+        ### Git
+
+        Cài đặt **[Git](https://git-scm.com/)** — trình dựng khung (scaffolder) dùng Git ở bên trong. Hầu hết máy tính đã có sẵn Git. Để kiểm tra, hãy mở terminal và chạy `git --version`.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## Bước 1: Thiết lập workspace
+
+Mở terminal trong thư mục bạn muốn đặt career-ops. Cách được khuyến nghị chỉ cần một lệnh; cách nâng cao dùng `git clone` nằm ngay bên dưới. Nếu thiếu Node (22.13+, hoặc 23.4+ với Node 23) hay Git, `npx` sẽ từ chối chạy — hãy cài cả hai trước (xem phần chuẩn bị ở trên).
+
+### Khuyến nghị — một lệnh duy nhất
+
+```bash title="Terminal"
+npx @santifer/career-ops init
+```
+
+Lệnh này clone bản phát hành mới nhất vào `./career-ops`, cài các dependency và dựng cấu trúc workspace. Nó cũng nhận biết CLI lập trình AI nào bạn đã cài và cho bạn biết lệnh phù hợp để bắt đầu. Lệnh chỉ cài vào một thư mục mới: nếu `./career-ops` đã tồn tại và không rỗng, lệnh sẽ dừng với lỗi và không thay đổi gì, nên chạy lại cũng không sửa chữa hay cập nhật được một workspace có sẵn.
+
+Khi lệnh chạy xong, hãy chuyển vào workspace:
+
+```bash title="Terminal"
+cd career-ops
+```
+
+<details>
+<summary>Nâng cao — tự clone repository</summary>
+
+Hãy dùng cách này nếu bạn muốn theo dõi một branch cụ thể, đóng góp ngược lại cho dự án hoặc kiểm tra mã nguồn trước khi cài dependency.
+
+```bash title="Terminal"
+git clone https://github.com/career-ops-hq/career-ops.git
+cd career-ops
+npm install
+```
+
+</details>
+
+### Trình duyệt headless (chỉ làm một lần)
+
+career-ops dùng một Chromium headless cho nhiều việc: tạo PDF, kiểm tra tin tuyển dụng còn mở hay không và chạy quét ATS đầy đủ. Trình cài đặt sẽ tự thiết lập nó sau khi cài dependency; nếu bước đó thất bại trên máy của bạn, hãy cài thủ công:
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+## Bước 2: Mở trợ lý AI của bạn
+
+Từ bên trong thư mục `career-ops`, hãy khởi chạy CLI lập trình AI mà bạn đã cài.
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
+  <Tab value="Claude Code">
+    ```bash title="Terminal"
+    claude
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash title="Terminal"
+    codex
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash title="Terminal"
+    opencode
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash title="Terminal"
+    copilot
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash title="Terminal"
+    agy
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash title="Terminal"
+    pi
+    ```
+  </Tab>
+</Tabs>
+
+<Callout title="Onboarding bắt đầu khi cần đến hồ sơ của bạn">
+  Trước lần đánh giá tin tuyển dụng đầu tiên, hoặc trước một quy trình khác cần hồ sơ của bạn, tác tử career-ops sẽ kiểm tra phần thiết lập và chạy một cuộc trò chuyện onboarding ngắn nếu cần. Bạn cũng có thể yêu cầu nó chạy onboarding trực tiếp. Nó sẽ hỏi về CV của bạn, loại vị trí bạn nhắm tới, mức lương mong muốn và nơi làm việc bạn ưu tiên. Bạn trả lời bằng ngôn ngữ thường ngày và tác tử sẽ ghi các file cấu hình giúp bạn. Buổi này mất khoảng hai đến ba phút. Việc khám phá workspace, xem lại mã hay chẩn đoán phần thiết lập sẽ không bắt đầu onboarding và không tạo file hồ sơ.
+
+  Dành cho lập trình viên: bước kiểm tra thiết lập là `node doctor.mjs --json`, lệnh này chỉ đọc. Onboarding tạo các file cá nhân hóa còn thiếu (`modes/_profile.md`, `modes/_custom.md`, `modes/_brief.md` và `voice-dna.md`) từ các template tương ứng bằng `node doctor.mjs --json --init-templates`, và không bao giờ ghi đè file bạn đã có.
+</Callout>
+
+<Callout title="Một lời nhắc không liên quan bạn có thể gặp">
+  Một số CLI (ví dụ Claude Code) hỏi bạn có tin tưởng các file trong thư mục mới hay không ngay lần đầu mở. Lời nhắc đó đến từ chính CLI, không phải từ career-ops. Hãy chọn đồng ý để tiếp tục. Việc chấp nhận không bắt đầu onboarding của career-ops.
+</Callout>
+
+<Callout type="warn" title="Đang trả tiền cho Claude Pro hoặc Max? Hãy kiểm tra phiên này đang tính phí theo cách nào">
+  Chạy `node doctor.mjs` từ thư mục `career-ops` trước lần đánh giá đầu tiên. Lệnh này báo nguồn tính phí của bạn trong một dòng.
+
+  Nếu `ANTHROPIC_API_KEY` được đặt trong môi trường của bạn, **CLI sẽ dùng khóa đó và tính phí theo từng token, kể cả khi bạn đang trả tiền cho Pro hoặc Max.** Thứ tự ưu tiên đó là của Claude Code, không phải của career-ops: doctor chỉ phát hiện và báo cho bạn. Để dùng gói đăng ký của bạn, hãy xóa dòng `export ANTHROPIC_API_KEY=...` khỏi `~/.zshrc`, `~/.bashrc`, `~/.profile` hoặc file `.env` của dự án, khởi động lại terminal rồi chạy `/login`. Nếu bạn chủ ý dùng tín dụng API thì không có gì sai cả.
+
+  Mỗi CLI còn lại có quy tắc riêng về gói đăng ký so với khóa API, và career-ops không kiểm tra những quy tắc đó. Xem [phần FAQ](/docs/faq) để có câu trả lời đầy đủ.
+</Callout>
+
+## Bước 3: Chạy lần đánh giá đầu tiên
+
+Sao chép URL của một tin tuyển dụng bất kỳ và dán vào khung chat. Nếu hồ sơ của bạn chưa sẵn sàng, tác tử sẽ hoàn tất onboarding trước. Với Claude Code, Antigravity CLI hoặc Pi, hãy thêm lệnh tường minh vào đầu; với các CLI khác, hãy dán URL và yêu cầu tác tử chạy auto-pipeline:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash
+    /career-ops https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash
+    /skill:career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+</Tabs>
+
+Nếu bạn không có URL, hãy dán toàn bộ nội dung mô tả công việc vào khung chat. Tác tử nhận ra cả hai dạng đầu vào là tin tuyển dụng và tự động chạy toàn bộ quy trình — đây chính là **auto-pipeline**.
+
+### Điều gì xảy ra tiếp theo
+
+Sau khi bạn dán tin tuyển dụng, career-ops tự thực hiện những việc sau:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        ### Đọc mô tả công việc
+        Nắm được vị trí, yêu cầu và mức đãi ngộ.
+      </Step>
+      <Step>
+        ### Đọc CV của bạn
+        Lấy thông tin từ `cv.md` để tìm điểm khớp và khoảng trống so với vị trí.
+      </Step>
+      <Step>
+        ### Chấm điểm tin tuyển dụng
+        Đánh giá vị trí theo thang từ 1 đến 5 trên nhiều khía cạnh, như độ phù hợp vai trò, mức lương và chính sách làm việc từ xa.
+      </Step>
+      <Step>
+        ### Viết báo cáo
+        Lưu bản phân tích chi tiết vào thư mục `reports/`.
+      </Step>
+      <Step>
+        ### Tạo CV PDF được điều chỉnh riêng
+        Xuất một phiên bản CV được tùy chỉnh cho đúng tin tuyển dụng này vào thư mục `output/`.
+      </Step>
+      <Step>
+        ### Thêm một dòng vào tracker của bạn
+        Ghi đơn ứng tuyển vào `data/applications.md`.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+Toàn bộ quy trình mất khoảng một đến hai phút. Khi xong, career-ops hiển thị điểm số và phần tóm tắt báo cáo.
+
+## Đọc kết quả của bạn
+
+Báo cáo có phần **Score Evidence** (bằng chứng cho điểm số) đặt sau Risk Summary. Phần này bao gồm năm khía cạnh: độ khớp CV, mức phù hợp với North Star, mức lương, tín hiệu văn hóa và dấu hiệu cảnh báo. Mỗi dòng ghi trạng thái bằng chứng (`supported`, `partial` hoặc `unknown`), một nguồn hoặc quan sát cụ thể, và một câu hỏi chưa được giải đáp. Phần này kết thúc bằng một mức độ tin cậy của bằng chứng (`High`, `Medium` hoặc `Low`), lý do của mức đó và tối đa ba ưu tiên cần kiểm chứng.
+
+Hãy mở file báo cáo trong `reports/`. Tên file theo mẫu `{number}-{company}-{date}.md`. Bên trong, bạn sẽ thấy:
+
+- **Score** — một con số từ 1 đến 5. Bất cứ điểm nào dưới 4.0 nghĩa là vị trí này có lẽ không thật sự phù hợp.
+- **Block A** — bản tóm tắt vị trí bằng ngôn ngữ dễ hiểu.
+- **Block B** — một bảng cho thấy CV của bạn khớp với từng yêu cầu công việc ra sao, kèm các khoảng trống nếu có.
+- **Block C** — đề xuất chiến lược về cách định vị bản thân cho vị trí này.
+- **Block D** — nghiên cứu mức lương, so sánh offer với mặt bằng thị trường.
+- **Block E** — ghi chú cá nhân hóa cho đơn ứng tuyển của bạn.
+- **Block F** — chuẩn bị phỏng vấn với các câu chuyện theo phương pháp STAR được điều chỉnh cho tin tuyển dụng này.
+- **Block G** — độ tin cậy của tin tuyển dụng: kiểm tra theo heuristic các tín hiệu như tin còn mở hay không và có bị đăng lại liên tục không. Nó báo những gì tìm thấy và để bạn tự đánh giá.
+- **Block H** — câu trả lời nháp cho biểu mẫu ứng tuyển, chỉ được viết khi điểm từ 4.5 trở lên.
+
+Bản CV PDF được điều chỉnh riêng nằm trong thư mục `output/`. Hãy xem lại trước khi gửi đi bất cứ đâu — career-ops không bao giờ nộp bất cứ thứ gì khi chưa có sự chấp thuận của bạn.
+
+## Làm gì tiếp theo
+
+Giờ lần đánh giá đầu tiên đã xong, bạn có thể khám phá thêm một số việc sau:
+
+- **Hoàn thiện hồ sơ của bạn.** Hãy kể cho tác tử điều gì đó mới về bạn — *"Đây là thêm bối cảnh: tôi vừa hoàn thành X."* Nó sẽ cập nhật hồ sơ và các lần đánh giá sau sẽ chính xác hơn.
+- **Đánh giá thêm tin tuyển dụng.** Dán thêm URL hoặc mô tả công việc. Mỗi tin sẽ được thêm vào tracker của bạn.
+- **Quét các trang việc làm.** Gõ `/career-ops scan` để tìm kiếm cùng lúc hàng chục trang tuyển dụng của công ty đã được cấu hình sẵn.
+- **So sánh các offer.** Nếu bạn có nhiều báo cáo, gõ `/career-ops ofertas` để nhận bản so sánh có xếp hạng.
+
+## Xử lý sự cố
+
+<Accordions>
+  <Accordion title="Tác tử không chạy onboarding">
+    Onboarding tự động bắt đầu khi bạn yêu cầu đánh giá một tin tuyển dụng hoặc một quy trình khác cần hồ sơ của bạn, và chỉ khi phần thiết lập chưa hoàn tất. Để bắt đầu trực tiếp, hãy khởi chạy CLI của bạn từ bên trong thư mục `career-ops` (chạy `pwd` để kiểm tra) và nói với tác tử: *"please run the first-run onboarding."*
+  </Accordion>
+  <Accordion title="Báo cáo không được tạo">
+    Hãy chắc chắn rằng `cv.md` tồn tại trong thư mục gốc và có nội dung. Nếu onboarding đã xong nhưng `cv.md` trống, hãy hỏi tác tử: *"my cv.md looks empty, can you help me fill it in?"*
+  </Accordion>
+  <Accordion title="File PDF không được tạo">
+    Chạy lại `npx playwright install chromium`. Nếu vẫn không được, hãy kiểm tra Node.js có phiên bản 22.13 trở lên (23.4 trở lên với Node 23) bằng cách chạy `node --version`.
+  </Accordion>
+  <Accordion title="Điểm số có vẻ chưa đúng">
+    Vài lần đánh giá đầu tiên còn thô — hệ thống chưa hiểu rõ bạn. Sau mỗi lần đánh giá, hãy cho trợ lý AI biết nó đã sai ở đâu. Ví dụ: *"That score is too high — I have no experience with Kubernetes."* Nó sẽ học và điều chỉnh.
+  </Accordion>
+  <Accordion title="Có lỗi khác">
+    Hãy hỏi thẳng trợ lý AI của bạn: *"What is wrong with my setup?"* Nếu nó không chẩn đoán được, hãy chạy `npm run doctor` để kiểm tra sức khỏe toàn diện.
+  </Accordion>
+</Accordions>
+
+## Gặp lỗi hoặc có câu hỏi?
+
+Nếu có điều gì không hoạt động như hướng dẫn này mô tả, hãy báo cho chúng tôi. Các báo cáo lỗi giúp ích cho tất cả những ai đến sau bạn.
+
+- **Báo lỗi:** Mở một issue trên [GitHub repository](https://github.com/career-ops-hq/career-ops/issues). Hãy mô tả bạn kỳ vọng điều gì xảy ra, thực tế điều gì đã xảy ra và dán thông báo lỗi bạn thấy (nếu có).
+- **Đặt câu hỏi:** Tham gia [cộng đồng Discord](https://discord.gg/8pRpHETxa4). Đây là cách nhanh nhất để nhận trợ giúp từ những người dùng khác và tác giả.
+- **Đóng góp bản sửa:** Nếu bạn biết cách tự sửa lỗi, hãy đọc [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) trước khi mở pull request. Tóm tắt ngắn: hãy mở issue trước nếu là tính năng mới, mode hoặc lệnh mới, hay thay đổi kiến trúc. Bản sửa lỗi, scanner provider mới không cần xác thực, tài liệu và bản dịch có thể gửi thẳng thành pull request.
+
+<StarOnGitHub locale="en" />

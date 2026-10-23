@@ -1,0 +1,67 @@
+---
+title: pdf
+description: "Tạo CV PDF được tinh chỉnh theo từng JD bằng Playwright, render markdown qua một mẫu trình bày gọn gàng. Đầu ra có cấu trúc đơn giản — không bảng, không cột, không đồ họa — đúng loại mà các trình phân tích ATS xử lý ổn định."
+seoTitle: "Chế độ pdf của career-ops — tạo CV PDF tương thích ATS theo từng tin tuyển dụng"
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-10-06"
+translationHash: 61f561d97321e237
+localized: true
+translatedFrom: /docs/reference/modes/pdf
+---
+
+## Chế độ này làm gì
+
+Chế độ pdf đọc cv.md gốc của bạn cùng ngữ cảnh của JD, rồi chạy bước tinh chỉnh (viết lại các gạch đầu dòng, sắp xếp lại thứ tự các mục, đưa các từ khóa ưu tiên vào) trước khi xuất ra PDF bằng Playwright với một mẫu CSS tuân theo quy ước của các trình phân tích ATS. Kết quả sẵn sàng để tải lên.
+
+## Khi nào nên dùng
+
+Hãy dùng pdf khi bạn đã đánh giá tin tuyển dụng và quyết định ứng tuyển, và chỉ cần bản PDF đã tinh chỉnh mà không phải chạy lại bước đánh giá.
+
+## Một lần chạy trông như thế nào
+
+Bạn chỉ chế độ này vào một tin tuyển dụng đã đánh giá, và nó tạo ra một bản PDF đã tinh chỉnh, sẵn sàng cho ATS — không đánh giá lại. Nó trích 15-20 từ khóa từ JD, chọn khổ giấy theo địa điểm của công ty, viết lại phần tóm tắt và sắp xếp lại các gạch đầu dòng xoay quanh vị trí, sau đó render HTML ra PDF và báo cáo mức độ phủ từ khóa.
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+
+Bố cục giữ một cột, với tiêu đề mục chuẩn và văn bản có thể chọn được — cấu trúc mà các trình phân tích ATS đọc sạch sẽ — còn từ khóa được lồng vào những thành tích có thật, không bao giờ bịa ra.
+
+## Khi nào nên chọn chế độ này
+
+Hãy chọn pdf khi bạn đã quyết định ứng tuyển và chỉ cần bản CV đã tinh chỉnh, bỏ qua bước đánh giá. Một vài hành vi đáng biết:
+
+- Khổ giấy tự động theo địa điểm của công ty: `letter` cho các vị trí ở Mỹ và Canada, `a4` cho mọi nơi khác.
+- Việc chèn từ khóa dựa trên sự thật. Chế độ này diễn đạt lại kinh nghiệm có thật theo đúng từ vựng của JD, nhưng không bao giờ thêm một kỹ năng bạn không có.
+- Với DACH và phần lớn châu Âu lục địa, bạn có thể chọn dùng ảnh bằng cách đặt `candidate.photo` trong `config/profile.yml`; để trống thì CV được render giống hệt từng pixel như khi không có ảnh, đây là mặc định an toàn hơn cho thị trường Mỹ, Anh và các thị trường ưu tiên ATS.
+
+## Lưu ý
+
+Cần cài Playwright trên máy. Script build có thể lỗi trên các bản cài Linux tối giản thiếu font hệ thống. Hãy chạy `npm run doctor` để chẩn đoán.
+
+Việc tạo PDF sẽ dừng khi các mục trong Work Experience của bạn không xếp theo thứ tự mới nhất trước, và thông báo lỗi trích dẫn ngày tháng của vị trí bắt đầu muộn hơn vị trí nằm phía trên nó. Hãy xếp lại các vị trí theo thứ tự thời gian đảo ngược rồi chạy lại: hãy tinh chỉnh CV qua phần tóm tắt và các gạch đầu dòng, đừng di chuyển các vị trí. Nếu bạn cố ý muốn một thứ tự khác, hãy truyền `--allow-nonchronological` cho `generate-pdf.mjs` và nó sẽ render kèm cảnh báo thay vì dừng. Với `--batch`, chỉ CV sai thứ tự bị lỗi, các CV còn lại vẫn được render.
+
+`generate-pdf.mjs` ghi lại mỗi PDF nó tạo trong `data/pdf-index.tsv`, và career-ops đọc tệp đó để tìm CV của một báo cáo. Mỗi dòng có một `kind` là `cv` hoặc `cover`, và mỗi báo cáo giữ một dòng cho mỗi loại. Tạo lại một PDF chỉ thay thế dòng cùng loại của nó.
+
+Khi không có `--kind`, loại được suy ra từ tên tệp đầu ra. Tên bắt đầu bằng `cv-` là CV, còn tên bắt đầu bằng `cover-` hoặc kết thúc bằng `-cover` là thư xin việc. Mọi tên khác đều được xếp là CV.
+
+Chế độ cover lưu các thư của nó là `cover` bất kể tên gì, nên quy tắc đặt tên tệp chỉ quan trọng khi bạn tự chạy `generate-pdf.mjs`. Một thư được render thành `acme-letter.pdf` với `--report=008` sẽ thay thế dòng CV của báo cáo 008, và khi tra cứu CV đó sẽ trả về bức thư. Hãy truyền `--kind=cover` khi tên tệp không cho biết nó là loại nào:
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind` nhận `cv` hoặc `cover`, và mọi giá trị khác, kể cả rỗng, sẽ dừng lần chạy trước khi render bất cứ thứ gì. `--batch` từ chối tham số này; hãy đặt `"kind"` trên một mục trong tệp batch thay vào đó. `generate-pdf.mjs` sở hữu `data/pdf-index.tsv`, và dòng tiêu đề của nó ghi rõ không được sửa tay.
+
+## Liên quan
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)

@@ -1,0 +1,104 @@
+---
+title: tracker
+description: "Xem nhanh trạng thái của từng đơn ứng tuyển. Hữu ích cho lần kiểm tra hằng ngày hoặc khi chuẩn bị tổng kết hằng tuần. Giao diện đầy đủ điều khiển bằng bàn phím nằm ở dashboard TUI viết bằng Go; chế độ này là bản tóm tắt ngay trong khung chat."
+seoTitle: "Chế độ tracker của career-ops: theo dõi trạng thái từng đơn ứng tuyển"
+icon: LayoutGrid
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: c95cd399167d223d
+localized: true
+translatedFrom: /docs/reference/modes/tracker
+---
+
+## Chế độ này làm gì
+
+Chế độ `tracker` đọc mọi tệp trong reports/ và tạo ra bản tóm tắt có cấu trúc, nhóm theo giai đoạn: đã nộp đơn, đã đánh giá, phỏng vấn, bị từ chối, đã loại bỏ. Số lượng theo từng giai đoạn, hoạt động gần đây và các lần follow-up quá hạn đều được đưa vào một phản hồi duy nhất.
+
+## Khi nào nên dùng
+
+Dùng tracker để kiểm tra nhanh trạng thái hằng ngày, chỉ mất khoảng mười lăm giây. Dùng dashboard TUI viết bằng Go khi bạn cần đi sâu vào chi tiết.
+
+## Ví dụ
+
+```
+`/career-ops tracker` — output is a structured status summary in the chat.
+```
+
+## Một lần chạy trông như thế nào
+
+Mỗi lần chạy tracker in ra toàn bộ bảng đơn ứng tuyển cùng một khối thống kê trong một phản hồi duy nhất, để bạn nắm được toàn cảnh quá trình tìm việc chỉ với một lần đọc. Mỗi dòng là một đơn ứng tuyển, gồm công ty, vị trí, điểm số, trạng thái hiện tại, và cho biết đã tạo PDF được điều chỉnh riêng và báo cáo đánh giá hay chưa.
+
+```txt title="Example"
+# | Date       | Company   | Role              | Score | Status    | PDF | Report
+1 | 2026-06-14 | Anthropic | AI Engineer       | 4.5/5 | Interview | yes | yes
+2 | 2026-06-18 | Vercel    | Applied AI Eng    | 4.2/5 | Applied   | yes | yes
+3 | 2026-06-21 | Figma     | Product Eng, AI   | 3.9/5 | Evaluated | yes | yes
+
+Total: 3   Applied: 1   Interview: 1   Evaluated: 1
+Average score: 4.2/5   PDF generated: 100%   Report generated: 100%
+```
+
+Một đơn ứng tuyển đi qua một tập trạng thái cố định: Evaluated (đã có báo cáo, chưa quyết định), Applied (bạn đã nộp), Responded (công ty đã phản hồi nhưng chưa có buổi phỏng vấn), Interview (quy trình đang diễn ra), rồi đến một trạng thái cuối là Offer, Rejected, Discarded, hoặc SKIP cho những vị trí không phù hợp. Để ghi nhận thay đổi trạng thái, bạn có thể nhờ trong chat hoặc tự chạy `node set-status.mjs <report#|company> <state>`, thêm `--on YYYY-MM-DD` khi việc đó xảy ra vào một ngày trước đó. Lệnh này từ chối các trạng thái không hợp lệ, khóa tracker trong lúc ghi, và ghi lại lần chuyển trạng thái vào `data/status-log.tsv`, sổ cái mà các thống kê về tốc độ funnel đọc, vì vậy hãy dùng lệnh này thay vì sửa tay dòng đó.
+
+Để sửa một ghi chú thay vì thêm ghi chú mới, hãy truyền ghi chú cũ qua `--replace-note` và nội dung mới qua `--note`. Nếu không có `--replace-note`, `--note` chỉ nối thêm, và sẽ để lại những mâu thuẫn như `not applied; applied` trong dòng. Việc so khớp được thực hiện trên cả một ghi chú nằm giữa các dấu phân cách `; `, và nếu không có nội dung nào trong ô Notes thì sẽ không có gì được ghi:
+
+```bash
+node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applied via referral"
+```
+
+Ba cờ nữa chủ yếu dành cho dashboard TUI viết bằng Go, hiện ghi nhận các thay đổi trạng thái của nó thông qua `set-status.mjs`. `--report-link N` chọn dòng có ô Report chứa đúng một liên kết tới báo cáo `N`, và từ chối các ô sai định dạng thay vì đoán. `--repair-status-log` và `--repair-followup` áp dụng khi một thay đổi sang Applied được chạy lại trên dòng đã ở trạng thái Applied: chúng thêm mục sổ cái hoặc lời nhắc follow-up mà lần thử đầu không ghi được, và không thêm gì nếu mục đó đã có sẵn.
+
+## Sửa các liên kết báo cáo bị hỏng
+
+`node verify-pipeline.mjs` báo `Report not found` khi ô Report của một dòng trỏ tới một tệp không còn tồn tại. `npm run fix-report-links` sửa các dòng đó bằng cách chỉ đổi ô ấy thành dấu "không có báo cáo" thường dùng của tracker. Lệnh không tạo lại báo cáo bị mất. Hãy xem trước:
+
+```bash
+npm run fix-report-links -- --dry-run  # list the affected rows, write nothing
+npm run fix-report-links               # apply; the tracker is backed up to .bak first
+```
+
+Mọi ô khác, thứ tự dòng và kiểu xuống dòng đều được giữ nguyên. Một ô Report chứa bất kỳ nội dung nào khác ngoài đúng một liên kết sẽ được liệt kê để bạn tự kiểm tra và không bị thay đổi. Chạy hai lần thì lần thứ hai không thay đổi gì.
+
+## Đọc các con số tích lũy
+
+Với các số liệu tích lũy, gồm toàn bộ funnel, tổng số của scanner, mức độ bao phủ của các portal và mức độ tuân thủ follow-up, chế độ này chạy `node stats.mjs --summary` và trình bày nguyên văn kết quả. Lệnh đó đọc các tệp cục bộ của bạn và tốn 0 token, nên các con số không bao giờ được tính lại bằng tay hay ước lượng theo trí nhớ. Dùng bản tóm tắt trong chat ở trên để đọc nhanh hằng ngày, và dùng lệnh stats khi bạn muốn xem tổng lũy kế của cả quá trình tìm việc.
+
+## Xuất bản đã được sửa lỗi
+
+Khi bảng markdown lên đến hàng trăm dòng, nó dễ bị hỏng: chuỗi giữ chỗ bị lỗi mã hóa (mojibake), điểm số bị lạc vào cột trạng thái, id trùng lặp, dấu gạch đứng thừa. `node tracker.mjs sync` tìm và sửa các lỗi này trong chỉ mục SQLite của nó, `data/applications.db`, mà không đụng đến markdown. `tracker.mjs` cần Node 22.13 trở lên (23.4 trở lên nếu dùng Node 23) cho chỉ mục này; tracker markdown vẫn hoạt động bình thường khi không có nó. `node tracker.mjs export` là cách để bạn dùng bản đã sửa lỗi đó của tracker của chính mình:
+
+```bash
+node tracker.mjs export                            # rebuilt table on stdout
+node tracker.mjs export --out repaired.md          # write to a file; an existing one is backed up to repaired.md.bak first
+node tracker.mjs export --out repaired.md --force  # write even when something would be lost
+```
+
+`export` không bao giờ động đến `data/applications.md` trừ khi bạn truyền chính tệp đó vào `--out`.
+
+Nó giữ nguyên bố cục đã đọc, không chỉ các giá trị: dòng tiêu đề của bạn, các cột mà career-ops không ánh xạ (`Location`, `Via`, `URL` hoặc cột do bạn tự thêm), tiêu đề, phần mở đầu và các dòng ở cuối, cũng như kiểu xuống dòng CRLF hay LF. Các cột bổ sung quay lại đúng vị trí của chúng, dù `query` không thể lọc theo các cột đó.
+
+Mọi thứ mà nó không thể tái tạo đều được nêu tên trên stderr. Khi danh sách đó không rỗng, `--out` ghi đè lên một tệp đã có sẽ từ chối ghi (mã thoát `1`, không ghi gì) cho đến khi bạn chạy lại với `--force`; khi danh sách rỗng, `--out` sao lưu tệp hiện có rồi ghi đè. Những gì được báo cáo:
+
+| Được báo cáo | Vì sao không thể dựng lại |
+| --- | --- |
+| Một ô nằm ngoài các cột mà dòng tiêu đề khai báo | Dòng tiêu đề không có cột nào để đặt ô đó vào |
+| Một dòng nằm giữa dòng đầu và dòng cuối của bảng, chẳng hạn một tiêu đề mục hoặc dòng tiêu đề của bảng thứ hai | Một bảng được dựng lại duy nhất không có chỗ để đặt nó |
+| Một dòng thuộc bảng sau, chẳng hạn mục `## Archive` | Dòng đó được lập chỉ mục theo dòng tiêu đề của bảng đầu tiên, nên xuất lại sẽ chuyển dữ liệu lưu trữ vào bảng đang dùng |
+| Một ô có giá trị phải được viết lại để tồn tại dưới dạng ô (dấu `\|` thừa trở thành `│`) | Chính giá trị đã bị thay đổi |
+
+Không có mất mát nào được báo cáo không có nghĩa là kết quả giống hệt từng byte. `export` xuất ra những chỉnh sửa mà `sync` đã thực hiện, và một số trong đó diễn ra âm thầm: `aplicado` là một bí danh được công nhận của `Applied` trong `templates/states.yml`, nên `sync --check` không báo hỏng hóc nào và bản export vẫn ghi `Applied`. Các ô căn cột cũng quay lại với một khoảng trắng đơn. Trước khi dùng bản export, hãy so sánh nó với tệp mà nó sẽ thay thế:
+
+```bash
+node tracker.mjs export | diff data/applications.md -
+```
+
+Tài liệu tham chiếu đầy đủ các lệnh, gồm `sync`, `query` và `history`, nằm trong [hướng dẫn scripts](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md#tracker) của repo lõi.
+
+## Lưu ý
+
+Trạng thái nằm trong cột Status của tracker (`data/applications.md`), không nằm trong tệp báo cáo. Sửa tay sẽ bỏ qua `data/status-log.tsv`: funnel-velocity vẫn thấy trạng thái mới, nhưng không biết nó xảy ra khi nào, nên thay đổi đó bị thiếu trong số đo tốc độ giữa các giai đoạn, và một dòng về sau kết thúc ở Rejected sẽ mất các giai đoạn mà nó đã đi qua. Hãy dùng `set-status.mjs`, chat, hoặc bộ chọn trạng thái của dashboard TUI viết bằng Go, vốn chạy cùng lệnh này.
+
+## Liên quan
+
+- [followup](/docs/reference/modes/followup)
+- [patterns](/docs/reference/modes/patterns)
