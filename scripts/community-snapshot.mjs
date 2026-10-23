@@ -99,12 +99,13 @@ const pluginAuthors = new Set(plugins.map((p) => p.author.toLowerCase()));
 // without a stated market is not placed in a country here (it stays in the
 // full list linked from the page). Regions only where the core names a
 // region, not a country.
+// Per-tenant ATS platforms (PrevueAPS, HiringRoom) are not job boards even
+// when the core names their market, so they stay out (venture-ops, 23 Oct).
 const BOARDS = [
   // [group, board, providerPath, one line from the core's own description]
   ['Belgium', 'VDAB', 'providers/vdab.mjs', 'Public employment service of Flanders'],
   ['Brazil', 'Gupy', 'providers/gupy.mjs', 'Search across the thousands of employers hosted on the Gupy ATS'],
   ['Canada', 'Job Bank', 'providers/jobbankca.mjs', 'The federal job-search service'],
-  ['Canada', 'PrevueAPS', 'providers/prevueaps.mjs', 'Credit unions, colleges and public-sector employers'],
   ['Germany', 'Arbeitsagentur', 'providers/arbeitsagentur.mjs', 'The federal employment agency job search'],
   ['Germany', 'Interamt.de', 'scan-interamt.mjs', 'Federal, state and municipal public-sector jobs'],
   ['Mexico', 'OCC Mundial', 'providers/occ.mjs', 'The largest general job board in Mexico'],
@@ -115,6 +116,7 @@ const BOARDS = [
   ['Spain', 'getManfred', 'providers/manfred.mjs', 'Tech roles in Spain and the EU, with published salary ranges'],
   ['Sweden', 'Platsbanken', 'providers/platsbanken.mjs', 'The national public employment service'],
   ['Switzerland', 'joinup.ch', 'providers/joinup.mjs', 'Swiss startup jobs'],
+  ['Switzerland', 'Remotli', 'providers/remotli.mjs', 'Remote roles at Swiss companies, paid in CHF'],
   ['Taiwan', 'Yourator', 'providers/yourator.mjs', 'Startup and digital roles'],
   ['United States', 'Built In', 'providers/builtin.mjs', 'Tech roles, with a board per city'],
   ['Vietnam', 'ITviec', 'providers/itviec.mjs', 'The largest IT job board in Vietnam'],
