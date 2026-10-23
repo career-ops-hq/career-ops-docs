@@ -142,6 +142,10 @@ const supported = readFileSync(join(CORE, 'docs/SUPPORTED_JOB_BOARDS.md'), 'utf8
 const retired = (supported.match(/^\| [^|]+\| \*\*Retired/gm) || []).length;
 const providerModules =
   readdirSync(join(CORE, 'providers')).filter((f) => f.endsWith('.mjs') && !f.startsWith('_')).length - retired;
+// Public copy says "more than 100", never the exact count: providers/ and the
+// supported list give two legitimate totals and both move with every merge
+// (search-ops rule, 23 Oct). The exact number only goes to the log below.
+if (providerModules <= 100) throw new Error(`${providerModules} providers: "more than 100" no longer holds, decide the wording first`);
 
 // ------------------------------------------------------------- commands
 const readme = readFileSync(join(CORE, 'README.md'), 'utf8');
@@ -181,7 +185,7 @@ const asOf = `as of ${fmtDate(DATE)}, core commit [${SHORT}](${REPO_URL}/tree/${
 const numbers = [
   `**By the numbers** (${asOf}):`,
   `${plugins.length} community plugins in the registry, by ${pluginAuthors.size} authors;`,
-  `${providerModules} job source providers in the core scanner.`,
+  'more than 100 job source providers in the core scanner.',
 ].join(' ');
 
 const pluginRows = plugins.map(
