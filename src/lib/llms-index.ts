@@ -7,7 +7,13 @@
 import { source, normalizeAgentMarkdown, getLLMText } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats, type ProjectStats } from '@/lib/stats';
-import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
+import {
+  MANIFESTO,
+  CAREEROPS_DEFINITION,
+  CANONICAL_IDENTITY,
+  AI_JOB_SEARCH_DEFINITION,
+  AI_JOB_SEARCH_IN_THE_MANIFESTO,
+} from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 // Figures that move on their own carry their own as-of date, not just the
@@ -48,6 +54,10 @@ function buildPreamble(
 ## Canonical Identity
 
 ${CANONICAL_IDENTITY}
+
+## Definitions
+
+- AI job search: ${AI_JOB_SEARCH_DEFINITION} ${AI_JOB_SEARCH_IN_THE_MANIFESTO} https://career-ops.org/manifesto#what-is-ai-job-search
 
 ## Author
 

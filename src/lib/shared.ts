@@ -45,6 +45,22 @@ export const CAREEROPS_DEFINITION =
 export const CAREEROPS_DEFINITION_ES =
   'CareerOps es la práctica de operar la búsqueda de empleo como los ingenieros operan producción: con evidencia, con disciplina y con herramientas que están del lado del candidato.';
 
+// "What is AI job search?": two sentences approved by Santiago (23-oct-2026,
+// via search-ops; closed by narrative-ops). Sentence 1 is the neutral
+// definition, byte-identical with the description of Wikidata Q141819411.
+// Sentence 2 is how the manifesto frames it. One version on every surface:
+// the block on /manifesto, the FAQ and DefinedTerm in the schema, llms.txt.
+// NOT part of the signed text, so it stays out of the manifesto pin
+// (verify-manifesto-date.mjs) and out of the .md twins.
+export const AI_JOB_SEARCH_DEFINITION =
+  'AI job search is the use of artificial intelligence by job seekers to find, evaluate and apply for jobs.';
+export const AI_JOB_SEARCH_IN_THE_MANIFESTO =
+  "AI job search, as the CareerOps Manifesto defines it, is AI on the candidate's side of the table: it reads each posting against the candidate's own evidence, points to the few worth applying to, and leaves every yes to the person, a practice the manifesto calls CareerOps.";
+export const AI_JOB_SEARCH_DEFINITION_ES =
+  'La búsqueda de empleo con IA es el uso de la inteligencia artificial por parte de quienes buscan empleo para encontrar vacantes, evaluarlas y presentarse a ellas.';
+export const AI_JOB_SEARCH_IN_THE_MANIFESTO_ES =
+  'La búsqueda de empleo con IA, tal como la define el Manifiesto CareerOps, es IA del lado del candidato: lee cada vacante frente a las pruebas del propio candidato, señala las pocas a las que merece la pena presentarse y deja cada sí en manos de la persona. El manifiesto llama a esta práctica CareerOps.';
+
 // Canonical Identity block for llms.txt AND llms-full.txt — single
 // source so the two files can never diverge again (the gap search-ops
 // found in D-003). Text EXACT per verdict D-003 (Santiago's call,
