@@ -3,14 +3,14 @@ title: Modalità
 description: "Le 14 modalità di career-ops che puoi richiamare (valutare, adattare, candidarti, monitorare e prepararti): ognuna è una skill in markdown che gira in qualsiasi CLI di programmazione AI supportata."
 seoTitle: "Modalità di career-ops: i 14 comandi per cercare lavoro (valutare, adattare, candidarsi, monitorare, prepararsi)"
 icon: Layers
-translationHash: b0ce95e7cf247608
+translationHash: 0476faf4beb570f9
 localized: true
 translatedFrom: /docs/reference/modes
 ---
 
 ## Le 14 modalità
 
-career-ops include **14 modalità che puoi richiamare direttamente**. Ognuna è una skill in semplice markdown che l'agente carica ed esegue dentro la CLI di programmazione AI che usi già: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot o [un'altra CLI supportata](/it/docs/supported-clis). Richiami una modalità con `/career-ops <mode>`, e ciascuna copre una fase della ricerca di lavoro: valutare un annuncio secondo la griglia (cinque dimensioni più un punteggio globale olistico), adattare il curriculum, redigere una candidatura, monitorare i risultati o prepararti ai colloqui. Le modalità appartengono al System Layer secondo il [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md): gli aggiornamenti le sostituiscono con l'ultima versione, e nessun aggiornamento modifica mai il tuo `cv.md`, il tuo profilo o i tuoi report.
+career-ops include **14 modalità che puoi richiamare direttamente**. Ognuna è una skill in semplice markdown che l'agente carica ed esegue dentro la CLI di programmazione AI che usi già: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot o [un'altra CLI supportata](/it/docs/supported-clis). Richiami una modalità con `/career-ops <mode>`, e ciascuna copre una fase della ricerca di lavoro: valutare un annuncio secondo la griglia (cinque dimensioni più un punteggio globale olistico), adattare il curriculum, redigere una candidatura, monitorare i risultati o prepararti ai colloqui. Le modalità appartengono al System Layer secondo il [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md). Un aggiornamento sostituisce con l'ultima versione ogni modalità che non hai modificato. Una modalità che hai modificato viene conservata per impostazione predefinita: l'aggiornamento la elenca, prova a salvarne una copia `.bak` e lascia la tua versione, quindi quella modalità non riceve più le modifiche upstream. `node update-system.mjs apply --force --confirm` la sostituisce con la versione upstream, anche quando il `.bak` non è stato scritto; l'aggiornamento indica il file e l'errore. Per cambiare il comportamento delle modalità continuando a ricevere i loro aggiornamenti, scrivi le tue regole in `modes/_profile.md` o `modes/_custom.md`, che sono tuoi. Nessun aggiornamento modifica mai il tuo `cv.md`, il tuo profilo o i tuoi report.
 
 ## Valutare
 

@@ -3,14 +3,14 @@ title: Modos
 description: "Os 14 modos do career-ops que você pode invocar (avaliar, adaptar, candidatar-se, acompanhar e se preparar), cada um deles uma skill em markdown que roda em qualquer CLI de programação com IA compatível."
 seoTitle: "Modos do career-ops: os 14 comandos para procurar emprego (avaliar, adaptar, candidatar-se, acompanhar, preparar)"
 icon: Layers
-translationHash: b0ce95e7cf247608
+translationHash: 0476faf4beb570f9
 localized: true
 translatedFrom: /docs/reference/modes
 ---
 
 ## Os 14 modos
 
-O career-ops vem com **14 modos que você pode invocar**. Cada um é uma skill em markdown puro que o agente carrega e executa dentro da CLI de programação com IA que você já usa: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot ou [outra CLI compatível](/pt/docs/supported-clis). Você invoca um modo com `/career-ops <mode>`, e cada um cobre uma etapa da busca de emprego: avaliar uma vaga segundo a rubrica (cinco dimensões mais uma nota global holística), adaptar o currículo, redigir uma candidatura, acompanhar os resultados ou se preparar para entrevistas. Os modos fazem parte da System Layer, conforme o [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md): as atualizações os substituem pela versão mais recente, e nenhuma atualização jamais modifica o seu `cv.md`, o seu perfil ou os seus relatórios.
+O career-ops vem com **14 modos que você pode invocar**. Cada um é uma skill em markdown puro que o agente carrega e executa dentro da CLI de programação com IA que você já usa: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot ou [outra CLI compatível](/pt/docs/supported-clis). Você invoca um modo com `/career-ops <mode>`, e cada um cobre uma etapa da busca de emprego: avaliar uma vaga segundo a rubrica (cinco dimensões mais uma nota global holística), adaptar o currículo, redigir uma candidatura, acompanhar os resultados ou se preparar para entrevistas. Os modos fazem parte da System Layer, conforme o [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md). Uma atualização substitui pela versão mais recente cada modo que você não editou. Um modo que você editou é mantido por padrão: a atualização o lista, tenta salvar uma cópia `.bak` e mantém a sua versão, então esse modo deixa de receber as mudanças do upstream. `node update-system.mjs apply --force --confirm` o substitui pela versão do upstream, mesmo quando não foi possível gravar o `.bak`; a atualização informa o arquivo e o erro. Para mudar o comportamento dos modos e continuar recebendo as atualizações deles, coloque suas regras em `modes/_profile.md` ou `modes/_custom.md`, que são seus. Nenhuma atualização jamais modifica o seu `cv.md`, o seu perfil ou os seus relatórios.
 
 ## Avaliar vagas
 
