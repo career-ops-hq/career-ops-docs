@@ -3,7 +3,7 @@ title: Schnellstart
 description: "Starte in etwa fünfzehn Minuten mit career-ops: Installiere das Open-Source-KI-System für die Jobsuche, öffne deine KI-CLI und bewerte deine erste Stellenanzeige. Programmierkenntnisse brauchst du nicht."
 seoTitle: "career-ops Schnellstart: installieren und in wenigen Minuten den ersten KI-Job-Scan ausführen"
 icon: Rocket
-translationHash: a1ac86db5bf5c50e
+translationHash: 7b12d8ccd43d60f2
 localized: true
 translatedFrom: /docs
 ---
@@ -261,7 +261,9 @@ Deine erste Bewertung ist fertig. Das kannst du als Nächstes ausprobieren:
     Prüfe, ob `cv.md` im Hauptordner liegt und Inhalt hat. Wenn das Onboarding fertig ist, `cv.md` aber leer ist, frag den Agenten: *„Meine cv.md sieht leer aus. Kannst du mir helfen, sie auszufüllen?“*
   </Accordion>
   <Accordion title="Das PDF wurde nicht erstellt">
-    Führe `npx playwright install chromium` noch einmal aus. Wenn das nicht hilft, prüfe mit `node --version`, ob du Node.js 22.13 oder neuer hast (bei Node 23: 23.4 oder neuer).
+    Führe zuerst `npm run doctor` aus. Seine Playwright-Prüfung sagt, warum Chromium nicht starten konnte, und gibt die passende Lösung für diese Ursache aus. Führe `npx playwright install chromium` nur aus, wenn doctor meldet, dass Chromium nicht installiert ist. Meldet es, dass Systembibliotheken fehlen, die Chromium braucht, folge der Abhängigkeits-Lösung, die es für dein System ausgibt; Chromium neu zu installieren hilft dann nicht, denn der Browser ist bereits heruntergeladen. Bei jedem anderen Startfehler hilft eine Neuinstallation ebenfalls nicht: Lies die Fehlermeldung, die doctor anzeigt, und prüfe, wenn du career-ops in einer Sandbox oder einem Container ausführst, ob dort ein Browserprozess starten darf.
+
+    Wenn das PDF weiterhin nicht erstellt wird, prüfe mit `node --version`, ob du Node.js 22.13 oder neuer hast (bei Node 23: 23.4 oder neuer).
   </Accordion>
   <Accordion title="Die Bewertung wirkt daneben">
     Die ersten Bewertungen sind noch ungenau, weil das System dich noch nicht gut kennt. Sag deinem KI-Assistenten nach jeder Bewertung, was er falsch eingeschätzt hat. Zum Beispiel: *„Die Bewertung ist zu hoch. Ich habe keine Erfahrung mit Kubernetes.“* Er lernt daraus und passt seine Bewertungen an.
