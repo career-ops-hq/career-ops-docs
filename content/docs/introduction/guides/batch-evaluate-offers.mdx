@@ -7,7 +7,7 @@ icon: FileStack
 
 Use this guide when you have 10 or more job offers to review and want to process them all in one session instead of one by one.
 
-Each offer gets its own Claude worker. That worker reads your CV, scores the match, writes a full report, and saves a tailored PDF — all without you lifting a finger.
+Each offer gets its own worker, a headless Claude Code session unless you [pick another CLI](#run-the-batch-on-another-cli). That worker reads your CV, scores the match, writes a full report, and saves a tailored PDF — all without you lifting a finger.
 
 ## Step 1: Add your offers to the input file
 
@@ -61,24 +61,24 @@ You'll see a list of pending offers and their IDs. If something looks wrong, fix
 
 ## Step 3: Run the batch
 
-When you're ready, start the batch. You can run one offer at a time or several at once.
+When you're ready, start the batch. With Claude Code workers, the default, the runner evaluates three offers at a time; `--parallel` changes that number.
 
-**One at a time (slowest, uses the least memory):**
+**Three at a time (the default, faster but heavier on your machine):**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh
 ```
 
-**Two at a time (a good default):**
+**Two at a time:**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --parallel 2
 ```
 
-**Three at a time (faster, but heavier on your machine):**
+**One at a time (slowest, uses the least memory):**
 
 ```bash title="Terminal"
-./batch/batch-runner.sh --parallel 3
+./batch/batch-runner.sh --parallel 1
 ```
 
 **Skip offers that score below a threshold (e.g., below 4.0 out of 5):**
@@ -88,6 +88,18 @@ When you're ready, start the batch. You can run one offer at a time or several a
 ```
 
 Watch the terminal as the batch runs. Each line tells you which offer is being processed and whether it finished or failed.
+
+When a Claude worker hits a rate limit, the runner waits and tries the same offer again within the same run, waiting no longer than `--rate-limit-sleep` seconds (default 300), and runs the rest of the batch on one worker. Each of these in-run retries uses up one of the offer's `--max-retries` attempts. A session or usage limit pauses the batch instead; continue it later with `--resume-paused`.
+
+### Run the batch on another CLI
+
+The runner uses Claude Code unless you pass `--cli`. It accepts four values: `claude` (the default), `opencode`, `gemini` and `qwen`. `--model` picks the model for that CLI:
+
+```bash title="Terminal"
+./batch/batch-runner.sh --cli opencode --model qwen2.5:32b
+```
+
+Parallel workers and in-run rate-limit retries are Claude-only. With any other `--cli`, the runner evaluates one offer at a time (it resets `--parallel` to 1 with a warning) and makes a single attempt per offer in each run. If that attempt fails, the offer is marked failed and waits for a later run, which retries it as described in Step 5. See [Supported AI CLIs](/docs/supported-clis#which-clis-can-run-a-batch) for how this list differs from the CLIs career-ops supports.
 
 If a delegated worker finds an agency posting that needs your confirmation, it stops before writing a report, CV, application draft, or tracker row and marks the job `needs_confirmation`. Answer the displayed question in the parent interactive session; that session resumes the held posting only after your explicit answer. `--retry-failed` and `--resume-paused` do not resume confirmation holds.
 
@@ -125,6 +137,8 @@ This tier describes the evidence behind the Global Score; it is neither a hiring
 ## Step 5: Retry any failed offers
 
 Sometimes a worker fails — for example, if a job posting URL stopped loading. Failed offers show up in the terminal with a short error message.
+
+These are later-run retries, and they work the same with every CLI: the next run picks up each failed offer again until the offer has used its `--max-retries` attempts. They are separate from the in-run rate-limit retries in Step 3, which only Claude workers make, although both count against the same `--max-retries` limit. A plain `./batch/batch-runner.sh` retries failed offers along with the pending ones.
 
 **Retry only the failed offers:**
 

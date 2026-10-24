@@ -19,6 +19,21 @@ The **canonical, always-current list — with the exact command to invoke career
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — the full matrix of supported CLIs, entry files, and how to invoke them (interactive and headless/batch).
 
+## Which CLIs can run a batch?
+
+The [batch runner](/docs/introduction/guides/batch-evaluate-offers) (`batch/batch-runner.sh`) starts its own headless workers, and its `--cli` flag accepts a shorter list than the one above:
+
+| `--cli` value | Worker command | How the batch runs |
+|---------------|----------------|--------------------|
+| `claude` (default) | `claude -p` | Three offers at a time by default (`--parallel`); rate-limited offers are retried within the same run |
+| `opencode` | `opencode run`, or `ollama launch opencode` when `opencode` is not installed | One offer at a time, one attempt per offer in each run |
+| `gemini` | `gemini -p` | One offer at a time, one attempt per offer in each run |
+| `qwen` | `qwen -p` | One offer at a time, one attempt per offer in each run |
+
+With every value, a failed offer is retried on a later run, up to `--max-retries`.
+
+Being accepted by the runner is not the same as being supported. The runner still accepts `gemini`, but Gemini CLI is a legacy wrapper that has moved to Antigravity CLI, so it is not on the list of supported CLIs. The reverse also holds: Cursor, Codex, Pi, Antigravity CLI, Grok Build CLI, Kimi, Hermes Agent and GitHub Copilot CLI are supported, but the batch runner does not launch them as workers.
+
 ## Pi
 
 Pi needs no wrapper file. It reads `AGENTS.md` from the career-ops folder and finds the shared skill on its own, so you start `pi` in that folder and call career-ops with `/skill:career-ops`, followed by the mode you want. For a single unattended run, use `pi -p "your prompt"`.

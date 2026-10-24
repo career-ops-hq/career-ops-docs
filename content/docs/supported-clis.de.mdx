@@ -3,7 +3,7 @@ title: Unterstützte KI-CLIs
 seoTitle: "Welche KI-CLI funktioniert mit career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops ist KI-agnostisch — es läuft auf jeder großen KI-Coding-CLI. So nutzt du den Assistenten, für den du ohnehin schon bezahlst, und bindest dich nie an einen einzigen Anbieter. Die vollständige, stets aktuelle Liste findest du im Core-Repo."
 icon: Terminal
-translationHash: aba388df8b32db03
+translationHash: e1d9f01f9679ce09
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -21,6 +21,21 @@ career-ops funktioniert vollwertig mit **Claude Code, Cursor, Codex, OpenCode, P
 Die **kanonische, stets aktuelle Liste — mit dem genauen Befehl, mit dem du career-ops in jeder CLI aufrufst — liegt im Core-Repo**, damit sie nie veraltet:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — die vollständige Matrix der unterstützten CLIs und ihrer Einstiegsdateien, und wie du sie aufrufst (interaktiv und headless/Batch).
+
+## Welche CLIs können einen Batch ausführen? [#which-clis-can-run-a-batch]
+
+Der [Batch-Runner](/de/docs/introduction/guides/batch-evaluate-offers) (`batch/batch-runner.sh`) startet eigene headless Worker, und sein Flag `--cli` akzeptiert eine kürzere Liste als die oben:
+
+| `--cli`-Wert | Worker-Befehl | So läuft der Batch |
+|---|---|---|
+| `claude` (Standard) | `claude -p` | Standardmäßig drei Angebote gleichzeitig (`--parallel`); Angebote mit Rate-Limit werden im selben Lauf wiederholt |
+| `opencode` | `opencode run`, oder `ollama launch opencode`, wenn `opencode` nicht installiert ist | Ein Angebot nach dem anderen, ein Versuch pro Angebot und Lauf |
+| `gemini` | `gemini -p` | Ein Angebot nach dem anderen, ein Versuch pro Angebot und Lauf |
+| `qwen` | `qwen -p` | Ein Angebot nach dem anderen, ein Versuch pro Angebot und Lauf |
+
+Bei jedem Wert wird ein fehlgeschlagenes Angebot in einem späteren Lauf wiederholt, bis `--max-retries` erreicht ist.
+
+Vom Runner akzeptiert heißt nicht unterstützt. Der Runner akzeptiert `gemini` noch, aber Gemini CLI ist ein Legacy-Wrapper, der zu Antigravity CLI übergegangen ist, und steht deshalb nicht auf der Liste der unterstützten CLIs. Umgekehrt gilt das auch: Cursor, Codex, Pi, Antigravity CLI, Grok Build CLI, Kimi, Hermes Agent und GitHub Copilot CLI werden unterstützt, aber der Batch-Runner startet sie nicht als Worker.
 
 ## Pi
 

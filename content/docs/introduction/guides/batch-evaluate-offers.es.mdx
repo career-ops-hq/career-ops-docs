@@ -3,14 +3,14 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: ec171c2cf58a6f48
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
 
 Usa esta guía cuando tengas 10 o más ofertas de empleo que revisar y quieras procesarlas todas en una sola sesión en lugar de una a una.
 
-Cada oferta recibe su propio worker de Claude. Ese worker lee tu CV, puntúa el encaje, redacta un informe completo y guarda un PDF adaptado — todo sin que muevas un dedo.
+Cada oferta recibe su propio worker, una sesión headless de Claude Code salvo que [elijas otro CLI](#run-the-batch-on-another-cli). Ese worker lee tu CV, puntúa el encaje, redacta un informe completo y guarda un PDF adaptado — todo sin que muevas un dedo.
 
 ## Paso 1: Añade tus ofertas al archivo de entrada
 
@@ -64,24 +64,24 @@ Verás una lista de las ofertas pendientes con sus IDs. Si algo no cuadra, corri
 
 ## Paso 3: Ejecuta el batch
 
-Cuando estés listo, arranca el batch. Puedes procesar las ofertas de una en una o varias a la vez.
+Cuando estés listo, arranca el batch. Con workers de Claude Code, la opción por defecto, el runner evalúa tres ofertas a la vez; `--parallel` cambia ese número.
 
-**De una en una (la opción más lenta, la que menos memoria consume):**
+**De tres en tres (por defecto; más rápido, pero más exigente con tu máquina):**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh
 ```
 
-**De dos en dos (una buena opción por defecto):**
+**De dos en dos:**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --parallel 2
 ```
 
-**De tres en tres (más rápido, pero más exigente con tu máquina):**
+**De una en una (la opción más lenta, la que menos memoria consume):**
 
 ```bash title="Terminal"
-./batch/batch-runner.sh --parallel 3
+./batch/batch-runner.sh --parallel 1
 ```
 
 **Omite las ofertas que puntúen por debajo de un umbral (p. ej., por debajo de 4.0 sobre 5):**
@@ -91,6 +91,18 @@ Cuando estés listo, arranca el batch. Puedes procesar las ofertas de una en una
 ```
 
 Observa la terminal mientras corre el batch. Cada línea te indica qué oferta se está procesando y si terminó o falló.
+
+Cuando un worker de Claude choca con un rate limit, el runner espera y vuelve a intentar la misma oferta dentro de la misma ejecución, sin esperar más de `--rate-limit-sleep` segundos (300 por defecto), y procesa el resto del batch con un solo worker. Cada uno de estos reintentos dentro de la ejecución consume uno de los intentos de `--max-retries` de la oferta. Un límite de sesión o de uso, en cambio, pausa el batch; continúalo más tarde con `--resume-paused`.
+
+### Ejecuta el batch con otro CLI [#run-the-batch-on-another-cli]
+
+El runner usa Claude Code salvo que pases `--cli`. Acepta cuatro valores: `claude` (por defecto), `opencode`, `gemini` y `qwen`. `--model` elige el modelo de ese CLI:
+
+```bash title="Terminal"
+./batch/batch-runner.sh --cli opencode --model qwen2.5:32b
+```
+
+Los workers en paralelo y los reintentos por rate limit dentro de la ejecución son exclusivos de Claude. Con cualquier otro `--cli`, el runner evalúa una oferta a la vez (restablece `--parallel` a 1 con un aviso) y hace un solo intento por oferta en cada ejecución. Si ese intento falla, la oferta queda marcada como fallida y espera a una ejecución posterior, que la reintenta como se explica en el Paso 5. Consulta [CLIs de IA compatibles](/es/docs/supported-clis#which-clis-can-run-a-batch) para ver en qué se diferencia esta lista de los CLIs que career-ops soporta.
 
 Si un worker delegado encuentra una oferta de agencia que requiere tu confirmación, se detiene antes de escribir un informe, CV, borrador de solicitud o fila del tracker y marca el trabajo como `needs_confirmation`. Responde a la pregunta mostrada en la sesión interactiva principal; esa sesión solo reanuda el trabajo retenido después de tu respuesta explícita. `--retry-failed` y `--resume-paused` no reanudan las retenciones por confirmación.
 
@@ -128,6 +140,8 @@ Este nivel describe la evidencia que respalda el Global Score; no es una probabi
 ## Paso 5: Reintenta las ofertas fallidas
 
 A veces un worker falla — por ejemplo, si la URL de una oferta dejó de cargar. Las ofertas fallidas aparecen en la terminal con un mensaje de error breve.
+
+Estos son reintentos en ejecuciones posteriores y funcionan igual con cualquier CLI: la siguiente ejecución vuelve a tomar cada oferta fallida hasta que la oferta agota sus intentos de `--max-retries`. Son distintos de los reintentos por rate limit dentro de la ejecución del Paso 3, que solo hacen los workers de Claude, aunque ambos cuentan contra el mismo límite de `--max-retries`. Un `./batch/batch-runner.sh` sin opciones reintenta las ofertas fallidas junto con las pendientes.
 
 **Reintenta solo las ofertas fallidas:**
 
