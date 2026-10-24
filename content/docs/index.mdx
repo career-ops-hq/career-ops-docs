@@ -258,7 +258,9 @@ Now that your first evaluation is done, here are a few things you can explore:
     Make sure `cv.md` exists in the root folder and has content in it. If the onboarding finished but `cv.md` is empty, ask the agent: *"my cv.md looks empty, can you help me fill it in?"*
   </Accordion>
   <Accordion title="The PDF did not generate">
-    Run `npx playwright install chromium` again. If that does not fix it, check that Node.js is version 22.13 or higher (23.4 or higher on Node 23) by running `node --version`.
+    Run `npm run doctor` first. Its Playwright check says why Chromium could not start and prints the fix for that cause. Run `npx playwright install chromium` only when doctor reports that Chromium is not installed. If it reports that the system libraries Chromium needs are missing, follow the dependency fix it prints for your system; reinstalling Chromium does not help, because the browser is already downloaded. For any other launch failure, reinstalling will not fix it either: read the error doctor shows, and if you run career-ops inside a sandbox or container, check that it allows a browser process to start.
+
+    If the PDF still does not generate, check that Node.js is version 22.13 or higher (23.4 or higher on Node 23) by running `node --version`.
   </Accordion>
   <Accordion title="The score seems off">
     The first few evaluations are rough — the system does not know you well yet. After each evaluation, tell your AI assistant what it got wrong. For example: *"That score is too high — I have no experience with Kubernetes."* It will learn and adjust.
