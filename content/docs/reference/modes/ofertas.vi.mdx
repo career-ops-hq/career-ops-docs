@@ -1,0 +1,56 @@
+---
+title: ofertas
+description: "Dùng khi bạn đang có hai offer trở lên cần cân nhắc và muốn một bản so sánh chuẩn hóa về mức lương thưởng, độ phù hợp với vai trò, lộ trình phát triển và các dấu hiệu cảnh báo. Kết quả là một khuyến nghị có xếp hạng."
+seoTitle: "Chế độ ofertas của career-ops: so sánh các offer song song để chọn offer tốt nhất"
+icon: GitCompare
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: b51253649996ab03
+localized: true
+translatedFrom: /docs/reference/modes/ofertas
+---
+
+## Chế độ này làm gì
+
+Chế độ `ofertas` đọc nhiều bản đánh giá JD (đã được tạo bởi oferta hoặc auto-pipeline) và xếp hạng chúng với nhau theo năm chiều đánh giá cùng một điểm tổng thể, kèm một ma trận quyết định đã chuẩn hóa. Kết quả gồm một báo cáo so sánh song song và một khuyến nghị có xếp hạng.
+
+## Khi nào nên dùng
+
+Hãy dùng ofertas khi bạn đã đến vòng phỏng vấn cuối cho nhiều vị trí và cần một cách có cấu trúc để chọn giữa chúng. Chế độ này đặc biệt hữu ích với các offer ở cấp staff, nơi gói lương thưởng và lộ trình phát triển khác nhau rất nhiều.
+
+## Một lần chạy trông như thế nào
+
+Bạn đưa cho chế độ này hai offer trở lên, nó sẽ chấm điểm từng offer theo mười chiều có trọng số, rồi xếp hạng. Trọng số lớn nhất thuộc về mức độ khớp với North Star (25%), tiếp theo là độ khớp CV và cấp bậc (mỗi mục 15%); lương thưởng và lộ trình phát triển mỗi mục chiếm 10%, phần còn lại thuộc về danh tiếng công ty, chất lượng làm việc từ xa, tech stack, thời gian chờ đến khi có offer và các tín hiệu về văn hóa.
+
+```bash title="Terminal"
+/career-ops ofertas
+```
+
+```txt title="Comparison excerpt"
+# Offer Comparison — 3 roles
+
+| Dimension (weight)       | Acme | Globex | Initech |
+|--------------------------|------|--------|---------|
+| North Star align (25%)   | 5    | 3      | 4       |
+| CV match (15%)           | 4    | 4      | 3       |
+| Compensation (10%)       | 3    | 5      | 4       |
+| Growth trajectory (10%)  | 5    | 3      | 3       |
+| ...                      |      |        |         |
+| Weighted total           | 4.4  | 3.6    | 3.5     |
+
+Recommendation: Acme — strongest North Star fit and growth path.
+Globex pays more but ranks lower on trajectory and time-to-offer.
+```
+
+## Khi nào nên dùng ofertas
+
+Hãy dùng ofertas khi bạn đang có hai offer trở lên và cần một cách chuẩn hóa để chọn. Chế độ này hữu ích nhất ở cấp staff, nơi gói lương thưởng và lộ trình phát triển chênh lệch đủ lớn để cảm tính dễ dẫn bạn đi sai.
+
+- Cung cấp các tin tuyển dụng dưới dạng văn bản dán vào, URL, hoặc tham chiếu đến các vị trí đã có trong tracker của bạn; nếu chưa có gì trong ngữ cảnh, chế độ này sẽ hỏi bạn.
+- Hãy chấm điểm từng offer riêng lẻ trước, bằng `oferta` hoặc `auto-pipeline`, để phần so sánh xếp hạng dựa trên những bản đánh giá nhất quán thay vì trộn lẫn các mức độ chi tiết khác nhau.
+- Vì mức độ khớp với North Star có trọng số 25%, chỉ riêng mức lương cao hơn sẽ không đưa một offer lên đầu bảng xếp hạng; một vai trò khớp với lộ trình mục tiêu của bạn có thể vượt qua một lựa chọn trả cao hơn nhưng lệch hướng.
+
+## Liên quan
+
+- [oferta](/docs/reference/modes/oferta)
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)

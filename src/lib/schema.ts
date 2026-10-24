@@ -12,6 +12,7 @@ import { homeDe } from '@/app/_home/home-de';
 import { homePt } from '@/app/_home/home-pt';
 import { homeIt } from '@/app/_home/home-it';
 import { homeZh } from '@/app/_home/home-zh';
+import { homeVi } from '@/app/_home/home-vi';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
 import {
@@ -240,7 +241,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh'],
+        inLanguage: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh', 'vi'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -811,6 +812,7 @@ const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
   pt: { home: 'Início', docs: 'Documentação' },
   it: { home: 'Home', docs: 'Documentazione' },
   zh: { home: '首页', docs: '文档' },
+  vi: { home: 'Trang chủ', docs: 'Tài liệu' },
 };
 
 export function docsBreadcrumbSchema(opts: {
@@ -955,6 +957,10 @@ export function homeFaqSchemaIt(dateModified?: Date) {
 
 export function homeFaqSchemaZh(dateModified?: Date) {
   return homeGraph('https://career-ops.org/zh', 'zh', faqFromDict(homeZh), dateModified);
+}
+
+export function homeFaqSchemaVi(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/vi', 'vi', faqFromDict(homeVi), dateModified);
 }
 
 export function blogPostSchema(args: {

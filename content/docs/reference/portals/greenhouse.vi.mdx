@@ -1,0 +1,57 @@
+---
+title: Greenhouse
+description: "career-ops gọi trực tiếp API công khai của Greenhouse. Không cào HTML, không lo bị giới hạn tần suất, không tốn token AI trong lúc quét."
+seoTitle: "Quét tin tuyển dụng Greenhouse với career-ops — quét cổng ATS không tốn token"
+icon: Leaf
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 7b6f2cf40aacd803
+localized: true
+translatedFrom: /docs/reference/portals/greenhouse
+---
+
+## Tính năng này làm gì
+
+Provider greenhouse trong providers/greenhouse.mjs gửi yêu cầu HTTP đến boards-api.greenhouse.io/v1/boards/`{slug}`/jobs rồi chuyển phản hồi JSON sang định dạng tin tuyển dụng của career-ops. Slug là mã định danh bảng tin tuyển dụng Greenhouse của công ty (ví dụ 'notion' cho Notion).
+
+## Khi nào nên dùng
+
+Hãy dùng tính năng quét Greenhouse khi các công ty bạn nhắm tới dùng Greenhouse làm ATS. Phần lớn các công ty công nghệ ở Mỹ có quy mô từ 50 đến 10.000 nhân viên đều dùng. templates/portals.example.yml có sẵn hơn 70 slug Greenhouse đã được cấu hình để bạn bật lên dùng.
+
+## Ví dụ
+
+```
+In your portals.yml: `- provider: greenhouse\n  slug: notion\n  careers_url: https://job-boards.greenhouse.io/notion` — then `/career-ops scan` picks up all open Notion roles.
+```
+
+## Trình quét làm gì
+
+Trình quét đọc các slug Greenhouse bạn đã bật trong portals.yml, gọi API công khai của từng bảng tin tuyển dụng, rồi thêm các vị trí mới có tiêu đề khớp vào pipeline của bạn, không cào trang và không tốn token LLM nào cho bước tải dữ liệu. Chỉ một lần chạy `node scan.mjs` là xử lý xong các bảng Greenhouse, Ashby và Lever của bạn, sau đó lọc kết quả theo các từ khóa tiêu đề bạn đã cấu hình.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 58 total
+Filtered by title: 9 relevant
+Duplicates: 6 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + Notion | AI Product Engineer | greenhouse
+  + OpenAI | Applied Engineer    | greenhouse
+```
+
+## Cách career-ops làm việc với Greenhouse
+
+career-ops gọi `boards-api.greenhouse.io/v1/boards/{slug}/jobs` và đọc mảng `jobs` trong JSON, lấy tiêu đề và `absolute_url` của từng vị trí. Endpoint này chỉ trả về siêu dữ liệu của tin tuyển dụng (tiêu đề, địa điểm và phòng ban), không có mô tả đầy đủ. Vì vậy career-ops lấy toàn bộ nội dung tin bằng một yêu cầu bổ sung cho từng vị trí trong bước đánh giá, hoặc thêm `?content=true` ở những bảng có hỗ trợ. Bản thân lần quét chỉ là một yêu cầu HTTPS GET đến endpoint công khai, nên nó nằm trong giới hạn tần suất và không tốn token của mô hình. Bạn có thể chạy lại lần quét một cách an toàn: mọi URL đều được loại trùng với lịch sử quét, các đơn ứng tuyển đã đánh giá và pipeline hiện tại của bạn, nên một vị trí bạn đã thấy sẽ không bao giờ bị thêm hai lần.
+
+## Lưu ý
+
+Endpoint boards của Greenhouse API chỉ trả về tiêu đề, địa điểm và phòng ban của tin tuyển dụng. Muốn có toàn văn JD thì cần một yêu cầu bổ sung cho từng tin, và career-ops tự xử lý việc này trong bước đánh giá.
+
+## Liên quan
+
+- [ashby](/docs/reference/portals/ashby)
+- [lever](/docs/reference/portals/lever)

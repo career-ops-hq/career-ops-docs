@@ -1,0 +1,61 @@
+---
+title: Ashby
+description: "Ashby là lựa chọn ATS hiện đại của các startup vòng Series A–C trong mảng AI và công cụ cho lập trình viên. career-ops gọi trực tiếp API công khai của bảng việc làm Ashby."
+seoTitle: "Quét tin tuyển dụng trên Ashby với career-ops, không tốn token"
+icon: Sparkles
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 8e0f69ac9571b6b9
+localized: true
+translatedFrom: /docs/reference/portals/ashby
+---
+
+## Tính năng này làm gì
+
+Provider ashby trong providers/ashby.mjs gửi các yêu cầu HTTP đến api.ashbyhq.com/posting-api/job-board/`{slug}` rồi phân tích JSON trả về. Slug là mã định danh bảng việc làm Ashby của công ty (ví dụ 'elevenlabs' cho ElevenLabs). career-ops chọn provider này dựa trên `careers_url` của mục đó (`https://jobs.ashbyhq.com/<slug>`), hoặc từ trường `api:` khai báo tường minh.
+
+## Khi nào nên dùng
+
+Hãy dùng chức năng quét Ashby khi bạn nhắm đến các phòng thí nghiệm AI, công ty hạ tầng và các startup hiện đại. ElevenLabs, Deepgram, Sierra, Decagon và n8n nằm trong số 40 bảng việc làm Ashby được cấu hình sẵn trong templates/portals.example.yml.
+
+## Ví dụ
+
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
+```
+
+Lần quét tiếp theo sẽ lấy về các vị trí đang tuyển của ElevenLabs.
+
+## Trình quét hoạt động thế nào
+
+Trình quét đọc các slug Ashby bạn đã bật trong portals.yml, gọi API bảng việc làm công khai của Ashby cho từng slug, rồi gộp các vị trí mới vào pipeline của bạn. Quá trình này không cần trình duyệt, không cần đăng nhập, và không tốn token LLM nào cho bước tải dữ liệu. Một lần chạy `node scan.mjs` quét chung cả bảng việc làm Ashby, Greenhouse và Lever, sau đó lọc kết quả theo các từ khóa chức danh bạn đã cấu hình.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Portal Scan - 2026-07-06
+Offers found: 41 total
+Filtered by title: 6 relevant
+Duplicates: 3 (already evaluated or in pipeline)
+New added to pipeline.md: 3
+
+  + ElevenLabs | Applied AI Engineer | ashby
+  + Deepgram   | Inference Engineer  | ashby
+```
+
+## career-ops làm việc với Ashby như thế nào
+
+career-ops gọi API đăng tin công khai của Ashby tại `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` và đọc danh sách `jobs` trực tiếp từ phản hồi JSON. Với mỗi tin tuyển dụng, career-ops lấy chức danh, `jobUrl` công khai làm liên kết ứng tuyển, địa điểm (địa điểm chính cùng các địa điểm phụ nếu có, kèm "Remote" cho các vị trí làm việc từ xa), phần mô tả dạng văn bản thuần, ngày đăng, và mức lương quy đổi theo năm nếu bảng việc làm có công bố. Vì đây là lệnh gọi API có cấu trúc chứ không phải cào dữ liệu trang web, việc quét không cần trình duyệt và không tốn token của mô hình. API công khai của Ashby phản hồi chậm, tối thiểu khoảng mười giây cho mỗi bảng việc làm, và giới hạn tần suất khi bị gọi lặp lại, nên career-ops chờ tối đa 30 giây cho mỗi bảng và thử lại với độ trễ tăng dần. Token chỉ được dùng sau đó, ở bước đánh giá, khi bạn quyết định một vị trí đáng xem kỹ hơn. Bạn có thể chạy lại lệnh quét một cách an toàn: mọi URL đều được loại trùng với lịch sử quét, các đơn ứng tuyển đã đánh giá và pipeline hiện tại, nên một vị trí bạn đã thấy sẽ không bao giờ bị thêm hai lần.
+
+## Lưu ý
+
+API bảng việc làm của Ashby trả về trực tiếp toàn bộ nội dung JD, không cần gửi thêm yêu cầu nào khác. Mỗi bảng việc làm mất khoảng mười giây để phản hồi, nên một lần quét có nhiều bảng Ashby sẽ lâu hơn một chút so với cùng số lượng bảng Greenhouse hoặc Lever.
+
+## Liên quan
+
+- [greenhouse](/docs/reference/portals/greenhouse)
+- [lever](/docs/reference/portals/lever)

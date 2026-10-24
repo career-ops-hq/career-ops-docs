@@ -1,0 +1,53 @@
+---
+title: auto-pipeline
+description: "Luồng mặc định khi bạn dán URL hoặc văn bản thô của một mô tả công việc. Chạy đánh giá A–H, tạo báo cáo, xuất CV PDF được tinh chỉnh theo vị trí và ghi một mục vào tracker, không cần can thiệp thủ công giữa các bước."
+seoTitle: "career-ops auto-pipeline: đánh giá tin tuyển dụng, tạo CV và tracker chỉ từ một URL"
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 233c7fa8819747b5
+localized: true
+translatedFrom: /docs/reference/modes/auto-pipeline
+---
+
+## Chức năng
+
+career-ops gọi auto-pipeline mỗi khi bạn đưa URL của JD hoặc văn bản đã dán vào prompt. Chế độ này đọc tin tuyển dụng, chấm điểm theo thang đánh giá (năm tiêu chí cùng một điểm tổng thể), ghi kết quả đánh giá vào reports/, tạo CV PDF được tinh chỉnh bằng Playwright và cập nhật mục trong tracker, tất cả trong một lượt chạy của tác tử AI.
+
+## Khi nào nên dùng
+
+Dùng auto-pipeline khi bạn muốn chạy toàn bộ pipeline một cách tự động. Đây là chế độ mặc định cho các tin tuyển dụng mới đi vào quá trình tìm việc của bạn.
+
+## Một lần chạy trông như thế nào
+
+Dán URL của một tin tuyển dụng mà không kèm lệnh con nào, auto-pipeline sẽ chạy trọn chuỗi từ đầu đến cuối: trích xuất mô tả, kiểm tra tin còn đăng hay không, chấm điểm, lưu báo cáo, xuất CV PDF được tinh chỉnh và ghi mục vào tracker của bạn.
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+
+## Cần biết
+
+- Dán URL là auto-pipeline tự lo việc trích xuất: ưu tiên Playwright cho các cổng tuyển dụng một trang như Lever, Ashby, Greenhouse và Workday, sau đó đến WebFetch cho các trang tĩnh, và cuối cùng là WebSearch.
+- Một bước kiểm tra tin còn đăng chạy trước khi đánh giá. Nếu liên kết đã chết hoặc trang chỉ là một trang trống kiểu "position filled", chế độ này dừng ngay tại đó thay vì chấm điểm cho nội dung không có thật. Nếu mục đó đến từ `data/pipeline.md`, nó sẽ đánh dấu dòng ấy là đã đóng.
+- Một trang LinkedIn mà phần mô tả cứ dừng ở khung tải không phải là tin đã đóng, cũng không phải là mô tả công việc: auto-pipeline dừng trước bước đánh giá, báo cáo, CV PDF và mọi thao tác ghi vào tracker, rồi nhờ bạn dán nội dung tin tuyển dụng hoặc đưa liên kết từ nhà tuyển dụng hay ATS cho cùng vị trí.
+- Câu trả lời đơn ứng tuyển dạng nháp chỉ được viết khi điểm từ 4.5 trở lên, nên những vị trí ít phù hợp sẽ không tốn token cho nội dung bạn sẽ không gửi.
+
+## Lưu ý
+
+Nếu bạn chỉ cần bản đánh giá mà không cần CV PDF (nhanh hơn, rẻ hơn), hãy chạy `/career-ops oferta`. auto-pipeline tốn nhiều token hơn vì chạy toàn bộ chuỗi.
+
+## Xem thêm
+
+- [pipeline](/docs/reference/modes/pipeline)
+- [oferta](/docs/reference/modes/oferta)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)

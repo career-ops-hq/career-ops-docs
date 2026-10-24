@@ -8,4 +8,4 @@
 // name and a link to the GitHub profile; no counts, no "verified".
 export type NativeReviewer = { name: string; github: string };
 
-export const NATIVE_REVIEWERS: Partial<Record<'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh', NativeReviewer[]>> = {};
+export const NATIVE_REVIEWERS: Partial<Record<'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh' | 'vi', NativeReviewer[]>> = {};

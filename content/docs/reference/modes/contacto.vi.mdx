@@ -1,0 +1,53 @@
+---
+title: contacto
+description: "Chiêu bài LinkedIn lợi hại. Khi bạn đưa tên công ty và bối cảnh mạng lưới quan hệ, contacto gợi ý những liên hệ có khả năng \"ấm\" (bạn chung, quan hệ cấp hai) và soạn một tin nhắn ngắn gửi họ, phù hợp với vị trí bạn đang ứng tuyển."
+seoTitle: "Chế độ contacto của career-ops: tìm liên hệ LinkedIn và soạn tin nhắn làm quen"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## Chế độ này làm gì
+
+Chế độ contacto đọc tên công ty và nội dung JD, rồi gợi ý những người nên liên hệ mà nó tìm được qua WebSearch: người quản lý tuyển dụng, nhà tuyển dụng phụ trách, hai hoặc ba đồng nghiệp trong nhóm và một người từng phỏng vấn. Nó soạn một tin nhắn ngắn, gồm ba câu và dưới 300 ký tự, phù hợp với vị trí và với vai trò của người nhận.
+
+**Liên hệ đã lưu được ưu tiên trước.** Trước khi tìm kiếm, contacto chạy `node contact-lookup.mjs --company "<company>" --summary` trên các liên hệ bạn đã lưu trong `data/contacts.tsv`, rồi hiển thị những người bạn đã có ở công ty đó, kèm đơn ứng tuyển trước đây gắn họ với công ty. Nếu bạn chọn một người, contacto bỏ qua bước tìm kiếm và soạn tin nhắn **Giới thiệu nội bộ**: tin nhắn nêu tên người bạn thật sự đã quen, nói trong một dòng vì sao vị trí mới phù hợp và hỏi thẳng xin giới thiệu. Đây là điểm ngược lại với tin nhắn gửi đồng nghiệp cùng cấp, loại tin không bao giờ xin việc. Một liên hệ đã lưu chỉ được đánh dấu là giới thiệu nội bộ sau khi bạn xác nhận có mối quan hệ thật với người đó; làm cùng công ty thôi thì chưa đủ. Để lưu một liên hệ từ email trả lời của nhà tuyển dụng hoặc người phỏng vấn, hãy dán nội dung email vào một tệp rồi chạy `node contact-extract.mjs --file <email.txt>`; lệnh này sẽ hỏi bạn trước khi ghi. contacto soạn mọi tin nhắn; bạn quyết định có gửi hay không.
+
+## Khi nào nên dùng
+
+Hãy dùng contacto khi bạn đã ứng tuyển một vị trí và muốn tìm đường được giới thiệu. Bạn cũng có thể dùng trước khi ứng tuyển, khi một lời giới thiệu từ người quen có thể giúp bạn vượt qua chồng hồ sơ của nhà tuyển dụng. Mặc định là chiêu bài LinkedIn; với nền tảng giới hạn ký tự chặt, như khung chat của trang việc làm, câu mở đầu của cold email hay 打招呼 của BOSS Zhipin, hãy yêu cầu một "greeting" và contacto sẽ viết một tin nhắn làm quen siêu ngắn, không cần tìm liên hệ.
+
+## Một lần chạy trông như thế nào
+
+Đưa cho contacto một công ty, nó sẽ tìm những người đáng liên hệ, chọn người hưởng lợi nhiều nhất khi có bạn, rồi viết tin nhắn dành riêng cho vai trò đó: nhà tuyển dụng thấy các yêu cầu bắt buộc đã đáp ứng, người quản lý tuyển dụng thấy tác động bạn tạo ra.
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## Lưu ý
+
+contacto không thu thập dữ liệu LinkedIn (đã bị từ chối theo issue #238). Nó làm việc từ bối cảnh bạn cung cấp, gồm CV, các nhà tuyển dụng cũ và những người quen chung bạn nhắc tới, cùng kết quả WebSearch công khai. Tác tử AI không có quyền truy cập vào mạng lưới LinkedIn riêng tư của bạn. Mọi tin nhắn đều nằm trong giới hạn 300 ký tự của lời mời kết nối LinkedIn và không bao giờ kèm số điện thoại của bạn.
+
+## Xem thêm
+
+- [deep](/docs/reference/modes/deep)
+- [interview-prep](/docs/reference/modes/interview-prep)

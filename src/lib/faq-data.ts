@@ -407,6 +407,73 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "CareerOps (uma palavra só) é o nome da prática; career-ops (com hífen, em minúsculas) é o projeto open source — a primeira implementação de referência dela. O CareerOps Manifesto define a prática. Em termos simples: o career-ops é o sistema de busca de emprego com IA, licenciado sob MIT, que roda localmente dentro da sua CLI de programação com IA, publicado em career-ops.org e em github.com/career-ops-hq/career-ops. CareerOps é a prática que ele materializa — conduzir a busca de emprego do jeito que engenheiros operam sistemas em produção —, nomeada e definida em The CareerOps Manifesto: nove direitos que toda pessoa que procura emprego deveria ter, assinados publicamente pela comunidade. Os dois vêm do mesmo autor, Santiago Fernández de Valderrama Aparicio, e os dois remontam ao mesmo repositório.",
     },
   ],
+  vi: [
+    {
+      question: "career-ops có miễn phí không?",
+      answer:
+        "career-ops miễn phí: đây là dự án mã nguồn mở theo giấy phép MIT, và sẽ luôn như vậy. Khoản chi phí duy nhất có thể phát sinh là công cụ AI mà nó chạy trên đó — và khoản này cũng có thể bằng 0: OpenCode với một nhà cung cấp miễn phí, một mô hình chạy cục bộ qua Ollama, hoặc trình chạy npm run or tích hợp sẵn với các mô hình miễn phí của OpenRouter. Hướng dẫn Thiết lập công cụ AI miễn phí đi qua từng cách. career-ops không có gói trả phí, không phân hạng, không dùng thử — dự án hoàn toàn miễn phí và theo giấy phép MIT. Bất kỳ trang web nào nói về giá của career-ops đều đang nói về một sản phẩm khác.",
+    },
+    {
+      question: "Tôi có cần đăng ký Claude để dùng career-ops không?",
+      answer:
+        "career-ops không yêu cầu đăng ký Claude: nó không phụ thuộc vào một AI cụ thể, và Claude Code chỉ là một trong số nhiều công cụ, không phải điều kiện bắt buộc. Bạn có thể chạy toàn bộ quy trình miễn phí với OpenCode cùng một nhà cung cấp miễn phí, một mô hình cục bộ qua Ollama, hoặc trình chạy OpenRouter tích hợp sẵn (npm run or). Nếu bạn bắt đầu bằng gói trả phí rồi hết token giữa chừng, việc chuyển sang công cụ miễn phí chỉ mất vài phút và dữ liệu của bạn vẫn nguyên vẹn — xem Thiết lập công cụ AI miễn phí.",
+    },
+    {
+      question: "Tôi trả tiền cho Claude Pro hoặc Max, sao career-ops lại tính vào tín dụng API?",
+      answer:
+        "Để biết career-ops đang tính phí vào gói đăng ký Claude hay tín dụng API của bạn, hãy chạy node doctor.mjs từ thư mục career-ops. Công cụ doctor báo trong một dòng phiên làm việc này đang dùng nguồn thanh toán nào, trước khi bạn tốn thêm bất kỳ chi phí nào. Quy tắc thanh toán không do career-ops đặt ra: CLI của bạn quyết định, và ANTHROPIC_API_KEY được ưu tiên. Nếu biến này được đặt trong môi trường của bạn, Claude Code sẽ tính phí theo từng token, kể cả khi bạn đang trả tiền cho Pro hoặc Max. career-ops không chọn nguồn thanh toán của bạn; nó chỉ phát hiện và cảnh báo. Khi có khóa này, doctor hiển thị: ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max. Để quay lại dùng gói đăng ký, hãy xóa dòng export ANTHROPIC_API_KEY=... khỏi ~/.zshrc, ~/.bashrc, ~/.profile hoặc tệp .env của dự án, khởi động lại terminal rồi chạy /login. Các lần chạy theo lô là ngoại lệ: tiến trình claude -p không dùng phiên đăng nhập tương tác, nên cần chạy claude setup-token và export kết quả thành CLAUDE_CODE_OAUTH_TOKEN. Nếu bạn chủ ý để Claude Code tính vào tín dụng API thì không có gì sai và bạn không cần làm gì. Quy tắc về ANTHROPIC_API_KEY áp dụng cho các công cụ của Anthropic. Các CLI khác (Codex, OpenCode, Copilot, Gemini, Qwen) tự có quy tắc riêng giữa gói đăng ký và khóa API, và career-ops không kiểm tra những CLI đó — hãy xem tài liệu của CLI bạn dùng.",
+    },
+    {
+      question: "Chạy career-ops tốn bao nhiêu tiền mỗi tháng?",
+      answer:
+        "Trong career-ops, chỉ bước đánh giá mới tốn tiền, và bước đánh giá cũng có thể là 0 đồng. Quét tin tuyển dụng không tốn token AI nào, nên việc tìm vị trí mới luôn miễn phí; chỉ khi đánh giá một tin tuyển dụng thì mới gọi đến mô hình. Có ba cách chạy toàn bộ quy trình mà không tốn đồng nào: một mô hình cục bộ qua Ollama, các mô hình miễn phí của OpenRouter (npm run or), hoặc gói miễn phí của Antigravity. Với một mô hình trả phí giá rẻ như DeepSeek V3 (có prompt caching), mỗi lần đánh giá tốn chưa đến một cent, nên vài cent đủ cho hàng chục tin tuyển dụng. Nếu bạn đã có gói đăng ký Claude thì chi phí cận biên gần như bằng 0; còn với API thô, hãy dự trù khoảng 0,05 đến 0,10 USD cho mỗi lần đánh giá (con số ước tính, thay đổi theo độ dài tin tuyển dụng). Bản thân career-ops miễn phí mãi mãi, theo giấy phép MIT, không thu phí và không chia hạng — bạn chỉ trả tiền cho nhà cung cấp AI của mình, nếu có. Hướng dẫn Thiết lập công cụ AI miễn phí trình bày các cách chạy với chi phí 0 đồng. Để tốn ít hơn cho mỗi lần đánh giá, hãy đặt spend_tier trong config/profile.yml: economy dùng bậc mô hình rẻ nhất và nhanh nhất của CLI, phù hợp khi đánh giá nhiều tin tuyển dụng; standard là mặc định; premium dùng mô hình mạnh nhất cho những tin tuyển dụng quan trọng nhất. Cuộc trò chuyện thiết lập ban đầu và bản PDF được điều chỉnh theo từng vị trí cũng chạy trên mô hình của bạn, nên cũng tốn token.",
+    },
+    {
+      question: "Dữ liệu của tôi được lưu ở đâu?",
+      answer:
+        "career-ops giữ dữ liệu của bạn trên máy bạn, trong các tệp thuần túy do chính bạn sở hữu — CV, hồ sơ, pipeline và báo cáo đều là Markdown/YAML cục bộ. Không có gì chạy trên máy chủ của career-ops. Các tệp được lưu cục bộ theo mặc định, nhưng nội dung CV của bạn vẫn được gửi đến nhà cung cấp AI mà bạn chọn khi nó đánh giá hay soạn tài liệu. Các bản cập nhật hệ thống không bao giờ đụng đến lớp dữ liệu của bạn (cv.md, config/, data/, reports/, output/): sự tách biệt đó là Data Contract, và mọi bản cập nhật đều tuân theo nó.",
+    },
+    {
+      question: "Làm sao để đưa CV của tôi cho career-ops?",
+      answer:
+        "Để đưa CV cho career-ops, hãy dán nội dung CV vào cuộc trò chuyện trong lần thiết lập đầu tiên, và tác tử AI sẽ tạo cv.md cho bạn. Dán văn bản là cách được hướng dẫn sẵn. Bạn cũng có thể chỉ cho tác tử AI một tệp CV có sẵn, kể cả PDF: nó sẽ đọc và chuyển đổi tệp đó, vì việc phân tích do tác tử AI của bạn thực hiện, không phải do một script của career-ops. Và vì cv.md là một tệp thuần túy do bạn sở hữu, bạn luôn có thể tự viết hoặc chỉnh sửa bằng tay. Tác tử tạo ra markdown gọn gàng với các mục chuẩn (Summary, Experience, Projects, Education, Skills). Trong lúc thiết lập, bạn cũng không phải tự sửa tệp cấu hình: bạn trả lời bằng ngôn ngữ thường ngày và tác tử sẽ viết config/profile.yml cùng các tệp còn lại cho bạn.",
+    },
+    {
+      question: "career-ops dùng được với những CLI AI nào?",
+      answer:
+        "career-ops hỗ trợ đầy đủ mười một CLI lập trình AI: Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent và GitHub Copilot CLI (Gemini CLI chỉ còn là lớp bao tương thích cũ). career-ops không phụ thuộc vào một AI cụ thể: nó đi kèm các tệp prompt để CLI thực thi, nên bạn cũng có thể trỏ nó tới bất kỳ endpoint nào tương thích OpenAI hoặc một mô hình cục bộ mà không phải sửa dòng mã nào. Xem Các CLI AI được hỗ trợ để biết danh sách hiện tại và cách gọi từng CLI.",
+    },
+    {
+      question: "scan và scan:full khác nhau thế nào?",
+      answer:
+        "npm run scan đọc danh sách các công ty bạn đã cấu hình trong portals.yml và lấy dữ liệu của từng công ty thông qua nhà cung cấp nhận diện được công ty đó (ví dụ Greenhouse, Ashby, Lever), không tốn token LLM nào — đây là lượt tìm vị trí mới hằng ngày hoặc hằng tuần của bạn. npm run scan:full đi theo chiều ngược lại: nó duyệt các danh bạ công ty ATS công khai và đưa ra những tin mới khớp với title_filter / location_filter của bạn, để bạn bắt được các vị trí của những công ty mà bạn chưa tự thêm vào.",
+    },
+    {
+      question: "Làm sao tránh chạm giới hạn token hoặc giới hạn tốc độ khi chạy theo lô?",
+      answer:
+        "Để tránh chạm giới hạn token hoặc giới hạn tốc độ khi chạy lô trong career-ops, hãy giới hạn lần chạy bằng ./batch/batch-runner.sh --limit 5 để xem chất lượng kết quả trước khi chạy lô lớn hơn. Nếu lần chạy bị gián đoạn vì giới hạn tốc độ hoặc lỗi mạng, đừng chạy lại từ đầu — hãy dùng --resume-paused để bỏ qua các tác vụ đã hoàn thành, nhờ đó không lãng phí token cho phần việc đã xong. Một tác vụ ở trạng thái needs_confirmation sẽ không tạo ra báo cáo, CV, bản nháp đơn ứng tuyển hay dòng tracker nào; --resume-paused không chạy tiếp tác vụ đó. Hãy trả lời câu hỏi của nó một cách rõ ràng trong phiên tương tác chính.",
+    },
+    {
+      question: "Kỹ năng không tải được trên Windows — lỗi symlink khi cài đặt",
+      answer:
+        "Windows không tạo symlink theo mặc định, nên Git checkout các điểm vào kỹ năng CLI của career-ops thành những tệp con trỏ thông thường. Trình cài đặt và trình cập nhật tự động phát hiện điều này: hãy chạy node update-system.mjs apply --confirm (hoặc npx @santifer/career-ops init nếu cài mới) và bước materialize sẽ thay các tệp con trỏ bằng nội dung kỹ năng đầy đủ. Từ một Git worktree được liên kết, apply --confirm sửa lỗi này trong bản checkout main của bạn. Hãy chạy git merge main trong worktree để nhận bản sửa; các worktree tạo từ main đã cập nhật thì có sẵn. Khi đặt CAREER_OPS_UPDATE_IN_WORKTREE=1, apply chỉ sửa nhánh của worktree đó, còn main vẫn chưa được sửa. Bạn không cần chạy mklink thủ công hay bật Developer Mode.",
+    },
+    {
+      question: "Tôi có thể chạy career-ops trên mô hình rẻ hơn hoặc mô hình cục bộ không?",
+      answer:
+        "career-ops chạy được trên mô hình rẻ hơn hoặc mô hình cục bộ vì nó hoàn toàn không phụ thuộc vào một AI cụ thể. Hướng dẫn Running on a Budget trong repo gốc nói về OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama và các nhà cung cấp giá rẻ hoặc cục bộ khác, kèm kích thước mô hình khuyến nghị (từ 32B trở lên để chấm điểm đáng tin cậy) và cách tiết kiệm token.",
+    },
+    {
+      question: "career-ops có tự động nộp đơn không?",
+      answer:
+        "career-ops không tự động nộp đơn: nó chuẩn bị — quét tin tuyển dụng, chấm điểm, điều chỉnh CV cho từng vị trí và có thể điền sẵn các biểu mẫu ứng tuyển của ATS — nhưng việc nộp luôn là cú bấm có chủ đích của bạn. Nó soạn và điền, nhưng không bao giờ nộp. Bạn là người bấm Nộp. career-ops không bao giờ nộp đơn thay bạn. Dự án career-ops chủ động từ chối kiểu tự động hóa gửi đơn tràn lan: mục tiêu là chọn công ty cho tốt, không phải nộp đơn bừa với số lượng lớn.",
+    },
+    {
+      question: "career-ops và CareerOps khác nhau thế nào?",
+      answer:
+        "CareerOps (viết liền một từ) là tên của một cách làm; career-ops (có gạch nối, viết thường) là dự án mã nguồn mở — bản triển khai tham chiếu đầu tiên của cách làm đó. The CareerOps Manifesto định nghĩa cách làm này. Nói đơn giản: career-ops là hệ thống tìm việc dùng AI theo giấy phép MIT, chạy cục bộ ngay trong CLI lập trình AI của bạn, được công bố tại career-ops.org và github.com/career-ops-hq/career-ops. CareerOps là cách làm mà nó thể hiện — tìm việc theo cách các kỹ sư vận hành hệ thống production — được đặt tên và định nghĩa trong The CareerOps Manifesto, gồm chín quyền mà mọi người đang tìm việc đều nên có, được cộng đồng công khai ký tên ủng hộ. Cả hai đều xuất phát từ cùng một tác giả, Santiago Fernández de Valderrama Aparicio, và cùng quy về một repository.",
+    },
+  ],
   zh: [
     {
       question: "career-ops 会自动投递简历吗？",
@@ -577,6 +644,23 @@ export const CLAUDE_CODE_FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Preciso do Claude Pro?",
       answer:
         "O Claude Code exige um plano pago do Claude ou uma chave de API da Anthropic. O career-ops em si é gratuito e tem licença MIT, e também roda em provedores gratuitos pelo OpenCode.",
+    },
+  ],
+  vi: [
+    {
+      question: "Claude Code có thể tìm việc giúp tôi không?",
+      answer:
+        "Claude Code có thể chạy quy trình tìm việc của bạn với career-ops: quét trang tuyển dụng của các công ty, chấm điểm từng tin tuyển dụng theo CV của bạn và soạn hồ sơ ứng tuyển cho những vị trí đáng theo đuổi. Bạn quyết định gửi đơn nào.",
+    },
+    {
+      question: "Nó có tự động nộp đơn không?",
+      answer:
+        "Không: career-ops không bao giờ nộp đơn thay bạn. Nó soạn tài liệu; bạn xem lại, chỉnh sửa và tự gửi từng đơn ứng tuyển.",
+    },
+    {
+      question: "Tôi có cần Claude Pro không?",
+      answer:
+        "Claude Code cần một gói Claude trả phí hoặc một API key của Anthropic. Bản thân career-ops miễn phí và theo giấy phép MIT, đồng thời cũng chạy được trên các nhà cung cấp miễn phí thông qua OpenCode.",
     },
   ],
   zh: [

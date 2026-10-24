@@ -1,0 +1,173 @@
+---
+title: Đánh giá hàng loạt tin tuyển dụng
+description: Xử lý hơn 10 tin tuyển dụng trong một phiên với các worker AI chạy song song và CV PDF được điều chỉnh riêng cho từng vị trí.
+seoTitle: "Đánh giá hàng loạt tin tuyển dụng với career-ops — chấm điểm nhiều vị trí cùng lúc"
+icon: FileStack
+translationHash: 537bf031e6d66d7e
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+Hãy dùng hướng dẫn này khi bạn có từ 10 tin tuyển dụng trở lên cần xem xét và muốn xử lý tất cả trong một phiên, thay vì làm từng tin một.
+
+Mỗi tin tuyển dụng có một worker Claude riêng. Worker đó đọc CV của bạn, chấm điểm mức độ phù hợp, viết báo cáo đầy đủ và lưu một bản PDF được điều chỉnh riêng — bạn không phải động tay vào việc gì.
+
+## Bước 1: Thêm các tin tuyển dụng vào tệp đầu vào
+
+Hệ thống xử lý hàng loạt đọc các URL tin tuyển dụng từ một tệp tên là **`batch/batch-input.tsv`**. Bạn có thể hình dung nó như danh sách việc cần làm của bộ đánh giá.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        Mở **`batch/batch-input.tsv`** bằng bất kỳ trình soạn thảo văn bản nào.
+      </Step>
+      <Step>
+        Thêm mỗi tin tuyển dụng một dòng. Mỗi dòng có bốn cột, ngăn cách nhau bằng dấu tab:
+
+        | Cột | Nội dung cần nhập |
+        |--------|---------------|
+        | `id` | Một số duy nhất cho tin tuyển dụng này (1, 2, 3, …) |
+        | `url` | URL đầy đủ của tin tuyển dụng |
+        | `source` | Nơi bạn tìm thấy tin (ví dụ: `LinkedIn`, `Greenhouse`) |
+        | `notes` | Ghi chú tùy chọn — để trống nếu không có |
+      </Step>
+      <Step>
+        Lưu tệp.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**Ví dụ:**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="Mẹo">
+  Mỗi ID phải là một số duy nhất. Đừng bỏ qua số nào và đừng lặp lại số nào.
+</Callout>
+
+## Bước 2: Xem trước lô tin (nên làm)
+
+Trước khi xử lý bất cứ thứ gì, hãy chạy một lệnh kiểm tra nhanh để xem có bao nhiêu tin tuyển dụng đang chờ. Lúc này chưa có tin nào được đánh giá — đây chỉ là bước xem trước.
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+Bạn sẽ thấy danh sách các tin đang chờ xử lý cùng ID của chúng. Nếu có gì sai, hãy sửa tệp đầu vào ngay bây giờ, trước khi mất thời gian xử lý một danh sách lỗi.
+
+## Bước 3: Chạy lô tin
+
+Khi đã sẵn sàng, hãy bắt đầu chạy. Bạn có thể chạy từng tin một hoặc nhiều tin cùng lúc.
+
+**Từng tin một (chậm nhất, tốn ít bộ nhớ nhất):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**Hai tin cùng lúc (mặc định hợp lý):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**Ba tin cùng lúc (nhanh hơn, nhưng máy của bạn sẽ chịu tải nặng hơn):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**Bỏ qua các tin có điểm dưới một ngưỡng (ví dụ: dưới 4.0 trên thang 1-5):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+Hãy theo dõi terminal trong lúc lô tin chạy. Mỗi dòng cho bạn biết tin nào đang được xử lý và đã hoàn thành hay thất bại.
+
+Nếu một worker được giao việc phát hiện tin đăng của một công ty trung gian tuyển dụng (agency) cần bạn xác nhận, nó sẽ dừng lại trước khi ghi báo cáo, CV, bản nháp đơn ứng tuyển hay dòng tracker, và đánh dấu công việc là `needs_confirmation`. Hãy trả lời câu hỏi hiển thị trong phiên tương tác chính; phiên đó chỉ tiếp tục xử lý tin đang bị giữ sau khi bạn trả lời rõ ràng. `--retry-failed` và `--resume-paused` không tiếp tục các tin đang bị giữ chờ xác nhận.
+
+## Bước 4: Đọc kết quả ngay khi có
+
+Bạn không cần chờ lô tin chạy xong. Kết quả xuất hiện ngay khi mỗi tin tuyển dụng hoàn thành.
+
+**Báo cáo đánh giá đầy đủ** → `reports/`
+
+Mỗi báo cáo là một tệp có tên dạng `042-company-name-2026-04-14.md`. Mở tệp để xem:
+
+- Tóm tắt về vai trò
+- CV của bạn phù hợp với vị trí đến mức nào
+- Nghiên cứu về mức lương
+- Kế hoạch chuẩn bị phỏng vấn được đề xuất
+
+Mỗi báo cáo còn có phần **Risk Summary**. Dòng **Fixed-term contract** của phần này trích dẫn nguyên văn các cụm từ nêu rõ hợp đồng có thời hạn trong tin đăng, báo `✅ no fixed term disclosed` khi tin đăng không có, và được đánh dấu là chưa đánh giá khi không có mô tả công việc. Trường tương ứng trong Machine Summary là `risk_summary.fixed_term`, với một trong các giá trị chính xác sau:
+
+| Giá trị | Ý nghĩa |
+|-------|---------|
+| `detected` | Tin đăng nêu rõ đây là vị trí có thời hạn |
+| `not_detected` | Không tìm thấy cụm từ nào nêu rõ hợp đồng có thời hạn |
+| `not_evaluated` | Không có mô tả công việc để thực hiện bước kiểm tra này |
+
+**Các dòng cho tracker** → `batch/tracker-additions/`
+
+Mỗi tin tuyển dụng cũng để lại ở đây một tệp tóm tắt ngắn: một dòng tiêu đề chứa tên các cột và một dòng giá trị. Các tệp này sẽ được thêm vào tracker chính của bạn ở Bước 6.
+
+### Score Evidence
+
+Báo cáo có phần **Score Evidence** ngay sau Risk Summary. Phần này bao gồm năm tiêu chí: mức độ phù hợp của CV, mức độ khớp với North Star, mức lương, tín hiệu về văn hóa và dấu hiệu cảnh báo. Mỗi dòng ghi một trạng thái bằng chứng (`supported`, `partial` hoặc `unknown`), một nguồn hoặc quan sát cụ thể, và một câu hỏi chưa được giải đáp. Phần này kết thúc bằng mức độ tin cậy của bằng chứng (`High`, `Medium` hoặc `Low`), lý do, và tối đa ba việc cần ưu tiên kiểm chứng.
+
+Mức này mô tả độ vững của bằng chứng đằng sau Global Score; nó không phải xác suất được tuyển, cũng không phải mức đánh giá độ xác thực của tin đăng ở Block G, và không làm thay đổi điểm số. Machine Summary lưu năm trạng thái trong `score_evidence`, mức tin cậy trong `confidence`, và các việc ưu tiên trong `confidence_gaps`. Khi không còn việc ưu tiên nào, `confidence_gaps` là một danh sách rỗng.
+
+## Bước 5: Thử lại các tin bị lỗi
+
+Đôi khi một worker bị lỗi — ví dụ khi URL của tin tuyển dụng không còn tải được. Các tin bị lỗi hiện trong terminal kèm một thông báo lỗi ngắn.
+
+**Chỉ thử lại các tin bị lỗi:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**Thử lại tối đa 3 lần thay vì 2 lần mặc định:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+Lô tin sẽ bỏ qua mọi tin đã hoàn thành thành công — nên bạn luôn có thể chạy lại lệnh này một cách an toàn.
+
+## Bước 6: Gộp kết quả vào tracker
+
+Sau khi lô tin chạy xong, hãy chạy lệnh sau để thêm tất cả các đánh giá mới vào `data/applications.md`:
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+Script này sẽ:
+
+1. Đọc các tệp tóm tắt trong `batch/tracker-additions/`
+2. Kiểm tra trùng lặp để bạn không bao giờ có hai dòng cho cùng một tin tuyển dụng
+3. Thêm các mục mới vào tracker đơn ứng tuyển của bạn
+4. Lưu trữ các tệp đã xử lý vào `batch/tracker-additions/merged/`
+
+**Để xem trước các thay đổi mà không ghi gì cả:**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## Bước tiếp theo
+
+Mở **`data/applications.md`** để xem tất cả các đánh giá của bạn trong một bảng. Từ đó bạn có thể:
+
+- Sắp xếp theo điểm để tìm những vị trí phù hợp nhất
+- Mở từng báo cáo trong `reports/` để xem phân tích chuyên sâu
+- Bắt đầu quy trình ứng tuyển cho những lựa chọn hàng đầu bằng `/career-ops apply`

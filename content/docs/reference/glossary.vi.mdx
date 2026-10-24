@@ -1,0 +1,82 @@
+---
+title: Bảng thuật ngữ
+description: Từ vựng của việc tìm việc có AI hỗ trợ, được giải thích rõ — ATS, điểm tổng thể 1-5, Data Contract, gửi CV đại trà, kiểm tra tin còn hiệu lực, tùy chỉnh CV, quét không tốn token, câu chuyện STAR+R và mọi thuật ngữ career-ops sử dụng.
+seoTitle: "Thuật ngữ career-ops — giải thích từ vựng tìm việc với AI"
+icon: BookOpen
+translationHash: c4294ea38951c036
+localized: true
+translatedFrom: /docs/reference/glossary
+---
+
+{/* Mirrored with src/lib/glossary-data.ts (DefinedTermSet JSON-LD) — edit
+    both together. Definitions must stay verifiable against the core repo. */}
+
+Mọi thuật ngữ career-ops sử dụng, được định nghĩa ở một nơi. Các thuật ngữ có liên kết đến trang tham khảo chi tiết hơn nếu có.
+
+## ATS (Applicant Tracking System)
+
+Phần mềm mà các công ty dùng để nhận, lưu trữ và lọc đơn ứng tuyển — [Greenhouse](/docs/reference/portals/greenhouse), [Ashby](/docs/reference/portals/ashby) và [Lever](/docs/reference/portals/lever) là những ví dụ phổ biến. career-ops đọc các API tuyển dụng công khai của họ để tìm vị trí đang mở và có thể điền sẵn biểu mẫu ứng tuyển, nhưng không bao giờ tự động nộp.
+
+## Điểm tổng thể (1-5)
+
+Đánh giá tổng thể của LLM về một tin tuyển dụng theo năm tiêu chí (mức độ phù hợp, định hướng nghề nghiệp, mức lương, tín hiệu về văn hóa, dấu hiệu cảnh báo), cho ra điểm từ 1 đến 5. Từ 4.5 trở lên, tác tử khuyến nghị ứng tuyển ngay; dưới 4.0 thì khuyến nghị không nên ứng tuyển. Không có công thức trọng số cố định: điểm số là đánh giá của LLM dựa trên bộ tiêu chí, vốn được công khai trên [trang phương pháp luận](https://career-ops.org/methodology).
+
+## Data Contract
+
+Cam kết kiến trúc cốt lõi của career-ops: **lớp hệ thống** (script, mode, mẫu) có thể cập nhật bất cứ lúc nào, trong khi **lớp người dùng** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — không bao giờ bị động đến khi cập nhật. Dữ liệu của bạn tồn tại lâu hơn mọi phiên bản.
+
+## Gửi CV đại trà (spray-and-pray)
+
+Chiến lược nộp đơn hàng loạt: gửi cùng một CV cho hàng trăm công việc mà không nhắm mục tiêu. career-ops từ chối cách này một cách rõ ràng: pipeline đánh giá và xếp hạng các tin tuyển dụng trước, để công sức tập trung vào một nhóm nhỏ vị trí đáng theo đuổi.
+
+## Kiểm tra tin còn hiệu lực (liveness check)
+
+Một phương pháp heuristic career-ops chạy để phát hiện tin tuyển dụng còn mở hay không trước khi bạn bỏ thời gian hoặc token vào đó. Đây chỉ là tín hiệu ở mức nỗ lực tốt nhất — tin đã hết hạn đôi khi vẫn còn trên các trang việc làm — và bạn có thể đánh dấu tin thủ công khi heuristic sai.
+
+## Tùy chỉnh CV (tailoring)
+
+Viết lại CV của bạn cho một tin tuyển dụng cụ thể — sắp xếp lại phần nhấn mạnh, đưa các kỹ năng và số liệu phù hợp lên nổi bật, điều chỉnh từ ngữ cho khớp với mô tả công việc — đồng thời giữ mọi thông tin đều trung thực với kinh nghiệm thực của bạn. career-ops tạo một CV đã tùy chỉnh cho mỗi đơn ứng tuyển dưới dạng Markdown để bạn chỉnh sửa.
+
+## Mode
+
+Một quy trình tập trung, được định nghĩa bằng prompt, mà career-ops cung cấp dưới dạng một tệp Markdown thuần để CLI AI của bạn thực thi — [scan, apply, tracker](/docs/reference/modes), [phỏng vấn/luyện tập](/docs/introduction/guides/interview-modes) và hơn một chục mode khác. Mode là văn bản có thể kiểm tra được, không phải mã nguồn hộp đen.
+
+## Pipeline
+
+Quy trình career-ops từ đầu đến cuối: quét các portal → đánh giá tin tuyển dụng (1-5) → tùy chỉnh CV → ứng tuyển → theo dõi → chuẩn bị phỏng vấn. Mỗi giai đoạn là một mode bạn có thể chạy độc lập hoặc theo lô.
+
+## Quét không tốn token (zero-token scan)
+
+Một lượt tìm tin không tiêu tốn token LLM: `scan.mjs` đọc trực tiếp các API của ATS, nguồn cấp dữ liệu của trang việc làm và trang tuyển dụng qua HTTP, nên việc tìm tin tuyển dụng mới là miễn phí, bất kể bạn dùng engine AI nào.
+
+## Engine AI
+
+CLI lập trình AI thực thi các prompt của career-ops — Claude Code, OpenCode, Codex, GitHub Copilot CLI và [các CLI khác được hỗ trợ](/docs/supported-clis) — hoặc bất kỳ endpoint nào tương thích OpenAI. career-ops không phụ thuộc vào engine và [cũng chạy được trên các engine miễn phí](/docs/free-ai-engine).
+
+## Ngân hàng câu hỏi (question bank)
+
+Một tệp Markdown cục bộ (`interview-prep/question-bank.md`) nơi career-ops tích lũy các câu hỏi phỏng vấn thực tế và kết quả của bạn ở từng câu (✅/🟡/🔴). [Mode phỏng vấn/debrief](/docs/introduction/guides/interview-modes) cập nhật tệp này sau mỗi buổi phỏng vấn thực tế, nên việc chuẩn bị được tích lũy qua từng vòng.
+
+## Câu chuyện STAR+R
+
+Một câu chuyện phỏng vấn được cấu trúc theo **S**ituation (Tình huống), **T**ask (Nhiệm vụ), **A**ction (Hành động), **R**esult (Kết quả), cộng thêm **R**eflection (Rút kinh nghiệm) — định dạng career-ops dùng trong kho câu chuyện để các câu trả lời hành vi cụ thể, có số liệu và dùng lại được qua nhiều buổi phỏng vấn.
+
+## Kho câu chuyện (story bank)
+
+Một tệp Markdown cục bộ (`interview-prep/story-bank.md`) chứa các câu chuyện STAR+R bạn đã chuẩn bị. Các buổi luyện tập đối chiếu câu trả lời với tệp này, và các buổi debrief trích xuất câu chuyện mới từ những gì bạn thực sự đã nói trong các buổi phỏng vấn thật.
+
+## Portal
+
+Trang tuyển dụng của một công ty chạy trên ATS mà career-ops có thể quét. Các portal bạn theo dõi nằm trong `portals.yml`; trình quét đọc các API công khai của chúng mỗi lần chạy.
+
+## Đánh giá theo lô (batch evaluate)
+
+Chấm điểm nhiều tin tuyển dụng đã lưu trong một lượt chạy thay vì từng tin một, với các cờ để bạn kiểm soát: `--limit` giới hạn kích thước lô, `--dry-run` xem trước những gì sẽ được xử lý, và `--resume-paused` tiếp tục lượt chạy bị gián đoạn mà không tốn lại token. Một job `needs_confirmation` là trạng thái giữ lại không tạo tệp kết quả, chỉ phiên tương tác cha mới tiếp tục được sau khi có câu trả lời rõ ràng; các cờ retry và paused-resume sẽ để nguyên trạng thái giữ lại đó.
+
+## Local-first
+
+Nguyên tắc kiến trúc của career-ops: mọi thứ — dữ liệu của bạn, các prompt, các script, CLI AI — đều chạy trên máy của bạn. Không có backend lưu trữ trên đám mây, không cần tài khoản và không phải đăng ký gì cả.
+
+## CareerOps
+
+CareerOps là cách làm việc tìm việc theo cách các kỹ sư vận hành hệ thống production: dựa trên bằng chứng, có kỷ luật, và với những công cụ đứng về phía ứng viên. Thuật ngữ này gọi tên một cách làm, không phải một sản phẩm; career-ops là bản triển khai tham chiếu đầu tiên của nó. Do Santiago Fernández de Valderrama Aparicio đặt ra trong [The CareerOps Manifesto](https://career-ops.org/manifesto) (14 tháng 7, 2026).

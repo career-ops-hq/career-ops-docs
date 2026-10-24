@@ -1,0 +1,77 @@
+---
+title: apply
+description: "Trợ lý ứng tuyển trực tiếp. Đọc các câu hỏi mở mà biểu mẫu Greenhouse, Ashby và Lever đưa ra, rồi soạn câu trả lời dựa trên CV và tin tuyển dụng của bạn."
+seoTitle: "Chế độ apply của career-ops: soạn nháp câu trả lời cho các câu hỏi ứng tuyển trên ATS"
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-10-14"
+translationHash: 7cdeaddd88619799
+localized: true
+translatedFrom: /docs/reference/modes/apply
+---
+
+## Chế độ này làm gì
+
+Chế độ `apply` đọc một biểu mẫu ứng tuyển đang mở (Greenhouse, Ashby, Lever), xác định các câu hỏi mở, chẳng hạn "Vì sao bạn chọn vị trí này?", "Hãy kể về một dự án", "Mức lương bạn mong muốn là bao nhiêu?", rồi soạn câu trả lời dựa trên CV và nội dung tin tuyển dụng của bạn. Bạn chỉnh sửa bản nháp ngay tại chỗ, sao chép vào portal rồi tự nộp.
+
+## Khi nào nên dùng
+
+Hãy mở tin tuyển dụng và biểu mẫu ứng tuyển cạnh nhau. Chạy apply khi biểu mẫu đã tải xong. Những câu trả lời có giới hạn trường đã được xác nhận sẽ kèm `used/allowed` ký tự hoặc từ; hãy kiểm tra trạng thái này trước khi dán. `limit unknown` nghĩa là chưa xác nhận được giới hạn của biểu mẫu, nên bạn cần kiểm tra lại trong trường nhập thực tế trước. Nếu một câu trả lời không thể vừa giới hạn mà không mất đi các thông tin thiết yếu, hãy chỉnh lại trước khi dán. Kết quả chỉ là bản nháp, không phải một đơn ứng tuyển hoàn chỉnh: bạn vẫn là người quyết định giọng văn, kiểm tra thông tin và xử lý mọi trường mà portal bổ sung thêm. apply hoạt động tốt nhất với Playwright ở chế độ hiển thị, khi đó nó đọc trang đang mở đúng như bạn nhìn thấy; nếu không có Playwright, hãy dán các câu hỏi hoặc chia sẻ ảnh chụp màn hình và nó sẽ soạn nháp từ đó.
+
+## Một lần chạy trông như thế nào
+
+Chạy apply khi biểu mẫu ứng tuyển đang mở trong Chrome. Trước khi viết bất kỳ câu trả lời nào, chế độ này đọc tab đang hoạt động, đối chiếu với báo cáo bạn đã tạo cho vị trí đó, xác nhận tin tuyển dụng vẫn còn hiệu lực, rồi quét biểu mẫu để tìm các câu hỏi loại trực tiếp (knock-out) có thể khiến đơn bị loại tự động.
+
+```txt title="Example"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+
+## Lưu ý
+
+apply không bao giờ nộp đơn ứng tuyển: lần bấm Nộp cuối cùng luôn là của bạn. Nó đọc mọi trường trên biểu mẫu, không chỉ các câu hỏi mở, bao gồm cả danh sách thả xuống, nút radio, hộp kiểm và trường tải tệp lên. Nó soạn các câu trả lời dạng văn bản tự do, gợi ý giá trị cho từng trường có đáp án đóng, và đánh dấu các câu hỏi về quyền làm việc, mức lương cùng những câu hỏi nhạy cảm khác mà hồ sơ của bạn chưa trả lời, để bạn tự xác nhận thay vì đoán. Với Playwright, nó có thể điền một số trường trong biểu mẫu thực; bạn kiểm tra mọi thứ và hoàn tất phần còn lại. Khi các câu trả lời đã được điền xong, nó ghi lại văn bản, các lựa chọn và các tệp đã dùng vào báo cáo. Nếu bước kiểm tra trước khi nộp phát hiện tin tuyển dụng đã đóng, apply từ chối soạn bản cuối trừ khi bạn chủ động yêu cầu bỏ qua, vì một đường dẫn đã chết không đáng để bạn có một câu trả lời được tinh chỉnh riêng.
+
+Các trường về kinh nghiệm lấy từ CV đã được điều chỉnh cho báo cáo đó, không lấy từ `cv.md`: nhà tuyển dụng cũ, chức danh, thời gian, mô tả vai trò, kỹ năng và học vấn khớp với tài liệu bạn tải lên, để biểu mẫu và CV đính kèm kể cùng một câu chuyện. `config/profile.yml` vẫn là nguồn chính thức cho thông tin nhận dạng và liên hệ, quyền làm việc và mức lương mong muốn của bạn. Nếu apply không tìm thấy CV đã điều chỉnh cho đơn ứng tuyển này, nó sẽ báo rõ và quay về dùng `cv.md`.
+
+Khi báo cáo hoặc tin tuyển dụng mô tả rõ vị trí này là hợp đồng có thời hạn, apply hiển thị một **Nhắc nhở về vị trí có thời hạn** trước câu trả lời đầu tiên, trích dẫn cụm từ đó cùng thời hạn nếu có nêu, và gợi ý bạn xác nhận việc gia hạn, phúc lợi và điều khoản khi kết thúc hợp đồng. Đây chỉ là thông tin tham khảo: nó không bao giờ thay đổi trường nào, không chặn đơn ứng tuyển và không cần bạn xác nhận.
+
+Trước mỗi lần Save, Next hoặc Continue trên biểu mẫu nhiều bước, và trước khi chuyển biểu mẫu cho bạn để Nộp, apply đọc lại toàn bộ bước hiện tại và kiểm tra mọi trường bắt buộc đều đã có giá trị, kể cả các trường chỉ xuất hiện sau khi bạn trả lời một câu khác. Nếu không thể điền một trường bắt buộc từ các tệp của chính bạn, nó sẽ dừng lại và hỏi bạn.
+
+Nó soạn và điền, nhưng không bao giờ nộp. Bạn là người bấm Nộp. career-ops không bao giờ nộp đơn thay bạn.
+
+## Các lưu ý riêng của từng ATS
+
+apply đã được thử nghiệm thực tế qua khoảng một chục đơn ứng tuyển chạy bằng Playwright, và một vài portal sẽ làm hỏng lần chạy nếu bạn không lưu ý:
+
+- **Ashby** loại trùng ứng viên theo email trong từng công ty, nên đơn thứ hai có thể âm thầm gộp vào đơn đầu tiên của bạn. Nếu đã có báo cáo cho công ty đó, apply gợi ý dùng một email bí danh dạng `+tag`. Với Ashby, hãy hoàn tất và nộp trong trình duyệt hệ thống thông thường của bạn, rồi kiểm tra trang thành công hoặc email xác nhận trước khi đánh dấu đơn là đã nộp.
+- **Lever** hiện captcha khi một hộp kiểm hoặc nút radio bị bấm bằng lập trình, nên apply chỉ điền các trường văn bản và danh sách thả xuống, còn hộp kiểm và nút radio thì để bạn tự đánh dấu.
+- **Các phần lặp lại** như Work Experience hoặc Education ("Add Another") dùng cùng một nhãn trong mọi khối, nên apply chỉ điền tối đa hai hoặc ba mục mỗi lần và kiểm tra từng giá trị với đúng mục dự định trước khi tiếp tục. Nếu không thể xác định duy nhất một trường, nó sẽ dừng lại và hỏi bạn thay vì đoán.
+- **Workday** bỏ qua các giá trị được đặt mà không có thao tác gõ phím thật, nên apply gõ câu trả lời từng ký tự một và nhờ bạn xem lại các danh sách thả xuống về quyền làm việc trước khi lưu.
+
+## Liên quan
+
+- [auto-pipeline](/docs/reference/modes/auto-pipeline)
+- [pdf](/docs/reference/modes/pdf)
+- [tracker](/docs/reference/modes/tracker)
