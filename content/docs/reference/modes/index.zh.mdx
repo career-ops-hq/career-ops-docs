@@ -3,14 +3,14 @@ title: 模式
 description: "career-ops 的 14 个可直接调用的模式，涵盖评估、定制简历、申请、跟踪和面试准备；每个模式都是一个 markdown 技能，可在任何受支持的 AI 编程 CLI 中运行。"
 seoTitle: "career-ops 的 14 个求职模式：评估、定制简历、申请、跟踪与面试准备"
 icon: Layers
-translationHash: b0ce95e7cf247608
+translationHash: 0476faf4beb570f9
 localized: true
 translatedFrom: /docs/reference/modes
 ---
 
 ## 14 个模式
 
-career-ops 提供 **14 个可由你直接调用的模式**。每个模式都是一个用纯 markdown 编写的技能（skill），由智能体加载，并在你已经在用的 AI 编程 CLI 中运行：Claude Code、Cursor、Codex、OpenCode、Qwen、GitHub Copilot，或[其他受支持的 CLI](/zh/docs/supported-clis)。调用方式是 `/career-ops <mode>`，每个模式负责求职中的一个环节：按评分标准评估一个职位（五个维度，外加一个整体综合评分）、定制简历、起草申请、跟踪结果，或准备面试。根据[数据契约（Data Contract）](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md)，模式属于系统层（System Layer）：更新时会被替换为最新版本，任何更新都不会修改你的 `cv.md`、个人档案或报告。
+career-ops 提供 **14 个可由你直接调用的模式**。每个模式都是一个用纯 markdown 编写的技能（skill），由智能体加载，并在你已经在用的 AI 编程 CLI 中运行：Claude Code、Cursor、Codex、OpenCode、Qwen、GitHub Copilot，或[其他受支持的 CLI](/zh/docs/supported-clis)。调用方式是 `/career-ops <mode>`，每个模式负责求职中的一个环节：按评分标准评估一个职位（五个维度，外加一个整体综合评分）、定制简历、起草申请、跟踪结果，或准备面试。根据[数据契约（Data Contract）](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md)，模式属于系统层（System Layer）。更新会把你没有修改过的每个模式替换为最新版本。你修改过的模式默认会被保留：更新会列出它，尝试保存一份 `.bak` 副本，并保留你的版本，因此这个模式不再接收上游的更改。`node update-system.mjs apply --force --confirm` 会用上游版本替换它，即使 `.bak` 没能写入也会替换；更新会列出该文件和错误信息。如果你想改变模式的行为，同时继续接收它们的更新，请把你的规则写在 `modes/_profile.md` 或 `modes/_custom.md` 中，这两个文件属于你。任何更新都不会修改你的 `cv.md`、个人档案或报告。
 
 ## 评估
 

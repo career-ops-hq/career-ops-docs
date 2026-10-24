@@ -3,7 +3,7 @@ title: Glossario
 description: Il vocabolario della ricerca di lavoro con l'AI, spiegato — ATS, punteggio globale da 1 a 5, Data Contract, spray-and-pray, liveness check, tailoring, scan a zero token, storie STAR+R e tutti i termini che career-ops usa.
 seoTitle: "Glossario career-ops: i termini della ricerca di lavoro con l'AI, spiegati"
 icon: BookOpen
-translationHash: c4294ea38951c036
+translationHash: 6518476f0486c906
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -23,7 +23,7 @@ Il giudizio complessivo dell'LLM su un annuncio di lavoro, basato su cinque dime
 
 ## Data Contract
 
-La promessa architetturale alla base di career-ops: il **livello di sistema** (script, modalità, template) si può aggiornare in qualsiasi momento, mentre il **livello utente** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — non viene mai toccato da un aggiornamento. I tuoi dati sopravvivono a ogni versione.
+La promessa architetturale alla base di career-ops: il **livello di sistema** (script, modalità, template) si può aggiornare in qualsiasi momento, mentre il **livello utente** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — non viene mai toccato da un aggiornamento. I tuoi dati sopravvivono a ogni versione. Un file di sistema che hai modificato viene conservato per impostazione predefinita: l'aggiornamento prova a salvarne una copia `.bak`, ti avvisa se non ci riesce e lascia la tua versione, che da quel momento non riceve più le modifiche upstream. `--force` lo sostituisce con la versione upstream, anche senza `.bak`. I file dell'updater stesso vengono sempre sostituiti, quindi una modifica a uno di essi sopravvive solo nel suo `.bak`. Il rollback funziona diversamente: sovrascrive i file di sistema che ripristina senza creare un `.bak`, tranne i percorsi che segnala come non sicuri, quindi fai commit o copia le tue modifiche prima. Le personalizzazioni che devono sopravvivere agli aggiornamenti vanno nel livello utente, come `modes/_profile.md` e `modes/_custom.md`.
 
 ## Spray-and-pray
 
