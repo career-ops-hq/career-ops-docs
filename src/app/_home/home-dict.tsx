@@ -75,11 +75,12 @@ export type HomeDict = {
   featApplyBody1: ReactNode;
   featApplyBody2: string;
   featApplyCta: string;
-  featScanTitle: string;
+  featScanTitle: ReactNode;
   featScanBody: ReactNode;
   featScanCta: string;
   featCommunityTitle: string;
   featCommunityBody: ReactNode;
+  featCommunityMembers?: (n: string) => string;
   joinDiscord: (n: string) => string;
   openSourceTitle: string;
   starsWord: string;
@@ -89,7 +90,7 @@ export type HomeDict = {
   meetContributors: string;
   faqHeading: string;
   faq: { q: string; a: ReactNode }[];
-  finalCta: string;
+  finalCta: ReactNode;
   yourTurn: string;
   followWhatWeShip: string;
   releaseBlurb: ReactNode;
@@ -126,6 +127,7 @@ export function heroLine(t: {
   startPre: string;
   choose: string;
   startPost: string;
+  highlightStop?: boolean;
 }): ReactNode {
   return (
     <>
@@ -139,11 +141,11 @@ export function heroLine(t: {
         </span>
       </span>
       <span className="block max-md:mt-[0.25em]">
-        <span className={`inline-block ${HOOK_TURN}`}>{t.stop}</span>
+        <span className={`inline-block ${t.highlightStop ? HOOK_ACCENT : HOOK_TURN}`}>{t.stop}</span>
         {gapAfter(t.stop)}
         <span className={`inline-block ${HOOK_ACTION}`}>
           {t.startPre}
-          <span className={HOOK_ACCENT}>{t.choose}</span>
+          <span className={t.highlightStop ? undefined : HOOK_ACCENT}>{t.choose}</span>
           {t.startPost}
         </span>
       </span>
