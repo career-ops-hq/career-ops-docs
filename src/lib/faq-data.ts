@@ -69,7 +69,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "What is the difference between career-ops and CareerOps?",
       answer:
-        "CareerOps (one word) names the practice; career-ops (hyphen, lowercase) is the open-source project — its first reference implementation. The CareerOps Manifesto defines the practice. In plain terms: career-ops is the MIT-licensed, AI-powered job search system that runs locally inside your AI coding CLI, published at career-ops.org and github.com/career-ops-hq/career-ops. CareerOps is the practice it embodies — running a job search the way engineers run production — named and defined in The CareerOps Manifesto, nine rights every job seeker should have, signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both trace back to the same repository.",
+        "CareerOps (one word) names the practice; career-ops (hyphen, lowercase) is the open-source project — its first reference implementation. The CareerOps Manifesto defines the practice. In plain terms: career-ops is the MIT-licensed, open-source AI job search agent that runs locally inside your AI coding CLI, published at career-ops.org and github.com/career-ops-hq/career-ops. CareerOps is the practice it embodies — running a job search the way engineers run production — named and defined in The CareerOps Manifesto, nine rights every job seeker should have, signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both trace back to the same repository.",
     },
   ],
   de: [
@@ -203,7 +203,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "¿Cuál es la diferencia entre career-ops y CareerOps?",
       answer:
-        "CareerOps (en una sola palabra) da nombre a la práctica; career-ops (con guion, en minúsculas) es el proyecto open source, su primera implementación de referencia. El Manifiesto CareerOps define la práctica. Dicho de forma sencilla: career-ops es el sistema de búsqueda de empleo potenciado por IA, con licencia MIT, que corre en local dentro de tu CLI de programación con IA, publicado en career-ops.org y github.com/career-ops-hq/career-ops. CareerOps es la práctica que encarna — llevar la búsqueda de empleo como los ingenieros llevan producción —, nombrada y definida en El Manifiesto CareerOps, nueve derechos que cualquier persona que busca empleo debería tener, firmados públicamente por la comunidad. Ambos vienen del mismo autor, Santiago Fernández de Valderrama Aparicio, y ambos se remontan al mismo repositorio.",
+        "CareerOps (en una sola palabra) da nombre a la práctica; career-ops (con guion, en minúsculas) es el proyecto open source, su primera implementación de referencia. El Manifiesto CareerOps define la práctica. Dicho de forma sencilla: career-ops es el agente de IA de código abierto para la búsqueda de empleo, con licencia MIT, que corre en local dentro de tu CLI de programación con IA, publicado en career-ops.org y github.com/career-ops-hq/career-ops. CareerOps es la práctica que encarna — llevar la búsqueda de empleo como los ingenieros llevan producción —, nombrada y definida en El Manifiesto CareerOps, nueve derechos que cualquier persona que busca empleo debería tener, firmados públicamente por la comunidad. Ambos vienen del mismo autor, Santiago Fernández de Valderrama Aparicio, y ambos se remontan al mismo repositorio.",
     },
   ],
   fr: [

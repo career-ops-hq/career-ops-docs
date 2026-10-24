@@ -30,6 +30,8 @@ export const homeEs: HomeDict = {
   memberOf: 'Miembro de',
   worthApplyingLabel: 'Cómo saber si una oferta merece tu candidatura →',
   worthApplyingHref: '/es/docs/introduction/guides/is-this-job-worth-applying-to',
+  aiJobSearchLabel: '¿Qué es la búsqueda de empleo con IA?',
+  aiJobSearchHref: '/es/manifesto#what-is-ai-job-search',
   authorTagline: ', operador durante 16 años y creador de career-ops',
   // Versión «yo» oficial del README.es (superficie personal = home). El
   // manifiesto ES usará la versión «nosotros», NO esta. Sujeto firme; el verbo
@@ -48,7 +50,7 @@ export const homeEs: HomeDict = {
   ),
   whatIsBody: (
     <>
-      career-ops es un sistema open source de búsqueda de empleo con IA que se
+      career-ops es un agente de IA de código abierto para la búsqueda de empleo que se
       ejecuta en local, en tu propia máquina, dentro de cualquier CLI de
       programación con IA — Claude Code, OpenCode, Codex, GitHub Copilot y más.
       Evalúa ofertas frente a tu CV con una rúbrica de cinco dimensiones más una
