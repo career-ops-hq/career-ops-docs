@@ -156,6 +156,16 @@ export async function RootShell({ locale, children }: { locale: SiteLocale; chil
                 <a href="/blog" className="hover:text-fd-foreground hover:underline">
                   Blog
                 </a>
+                {/* EN only: the guide has no twins yet (24-oct, search-ops: Bing
+                    counted one internal anchor to it). */}
+                {locale === 'en' && (
+                  <a
+                    href="/blog/the-complete-ai-job-search-guide"
+                    className="hover:text-fd-foreground hover:underline"
+                  >
+                    AI job search guide
+                  </a>
+                )}
                 <a href="/changelog" className="hover:text-fd-foreground hover:underline">
                   Changelog
                 </a>

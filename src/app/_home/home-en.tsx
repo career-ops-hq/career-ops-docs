@@ -32,6 +32,8 @@ export const homeEn: HomeDict = {
   worthApplyingHref: '/docs/introduction/guides/is-this-job-worth-applying-to',
   aiJobSearchLabel: 'What is AI job search?',
   aiJobSearchHref: '/manifesto#what-is-ai-job-search',
+  aiJobSearchGuideLabel: 'AI job search: a practical guide',
+  aiJobSearchGuideHref: '/blog/the-complete-ai-job-search-guide',
   authorTagline: ', 16-year operator and creator of career-ops',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
   readIt: 'Read it →',
