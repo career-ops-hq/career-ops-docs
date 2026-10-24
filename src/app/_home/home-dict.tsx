@@ -54,6 +54,10 @@ export type HomeDict = {
   // arrow. Optional: only EN and ES have the definition block.
   aiJobSearchLabel?: string;
   aiJobSearchHref?: string;
+  // Link to the AI job search guide on the blog (24-oct, search-ops: Bing
+  // counted one internal anchor to it). EN only: the guide has no twins yet.
+  aiJobSearchGuideLabel?: string;
+  aiJobSearchGuideHref?: string;
   authorTagline: string;
   // Official localized rendering of the signature thesis, shown BELOW the
   // literal-English blockquote (which stays verbatim on every locale, it is the

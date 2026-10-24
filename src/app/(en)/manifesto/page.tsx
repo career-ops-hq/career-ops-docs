@@ -337,6 +337,16 @@ export default async function ManifestoPage() {
           <p className="mt-3 text-fd-foreground/90">
             {AI_JOB_SEARCH_IN_THE_MANIFESTO}
           </p>
+          <p className="mt-3 text-fd-foreground/90">
+            For the practical side, read{' '}
+            <Link
+              href="/blog/the-complete-ai-job-search-guide"
+              className="text-brand-text hover:underline underline-offset-2"
+            >
+              AI job search: a practical guide
+            </Link>
+            .
+          </p>
         </section>
 
         <hr className="my-12 border-t border-fd-border" />
