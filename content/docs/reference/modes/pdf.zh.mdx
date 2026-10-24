@@ -4,8 +4,8 @@ description: "针对特定 JD 生成一份定制的 PDF 简历：career-ops 用�
 seoTitle: "career-ops pdf 模式：生成适配 ATS 的定制简历"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-16"
-translationHash: ac18633cc823dce2
+lastModified: "2026-10-20"
+translationHash: 276805aefe6c9d60
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -44,6 +44,29 @@ Pages: 2 · Keyword coverage: 16/18 (89%)
 - 纸张尺寸会自动跟随公司所在地：美国和加拿大的职位用 `letter`，其他地区一律用 `a4`。
 - 关键词注入以事实为依据。该模式会用 JD 的原词改写你的真实经历，但绝不会添加你不具备的技能。
 - 在 DACH 地区（德国、奥地利、瑞士）以及欧洲大陆的大部分地区，你可以在 `config/profile.yml` 中设置 `candidate.photo` 来加入照片；留空则不显示照片，简历的渲染结果逐像素保持不变，这在美国、英国以及以 ATS 为先的市场中是更稳妥的默认选择。
+
+## 渲染前的检查
+
+pdf 模式可以改写你的经历，但不能编造。PDF 生成之前会运行两项检查：一项检查职位名称，一项检查事实。
+
+职位名称检查先运行，对象是定制后的简历，此时还没有生成 HTML。`cv-title-check.mjs` 会把定制简历中的每段工作经历与 `cv.md` 中公司和日期相同的条目配对，然后比较两者的职位名称。它只忽略大小写和空格，所以“Backend Engineer”和“Senior Backend Engineer”算作不一致。每发现一处不一致，career-ops 都会把两个职位名称同时展示给你，并询问你是保留新的名称，还是改回 `cv.md` 中的名称：
+
+```text title="Terminal"
+CV Title Consistency Check
+────────────────────────────────────────
+Entries compared: 3
+⚠️  1 title mismatch(es) found:
+
+  Acme (2021-2024)
+    cv.md:        "Backend Engineer"
+    tailored CV:  "Senior Backend Engineer"
+```
+
+职位名称检查只发出警告，从不阻止生成，因为调整职位名称的表述有时是你自己的决定。无法配对的经历（例如日期写法与 `cv.md` 不同）会被标记为未检查，这类职位名称需要你自己核对。如果检查根本无法运行，比如 `cv.md` 无法读取，或某段经历缺少公司、职位名称或日期，career-ops 会先停下来修正输入。
+
+事实检查在 `generate-pdf.mjs` 中运行，对象是 HTML，在打印任何内容之前进行。`cv.md` 和 `article-digest.md` 中都没有的数字或陈述会阻止生成 PDF。修正方法是从简历中删除该陈述，或者把证据补充到你的资料来源中。`config/cv-facts.json` 可以加入你自己的列表：`allow_metrics` 和 `allow_facts` 用于你已在别处核实过的陈述，`forbidden_phrases` 会阻止生成，`warn_phrases` 只发出警告。没有这个文件时，短语检查不会运行，输出中会注明这一点。`--skip-fact-check` 会关闭这项检查。
+
+两项检查都不评判改写本身。即使没有新增数字或新职位名称，一条要点也可能夸大你做过的事，所以每份简历发出前都要亲自读一遍。
 
 ## 注意事项
 
