@@ -114,7 +114,7 @@ Each report also includes a **Risk Summary**. Its **Fixed-term contract** row qu
 
 **Tracker entries** → `batch/tracker-additions/`
 
-Each offer also drops a short summary file here: a header row of column labels and one row of values. These get added to your main tracker in Step 6.
+Each offer also drops a short summary file here: a header row of column labels and one row of values, including the posting's `url`. These get added to your main tracker in Step 6.
 
 ### Score Evidence
 
@@ -151,7 +151,7 @@ node merge-tracker.mjs
 This script:
 
 1. Reads the summary files from `batch/tracker-additions/`
-2. Checks for duplicates so you never get two rows for the same offer
+2. Checks for duplicates so you never get two rows for the same offer. If your tracker has a URL column, it matches on the posting URL first. After that, or without one, it looks for a row with the same report file, then the same report number and company, then the same `#` number and company, and finally a similar company and role
 3. Adds new entries to your applications tracker
 4. Archives the processed files into `batch/tracker-additions/merged/`
 
