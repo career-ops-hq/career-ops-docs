@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: 30fa6edc5cc9f3d2
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -154,9 +154,12 @@ node merge-tracker.mjs
 Dieses Script:
 
 1. Liest die Zusammenfassungsdateien aus `batch/tracker-additions/`
-2. Prüft auf Duplikate, damit du nie zwei Zeilen für dasselbe Angebot bekommst
-3. Fügt neue Einträge zu deinem Bewerbungs-Tracker hinzu
-4. Archiviert die verarbeiteten Dateien in `batch/tracker-additions/merged/`
+2. Gleicht jede davon mit den Zeilen ab, die schon in deinem Tracker stehen, damit du nie zwei Zeilen für dasselbe Angebot bekommst
+3. Legt für jedes neue Angebot eine Zeile an
+4. Aktualisiert die vorhandene Zeile eines Angebots, das du schon einmal bewertet hast: Der neue Score und der neue Berichtslink ersetzen die alten, und die Zeile behält ihre Nummer und ihren Status. Eine erneute Bewertung, die keinen Score ergeben hat (`N/A`, `—` oder `-`), wird übersprungen, wenn die Zeile schon einen hat, und die Zeile bleibt, wie sie ist
+5. Archiviert die verarbeiteten Dateien in `batch/tracker-additions/merged/`
+
+Ein Merge ändert nie einen Status. Eine Zeile, die du schon auf `Applied` gesetzt hast, bleibt auf `Applied`, wenn das Angebot erneut bewertet wird. Um einen Status zu ändern, nutzt du `node set-status.mjs`; die Seite zum [tracker-Modus](/de/docs/reference/modes/tracker) erklärt es.
 
 **Um die Änderungen vorab anzusehen, ohne etwas zu schreiben:**
 
