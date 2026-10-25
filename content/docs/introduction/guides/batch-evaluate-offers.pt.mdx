@@ -3,7 +3,7 @@ title: Avaliar vagas em lote
 description: Processe 10 ou mais vagas em uma única sessão, com workers de IA em paralelo e PDFs personalizados.
 seoTitle: "Avaliar vagas em lote com o career-ops — pontue várias de uma vez"
 icon: FileStack
-translationHash: ec171c2cf58a6f48
+translationHash: c579af19d54c5776
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -92,7 +92,7 @@ Quando estiver tudo pronto, inicie o lote. Com workers do Claude Code, o padrão
 
 Acompanhe o terminal enquanto o lote roda. Cada linha informa qual vaga está sendo processada e se ela foi concluída ou falhou.
 
-Quando um worker do Claude esbarra em um limite de requisições, o runner espera e tenta a mesma vaga de novo dentro da mesma execução, sem esperar mais que `--rate-limit-sleep` segundos (300 por padrão), e roda o restante do lote com um só worker. Cada uma dessas novas tentativas dentro da execução consome uma das tentativas de `--max-retries` da vaga. Já um limite de sessão ou de uso pausa o lote; continue depois com `--resume-paused`.
+Quando um worker do Claude esbarra em um limite de requisições, o runner espera e tenta a mesma vaga de novo dentro da mesma execução, sem esperar mais que `--rate-limit-sleep` segundos (300 por padrão), e roda o restante do lote com um só worker. Cada uma dessas novas tentativas dentro da execução consome uma das tentativas de `--max-retries` da vaga. Já um limite de sessão ou de uso pausa o lote, e as vagas que ele ainda não tinha começado ficam pendentes. Para terminar o lote depois, rode `./batch/batch-runner.sh --resume-paused` para as vagas pausadas e um `./batch/batch-runner.sh` sem opções para as pendentes: cada comando pula as vagas do outro.
 
 ### Rode o lote com outro CLI [#run-the-batch-on-another-cli]
 

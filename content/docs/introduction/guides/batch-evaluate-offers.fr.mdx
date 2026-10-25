@@ -3,7 +3,7 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: ec171c2cf58a6f48
+translationHash: c579af19d54c5776
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -92,7 +92,7 @@ Quand vous êtes prêt, démarrez le lot. Avec des workers Claude Code, le choix
 
 Surveillez le terminal pendant l'exécution du lot. Chaque ligne vous indique quelle offre est en cours de traitement et si elle s'est terminée ou a échoué.
 
-Lorsqu'un worker Claude atteint une limite de débit, le runner attend puis retente la même offre au cours du même run, sans attendre plus de `--rate-limit-sleep` secondes (300 par défaut), et traite le reste du lot avec un seul worker. Chacune de ces relances en cours de run consomme l'une des tentatives `--max-retries` de l'offre. Une limite de session ou d'utilisation met en revanche le lot en pause ; reprenez-le plus tard avec `--resume-paused`.
+Lorsqu'un worker Claude atteint une limite de débit, le runner attend puis retente la même offre au cours du même run, sans attendre plus de `--rate-limit-sleep` secondes (300 par défaut), et traite le reste du lot avec un seul worker. Chacune de ces relances en cours de run consomme l'une des tentatives `--max-retries` de l'offre. Une limite de session ou d'utilisation met en revanche le lot en pause, et les offres qu'il n'avait pas encore commencées restent en attente. Pour terminer le lot plus tard, lancez `./batch/batch-runner.sh --resume-paused` pour les offres en pause, puis un simple `./batch/batch-runner.sh` pour les offres en attente : chaque commande ignore les offres de l'autre.
 
 ### Lancer le lot avec une autre CLI [#run-the-batch-on-another-cli]
 

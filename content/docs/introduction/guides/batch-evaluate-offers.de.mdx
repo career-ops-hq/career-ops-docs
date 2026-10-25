@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: ec171c2cf58a6f48
+translationHash: c579af19d54c5776
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -92,7 +92,7 @@ Wenn du so weit bist, starte den Batch. Mit Claude-Code-Workern, dem Standard, b
 
 Behalte das Terminal im Blick, während der Batch läuft. Jede Zeile zeigt dir, welches Angebot gerade verarbeitet wird und ob es fertig geworden oder fehlgeschlagen ist.
 
-Stößt ein Claude-Worker an ein Rate-Limit, wartet der Runner und versucht dasselbe Angebot im selben Lauf erneut, höchstens `--rate-limit-sleep` Sekunden lang (Standard 300), und verarbeitet den Rest des Batches mit einem einzigen Worker. Jede dieser Wiederholungen im laufenden Lauf verbraucht einen der `--max-retries`-Versuche des Angebots. Ein Sitzungs- oder Nutzungslimit pausiert den Batch dagegen; setze ihn später mit `--resume-paused` fort.
+Stößt ein Claude-Worker an ein Rate-Limit, wartet der Runner und versucht dasselbe Angebot im selben Lauf erneut, höchstens `--rate-limit-sleep` Sekunden lang (Standard 300), und verarbeitet den Rest des Batches mit einem einzigen Worker. Jede dieser Wiederholungen im laufenden Lauf verbraucht einen der `--max-retries`-Versuche des Angebots. Ein Sitzungs- oder Nutzungslimit pausiert den Batch dagegen, und die Angebote, die er noch nicht begonnen hatte, bleiben ausstehend. Um den Batch später abzuschließen, führe `./batch/batch-runner.sh --resume-paused` für die pausierten Angebote und ein einfaches `./batch/batch-runner.sh` für die ausstehenden aus: Jeder der beiden Befehle überspringt die Angebote des anderen.
 
 ### Den Batch mit einem anderen CLI ausführen [#run-the-batch-on-another-cli]
 

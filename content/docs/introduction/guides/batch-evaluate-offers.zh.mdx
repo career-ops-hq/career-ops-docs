@@ -3,7 +3,7 @@ title: 批量评估职位
 description: 在一次会话中用并行的 AI 工作进程处理 10 个以上职位，并为每个职位生成定制的 PDF。
 seoTitle: "用 career-ops 批量评估职位：一次为多个职位打分"
 icon: FileStack
-translationHash: ec171c2cf58a6f48
+translationHash: c579af19d54c5776
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -92,7 +92,7 @@ id	url	source	notes
 
 批处理运行时，留意终端输出。每一行都会告诉你正在处理哪个职位，以及它是已完成还是失败了。
 
-当 Claude 工作进程遇到速率限制时，运行器会等待，并在同一次运行中重试同一个职位，等待时间不超过 `--rate-limit-sleep` 秒（默认 300），同时把批处理的剩余部分改为只用一个工作进程。每一次这样的运行内重试都会消耗该职位的一次 `--max-retries` 尝试。而遇到会话或用量上限时，批处理会暂停；之后用 `--resume-paused` 继续。
+当 Claude 工作进程遇到速率限制时，运行器会等待，并在同一次运行中重试同一个职位，等待时间不超过 `--rate-limit-sleep` 秒（默认 300），同时把批处理的剩余部分改为只用一个工作进程。每一次这样的运行内重试都会消耗该职位的一次 `--max-retries` 尝试。而遇到会话或用量上限时，批处理会暂停，尚未开始的职位则保持待处理状态。之后要完成这批任务，先用 `./batch/batch-runner.sh --resume-paused` 处理已暂停的职位，再直接运行 `./batch/batch-runner.sh` 处理待处理的职位：两条命令都会跳过对方负责的职位。
 
 ### 用其他 CLI 运行批处理 [#run-the-batch-on-another-cli]
 

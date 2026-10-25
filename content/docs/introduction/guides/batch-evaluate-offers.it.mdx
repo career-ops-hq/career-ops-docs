@@ -3,7 +3,7 @@ title: Valutare più annunci in batch
 description: Elabora 10 o più annunci di lavoro in un'unica sessione, con worker AI in parallelo e PDF su misura.
 seoTitle: "Valutare tanti annunci di lavoro in una volta con career-ops: la valutazione in batch"
 icon: FileStack
-translationHash: ec171c2cf58a6f48
+translationHash: c579af19d54c5776
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -92,7 +92,7 @@ Quando sei pronto, avvia il batch. Con i worker Claude Code, l'impostazione pred
 
 Tieni d'occhio il terminale mentre il batch è in esecuzione. Ogni riga ti dice quale annuncio è in elaborazione e se è stato completato o è fallito.
 
-Quando un worker Claude incontra un limite di frequenza, il runner aspetta e riprova lo stesso annuncio nella stessa esecuzione, senza attendere più di `--rate-limit-sleep` secondi (300 per impostazione predefinita), ed elabora il resto del batch con un solo worker. Ognuno di questi nuovi tentativi nella stessa esecuzione consuma uno dei tentativi `--max-retries` dell'annuncio. Un limite di sessione o di utilizzo invece mette in pausa il batch; riprendilo più tardi con `--resume-paused`.
+Quando un worker Claude incontra un limite di frequenza, il runner aspetta e riprova lo stesso annuncio nella stessa esecuzione, senza attendere più di `--rate-limit-sleep` secondi (300 per impostazione predefinita), ed elabora il resto del batch con un solo worker. Ognuno di questi nuovi tentativi nella stessa esecuzione consuma uno dei tentativi `--max-retries` dell'annuncio. Un limite di sessione o di utilizzo invece mette in pausa il batch, e gli annunci che non aveva ancora iniziato restano in sospeso. Per completare il batch più tardi, esegui `./batch/batch-runner.sh --resume-paused` per gli annunci in pausa e un semplice `./batch/batch-runner.sh` per quelli in sospeso: ciascun comando salta gli annunci dell'altro.
 
 ### Esegui il batch con un'altra CLI [#run-the-batch-on-another-cli]
 

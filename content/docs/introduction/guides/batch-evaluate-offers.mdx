@@ -89,7 +89,7 @@ When you're ready, start the batch. With Claude Code workers, the default, the r
 
 Watch the terminal as the batch runs. Each line tells you which offer is being processed and whether it finished or failed.
 
-When a Claude worker hits a rate limit, the runner waits and tries the same offer again within the same run, waiting no longer than `--rate-limit-sleep` seconds (default 300), and runs the rest of the batch on one worker. Each of these in-run retries uses up one of the offer's `--max-retries` attempts. A session or usage limit pauses the batch instead; continue it later with `--resume-paused`.
+When a Claude worker hits a rate limit, the runner waits and tries the same offer again within the same run, waiting no longer than `--rate-limit-sleep` seconds (default 300), and runs the rest of the batch on one worker. Each of these in-run retries uses up one of the offer's `--max-retries` attempts. A session or usage limit pauses the batch instead, and the offers it had not started stay pending. To finish the batch later, run `./batch/batch-runner.sh --resume-paused` for the paused offers and a plain `./batch/batch-runner.sh` for the pending ones: each command skips the other's offers.
 
 ### Run the batch on another CLI
 

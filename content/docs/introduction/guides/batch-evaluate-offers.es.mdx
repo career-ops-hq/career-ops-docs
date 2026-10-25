@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: ec171c2cf58a6f48
+translationHash: c579af19d54c5776
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -92,7 +92,7 @@ Cuando estés listo, arranca el batch. Con workers de Claude Code, la opción po
 
 Observa la terminal mientras corre el batch. Cada línea te indica qué oferta se está procesando y si terminó o falló.
 
-Cuando un worker de Claude choca con un rate limit, el runner espera y vuelve a intentar la misma oferta dentro de la misma ejecución, sin esperar más de `--rate-limit-sleep` segundos (300 por defecto), y procesa el resto del batch con un solo worker. Cada uno de estos reintentos dentro de la ejecución consume uno de los intentos de `--max-retries` de la oferta. Un límite de sesión o de uso, en cambio, pausa el batch; continúalo más tarde con `--resume-paused`.
+Cuando un worker de Claude choca con un rate limit, el runner espera y vuelve a intentar la misma oferta dentro de la misma ejecución, sin esperar más de `--rate-limit-sleep` segundos (300 por defecto), y procesa el resto del batch con un solo worker. Cada uno de estos reintentos dentro de la ejecución consume uno de los intentos de `--max-retries` de la oferta. Un límite de sesión o de uso, en cambio, pausa el batch, y las ofertas que aún no había empezado quedan pendientes. Para terminar el batch más tarde, ejecuta `./batch/batch-runner.sh --resume-paused` para las ofertas pausadas y un `./batch/batch-runner.sh` sin opciones para las pendientes: cada comando omite las ofertas del otro.
 
 ### Ejecuta el batch con otro CLI [#run-the-batch-on-another-cli]
 
