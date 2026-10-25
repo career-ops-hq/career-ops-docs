@@ -3,7 +3,7 @@ title: Glossaire
 description: Le vocabulaire de la recherche d'emploi assistée par IA, défini — ATS, le score global 1-5, Data Contract, spray-and-pray, liveness check, tailoring, scan zéro token, histoires STAR+R, et chaque terme utilisé par career-ops.
 seoTitle: "Glossaire career-ops — les termes de la recherche d'emploi assistée par IA, définis"
 icon: BookOpen
-translationHash: 6518476f0486c906
+translationHash: 7bba42a8e47fe5a2
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -23,7 +23,7 @@ Le jugement holistique du LLM sur une offre d'emploi, selon cinq dimensions (cor
 
 ## Data Contract
 
-La promesse architecturale centrale de career-ops : la **couche système** (scripts, modes, templates) peut être mise à jour à tout moment, tandis que la **couche utilisateur** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — n'est jamais touchée par une mise à jour. Vos données survivent à toutes les versions. Un fichier système que vous avez modifié est conservé par défaut : la mise à jour tente d'en enregistrer une copie `.bak`, le signale si elle échoue et laisse votre version en place, qui ne reçoit alors plus les changements upstream. `--force` le remplace par la version upstream, même sans `.bak`. Les fichiers propres à l'outil de mise à jour sont toujours remplacés : une modification de l'un d'eux ne survit que dans son `.bak`. Le rollback fonctionne autrement : il écrase les fichiers système qu'il restaure sans créer de `.bak`, sauf les chemins qu'il signale comme non sûrs. Committez ou copiez donc vos modifications avant. Les personnalisations qui doivent survivre aux mises à jour vont dans la couche utilisateur, par exemple `modes/_profile.md` et `modes/_custom.md`.
+La promesse architecturale centrale de career-ops : la **couche système** (scripts, modes, templates) peut être mise à jour à tout moment, tandis que la **couche utilisateur** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — n'est jamais touchée par une mise à jour. Vos données survivent à toutes les versions. Un fichier système que vous avez modifié est conservé par défaut : la mise à jour tente d'en enregistrer une copie `.bak`, le signale si elle échoue et laisse votre version en place, qui ne reçoit alors plus les changements upstream. `--force` le remplace par la version upstream, même sans `.bak`. Les fichiers propres à l'outil de mise à jour sont toujours remplacés : une modification de l'un d'eux ne survit que dans son `.bak`, et elle est perdue si ce `.bak` n'a pas pu être écrit. Le rollback fonctionne autrement : il écrase les fichiers système qu'il restaure sans créer de `.bak`, sauf les chemins qu'il signale comme non sûrs. Committez ou copiez donc vos modifications avant. Il supprime aussi les fichiers ajoutés par la mise à jour, sauf si son enregistrement de cette mise à jour manque ; il avertit alors que ces fichiers peuvent rester. Les personnalisations qui doivent survivre aux mises à jour vont dans la couche utilisateur, par exemple `modes/_profile.md` et `modes/_custom.md`.
 
 ## Spray-and-pray
 
