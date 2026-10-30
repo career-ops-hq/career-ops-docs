@@ -45,10 +45,14 @@ export function WaitlistForm({ locale, copy }: { locale: WaitlistLocale; copy: W
   }, [locale]);
 
   // The page is static, so the ref is read here. The load counts once per page
-  // view, with the ref and the language and nothing else.
+  // arrival, with the ref and the language and nothing else.
   useEffect(() => {
     const value = new URLSearchParams(window.location.search).get('ref') ?? '';
     setRef(value);
+    // Reloads and back/forward don't count. No flag in the browser to dedupe
+    // further: storing one for analytics would need consent (ePrivacy art. 5(3)).
+    const [nav] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    if (nav && nav.type !== 'navigate') return;
     const body = JSON.stringify({ ref: value, locale });
     if (!navigator.sendBeacon?.('/api/waitlist/load', body)) {
       void fetch('/api/waitlist/load', { method: 'POST', body, keepalive: true }).catch(() => {});
