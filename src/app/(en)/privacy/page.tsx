@@ -194,7 +194,8 @@ export default function PrivacyPage() {
             <li>
               <strong className="text-fd-foreground">Resend Inc.</strong> (United States) —
               transactional email and audience management. Subscriber emails are stored in their EU
-              region (eu-west-1, Ireland). DPA:{' '}
+              region (eu-west-1, Ireland). It also delivers the one notice to the web version waitlist
+              (section 13). DPA:{' '}
               <a
                 href="https://resend.com/legal/dpa"
                 rel="noreferrer noopener"
@@ -205,7 +206,8 @@ export default function PrivacyPage() {
             </li>
             <li>
               <strong className="text-fd-foreground">Vercel Inc.</strong> (United States) — website
-              hosting. Captures request IP and timestamps in standard server logs for
+              hosting and private storage of waitlist email addresses (section 13), in the United
+              States (iad1). Captures request IP and timestamps in standard server logs for
               abuse-prevention. DPA:{' '}
               <a
                 href="https://vercel.com/legal/dpa"
@@ -304,9 +306,9 @@ export default function PrivacyPage() {
             day and by that link, without an IP address or a cookie.
           </p>
           <p className="mt-3">
-            The email addresses are stored privately with Vercel Inc. and are not passed to anyone
-            else; Resend Inc. delivers the one message. We delete them once that message is sent, or
-            earlier if you ask at{' '}
+            The email addresses are stored privately with Vercel Inc. Resend Inc. receives them only
+            to deliver the one message, and nobody else gets them. We delete them once that message
+            is sent, or earlier if you ask at{' '}
             <a
               href="mailto:hi@career-ops.org"
               className="text-fd-foreground underline underline-offset-2"

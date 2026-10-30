@@ -214,8 +214,8 @@ export const homeDe: HomeDict = {
       a: (
         <>
           career-ops ist dauerhaft kostenlos, MIT-lizenziert und von der
-          Community finanziert. Es gibt keinen kostenpflichtigen Tarif, keine
-          Warteliste, kein Konto, keine Telemetrie und keine Premium-Funktionen.
+          Community finanziert. Es gibt keinen kostenpflichtigen Tarif, kein
+          Konto, keine Telemetrie und keine Premium-Funktionen.
           Du klonst das Repo, richtest dein Profil ein und startest das System
           lokal mit der KI-Coding-CLI, die du ohnehin nutzt. Getragen wird das
           Projekt von Beiträgen der Community und von Unternehmens-Sponsoring
