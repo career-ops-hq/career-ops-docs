@@ -22,7 +22,7 @@ const Body = z.object({
     .min(1)
     .refine((a) => !a.includes('none') || a.length === 1),
   locale: z.enum(WAITLIST_LOCALES),
-  ref: z.string().max(200).optional(),
+  ref: z.string().optional(),
   hp: z.string().optional(), // honeypot: bots fill hidden fields
 });
 
