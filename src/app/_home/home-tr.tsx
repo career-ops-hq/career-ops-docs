@@ -101,7 +101,7 @@ export const homeTr: HomeDict = {
       Copilot ve daha fazlası. Open Agent Skill Standard üzerine kuruludur.
     </>
   ),
-  featApplyTitle: 'Açık uçlu cevapların taslağını yazar.',
+  featApplyTitle: 'Açık uçlu sorulara cevap taslakları yazar.',
   featApplyBody1: (
     <>
       Greenhouse, Ashby ve Lever formları &ldquo;Neden bu rol?&rdquo; ve &ldquo;Bize bir
@@ -162,7 +162,7 @@ export const homeTr: HomeDict = {
       a: (
         <>
           career-ops, beş boyutlu bir çerçevenin yön verdiği bir LLM değerlendirmesi
-          kullanır: uyum, kuzey yıldızına yakınlık, ücret, kültür sinyalleri ve
+          kullanır: uyum, ana kariyer hedefine yakınlık, ücret, kültür sinyalleri ve
           uyarı işaretleri. Sonuç, CV&apos;nin ve iş tanımının belirli satırlarına atıf yapan,
           1-5 arası bütüncül bir genel puandır. 4,0&apos;ın altındaki ilanlarda ajan başvurmamanı
           önerir. Sabit bir formül yok, rastgele başvuru yağdırma yok. Değerlendirme çerçevesinin
@@ -179,10 +179,10 @@ export const homeTr: HomeDict = {
       a: (
         <>
           Hayır. Taslakları hazırlar ve alanları doldurur; asla göndermez. Gönder&apos;e sen
-          basarsın. career-ops her başvuruyu son tıklamaya kadar hazırlar: rolleri tarar, her birini
+          basarsın. career-ops her başvuruyu son tıklamaya kadar hazırlar: iş ilanlarını tarar, her birini
           CV&apos;ne göre puanlar ve CV&apos;ni uyarlar. Sonra kararı sana bırakır. Bu bilinçli
           bir tercihtir: toplu otomatik başvuru, işe alım uzmanları ve ATS sistemleri nezdindeki
-          itibarını yakar. career-ops angaryayı kaldırır, seçimi sende bırakır. Daha fazlası (İngilizce):{' '}
+          itibarını zedeler. career-ops angaryayı kaldırır, seçimi sana bırakır. Daha fazlası (İngilizce):{' '}
           <a
             href="/blog/can-an-ai-agent-run-your-job-search"
             className="text-fd-foreground hover:underline underline-offset-2"
@@ -200,9 +200,9 @@ export const homeTr: HomeDict = {
           Ücretli plan, hesap, telemetri ve premium özellik yoktur. Depoyu klonlar, profilini
           ayarlar ve sistemi zaten kullandığın yapay zeka kodlama CLI&apos;ıyla yerel olarak
           çalıştırırsın. Proje, premium planlarla, ücretli özelliklerle veya verilerle değil;
-          topluluk katkıları ve Open Collective&apos;teki kolektifi üzerinden gelen kurumsal
-          sponsorlukla ayakta kalır. Fonlar, projenin mali ev sahibi (fiscal host) Open
-          Source Collective&apos;de herkese açık bir defterde tutulur ve bakım, güvenlik
+          topluluk katkıları ve Open Collective&apos;deki kolektifi üzerinden gelen kurumsal
+          sponsorlukla ayakta kalır. Fonlar, projenin mali yönetimini üstlenen kuruluş (fiscal host) Open
+          Source Collective&apos;de herkese açık bir muhasebe defterine kaydedilir ve bakım, güvenlik
           düzeltmeleri, sürümler ve belgeler için kullanılır. Ayrıntılar{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
@@ -277,7 +277,7 @@ export const homeTr: HomeDict = {
           career-ops; Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen,
           Kimi, Hermes Agent ve GitHub Copilot CLI ile çalışır: tam destekli on bir CLI (Gemini CLI
           eski bir sarmalayıcıdır). Aynı mod dosyaları hepsinde çalışır. Herkes mevcut aboneliğine ve
-          maliyet tercihine uyan CLI&apos;ı seçer; career-ops seni asla tek bir sağlayıcıya kilitlemez.
+          maliyet tercihine uyan CLI&apos;ı seçer; career-ops seni asla tek bir sağlayıcıya bağımlı kılmaz.
           Tipik bir iş arayışı ayda 20 $ olan Claude Pro ile yürür, ama seçim senin.
         </>
       ),
