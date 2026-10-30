@@ -29,12 +29,12 @@ export default function PrivacyPage() {
           <div className="flex gap-2">
             <dt>Effective:</dt>
             <dd className="text-fd-foreground">
-              <time dateTime="2026-05-07">7 May 2026</time>
+              <time dateTime="2026-10-30">30 October 2026</time>
             </dd>
           </div>
           <div className="flex gap-2">
             <dt>Version:</dt>
-            <dd className="text-fd-foreground">1.0</dd>
+            <dd className="text-fd-foreground">1.1</dd>
           </div>
         </dl>
       </header>
