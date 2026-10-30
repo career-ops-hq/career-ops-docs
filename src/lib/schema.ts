@@ -11,6 +11,7 @@ import { homeFr } from '@/app/_home/home-fr';
 import { homeDe } from '@/app/_home/home-de';
 import { homePt } from '@/app/_home/home-pt';
 import { homeIt } from '@/app/_home/home-it';
+import { homeTr } from '@/app/_home/home-tr';
 import { homeZh } from '@/app/_home/home-zh';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
@@ -240,7 +241,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh'],
+        inLanguage: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh', 'tr'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -810,6 +811,7 @@ const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
   de: { home: 'Startseite', docs: 'Dokumentation' },
   pt: { home: 'Início', docs: 'Documentação' },
   it: { home: 'Home', docs: 'Documentazione' },
+  tr: { home: 'Ana sayfa', docs: 'Belgeler' },
   zh: { home: '首页', docs: '文档' },
 };
 
@@ -947,6 +949,10 @@ export function homeFaqSchemaDe(dateModified?: Date) {
 
 export function homeFaqSchemaPt(dateModified?: Date) {
   return homeGraph('https://career-ops.org/pt', 'pt', faqFromDict(homePt), dateModified);
+}
+
+export function homeFaqSchemaTr(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/tr', 'tr', faqFromDict(homeTr), dateModified);
 }
 
 export function homeFaqSchemaIt(dateModified?: Date) {

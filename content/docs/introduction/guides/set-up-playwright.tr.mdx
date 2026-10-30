@@ -1,0 +1,147 @@
+---
+title: Playwright'ı kur
+description: Tarayıcı otomasyonu için Playwright'ı kur ve yapılandır.
+seoTitle: "career-ops için Playwright kurulumu: iş ilanı tarama ve PDF CV oluşturma"
+icon: Globe
+translationHash: 52b5ed2304ef9e82
+localized: true
+translatedFrom: /docs/introduction/guides/set-up-playwright
+---
+
+Bu rehber, career-ops'a tarayıcı otomasyonu yeteneklerini kazandıran üç kurulum adımını anlatır:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Playwright paketini kur">
+        Playwright Node paketini kur
+      </Step>
+      <Step title="Chromium'u indir">
+        Playwright'ın kontrol ettiği Chromium tarayıcısını indir
+      </Step>
+      <Step title="Playwright MCP'yi yapılandır">
+        Claude'un apply adımında tarayıcıyı kullanabilmesi için Playwright MCP'yi yapılandır
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+<Callout title="Başlamadan önce">
+  [Hızlı Başlangıç](/tr/docs) rehberini tamamla. Node.js 22.13 veya üstü (Node 23 kullanıyorsan 23.4 veya üstü) kurulu olmalı ve career-ops kök klasöründe olmalısın.
+</Callout>
+
+---
+
+## Playwright paketini kur
+
+career-ops kök klasöründe `npm install` komutunu çalıştır:
+
+```bash title="Terminal"
+npm install
+```
+
+Bu komut, Playwright'ı ve `package.json` içinde tanımlı diğer tüm proje bağımlılıklarını kurar. İlk kurulum sırasında zaten çalıştırdıysan bu adımı atla.
+
+## Chromium'u indir
+
+Playwright, otomasyon için kendi Chromium kopyasına ihtiyaç duyar. Kurulum aracı normalde bağımlılıkların hemen ardından onu otomatik olarak indirir; `npm run doctor` eksik olduğunu bildirirse şu komutla indir:
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+Bu işlemi yalnızca bir kez yapman yeterli. `npm` güncellemelerinden sonra tekrarlaman gerekmez.
+
+Ortamında `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` boş, `0` veya `false` dışında bir değere ayarlıysa `npm install` otomatik indirmeyi atlar; bu durumda yukarıdaki komutu kendin çalıştır. NixOS'ta bu adımı tamamen atla: indirilen tarayıcılar orada başlatılamaz; çalışan tarayıcıları ve Playwright MCP sunucusunu deponun flake dev shell'i sağlar. Ayrıntılar core'un [NixOS rehberinde](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) yer alıyor.
+
+## Playwright MCP'yi yapılandır
+
+Playwright MCP, Claude'un `/career-ops apply` adımı sırasında tarayıcıyı doğrudan kontrol etmesini sağlar: iş başvuru formlarına gider, alan etiketlerini okur ve yanıt önerir.
+
+### MCP sunucusunu kaydet
+
+Playwright MCP'yi Claude Code'a kaydetmek için career-ops kök klasöründe şu komutu çalıştır:
+
+```bash title="Terminal"
+claude mcp add --scope project playwright -- npx @playwright/mcp@latest
+```
+
+Bu, [Playwright MCP belgelerindeki](https://playwright.dev/docs/getting-started-mcp) tek adımlı kayıt yöntemidir. `--scope project` eklendiği için Claude Code sunucu kaydını, career-ops kök klasöründeki `.mcp.json` dosyasına yazar; bu dosya `npm run doctor` komutunun kontrol ettiği dosyalardan biridir. Claude Code'u orada bir sonraki başlatışında sunucuyu onaylaman istendiğinde onayla.
+
+Bunun yerine her projede kullanmak istersen komutu `--scope user` ile çalıştır. `npm run doctor` onu orada da bulur: yalnızca `.mcp.json` dosyasını değil, Claude Code'un kullanıcın ve bu proje için tuttuğu sunucuları da okur.
+
+### Elle yapılandırma (alternatif)
+
+Elle yapılandırmayı tercih ediyorsan career-ops kök klasöründeki `.mcp.json` dosyasına aşağıdaki girdiyi ekle (dosya yoksa oluştur):
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+Dosyayı kaydettikten sonra Claude Code'u yeniden başlat ve sunucuyu onaylaman istendiğinde onayla. Böylece career-ops, apply oturumlarında `browser_navigate` ve `browser_snapshot` araçlarına erişebilir.
+
+---
+
+## Kurulumu doğrula
+
+Üç bileşenin de yerinde olduğunu doğrulamak için doctor script'ini çalıştır:
+
+```bash title="Terminal"
+npm run doctor
+```
+
+Playwright, Chromium ve MCP sunucusunun hazır olduğuna dair onayı ara. Kontrol başarılıysa kurulum tamamlanmıştır.
+
+---
+
+## Tarayıcının formu doldurmasını izle
+
+Playwright MCP varsayılan olarak görünür bir tarayıcı penceresi açar (yukarıdaki kurulum `--headless` kullanmaz); böylece okuduğu her sayfayı ve doldurduğu her alanı görebilirsin.
+
+Başvuruyu bu pencerede açıp formun tamamını doldurması için apply komutuna bir talimat ekle:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name} open up with playwright the browser and fill out the entire form
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+</Tabs>
+
+Ashby'de Playwright formu inceleyebilir ve yanıtların taslağını hazırlamana yardımcı olabilir, ancak formu normal sistem tarayıcında tamamlayıp gönder. Başvuruyu gönderildi olarak işaretlemeden önce başarı sayfasını veya onay e-postasını kontrol et.
+
+Bu talimat olmadan da career-ops, aynı görünür pencerede formu okumak ve yanıtlarının taslağını hazırlamak için Playwright'ı ve MCP'yi kullanır.
+
+## Her bileşen ne sağlar?
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Bileşen            | Amaç                                                                                                              |
+    | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+    | Playwright paketi  | Tarayıcı otomasyonunu yürüten temel kütüphane                                                                     |
+    | Chromium           | Sayfaları işler, `/career-ops pdf` ile baskı kalitesinde PDF'ler üretir, iş ilanlarının hâlâ yayında olup olmadığını kontrol eder ve tam ATS taramalarını çalıştırır |
+    | Playwright MCP     | career-ops'un `/career-ops apply` sırasında formlarda gezinmesini ve alanlar için yanıt önermesini sağlar         |
+  </div>
+</div>

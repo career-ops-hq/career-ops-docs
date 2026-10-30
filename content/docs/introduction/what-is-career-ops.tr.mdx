@@ -1,0 +1,35 @@
+---
+title: "career-ops nedir?"
+description: "career-ops, zaten kullandığın yapay zeka CLI'ının içinde yerel olarak çalışan ücretsiz, açık kaynaklı yapay zeka iş arama ajanıdır: ilanları puanlar, CV'ni uyarlar ve başvurularını takip eder."
+seoTitle: "career-ops nedir? Yerelde çalışan, açık kaynaklı yapay zeka iş arama ajanı"
+icon: CircleQuestionMark
+date: 2026-04-20
+lastModified: 2026-10-11
+translationHash: 34992fc9b6bc843b
+localized: true
+translatedFrom: /docs/introduction/what-is-career-ops
+---
+
+career-ops, yapay zeka kodlama asistanının içinde çalışan açık kaynaklı bir iş arama sistemidir. career-ops bir filtredir: daha az pozisyona daha iyi başvurmana yardım eder ve her kararı sen verirsin. Ona bir iş ilanının URL'sini veya metnini verirsin; o da açıklamayı okur, pozisyonu beş boyutta ve bütüncül bir genel puanla geçmişine göre puanlar, CV'nin belirli satırlarına atıfta bulunan uyarlanmış bir PDF CV üretir ve her şeyi yerel başvuru takip dosyana kaydeder. Bunların hepsi tek komutla olur; elektronik tablo da hesap da gerekmez ve bizim bir backend'imiz yoktur: CV'n bilgisayarından yalnızca seçtiğin yapay zeka sağlayıcısına gider, başka hiçbir yere gitmez. career-ops, 2026'nın başında yapay zeka çağındaki gerçek bir iş aramasını yönetmek için [Santiago Fernández de Valderrama Aparicio](https://santifer.io/about) tarafından geliştirildi: açık bir değerlendirme ölçütüne göre 740 ilan değerlendirildi ve tek bir Head of Applied AI pozisyonu elde edildi. Artık ihtiyacı kalmayınca projeyi MIT lisansıyla açık kaynak yaptı; böylece yapılandırılmış bir iş araması yürüten herkes aynı sistemi kendi bilgisayarında, zaten ücretini ödediği yapay zeka modeliyle ücretsiz kullanabilir. Bu pozisyona geçtikten altı ay sonra, tüm zamanını career-ops'u geliştirmeye ayırmak için işinden ayrıldı.
+
+## Felsefe
+
+### Gerçekten açık kaynak
+
+career-ops'un ücretli bir planı, hesap zorunluluğu veya telemetrisi yoktur. Depoyu klonlarsın ve zaten kullandığın yapay zeka kodlama CLI'ıyla yerel olarak çalıştırırsın. CV'n düz markdown'da, yapılandırman YAML'da durur: bunlar sana ait, istediğin zaman düzenleyebileceğin dosyalardır. Kurulum sırasında onlara dokunman gerekmez, çünkü sen günlük dille yanıt verirsin ve ajan dosyaları senin için yazar. Profilin ve başvuru geçmişin bilgisayarındaki dosyalarda durur. Seçtiğin yapay zeka sağlayıcısı CLI'ının ona gönderdiklerini okur; bunları sen kendin bir yere göndermedikçe başka hiçbir yere gitmezler. Proje, herkesin önünde incelenen topluluk katkılarıyla büyür: biri yeni bir şirket portalı scraper'ı eklediğinde, puanlama ölçütlerini iyileştirdiğinde veya bir hatayı düzelttiğinde bu iyileştirme bir sonraki sürümle herkese ulaşır. İş modelinin tamamı budur: ek satış yok, kurumsal plan yok, planlanan bir veri satışı da yok. Sistem sonsuza dek MIT lisanslıdır; bakımcı yeni sürüm çıkarmayı bıraksa bile puanlama ölçütleri, prompt'lar ve scraper'lar fork'layabileceğin, denetleyebileceğin ve çalıştırabileceğin şekilde senin kalır.
+
+<Callout title="Katkıda bulunmak ister misin?">
+  Pull request açmadan önce [katkı kılavuzunu](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) oku. Kısaca: yeni bir özellik, yeni bir mod veya komut ya da mimari bir değişiklik için önce bir issue aç. Hata düzeltmeleri, kimlik doğrulama gerektirmeyen yeni tarama sağlayıcıları, dokümantasyon ve çeviriler doğrudan pull request olarak gelebilir. Bakımcılar hızlı inceler.
+</Callout>
+
+### Yapay zeka odaklı, sağlayıcıdan bağımsız
+
+career-ops kendi yapay zeka modeliyle gelmez. Zaten güvendiğin yapay zeka kodlama CLI'ının içinde, bir dizi slash komutu ve prompt dosyası olarak çalışır: Claude Code, Codex, OpenCode, Qwen, GitHub Copilot ve [diğerleri](/tr/docs/supported-clis). Akıl yürütmeyi yapay zeka yapar; career-ops ise yapıyı, puanlama ölçütlerini, şirket portalı scraper'larını ve dosyalarının sana ait kalmasını sağlayan veri sözleşmesini sunar. Bu mimari sayesinde tek bir sağlayıcının yol haritasına veya fiyatlarına bağlı kalmazsın: daha iyi bir model çıktığında CLI'ını değiştirirsin ve career-ops hiçbir değişiklik olmadan onun üzerinde çalışır. Aynı ölçütler (beş puanlama boyutu ve bütüncül bir genel puan), ister Claude, OpenAI, Gemini ister Qwen modeli kullan, karşılaştırılabilir bir akıl yürütme üretir. Maliyet, kalite ve gizlilik beklentine uyan motoru seç, koşullar değiştikçe de dilediğin gibi değiştir.
+
+## career-ops'u ne zaman kullanmalısın?
+
+career-ops, öylesine ilanlara bakmak yerine aktif ve yapılandırılmış bir iş araması yürütüyorsan doğru araçtır. En çok şu adaylar için işe yarar: memnun olduğu bir CV'si olan ve her seferinde elle yeniden yazmadan onu her başvuruya göre uyarlamak isteyenler; birden fazla başvuruyu takip eden ve dağınık bir elektronik tablo yerine tek bir doğruluk kaynağı isteyenler; az çok ilgili her şeye değil, yalnızca gerçekten uyan pozisyonlara başvurmak isteyenler; profesyonel olarak kod yazmasa bile terminalde komut çalıştırmaktan çekinmeyenler. Yalnızca bir iki başvuru yapıp bırakacaksan muhtemelen career-ops'a ihtiyacın yoktur. Kurulum (repoyu klonlamak, profilini yapılandırmak, CV'ni eklemek) yaklaşık on beş dakika sürer; bu yatırım ancak birkaç pozisyondan fazlasını değerlendirdiğinde karşılığını verir.
+
+## career-ops ne yapmaz?
+
+career-ops asla senin adına başvurmaz. Sistem değerlendirir, puanlar, üretir ve takip eder; ama gönderme kararını her seferinde, ajanın akıl yürütmesini adım adım görerek sen verirsin ve açık onayın olmadan hiçbir şey hiçbir yere gitmez. career-ops ayrıca bir CV oluşturucu veya LinkedIn optimizasyon aracı da değildir; sen zaten sahip olduğun CV'yi getirirsin, sistem de her sürümünün önündeki ilana göre ayarlanmasını sağlar. Bir içerik fabrikası değil, bir pipeline'dır. Sistem kodu (her sürümle güncellenir) ile kullanıcı verileri (asla üzerine yazılmaz) arasındaki sınırı depodaki DATA_CONTRACT.md güvence altına alır: CV'n, profilin ve başvuru geçmişin sana aittir. career-ops onları okur, ama hangi sürüm olursa olsun oraya koyduklarını asla sessizce yeniden yazmaz veya silmez.
