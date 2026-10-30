@@ -1,4 +1,4 @@
-// Shared rules for the web version waitlist (/waitlist, /es/waitlist). Two
+// Shared rules for the web version waitlist (/waitlist, /<locale>/waitlist). Two
 // separate things are stored in the project's private Blob store, with no key
 // in common: the email, on its own, for the one message; and the counts (ref,
 // language, country, assistants) with the day and no email, which is what makes
@@ -7,7 +7,7 @@
 export const ASSISTANTS = ['chatgpt', 'gemini', 'claude', 'other', 'none'] as const;
 export type Assistant = (typeof ASSISTANTS)[number];
 
-export const WAITLIST_LOCALES = ['en', 'es'] as const;
+export const WAITLIST_LOCALES = ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh'] as const;
 export type WaitlistLocale = (typeof WAITLIST_LOCALES)[number];
 
 export const LOADS_PREFIX = 'waitlist-loads';

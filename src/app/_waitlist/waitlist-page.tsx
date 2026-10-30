@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { WaitlistForm, type WaitlistFormCopy } from '@/components/waitlist-form';
-import type { WaitlistLocale } from '@/lib/waitlist';
+import { WAITLIST_LOCALES, type WaitlistLocale } from '@/lib/waitlist';
 
 // Web version waitlist (Santiago, 30 Oct 2026; copy by narrative-ops, approved by
 // venture-ops). It announces a version that doesn't exist yet, so it describes no
 // feature, gives no date and names no operator. noindex and out of the sitemap,
-// llms.txt and the .md mirror; no hreflang, a visible link joins EN and ES
+// llms.txt and the .md mirror; no hreflang, visible links join the languages
 // (search-ops, 30 Oct 2026).
 type Copy = {
   title: string;
@@ -15,7 +15,6 @@ type Copy = {
   footer: string;
   footerLink: string;
   docsHref: string;
-  otherLanguage: { label: string; href: string; lang: string };
   form: WaitlistFormCopy;
 };
 
@@ -25,6 +24,18 @@ const mail = (
   </a>
 );
 
+const LANGUAGE_NAMES: Record<WaitlistLocale, string> = {
+  en: 'English',
+  es: 'Español',
+  fr: 'Français',
+  de: 'Deutsch',
+  pt: 'Português',
+  it: 'Italiano',
+  zh: '中文',
+};
+
+const pagePath = (locale: WaitlistLocale) => (locale === 'en' ? '/waitlist' : `/${locale}/waitlist`);
+
 const COPY: Record<WaitlistLocale, Copy> = {
   en: {
     title: 'career-ops, without the terminal.',
@@ -33,7 +44,6 @@ const COPY: Record<WaitlistLocale, Copy> = {
     footer: 'The local version stays as it is. Open source. Local. In the AI CLI you already use.',
     footerLink: 'Install it →',
     docsHref: '/docs',
-    otherLanguage: { label: 'Leer en español', href: '/es/waitlist', lang: 'es' },
     form: {
       email: 'Email',
       country: 'Country',
@@ -60,7 +70,6 @@ const COPY: Record<WaitlistLocale, Copy> = {
     footer: 'La versión local sigue igual. Open source. En local. En el CLI de IA que ya usas.',
     footerLink: 'Instálala →',
     docsHref: '/es/docs',
-    otherLanguage: { label: 'Read in English', href: '/waitlist', lang: 'en' },
     form: {
       email: 'Email',
       country: 'País',
@@ -80,6 +89,136 @@ const COPY: Record<WaitlistLocale, Copy> = {
       sent: 'Ya estás en la lista. Te escribiremos una vez, cuando esté lista.',
     },
   },
+  fr: {
+    title: 'career-ops, sans le terminal.',
+    sentence:
+      'Une version web de career-ops pour les personnes qui n’utilisent pas de CLI de code, gratuite pour les candidats. Laissez votre e-mail et nous vous écrirons une seule fois, quand elle sera prête.',
+    footer: 'La version locale ne change pas. Open source. En local. Dans le CLI d’IA que vous utilisez déjà.',
+    footerLink: 'Installez-la →',
+    docsHref: '/fr/docs',
+    form: {
+      email: 'E-mail',
+      country: 'Pays',
+      countryPlaceholder: 'Choisissez votre pays',
+      assistants: 'Quels assistants d’IA utilisez-vous déjà\u00a0?',
+      assistantsHint: 'Cochez tous ceux que vous utilisez.',
+      assistantLabels: { chatgpt: 'ChatGPT', gemini: 'Gemini', claude: 'Claude', other: 'Autre', none: 'Aucun' },
+      assistantsRequired: 'Cochez au moins une option.',
+      submit: 'Rejoindre la liste d’attente',
+      submitting: 'Inscription…',
+      privacy: (
+        <>
+          Nous n’utiliserons votre e-mail que pour ce message, et nous ne le partagerons pas. Votre pays
+          et votre réponse ne servent qu’aux totaux. Pour faire supprimer vos données, écrivez à {mail}.
+        </>
+      ),
+      sent: 'Vous êtes sur la liste. Nous vous écrirons une seule fois, quand elle sera prête.',
+    },
+  },
+  de: {
+    title: 'career-ops, ohne Terminal.',
+    sentence:
+      'Eine Webversion von career-ops für alle, die keine Coding-CLI nutzen, für Jobsuchende kostenlos. Hinterlass deine E-Mail-Adresse, und wir schreiben dir einmal, sobald sie fertig ist.',
+    footer: 'Die lokale Version bleibt, wie sie ist. Open Source. Lokal. In der KI-CLI, die du schon nutzt.',
+    footerLink: 'Jetzt installieren →',
+    docsHref: '/de/docs',
+    form: {
+      email: 'E-Mail',
+      country: 'Land',
+      countryPlaceholder: 'Wähle dein Land',
+      assistants: 'Welche KI-Assistenten nutzt du bereits?',
+      assistantsHint: 'Wähle alle aus, die du nutzt.',
+      assistantLabels: { chatgpt: 'ChatGPT', gemini: 'Gemini', claude: 'Claude', other: 'Andere', none: 'Keine' },
+      assistantsRequired: 'Wähle mindestens eine Option aus.',
+      submit: 'Auf die Warteliste',
+      submitting: 'Wird eingetragen…',
+      privacy: (
+        <>
+          Wir nutzen deine E-Mail-Adresse nur für diese eine Nachricht und geben sie nicht weiter. Dein
+          Land und deine Antwort fließen nur in Gesamtzahlen ein. Wenn wir deine Daten löschen sollen,
+          schreib an {mail}.
+        </>
+      ),
+      sent: 'Du stehst auf der Liste. Wir schreiben dir einmal, sobald sie fertig ist.',
+    },
+  },
+  pt: {
+    title: 'career-ops, sem terminal.',
+    sentence:
+      'Uma versão web do career-ops para quem não usa uma CLI de programação, gratuita para candidatos. Deixe seu e-mail e escreveremos para você uma vez, quando ela estiver pronta.',
+    footer: 'A versão local continua igual. Open source. Local. Na CLI de IA que você já usa.',
+    footerLink: 'Instale →',
+    docsHref: '/pt/docs',
+    form: {
+      email: 'E-mail',
+      country: 'País',
+      countryPlaceholder: 'Escolha seu país',
+      assistants: 'Quais assistentes de IA você já usa?',
+      assistantsHint: 'Marque todos os que você usa.',
+      assistantLabels: { chatgpt: 'ChatGPT', gemini: 'Gemini', claude: 'Claude', other: 'Outro', none: 'Nenhum' },
+      assistantsRequired: 'Marque pelo menos uma opção.',
+      submit: 'Entrar na lista de espera',
+      submitting: 'Entrando…',
+      privacy: (
+        <>
+          Usaremos seu e-mail só para essa mensagem e não vamos compartilhá-lo. Seu país e sua resposta
+          só entram nos totais. Para pedir a exclusão dos seus dados, escreva para {mail}.
+        </>
+      ),
+      sent: 'Você está na lista. Escreveremos uma vez, quando ela estiver pronta.',
+    },
+  },
+  it: {
+    title: 'career-ops, senza terminale.',
+    sentence:
+      'Una versione web di career-ops per chi non usa una CLI di programmazione, gratis per chi cerca lavoro. Lasciaci la tua email e ti scriveremo una sola volta, quando sarà pronta.',
+    footer: 'La versione locale resta com’è. Open source. In locale. Nella CLI AI che usi già.',
+    footerLink: 'Installala →',
+    docsHref: '/it/docs',
+    form: {
+      email: 'Email',
+      country: 'Paese',
+      countryPlaceholder: 'Scegli il tuo paese',
+      assistants: 'Quali assistenti AI usi già?',
+      assistantsHint: 'Seleziona tutti quelli che usi.',
+      assistantLabels: { chatgpt: 'ChatGPT', gemini: 'Gemini', claude: 'Claude', other: 'Altro', none: 'Nessuno' },
+      assistantsRequired: 'Seleziona almeno un’opzione.',
+      submit: 'Iscriviti alla lista d’attesa',
+      submitting: 'Iscrizione…',
+      privacy: (
+        <>
+          Useremo la tua email solo per questo messaggio e non la condivideremo. Il tuo paese e la tua
+          risposta contano solo nei totali. Per far cancellare i tuoi dati, scrivi a {mail}.
+        </>
+      ),
+      sent: 'Sei in lista. Ti scriveremo una sola volta, quando sarà pronta.',
+    },
+  },
+  zh: {
+    title: 'career-ops，无需终端。',
+    sentence:
+      'career-ops 的网页版，面向不使用编程 CLI 的人，对求职者免费。留下你的邮箱，等它准备好时，我们会给你写一封信，只写这一次。',
+    footer: '本地版保持不变。开源。在本地运行。就在你已经在用的 AI CLI 里。',
+    footerLink: '安装 →',
+    docsHref: '/zh/docs',
+    form: {
+      email: '邮箱',
+      country: '国家或地区',
+      countryPlaceholder: '选择你的国家或地区',
+      assistants: '你已经在用哪些 AI 助手？',
+      assistantsHint: '可多选。',
+      assistantLabels: { chatgpt: 'ChatGPT', gemini: 'Gemini', claude: 'Claude', other: '其他', none: '都没有' },
+      assistantsRequired: '请至少选择一项。',
+      submit: '加入候补名单',
+      submitting: '正在加入…',
+      privacy: (
+        <>
+          你的邮箱只用于这一封通知，我们不会分享给任何人。你的国家或地区和回答只计入总数。如需删除你的数据，请写信至 {mail}。
+        </>
+      ),
+      sent: '你已加入名单。等它准备好时，我们会写信给你，只写这一次。',
+    },
+  },
 };
 
 export function waitlistMetadata(locale: WaitlistLocale): Metadata {
@@ -88,7 +227,7 @@ export function waitlistMetadata(locale: WaitlistLocale): Metadata {
     metadataBase: new URL('https://career-ops.org'),
     title,
     description: sentence,
-    alternates: { canonical: locale === 'en' ? '/waitlist' : `/${locale}/waitlist` },
+    alternates: { canonical: pagePath(locale) },
     robots: { index: false, follow: true },
   };
 }
@@ -113,10 +252,12 @@ export function WaitlistPage({ locale }: { locale: WaitlistLocale }) {
             {copy.footerLink}
           </Link>
         </p>
-        <p>
-          <Link href={copy.otherLanguage.href} lang={copy.otherLanguage.lang} className="hover:underline">
-            {copy.otherLanguage.label}
-          </Link>
+        <p className="flex flex-wrap gap-x-4 gap-y-1">
+          {WAITLIST_LOCALES.filter((other) => other !== locale).map((other) => (
+            <Link key={other} href={pagePath(other)} lang={other} className="hover:underline">
+              {LANGUAGE_NAMES[other]}
+            </Link>
+          ))}
         </p>
       </footer>
     </main>
