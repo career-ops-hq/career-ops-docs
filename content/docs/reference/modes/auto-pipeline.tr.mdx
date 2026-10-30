@@ -1,0 +1,55 @@
+---
+title: auto-pipeline
+description: "Bir iş ilanının URL'sini veya ham metnini yapıştırdığında çalışan varsayılan akış. A–H değerlendirmesini yapar, raporu oluşturur, ilana göre uyarlanmış PDF'i dışa aktarır ve tracker kaydını yazar; hepsi tek seferde olur ve yalnızca senden bir yanıt gerektiğinde durur."
+seoTitle: "career-ops auto-pipeline: tek bir URL'den iş ilanı değerlendirme, CV ve tracker kaydı"
+icon: Zap
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: 618e23f3b4b2c9d2
+localized: true
+translatedFrom: /docs/reference/modes/auto-pipeline
+---
+
+## Ne yapar?
+
+Komut satırına bir iş ilanı URL'si veya yapıştırılmış ilan metni bıraktığında career-ops, auto-pipeline'ı çalıştırır. Bu mod ilanı okur, puanlama ölçütlerine göre (beş boyut ve bütünsel bir genel puan) puanlar, değerlendirmeyi reports/ klasörüne yazar, Playwright ile ilana göre uyarlanmış PDF'i oluşturur ve tracker kaydını günceller; hepsi tek seferde olur. Sana yalnızca iki durumda soru sormak için durur: şirket kara listendeyse veya ilan bir işe alım ajansı üzerinden geliyorsa ve hangi ajans olduğunu doğrulaman gerekiyorsa.
+
+## Ne zaman kullanılır?
+
+Akışın tamamının otomatik olarak çalışmasını istediğinde auto-pipeline'ı kullan. Aramana yeni giren ilanlar için varsayılan mod budur.
+
+## Bir çalıştırma nasıl görünür?
+
+Alt komut olmadan bir ilan URL'si yapıştırırsan auto-pipeline tüm zinciri baştan sona çalıştırır: ilan metnini çıkarır, ilanın hâlâ yayında olduğunu kontrol eder, puanlar, raporu kaydeder, ilana göre uyarlanmış PDF'i dışa aktarır ve kaydı tracker'ına işler.
+
+```txt title="Terminal"
+> https://job-boards.greenhouse.io/notion/jobs/4523451008
+
+Extracting JD with Playwright... done.
+Liveness gate: posting is live.
+Evaluation: 4.6/5 — legitimacy verified.
+Saved reports/072-notion-applied-ai-engineer-2026-05-18.md
+Generated the tailored PDF via Playwright.
+Score >= 4.5 — drafted Section H application answers in the report.
+Updated data/applications.md (Report and PDF marked done).
+```
+
+## Bilmende fayda var
+
+- URL'yi yapıştırman yeterli, metin çıkarma işini auto-pipeline halleder: Lever, Ashby, Greenhouse ve Workday gibi tek sayfalı portallar için önce Playwright, statik sayfalar için ardından WebFetch, son çare olarak da WebSearch kullanır.
+- Değerlendirmeden önce ilanın yayında olup olmadığı kontrol edilir. Bağlantı ölüyse veya sayfa boş bir "pozisyon doldu" kabuğundan ibaretse mod, var olmayan içeriği puanlamak yerine orada durur; kayıt `data/pipeline.md` dosyasından geldiyse o satırı kapalı olarak işaretler.
+- Açıklaması yükleme iskeleti olarak kalan bir LinkedIn sayfası ne kapanmış bir ilandır ne de ilan metni sayılır: auto-pipeline değerlendirmeden, rapordan, PDF'ten ve tracker'a herhangi bir yazma işleminden önce durur, senden ilan metnini yapıştırmanı ya da aynı pozisyon için işverenin sitesinden veya bir ATS'ten bağlantı vermeni ister.
+- Başvuru yanıtı taslakları yalnızca puan 4,5 veya üzerindeyse yazılır; böylece uyumu düşük pozisyonlarda, göndermeyeceğin metinlere token harcanmaz.
+- Kaydedilen rapor, G Bloğu'ndan sonraki tek satırlık kararı ve pozisyonu sana bir işe alım uzmanı getirdiğinde G Bloğu'nun yaptığı işe alım uzmanı kontrollerini de içeren [oferta](/tr/docs/reference/modes/oferta) biçimini kullanır.
+- Ajanın kendi oturumunu yeniden adlandırabildiği bir CLI'da, ilan metni okunduktan sonra oturum ilanın adını alır, örneğin `VP Infrastructure, Acme Health`. Kendi oturum başlıklarını korumak için `config/profile.yml` dosyasında `session_title: off` ayarını yap.
+
+## Dikkat edilmesi gerekenler
+
+PDF olmadan yalnızca değerlendirmeyi istiyorsan (daha hızlı, daha ucuz) bunun yerine `/career-ops oferta` komutunu çalıştır. auto-pipeline zincirin tamamını çalıştırdığı için daha fazla token harcar.
+
+## İlgili sayfalar
+
+- [pipeline](/tr/docs/reference/modes/pipeline)
+- [oferta](/tr/docs/reference/modes/oferta)
+- [pdf](/tr/docs/reference/modes/pdf)
+- [tracker](/tr/docs/reference/modes/tracker)

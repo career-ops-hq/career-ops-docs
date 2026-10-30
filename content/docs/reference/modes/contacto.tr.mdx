@@ -1,0 +1,53 @@
+---
+title: contacto
+description: "LinkedIn'deki en güçlü hamlen. Şirket adını ve ağınla ilgili bağlamı verdiğinde contacto, sıcak temas kurabileceğin kişileri (ortak bağlantılar, ikinci derece bağlantılar) öne çıkarır ve başvurduğun role göre kısa bir mesaj taslağı hazırlar."
+seoTitle: "career-ops contacto modu: LinkedIn'de sıcak bağlantılar bul, mesaj taslağı hazırla"
+icon: UserPlus
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3de401b64f5b1243
+localized: true
+translatedFrom: /docs/reference/modes/contacto
+---
+
+## Ne yapar?
+
+contacto modu şirket adını ve ilan metnini okur, ardından WebSearch ile bulduğu kişileri ulaşman için önerir: işe alım yöneticisi, ilanla ilgilenen işe alım uzmanı, iki üç ekip arkadaşı ve bilinen bir mülakatçı. Role ve karşısındaki kişiye göre kısa bir mesaj taslağı hazırlar: üç cümle, 300 karakterin altında.
+
+**Önce kayıtlı kişiler.** contacto herhangi bir arama yapmadan önce `data/contacts.tsv` dosyasındaki kayıtlı kişilerin üzerinde `node contact-lookup.mjs --company "<company>" --summary` komutunu çalıştırır ve o şirkette zaten tanıdığın herkesi, onları şirkete bağlayan önceki başvurunla birlikte gösterir. Birini seçersen aramayı atlar ve bir **Internal Referral** (şirket içi referans) mesajı hazırlar: gerçek önceki temasının adını anar, yeni rolün sana neden uyduğunu tek satırda söyler ve doğrudan referans ister. Bu, asla iş istemeyen ekip arkadaşı mesajının tam tersidir. Kayıtlı bir kişi, ancak onunla gerçek bir geçmiş ilişkin olduğunu onayladıktan sonra şirket içi referans olarak işaretlenir; aynı şirkette çalışıyor olmak yeterli değildir. Bir işe alım uzmanının veya mülakatçının yanıtından kişi kaydetmek için yanıtı bir dosyaya yapıştır ve `node contact-extract.mjs --file <email.txt>` komutunu çalıştır; komut dosyaya yazmadan önce sana sorar. contacto her mesajın taslağını hazırlar; gönderip göndermeyeceğine sen karar verirsin.
+
+## Ne zaman kullanılır?
+
+Bir role başvurduğunda ve referans yolu aramak istediğinde contacto'yu kullan. Sıcak bir tanıştırma seni işe alım uzmanının önündeki başvuru yığınının ötesine taşıyabilecekse başvurmadan önce de kullanabilirsin. Varsayılan kullanım LinkedIn'deki güçlü hamledir; katı karakter sınırı olan bir platform için (iş ilanı sitesindeki bir sohbet kutusu, soğuk e-postanın açılışı, BOSS Zhipin'deki 打招呼) "greeting" iste. contacto bu durumda kişi araması yapmadan, çok kısa tek bir ilk temas mesajı yazar.
+
+## Örnek bir çalıştırma
+
+contacto'ya bir şirket adı ver; iletişime geçmeye değer kişileri bulur, orada olmandan en çok kazanç sağlayacak kişiyi seçer ve o kişinin profiline uygun bir mesaj yazar: işe alım uzmanına zorunlu şartları karşıladığını, işe alım yöneticisine yaratacağın etkiyi anlatır.
+
+```txt title="Example"
+> /career-ops contacto notion
+
+Targets found (WebSearch):
+  • Hiring manager — Head of Applied AI
+  • Recruiter — Technical Talent Partner
+  • 2 peers — AI Engineers on the team
+
+Primary target: Hiring Manager
+
+Draft (287/300 chars):
+> Saw Notion is scaling agent tooling inside the editor. I built and
+> sold an AI-workflow company in 2025 that shipped the same kind of
+> pipeline. Would love to hear how your team is approaching it.
+
+Alternative: message the recruiter first if you want a faster screen
+than a cold note to the manager.
+```
+
+## Dikkat edilmesi gerekenler
+
+contacto LinkedIn'den veri kazımaz (#238 numaralı issue'da reddedildi). Senin verdiğin bağlamla (CV'n, önceki işverenlerin, andığın ortak bağlantılar) ve herkese açık WebSearch sonuçlarıyla çalışır. Ajanın LinkedIn'deki özel bağlantı ağına erişimi yoktur. Her mesaj LinkedIn'in bağlantı isteklerindeki 300 karakter sınırının altında kalır ve telefon numaranı asla içermez.
+
+## İlgili sayfalar
+
+- [deep](/tr/docs/reference/modes/deep)
+- [interview-prep](/tr/docs/reference/modes/interview-prep)

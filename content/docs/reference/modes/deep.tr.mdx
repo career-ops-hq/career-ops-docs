@@ -1,0 +1,52 @@
+---
+title: deep
+description: "Değerlendirdiğin şirket için yapılandırılmış bir araştırma prompt'u üretir: yapay zeka stratejisi, son hamleler, mühendislik kültürü, olası zorluklar, rakipler ve aday olarak senin açın. İyi tanımadığın Seri B veya daha ileri aşamadaki bir şirkete başvurmadan önce bu prompt'u Perplexity, Claude ya da ChatGPT'ye yapıştır."
+seoTitle: "career-ops deep modu: başvurmadan önce şirket araştırması prompt'u"
+icon: Search
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: cef52678d1e8b67a
+localized: true
+translatedFrom: /docs/reference/modes/deep
+---
+
+## Ne yapar?
+
+`deep` modu, değerlendirdiğin şirket için altı eksen etrafında düzenlenmiş yapılandırılmış bir araştırma prompt'u üretir: şirketin yapay zeka stratejisi, son altı aydaki hamleleri, mühendislik kültürü, muhtemelen karşılaştığı teknik zorluklar, rakipleri ve farklılaştığı noktalar, bir de aday olarak senin açın. Bu prompt'u Perplexity, Claude veya ChatGPT gibi bir araştırma aracına yapıştırırsın; araç da mülakattan önce okuyabileceğin bir özet döndürür. deep, her ekseni ilgili rol ve şirkete göre kişiselleştirir.
+
+## Ne zaman kullanılır?
+
+Seri B veya daha ileri aşamadaki bir şirkete başvururken, başvurup başvurmama ya da mülakata nasıl hazırlanma kararın için iş ilanının söylediklerinden fazlasına ihtiyaç duyduğunda deep'i kullan. Aday açısı ekseni cv.md ve profile.yml dosyalarından beslenir; bu sayede dönen özet, genel şirket bilgileriyle değil, senin özel olarak neler getirdiğinle sona erer.
+
+## Bir çalıştırma nasıl görünür?
+
+deep'e bir şirket ve rol ver, sana yapıştırmaya hazır bir araştırma prompt'u yazsın. Altı eksenin her biri, araştırma aracının yanıtlaması gereken sorulardan oluşan bir kontrol listesidir; son eksen ise bulguları yeniden sana bağlar.
+
+```txt title="Example"
+> /career-ops deep notion
+
+Deep Research: Notion — Applied AI Engineer
+Paste the block below into Perplexity, Claude, or ChatGPT.
+
+1. AI strategy — which products use AI/ML, the stack behind them,
+   the engineering blog, any papers or talks.
+2. Recent moves (last 6 months) — AI/ML hires, acquisitions,
+   product launches, funding or leadership changes.
+3. Engineering culture — ship cadence, monorepo vs multirepo,
+   languages, remote posture, Glassdoor/Blind signals.
+4. Likely challenges — scaling, reliability, cost, latency, any
+   migration in flight.
+5. Competitors and differentiation — main rivals and the moat.
+6. Candidate angle — given my cv.md and profile.yml, the unique
+   value I bring and the story to tell in the interview.
+```
+
+## Dikkat edilmesi gerekenler
+
+Özet, ancak araştırma aracının bulabildiği kamuya açık bilgiler kadar iyidir. Gizli modda çalışan startup'lar için sonuçlar zayıf çıkar ve her araç bir yatırım turunu ya da bir yöneticinin adını uydurabilir. Önemli bir karar vermeden önce her şeyi birincil kaynaklardan doğrula.
+
+## İlgili sayfalar
+
+- [oferta](/tr/docs/reference/modes/oferta)
+- [contacto](/tr/docs/reference/modes/contacto)
+- [interview-prep](/tr/docs/reference/modes/interview-prep)

@@ -1,0 +1,63 @@
+---
+title: Lever
+description: "Lever, orta ölçekli ve büyüme aşamasındaki şirketlerin yaygın olarak kullandığı köklü bir ATS'dir. career-ops, Lever'ın herkese açık ilan API'sine doğrudan bağlanır."
+seoTitle: "career-ops ile Lever ilanlarını tarama: token harcamadan ATS portal taraması"
+icon: Wrench
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: c4bc88a2232f7c33
+localized: true
+translatedFrom: /docs/reference/portals/lever
+---
+
+## Ne yapar?
+
+providers/lever.mjs içindeki lever sağlayıcısı, api.lever.co/v0/postings/`{slug}` adresine HTTP istekleri gönderir ve gelen JSON yanıtını ayrıştırır. Slug, şirketin Lever'daki ilan tanımlayıcısıdır (ör. Mistral AI için 'mistral').
+
+## Ne zaman kullanılır?
+
+Hedeflediğin şirketler pozisyonlarını Lever'da yayımlıyorsa Lever taramasını kullan. Mistral AI, Palantir ve Spotify, templates/portals.example.yml içinde önceden yapılandırılmış Lever sayfaları arasında yer alır.
+
+## Örnek
+
+```yaml title="portals.yml"
+- name: Mistral AI
+  careers_url: https://jobs.lever.co/mistral
+  enabled: true
+```
+
+Bir sonraki tarama, Mistral AI'ın açık pozisyonlarını bulur.
+
+## Tarama aracı ne yapar?
+
+Tarama aracı, portals.yml dosyasından etkin Lever slug'larını okur, her biri için Lever'ın herkese açık ilan API'sini çağırır ve başlığı eşleşen yeni pozisyonları pipeline'ına ekler. Bunun için tarayıcı oturumu açılmaz ve veri çekerken hiç LLM token'ı harcanmaz. Aynı `node scan.mjs` çalıştırması Greenhouse ve Ashby sayfalarını da kapsar, ardından tüm sonuçları yapılandırdığın başlık anahtar kelimelerine göre filtreler.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Çıktı"
+Companies scanned:     12
+Total jobs found:      33
+Filtered by title:     28 removed
+Duplicates:            2 skipped
+New offers added:      3
+
+New offers:
+  + Mistral AI | Applied AI Engineer | Paris, France
+  + Palantir | Forward Deployed Engineer | London, UK
+  + Spotify | ML Engineer, Search | Stockholm, Sweden
+```
+
+## career-ops, Lever'a nasıl bağlanır?
+
+career-ops, `api.lever.co/v0/postings/{slug}` adresine ya da AB'deki sayfalar için `api.eu.lever.co` sunucusuna istek gönderir ve ilanlardan oluşan JSON dizisini okur. Her pozisyon için `text` alanını başlık, `hostedUrl` alanını bağlantı olarak alır; konumu, oluşturulma tarihini ve tam açıklamayı da kaydeder. Lever tüm sayfayı tek bir yapılandırılmış yanıtta döndürdüğü için tarama, şirket başına tek bir herkese açık HTTPS GET isteğinden oluşur; hız sınırlarının içinde kalır ve model token'ı harcamaz. Token maliyeti ancak daha sonra, ilgilendiğin bir pozisyonu değerlendirdiğinde başlar. Taramayı yeniden çalıştırmak güvenlidir: her URL; tarama geçmişin, değerlendirdiğin başvurular ve mevcut pipeline ile karşılaştırılarak tekilleştirilir, böylece daha önce gördüğün bir pozisyon asla ikinci kez eklenmez.
+
+## Dikkat edilmesi gerekenler
+
+Lever'ın API'si, ilan yanıtında iş tanımının tamamını sunar: giriş metnini, her liste bölümünü (ör. gereksinimler ve sorumluluklar) ve kapanış metnini. `portals.yml` içindeki içerik filtreleri (`content_filter` ve `visa_filter`) bunların hepsini okur; bu nedenle yalnızca bir Lever pozisyonunun gereksinimler listesinde geçen bir ifade de eşleşir.
+
+## İlgili sayfalar
+
+- [greenhouse](/tr/docs/reference/portals/greenhouse)
+- [ashby](/tr/docs/reference/portals/ashby)

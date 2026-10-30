@@ -1,0 +1,56 @@
+---
+title: ofertas
+description: "Elinde birbiriyle yarışan iki veya daha fazla teklif olduğunda ve bunları ücret, role uygunluk, kariyer gelişimi ve uyarı işaretleri açısından aynı ölçütlerle karşılaştırman gerektiğinde kullanılır. Sonuç olarak sıralı bir öneri verir."
+seoTitle: "career-ops ofertas modu: iş tekliflerini yan yana karşılaştırma"
+icon: GitCompare
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: d1226dc3d5c18347
+localized: true
+translatedFrom: /docs/reference/modes/ofertas
+---
+
+## Ne yapar?
+
+`ofertas` modu, yapıştırılmış metin, URL veya tracker'ında daha önce değerlendirdiğin pozisyonlar olarak verdiğin iki veya daha fazla işi alır ve on boyut üzerinden hesaplanan ağırlıklı bir puanla bunları birbirine göre sıralar. Çıktıda her iş için boyut bazında puanlar, ağırlıklı toplam puan ve teklife kadar geçecek süreyi de hesaba katan sıralı bir öneri yer alır.
+
+## Ne zaman kullanılır?
+
+ofertas'ı birden fazla pozisyon için mülakatların son aşamalarına geldiğinde ve aralarında yapılandırılmış bir şekilde seçim yapman gerektiğinde kullan. Özellikle ücret paketlerinin ve gelişim yollarının belirgin biçimde ayrıştığı staff seviyesi tekliflerde işe yarar.
+
+## Örnek bir çalıştırma
+
+Moda iki veya daha fazla teklif verirsin; mod her birini ağırlıklandırılmış on boyutta puanlar ve ardından sıralar. En yüksek ağırlık North Star uyumundadır (%25); onu CV uyumu ve kıdem izler (her biri %15). Ücret ve kariyer gelişimi %10'ar ağırlık taşır; kalan kısmı itibar, uzaktan çalışma kalitesi, teknoloji yığını, teklife kadar geçecek süre ve kültürel sinyaller tamamlar.
+
+```bash title="Terminal"
+/career-ops ofertas
+```
+
+```txt title="Comparison excerpt"
+# Offer Comparison — 3 roles
+
+| Dimension (weight)       | Acme | Globex | Initech |
+|--------------------------|------|--------|---------|
+| North Star align (25%)   | 5    | 3      | 4       |
+| CV match (15%)           | 4    | 4      | 3       |
+| Compensation (10%)       | 3    | 5      | 4       |
+| Growth trajectory (10%)  | 5    | 3      | 3       |
+| ...                      |      |        |         |
+| Weighted total           | 4.4  | 3.6    | 3.5     |
+
+Recommendation: Acme — strongest North Star fit and growth path.
+Globex pays more but ranks lower on trajectory and time-to-offer.
+```
+
+## En çok ne zaman işe yarar?
+
+Elinde birbiriyle yarışan iki veya daha fazla teklif varsa ve aynı ölçütlerle seçim yapmak istiyorsan ofertas tam sana göre. En çok, ücret paketlerinin ve gelişim yollarının içgüdülerini yanıltacak kadar ayrıştığı staff seviyesinde işe yarar.
+
+- İlanları yapıştırılmış metin, URL veya tracker'ında zaten bulunan işlere referans olarak ver; bağlamda hiç ilan yoksa mod bunları senden ister.
+- Önce her teklifi `oferta` veya `auto-pipeline` ile tek tek puanla; böylece karşılaştırma, farklı derinlikleri birbirine karıştırmak yerine tutarlı değerlendirmeleri sıralar.
+- North Star uyumunun ağırlığı %25 olduğu için tek başına yüksek maaş sıralamanın başına geçmeye yetmez; hedeflediğin kariyer yoluna uyan bir pozisyon, daha iyi ödeyen ama seni bu yoldan uzaklaştıran bir pozisyonu geride bırakabilir.
+
+## İlgili sayfalar
+
+- [oferta](/tr/docs/reference/modes/oferta)
+- [auto-pipeline](/tr/docs/reference/modes/auto-pipeline)

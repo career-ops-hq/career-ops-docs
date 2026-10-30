@@ -407,6 +407,73 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "CareerOps (uma palavra só) é o nome da prática; career-ops (com hífen, em minúsculas) é o projeto open source — a primeira implementação de referência dela. O CareerOps Manifesto define a prática. Em termos simples: o career-ops é o sistema de busca de emprego com IA, licenciado sob MIT, que roda localmente dentro da sua CLI de programação com IA, publicado em career-ops.org e em github.com/career-ops-hq/career-ops. CareerOps é a prática que ele materializa — conduzir a busca de emprego do jeito que engenheiros operam sistemas em produção —, nomeada e definida em The CareerOps Manifesto: nove direitos que toda pessoa que procura emprego deveria ter, assinados publicamente pela comunidade. Os dois vêm do mesmo autor, Santiago Fernández de Valderrama Aparicio, e os dois remontam ao mesmo repositório.",
     },
   ],
+  tr: [
+    {
+      question: "career-ops ücretsiz mi?",
+      answer:
+        "career-ops ücretsizdir: MIT lisansıyla açık kaynaklıdır ve hep öyle kalacak. Olası tek maliyet, üzerinde çalıştığı yapay zeka motorudur ve o da ücretsiz olabilir: ücretsiz bir sağlayıcıyla OpenCode, Ollama üzerinden yerel bir model veya OpenRouter'ın ücretsiz modellerinde yerleşik npm run or çalıştırıcısı. Ücretsiz bir yapay zeka motoru kur rehberi her yolu adım adım anlatır. career-ops'un ücretli planı, paketi veya deneme süresi yoktur: %100 ücretsizdir ve MIT lisanslıdır. career-ops fiyatlandırmasından söz eden her site başka bir üründen bahsediyordur.",
+    },
+    {
+      question: "Abonelik ödemem gerekiyor mu?",
+      answer:
+        "career-ops için Claude aboneliği gerekmez: belirli bir yapay zekaya bağlı değildir ve Claude Code bir zorunluluk değil, birkaç motordan yalnızca biridir. Tüm pipeline'ı ücretsiz bir sağlayıcıyla OpenCode, Ollama üzerinden yerel bir model veya yerleşik OpenRouter çalıştırıcısı (npm run or) ile ücretsiz olarak çalıştırabilirsin. Ücretli bir planla başladıysan ve iş aramanın ortasında token'ların bittiyse, ücretsiz bir motora geçmek birkaç dakika sürer ve verilerine dokunmaz. Ayrıntılar için Ücretsiz bir yapay zeka motoru kur rehberine bak.",
+    },
+    {
+      question: "Claude Pro veya Max aboneliğim var. career-ops neden API kredilerimi harcıyor?",
+      answer:
+        "career-ops'un Claude aboneliğini mi yoksa API kredilerini mi kullandığını görmek için career-ops klasöründen node doctor.mjs komutunu çalıştır. doctor, başka bir şey harcamadan önce bu oturumun hangi faturalama kaynağını kullandığını tek satırda bildirir. Faturalama kuralını career-ops belirlemez: kararı CLI'n verir ve ANTHROPIC_API_KEY önceliklidir. Bu değişken ortamında tanımlıysa, Pro veya Max için ödeme yapıyor olsan bile Claude Code token başına faturalandırır. career-ops faturalama kaynağını seçmez; yalnızca onu tespit eder ve seni uyarır. Anahtar mevcutsa doctor şunu söyler: ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max. Aboneliğine dönmek için export ANTHROPIC_API_KEY=... satırını ~/.zshrc, ~/.bashrc, ~/.profile veya projedeki .env dosyasından kaldır, terminalini yeniden başlat ve /login komutunu çalıştır. Toplu çalıştırmalar bunun istisnasıdır: claude -p işçileri etkileşimli girişi kullanmaz, bu yüzden claude setup-token çıktısının CLAUDE_CODE_OAUTH_TOKEN olarak export edilmesi gerekir. Claude Code'un API kredilerini kullanmasını zaten istiyorsan ortada bir sorun yoktur ve yapman gereken bir şey de yoktur. ANTHROPIC_API_KEY kuralı Anthropic motorları için geçerlidir. Diğer CLI'lar (Codex, OpenCode, Copilot, Gemini, Qwen) abonelik ve anahtar arasındaki kuralı kendileri belirler ve career-ops bunları kontrol etmez. Bunun için kullandığın CLI'ın kendi belgelerine bak.",
+    },
+    {
+      question: "career-ops'u çalıştırmanın aylık maliyeti ne kadar?",
+      answer:
+        "career-ops'ta yalnızca değerlendirmenin bir maliyeti vardır ve değerlendirme de $0 olabilir. İş taraması hiç yapay zeka token'ı harcamaz, yani pozisyon keşfetmek her zaman ücretsizdir; modeli yalnızca bir ilanı değerlendirmek çağırır. Tüm pipeline'ı hiç ödeme yapmadan çalıştırmanın üç yolu vardır: Ollama üzerinden yerel bir model, OpenRouter'ın ücretsiz modelleri (npm run or) veya Antigravity'nin ücretsiz katmanı. DeepSeek V3 gibi ucuz bir ücretli modelde (prompt caching ile) bir değerlendirme bir sentin çok altına mal olur, yani birkaç sent onlarca ilana yeter. Zaten bir Claude aboneliğin varsa ek maliyet fiilen $0'dır; doğrudan API'de değerlendirme başına yaklaşık $0,05 ile $0,10 arasında bütçe ayır (bu, ilanın uzunluğuna göre değişen bir tahmindir). career-ops'un kendisi sonsuza dek ücretsizdir, MIT lisanslıdır, ücreti ve paketi yoktur; ödeme yapacaksan yalnızca yapay zeka sağlayıcına yaparsın. Ücretsiz bir yapay zeka motoru kur rehberi $0'lık yolları adım adım anlatır. Değerlendirme başına daha az harcamak için config/profile.yml içinde spend_tier değerini ayarla: economy, CLI'ının en ucuz ve en hızlı model katmanını kullanır ve çok sayıda ilanı değerlendirmeye uygundur; standard varsayılandır; premium ise senin için en önemli ilanlarda en yetenekli modeli kullanır. İlk kurulum sohbeti ve uyarlanmış PDF de modelinde çalışır, yani onlar da token harcar.",
+    },
+    {
+      question: "Verilerim nerede saklanıyor?",
+      answer:
+        "career-ops verilerini kendi bilgisayarında, sahibi olduğun düz dosyalarda tutar: CV'n, profilin, pipeline'ın ve raporların yerel Markdown/YAML dosyalarıdır. career-ops sunucularında hiçbir şey çalışmaz. Sistem güncellemeleri veri katmanına (cv.md, config/, data/, reports/, output/) asla dokunmaz: bu ayrım Data Contract (veri sözleşmesi) olarak adlandırılır ve her güncelleme ona uyar.",
+    },
+    {
+      question: "career-ops'a CV'mi nasıl veririm?",
+      answer:
+        "career-ops'a CV'ni vermek için ilk kurulum sırasında CV metnini sohbete yapıştır; ajan cv.md dosyasını senin için yazar. Metni yapıştırmak, rehberli yoldur. Ajanı PDF dahil mevcut bir CV dosyasına da yönlendirebilirsin: dosyayı okur ve dönüştürür, çünkü ayrıştırmayı bir career-ops script'i değil, yapay zeka ajanın yapar. cv.md sahibi olduğun düz bir dosya olduğu için onu istediğin zaman elle de yazabilir veya düzenleyebilirsin. Ajan, standart bölümlerden (Özet, Deneyim, Projeler, Eğitim, Beceriler) oluşan temiz bir markdown üretir. Kurulum sırasında yapılandırma dosyalarını da elle düzenlemezsin: sade bir dille yanıt verirsin, ajan da config/profile.yml ve diğer dosyaları senin için yazar.",
+    },
+    {
+      question: "career-ops hangi yapay zeka kodlama CLI'larıyla çalışır?",
+      answer:
+        "career-ops, on bir yapay zeka kodlama CLI'ıyla birinci sınıf destekle çalışır: Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent ve GitHub Copilot CLI (Gemini CLI yalnızca eski bir sarmalayıcı olarak kalmıştır). career-ops belirli bir yapay zekaya bağlı değildir: CLI'ın çalıştırdığı prompt dosyalarıyla gelir, bu yüzden kodu hiç değiştirmeden OpenAI uyumlu herhangi bir uç noktaya veya yerel bir modele de yönlendirebilirsin. Güncel liste ve her birinin nasıl çağrılacağı için Desteklenen yapay zeka CLI'ları sayfasına bak.",
+    },
+    {
+      question: "scan ile scan:full arasındaki fark nedir?",
+      answer:
+        "npm run scan, portals.yml içinde yapılandırdığın şirketleri okur ve her birini onu tanıyan sağlayıcı üzerinden getirir (örneğin Greenhouse, Ashby, Lever); hiç LLM token'ı harcamaz. Düzenli günlük veya haftalık keşif taraman budur. npm run scan:full ise yönü tersine çevirir: herkese açık ATS şirket dizinlerini gezer ve title_filter / location_filter filtrelerine uyan yeni ilanları öne çıkarır, böylece elle eklemediğin şirketlerdeki pozisyonları da yakalarsın.",
+    },
+    {
+      question: "Toplu çalıştırmada token veya hız limitlerine takılmamak için ne yapmalıyım?",
+      answer:
+        "career-ops'ta toplu çalıştırma sırasında token veya hız limitlerine takılmamak için, daha büyük bir partiye geçmeden önce çıktı kalitesini incelemek üzere çalıştırmayı ./batch/batch-runner.sh --limit 5 ile sınırla. Bir çalıştırma hız limiti veya ağ hatası yüzünden kesilirse baştan başlama: zaten tamamlanmış işleri atlamak için --resume-paused kullan, böylece biten işe token harcanmaz. needs_confirmation durumundaki bir iş rapor, CV, başvuru taslağı veya tracker satırı üretmez; --resume-paused onu sürdürmez. Sorusunu üst etkileşimli oturumda açıkça yanıtla.",
+    },
+    {
+      question: "Windows'ta skill'ler yüklenmiyor: kurulumda symlink hatası",
+      answer:
+        "Windows varsayılan olarak symlink oluşturmaz, bu yüzden Git career-ops CLI skill giriş noktalarını düz işaretçi dosyaları olarak çeker. Kurulum ve güncelleme araçları bunu otomatik olarak algılar: node update-system.mjs apply --confirm komutunu (yeni bir kurulumda npx @santifer/career-ops init) çalıştır, materialize adımı işaretçi dosyalarını skill'lerin tam içeriğiyle değiştirir. Bağlı bir Git worktree'sinden çalıştırıldığında apply --confirm bu onarımı main checkout'unda yapar. Onarımı almak için worktree'de git merge main çalıştır; güncellenmiş main dalından oluşturulan worktree'lerde onarım zaten bulunur. CAREER_OPS_UPDATE_IN_WORKTREE=1 ayarlıysa apply bunun yerine yalnızca o worktree'nin dalını onarır ve main onarılmadan kalır. Elle mklink veya Developer Mode değişikliği gerekmez.",
+    },
+    {
+      question: "career-ops'u daha ucuz veya yerel bir modelle çalıştırabilir miyim?",
+      answer:
+        "career-ops, belirli bir yapay zekaya hiç bağlı olmadığı için daha ucuz veya yerel bir modelle çalışabilir. Ana deponun Running on a Budget rehberi OpenCode, Qwen CLI, DeepSeek, OpenRouter, Ollama ve diğer düşük maliyetli veya yerel sağlayıcıları, önerilen model boyutları (güvenilir puanlama için 32B+) ve token tasarrufu yöntemleriyle birlikte anlatır.",
+    },
+    {
+      question: "career-ops başvuruları otomatik gönderir mi?",
+      answer:
+        "career-ops başvuruları otomatik göndermez: hazırlık yapar (ilanları tarar, puanlar, CV'ni uyarlar ve ATS başvuru formlarını önceden doldurabilir), ama göndermek her zaman senin açıkça tıklamanla olur. career-ops projesi, körlemesine toplu başvuru otomasyonunu açıkça reddeder: amaç şirketleri iyi seçmektir, hacim uğruna körü körüne başvurmak değil.",
+    },
+    {
+      question: "career-ops ile CareerOps arasındaki fark nedir?",
+      answer:
+        "CareerOps (tek kelime) uygulamanın adıdır; career-ops (tireli, küçük harfle) ise açık kaynaklı projedir ve bu uygulamanın ilk referans gerçeklemesidir. The CareerOps Manifesto bu uygulamayı tanımlar. Kısacası: career-ops, yapay zeka kodlama CLI'ının içinde yerel olarak çalışan, MIT lisanslı, açık kaynaklı yapay zeka iş arama ajanıdır ve career-ops.org ile github.com/career-ops-hq/career-ops adreslerinde yayımlanır. CareerOps ise onun hayata geçirdiği uygulamadır: iş aramayı, mühendislerin production ortamını yönettiği gibi yürütmek. Adını ve tanımını, her iş arayanın sahip olması gereken dokuz hakkı içeren ve topluluk tarafından herkese açık olarak imzalanan The CareerOps Manifesto belirler. İkisi de aynı yazardan, Santiago Fernández de Valderrama Aparicio'dan gelir ve ikisinin de kökeni aynı depoya dayanır.",
+    },
+  ],
   zh: [
     {
       question: "career-ops 会自动投递简历吗？",
@@ -577,6 +644,23 @@ export const CLAUDE_CODE_FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Preciso do Claude Pro?",
       answer:
         "O Claude Code exige um plano pago do Claude ou uma chave de API da Anthropic. O career-ops em si é gratuito e tem licença MIT, e também roda em provedores gratuitos pelo OpenCode.",
+    },
+  ],
+  tr: [
+    {
+      question: "Claude Code benim için iş arayabilir mi?",
+      answer:
+        "Claude Code, career-ops ile iş aramanı yürütebilir: şirketlerin kariyer sayfalarını tarar, her ilanı CV'ne göre puanlar ve peşinden gitmeye değer ilanlar için başvuru materyallerinin taslağını hazırlar. Hangi başvuruları göndereceğine sen karar verirsin.",
+    },
+    {
+      question: "career-ops başvuruları otomatik gönderir mi?",
+      answer:
+        "Hayır. career-ops asla senin adına başvurmaz. Materyallerin taslağını hazırlar; her başvuruyu kendin gözden geçirir, düzenler ve gönderirsin.",
+    },
+    {
+      question: "Claude Pro gerekiyor mu?",
+      answer:
+        "Claude Code, ücretli bir Claude planı veya bir Anthropic API anahtarı gerektirir. career-ops'un kendisi ücretsizdir ve MIT lisanslıdır; ayrıca OpenCode üzerinden ücretsiz sağlayıcılarla da çalışır.",
     },
   ],
   zh: [

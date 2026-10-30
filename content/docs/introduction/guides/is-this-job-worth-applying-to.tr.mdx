@@ -1,0 +1,181 @@
+---
+title: "Bu iş ilanına başvurmaya değer mi?"
+description: "Başvurmadan önce karar ver. career-ops bir iş ilanını CV'ne ve hedeflerine göre 1-5 arası puanlar, gerekçesini gösterir ve kararı sana bırakır."
+seoTitle: "Bu iş ilanına başvurmaya değer mi? career-ops ile başvurmadan önce karar ver: 1-5 arası puan ve gerekçesi"
+icon: Scale
+translationHash: b1e264742d31f2d3
+localized: true
+translatedFrom: /docs/introduction/guides/is-this-job-worth-applying-to
+---
+
+Bir iş ilanı; CV'ne, seviyene ve koşullarına başvuruyu haklı çıkaracak kadar uyuyorsa başvurmaya değerdir. career-ops ilanı CV'n ve hedeflerinle karşılaştırarak okur, 1-5 arası bir puan verir ve gerekçesini gösterir; puan 4,0'ın altındaysa özel bir nedenin yoksa başvurmamanı önerir. Kararı sen verirsin.
+
+Başvurmadan önce bir ilanı kontrol etmek için `/career-ops oferta` komutunu çalıştır ve ilanı yapıştır. Değerlendirir ve taslakları hazırlar; kararı sen verir, başvuruyu sen gönderirsin. career-ops asla senin adına başvurmaz.
+
+**Bu sayfada:** [Başvurmadan önce karar ver](#decide-before-you-apply) · [Bir ilanı nasıl kontrol edersin](#how-do-i-check-a-job-before-i-apply) · [Puan nasıl belirlenir](#how-does-career-ops-decide-the-score) · [Puanı neler değiştirmez](#what-does-not-change-the-score) · [4,0'ın altında](#what-happens-below-40) · [Değerlendirme sana ne verir](#what-does-the-evaluation-give-you) · [Kurgusal bir örnek](#a-fictional-example) · [Ona kim olduğunu anlat](#the-first-evaluations-are-rough-until-you-tell-it-who-you-are) · [Puanı kendi sonuçlarınla karşılaştır](#is-the-score-right-for-you) · [İki teklifi maaşın ötesinde karşılaştır](#compare-two-offers-beyond-salary) · [Kendi rakamlarınla pazarlık yap](#negotiate-with-your-own-numbers) · [SSS](#frequently-asked-questions)
+
+## Başvurmadan önce karar ver [#decide-before-you-apply]
+
+career-ops tek bir karar üzerine kurulu: bir ilan başvuruyu hak ediyor mu? Bu gece başvurmak üzere olduğun ilanı yapıştır, o gecenin buna değip değmeyeceğini söylesin. Sana kimin cevap vereceğini söyleyemez. Geceni sessizlikle bitebilecek bir başvuruya harcamadan önce, rolün CV'ne ve istediklerine ne kadar uyduğunu söyler.
+
+career-ops nicelik için değil, nitelik için tasarlandı. Seni daha az ama daha iyi başvurulara yönlendirir ve bir ilan yetersiz kaldığında bunu açıkça söyler. *Başvurma* diyen bir sonuç, ürünün işini yaptığı anlamına gelir.
+
+Daha az ama daha iyi başvuru, masanın iki tarafı için de bir saygınlık meselesidir. İşe alım uzmanlarının zamanı saygıyı hak eder. Seninki de öyle.
+
+> career-ops'u kendi 2026 iş aramam için geliştirdim. Benim hunim: 740 ilan değerlendirildi → 68 başvuru → 12 mülakat → 1 teklif. — Santiago Fernández de Valderrama Aparicio
+
+## Başvurmadan önce bir iş ilanını nasıl kontrol ederim? [#how-do-i-check-a-job-before-i-apply]
+
+<Callout title="Başlamadan önce">
+  career-ops'u [Hızlı Başlangıç](/tr/docs) ile kur ve [desteklenen CLI'lardan](/tr/docs/supported-clis) birinde aç. Ona kim olduğunu anlatana kadar değerlendirmeler, yapay zeka rollerini hedefleyen hazır profile göre puanlanır: bkz. [ilk değerlendirmeler kabadır](/tr/docs/introduction/guides/is-this-job-worth-applying-to#the-first-evaluations-are-rough-until-you-tell-it-who-you-are).
+</Callout>
+
+career-ops'un önce karar vermek için yalnızca değerlendirme yapan bir modu vardır. Yapay zeka destekli kodlama CLI'ını career-ops klasöründe aç, aşağıdaki komutu çalıştır ve iş tanımını ya da URL'sini yapıştır:
+
+```bash title="Claude Code"
+/career-ops oferta
+```
+
+`oferta` modu değerlendirmeyi yapar ve raporu yazar; otomatik PDF üretmez. Bunun yerine bir ilanı doğrudan `/career-ops` komutuna yapıştırırsan tam pipeline çalışır ve puan ne olursa olsun CV'ni de uyarlar (varsayılan olarak PDF). Her şeyden önce sonucu görmek istediğinde `oferta` kullan. Sonra başvurmaya karar verirsen `/career-ops pdf` CV'ni uyarlar, `/career-ops apply` ise başvuru formundaki sorulara taslak cevaplar hazırlar; bunları gözden geçirip başvuruyu kendin gönderirsin.
+
+Codex'te slash komutları garanti değildir: bunun yerine modu bir prompt içinde belirt, örneğin `Run the career-ops oferta mode on this job: {URL}`.
+
+career-ops puan vermeden önce birkaç kontrol yapar. Ona bir URL verdiğinde önce ilanın hâlâ yayında olduğunu doğrular; ölü bir bağlantı çalışmayı değerlendirmeden önce durdurur, rapor ve CV üretilmez. Yapıştırılan metin bu şekilde kontrol edilemez ve rapor bunu belirtir. `data/blacklist.md` dosyasında başvurmak istemediğin şirketlerin listesini tutuyorsan, listedeki bir şirket çalışmayı durdurur: career-ops kaydettiğin nedeni aktarır ve değerlendirmeyi yine de isteyip istemediğini sorar. İlan bir aracı kurum üzerinden gelmiş gibi görünüyorsa, herhangi bir şey yazmadan önce hangi kurum olduğunu sorar.
+
+Değerlendirme içindeki araştırma sınırlıdır. Ücret ve ilan güvenilirliği araştırması toplamda en fazla beş web aramasıyla sınırlıdır; bulamadığı her şey "ulaşılamadı" olarak işaretlenir. Bir şirketi daha derinlemesine incelemek için ayrıca `/career-ops deep` çalıştır.
+
+## career-ops puanı nasıl belirler? [#how-does-career-ops-decide-the-score]
+
+career-ops puanı, beş boyutun yönlendirdiği bütünsel bir değerlendirmedir:
+
+| Boyut                | Neye bakar                                                          |
+| -------------------- | ------------------------------------------------------------------- |
+| CV uyumu             | Becerilerinin, deneyiminin ve kanıtlarının işle ne kadar örtüştüğü  |
+| North Star uyumu     | Rolün profilindeki hedef rollere ne kadar uyduğu                    |
+| Ücret                | İlanda belirtilen ücretin piyasa araştırmasına göre durumu          |
+| Kültürel sinyaller   | Şirket kültürü, gelişim, istikrar ve uzaktan çalışma politikası     |
+| Kırmızı bayraklar    | Puanı aşağı çeken engeller ve uyarılar                              |
+
+career-ops genel puanı, beş boyutu aritmetik bir formül kullanmadan 1-5 arası tek bir sayıda birleştirir. Raporun bölümlerinin ortalaması alınmaz. Aynı puan hem raporun başlığına hem de tracker'ına yazılır.
+
+Kültürel uyum, güçlü bir CV uyumunun arkasına saklanamaz. `config/profile.yml` dosyasında kültür gereksinimleri belirlediysen ve ilandaki kanıtlar bunlarla çelişiyorsa, rapor eksik olanı açıkça söyler ve Kültürel sinyaller boyutuna bir üst sınır koyar. 4,5 veya üzeri puan alan ama kültürel uyumu zayıf olan bir rol, başvurmadan önce doğrulaman için açık bir uyarı taşır.
+
+career-ops çalışma iznini profiline göre kontrol eder. Bir ilan vize sponsorluğundan hiç bahsetmiyorsa puan düşmez. X, çalışma iznine sahip olduğun bir ülkeyse, genel geçer bir "must be authorized to work in X" ifadesi de puanı düşürmez. Çalışma iznine sahip olduğun bir ülkeden alamayacağın bir rol için "no visa sponsorship" veya "must have existing work authorization" gibi sponsorluğu açıkça dışlayan bir ifade ise kesin engel olarak kaydedilir ve rapor ilanın tam ifadesini aktarır.
+
+## Puanı neler değiştirmez? [#what-does-not-change-the-score]
+
+İlan güvenilirliği seviyesi 1-5 arası puanı asla değiştirmez. İlan güvenilirliği kontrolü (rapordaki Blok G); ilanın yaşı, başvuru düğmesinin hâlâ etkin olup olmadığı, tanımın ne kadar somut olduğu, yakın zamandaki işten çıkarma haberleri ve aynı rolün sürekli yeniden yayımlanıp yayımlanmadığı gibi sinyallere bakar. Üç seviyeden birini döndürür: High Confidence, Proceed with Caution veya Suspicious. Gördüğünü sunar, kimseyi suçlamaz, endişe verici bir sinyalin meşru açıklamalarını not eder ve yargıyı sana bırakır. İlan tarihi yoksa ve başka endişe verici bir şey bulunmuyorsa varsayılan seviye Proceed with Caution'dır, asla Suspicious değildir. Rol sana bir işe alım uzmanının mesajı veya aramasıyla ulaştıysa, kontrol uzmanı da doğrular: şirketin kendi kariyer sayfası, uzmanın e-posta alan adı, herkese açık dolandırıcılık bildirimleri ve gönderdiği bir kodu çalıştırman, bir sohbet uygulamasına geçmen ya da bir şey için ödeme yapman yönündeki talepler. Bir işe alım uzmanının sana ulaşması tek başına nötrdür; bu kontroller seviyeyi değiştirebilir, puanı asla. Kontrolün dayandığı şirket araştırması, örneğin şirketin istikrarıyla ilgili haberler, yine de Kültürel sinyaller boyutunu etkileyebilir.
+
+Gereksinimlerin önemi etiketlenir, puana sayılmaz. Rapor, ilanın önemli gereksinimlerini en fazla 12 satırda listeler ve sığdırmak için kritik veya yüksek öneme sahip olanları asla çıkarmaz. Her biri için bu ilanda ne kadar önemli olduğunu kritikten düşük sinyale kadar işaretler ve bunun ilanın kendi ifadesinden mi, yapısından mı yoksa etiketlenmiş bir tahminden mi geldiğini belirtir. Önem, CV'n okunmadan önce yalnızca ilana bakılarak doldurulur; böylece bir gereksinim sırf sen onda güçlüsün diye önemli sayılmaz. Karşılamadığın veya kısmen karşıladığın her kritik ya da yüksek öneme sahip gereksinim için belirli bir mülakat riski ve buna hazırlanma planı verilir. Önem etiketleri 1-5 arası puanı değiştirmez.
+
+Bir şirketle kendi geçmişin gösterilir, puana katılmaz. Daha önce oraya başvurup hiç cevap almadıysan ya da bir kez cevap alıp başka bir sefer sessizlikle karşılaştıysan, rapor bunu söyleyen tek bir not ekler. Bu not bir güvenilirlik sinyali değildir; ne puanı ne de seviyeyi değiştirir. Ne kadar emek harcayacağına karar verebilmen için oradadır.
+
+Kara listen hiçbir puanı değiştirmez: cevap verene kadar çalışmayı durduran bir kapıdır ve listeye senin yerine asla bir şey eklenmez.
+
+## Puan 4,0'ın altında kalırsa ne olur? [#what-happens-below-40]
+
+Puan 4,0'ın altındaysa career-ops, özel bir nedenin yoksa başvurmamanı önerir. Bu öneriyi geçersiz kılabilirsin; o da bunu belirtir.
+
+4,0 sınırı bir öneridir. Karar sende kalır, her başvuru da öyle: career-ops materyalin taslağını hazırlar, sen gözden geçirir ve gönderirsin. Ölçeğin diğer ucunda, 4,5 veya üzeri puan alan bir ilan için başvuru formuna taslak cevaplar da hazırlanır.
+
+## Değerlendirme sana ne verir? [#what-does-the-evaluation-give-you]
+
+career-ops her değerlendirmeyi `reports/` klasöründe bir rapora yazar ve tracker'ın olan `data/applications.md` dosyasına Evaluated durumuyla bir satır ekler. Raporun başlığında puan, güvenilirlik seviyesi ve çalışma izni durumu yer alır; altında ise makine tarafından okunabilir bir özet bulunur. Ana bölümler şu sırayla gelir:
+
+- A) Rol özeti
+- B) CV uyumu
+- C) Seviye ve strateji
+- D) Ücret ve talep
+- E) Uyarlama planı
+- F) Mülakat planı
+- G) İlan güvenilirliği
+- Karar, kalın harflerle yazılan sonuç (Apply, Consider, Research first veya Skip) ve yukarıdaki bloklardan tek bir gerekçe
+- Risk özeti, hiçbir şeyi yeniden puanlamadan risk sinyallerini tek ekranda toplar
+- Puan kanıtları, beş boyutun her birinin ne kadar desteklendiğini bir kanıt güven seviyesiyle gösterir
+- H) Taslak başvuru cevapları, yalnızca puan 4,5 veya üzeriyse
+
+İlanın kendisi rapora kelimesi kelimesine arşivlenir (çok uzun bir ilan, raporun işaret ettiği bir `jds/` dosyasına gider), böylece ilan yayından kalktıktan sonra da gereksinimleri elinde tutarsın. Sona, `/career-ops cover {slug}` ile tamamlaman için ilk bir ön yazı (motivasyon mektubu) taslağı eklenir.
+
+## Kurgusal bir örnek [#a-fictional-example]
+
+<Callout title="Kurgusal örnek">
+  Acme Freight, aşağıdaki rol ve aday hayal ürünüdür. Bu gerçek bir değerlendirme değildir ve gerçek bir değerlendirmeye de dayanmaz. Yalnızca gerekçenin nasıl okunduğunu gösterir.
+</Callout>
+
+Bu kurgusal örnekte Maya, career-ops'a ne istediğini anlatmış bir backend mühendisidir: ürün odaklı backend rolleri, küçük bir ekip, uzaktan çalışma. Acme Freight'teki Senior Platform Engineer ilanının URL'sini yapıştırır. Beş boyutta gerekçe şöyle ilerler:
+
+- **CV uyumu:** işin özünde, yani Go servisleri ve Postgres'te güçlü. Kritik bir gereksinim olan Kubernetes'i üretimde çalıştırma ise yalnızca kısmen karşılanıyor; bu yüzden rapor mülakat riskini ve buna hazırlanmanın bir yolunu belirtiyor.
+- **North Star uyumu:** hedeflerine yakın, ancak rol istediği ürün odaklı backend işinden çok altyapıya kayıyor.
+- **Ücret:** ilanda maaş belirtilmemiş. Rapor bunu söylüyor, şirket türünü sınıflandırıyor, bu tür bir şirket için herkese açık ücret verilerinin ne kadar güvenilir olduğunu derecelendiriyor ve orada duruyor.
+- **Kültürel sinyaller:** küçük bir ekip istemişti; ilan ise birkaç yönetim katmanına sahip büyük bir platform organizasyonunu anlatıyor. Rapor, güçlü CV uyumunun bunu gizlemesine izin vermek yerine bu farkı açıkça söylüyor.
+- **Kırmızı bayraklar:** başvuruyu engelleyen bir şey yok.
+
+**Puan (kurgusal): 3,6/5.** Puan 4,0'ın altında olduğu için career-ops, özel bir nedeni yoksa başvurmamasını öneriyor.
+
+Ayrıca bu örnekte güvenilirlik seviyesi Proceed with Caution: ilan sayfasında tarih yok ve başka endişe verici bir şey de bulunmuyor. Seviye puanı değiştirmez.
+
+Maya'nın raporun göremediği bir nedeni var: mühendislik yöneticisini tanıyor ve yönetici ona ekibin daha küçük gruplara bölüneceğini söylemiş. career-ops başvurmamasını önerdiğini zaten söyledi. Maya yine de devam ediyor; karar onun. career-ops'un hazırladığı taslakları gözden geçiriyor ve başvuruyu kendisi gönderiyor.
+
+## Ona kim olduğunu anlatana kadar ilk değerlendirmeler kabadır [#the-first-evaluations-are-rough-until-you-tell-it-who-you-are]
+
+career-ops elindeki profile göre puanlar ve hazır gelen profil senin değildir. Hazır profilin varsayılan hedef rollerinin hepsi yapay zeka rolleridir. `modes/_profile.md` dosyasını kişiselleştirene kadar değerlendirmeler, şablonun yazarının hedeflerine göre puanlanır ve `node doctor.mjs` çalıştırdığında bu durum işaretlenir. Profilinde kendi hedef rollerin yer aldığında her ilan bunlara göre sınıflandırılır: hiçbiriyle eşleşmeyen bir rol North Star uyumunda 1 alır ve rapor, onu en yakın rol türüne uydurmak yerine hedef olmadığını söyler.
+
+İlk çalıştırmalar kabadır. Seni henüz tanımıyor. Onunla konuş: CV'n, ne istediğin, neyi reddettiğin. İlk açılışta bunların hepsini sohbette sorar. Hedef rolleri değiştirmek için bunu sade bir dille söyle, örneğin "Arketipleri backend mühendisliği rollerine çevir". Herhangi bir değerlendirmeden sonra "bu puan fazla yüksek" veya "X'teki deneyimimi atlamışsın" gibi neyi yanlış yaptığını söyle; o da profil dosyalarını günceller.
+
+## Puan sana uygun mu? [#is-the-score-right-for-you]
+
+career-ops, puanının sonuçlarını öngördüğünü varsaymaz; bunu kontrol etmene olanak tanır. Her başvurunun sonucunu `/career-ops outcome` ile kaydet. Sonuçların biriktiğinde şunu çalıştır:
+
+```bash
+node calibrate.mjs
+```
+
+`calibrate` raporu tek bir soru sorar: daha yüksek puanlı başvuruların senin için daha sık mülakata ve teklife dönüşüyor mu? Tavsiye niteliğindedir. Puanlamayı, eşikleri veya yapılandırmanı asla değiştirmez ve hiçbir şey kendini otomatik olarak ayarlamaz. Örneklemin çok küçük olduğu oranları göstermez ve hâlâ süren başvuruları dışarıda bırakır. Sonuçların, sınırın senin için yanlış yerde olduğunu gösteriyorsa, kanıtların destekleyebileceği şey başvurduğun puanı veya hedeflediğin rolleri değiştirmektir. Bu karar senindir.
+
+## İki teklifi maaşın ötesinde karşılaştır [#compare-two-offers-beyond-salary]
+
+İki teklifi maaşın ötesinde karşılaştırmak için rolleri `/career-ops ofertas` ile karşılaştır, ardından her teklif mektubunu `/career-ops offer-prep` ile oku. `ofertas` modu iş ilanlarından çalışır: on boyutundan hiçbiri eline geçen bir teklif mektubunun koşullarını kapsamaz ve uzaktan çalışma kalitesi dışında işe gidiş geliş veya yaşam kalitesi boyutu yoktur.
+
+```bash title="Claude Code"
+/career-ops ofertas
+```
+
+`ofertas` modu iki veya daha fazla ilan alır: metinlerini, URL'lerini ya da tracker'ında daha önce değerlendirdiğin rolleri. Her rolü on boyutta 1-5 arası puanlar ve teklife ulaşma süresini de hesaba katan bir öneriyle birlikte bir sıralama döndürür.
+
+Maaş, yani tahmini ücret, `ofertas` modunun puanladığı on boyuttan biridir. Diğer dokuzu North Star uyumu, CV uyumu, seviye, gelişim çizgisi, uzaktan çalışma kalitesi, şirket itibarı, teknoloji yığınının güncelliği, teklife ulaşma hızı ve kültürel sinyallerdir.
+
+Aritmetik bir formülü olmayan 1-5 arası değerlendirme puanının aksine, `ofertas` karşılaştırması varsayılan ağırlıklar kullanır ve en çok North Star uyumu sayılır. Varsayılanlar kıdemli yapay zeka rollerine yakındır: seviye boyutu staff seviyesindeki rollere, teknoloji yığını boyutu ise en yeni yapay zeka ve ML teknolojilerine en yüksek puanı verir. Aradığın bu değilse, karşılaştırmadan önce senin için neyin önemli olduğunu söyle. Puanlama tercihlerin, karşılaştırmanın okuduğu `modes/_profile.md` profil dosyasında durur.
+
+### Kendi rakamlarınla pazarlık yap [#negotiate-with-your-own-numbers]
+
+career-ops seni kendi belgelerinden ve kendi rakamlarından yola çıkarak pazarlığa hazırlar. `offer-prep` modu teklif mektubunu veya sözleşmeni seninle birlikte okur ve teklifin düşük, adil ya da yüksek olduğu konusunda görüş bildirmez: bu karar senindir. Metni yapıştır veya dosyayı göster:
+
+```bash title="Claude Code"
+/career-ops offer-prep
+```
+
+`offer-prep` dikkat çekmeye değer her maddeyi kelimesi kelimesine aktarır, sade bir İngilizceyle açıklar ve "sık pazarlık edilir" veya "avukatına sor" gibi nötr etiketlerle işaretler. Avukatın için sorular, işverene iletilecek konular (talep olarak değil, her zaman soru olarak) ve bunun hukuki tavsiye olmadığını belirten sabit bir notla biter. Web araması yapmaz ve yalnızca İngilizce sözleşmeleri okur.
+
+`node salary-gap.mjs --summary`, her başvuru için ne istediğini, ilanda ne ilan edildiğini ve sana gerçekte ne teklif edildiğini gösterir. `node negotiation-roi.mjs --summary`, sayısı `cv.md` dosyanda da geçen bir "kazandırılan saat" iddiasından yola çıkarak, senin verdiğin ücret ve sıklıkla değer biçilen bir pazarlık argümanı taslağı hazırlar: bu bir tahmindir, finansal tavsiye değildir. `/career-ops offer-prep reply {company-slug}`, hazırlık raporundan bir cevap e-postası taslağı hazırlar; onu kendin gönderirsin.
+
+Bir rol başka bir eyalete taşınmayı gerektiriyorsa, aynı maaş vergi sonrasında sana farklı bir tutar bırakabilir. `salary-gap.mjs --relocation`, yıllık tek bir brüt tutar için iki yeri karşılaştırır:
+
+```bash
+node salary-gap.mjs --relocation --gross 95k --currency CAD --posting-location "Calgary, AB" --home-location "Toronto, ON"
+```
+
+`--gross` yıllık tutardır, `--currency` ise ilanın tutarı belirttiği para birimidir; bu para birimi vergi tablosuyla eşleşmediğinde betik tahmin yürütmek yerine karşılaştırmayı reddeder. `--home-location` isteğe bağlıdır: belirtilmezse konumun `config/profile.yml` dosyasından alınır. `--posting-location-file <path>`, ilanın konumunu komut satırı yerine bir dosyadan okur. Vergi tablosu şu anda Kanada'yı (federal vergi ile Ontario, Nova Scotia, Alberta ve British Columbia) kapsar ve ülkeler arası karşılaştırma yapmaz. Sonuç yalnızca vergi dilimlerini hesaba katar; vergi indirimlerini, bordro kesintilerini veya yaşam maliyetini içermez: kendi değerlendirmen için bir veri noktasıdır, finansal veya vergi tavsiyesi değildir. İlanda maaş ve taşınman gereken bir çalışma konumu belirtilmişse, değerlendirme de aynı kontrolü yapar.
+
+## Sık sorulan sorular [#frequently-asked-questions]
+
+### CV'me göre hangi ilanlara başvurmaya değer olduğunu söyleyen bir araç var mı?
+
+career-ops, başvurmadan önce bir iş ilanını CV'n ve hedeflerinle karşılaştırarak okuyan, MIT lisanslı, açık kaynaklı bir yapay zeka iş arama ajanıdır. Gerekçesiyle birlikte 1-5 arası bir genel puan verir. Puan 4,0'ın altındaysa özel bir nedenin yoksa başvurmamanı önerir; bu öneriyi geçersiz kılabilirsin. career-ops asla senin adına başvurmaz: her başvuruyu kendin gözden geçirir ve gönderirsin.
+
+### Yüksek puan mülakata çağrılacağım anlamına mı gelir?
+
+Yüksek bir career-ops puanı mülakat vaat etmez. Puan, bir ilanın CV'ne ve hedeflerine ne kadar uyduğuna dair bir değerlendirmedir; mülakat veya teklif tahmini değildir. Puanın kendi sonuçlarınla nasıl örtüştüğünü görmek için sonuçları oldukça kaydet ve tavsiye niteliğindeki, puanlamayı asla değiştirmeyen calibrate raporunu çalıştır.
+
+### İki iş teklifini maaş dışında nasıl karşılaştırırım?
+
+career-ops ile iki iş teklifini maaşın ötesinde karşılaştırmak için rolleri ofertas moduyla karşılaştır; bu mod her rolü, maaşın yalnızca biri olduğu on boyutta puanlar ve öneriyle birlikte bir sıralama döndürür. Bu boyutların hiçbiri teklif mektubunun koşullarını kapsamaz; bu yüzden her mektubu offer-prep moduyla oku: maddeleri seninle birlikte inceler, avukatın için sorular ve işverene iletilecek konular listeler, teklif hakkında bir hüküm vermez.

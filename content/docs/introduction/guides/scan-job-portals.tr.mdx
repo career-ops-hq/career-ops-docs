@@ -1,0 +1,339 @@
+---
+title: İş portallarını tara
+description: Portal tarayıcısını kur ve çalıştır, yeni iş ilanlarını otomatik olarak bul.
+seoTitle: "career-ops ile iş portallarını tarama: Greenhouse, Ashby, Lever, sıfır token"
+icon: ScanEye
+translationHash: e9fa0fe2337f7f18
+localized: true
+translatedFrom: /docs/introduction/guides/scan-job-portals
+---
+
+Bu rehber, `portals.yml` dosyasını ayarlamayı ve yeni iş ilanlarını otomatik olarak bulmak için portal tarayıcısını çalıştırmayı adım adım anlatır.
+
+<Callout title="Başlamadan önce">
+  [Hızlı Başlangıç](/tr/docs) rehberini tamamladığından emin ol. Taramanın işe yaraması için `cv.md` ve `modes/_profile.md` dosyalarının hazır olması gerekir.
+</Callout>
+
+## portals.yml dosyasını ayarla
+
+`portals.yml`, tarayıcının neyi ve nerede arayacağını belirleyen dosyadır. Onu bir kez, projeyle gelen şablondan oluşturursun, sonra hedeflediğin pozisyonlara göre düzenlersin.
+
+Proje klasöründe şu komutu çalıştır:
+
+```bash title="Terminal"
+cp templates/portals.example.yml portals.yml
+```
+
+`portals.yml` dosyasını herhangi bir metin düzenleyicide aç. Aşağıdaki adımlar, ilk düzenleyeceğin üç bölümü anlatır: başlık filtresi, takip edilecek şirketler ve arama sorguları.
+
+### Başlık filtresini yapılandır
+
+Başlık filtresi, tarayıcının bir ilanı sana gösterip göstermeyeceğine karar verme yöntemidir. İlan başlığını iki anahtar kelime listesiyle karşılaştırır.
+
+Dosyanın üst kısmına yakın `title_filter` bölümünü bul:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "AI"
+    - "ML"
+    - "Product Manager"
+  negative:
+    - "Junior"
+    - "Intern"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+**`positive` listesini değiştir:** Buraya hedeflediğin pozisyonlara uyan anahtar kelimeleri yaz. Bir ilanın filtreden geçmesi için bu listeden en az bir anahtar kelimeyle eşleşmesi gerekir. Kontrol büyük-küçük harfe duyarlı değildir, yani `"AI"` aynı zamanda `"ai engineer"` ile de eşleşir.
+
+**`negative` listesini değiştir:** Buraya bir ilanı eleyen anahtar kelimeleri yaz. Bunlardan biri başlıkta geçerse ilan atlanır, pozitif bir anahtar kelimeyle eşleşmiş olsa bile.
+
+**`seniority_boost` listesini olduğu gibi bırak:** Kıdem seviyesi eklemek veya çıkarmak istemiyorsan dokunmana gerek yok. Bu anahtar kelimeler hiçbir ilanı elemez, yalnızca eşleşen ilanları sonuçlarda üst sıralara taşır.
+
+**Örnek:** Rails mühendisliği pozisyonları arıyorsan filtren şöyle görünebilir:
+
+```yaml title="portals.yml"
+title_filter:
+  positive:
+    - "Rails"
+    - "Ruby"
+    - "Full Stack"
+    - "Backend"
+  negative:
+    - "Junior"
+    - "Intern"
+    - "PHP"
+    - "Java"
+  seniority_boost:
+    - "Senior"
+    - "Staff"
+    - "Lead"
+```
+
+<Callout title="İpucu">
+  Üç ila beş anahtar kelimelik kısa bir `positive` listesiyle başla. Daha sonra istediğin zaman ekleyebilirsin. Uzun bir liste, bir ilanın neden geçtiğini veya elendiğini görmeyi zorlaştırır.
+</Callout>
+
+### Takip edilecek şirketleri ekle
+
+`tracked_companies` bölümü, tarayıcının her seferinde kontrol etmesini istediğin şirketlerin listesidir. Tarayıcı doğrudan her şirketin iş ilanları sayfasına gider ve açık pozisyonları okur.
+
+Dosyanın alt kısmına yakın `tracked_companies` bölümünü bul. Her kayıt şöyle görünür:
+
+```yaml title="portals.yml"
+tracked_companies:
+  - name: Anthropic
+    careers_url: https://job-boards.greenhouse.io/anthropic
+    api: https://boards-api.greenhouse.io/v1/boards/anthropic/jobs
+    enabled: true
+
+  - name: OpenAI
+    careers_url: https://openai.com/careers
+    enabled: true
+```
+
+**Şirket eklemek için** mevcut bir kaydı kopyala ve değerlerini değiştir:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Alan          | Ne yazmalı                                                                                                 |
+    | ------------- | ---------------------------------------------------------------------------------------------------------- |
+    | `name`        | Sonuçlarda görünmesini istediğin şirket adı                                                                |
+    | `careers_url` | Şirketin iş ilanları sayfasının doğrudan URL'si                                                            |
+    | `api`         | İsteğe bağlı. Şirket Greenhouse kullanıyorsa Greenhouse API URL'si. Emin değilsen bu alanı ekleme.         |
+    | `enabled`     | Şirketi dahil etmek için `true`, kaydı silmeden atlamak için `false` yaz.                                  |
+  </div>
+</div>
+
+
+**Bir şirketin `careers_url` adresini bulmak için** şirketin web sitesine git, Careers veya Jobs (Kariyer) bağlantısına tıkla ve açık pozisyonları listeleyen sayfanın URL'sini kopyala. Kullanacağın URL budur.
+
+**Bir şirketi silmeden devre dışı bırakmak için** `enabled: false` yaz:
+
+```yaml title="portals.yml"
+  - name: Stripe
+    careers_url: https://stripe.com/jobs/search
+    enabled: false
+```
+
+<Callout title="Not">
+  `tracked_companies` içindeki her şirketin bir `careers_url` değeri olmalıdır. Bu değer yoksa tarayıcının ziyaret edeceği bir sayfa olmaz ve o kaydı atlar.
+</Callout>
+
+### Arama sorgularını gözden geçir
+
+`search_queries` bölümü, takip listende olmayan şirketlerdeki pozisyonları bulmak için daha geniş web aramaları yapar. Şablonda hazır birçok sorgu bulunur.
+
+Başlamak için bu bölümü değiştirmen gerekmez. Hazır sorgular, Greenhouse ve Ashby dahil başlıca iş ilanı sitelerini kapsar.
+
+Özelleştirmeye hazır olduğunda, her sorgunun şöyle göründüğünü göreceksin:
+
+```yaml title="portals.yml"
+search_queries:
+  - name: Greenhouse — Rails Engineer
+    query: 'site:job-boards.greenhouse.io "Rails Engineer" OR "Ruby on Rails" remote'
+    enabled: true
+```
+
+İhtiyacın olmayan bir sorguyu kapatmak için `enabled: false` yaz. Yeni bir sorgu eklemek için mevcut bir kaydı kopyala, ona yeni bir `name` ver ve `query` metnini güncelle.
+
+### İlanların dilini seç (isteğe bağlı)
+
+Bazı iş ilanı siteleri aynı ilanı birkaç dilde yayınlar. Yalnızca bazı dillerde başvuruyorsan bu dilleri tercih sırasına göre listele:
+
+```yaml title="portals.yml"
+preferred_languages: [en]
+```
+
+Bir ilanın bu dillerde sürümleri varsa tarama, listende en önde gelen dildeki sürümü tutar; yoksa ilanın varsayılan sürümünü tutar. Bu bir filtre değil, tercih sırasıdır: hiçbir ilan elenmez ve her ilan için yine tek satır alırsın. Bölgesel varyantlar tek dil sayılır, yani `en-GB` de `en` demektir. Dili yalnızca tek bir şirket için ayarlamak istiyorsan sitenin kendi parametresini o şirketin `careers_url` adresine ekle: Personio'da `?language=xx`, Recruitee'de `?lang=xx`.
+
+## Tarama çalıştır
+
+Taramayı çalıştırmanın iki yolu var. İhtiyacına uyanı kullan.
+
+### A seçeneği: script'i doğrudan çalıştır
+
+```bash title="Terminal"
+npm run scan
+```
+
+Bunu proje klasöründe çalıştır. Script `portals.yml` dosyasını okur, her şirketin API'sine doğrudan bağlanır ve yeni ilanları `data/pipeline.md` dosyasına yazar. Yapay zeka token'ı harcamaz ve yaklaşık 30 saniyede biter.
+
+Bu seçenek, iş ilanları sayfası tarayıcının yerleşik sağlayıcısı olan bir platformda çalışan her şirket için geçerlidir: Greenhouse, Ashby ve Lever'ın yanı sıra Workable, Workday ve SmartRecruiters gibi onlarca başka başvuru takip sistemi ve iş ilanı sitesi. Tam liste [SUPPORTED_JOB_BOARDS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md) dosyasında. Eşleşen sağlayıcısı olmayan şirketler atlanır ve tarama kaç şirketin atlandığını bildirir.
+
+**Sonuçları kaydetmeden önce önizle:**
+
+```bash title="Terminal"
+npm run scan -- --dry-run
+```
+
+Bu komut taramanın tamamını çalıştırır ama diske hiçbir şey yazmaz. Sonuçları kaydetmeden önce filtre ayarlarını kontrol etmek için kullan.
+
+**Tek bir şirketi tara:**
+
+```bash title="Terminal"
+npm run scan -- --company Anthropic
+```
+
+`Anthropic` yerine `tracked_companies` listendeki herhangi bir şirket adını yaz. Eşleştirme büyük-küçük harfe duyarlı değildir.
+
+**Dayforce kariyer sitelerini tara:**
+
+`jobs.dayforcehcm.com` adresindeki Dayforce (Ceridian) kariyer siteleri düz web isteklerini engeller, bu yüzden `npm run scan` onları okuyamaz. Bunun yerine ayrı bir script onlar için gerçek bir tarayıcı oturumu açar; bu da onu ana taramadan daha yavaş yapar. Siteleri `portals.yml` içinde `dayforce_boards` altında listele: her şirket için `name` ve `tenant` (şirketin Dayforce adresindeki kodu) içeren bir kayıt. Biçimi `templates/portals.example.yml` dosyasında görebilirsin. Sonra şunu çalıştır:
+
+```bash title="Terminal"
+npm run scan:dayforce
+```
+
+Yeni ilanlar, ana taramada olduğu gibi `data/pipeline.md` dosyasına gider. Kaydetmeden önizlemek için `-- --dry-run`, tek bir siteyi taramak için `-- --tenant <tenant>`, her sitenin ekran görüntüsünü `output/` klasörüne kaydetmek için `-- --debug` ekle. Bir site bot doğrulaması gösterirse script o siteyi atlar; böyle bir doğrulamayı aşmaya asla çalışmaz.
+
+### B seçeneği: Claude Code içinde yapay zeka destekli taramayı çalıştır
+
+Proje klasöründe Claude Code'u aç ve şunu yaz:
+
+```bash title="Claude Code"
+/career-ops scan
+```
+
+Bu sürüm, her şirketin iş ilanları sayfasını bir tarayıcıyla doğrudan ziyaret eder, bu yüzden herkese açık API'si olmayan şirketlerde de çalışır. Ayrıca takip listende olmayan şirketlerdeki pozisyonları bulmak için `portals.yml` dosyandaki `search_queries` sorgularını da çalıştırır.
+
+Bu seçeneği şu durumlarda kullan:
+- Listendeki bir şirket, script'in sağlayıcısı olmayan bir platform kullanıyor ve script taraması onu atlıyor
+- Yalnızca bilinen şirketleri kontrol etmek değil, yeni şirketler keşfetmek istiyorsun
+- Script taraması görmeyi beklediğin bir şeyi kaçırdı
+
+Script, kendi bulduğun bir ilanı kaçırdıysa önce nedenini ona sor:
+
+```bash title="Terminal"
+node coverage-check.mjs <url> --company "<company>" --title "<job title>"
+```
+
+Bu komut internete bağlanmadan `portals.yml` dosyanı ve tarama geçmişini okur, ilanın neden kaçırıldığını söyler (şirket takip edilmiyor, kaydı devre dışı, iş ilanları sitesini okuyan bir sağlayıcı yok ya da bir başlık veya konum filtresi onu eledi) ve ilanı yakalayacak tek değişikliği önerir. `portals.yml` dosyasını asla senin yerine düzenlemez.
+
+<Callout title="İpucu">
+  B seçeneği yapay zeka modeli token'ı harcar ve script'ten daha uzun sürer. Bu token'ların bir API anahtarına faturalanması mı yoksa aboneliğinden mi düşmesi, CLI'ının nasıl kurulu olduğuna bağlıdır ([SSS'ye bak](/tr/docs/faq#claude-pro-veya-max-aboneligim-var-career-ops-neden-api-kredilerimi-harciyor)). Günlük hızlı bir kontrol için A seçeneği daha hızlıdır.
+</Callout>
+
+## Tarama çıktısını oku
+
+Tarama bittiğinde şuna benzer bir özet görürsün:
+
+```text title="Terminal"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Portal Scan — 2026-04-13
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Companies scanned:     42
+Total jobs found:      318
+Filtered by title:     291 removed
+Duplicates:            4 skipped
+New offers added:      23
+
+New offers:
+  + Anthropic | AI Engineer | San Francisco, CA
+  + ElevenLabs | Solutions Architect | Remote
+  ...
+
+→ Run /career-ops pipeline to evaluate new offers.
+```
+
+Her satırın anlamı şöyle:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Satır | Sana ne söyler |
+    |---|---|
+    | **Companies scanned** | `tracked_companies` listesinden kaç şirketin kontrol edildiği |
+    | **Total jobs found** | Bu şirketlerde görülen tüm açık pozisyonlar, herhangi bir filtrelemeden önce |
+    | **Filtered by title** | Başlığı `title_filter` ayarınla eşleşmediği için çıkarılan ilanlar |
+    | **Duplicates skipped** | Pipeline'ında veya tracker'ında zaten olan, tekrar eklenmeyen ilanlar |
+    | **New offers added** | Tüm filtrelerden geçen ve senin için yeni olan ilanlar |
+  </div>
+</div>
+
+
+**New offers added** değeri 0 ise önce tarama çıktısında şu uyarıyı ara:
+
+```text title="Terminal"
+⚠️  1 target(s) returned zero jobs without a successful HTTP response: Acme
+```
+
+Bu, o şirketin portalının hiç başarılı yanıt vermediği anlamına gelir; yani sıfır sonucu, ilan sayfasının boş olduğunu kanıtlamaz. Şirket `data/portal-health.tsv` dosyasına `unverified_zero` olarak kaydedilir ve bu, ardışık hata sayısına eklenir. Filtrelerini değiştirmeden önce o portalı kontrol et. Yavaş bir site de yanıt vermeden süresi dolabilir: tarayıcı varsayılan olarak istek başına 10 saniye bekler, `CAREER_OPS_HTTP_TIMEOUT_MS=30000 npm run scan` ise bu süreyi 30 saniyeye çıkarır.
+
+Böyle bir uyarı yoksa başlık filtren fazla katı olabilir. `positive` listene bir anahtar kelime eklemeyi dene ve taramayı yeniden çalıştır.
+
+**Yeni ilanlar nereye gider:** Her yeni ilan, `data/pipeline.md` dosyasına bir satır olarak eklenir. Bu dosya, değerlendirilmeyi bekleyen ilanların listesidir.
+
+**`data/scan-history.tsv` ne işe yarar:** Tarayıcının gördüğü her URL, eklenmiş, filtrelenmiş veya atlanmış olsun, buraya kaydedilir. Tarayıcı, sonraki taramalarda aynı ilanı sana iki kez göstermemeyi böyle sağlar. Tek istisna, `portals.yml` içindeki `location_filter` veya `max_posting_age_days` ayarının eleyip çıkardığı ilanlardır. Bunlar `skipped_location` veya `skipped_age` olarak kaydedilir ve o ayarı değiştirdiğinde yeniden görünebilir. Bu dosyayı düzenlemen gerekmez.
+
+## Taramadan gelen yeni ilanları değerlendir
+
+Tarama, bekleyen ilan listen olan `data/pipeline.md` dosyasına yeni ilanlar ekledikten sonra, her birini profilinle karşılaştırıp değerlendirmek için pipeline komutunu çalıştır. Bu adımda Claude iş tanımını okur, `cv.md` ve `modes/_profile.md` dosyalarınla karşılaştırır ve her pozisyon için puanlanmış bir özet hazırlar.
+
+Proje klasöründe Claude Code'u aç ve şunu yaz:
+
+```bash title="Terminal"
+/career-ops pipeline
+```
+
+Claude, `data/pipeline.md` içindeki bekleyen her URL'yi okur, her ilanı ziyaret eder ve değerlendirir. Sonuçlar gruplar hâlinde gelir. Her grup şuna benzer bir tablo gösterir:
+
+1. grup tamamlandı (Anthropic, ElevenLabs, Mistral):
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | #   | Şirket     | Pozisyon            | Puan  | Güvenilirlik                          |
+    | --- | ---------- | ------------------- | ----- | ------------------------------------- |
+    | 024 | Anthropic  | AI Engineer         | 4,8/5 | High Confidence                       |
+    | 025 | ElevenLabs | Solutions Architect | 4,1/5 | High Confidence — hızlı büyüyor       |
+    | 026 | Mistral AI | Product Manager     | 3,2/5 | Proceed w/ Caution — pozisyon kapanmış |
+  </div>
+</div>
+
+
+Her sütunun anlamı şöyle:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Sütun            | Sana ne söyler                                                                                                                                                                                       |
+    | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **#**            | Rapor numarası. Tam raporu `reports/` klasöründe bulmak için kullan: örneğin 024 numaralı rapor `reports/024-anthropic-2026-04-13.md` dosyasıdır                                                     |
+    | **Puan**         | Pozisyonun profiline ne kadar uyduğu, 1-5 arası                                                                                                                                                      |
+    | **Güvenilirlik** | İlanın gerçek ve aktif görünüp görünmediği. "High Confidence", ilanın yayında olduğu ve ayrıntıların tutarlı olduğu anlamına gelir. "Proceed w/ Caution", bir şeyin şüphe uyandırdığı anlamına gelir: yanındaki notu oku. |
+  </div>
+</div>
+
+**Bir pozisyonun tam değerlendirmesini okumak için** iki seçeneğin var:
+
+- **Rapor dosyasını doğrudan aç:** Tablodaki numarayla `reports/` klasöründe bul.
+- **Dashboard'u kullan:** Tüm raporlarına terminal arayüzünden göz atmak için proje klasöründe `./dashboard/career-dashboard` komutunu çalıştır. Puana ve duruma göre filtreleyebilir, terminalden çıkmadan istediğin raporu açabilirsin.
+
+## Sırada ne var?
+
+`/career-ops pipeline` bittiğinde her ilanın 1-5 arası bir puanı olur. Herhangi bir pozisyonun tam raporunu `reports/` klasöründe bulabilirsin. Puan, pozisyonun profiline ne kadar uyduğunu gösterir.
+
+Puanı başlangıç noktası olarak kullan:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Puan               | Önerilen adım                                                                                                                                |
+    | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **4,5 veya üzeri** | Güçlü eşleşme. Hemen `/career-ops apply` çalıştır.                                                                                           |
+    | **4,0 – 4,4**      | İyi uyum. `/career-ops apply` çalıştır. Başvurmadan önce ekipten biriyle iletişime geçmek için önce `/career-ops contacto` da çalıştırabilirsin. |
+    | **3,5 – 3,9**      | İki tarafa da gidebilir. Karar vermeden önce daha fazla bilgi almak için `/career-ops deep` çalıştır.                                        |
+    | **3,5'in altında** | Başvurmak için özel bir nedenin yoksa geç.                                                                                                   |
+  </div>
+</div>
+
+Her komutun yaptığı iş şöyle:
+
+- **`/career-ops apply`:** Başvuru formunu açar ve profiline göre uyarlanmış yanıtlar yazar. Her şeyi önce gözden geçirebilmen için göndermeden önce durur.
+- **`/career-ops contacto`:** LinkedIn'de işe alım yöneticisini veya bir ekip üyesini bulur ve senin göndereceğin kısa bir iletişim mesajının taslağını hazırlar.
+- **`/career-ops deep`:** Şirketi ve pozisyonu derinlemesine araştırır. Kararsız kaldığında ve karar vermeden önce daha fazla bilgi istediğinde bunu kullan.
+- **`/career-ops tracker`:** Pipeline'ındaki her pozisyonun durumunu gösterir. Durumu görmek istediğin her an çalıştır.
+
+<Callout title="İpucu">
+  Sırayla gitmek zorunda değilsin. Bir pozisyon 4,8 aldıysa ama şirketin adını hiç duymadıysan önce `/career-ops deep` çalıştır. Komutlar birbirinden bağımsız çalışır: durumuna hangisi uyuyorsa onu kullan.
+</Callout>

@@ -1,0 +1,82 @@
+---
+title: Sözlük
+description: "Yapay zeka destekli iş aramanın sözlüğü: ATS, 1-5 arası genel puan, Veri Sözleşmesi, spray-and-pray, liveness check, CV uyarlama, sıfır token taraması, STAR+R hikâyeleri ve career-ops'un kullandığı tüm terimler."
+seoTitle: "career-ops sözlüğü: yapay zeka destekli iş arama terimleri ve anlamları"
+icon: BookOpen
+translationHash: c4294ea38951c036
+localized: true
+translatedFrom: /docs/reference/glossary
+---
+
+{/* Mirrored with src/lib/glossary-data.ts (DefinedTermSet JSON-LD) — edit
+    both together. Definitions must stay verifiable against the core repo. */}
+
+career-ops'un kullandığı tüm terimler, tek bir yerde tanımlı. Daha ayrıntılı bir referans sayfası olan terimler oraya bağlanır.
+
+## ATS (Aday Takip Sistemi)
+
+Şirketlerin iş başvurularını almak, saklamak ve filtrelemek için kullandığı yazılım; [Greenhouse](/tr/docs/reference/portals/greenhouse), [Ashby](/tr/docs/reference/portals/ashby) ve [Lever](/tr/docs/reference/portals/lever) yaygın örneklerdir. career-ops, açık pozisyonları bulmak için bu sistemlerin herkese açık iş API'lerini okur ve başvuru formlarını önceden doldurabilir, ancak asla otomatik olarak göndermez.
+
+## Genel puan (1-5 arası)
+
+LLM'in bir iş ilanını beş boyutta (uyum, kuzey yıldızı hedefleriyle uyum, ücret, kültürel sinyaller, kırmızı bayraklar) bütünsel olarak değerlendirmesi ve bunun sonucunda verdiği 1-5 arası puan. Puan 4,5 ve üzerindeyse ajan hemen başvurmanı önerir; 4,0'ın altındaysa başvurmamanı önerir. Sabit bir ağırlıklandırma formülü yoktur: puan, LLM'in değerlendirme ölçütlerine göre verdiği karardır ve bu ölçütler [metodoloji sayfasında](https://career-ops.org/methodology) herkese açıktır.
+
+## Veri Sözleşmesi (Data Contract)
+
+career-ops'un temel mimari sözü: **sistem katmanı** (script'ler, modlar, şablonlar) her an güncellenebilir, **kullanıcı katmanına** ise (`cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/`) hiçbir güncelleme dokunmaz. Verilerin her sürümden uzun yaşar.
+
+## Spray-and-pray
+
+Aynı CV'yi hiçbir hedefleme yapmadan yüzlerce işe gönderen toplu başvuru stratejisi. career-ops bunu açıkça reddeder: pipeline önce ilanları değerlendirir ve sıralar, böylece emeğin peşinden gitmeye değer az sayıda pozisyona yoğunlaşır.
+
+## Liveness check (ilan açık mı kontrolü)
+
+career-ops'un, sen zaman ya da token harcamadan önce bir iş ilanının hâlâ açık olup olmadığını anlamak için çalıştırdığı sezgisel kontrol. Kesin olmayan bir sinyaldir, çünkü süresi dolmuş ilanlar bazen iş sitelerinde kalmaya devam eder; sezgisel kontrol yanıldığında ilanları elle işaretleyebilirsin.
+
+## CV uyarlama (tailoring)
+
+CV'ni belirli bir iş ilanına göre yeniden yazmak: vurguları yeniden sıralamak, eşleşen becerileri ve metrikleri öne çıkarmak, kullandığın dili iş tanımıyla uyumlu hale getirmek ve bunu yaparken her ifadeyi gerçek deneyimine sadık tutmak. career-ops her başvuru için düzenleyebileceğin Markdown biçiminde uyarlanmış bir CV üretir.
+
+## Mod
+
+career-ops'un, yapay zeka CLI'ının çalıştırdığı düz bir Markdown dosyası olarak sunduğu, prompt ile tanımlanmış odaklı iş akışı: [scan, apply, tracker](/tr/docs/reference/modes), [interview/practice](/tr/docs/introduction/guides/interview-modes) ve bir düzineden fazlası. Modlar, kara kutu kod değil, incelenebilir metinlerdir.
+
+## Pipeline
+
+Baştan sona career-ops iş akışı: portalları tara → ilanları değerlendir (1-5 arası) → CV'yi uyarla → başvur → takip et → mülakatlara hazırlan. Her aşama, bağımsız olarak ya da toplu halde çalıştırabileceğin bir moddur.
+
+## Sıfır token taraması
+
+Hiç LLM token'ı harcamayan keşif çalıştırması: `scan.mjs`, ATS API'lerini, iş ilanı sitelerinin akışlarını ve kariyer sayfalarını doğrudan HTTP üzerinden okur; böylece hangi yapay zeka motorunu kullanırsan kullan yeni ilanları bulmak ücretsizdir.
+
+## Yapay zeka motoru
+
+career-ops prompt'larını çalıştıran yapay zeka kodlama CLI'ı (Claude Code, OpenCode, Codex, GitHub Copilot CLI ve [desteklenen diğer CLI'lar](/tr/docs/supported-clis)) ya da OpenAI uyumlu herhangi bir uç nokta. career-ops motordan bağımsızdır ve [ücretsiz motorlarda da çalışır](/tr/docs/free-ai-engine).
+
+## Soru bankası
+
+career-ops'un gerçek mülakat sorularını ve her birindeki performansını (✅/🟡/🔴) biriktirdiği yerel Markdown dosyası (`interview-prep/question-bank.md`). [interview/debrief modu](/tr/docs/introduction/guides/interview-modes) bu dosyayı her gerçek mülakattan sonra günceller, böylece hazırlığın turlar boyunca birikerek güçlenir.
+
+## STAR+R hikâyesi
+
+**S**ituation (Durum), **T**ask (Görev), **A**ction (Eylem), **R**esult (Sonuç) ve buna ek olarak **R**eflection (Değerlendirme) şeklinde yapılandırılmış mülakat hikâyesi. career-ops, davranışsal soruların yanıtları somut, ölçülebilir ve farklı mülakatlarda yeniden kullanılabilir olsun diye hikâye bankasında bu biçimi kullanır.
+
+## Hikâye bankası
+
+Hazırladığın STAR+R hikâyelerini içeren yerel Markdown dosyası (`interview-prep/story-bank.md`). Pratik oturumları yanıtlarını bu dosyaya göre doğrular, mülakat sonrası değerlendirmeler ise gerçek mülakatlarda söylediklerinden yeni hikâyeler çıkarır.
+
+## Portal
+
+career-ops'un tarayabildiği, bir ATS altyapısı kullanan şirket kariyer sitesi. Takip ettiğin portallar `portals.yml` dosyasında durur; tarayıcı her çalıştırmada bu portalların herkese açık API'lerini okur.
+
+## Toplu değerlendirme
+
+Kayıtlı çok sayıda ilanı tek tek değil, tek çalıştırmada puanlamak; kontrol sende kalsın diye bayraklar vardır: `--limit` toplu işin boyutunu sınırlar, `--dry-run` nelerin işleneceğini önceden gösterir, `--resume-paused` ise yarıda kalan bir çalıştırmayı yeniden token harcamadan sürdürür. `needs_confirmation` durumundaki bir görev, hiçbir çıktı üretmeyen bir beklemedir ve yalnızca üst etkileşimli oturum tarafından, açık bir yanıttan sonra sürdürülür; yeniden deneme ve duraklatılanı sürdürme bayrakları onu beklemede bırakır.
+
+## Local-first (önce yerel)
+
+career-ops'un mimari ilkesi: verilerin, prompt'lar, script'ler ve yapay zeka CLI'ı dahil her şey kendi bilgisayarında çalışır. Barındırılan bir backend yoktur, hesap yoktur ve kaydolman gereken hiçbir şey yoktur.
+
+## CareerOps
+
+CareerOps, iş aramayı mühendislerin üretim sistemlerini yönettiği gibi yürütme pratiğidir: kanıtla, disiplinle ve masanın aday tarafında duran araçlarla. Terim bir ürünü değil, bu pratiği adlandırır; career-ops bu pratiğin ilk referans uygulamasıdır. Terim, Santiago Fernández de Valderrama Aparicio tarafından [The CareerOps Manifesto](https://career-ops.org/manifesto) metninde (14 Temmuz 2026) ortaya atılmıştır.

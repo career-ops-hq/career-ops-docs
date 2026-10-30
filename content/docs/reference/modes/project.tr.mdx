@@ -1,0 +1,61 @@
+---
+title: project
+description: "Geliştiriciler fikirleri hayata geçirebildiklerinden daha hızlı biriktirir. project modu, bir portföy projesi fikrini hedef rollerine, mevcut portföyüne ve ayıracağın zamana göre puanlar; yapmaya değip değmeyeceğini ortaya koyar."
+seoTitle: "career-ops project modu: portföy projesi fikrini hedef rollerine göre puanla"
+icon: Lightbulb
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 974b5ecbe5ade3b0
+localized: true
+translatedFrom: /docs/reference/modes/project
+---
+
+## Ne yapar?
+
+project modu, proje fikrinin açıklamasını, config/profile.yml dosyasındaki hedef arketiplerini ve mevcut portföy bağlamını okur; ardından projeyi ağırlıklandırılmış altı boyutta puanlar: hedef rollerin için verdiği sinyal, özgünlük, demo yapılabilirlik, metrik potansiyeli, MVP'ye kadar geçen süre ve STAR hikayesi potansiyeli.
+
+## Ne zaman kullanılır?
+
+Elinde üç dört yan proje fikri varsa ve iş aramanı gerçekten ileri taşıyacak olanı seçmek istiyorsan project modunu kullan. oferta modunun yan projeler için olan karşılığıdır.
+
+## Örnek
+
+```
+`/career-ops project` + project description — output is a scored evaluation with a build/skip recommendation.
+```
+
+## Bir çalıştırma nasıl görünür?
+
+Bir project çalıştırması sana bir meşruiyet değerlendirmesi, altı boyutta ağırlıklı bir puan ve tek bir net karar verir. Moda bir fikir verirsin; mod da kodun derlenip derlenmeyeceğine bakmak yerine, bu fikri işe alım yöneticisinin portföyünde göreceği haliyle değerlendirir.
+
+```txt title="Example"
+Portfolio Project Evaluation
+URL: (idea only, no repo yet)
+Legitimacy: High Confidence
+
+Dimension                 Weight  Score
+Signal for target roles     25%     5   Directly demonstrates a JD skill
+Uniqueness                  20%     3
+Demo ability                20%     5   Live demo in 2 min
+Metrics potential           15%     4   latency, cost, accuracy
+Time to MVP                 10%     4   ~1 week
+STAR story potential        10%     4   trade-offs worth narrating
+
+Verdict: BUILD
+  Week 1 -> MVP with the core metric
+  Week 2 -> polish + interview pack
+```
+
+Karar her zaman şu üçünden biridir: haftalık kilometre taşlarıyla BUILD; bunun yerine ne yapman gerektiğiyle birlikte SKIP; ya da peşinde olduğun roller için daha güçlü sinyal veren bir alternatife yönelten PIVOT TO. Altı boyut ağırlıklı olduğu için iyi demo yapılabilen ve temiz metrikler üreten bir proje, görünür bir getirisi olmayan daha yenilikçi bir fikrin önüne geçebilir.
+
+## Mülakat paketi
+
+Onaylanan her proje bir mülakat paketiyle gelir, çünkü asıl çıktı repository değil, anlatacağın hikayedir. Paket üç bölümden oluşur: ürünü, mimariyi, metrikleri ve değerlendirme planını özetleyen tek sayfalık bir belge; canlı bir URL ya da iki dakikalık kayıtlı bir anlatım şeklinde bir demo; ve neyin işe yaradığını, neyin yaramadığını ve bunu nasıl telafi ettiğini anlatan bir postmortem. Anlatısı olmayan bitmiş bir proje iş aramasını nadiren ileri taşır; net bir ödünleşim hikayesi olan mütevazı bir proje ise çoğu zaman taşır. 80/20 planı da bunu yansıtır: ilk hafta temel metriğiyle MVP, ikinci hafta cilalama ve paketin kendisi.
+
+## Dikkat edilmesi gerekenler
+
+Bu mod teknik fizibiliteyi doğrulamaz, yalnızca kariyer açısından verdiği sinyalin değerini ölçer. Teknik kapsam değerlendirmesini ayrıca yap.
+
+## İlgili sayfalar
+
+- [training](/tr/docs/reference/modes/training)

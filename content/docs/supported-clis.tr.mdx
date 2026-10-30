@@ -1,0 +1,37 @@
+---
+title: Desteklenen yapay zeka CLI'ları
+seoTitle: "career-ops hangi yapay zeka CLI'larıyla çalışır? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
+description: "career-ops yapay zeka sağlayıcısından bağımsızdır: tüm büyük yapay zeka kodlama CLI'larında çalışır, böylece zaten ödeme yaptığın asistanı kullanırsın ve tek bir sağlayıcıya bağlı kalmazsın. Eksiksiz ve her zaman güncel liste ana depoda yer alır."
+icon: Terminal
+translationHash: aba388df8b32db03
+localized: true
+translatedFrom: /docs/supported-clis
+---
+
+**career-ops tüm büyük yapay zeka kodlama CLI'larında çalışır; tek bir sağlayıcıya bağlı kalmazsın.** career-ops, kendi modeliyle gelmez; CLI'ın çalıştırdığı prompt dosyalarından oluşur. Bu yüzden onu zaten kullandığın yapay zeka kodlama asistanına yönlendirirsin ve hiçbir değişiklik yapmadan o motorun üzerinde çalışır. Daha iyi bir model çıktığında CLI'ı değiştirirsin; pipeline'ın, verilerin ve kurulumun olduğu gibi kalır.
+
+<Callout title="Elindekini kullan">
+career-ops için en iyi CLI, zaten ödeme yaptığın CLI'dır. Claude Code için zaten ödeme yapıyorsan career-ops başka bir kurulum gerektirmez. Ücretsiz çalıştırmak istiyorsan [Ücretsiz bir yapay zeka motoru kur](/tr/docs/free-ai-engine) sayfasına bak.
+</Callout>
+
+## Hangi CLI'lar destekleniyor?
+
+career-ops, **Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent ve GitHub Copilot CLI** ile tam destekli çalışır: aktif olarak geliştirilen on bir yapay zeka kodlama CLI'ı. (Gemini CLI artık yalnızca eski bir sarmalayıcı olarak duruyor; Antigravity CLI'a taşındı.) career-ops mimarisi tüm CLI'larda ortaktır: mantığı tek bir standart `AGENTS.md` yönetir, her CLI'a özel ince giriş dosyaları da o aracın çağrılma ayrıntılarını üstlenir.
+
+**Standart ve her zaman güncel liste, career-ops'u her CLI'da çağırmak için gereken komutla birlikte ana depoda yer alır**, böylece hiçbir zaman eskimez:
+
+- [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md): desteklenen CLI'ların, giriş dosyalarının ve bunların nasıl çağrılacağının (etkileşimli ve headless/toplu) tam tablosu.
+
+## Pi
+
+Pi'nin sarmalayıcı dosyaya ihtiyacı yoktur. `AGENTS.md` dosyasını career-ops klasöründen okur ve paylaşılan skill'i kendisi bulur; yani `pi` komutunu o klasörde başlatır, career-ops'u `/skill:career-ops` ve ardından istediğin modla çağırırsın. Gözetimsiz tek bir çalıştırma için `pi -p "your prompt"` komutunu kullan.
+
+Bazı Pi sürümleri, bir projenin skill'lerini yüklemeden önce o projeye güvenmeni ister. `/skill:career-ops` kullanılamıyorsa klasörde bir kez `/trust` çalıştır, sonra `pi`'yi yeniden başlat: güven kararı yalnızca bundan sonra başlatılan Pi oturumları için geçerlidir. Pi'yi kurmak için [Pi'nin kendi talimatlarını](https://github.com/earendil-works/pi) izle.
+
+## Hangisini seçmeliyim?
+
+- **Claude Code, Codex veya Copilot için zaten ödeme yapıyorsan o CLI'ı kullan.** career-ops hiçbir ek kurulum gerektirmeden onun üzerinde çalışır: CLI'ı career-ops klasörünün içinde aç.
+- **career-ops'u 0 dolara çalıştırmak için** [ücretsiz bir sağlayıcıyla OpenCode'u, Ollama üzerinden yerel bir modeli veya yerleşik OpenRouter çalıştırıcısını](/tr/docs/free-ai-engine) kullan.
+- **Belirli bir model veya sağlayıcı gerekiyorsa** bu CLI'lardan herhangi birini OpenAI uyumlu herhangi bir uç noktaya ya da yerel bir modele yönlendir: career-ops modelden bağımsızdır ve career-ops'ta hiçbir şey değişmez.
+
+Hangi CLI'ı seçersen seç, career-ops'un [14 modu](/tr/docs/reference/modes) aynı şekilde çalışır: CLI motordur, career-ops ise onun üzerindeki yapıdır.

@@ -1,0 +1,57 @@
+---
+title: training
+description: "4.000 dolarlık o ML sistemleri kursunu almalı mısın? Ya Coursera uzmanlık programını? Pahalı AWS sertifikasını? training modu, bir öğrenme yatırımını belirttiğin kariyer yönüne göre puanlar ve harcayacağın zaman ile paranın gerçek getirisini ortaya koyar."
+seoTitle: "career-ops training modu: o kurs veya sertifika almaya değer mi?"
+icon: BookOpen
+date: "2026-05-18"
+lastModified: "2026-05-18"
+translationHash: 02f484e92b4c5f63
+localized: true
+translatedFrom: /docs/reference/modes/training
+---
+
+## Ne yapar?
+
+`training` modu kursun veya sertifikanın ayrıntılarını (müfredat, gereken zaman, maliyet) ve config/profile.yml dosyandaki North Star bölümünü okur, ardından yatırımı altı boyutta puanlar: North Star uyumu, işe alım tarafına verdiği sinyal, zaman ve emek, fırsat maliyeti, riskler ve portfolyoya somut bir çıktı bırakıp bırakmadığı.
+
+## Ne zaman kullanılır?
+
+training modunu, bir eğitim seni cezbettiğinde ama seni gerçekten belirttiğin yöne taşıyıp taşımadığından emin olmadığında kullan. Özellikle pahalı sertifikalar ve bootcamp'ler için işe yarar.
+
+## Örnek
+
+```
+`/career-ops training` + course name and URL — output is a scored evaluation with recommendation.
+```
+
+## Bir çalıştırma nasıl görünür?
+
+training modu bir kursu veya sertifikayı altı boyutta puanlar ve üç karardan birini verir; böylece zamanını ve paranı ayırmadan önce getirisini görürsün. Eğitimin bilgilerini (müfredat, hafta sayısı, haftalık saat ve maliyet) verirsin, mod da bunları belirttiğin kariyer yönüne göre değerlendirir.
+
+```txt title="Example"
+Training Evaluation — "Production LLM Systems" (8 weeks, 6 h/wk, $1,200)
+
+North Star alignment   Moves toward the Applied AI target
+Recruiter signal       HMs read this as production-grade, not tutorial
+Time and effort        8 weeks x 6 h = 48 h
+Opportunity cost       ~2 portfolio projects foregone
+Risks                  Syllabus current; brand is mid-tier
+Portfolio deliverable  Yes -- a graded eval harness
+
+Verdict: DO WITH TIMEBOX (max 6 weeks)
+  Condensed plan, essentials only, weekly scoreboard
+```
+
+DO kararıyla birlikte haftalık çıktıları ve bir takip tablosu olan dört ila on iki haftalık bir plan gelir. DON'T DO kararı daha iyi bir alternatif önerir ve nedenini açıklar. DO WITH TIMEBOX ise hafta sayısına üst sınır koyar ve planı yalnızca temel konulara indirir; faydalı ama gereksiz yere uzatılmış kurslarda en sık çıkan sonuç budur.
+
+## En yüksek puanı neler alır?
+
+Mod, genel geçer belgeler yerine üretim düzeyinde yapay zeka konusunda güvenilirlik kazandıran eğitimlere daha fazla ağırlık verir. Öncelik sırasına göre bunlar LLM değerlendirme ve testi, gözlemlenebilirlik ve izleme, maliyet ve güvenilirlik dengeleri, yapay zeka yönetişimi ve güvenliği ve kurumsal yapay zeka mimarisidir. Sonunda gösterilebilir bir çıktı (bir eval harness, izlenen bir canlı dağıtım) bırakan kurs, yalnızca sertifikayla biten kurstan daha yüksek puan alır, çünkü işe alım yöneticisinin gerçekten görebildiği şey bu çıktıdır.
+
+## Dikkat edilmesi gerekenler
+
+Mod, belirttiğin North Star'a göre yanlıdır. config/profile.yml dosyasındaki North Star bölümünü özenle doldurmadıysan değerlendirme yüzeysel kalır.
+
+## İlgili
+
+- [project](/tr/docs/reference/modes/project)

@@ -1,0 +1,72 @@
+---
+title: Ashby
+description: "Ashby, yapay zeka ve geliştirici araçları alanındaki Seri A–C girişimlerin tercih ettiği modern ATS'dir. career-ops, herkese açık iş ilanı panosu API'sine doğrudan bağlanır."
+seoTitle: "career-ops ile Ashby ilanlarını tara: sıfır token harcayan ATS portal taraması"
+icon: Sparkles
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: b44a43aefbce9bb4
+localized: true
+translatedFrom: /docs/reference/portals/ashby
+---
+
+## Ne yapar?
+
+providers/ashby.mjs içindeki ashby sağlayıcısı, api.ashbyhq.com/posting-api/job-board/`{slug}` adresine HTTP istekleri gönderir ve dönen JSON'u ayrıştırır. Slug, şirketin Ashby ilan panosunun tanımlayıcısıdır (örneğin ElevenLabs için 'elevenlabs'). career-ops bu sağlayıcıyı kaydın `careers_url` alanından (`https://jobs.ashbyhq.com/<slug>`) veya açıkça yazılmış bir `api:` alanından seçer.
+
+## Ne zaman kullanılır?
+
+Yapay zeka laboratuvarlarını, altyapı şirketlerini ve modern girişimleri hedefliyorsan Ashby taramasını kullan. ElevenLabs, Deepgram, Sierra, Decagon ve n8n, templates/portals.example.yml içinde önceden yapılandırılmış Ashby panoları arasında yer alır.
+
+## Örnek
+
+```yaml title="portals.yml"
+- name: ElevenLabs
+  careers_url: https://jobs.ashbyhq.com/elevenlabs
+  enabled: true
+```
+
+Bir sonraki tarama, ElevenLabs'in aktif ilanlarını da alır.
+
+## Tarama aracı ne yapar?
+
+Tarama aracı, etkinleştirdiğin Ashby slug'larını portals.yml dosyasından okur, her biri için Ashby'nin herkese açık ilan panosu API'sini çağırır ve yeni ilanları pipeline'ına ekler. Bunun için tarayıcı veya oturum açma gerekmez, ilanların çekilmesi için de hiç LLM token'ı harcanmaz. Tek bir `node scan.mjs` çalıştırması Ashby, Greenhouse ve Lever panolarını birlikte kapsar, ardından sonuçları yapılandırdığın başlık anahtar kelimelerine göre filtreler.
+
+```bash title="Terminal"
+node scan.mjs
+```
+
+```txt title="Output"
+Companies scanned:     12
+Total jobs found:      41
+Filtered by title:     35 removed
+Duplicates:            3 skipped
+New offers added:      3
+
+New offers:
+  + ElevenLabs | Applied AI Engineer | London, UK
+  + Deepgram | Inference Engineer | Remote
+  + Sierra | Agent Engineer | San Francisco, CA
+```
+
+## career-ops, Ashby ile nasıl konuşur?
+
+career-ops, Ashby'nin herkese açık ilan API'sini `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` adresinden çağırır ve `jobs` listesini doğrudan JSON yanıtından okur. Her ilan için başlığı, başvuru bağlantısı olarak herkese açık `jobUrl` değerini, konumu (birincil konum ve varsa ikincil konumlar; uzaktan çalışılan ilanlara "Remote" da eklenir), düz metin açıklamayı, yayın tarihini ve pano yayımlıyorsa yıllığa çevrilmiş maaş aralığını alır. Bu, sayfa kazıma değil yapılandırılmış bir API çağrısı olduğu için tarama tarayıcı gerektirmez ve model token'ı harcamaz. Ashby'nin herkese açık API'si yavaş yanıt verir (pano başına en az on saniye kadar) ve tekrarlanan istekleri sınırlar. Bu yüzden career-ops pano başına 30 saniyeye kadar bekler ve artan bekleme süreleriyle yeniden dener. Token'lar ancak daha sonra, değerlendirme adımında, bir ilanı daha yakından incelemeye değer bulduğunda harcanır. Taramayı yeniden çalıştırmak güvenlidir: her URL tarama geçmişinle, değerlendirdiğin başvurularla ve mevcut pipeline ile karşılaştırılıp yinelenenler ayıklanır, böylece daha önce gördüğün bir ilan asla ikinci kez eklenmez.
+
+## Dikkat edilmesi gerekenler
+
+Ashby'nin ilan panosu API'si, ilan metninin tamamını doğrudan döndürür, ek bir istek gerekmez. Her pano yaklaşık on saniyede yanıt verir, bu yüzden çok sayıda Ashby panosu içeren bir tarama, aynı sayıda Greenhouse veya Lever panosuna göre biraz daha uzun sürer.
+
+Bazı şirketler panoları yayında kalırken Ashby'nin ilan API'sini kapatır: ilanlar hâlâ yayında olsa da API 404 döndürür. Böyle bir şirket için kaydına `ashby: { embed: true }` ekle; career-ops panoyu, Ashby'nin onu kariyer sitelerine gömmek için sunduğu sayfadan okur. Kaydın `careers_url` değeri bir `jobs.ashbyhq.com` adresi değil de şirketin kendi sitesiyse, panoyu ayrıca `ashby: { board: <slug> }` ile belirt. Bu kaynaktan gelen ilanlarda açıklama ve yayın tarihi bulunmaz, ücret aralığı da ayrıştırılmış bir maaş olarak değil, görüntülenen metin olarak kalır. Bu seçenek varsayılan olarak kapalıdır, çünkü 404 çoğunlukla kapanmış bir pano veya yanlış yazılmış bir slug anlamına gelir ve bunun hata olarak kalması gerekir.
+
+```yaml title="portals.yml"
+- name: Example Co
+  careers_url: https://jobs.ashbyhq.com/exampleco
+  ashby: { embed: true }
+  enabled: true
+```
+
+## İlgili sayfalar
+
+- [greenhouse](/tr/docs/reference/portals/greenhouse)
+- [lever](/tr/docs/reference/portals/lever)

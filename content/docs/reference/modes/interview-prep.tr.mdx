@@ -1,0 +1,67 @@
+---
+title: interview-prep
+description: "career-ops interview-prep, şirkete ve role özel bir mülakat istihbaratı belgesi hazırlar. Belge, karşındaki kişiye göre bölümlere ayrılır (işe alım uzmanı, işe alım yöneticisi, teknik ekip arkadaşı veya panel) ve olası soruları, konuşma noktalarını ve kendi profilinden çıkarılan STAR hikâyelerini içerir."
+seoTitle: "career-ops interview-prep: şirkete özel, aşama aşama mülakat hazırlığı"
+icon: GraduationCap
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 9f9b6324137f1386
+localized: true
+translatedFrom: /docs/reference/modes/interview-prep
+---
+
+career-ops **interview-prep**, takvimindeki bir mülakatı üzerinde çalışabileceğin bir istihbarat belgesine dönüştürür. Bir şirket ve rol adı verirsin ya da resmi olarak hiç değerlendirmediğin bir rolün ilanını paylaşırsın. Mod, işe alım sürecini araştırır, her aşamayı kimin yürüttüğüne göre sınıflandırır (işe alım uzmanı ön görüşmesi, işe alım yöneticisi, teknik ekip arkadaşı veya panel) ve her birinin sorması muhtemel soruları, kendi geçmişinden çıkarılan taslak yanıtlarla birlikte yazar. Her soru ya web aramasıyla bulunan herkese açık mülakat yorumlarına (örneğin Glassdoor veya Blind'daki) dayanır ya da `[inferred from JD]` etiketi taşır. Sonuç bir sohbet değil, kaydedilmiş bir hazırlık belgesidir.
+
+## interview-prep ne yapar?
+
+interview-prep şirket bağlamını (ideal olarak `deep` veya `oferta` ile zenginleştirilmiş olanı), iş tanımını (JD) ve profilini okur, ardından şirketin sürecinde yer aldığı bildirilen aşamalara göre tek bir hazırlık belgesi oluşturur. Belge, karşındaki kişiye göre beklenen soru kalıplarını, geçmişine özel konuşma noktalarını ve görüşme sırasında uyarlayabileceğin önceden yazılmış STAR hikâyelerini kapsar. Rol için zaten bir değerlendirme raporu varsa esas alınan kaynak bu rapordur. Hiç değerlendirmediğin bir rolün URL'sini verirsen interview-prep iş tanımını kendisi çeker: önce yapılandırılmış ATS API'sini, sonra Playwright'ı dener, son çare olarak headless yönteme geçer. İlan kapanmışsa metnini yapıştırmanı ister.
+
+## Ne zaman kullanılır?
+
+interview-prep'i bir mülakat aşaması takvime girdiğinde çalıştır. Süreçte yer alan her görüşmeci türü için ayrı bölümü olan tek bir belge üretir: işe alım uzmanı ön görüşmesi bölümü maaş pazarlığı hazırlığını, işe alım yöneticisi bölümü role uygunluğu, teknik ekip arkadaşı bölümü mimari ve kodlamayı, panel bölümü ise liderlik sinyallerini ele alır. career-ops'a ayrıca, 4,0 veya üzeri puan alan bir rol tracker'ında `Interview` durumuna geçtiğinde bu modu çalıştırması talimatı verilmiştir.
+
+interview-prep **araştırma** adımıdır, yani önceden çalıştığın istihbarat belgesidir. Sana canlı prova yaptıran ve bir aşamayı sonradan gözden geçiren etkileşimli `plan`, `practice` ve `debrief` mülakat alıştırmalarından farklı bir moddur. Yine de birbirlerine bağlıdırlar: bir debrief, interview-prep'in bir sonraki sefer okuyacağı malzemeyi besler. Bu alıştırmalar için [mülakat modları rehberine](/tr/docs/introduction/guides/interview-modes) bak.
+
+## Örnek bir çalıştırma
+
+Şirketi ve rolü belirtirsin, mod da şirketin sürecinde yer aldığı bildirilen aşamalara göre hazırlanmış tek bir mülakat istihbaratı raporu döndürür. Süreci araştırır, her aşamayı görüşmeci türüne göre sınıflandırır (işe alım uzmanı ön görüşmesi, işe alım yöneticisi, teknik ekip arkadaşı veya panel) ve olası soruları yazar. Her soruya bir kaynak atfı ya da `[inferred from JD]` etiketi ekler.
+
+```bash title="Terminal"
+/career-ops interview-prep Anthropic "Applied AI Engineer"
+```
+
+```txt title="interview-prep/anthropic-applied-ai-engineer.md (excerpt)"
+# Interview Intel: Anthropic — Applied AI Engineer
+
+**Legitimacy:** High Confidence
+**Researched:** 2026-05-18
+**Sources:** 12 Glassdoor reviews, 4 Blind posts, 3 other
+**Audiences covered:** recruiter-screen, hiring-manager, peer-tech
+
+## Process Overview
+- Rounds: 4 rounds, ~18 days end-to-end
+- Difficulty: 3.5/5 (Glassdoor avg, 12 reviews)
+- Known quirks: pair programming, not whiteboard
+
+## Likely Questions — recruiter-screen
+- "Why are you looking, and why us?" — 60-90s, anchored to your narrative
+- Comp expectation — defer to the band if leverage is thin
+- Location / visa / notice period — numbers, not vibes
+```
+
+Rapor ayrıca `story-bank.md` dosyandaki hikâyeleri olası sorularla eşleştirir ve henüz hazır hikâyen olmayan boşlukları işaretler. Bir boşluğu doldurmak istersen eksik STAR+R hikâyesini seninle birlikte yazar ve hikâye eşleştiricinin (`npm run star`) okuduğu kayıt biçiminde `interview-prep/story-bank.md` dosyasına kaydeder. Bu dosya yoksa şablonundan oluşturur.
+
+## Ne zaman işine yarar?
+
+Bir mülakat aşaması planlandığında ve genel tavsiyeler yerine üzerinde çalışabileceğin bir belge istediğinde interview-prep'e geç. Şunlar çıktıyı daha isabetli hale getirir:
+
+- Önce şirket için `oferta` veya `deep` çalıştır. Hazırlık, arketip, eksikler ve eşleşen kanıt noktaları için değerlendirme raporunu okur; bağlam arttıkça sorular da özelleşir.
+- Görüşmecilerin adları veya program elindeyse yapıştır. Panel için mod, her görüşmeciye ayrı bir değerlendirme hazırlar ve her görüşme için sana özel bir kapanış sorusu yazar.
+- Bu rol için daha önce bir maaş rakamı söylediysen işe alım uzmanı ön görüşmesi bölümü bunu da hesaba katar. career-ops belirttiğin rakamı okur, böylece maaş pazarlığı hazırlığı bir tahmine değil, gerçekten söylediğin şeye dayanır.
+- Etiketleri oku: kaynaklı sorular geldikleri yorumu belirtir, çıkarım yapılanlarda ise `[inferred from JD]` etiketi bulunur. Çıkarım yapılan soruları sana kesin sorulacak sorular olarak değil, olası sorular olarak gör.
+
+## İlgili sayfalar
+
+- [deep](/tr/docs/reference/modes/deep)
+- [contacto](/tr/docs/reference/modes/contacto)
+- [oferta](/tr/docs/reference/modes/oferta)
