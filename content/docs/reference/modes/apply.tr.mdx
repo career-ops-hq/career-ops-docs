@@ -51,7 +51,7 @@ captcha, and submit yourself.
 
 ## Dikkat edilmesi gerekenler
 
-apply başvuruyu asla göndermez: son adımda Gönder'e her zaman sen tıklarsın. Yalnızca açık uçlu soruları değil, formdaki tüm alanları okur; açılır listeler, radyo düğmeleri, onay kutuları ve dosya yükleme alanları da buna dahildir. Serbest metin yanıtlarının taslağını hazırlar, kapalı uçlu her alan için bir değer önerir; çalışma izni, maaş ve profilinde yanıtı bulunmayan diğer hassas soruları tahmin yürütmek yerine onaylaman için işaretler. Playwright ile canlı formdaki bazı alanları doldurabilir; her şeyi sen gözden geçirir ve kalanını tamamlarsın. Yanıtlar girildikten sonra metni, seçimleri ve kullanılan dosyaları rapora kaydeder. Ön kontrol (preflight) ilanın kapandığını tespit ederse, sen açıkça aksini istemedikçe apply nihai metin hazırlamayı reddeder: geçersiz bir bağlantı, özel hazırlanmış bir yanıta değmez.
+apply başvuruyu asla göndermez: son adımda Gönder'e her zaman sen tıklarsın. Yalnızca açık uçlu soruları değil, formdaki tüm alanları okur; açılır listeler, radyo düğmeleri, onay kutuları ve dosya yükleme alanları da buna dahildir. Serbest metin yanıtlarının taslağını hazırlar, kapalı uçlu her alan için bir değer önerir; profilinde yanıtı bulunmayan çalışma izni, maaş ve diğer hassas soruları tahmin yürütmek yerine onaylaman için işaretler. Playwright ile canlı formdaki bazı alanları doldurabilir; her şeyi sen gözden geçirir ve kalanını tamamlarsın. Yanıtlar girildikten sonra metni, seçimleri ve kullanılan dosyaları rapora kaydeder. Ön kontrol (preflight) ilanın kapandığını tespit ederse, sen açıkça aksini istemedikçe apply nihai metin hazırlamayı reddeder: geçersiz bir bağlantı, özel hazırlanmış bir yanıta değmez.
 
 Deneyim alanları `cv.md` dosyasından değil, o rapor için uyarlanan CV'den gelir: işverenler, unvanlar, tarihler, görev tanımları, beceriler ve eğitim yüklediğin belgeyle eşleşir, böylece form ve ekteki CV aynı hikâyeyi anlatır. Kimliğin ve iletişim bilgilerin, çalışma iznin ve ücret beklentilerin için belirleyici kaynak `config/profile.yml` olmaya devam eder. apply başvuru için uyarlanmış bir CV bulamazsa bunu sana söyler ve `cv.md` dosyasına geri döner.
 
@@ -68,7 +68,7 @@ apply yaklaşık bir düzine Playwright destekli başvuruda sahada test edildi v
 - İş Deneyimi veya Eğitim gibi **tekrarlanan bölümler** ("Add Another") her blokta aynı etiketleri kullanır, bu yüzden apply bir seferde en fazla iki veya üç kayıt doldurur ve devam etmeden önce her değeri ait olduğu kayıtla karşılaştırır. Bir alanı kesin olarak ayırt edemezse tahmin yürütmek yerine durur ve sana sorar.
 - **Workday**, gerçek tuş vuruşları olmadan girilen değerleri yok sayar, bu yüzden apply yanıtları karakter karakter yazar ve kaydetmeden önce çalışma izni açılır listelerini gözden geçirmeni ister.
 
-## İlgili sayfalar
+## İlgili sayfalar [#ilgili-sayfalar]
 
 - [auto-pipeline](/tr/docs/reference/modes/auto-pipeline)
 - [pdf](/tr/docs/reference/modes/pdf)

@@ -23,7 +23,7 @@ export const homeTr: HomeDict = {
     <>
       career-ops: açık kaynaklı yapay zeka iş arama{' '}ajanı.
       <br />
-      CLI&apos;ında çalışır. Verilerin senin, makine senin.
+      CLI&apos;ında çalışır. Veriler de makine de senin.
       <br />
       CV&apos;ni uyarlar ve cevaplarının taslağını yazar.{' '}
       <span className="inline-block">Gönder&apos;e sen basarsın.</span>
@@ -38,7 +38,7 @@ export const homeTr: HomeDict = {
   memberOf: 'Üyesi olduğu program',
   worthApplyingLabel: 'Bir iş ilanına başvurmaya değer mi, nasıl anlarsın? →',
   worthApplyingHref: '/tr/docs/introduction/guides/is-this-job-worth-applying-to',
-  authorTagline: ', 16 yıllık işletmeci ve career-ops’un yaratıcısı',
+  authorTagline: ', 16 yıl işletme yönetmiş, career-ops’un yaratıcısı',
   // No thesisTranslation for TR: the English thesis stands alone, as in FR, DE, PT, IT and ZH.
   nowSignedManifesto: <>Artık imzalı bir manifesto ·</>,
   readIt: 'Oku →',
@@ -54,12 +54,12 @@ export const homeTr: HomeDict = {
     <>
       career-ops, makinende yerel olarak, herhangi bir yapay zeka kodlama CLI&apos;ının
       içinde çalışan açık kaynaklı bir yapay zeka iş arama ajanıdır: Claude Code, OpenCode,
-      Codex, GitHub Copilot ve daha fazlası. İş ilanlarını beş boyutlu bir değerlendirme
-      çerçevesi ve bütünsel bir genel puanla, 1-5 arası, CV&apos;ne göre değerlendirir; her
+      Codex, GitHub Copilot ve daha fazlası. İş ilanlarını CV&apos;ne göre beş boyutta değerlendirir
+      ve 1-5 arası bütüncül bir genel puan verir; her
       role göre uyarlanmış ATS uyumlu PDF CV&apos;ler üretir; Greenhouse, Ashby ve Lever
       formlarındaki açık uçlu sorulara cevap taslağı yazar; 150&apos;den fazla iş kaynağını
       hiç token harcamadan tarar ve süreci Go ile yazılmış bir terminal panosunda takip eder.
-      Dosyaların makinende durur: {brand('bize ait sunucu yok')}, {brand('telemetri yok')},{' '}
+      Dosyaların makinende kalır: {brand('bize ait sunucu yok')}, {brand('telemetri yok')},{' '}
       {brand('hesap yok')}. CV&apos;n makinenden seçtiğin yapay zeka sağlayıcısına gider,
       başka hiçbir yere gitmez. MIT lisanslıdır ve her zaman ücretsizdir; ödeme yapabileceğin
       tek şey seçtiğin yapay zeka motorudur, ücretsiz ve yerel modeller de çalışır. Santiago
@@ -87,14 +87,14 @@ export const homeTr: HomeDict = {
     </>
   ),
   mechanism:
-    'Başvuruları bir tabloda elle takip etmek yerine portalları tarayan, uyarlanmış PDF’ler üreten ve her şeyi senin için takip eden yapay zeka destekli bir süreç kazanırsın.',
+    'Başvuruları bir tabloda elle takip etmek yerine portalları tarayan, uyarlanmış PDF’ler üreten ve her şeyi senin için kayıt altında tutan yapay zeka destekli bir sistemin olur.',
   analogy: (
     <>
       &ldquo;İş arayışında yanında bir kariyer koçu olması gibi, ama{' '}
       {brand('ücret ödemeden')}.&rdquo;
     </>
   ),
-  featAgnosticTitle: 'Yapay zeka için doğdu, tedarikçiye bağlı değil',
+  featAgnosticTitle: 'Yapay zeka odaklı, sağlayıcıdan bağımsız',
   featAgnosticBody: (
     <>
       Herhangi bir kodlama CLI&apos;ıyla çalışır: Claude Code, OpenCode, Codex, GitHub
@@ -105,18 +105,18 @@ export const homeTr: HomeDict = {
   featApplyBody1: (
     <>
       Greenhouse, Ashby ve Lever formları &ldquo;Neden bu rol?&rdquo; ve &ldquo;Bize bir
-      projeni anlat&rdquo; diye sorar.{' '}
+      projenden bahset&rdquo; diye sorar.{' '}
       <code className="font-mono text-brand">/career-ops apply</code> formu okur, her
-      cevabın taslağını CV&apos;nden ve iş tanımından yazar ve yapıştırmaya hazır şekilde
+      cevabın taslağını CV&apos;ne ve iş tanımına dayanarak yazar ve yapıştırmaya hazır hâlde
       sana verir.
     </>
   ),
   featApplyBody2: 'Sen düzenlersin, sen gönderirsin. Asistan asla senin yerine tıklamaz.',
-  featApplyCta: 'apply nasıl çalışır, gör',
+  featApplyCta: 'apply nasıl çalışır?',
   featScanTitle: '150’den fazla iş kaynağı. Elle arama yok.',
   featScanBody: (
     <>
-      Önceden ayarlanmış tarayıcılar, aralarında Greenhouse, Ashby ve Lever&apos;ın da
+      Önceden ayarlanmış taramalar, aralarında Greenhouse, Ashby ve Lever&apos;in de
       olduğu{' '}
       <a href="https://github.com/career-ops-hq/career-ops/blob/main/templates/portals.example.yml" target="_blank" rel="noopener" className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground">150&apos;den fazla iş kaynağını</a>{' '}
       istediğinde kontrol eder; hiç API token&apos;ı harcanmaz.{' '}
@@ -129,7 +129,7 @@ export const homeTr: HomeDict = {
   featCommunityBody: (
     <>
       career-ops, gerçek bir iş arayışındaki insanların pull request&apos;leriyle büyüyor.
-      Sorunlar Discord&apos;da ele alınır, düzeltmeler aynı hafta yayınlanır. Aracı yalnızca
+      Sorunlar Discord&apos;da ele alınır, düzeltmeler aynı hafta yayımlanır. Aracı yalnızca
       kullanmazsın, neye dönüşeceğini belirlemeye de yardım edersin.
     </>
   ),
@@ -154,18 +154,18 @@ export const homeTr: HomeDict = {
       Artık topluluk geliştiriyor.
     </>
   ),
-  meetContributors: 'Katkıcılarımızla tanış →',
+  meetContributors: 'Katkıda bulunanlarla tanış →',
   faqHeading: 'Sık sorulan sorular',
   faq: [
     {
       q: 'career-ops iş ilanlarını nasıl puanlar?',
       a: (
         <>
-          career-ops, beş boyutta bir değerlendirme çerçevesiyle yönlendirilen bir LLM
-          değerlendirmesi kullanır: uyum, kuzey yıldızına yakınlık, ücret, kültür sinyalleri ve
+          career-ops, beş boyutlu bir çerçevenin yön verdiği bir LLM değerlendirmesi
+          kullanır: uyum, kuzey yıldızına yakınlık, ücret, kültür sinyalleri ve
           uyarı işaretleri. Sonuç, CV&apos;nin ve iş tanımının belirli satırlarına atıf yapan,
-          1-5 arası bütünsel bir genel puandır. 4,0&apos;ın altındaki ilanlarda ajan başvurmamanı
-          önerir. Kapalı bir formül yok, rastgele başvuru yağdırma yok. Değerlendirme çerçevesinin
+          1-5 arası bütüncül bir genel puandır. 4,0&apos;ın altındaki ilanlarda ajan başvurmamanı
+          önerir. Sabit bir formül yok, rastgele başvuru yağdırma yok. Değerlendirme çerçevesinin
           tamamı{' '}
           <a href="/methodology" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/methodology
@@ -179,7 +179,7 @@ export const homeTr: HomeDict = {
       a: (
         <>
           Hayır. Taslakları hazırlar ve alanları doldurur; asla göndermez. Gönder&apos;e sen
-          basarsın. career-ops her başvuruyu tıklamaya kadar hazırlar: rolleri tarar, her birini
+          basarsın. career-ops her başvuruyu son tıklamaya kadar hazırlar: rolleri tarar, her birini
           CV&apos;ne göre puanlar ve CV&apos;ni uyarlar. Sonra kararı sana bırakır. Bu bilinçli
           bir tercihtir: toplu otomatik başvuru, işe alım uzmanları ve ATS sistemleri nezdindeki
           itibarını yakar. career-ops angaryayı kaldırır, seçimi sende bırakır. Daha fazlası (İngilizce):{' '}
@@ -199,10 +199,10 @@ export const homeTr: HomeDict = {
           career-ops kalıcı olarak ücretsizdir, MIT lisanslıdır ve topluluk tarafından fonlanır.
           Ücretli plan, hesap, telemetri ve premium özellik yoktur. Depoyu klonlar, profilini
           ayarlar ve sistemi zaten kullandığın yapay zeka kodlama CLI&apos;ıyla yerel olarak
-          çalıştırırsın. Sürdürülebilirlik, premium planlardan, ücretli özelliklerden veya
-          verilerden değil, topluluk katkılarından ve projenin Open Collective&apos;teki kolektifi
-          üzerinden gelen kurumsal sponsorluktan gelir. Fonlar, projenin mali ev sahibi Open
-          Source Collective&apos;te herkese açık bir defterde tutulur ve bakım, güvenlik
+          çalıştırırsın. Proje, premium planlarla, ücretli özelliklerle veya verilerle değil;
+          topluluk katkıları ve Open Collective&apos;teki kolektifi üzerinden gelen kurumsal
+          sponsorlukla ayakta kalır. Fonlar, projenin mali ev sahibi (fiscal host) Open
+          Source Collective&apos;de herkese açık bir defterde tutulur ve bakım, güvenlik
           düzeltmeleri, sürümler ve belgeler için kullanılır. Ayrıntılar{' '}
           <a href="/sustain" className="text-fd-foreground hover:underline underline-offset-2">
             career-ops.org/sustain
@@ -212,7 +212,7 @@ export const homeTr: HomeDict = {
       ),
     },
     {
-      q: 'Verilerim nerede duruyor?',
+      q: 'Verilerim nerede saklanıyor?',
       a: (
         <>
           career-ops verilerini kendi makinende, sana ait düz dosyalarda tutar: CV&apos;n, profilin,
@@ -234,22 +234,22 @@ export const homeTr: HomeDict = {
           </a>{' '}
           yaptı. 2009&apos;da İspanya&apos;da bir telefon tamir işletmesi kurdu ve 2025&apos;te satana
           kadar yönetti. 2026 başında kendi iş arayışını yönetmek için career-ops&apos;u oluşturdu ve
-          artık ihtiyacı kalmayınca MIT lisansıyla açık kaynak yaptı. O zamana kadar onunla 740 ilan
-          değerlendirmiş ve bir Head of Applied AI rolü almıştı. Altı ay sonra, tam zamanlı olarak
-          career-ops&apos;u geliştirmek için o rolden ayrıldı.
+          artık ihtiyacı kalmayınca MIT lisansıyla açık kaynak olarak yayımladı. O zamana kadar onunla 740 ilan
+          değerlendirmiş ve bir Head of Applied AI pozisyonuna geçmişti. Altı ay sonra, tam zamanlı olarak
+          career-ops&apos;u geliştirmek için o görevden ayrıldı.
         </>
       ),
     },
     {
-      q: 'career-ops bir Claude Code becerisi mi, yoksa bağımsız bir araç mı?',
+      q: 'career-ops bir Claude Code skill\u2019i mi, yoksa bağımsız bir araç mı?',
       a: (
         <>
           career-ops belirli bir CLI&apos;a bağlı değildir. Claude Code, OpenCode, Codex, GitHub
-          Copilot ve daha fazlasıyla, yani kullanıcının zaten ödeme yaptığı yapay zeka kodlama ajanıyla
-          çalışır. Beceri dosyaları (
+          Copilot ve daha fazlasıyla, yani zaten ücretini ödediğin yapay zeka kodlama ajanıyla
+          çalışır. Skill dosyaları (
           <code className="font-mono text-fd-foreground">modes/</code>) depoda düz markdown prompt&apos;ları
-          olarak durur; beceri yüklemeyi destekleyen her ajan onları çağırabilir. Anthropic&apos;e özgü
-          bir bağımlılık yoktur. Beceri yükleyicisi sayesinde en yaygın çalışma ortamı Claude Code&apos;dur,
+          olarak durur; skill yüklemeyi destekleyen her ajan onları çağırabilir. Anthropic&apos;e özgü
+          bir bağımlılık yoktur. Skill yükleyicisi sayesinde en yaygın çalışma ortamı Claude Code&apos;dur,
           ama aynı modlar diğer CLI&apos;larda da değişmeden çalışır.
         </>
       ),
@@ -275,7 +275,7 @@ export const homeTr: HomeDict = {
       a: (
         <>
           career-ops; Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen,
-          Kimi, Hermes Agent ve GitHub Copilot CLI ile çalışır: on bir birinci sınıf CLI (Gemini CLI
+          Kimi, Hermes Agent ve GitHub Copilot CLI ile çalışır: tam destekli on bir CLI (Gemini CLI
           eski bir sarmalayıcıdır). Aynı mod dosyaları hepsinde çalışır. Herkes mevcut aboneliğine ve
           maliyet tercihine uyan CLI&apos;ı seçer; career-ops seni asla tek bir sağlayıcıya kilitlemez.
           Tipik bir iş arayışı ayda 20 $ olan Claude Pro ile yürür, ama seçim senin.

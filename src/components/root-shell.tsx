@@ -80,7 +80,7 @@ const inter = Inter({
 });
 
 // The document shell every root layout renders: (en)/layout.tsx for English
-// and es/, fr/, de/, pt/, it/ and zh/layout.tsx for each translation. One root layout per
+// and es/, fr/, de/, pt/, it/, zh/ and tr/layout.tsx for each translation. One root layout per
 // locale is what lets the server render <html lang> right for every page
 // (search-ops D1): with a single root layout it was "en" everywhere and a
 // script corrected it in the browser, which crawlers that read raw HTML never

@@ -59,7 +59,7 @@ npm run fix-report-links               # apply; the tracker is backed up to .bak
 
 Diğer tüm hücreler, satır sırası ve satır sonları olduğu gibi kalır. Tam olarak bir bağlantıdan başka bir şey içeren Report hücreleri, elle kontrol etmen için listelenir ve değiştirilmez. Komutu ikinci kez çalıştırmak hiçbir şeyi değiştirmez.
 
-## İlanların hâlâ açık olup olmadığını kontrol etme
+## İlanların hâlâ açık olup olmadığını kontrol etme [#ilanların-hâlâ-açık-olup-olmadığını-kontrol-etme]
 
 Satırlar Evaluated veya Applied durumunda beklerken ilanlar kapanır. `node check-liveness.mjs --tracker`, her Evaluated ve Applied satırının ilanını kontrol eder; `--status=` ile başka durumları seçebilirsin. Her ilanı satırın URL hücresinden veya raporundaki `**URL:**` satırından alır, ikisi de olmayan satırları ise numarasıyla listeler.
 
@@ -111,7 +111,7 @@ node tracker.mjs export | diff data/applications.md -
 
 Durum, rapor dosyasında değil, tracker'ın (`data/applications.md`) Status sütununda tutulur. Durumu elle değiştirmek `data/status-log.tsv` dosyasını atlar: funnel-velocity yeni durumu yine görür ama ne zaman gerçekleştiğini göremez; bu yüzden değişiklik aşama hızı sürelerinde yer almaz ve sonradan Rejected ile biten bir satır geçtiği aşamaları kaybeder. `set-status.mjs` komutunu, sohbeti veya aynı komutu çalıştıran Go TUI panelinin durum seçicisini kullan.
 
-## İlgili sayfalar
+## İlgili sayfalar [#ilgili-sayfalar]
 
 - [followup](/tr/docs/reference/modes/followup)
 - [patterns](/tr/docs/reference/modes/patterns)

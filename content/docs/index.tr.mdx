@@ -29,12 +29,12 @@ Kod yazmayı bilmen gerekmiyor. Bir terminal açıp komut çalıştırabilmen ye
       <Step>
         ### Node.js 22.13+
 
-        **[Node.js](https://nodejs.org)** kur: **22.13 veya üzeri** bir sürüm (Node 23'te **23.4 veya üzeri**). Yardımcı script'leri çalıştırır ve PDF'leri üretir. Eski sürümler kurulum kontrolünden geçemez, çünkü tracker'ın SQLite dizini daha yeni bir Node gerektirir. Sürümünü `node --version` ile kontrol et.
+        **[Node.js](https://nodejs.org)** kur: **22.13 veya üzeri** bir sürüm (Node 23'te **23.4 veya üzeri**). Yardımcı script'leri çalıştırır ve PDF'leri üretir. Eski sürümler kurulum kontrolünden geçemez, çünkü tracker'ın SQLite indeksi daha yeni bir Node gerektirir. Sürümünü `node --version` ile kontrol et.
       </Step>
       <Step>
         ### Git
 
-        **[Git](https://git-scm.com/)** kur; iskele aracı (scaffolder) onu kendi içinde kullanır. Çoğu bilgisayarda zaten yüklüdür. Kontrol etmek için bir terminal aç ve `git --version` komutunu çalıştır.
+        **[Git](https://git-scm.com/)** kur; kurulum aracı (scaffolder) (scaffolder) onu kendi içinde kullanır. Çoğu bilgisayarda zaten yüklüdür. Kontrol etmek için bir terminal aç ve `git --version` komutunu çalıştır.
       </Step>
     </Steps>
   </div>
@@ -42,7 +42,7 @@ Kod yazmayı bilmen gerekmiyor. Bir terminal açıp komut çalıştırabilmen ye
 
 ## 1. Adım: Çalışma alanını kur
 
-career-ops'un duracağı klasörde bir terminal aç. Önerilen yol tek bir komuttan oluşur; `git clone` kullanan ileri düzey yol hemen altındadır. Node (22.13+, Node 23'te 23.4+) veya Git eksikse `npx` çalışmayı reddeder; önce ikisini de kur (yukarıdaki gereksinimlere bak).
+career-ops'u kurmak istediğin klasörde bir terminal aç. Önerilen yol tek bir komuttan oluşur; `git clone` kullanan ileri düzey yol hemen altındadır. Node (22.13+, Node 23'te 23.4+) veya Git eksikse `npx` çalışmaz; önce ikisini de kur (yukarıdaki gereksinimlere bak).
 
 ### Önerilen yol: tek komut
 
@@ -141,7 +141,7 @@ npx playwright install chromium
   Diğer CLI'ların her biri abonelik ve anahtar arasındaki kuralı kendisi belirler; career-ops bunu kontrol etmez. Yanıtın tamamı için [SSS](/tr/docs/faq) sayfasına bak.
 </Callout>
 
-## 3. Adım: İlk değerlendirmeni çalıştır
+## 3. Adım: İlk değerlendirmeni çalıştır [#3-adım-ilk-değerlendirmeni-çalıştır]
 
 Herhangi bir iş ilanının URL'sini kopyala ve sohbete yapıştır. Profilin hazır değilse ajan önce onboarding'i tamamlar. Claude Code, Antigravity CLI veya Pi kullanıyorsan URL'nin başına açık komutu ekle; diğer CLI'larda URL'yi yapıştır ve ajandan auto-pipeline'ı çalıştırmasını iste:
 
@@ -193,7 +193,7 @@ URL'n yoksa ilanın tam metnini sohbete yapıştır. Ajan her iki girdiyi de iş
   <div className="rounded-xl bg-fd-background p-3">
     <Steps>
       <Step>
-        ### İş tanımını okur
+        ### İş tanımını okur [#iş-tanımını-okur]
         Rolü, gereksinimleri ve ücreti anlar.
       </Step>
       <Step>
@@ -201,7 +201,7 @@ URL'n yoksa ilanın tam metnini sohbete yapıştır. Ajan her iki girdiyi de iş
         Rolle eşleşen noktaları ve eksikleri bulmak için `cv.md` dosyasından yararlanır.
       </Step>
       <Step>
-        ### İlanı puanlar
+        ### İlanı puanlar [#ilanı-puanlar]
         Rolü; rol uyumu, ücret ve uzaktan çalışma politikası gibi birden çok boyutta 1-5 arası puanlar.
       </Step>
       <Step>
@@ -209,7 +209,7 @@ URL'n yoksa ilanın tam metnini sohbete yapıştır. Ajan her iki girdiyi de iş
         Ayrıntılı dökümü `reports/` klasörüne kaydeder.
       </Step>
       <Step>
-        ### İlana göre uyarlanmış bir PDF CV üretir
+        ### İlana göre uyarlanmış bir PDF CV üretir [#ilana-göre-uyarlanmış-bir-pdf-cv-üretir]
         CV'nin bu ilana özel olarak uyarlanmış bir sürümünü `output/` klasörüne yazar.
       </Step>
       <Step>
@@ -271,12 +271,12 @@ G Bloğu'nun hemen ardından gelen **Verdict**, kararı kalın harflerle (Apply,
   </Accordion>
 </Accordions>
 
-## Hata mı buldun, sorun mu var?
+## Hata mı buldun, soruların mı var?
 
 Bir şey bu rehberde anlatıldığı gibi çalışmıyorsa lütfen bildir. Hata bildirimleri senden sonra gelen herkesin işine yarar.
 
 - **Hata bildir:** [GitHub deposunda](https://github.com/career-ops-hq/career-ops/issues) bir issue aç. Ne olmasını beklediğini, gerçekte ne olduğunu anlat ve gördüğün hata mesajını yapıştır.
 - **Soru sor:** [Discord topluluğuna](https://discord.gg/8pRpHETxa4) katıl. Diğer kullanıcılardan ve yazardan yardım almanın en hızlı yolu budur.
-- **Düzeltme gönder:** Sorunu kendin nasıl düzelteceğini biliyorsan pull request açmadan önce [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) dosyasını oku. Kısaca: yeni bir özellik, yeni bir mod veya komut ya da mimari değişiklik için önce issue aç. Hata düzeltmeleri, kimlik doğrulama gerektirmeyen yeni tarayıcı sağlayıcıları, dokümantasyon ve çeviriler doğrudan pull request olarak gönderilebilir.
+- **Düzeltme gönder:** Sorunu kendin nasıl düzelteceğini biliyorsan pull request açmadan önce [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) dosyasını oku. Kısaca: yeni bir özellik, yeni bir mod veya komut ya da mimari değişiklik için önce issue aç. Hata düzeltmeleri, kimlik doğrulama gerektirmeyen yeni tarama sağlayıcıları, dokümantasyon ve çeviriler doğrudan pull request olarak gönderilebilir.
 
 <StarOnGitHub locale="tr" />

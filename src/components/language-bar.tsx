@@ -216,7 +216,7 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
   pt: { question: 'Prefere português?', cta: 'Ver em português' },
   it: { question: 'Preferisci l\u2019italiano?', cta: 'Leggi in italiano' },
   zh: { question: '更想看中文？', cta: '查看中文版' },
-  tr: { question: 'Türkçe mi tercih edersin?', cta: 'Türkçe oku' },
+  tr: { question: 'Türkçe okumak ister misin?', cta: 'Türkçeye geç' },
 };
 
 /**

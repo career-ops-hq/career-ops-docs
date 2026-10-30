@@ -265,7 +265,7 @@ export const UI: Record<SiteLocale, UiStrings> = {
     subscribeSent: 'Aboneliğini onaylamak için e-postanı kontrol et.',
     subscribeRetry: 'Tekrar dene.',
     subscribeFailed: 'Bir şeyler ters gitti',
-    heroImageAlt: 'Başvuru takipçisiyle career-ops terminal arayüzü',
+    heroImageAlt: 'Başvuru takip ekranını gösteren career-ops terminal arayüzü',
     starChartAlt:
       'Warpchart\u2019ta career-ops yıldız geçmişi: gerçek tarihlerden çizilmiş, 0\u2019dan 50K+ GitHub yıldızına',
     officialSite: 'Resmî site',
