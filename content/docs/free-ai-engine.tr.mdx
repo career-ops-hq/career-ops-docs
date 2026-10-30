@@ -1,7 +1,7 @@
 ---
 title: Ücretsiz bir yapay zeka motoru kur
 seoTitle: "career-ops'u ücretsiz kullanma (Claude aboneliği olmadan): OpenRouter, Ollama ve yerel modeller"
-description: "career-ops'u 0 dolara çalıştır: Claude aboneliği ya da herhangi bir ücretli plan gerekmez. career-ops için ücretsiz yapay zeka motorları: ücretsiz bir sağlayıcıyla OpenCode, Ollama üzerinden yerel bir model, OpenAI uyumlu herhangi bir uç nokta veya yerleşik OpenRouter çalıştırıcısı. Ayrıca iş aramanın ortasında token'ların biterse ne yapman gerektiğini de anlatır."
+description: "career-ops'u 0 dolara çalıştır: Claude aboneliği ya da herhangi bir ücretli plan gerekmez. career-ops için ücretsiz yapay zeka motorları: ücretsiz bir sağlayıcıyla OpenCode, Ollama üzerinden yerel bir model, OpenAI uyumlu herhangi bir uç nokta veya yerleşik OpenRouter çalıştırıcısı. Bu sayfa ayrıca iş aramanın ortasında token'ların biterse ne yapman gerektiğini de anlatır."
 icon: Sparkles
 translationHash: 27392ae8d171293d
 localized: true
@@ -12,7 +12,7 @@ translatedFrom: /docs/free-ai-engine
 
 career-ops'un ücretli planı, paketi ya da deneme sürümü yoktur: %100 ücretsizdir ve MIT lisanslıdır. career-ops fiyatlarından söz eden bir site varsa, başka bir üründen bahsediyordur. career-ops'un düşünmek için ihtiyaç duyduğu tek şey bir **yapay zeka motoru**, yani prompt'larını okuyup işi yapan bir yapay zeka kodlama asistanıdır. Bu motor da ücretsiz olabilir.
 
-career-ops'ta kendi motorunu ve kendi anahtarını kullanırsın. career-ops sunucularında hiçbir şey çalışmaz; her şey senin bilgisayarında olur. Bu sayfa, en kolayından en çok uğraştıranına doğru ücretsiz yolları gösterir. Birini seç, ardından [Hızlı Başlangıç](/tr/docs) için hazırsın.
+career-ops'ta kendi motorunu ve kendi anahtarını kullanırsın. career-ops sunucularında hiçbir şey çalışmaz; her şey senin bilgisayarında olur. Bu sayfa, en kolayından en çok uğraştıranına doğru ücretsiz yolları gösterir. Birini seç, ardından [Hızlı Başlangıç](/tr/docs) sayfasına geç.
 
 <Callout title="Tam olarak neyi kuruyorum?">
 career-ops'u tarif, yapay zeka motorunu da aşçı gibi düşün. Tarif sonsuza kadar ücretsiz. Bu sayfa ise ücretsiz bir aşçıyı nasıl bulacağını anlatıyor: ücretsiz katmanı olan, bulutta çalışan bir model ya da tamamen kendi bilgisayarında çalışan bir model.
@@ -37,7 +37,7 @@ career-ops'u tarif, yapay zeka motorunu da aşçı gibi düşün. Tarif sonsuza 
   <div className="rounded-xl bg-fd-background p-3">
     <Steps>
       <Step title="OpenCode'u kur">
-        [opencode.ai](https://opencode.ai) adresindeki tek satırlık kurulum adımını izle. Diğer yapay zeka CLI'ları gibi terminalinde çalışır.
+        [opencode.ai](https://opencode.ai) adresindeki kurulum için verilen tek satırlık komutu çalıştır. Diğer yapay zeka CLI'ları gibi terminalinde çalışır.
       </Step>
       <Step title="Ücretsiz bir sağlayıcı seç">
         Ücretsiz katmanı olan herhangi bir sağlayıcıya kaydol ve API anahtarını kopyala. Topluluğun sık kullandığı ücretsiz seçenekler: **OpenRouter** (`:free` etiketli modeller), **Google AI Studio** (Gemini ücretsiz katmanı) ve **Nvidia'nın** ücretsiz katmanı gibi OpenAI uyumlu uç noktalar. İyi sonuç veren modellerin güncel listesi [bütçe rehberinde](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) yer alır.
@@ -47,7 +47,7 @@ career-ops'u tarif, yapay zeka motorunu da aşçı gibi düşün. Tarif sonsuza 
         ```bash title="Terminal"
         opencode
         ```
-        OpenCode içinde `/connect` komutunu çalıştır, sağlayıcını seç (örneğin **OpenRouter**) ve anahtarını yapıştır. Ardından `/models` komutunu çalıştırıp ücretsiz bir model seç; OpenRouter'da `:free` etiketli olanlardan birini. OpenCode, `OPENAI_API_BASE` ve `OPENAI_BASE_URL` değişkenlerini yok sayar; kurulumu `/connect` ve `/models` yapar.
+        OpenCode içinde `/connect` komutunu çalıştır, sağlayıcını seç (örneğin **OpenRouter**) ve anahtarını yapıştır. Ardından `/models` komutunu çalıştırıp ücretsiz bir model seç; OpenRouter'da `:free` etiketli olanlardan birini. OpenCode, `OPENAI_API_BASE` ve `OPENAI_BASE_URL` değişkenlerini yok sayar; yapılandırmayı `/connect` ve `/models` komutlarıyla yaparsın.
       </Step>
     </Steps>
   </div>
