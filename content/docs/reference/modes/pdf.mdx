@@ -4,7 +4,7 @@ description: "Generates a tailored PDF resume against a specific JD: career-ops 
 seoTitle: "career-ops pdf mode — generate an ATS-friendly tailored resume"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-20"
+lastModified: "2026-10-30"
 ---
 
 ## What it does
@@ -61,9 +61,11 @@ Entries compared: 3
 
 The title check warns and never blocks, because reframing a title is sometimes your call. A role it cannot pair, for example because its dates are written differently from `cv.md`, is reported as not checked, so check that title yourself. If the check cannot run at all, because `cv.md` cannot be read or a role is missing its company, title or dates, career-ops stops and fixes the input first.
 
-The fact check runs in `generate-pdf.mjs`, on the HTML, before anything is printed. A number or claim that is not in `cv.md` or `article-digest.md` blocks the PDF. To fix it, take the claim out of the CV or add the evidence to your sources. `config/cv-facts.json` adds your own lists: `allow_metrics` and `allow_facts` for claims you have verified elsewhere, `forbidden_phrases` that block, and `warn_phrases` that only warn. Without that file, the phrase checks do not run and the output says so. `--skip-fact-check` turns the gate off.
+The fact check runs in `generate-pdf.mjs`, on the HTML, before anything is printed. It blocks the PDF on a number, an employer, a degree, a certification or a named tool that is in neither `cv.md` nor `article-digest.md`. It also blocks a bullet that claims more of the work than your sources do, such as "Led" where `cv.md` says "Contributed to". To fix a block, take the claim out of the CV or add the evidence to your sources. The gate does not read your skills list, because putting a skill in the posting's words is allowed, and a job title only gets a warning, since the title check covers titles. `config/cv-facts.json` adds your own lists: `allow_metrics` and `allow_facts` for claims you have verified elsewhere, `forbidden_phrases` that block, and `warn_phrases` that only warn. Without that file, the phrase checks do not run and the output says so.
 
-Neither check judges rewording. A bullet can overstate what you did without a new number or a new title, so read every CV before you send it.
+The fact check needs `cv.md`. In a workspace without one, `generate-pdf.mjs` prints the PDF without checking anything and does not say so. pdf mode stops earlier when `cv.md` is missing, so this only matters when you run the script yourself. `--skip-fact-check` turns the gate off on purpose.
+
+Neither check judges rewording in general. A bullet can still overstate what you did without a new number, name or title, so read every CV before you send it.
 
 ## Gotchas
 

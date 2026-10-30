@@ -4,8 +4,8 @@ description: "Génère un CV PDF adapté à une JD précise : career-ops constru
 seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-20"
-translationHash: 276805aefe6c9d60
+lastModified: "2026-10-30"
+translationHash: e2ac66dff3d31c92
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -64,9 +64,11 @@ Entries compared: 3
 
 La vérification des intitulés avertit et ne bloque jamais, car reformuler un intitulé relève parfois de votre choix. Un poste qu'elle ne parvient pas à associer, par exemple parce que ses dates ne sont pas écrites comme dans `cv.md`, est signalé comme non vérifié : vérifiez cet intitulé vous-même. Si la vérification ne peut pas s'exécuter du tout, parce que `cv.md` est illisible ou qu'un poste n'a pas d'entreprise, d'intitulé ou de dates, career-ops s'arrête et corrige d'abord l'entrée.
 
-La vérification des faits a lieu dans `generate-pdf.mjs`, sur le HTML, avant toute impression. Un chiffre ou une affirmation absent de `cv.md` et de `article-digest.md` bloque le PDF. Pour corriger, retirez l'affirmation du CV ou ajoutez la preuve à vos sources. `config/cv-facts.json` ajoute vos propres listes : `allow_metrics` et `allow_facts` pour les affirmations vérifiées ailleurs, `forbidden_phrases`, qui bloquent, et `warn_phrases`, qui ne font qu'avertir. Sans ce fichier, les vérifications de formulations ne s'exécutent pas et la sortie l'indique. `--skip-fact-check` désactive ce contrôle.
+La vérification des faits a lieu dans `generate-pdf.mjs`, sur le HTML, avant toute impression. Elle bloque le PDF sur un chiffre, un employeur, un diplôme, une certification ou un outil nommé qui ne figure ni dans `cv.md` ni dans `article-digest.md`. Elle bloque aussi une puce qui s'attribue plus de travail que vos sources, comme « Led » là où `cv.md` dit « Contributed to ». Pour lever un blocage, retirez l'affirmation du CV ou ajoutez la preuve à vos sources. Elle ne lit pas votre liste de compétences, car formuler une compétence avec les mots de l'offre est permis, et un intitulé de poste ne déclenche qu'un avertissement, puisque la vérification des intitulés s'en charge. `config/cv-facts.json` ajoute vos propres listes : `allow_metrics` et `allow_facts` pour les affirmations vérifiées ailleurs, `forbidden_phrases`, qui bloquent, et `warn_phrases`, qui ne font qu'avertir. Sans ce fichier, les vérifications de formulations ne s'exécutent pas et la sortie l'indique.
 
-Aucune des deux ne juge la reformulation. Une puce peut exagérer ce que vous avez fait sans nouveau chiffre ni nouvel intitulé : relisez donc chaque CV avant de l'envoyer.
+La vérification des faits a besoin de `cv.md`. Dans un espace de travail qui n'en a pas, `generate-pdf.mjs` imprime le PDF sans rien vérifier et ne le signale pas. Le mode pdf s'arrête plus tôt quand `cv.md` manque : cela ne compte donc que si vous lancez le script vous-même. `--skip-fact-check` désactive volontairement ce contrôle.
+
+Aucune des deux ne juge la reformulation en général. Une puce peut encore exagérer ce que vous avez fait sans nouveau chiffre, nom ou intitulé : relisez donc chaque CV avant de l'envoyer.
 
 ## Pièges à connaître
 

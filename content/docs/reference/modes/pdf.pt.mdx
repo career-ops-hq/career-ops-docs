@@ -4,8 +4,8 @@ description: "Gera um currículo em PDF sob medida para uma vaga específica: o 
 seoTitle: "Modo pdf do career-ops — gere um currículo sob medida e compatível com ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-20"
-translationHash: 276805aefe6c9d60
+lastModified: "2026-10-30"
+translationHash: e2ac66dff3d31c92
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -64,9 +64,11 @@ Entries compared: 3
 
 A verificação de cargos avisa e nunca bloqueia, porque reformular um cargo às vezes é decisão sua. Uma experiência que ela não consegue parear, por exemplo porque as datas estão escritas de outro jeito que no `cv.md`, aparece como não verificada; confira esse cargo por conta própria. Se a verificação nem consegue rodar, porque o `cv.md` não pode ser lido ou falta empresa, cargo ou datas em uma experiência, o career-ops para e corrige a entrada primeiro.
 
-A verificação de fatos roda no `generate-pdf.mjs`, sobre o HTML, antes de qualquer impressão. Um número ou afirmação que não está no `cv.md` nem no `article-digest.md` bloqueia o PDF. Para corrigir, tire a afirmação do currículo ou acrescente a evidência às suas fontes. O `config/cv-facts.json` acrescenta suas próprias listas: `allow_metrics` e `allow_facts` para afirmações que você comprovou em outro lugar, `forbidden_phrases`, que bloqueiam, e `warn_phrases`, que só avisam. Sem esse arquivo, as verificações de frases não rodam e a saída avisa. `--skip-fact-check` desliga a verificação.
+A verificação de fatos roda no `generate-pdf.mjs`, sobre o HTML, antes de qualquer impressão. Ela bloqueia o PDF diante de um número, um empregador, uma formação, uma certificação ou uma ferramenta citada pelo nome que não está nem no `cv.md` nem no `article-digest.md`. Também bloqueia um bullet que atribui a você mais do trabalho do que suas fontes, como "Led" onde o `cv.md` diz "Contributed to". Para resolver um bloqueio, tire a afirmação do currículo ou acrescente a evidência às suas fontes. A verificação não lê sua lista de habilidades, porque escrever uma habilidade com as palavras da vaga é permitido, e um cargo só gera um aviso, já que a verificação de cargos cuida dos cargos. O `config/cv-facts.json` acrescenta suas próprias listas: `allow_metrics` e `allow_facts` para afirmações que você comprovou em outro lugar, `forbidden_phrases`, que bloqueiam, e `warn_phrases`, que só avisam. Sem esse arquivo, as verificações de frases não rodam e a saída avisa.
 
-Nenhuma das duas julga a reformulação. Um bullet pode exagerar o que você fez sem número novo nem cargo novo, então leia cada currículo antes de enviar.
+A verificação de fatos precisa do `cv.md`. Em um workspace sem ele, o `generate-pdf.mjs` imprime o PDF sem verificar nada e não avisa. O modo pdf para antes quando falta o `cv.md`, então isso só importa quando você roda o script por conta própria. `--skip-fact-check` desliga a verificação de propósito.
+
+Nenhuma das duas julga a reformulação em geral. Um bullet ainda pode exagerar o que você fez sem número, nome ou cargo novo, então leia cada currículo antes de enviar.
 
 ## Pontos de atenção
 

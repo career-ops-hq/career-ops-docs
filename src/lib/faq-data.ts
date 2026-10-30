@@ -69,7 +69,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Can the tailored CV invent things?",
       answer:
-        "career-ops must not invent anything in a tailored CV: the prompts say reformulate, never fabricate, and two checks back that up. generate-pdf.mjs blocks a CV whose numbers or facts are missing from your sources (cv.md and article-digest.md), unless you pass --skip-fact-check. The pdf mode also runs cv-title-check.mjs, which compares each job title in the tailored CV with the title cv.md gives the same job, matched by company and dates, and asks you to keep or revert any title that differs. The title check warns rather than blocks, because reframing a title is sometimes your call. Nothing judges rewording yet, so read every CV before you send it.",
+        "career-ops must not invent anything in a tailored CV: the prompts say reformulate, never fabricate, and two checks back that up. generate-pdf.mjs blocks a CV whose numbers, employers, degrees, certifications or named tools are missing from your sources (cv.md and article-digest.md), unless you pass --skip-fact-check. That gate needs cv.md: in a workspace without one, it checks nothing. The pdf mode also runs cv-title-check.mjs, which compares each job title in the tailored CV with the title cv.md gives the same job, matched by company and dates, and asks you to keep or revert any title that differs. The title check warns rather than blocks, because reframing a title is sometimes your call. Neither check judges rewording in general, so read every CV before you send it.",
     },
     {
       question: "What is the difference between career-ops and CareerOps?",
@@ -141,7 +141,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Kann der zugeschnittene Lebenslauf Dinge erfinden?",
       answer:
-        "career-ops darf in einem zugeschnittenen Lebenslauf nichts erfinden: Die Prompts sagen umformulieren, nie erfinden, und zwei Prüfungen sichern das ab. generate-pdf.mjs blockiert einen Lebenslauf, dessen Zahlen oder Fakten nicht in deinen Quellen stehen (cv.md und article-digest.md), außer du übergibst --skip-fact-check. Der pdf-Modus führt außerdem cv-title-check.mjs aus. Es vergleicht jeden Jobtitel im zugeschnittenen Lebenslauf mit dem Titel, den cv.md derselben Stelle gibt, zugeordnet nach Unternehmen und Zeitraum, und fragt dich bei jeder Abweichung, ob du den Titel behältst oder zurücksetzt. Die Titelprüfung warnt, statt zu blockieren, denn einen Titel anders zu fassen ist manchmal deine Entscheidung. Umformulierungen bewertet noch nichts, also lies jeden Lebenslauf, bevor du ihn abschickst.",
+        "career-ops darf in einem zugeschnittenen Lebenslauf nichts erfinden: Die Prompts sagen umformulieren, nie erfinden, und zwei Prüfungen sichern das ab. generate-pdf.mjs blockiert einen Lebenslauf, dessen Zahlen, Arbeitgeber, Abschlüsse, Zertifikate oder benannte Tools nicht in deinen Quellen stehen (cv.md und article-digest.md), außer du übergibst --skip-fact-check. Diese Prüfung braucht cv.md: In einem Workspace ohne diese Datei prüft sie nichts. Der pdf-Modus führt außerdem cv-title-check.mjs aus. Es vergleicht jeden Jobtitel im zugeschnittenen Lebenslauf mit dem Titel, den cv.md derselben Stelle gibt, zugeordnet nach Unternehmen und Zeitraum, und fragt dich bei jeder Abweichung, ob du den Titel behältst oder zurücksetzt. Die Titelprüfung warnt, statt zu blockieren, denn einen Titel anders zu fassen ist manchmal deine Entscheidung. Keine der beiden Prüfungen bewertet Umformulierungen im Allgemeinen, also lies jeden Lebenslauf, bevor du ihn abschickst.",
     },
     {
       question: "Was ist der Unterschied zwischen career-ops und CareerOps?",
@@ -213,7 +213,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "¿El CV adaptado puede inventar cosas?",
       answer:
-        "career-ops no debe inventar nada en un CV adaptado: los prompts dicen reformular, nunca fabricar, y dos comprobaciones lo respaldan. generate-pdf.mjs bloquea un CV cuyas cifras o hechos no están en tus fuentes (cv.md y article-digest.md), salvo que pases --skip-fact-check. El modo pdf también ejecuta cv-title-check.mjs, que compara cada cargo del CV adaptado con el que cv.md da al mismo puesto, emparejados por empresa y fechas, y te pregunta si mantener o revertir cualquier cargo distinto. La comprobación de cargos avisa en lugar de bloquear, porque reformular un cargo a veces es decisión tuya. Todavía nada juzga la reformulación, así que lee cada CV antes de enviarlo.",
+        "career-ops no debe inventar nada en un CV adaptado: los prompts dicen reformular, nunca fabricar, y dos comprobaciones lo respaldan. generate-pdf.mjs bloquea un CV cuyas cifras, empresas, títulos académicos, certificaciones o herramientas con nombre no están en tus fuentes (cv.md y article-digest.md), salvo que pases --skip-fact-check. Esa comprobación necesita cv.md: en un espacio de trabajo sin él, no comprueba nada. El modo pdf también ejecuta cv-title-check.mjs, que compara cada cargo del CV adaptado con el que cv.md da al mismo puesto, emparejados por empresa y fechas, y te pregunta si mantener o revertir cualquier cargo distinto. La comprobación de cargos avisa en lugar de bloquear, porque reformular un cargo a veces es decisión tuya. Ninguna de las dos juzga la reformulación en general, así que lee cada CV antes de enviarlo.",
     },
     {
       question: "¿Cuál es la diferencia entre career-ops y CareerOps?",
@@ -285,7 +285,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Le CV personnalisé peut-il inventer des choses ?",
       answer:
-        "career-ops ne doit rien inventer dans un CV personnalisé : les prompts disent reformuler, jamais fabriquer, et deux vérifications le garantissent. generate-pdf.mjs bloque un CV dont les chiffres ou les faits sont absents de vos sources (cv.md et article-digest.md), sauf si vous passez --skip-fact-check. Le mode pdf exécute aussi cv-title-check.mjs, qui compare chaque intitulé de poste du CV personnalisé à celui que cv.md donne au même poste, associés par entreprise et par dates, et vous demande de garder ou d'annuler tout intitulé différent. La vérification des intitulés avertit au lieu de bloquer, car reformuler un intitulé relève parfois de votre choix. Rien ne juge encore la reformulation : relisez donc chaque CV avant de l'envoyer.",
+        "career-ops ne doit rien inventer dans un CV personnalisé : les prompts disent reformuler, jamais fabriquer, et deux vérifications le garantissent. generate-pdf.mjs bloque un CV dont les chiffres, employeurs, diplômes, certifications ou outils nommés sont absents de vos sources (cv.md et article-digest.md), sauf si vous passez --skip-fact-check. Ce contrôle a besoin de cv.md : dans un espace de travail qui n'en a pas, il ne vérifie rien. Le mode pdf exécute aussi cv-title-check.mjs, qui compare chaque intitulé de poste du CV personnalisé à celui que cv.md donne au même poste, associés par entreprise et par dates, et vous demande de garder ou d'annuler tout intitulé différent. La vérification des intitulés avertit au lieu de bloquer, car reformuler un intitulé relève parfois de votre choix. Aucune des deux ne juge la reformulation en général : relisez donc chaque CV avant de l'envoyer.",
     },
     {
       question: "Quelle est la différence entre career-ops et CareerOps ?",
@@ -302,7 +302,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "Il CV su misura può inventare cose?",
       answer:
-        "career-ops non deve inventare nulla in un CV su misura: i prompt dicono riformulare, mai inventare, e due controlli lo garantiscono. generate-pdf.mjs blocca un CV i cui numeri o fatti non compaiono nelle tue fonti (cv.md e article-digest.md), a meno che tu non passi --skip-fact-check. La modalità pdf esegue anche cv-title-check.mjs, che confronta ogni titolo di ruolo del CV su misura con quello che cv.md dà allo stesso ruolo, abbinati per azienda e date, e ti chiede se tenere o ripristinare ogni titolo diverso. Il controllo dei titoli avvisa invece di bloccare, perché riformulare un titolo a volte è una tua scelta. Nulla giudica ancora la riformulazione, quindi leggi ogni CV prima di inviarlo.",
+        "career-ops non deve inventare nulla in un CV su misura: i prompt dicono riformulare, mai inventare, e due controlli lo garantiscono. generate-pdf.mjs blocca un CV i cui numeri, datori di lavoro, titoli di studio, certificazioni o strumenti citati per nome non compaiono nelle tue fonti (cv.md e article-digest.md), a meno che tu non passi --skip-fact-check. Questo controllo richiede cv.md: in un workspace che non ce l'ha, non controlla nulla. La modalità pdf esegue anche cv-title-check.mjs, che confronta ogni titolo di ruolo del CV su misura con quello che cv.md dà allo stesso ruolo, abbinati per azienda e date, e ti chiede se tenere o ripristinare ogni titolo diverso. Il controllo dei titoli avvisa invece di bloccare, perché riformulare un titolo a volte è una tua scelta. Nessuno dei due controlli giudica la riformulazione in generale, quindi leggi ogni CV prima di inviarlo.",
     },
     {
       question: "career-ops è gratis?",
@@ -374,7 +374,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "O currículo sob medida pode inventar coisas?",
       answer:
-        "O career-ops não pode inventar nada em um currículo sob medida: os prompts dizem reformular, nunca fabricar, e duas verificações garantem isso. O generate-pdf.mjs bloqueia um currículo cujos números ou fatos não estão nas suas fontes (cv.md e article-digest.md), a menos que você passe --skip-fact-check. O modo pdf também roda o cv-title-check.mjs, que compara cada cargo do currículo sob medida com o cargo que o cv.md dá à mesma experiência, pareados por empresa e datas, e pergunta se você quer manter ou reverter qualquer cargo diferente. A verificação de cargos avisa em vez de bloquear, porque reformular um cargo às vezes é decisão sua. Nada julga a reformulação ainda, então leia cada currículo antes de enviar.",
+        "O career-ops não pode inventar nada em um currículo sob medida: os prompts dizem reformular, nunca fabricar, e duas verificações garantem isso. O generate-pdf.mjs bloqueia um currículo cujos números, empregadores, formações, certificações ou ferramentas citadas pelo nome não estão nas suas fontes (cv.md e article-digest.md), a menos que você passe --skip-fact-check. Essa verificação precisa do cv.md: em um workspace sem ele, ela não verifica nada. O modo pdf também roda o cv-title-check.mjs, que compara cada cargo do currículo sob medida com o cargo que o cv.md dá à mesma experiência, pareados por empresa e datas, e pergunta se você quer manter ou reverter qualquer cargo diferente. A verificação de cargos avisa em vez de bloquear, porque reformular um cargo às vezes é decisão sua. Nenhuma das duas verificações julga a reformulação em geral, então leia cada currículo antes de enviar.",
     },
     {
       question: "O career-ops é gratuito?",
@@ -446,7 +446,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "定制简历会编造内容吗？",
       answer:
-        "career-ops 不允许在定制简历中编造任何内容：提示词要求只改写、不编造，并有两项检查作为保障。如果简历中的数字或事实在你的资料来源（cv.md 和 article-digest.md）中找不到，generate-pdf.mjs 会阻止生成，除非你传入 --skip-fact-check。pdf 模式还会运行 cv-title-check.mjs：它按公司和日期把定制简历中的每个职位名称与 cv.md 中同一段经历的职位名称配对比较，遇到不一致时询问你是保留还是改回。职位名称检查只发出警告而不阻止生成，因为调整职位名称的表述有时是你自己的决定。目前还没有任何检查会评判改写本身，所以每份简历发出前都要亲自读一遍。",
+        "career-ops 不允许在定制简历中编造任何内容：提示词要求只改写、不编造，并有两项检查作为保障。如果简历中的数字、雇主、学位、证书或具名工具在你的资料来源（cv.md 和 article-digest.md）中找不到，generate-pdf.mjs 会阻止生成，除非你传入 --skip-fact-check。这项检查依赖 cv.md：工作区里没有 cv.md 时，它什么都不检查。pdf 模式还会运行 cv-title-check.mjs：它按公司和日期把定制简历中的每个职位名称与 cv.md 中同一段经历的职位名称配对比较，遇到不一致时询问你是保留还是改回。职位名称检查只发出警告而不阻止生成，因为调整职位名称的表述有时是你自己的决定。两项检查都不评判一般意义上的改写，所以每份简历发出前都要亲自读一遍。",
     },
     {
       question: "career-ops 免费吗？",

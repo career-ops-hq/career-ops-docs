@@ -4,8 +4,8 @@ description: "Genera un CV en PDF adaptado a una JD concreta: career-ops constru
 seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-20"
-translationHash: 276805aefe6c9d60
+lastModified: "2026-10-30"
+translationHash: e2ac66dff3d31c92
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -64,9 +64,11 @@ Entries compared: 3
 
 La comprobación de cargos avisa y nunca bloquea, porque reformular un cargo a veces es decisión tuya. Un puesto que no puede emparejar, por ejemplo porque sus fechas están escritas de otra forma que en `cv.md`, se marca como no comprobado, así que revisa ese cargo directamente. Si la comprobación no puede ejecutarse, porque no se puede leer `cv.md` o a un puesto le falta la empresa, el cargo o las fechas, career-ops se detiene y corrige primero la entrada.
 
-La comprobación de hechos se ejecuta en `generate-pdf.mjs`, sobre el HTML, antes de imprimir nada. Una cifra o afirmación que no está en `cv.md` ni en `article-digest.md` bloquea el PDF. Para corregirlo, quita la afirmación del CV o añade la evidencia a tus fuentes. `config/cv-facts.json` añade tus propias listas: `allow_metrics` y `allow_facts` para afirmaciones que has verificado en otro sitio, `forbidden_phrases` que bloquean y `warn_phrases` que solo avisan. Sin ese archivo, las comprobaciones de frases no se ejecutan y la salida lo indica. `--skip-fact-check` desactiva la comprobación.
+La comprobación de hechos se ejecuta en `generate-pdf.mjs`, sobre el HTML, antes de imprimir nada. Bloquea el PDF ante una cifra, una empresa, un título académico, una certificación o una herramienta con nombre que no está ni en `cv.md` ni en `article-digest.md`. También bloquea un bullet que se atribuye más trabajo que tus fuentes, como "Led" donde `cv.md` dice "Contributed to". Para corregir un bloqueo, quita la afirmación del CV o añade la evidencia a tus fuentes. La comprobación no lee tu lista de habilidades, porque expresar una habilidad con las palabras de la oferta está permitido, y un cargo solo genera un aviso, porque de los cargos se encarga la comprobación de cargos. `config/cv-facts.json` añade tus propias listas: `allow_metrics` y `allow_facts` para afirmaciones que has verificado en otro sitio, `forbidden_phrases` que bloquean y `warn_phrases` que solo avisan. Sin ese archivo, las comprobaciones de frases no se ejecutan y la salida lo indica.
 
-Ninguna de las dos juzga la reformulación. Un bullet puede exagerar lo que hiciste sin una cifra nueva ni un cargo nuevo, así que lee cada CV antes de enviarlo.
+La comprobación de hechos necesita `cv.md`. En un espacio de trabajo sin él, `generate-pdf.mjs` imprime el PDF sin comprobar nada y no lo indica. El modo pdf se detiene antes si falta `cv.md`, así que esto solo importa cuando ejecutas el script directamente. `--skip-fact-check` desactiva la comprobación a propósito.
+
+Ninguna de las dos juzga la reformulación en general. Un bullet puede exagerar lo que hiciste sin una cifra, un nombre ni un cargo nuevos, así que lee cada CV antes de enviarlo.
 
 ## Posibles problemas
 

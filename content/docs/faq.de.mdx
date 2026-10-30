@@ -3,7 +3,7 @@ title: FAQ
 description: Häufige Fragen zu career-ops — Kosten, Datenschutz, unterstützte KI-CLIs, scan vs. scan:full, Token-Limits, Einrichtung unter Windows und was career-ops niemals in deinem Namen tun wird.
 seoTitle: "career-ops FAQ — Kosten, Datenschutz, unterstützte CLIs, Windows und kostenloser Betrieb"
 icon: CircleQuestionMark
-translationHash: 4fcba7339b2ca9b2
+translationHash: f8366941d415f74c
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -76,7 +76,7 @@ career-ops reicht keine Bewerbungen automatisch ein: Es bereitet vor — es scan
 
 ## Kann der zugeschnittene Lebenslauf Dinge erfinden?
 
-career-ops darf in einem zugeschnittenen Lebenslauf nichts erfinden: Die Prompts sagen umformulieren, nie erfinden, und zwei Prüfungen sichern das ab. `generate-pdf.mjs` blockiert einen Lebenslauf, dessen Zahlen oder Fakten nicht in deinen Quellen stehen (`cv.md` und `article-digest.md`), außer du übergibst `--skip-fact-check`. Der [pdf-Modus](/de/docs/reference/modes/pdf) führt außerdem `cv-title-check.mjs` aus. Es vergleicht jeden Jobtitel im zugeschnittenen Lebenslauf mit dem Titel, den `cv.md` derselben Stelle gibt, zugeordnet nach Unternehmen und Zeitraum, und fragt dich bei jeder Abweichung, ob du den Titel behältst oder zurücksetzt. Die Titelprüfung warnt, statt zu blockieren, denn einen Titel anders zu fassen ist manchmal deine Entscheidung. Umformulierungen bewertet noch nichts, also lies jeden Lebenslauf, bevor du ihn abschickst.
+career-ops darf in einem zugeschnittenen Lebenslauf nichts erfinden: Die Prompts sagen umformulieren, nie erfinden, und zwei Prüfungen sichern das ab. `generate-pdf.mjs` blockiert einen Lebenslauf, dessen Zahlen, Arbeitgeber, Abschlüsse, Zertifikate oder benannte Tools nicht in deinen Quellen stehen (`cv.md` und `article-digest.md`), außer du übergibst `--skip-fact-check`. Diese Prüfung braucht `cv.md`: In einem Workspace ohne diese Datei prüft sie nichts. Der [pdf-Modus](/de/docs/reference/modes/pdf) führt außerdem `cv-title-check.mjs` aus. Es vergleicht jeden Jobtitel im zugeschnittenen Lebenslauf mit dem Titel, den `cv.md` derselben Stelle gibt, zugeordnet nach Unternehmen und Zeitraum, und fragt dich bei jeder Abweichung, ob du den Titel behältst oder zurücksetzt. Die Titelprüfung warnt, statt zu blockieren, denn einen Titel anders zu fassen ist manchmal deine Entscheidung. Keine der beiden Prüfungen bewertet Umformulierungen im Allgemeinen, also lies jeden Lebenslauf, bevor du ihn abschickst.
 
 ## Was ist der Unterschied zwischen career-ops und CareerOps?
 

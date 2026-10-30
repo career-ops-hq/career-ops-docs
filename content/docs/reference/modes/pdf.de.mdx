@@ -4,8 +4,8 @@ description: "Erstellt einen auf eine bestimmte Stellenbeschreibung zugeschnitte
 seoTitle: "career-ops pdf-Modus — einen ATS-tauglichen, zugeschnittenen Lebenslauf erstellen"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-20"
-translationHash: 276805aefe6c9d60
+lastModified: "2026-10-30"
+translationHash: e2ac66dff3d31c92
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -64,9 +64,11 @@ Entries compared: 3
 
 Die Titelprüfung warnt nur und blockiert nie, denn einen Titel anders zu fassen ist manchmal deine Entscheidung. Eine Stelle, die sie nicht zuordnen kann, etwa weil ihr Zeitraum anders geschrieben ist als in `cv.md`, wird als nicht geprüft gemeldet. Diesen Titel prüfst du dann selbst. Kann die Prüfung gar nicht laufen, weil `cv.md` nicht lesbar ist oder einer Stelle Unternehmen, Titel oder Zeitraum fehlen, hält career-ops an und repariert zuerst die Eingabe.
 
-Die Faktenprüfung läuft in `generate-pdf.mjs`, auf dem HTML, bevor etwas gedruckt wird. Eine Zahl oder Aussage, die weder in `cv.md` noch in `article-digest.md` steht, blockiert das PDF. Nimm die Aussage aus dem Lebenslauf heraus oder ergänze den Beleg in deinen Quellen. `config/cv-facts.json` ergänzt eigene Listen: `allow_metrics` und `allow_facts` für Aussagen, die du anderweitig belegt hast, `forbidden_phrases`, die blockieren, und `warn_phrases`, die nur warnen. Ohne diese Datei laufen die Phrasenprüfungen nicht, und die Ausgabe sagt das. `--skip-fact-check` schaltet die Prüfung ab.
+Die Faktenprüfung läuft in `generate-pdf.mjs`, auf dem HTML, bevor etwas gedruckt wird. Sie blockiert das PDF bei einer Zahl, einem Arbeitgeber, einem Abschluss, einem Zertifikat oder einem benannten Tool, das weder in `cv.md` noch in `article-digest.md` steht. Sie blockiert auch einen Bullet, der dir mehr von der Arbeit zuschreibt als deine Quellen, etwa „Led“, wo `cv.md` „Contributed to“ sagt. Um eine Blockade zu lösen, nimm die Aussage aus dem Lebenslauf heraus oder ergänze den Beleg in deinen Quellen. Deine Skills-Liste liest die Prüfung nicht, denn eine Fähigkeit in den Worten der Stellenanzeige zu nennen ist erlaubt, und bei einem Jobtitel warnt sie nur, weil die Titelprüfung Titel abdeckt. `config/cv-facts.json` ergänzt eigene Listen: `allow_metrics` und `allow_facts` für Aussagen, die du anderweitig belegt hast, `forbidden_phrases`, die blockieren, und `warn_phrases`, die nur warnen. Ohne diese Datei laufen die Phrasenprüfungen nicht, und die Ausgabe sagt das.
 
-Keine der beiden Prüfungen bewertet Umformulierungen. Ein Bullet kann übertreiben, was du getan hast, ohne neue Zahl und ohne neuen Titel. Lies deshalb jeden Lebenslauf, bevor du ihn abschickst.
+Die Faktenprüfung braucht `cv.md`. In einem Workspace ohne diese Datei druckt `generate-pdf.mjs` das PDF, ohne etwas zu prüfen, und sagt das nicht. Der pdf-Modus hält schon vorher an, wenn `cv.md` fehlt, das spielt also nur eine Rolle, wenn du das Script selbst ausführst. `--skip-fact-check` schaltet die Prüfung bewusst ab.
+
+Keine der beiden Prüfungen bewertet Umformulierungen im Allgemeinen. Ein Bullet kann trotzdem übertreiben, was du getan hast, ohne neue Zahl, neuen Namen oder neuen Titel. Lies deshalb jeden Lebenslauf, bevor du ihn abschickst.
 
 ## Stolperfallen
 

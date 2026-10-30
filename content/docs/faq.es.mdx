@@ -3,7 +3,7 @@ title: Preguntas frecuentes
 description: Preguntas frecuentes sobre career-ops — coste, privacidad, CLIs de IA compatibles, scan vs scan:full, límites de tokens, configuración en Windows y lo que career-ops nunca hará en tu nombre.
 seoTitle: "FAQ de career-ops — coste, privacidad, CLIs compatibles, Windows y cómo ejecutarlo gratis"
 icon: CircleQuestionMark
-translationHash: 4fcba7339b2ca9b2
+translationHash: f8366941d415f74c
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -76,7 +76,7 @@ career-ops no envía candidaturas por ti: hace todo el trabajo previo — escane
 
 ## ¿El CV adaptado puede inventar cosas?
 
-career-ops no debe inventar nada en un CV adaptado: los prompts dicen reformular, nunca fabricar, y dos comprobaciones lo respaldan. `generate-pdf.mjs` bloquea un CV cuyas cifras o hechos no están en tus fuentes (`cv.md` y `article-digest.md`), salvo que pases `--skip-fact-check`. El [modo pdf](/es/docs/reference/modes/pdf) también ejecuta `cv-title-check.mjs`, que compara cada cargo del CV adaptado con el que `cv.md` da al mismo puesto, emparejados por empresa y fechas, y te pregunta si mantener o revertir cualquier cargo distinto. La comprobación de cargos avisa en lugar de bloquear, porque reformular un cargo a veces es decisión tuya. Todavía nada juzga la reformulación, así que lee cada CV antes de enviarlo.
+career-ops no debe inventar nada en un CV adaptado: los prompts dicen reformular, nunca fabricar, y dos comprobaciones lo respaldan. `generate-pdf.mjs` bloquea un CV cuyas cifras, empresas, títulos académicos, certificaciones o herramientas con nombre no están en tus fuentes (`cv.md` y `article-digest.md`), salvo que pases `--skip-fact-check`. Esa comprobación necesita `cv.md`: en un espacio de trabajo sin él, no comprueba nada. El [modo pdf](/es/docs/reference/modes/pdf) también ejecuta `cv-title-check.mjs`, que compara cada cargo del CV adaptado con el que `cv.md` da al mismo puesto, emparejados por empresa y fechas, y te pregunta si mantener o revertir cualquier cargo distinto. La comprobación de cargos avisa en lugar de bloquear, porque reformular un cargo a veces es decisión tuya. Ninguna de las dos juzga la reformulación en general, así que lee cada CV antes de enviarlo.
 
 ## ¿Cuál es la diferencia entre career-ops y CareerOps?
 
