@@ -32,6 +32,7 @@ const LANGUAGE_NAMES: Record<WaitlistLocale, string> = {
   pt: 'Português',
   it: 'Italiano',
   zh: '中文',
+  tr: 'Türkçe',
 };
 
 const pagePath = (locale: WaitlistLocale) => (locale === 'en' ? '/waitlist' : `/${locale}/waitlist`);
@@ -217,6 +218,32 @@ const COPY: Record<WaitlistLocale, Copy> = {
         </>
       ),
       sent: '你已加入名单。等它准备好时，我们会写信给你，只写这一次。',
+    },
+  },
+  tr: {
+    title: 'career-ops, terminalsiz.',
+    sentence:
+      "career-ops'un kodlama CLI'ı kullanmayanlar için web sürümü, adaylar için ücretsiz. E-postanı bırak, hazır olduğunda sana bir kez yazalım.",
+    footer: "Yerel sürüm olduğu gibi kalıyor. Açık kaynak. Yerel. Zaten kullandığın yapay zeka CLI'ında.",
+    footerLink: 'Kur →',
+    docsHref: '/tr/docs',
+    form: {
+      email: 'E-posta',
+      country: 'Ülke',
+      countryPlaceholder: 'Ülkeni seç',
+      assistants: 'Hangi yapay zeka asistanlarını kullanıyorsun?',
+      assistantsHint: 'Kullandıklarının hepsini işaretle.',
+      assistantLabels: { chatgpt: 'ChatGPT', gemini: 'Gemini', claude: 'Claude', other: 'Diğer', none: 'Hiçbiri' },
+      assistantsRequired: 'En az bir seçenek işaretle.',
+      submit: 'Bekleme listesine katıl',
+      submitting: 'Katılıyorsun…',
+      privacy: (
+        <>
+          E-postanı yalnızca bu tek mesaj için kullanacağız ve kimseyle paylaşmayacağız. Ülken ve cevabın
+          yalnızca toplamlara girer. Verilerinin silinmesini istersen {mail} adresine yaz.
+        </>
+      ),
+      sent: 'Listedesin. Hazır olduğunda sana bir kez yazacağız.',
     },
   },
 };

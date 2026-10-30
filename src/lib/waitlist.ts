@@ -7,7 +7,7 @@
 export const ASSISTANTS = ['chatgpt', 'gemini', 'claude', 'other', 'none'] as const;
 export type Assistant = (typeof ASSISTANTS)[number];
 
-export const WAITLIST_LOCALES = ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh'] as const;
+export const WAITLIST_LOCALES = ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh', 'tr'] as const;
 export type WaitlistLocale = (typeof WAITLIST_LOCALES)[number];
 
 export const LOADS_PREFIX = 'waitlist-loads';
