@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Privacy · career-ops',
   description:
-    'How career-ops.org handles personal data — applies only to the mailing list. GDPR-compliant, no tracking, minimal data.',
+    'How career-ops.org handles personal data: it applies to the mailing list and the web version waitlist. GDPR-compliant, no tracking, minimal data.',
   alternates: { canonical: 'https://career-ops.org/privacy' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     siteName: 'career-ops',
     title: 'Privacy · career-ops',
     description:
-      'How career-ops.org handles personal data. Applies only to the mailing list signup. GDPR-compliant.',
+      'How career-ops.org handles personal data. Applies to the mailing list and the web version waitlist. GDPR-compliant.',
   },
   robots: { index: true, follow: true },
 };
@@ -29,12 +29,12 @@ export default function PrivacyPage() {
           <div className="flex gap-2">
             <dt>Effective:</dt>
             <dd className="text-fd-foreground">
-              <time dateTime="2026-05-07">7 May 2026</time>
+              <time dateTime="2026-10-30">30 October 2026</time>
             </dd>
           </div>
           <div className="flex gap-2">
             <dt>Version:</dt>
-            <dd className="text-fd-foreground">1.0</dd>
+            <dd className="text-fd-foreground">1.1</dd>
           </div>
         </dl>
       </header>
@@ -42,8 +42,9 @@ export default function PrivacyPage() {
       <div className="space-y-8 text-fd-foreground/90 leading-relaxed">
         <p>
           This policy explains what data career-ops.org collects through its mailing list signup,
-          why, and how. It applies only to the email subscription form on career-ops.org. The
-          website itself collects no other personal data beyond what's described below.
+          why, and how. It applies to the email subscription form on career-ops.org and to the web
+          version waitlist (section 13). The website itself collects no other personal data beyond
+          what's described below.
         </p>
 
         <Section title="1. Data Controller">
@@ -193,7 +194,8 @@ export default function PrivacyPage() {
             <li>
               <strong className="text-fd-foreground">Resend Inc.</strong> (United States) —
               transactional email and audience management. Subscriber emails are stored in their EU
-              region (eu-west-1, Ireland). DPA:{' '}
+              region (eu-west-1, Ireland). It also delivers the one notice to the web version waitlist
+              (section 13). DPA:{' '}
               <a
                 href="https://resend.com/legal/dpa"
                 rel="noreferrer noopener"
@@ -204,7 +206,8 @@ export default function PrivacyPage() {
             </li>
             <li>
               <strong className="text-fd-foreground">Vercel Inc.</strong> (United States) — website
-              hosting. Captures request IP and timestamps in standard server logs for
+              hosting and private storage of waitlist email addresses (section 13), in the United
+              States (iad1). Captures request IP and timestamps in standard server logs for
               abuse-prevention. DPA:{' '}
               <a
                 href="https://vercel.com/legal/dpa"
@@ -283,6 +286,36 @@ export default function PrivacyPage() {
           <p className="mt-3">
             Editorial corrections (typo fixes, clarifications without substantive change) are made
             silently.
+          </p>
+        </Section>
+
+        <Section title="13. Web version waitlist">
+          <p>
+            If you join the waitlist at{' '}
+            <a href="/waitlist" className="text-fd-foreground underline underline-offset-2">
+              career-ops.org/waitlist
+            </a>
+            , we store your email address, with the time you joined, so that we can write to you
+            once when the web version is ready. We process it on the basis of your consent (Article
+            6(1)(a) of the GDPR), and it is kept apart from the mailing list above: joining the
+            waitlist does not subscribe you to anything else.
+          </p>
+          <p className="mt-3">
+            Your country, your answer about AI assistants and the link you arrived from are stored
+            separately, without your email, and are used only as totals. We also count page loads by
+            day and by that link, without an IP address or a cookie.
+          </p>
+          <p className="mt-3">
+            The email addresses are stored privately with Vercel Inc. Resend Inc. receives them only
+            to deliver the one message, and nobody else gets them. We delete them once that message
+            is sent, or earlier if you ask at{' '}
+            <a
+              href="mailto:hi@career-ops.org"
+              className="text-fd-foreground underline underline-offset-2"
+            >
+              hi@career-ops.org
+            </a>
+            . The rights in section 6 apply.
           </p>
         </Section>
 
