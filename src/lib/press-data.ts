@@ -109,6 +109,7 @@ export const OFFICIAL_LINKS: { label: string; href: string }[] = [
   { label: 'Manifesto', href: `https://${SITE}/manifesto` },
   { label: 'Changelog', href: `https://${SITE}/changelog` },
   { label: 'Hired stories', href: HIRED_URL },
+  { label: 'Community plugins', href: `https://${SITE}/docs/reference/plugins` },
 ];
 
 export type PressFact = { label: string; value: string; href?: string };
