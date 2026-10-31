@@ -1,0 +1,76 @@
+---
+title: "All career-ops commands"
+seoTitle: "career-ops commands: the full list"
+description: "Every career-ops command in one table: what each one does in a line, with a link to its reference page when it has one."
+icon: SquareTerminal
+---
+
+career-ops works through commands that you type in the AI coding CLI where you run it. `/career-ops` on its own shows them all; you can also paste a job URL or description directly, and career-ops detects it and runs the full pipeline. In Codex, slash commands are not guaranteed: use the same command names in a prompt instead.
+
+None of them sends an application for you. It drafts and fills; it never submits. You press Submit.
+
+{/* generated:source:start (scripts/community-snapshot.mjs) */}
+The list below is the Usage block of the core README (as of 23 Oct 2026, core commit [115bc98](https://github.com/career-ops-hq/career-ops/tree/115bc9873e3d43e23883f3c8f16436617facc62c)).
+{/* generated:source:end */}
+
+{/* generated:commands:start (scripts/community-snapshot.mjs) */}
+| Command | What it does | Reference |
+| --- | --- | --- |
+| `/career-ops` | Show all available commands |  |
+| `/career-ops {JD}` | AUTO-PIPELINE: evaluate + report + PDF + tracker (paste text or URL) | [auto-pipeline](/docs/reference/modes/auto-pipeline) |
+| `/career-ops pipeline` | Process pending URLs from inbox (data/pipeline.md) | [pipeline](/docs/reference/modes/pipeline) |
+| `/career-ops oferta` | Evaluation only, blocks A to H (no auto PDF) | [oferta](/docs/reference/modes/oferta) |
+| `/career-ops ofertas` | Compare and rank multiple offers | [ofertas](/docs/reference/modes/ofertas) |
+| `/career-ops contacto` | LinkedIn power move: find contacts + draft message | [contacto](/docs/reference/modes/contacto) |
+| `/career-ops deep` | Deep research prompt about company | [deep](/docs/reference/modes/deep) |
+| `/career-ops interview-prep` | Generate company-specific interview prep doc | [interview-prep](/docs/reference/modes/interview-prep) |
+| `/career-ops interview` | Interactive profile/CV onboarding interview |  |
+| `/career-ops master-profile` | Import, review, validate, and prepare selected Profile facts as CV bullets |  |
+| `/career-ops eu-swe` | Calibrate a European SWE application before CV/apply/interview |  |
+| `/career-ops interview/plan` | Time-blocked prep plan for an upcoming interview |  |
+| `/career-ops interview/practice` | Practice interview, one question at a time with feedback |  |
+| `/career-ops interview/debrief` | Post-interview debrief: close gaps, predict next round |  |
+| `/career-ops interview-redflag` | Analyze employer warning signs before joining a company |  |
+| `/career-ops pdf` | PDF only, ATS-optimized CV | [pdf](/docs/reference/modes/pdf) |
+| `/career-ops text` | Tailored markdown CV (mirrors cv.md, no PDF) |  |
+| `/career-ops latex` | Export CV as LaTeX/Overleaf .tex |  |
+| `/career-ops latex-tex` | Tailor your own resume.tex in place (opt-in; cv.md stays default) |  |
+| `/career-ops cover` | Cover letter: standalone JD paste or /career-ops cover \{slug\} |  |
+| `/career-ops email` | Formal application email draft (draft-only; never sends, submits, or clicks) |  |
+| `/career-ops add` | Add a project/paper/role to your CV (fetch + preview + confirm) |  |
+| `/career-ops expand` | Auto-discover and add missing competencies from profile links |  |
+| `/career-ops training` | Evaluate course/cert against North Star | [training](/docs/reference/modes/training) |
+| `/career-ops project` | Evaluate portfolio project idea | [project](/docs/reference/modes/project) |
+| `/career-ops tracker` | Application status overview | [tracker](/docs/reference/modes/tracker) |
+| `/career-ops agent-inbox` | Queue/drain requests for the next session (data/agent-inbox.md) |  |
+| `/career-ops apply` | Live application assistant (Playwright from this checkout, does not submit) | [apply](/docs/reference/modes/apply) |
+| `/career-ops scan` | Scan portals and discover new offers |  |
+| `/career-ops discover` | Resolve a company list to scannable ATS boards + append to portals.yml (zero-token) |  |
+| `/career-ops batch` | Batch processing with parallel workers |  |
+| `/career-ops patterns` | Analyze rejection patterns and improve targeting | [patterns](/docs/reference/modes/patterns) |
+| `/career-ops offer-prep` | Read a received offer/contract with the candidate: clause walk + lawyer questions (not legal advice) |  |
+| `/career-ops titles` | Suggest adjacent job titles from your CV to broaden the search |  |
+| `/career-ops upskill` | Aggregate skill-gap analysis from your evaluated reports |  |
+| `/career-ops followup` | Follow-up cadence tracker: flag overdue, generate drafts | [followup](/docs/reference/modes/followup) |
+| `/career-ops reply-watch` | Classify employer replies and suggest tracker updates |  |
+| `/career-ops outcome` | Record application outcome & archive artifacts |  |
+| `/career-ops calibrate` | Advisory report: do your evaluation scores predict your real outcomes? Reads /outcome data; never changes scoring |  |
+| `/career-ops update` | Update career-ops system files with diff preview + compat check |  |
+{/* generated:commands:end */}
+
+The README block does not list one command yet: `/career-ops retro`, which turns your corrections from a session into rules you approve. See [retro](/docs/reference/modes/retro).
+
+The commands with a reference page are explained in depth in [Modes](/docs/reference/modes).
+
+## Helper scripts
+
+These run in a terminal from the career-ops folder, not in the chat. The first four are read-only and use no AI tokens, and each one prints a readable table with `--summary`.
+
+| Command | What it does |
+| --- | --- |
+| `npm run closing-soon -- --summary` | Lists tracker rows whose posting closes soon, read from dates you noted (such as "closes 2026-10-22") or from the archived posting. The window is 7 days; change it with `--within 14`. Rows with a date it cannot read are listed, not guessed. |
+| `npm run filter-audit` | Shows which `title_filter` keywords earn their keep: how many postings each one is the only keyword to catch, and how those postings scored. |
+| `npm run ics-interview -- invite.ics --summary` | Reads an interview invite's `.ics` file: start, end, time zone and meeting link. It prints a row for you to paste into `data/active-interviews.md`. |
+| `npm run reeval-candidates -- --summary` | Lists tracker rows scored before your CV, profile or other sources last changed, so you can decide which ones to evaluate again. |
+| `npm run ui` | Starts the experimental, opt-in web UI (alpha): a local-first view over the same files the CLI reads and writes, at localhost. See [web/README.md](https://github.com/career-ops-hq/career-ops/blob/career-ops-v1.38.0/web/README.md). |
+
