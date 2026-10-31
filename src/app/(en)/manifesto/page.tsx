@@ -338,6 +338,19 @@ export default async function ManifestoPage() {
             {AI_JOB_SEARCH_IN_THE_MANIFESTO}
           </p>
         </section>
+        {/* Below the block, not inside it: the block is one literal version on
+            every surface (page, schema FAQ, llms.txt, MANIFESTO.md) and links
+            to no career-ops page (venture-ops, 24-oct). */}
+        <p className="mt-4 text-sm leading-relaxed text-fd-muted-foreground">
+          For the practical side, read{' '}
+          <Link
+            href="/ai-job-search"
+            className="text-brand-text hover:underline underline-offset-2"
+          >
+            How to choose an AI job search agent
+          </Link>
+          .
+        </p>
 
         <hr className="my-12 border-t border-fd-border" />
 

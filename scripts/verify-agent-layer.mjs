@@ -304,6 +304,26 @@ async function main() {
     }
   }
 
+  // 6. The category guide: top-level, so the docs rewrite and the proxy do not
+  //    cover it. Literal .md twins, Accept on the human URL, an llms.txt line.
+  {
+    const { body: llms } = await get('/llms.txt');
+    if (!llms.includes('https://career-ops.org/ai-job-search'))
+      fail('/llms.txt lost the /ai-job-search line');
+    for (const url of ['/ai-job-search', '/es/ai-job-search']) {
+      const md = await get(`${url}.md`);
+      if (md.res.status !== 200) fail(`${url}.md status ${md.res.status} (want 200)`);
+      if (!md.ct.includes('text/markdown')) fail(`${url}.md content-type "${md.ct}"`);
+      if ((md.res.headers.get('x-robots-tag') || '') !== 'noindex')
+        fail(`${url}.md missing X-Robots-Tag: noindex`);
+      if (!(md.res.headers.get('link') || '').includes(`https://career-ops.org${url}>; rel="canonical"`))
+        fail(`${url}.md missing its Link canonical`);
+      if (/\[#[a-z0-9-]+\]$/m.test(md.body)) fail(`${url}.md leaks heading anchors`);
+      const acc = await get(url, { Accept: 'text/markdown' });
+      if (!acc.ct.includes('text/markdown')) fail(`${url} with Accept:markdown returned "${acc.ct}"`);
+    }
+  }
+
   if (failures.length) {
     console.error(`\n✗ Agent-layer guard: ${failures.length} regression(s)\n`);
     for (const f of failures) console.error(`  - ${f}`);

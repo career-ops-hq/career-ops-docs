@@ -1,0 +1,130 @@
+---
+title: "How to choose an AI job search agent"
+description: "AI job search agents read job listings, score them against your CV and draft applications. Seven questions to ask before you pick one, from who sends the application to where your CV goes."
+date: "2026-05-18"
+lastModified: "2026-10-31"
+tags: [ai-job-search, guide, ai-job-search-agent, methodology]
+summary: "AI job search agents read job listings, score them against your CV and draft applications. Seven questions to ask before you pick one, from who sends the application to where your CV goes."
+faq:
+  - q: "What is the best AI job search tool?"
+    a: "There is no single best AI job search tool; the best one is the one that passes your own checks. Ask who sends the application, where your CV goes, whether it evaluates listings before it applies, what it costs, whether you can read and change it, whether it fits the tools you already use, and how it keeps up with new job sources."
+  - q: "What is an AI job search agent?"
+    a: "An AI job search agent is software that finds job listings, scores each one against your CV and drafts the application material, so you spend your time on the roles worth applying to. The difference from a chatbot is that it follows a repeatable process and keeps track of what it did."
+  - q: "Can an AI agent manage my whole job search?"
+    a: "An AI agent can run the repetitive parts: scanning job sources, scoring listings, tailoring your CV and tracking applications. The decisions stay with you: which roles you want, whether a listing is worth an application, and what you send."
+  - q: "Is there an AI agent that applies to jobs automatically?"
+    a: "Some tools advertise it. career-ops does not apply for you; it prepares, you send. It drafts and fills; it never submits. You press Submit."
+  - q: "Is there a free, open-source AI job search agent?"
+    a: "Yes. career-ops is an open-source AI job search agent under the MIT license, free for candidates, with no paid plans. You only pay your AI provider, if at all, because it also runs on free and local models."
+  - q: "How does an AI agent score a job against my resume?"
+    a: "It reads the job posting against your CV and your targets, then gives a score with its reasoning. career-ops scores each posting from 1 to 5 across five dimensions: match with your CV, alignment with your target roles, comp, cultural signals and red flags. Below 4.0, it recommends against applying unless you have a specific reason."
+---
+
+{/* The FAQ below is duplicated in the frontmatter `faq` (FAQPage JSON-LD): edit both together. The CI schema parity guard compares every question and answer literally. */}
+
+An AI job search agent is software that finds job listings, scores each one against your CV (resume) and drafts the application material, so you spend your time on the roles worth applying to. To choose one, ask seven questions: who sends the application, where your CV goes, whether it evaluates before it applies, what it costs, whether you can read and change it, whether it fits the tools you already use, and how it keeps up with new job sources.
+
+Each question below comes with the answer of one tool, [career-ops, an open-source AI job search agent](/), so you can see what a concrete answer looks like. Ask any tool you are considering the same questions.
+
+**On this page:** [Who sends the application?](#who-sends-the-application) · [Where does your CV go?](#where-does-your-cv-go) · [Does it evaluate before it applies?](#does-it-evaluate-before-it-applies) · [What does it cost?](#what-does-it-cost) · [Can you read it and change it?](#can-you-read-it-and-change-it) · [Does it fit your tools?](#does-it-fit-the-tools-you-already-use) · [How does it keep up?](#how-does-it-keep-up-with-new-job-sources) · [A search, step by step](#what-a-search-looks-like-step-by-step) · [Limits](#the-limits-to-check-before-you-commit) · [FAQ](#frequently-asked-questions)
+
+## Who sends the application? [#who-sends-the-application]
+
+Start here, because this answer decides who carries the risk. An application goes out under your name. If an agent submits on its own, a wrong answer on a form or a role you would never take becomes your problem, and you find out afterwards.
+
+career-ops draws the line in one place: it drafts and fills; it never submits. You press Submit. It sends no application to a job portal and no email. It writes its drafts from your CV, and you review every line before you send it.
+
+## Where does your CV go? [#where-does-your-cv-go]
+
+A CV holds your employment history, your contact details and, in a search, what you earn and what you want to earn. Ask where that goes, who stores it and whether you can get it back.
+
+No backend of ours. Your CV goes from your machine to the AI provider you chose, and nowhere else. career-ops keeps your CV, profile, pipeline and reports as plain files on your computer. With a local model, nothing leaves your computer. The [privacy policy](/privacy) covers the website itself.
+
+## Does it evaluate before it applies? [#does-it-evaluate-before-it-applies]
+
+A tool built for volume helps you send more applications. A tool built as a filter helps you send fewer and better ones. Look at what it does when a job is a poor fit: does it say so, and does it show why?
+
+career-ops [scores each job posting against your resume](/docs/introduction/guides/is-this-job-worth-applying-to) from 1 to 5, with its reasoning, across five dimensions: match with your CV, alignment with your target roles, comp, cultural signals and red flags. Below 4.0, it recommends against applying unless you have a specific reason. You decide.
+
+<Callout title="Fictional example">
+  The candidate and the role here are invented. This is not a real evaluation. It only shows how the reasoning reads.
+</Callout>
+
+Maya, a backend engineer, wants product work on a small team. She pastes a Senior Platform Engineer posting. Her CV matches the core of the job, but one critical requirement is only a partial match, the role leans toward infrastructure, and the posting describes a large organization. **Score (fictional): 3.6/5.** The report recommends against applying and names each gap. Maya knows something the report cannot see, a friend on the team, so she applies anyway. The call is hers.
+
+## What does it cost? [#what-does-it-cost]
+
+Ask what you pay for the software, what you pay for the AI model behind it, and what happens when a trial ends.
+
+career-ops is free for candidates, forever, and MIT-licensed: no paid plans, no tiers, no trials. You only pay your AI provider, if at all, because it also [runs on free and local models](/docs/free-ai-engine). Scanning for jobs uses zero AI tokens.
+
+## Can you read it and change it? [#can-you-read-it-and-change-it]
+
+If an agent scores your job search, you should be able to see how. With open source, you can read the rules, check a claim and change what does not suit you.
+
+career-ops is [open source on GitHub](https://github.com/career-ops-hq/career-ops), and its own users improve it. Its [methodology is published](/methodology). The instructions it follows are plain text in the repository, and you adapt it by telling it in chat what you want and what you refuse.
+
+## Does it fit the tools you already use? [#does-it-fit-the-tools-you-already-use]
+
+An agent you have to build your day around is one you stop using. Ask where it runs and which AI models it works with.
+
+career-ops runs inside the AI coding CLI you choose, including Claude Code, Codex, Cursor, OpenCode and [the other supported CLIs](/docs/supported-clis). You don't need to code. You need to be comfortable running one command in a terminal; after that, setup and daily use are a conversation in plain language.
+
+## How does it keep up with new job sources? [#how-does-it-keep-up-with-new-job-sources]
+
+Job boards appear and change, so a job search tool needs upkeep, and someone has to do it. Ask this: do new job sources reach you through an update that leaves your data alone, or do you maintain your own copy and move changes across by hand?
+
+career-ops reads [more than 100 job sources](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md), and new ones arrive with updates. Community plugins are reviewed and pinned to a commit. `/career-ops update` shows you a diff preview before it changes anything, and its [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) keeps your CV, profile and reports out of it.
+
+## What a search looks like, step by step [#what-a-search-looks-like-step-by-step]
+
+Whichever tool you choose, a structured search has the same five steps. Here is how they run in career-ops:
+
+1. **Scan.** [Read the job sources you picked](/docs/introduction/guides/scan-job-portals) for listings that match your target roles.
+2. **Evaluate.** [Score each listing](/docs/introduction/guides/is-this-job-worth-applying-to) against your CV, or [a whole batch](/docs/introduction/guides/batch-evaluate-offers) at once.
+3. **Tailor.** [Draft the CV and the answers](/docs/introduction/guides/apply-for-a-job) for the roles that clear your bar.
+4. **Review.** Read every line, fix what is wrong, and press Submit yourself.
+5. **Track.** [Keep every application and its status](/docs/reference/modes/tracker) in one place, so you can see what to do next.
+
+## The limits to check before you commit [#the-limits-to-check-before-you-commit]
+
+Any honest tool has limits, and you should hear them before you commit. These are career-ops's:
+
+- **It cannot tell you who will reply.** A score tells you how well a role fits your CV and what you want. It does not predict the result.
+- **The first evaluations are rough.** It does not know you yet. They improve once you tell it your target roles and correct what it got wrong.
+- **It needs a terminal to start.** You run one command, and you need Node.js.
+- **It does not scan every site.** The scanner does not read LinkedIn, Indeed or Naukri directly, but you can paste any listing from them and it evaluates it.
+
+> I built career-ops for my own 2026 job search: 740 job listings evaluated → 68 applications → 12 interviews → 1 offer. That is one person's search, not a promise.
+>
+> Santiago Fernández de Valderrama Aparicio
+
+## Frequently asked questions [#frequently-asked-questions]
+
+### What is the best AI job search tool?
+
+There is no single best AI job search tool; the best one is the one that passes your own checks. Ask who sends the application, where your CV goes, whether it evaluates listings before it applies, what it costs, whether you can read and change it, whether it fits the tools you already use, and how it keeps up with new job sources.
+
+### What is an AI job search agent?
+
+An AI job search agent is software that finds job listings, scores each one against your CV and drafts the application material, so you spend your time on the roles worth applying to. The difference from a chatbot is that it follows a repeatable process and keeps track of what it did.
+
+### Can an AI agent manage my whole job search?
+
+An AI agent can run the repetitive parts: scanning job sources, scoring listings, tailoring your CV and tracking applications. The decisions stay with you: which roles you want, whether a listing is worth an application, and what you send.
+
+### Is there an AI agent that applies to jobs automatically?
+
+Some tools advertise it. career-ops does not apply for you; it prepares, you send. It drafts and fills; it never submits. You press Submit.
+
+### Is there a free, open-source AI job search agent?
+
+Yes. career-ops is an open-source AI job search agent under the MIT license, free for candidates, with no paid plans. You only pay your AI provider, if at all, because it also runs on free and local models.
+
+### How does an AI agent score a job against my resume?
+
+It reads the job posting against your CV and your targets, then gives a score with its reasoning. career-ops scores each posting from 1 to 5 across five dimensions: match with your CV, alignment with your target roles, comp, cultural signals and red flags. Below 4.0, it recommends against applying unless you have a specific reason.
+
+## Keep reading [#keep-reading]
+
+For a longer answer on running the whole search with an agent, read [Can an AI agent run your job search?](/blog/can-an-ai-agent-run-your-job-search)

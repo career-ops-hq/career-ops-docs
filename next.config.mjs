@@ -167,6 +167,19 @@ const config = {
           missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
           destination: '/es/manifesto.md',
         },
+        // Same for the category guide and its literal twins.
+        {
+          source: '/ai-job-search',
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
+          destination: '/ai-job-search.md',
+        },
+        {
+          source: '/es/ai-job-search',
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          missing: [{ type: 'header', key: 'accept', value: '.*text/html.*' }],
+          destination: '/es/ai-job-search.md',
+        },
       ],
     };
   },

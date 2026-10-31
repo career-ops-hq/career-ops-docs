@@ -1,14 +1,17 @@
 import { DEFAULT_OG_IMAGE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { blogSource, blogTwin } from '@/lib/blog-source';
+import { blogRoutePages, blogSource, blogTwin } from '@/lib/blog-source';
 import { BlogPostView, type BlogFrontmatter } from '@/components/blog-post-view';
+
+// Only the listed posts exist here; the category guide lives at /ai-job-search.
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   // /blog/[slug] is a single-segment route, so we flatten the slugs
   // array Fumadocs returns to a string. Posts must live at
   // content/blog/<slug>.mdx (no nested directories) for this to hold.
-  return blogSource.getPages('en').map((page) => ({ slug: page.slugs[0] }));
+  return blogRoutePages('en').map((page) => ({ slug: page.slugs[0] }));
 }
 
 export async function generateMetadata(
