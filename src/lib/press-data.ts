@@ -41,7 +41,7 @@ const OPENING =
 export const BOILERPLATE = {
   short: `career-ops is an open-source AI job search agent, free for candidates, that puts hiring leverage on the candidate’s side. ${REPO_URL}`,
   medium: `${OPENING} It scans listings, scores them from 1 to 5 across five dimensions, tailors your CV per role and tracks the pipeline. ${REPO_URL}`,
-  long: `${OPENING} It works with Claude Code, Codex, Cursor, OpenCode, GitHub Copilot CLI and other CLIs, and free and local models work too. It scans company career pages on ATS platforms such as Greenhouse, Ashby, Lever and Workday, plus job boards in several countries, scores each listing from 1 to 5 against a published rubric of five scoring dimensions, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago Fernández de Valderrama Aparicio built it during his own 2026 job search (740 job listings evaluated, 68 applications, 12 interviews, 1 offer), then open-sourced it. It reached 50,000 GitHub stars about two months after the repository was created. In July 2026 he published The CareerOps Manifesto, naming the practice and its nine candidate rights. ${REPO_URL}`,
+  long: `${OPENING} It works with Claude Code, Codex, Cursor, OpenCode, GitHub Copilot CLI and other CLIs, and free and local models work too. It scans company career pages on ATS platforms such as Greenhouse, Ashby, Lever and Workday, plus job boards in several countries, scores each listing from 1 to 5 against a published rubric of five scoring dimensions, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago Fernández de Valderrama Aparicio built it during his own 2026 job search (740 job listings evaluated, 68 applications, 12 interviews, 1 offer), then open-sourced it. It reached 50,000 GitHub stars in June 2026, about two months after the repository was created. In July 2026 he published The CareerOps Manifesto, naming the practice and its nine candidate rights. ${REPO_URL}`,
 };
 
 export function wordCountLabel(text: string): string {
@@ -98,7 +98,7 @@ export const WRITING_RULES: { label: string; value: string }[] = [
   {
     label: 'Built on career-ops',
     value:
-      'The official project is the repository listed below. Apps built on career-ops are independent projects.',
+      'The official project is github.com/career-ops-hq/career-ops and career-ops.org. Anything else built on career-ops is a separate project, with its own authors and terms.',
   },
 ];
 
@@ -138,7 +138,7 @@ export function pressFacts(stats: ProjectStats, hired: number | null): PressFact
       : []),
     {
       label: 'Release pace',
-      value: `33 releases between May and October 2026, roughly weekly since mid-September (as of ${PRESS_AS_OF})`,
+      value: `33 releases of the core between May and October 2026, roughly weekly since mid-September (as of ${PRESS_AS_OF})`,
     },
     {
       label: 'Job sources',
@@ -146,7 +146,7 @@ export function pressFacts(stats: ProjectStats, hired: number | null): PressFact
     },
     {
       label: 'Languages',
-      value: 'Website in 8 languages, README in 19, evaluation modes in 19',
+      value: 'Website in 8 languages, README in 19 and evaluation modes in 20, English included',
     },
     {
       label: 'AI CLIs supported',
@@ -197,7 +197,7 @@ export function pressFacts(stats: ProjectStats, hired: number | null): PressFact
 // Dates come from the core's git history, GitHub and warpchart's star ledger.
 export const TIMELINE: { date: string; label: string; event: string }[] = [
   { date: '2026-03-17', label: '17 Mar 2026', event: 'Project inception, during Santiago’s own job search.' },
-  { date: '2026-04-04', label: '4 Apr 2026', event: 'Repository created on GitHub with its initial release, under the MIT license.' },
+  { date: '2026-04-04', label: '4 Apr 2026', event: 'Repository created on GitHub, under the MIT license.' },
   { date: '2026-04-06', label: '6 Apr 2026', event: '10,000 GitHub stars.' },
   { date: '2026-04-17', label: '17 Apr 2026', event: 'Feature in WIRED Greece.' },
   { date: '2026-04-28', label: '28 Apr 2026', event: 'Feature in Business Insider.' },

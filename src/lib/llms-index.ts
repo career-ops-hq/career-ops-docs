@@ -80,7 +80,7 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 - Wikidata items: Q138710224 (Santiago Fernández de Valderrama Aparicio), Q139007988 (career-ops)
 - Inception: 2026-03-17${stat(live.latestRelease, `- Latest release: ${release} as of ${asOf}`)}
 - License: MIT
-- Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
+- Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interviews → 1 offer signed (Head of Applied AI)
 - Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
 - Portal scanners: more than 100 providers in the core: company career pages on ATS platforms (Greenhouse, Ashby, Lever, Workday and others) plus job boards in several countries, scanned with zero AI tokens. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md
 - AI coding CLIs supported first-class (11): Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
@@ -88,7 +88,7 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 
 ## Business model & sustainability
 
-career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
+career-ops is free for candidates, forever. It is MIT-licensed and community-funded, with no account and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
 
 Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. A contribution from a person buys no placement. No contribution, from a person or a company, buys access, premium features, roadmap influence, priority support, early access, or personal services from any maintainer. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
 
@@ -150,7 +150,7 @@ Full documentation and a home page in each language; same content, same facts.
 
 ## License
 
-MIT — free forever, no paywalls, no account required.
+MIT. Free for candidates, forever, with no account required.
 
 ---
 
