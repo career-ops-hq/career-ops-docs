@@ -3,7 +3,7 @@ title: CLI d'IA prises en charge
 seoTitle: "Quelle CLI d'IA fonctionne avec career-ops ? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops est agnostique en matière d'IA — il fonctionne avec toutes les grandes CLI de codage IA : vous utilisez l'assistant que vous payez déjà, sans jamais être enfermé chez un fournisseur. La liste complète et toujours à jour se trouve dans le dépôt principal."
 icon: Terminal
-translationHash: e1d9f01f9679ce09
+translationHash: e16c1ba8d93aaf79
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -32,10 +32,11 @@ Le [runner de lot](/fr/docs/introduction/guides/batch-evaluate-offers) (`batch/b
 | `opencode` | `opencode run`, ou `ollama launch opencode` si `opencode` n'est pas installé | Une offre à la fois, une tentative par offre à chaque run |
 | `gemini` | `gemini -p` | Une offre à la fois, une tentative par offre à chaque run |
 | `qwen` | `qwen -p` | Une offre à la fois, une tentative par offre à chaque run |
+| `grok` | `grok -p` avec `--always-approve` | Une offre à la fois, une tentative par offre à chaque run |
 
 Quelle que soit la valeur, une offre en échec est relancée lors d'un run ultérieur, dans la limite de `--max-retries`.
 
-Être accepté par le runner n'est pas la même chose qu'être pris en charge. Le runner accepte encore `gemini`, mais Gemini CLI est un wrapper hérité qui a migré vers Antigravity CLI ; il ne figure donc pas dans la liste des CLI prises en charge. L'inverse est vrai aussi : Cursor, Codex, Pi, Antigravity CLI, Grok Build CLI, Kimi, Hermes Agent et GitHub Copilot CLI sont pris en charge, mais le runner de lot ne les lance pas comme workers.
+Être accepté par le runner n'est pas la même chose qu'être pris en charge nativement. Le runner accepte encore `gemini`, mais Gemini CLI ne subsiste que comme wrapper hérité, ayant fait sa transition vers Antigravity CLI. L'inverse est vrai aussi : Cursor, Codex, Pi, Antigravity CLI, Kimi, Hermes Agent et GitHub Copilot CLI sont pris en charge nativement, mais le runner de lot ne les lance pas comme workers.
 
 ## Pi
 

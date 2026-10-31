@@ -3,7 +3,7 @@ title: 批量评估职位
 description: 在一次会话中用并行的 AI 工作进程处理 10 个以上职位，并为每个职位生成定制的 PDF。
 seoTitle: "用 career-ops 批量评估职位：一次为多个职位打分"
 icon: FileStack
-translationHash: c579af19d54c5776
+translationHash: 8e7eb404760e2e2a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -96,7 +96,7 @@ id	url	source	notes
 
 ### 用其他 CLI 运行批处理 [#run-the-batch-on-another-cli]
 
-除非你传入 `--cli`，运行器都会使用 Claude Code。它接受四个值：`claude`（默认）、`opencode`、`gemini` 和 `qwen`。`--model` 用来选择该 CLI 的模型：
+除非你传入 `--cli`，运行器都会使用 Claude Code。它接受五个值：`claude`（默认）、`opencode`、`gemini`、`qwen` 和 `grok`。`--model` 用来选择该 CLI 的模型：
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --cli opencode --model qwen2.5:32b

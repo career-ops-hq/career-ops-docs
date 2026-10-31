@@ -3,7 +3,7 @@ title: Valutare più annunci in batch
 description: Elabora 10 o più annunci di lavoro in un'unica sessione, con worker AI in parallelo e PDF su misura.
 seoTitle: "Valutare tanti annunci di lavoro in una volta con career-ops: la valutazione in batch"
 icon: FileStack
-translationHash: c579af19d54c5776
+translationHash: 8e7eb404760e2e2a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -96,7 +96,7 @@ Quando un worker Claude incontra un limite di frequenza, il runner aspetta e rip
 
 ### Esegui il batch con un'altra CLI [#run-the-batch-on-another-cli]
 
-Il runner usa Claude Code a meno che tu non passi `--cli`. Accetta quattro valori: `claude` (predefinito), `opencode`, `gemini` e `qwen`. `--model` sceglie il modello di quella CLI:
+Il runner usa Claude Code a meno che tu non passi `--cli`. Accetta cinque valori: `claude` (predefinito), `opencode`, `gemini`, `qwen` e `grok`. `--model` sceglie il modello di quella CLI:
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --cli opencode --model qwen2.5:32b

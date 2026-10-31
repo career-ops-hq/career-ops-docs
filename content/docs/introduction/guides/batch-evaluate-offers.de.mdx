@@ -3,7 +3,7 @@ title: Stellenangebote im Batch bewerten
 description: Bearbeite 10+ Stellenangebote in einer einzigen Session – mit parallelen KI-Workern und maßgeschneiderten PDFs.
 seoTitle: "Stellenanzeigen mit career-ops im Batch bewerten – viele auf einmal scoren"
 icon: FileStack
-translationHash: c579af19d54c5776
+translationHash: 8e7eb404760e2e2a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -96,7 +96,7 @@ Stößt ein Claude-Worker an ein Rate-Limit, wartet der Runner und versucht dass
 
 ### Den Batch mit einem anderen CLI ausführen [#run-the-batch-on-another-cli]
 
-Der Runner nutzt Claude Code, solange du kein `--cli` angibst. Er akzeptiert vier Werte: `claude` (Standard), `opencode`, `gemini` und `qwen`. `--model` wählt das Modell für dieses CLI:
+Der Runner nutzt Claude Code, solange du kein `--cli` angibst. Er akzeptiert fünf Werte: `claude` (Standard), `opencode`, `gemini`, `qwen` und `grok`. `--model` wählt das Modell für dieses CLI:
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --cli opencode --model qwen2.5:32b

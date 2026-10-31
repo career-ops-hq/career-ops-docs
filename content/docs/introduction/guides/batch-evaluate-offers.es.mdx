@@ -3,7 +3,7 @@ title: Evalúa ofertas en lote
 description: Procesa 10 o más ofertas de empleo en una sola sesión con workers de IA en paralelo y PDFs personalizados.
 seoTitle: "Evalúa ofertas de empleo en lote con career-ops — puntúa muchas a la vez"
 icon: FileStack
-translationHash: c579af19d54c5776
+translationHash: 8e7eb404760e2e2a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -96,7 +96,7 @@ Cuando un worker de Claude choca con un rate limit, el runner espera y vuelve a 
 
 ### Ejecuta el batch con otro CLI [#run-the-batch-on-another-cli]
 
-El runner usa Claude Code salvo que pases `--cli`. Acepta cuatro valores: `claude` (por defecto), `opencode`, `gemini` y `qwen`. `--model` elige el modelo de ese CLI:
+El runner usa Claude Code salvo que pases `--cli`. Acepta cinco valores: `claude` (por defecto), `opencode`, `gemini`, `qwen` y `grok`. `--model` elige el modelo de ese CLI:
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --cli opencode --model qwen2.5:32b

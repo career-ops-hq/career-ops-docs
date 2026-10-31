@@ -93,7 +93,7 @@ When a Claude worker hits a rate limit, the runner waits and tries the same offe
 
 ### Run the batch on another CLI
 
-The runner uses Claude Code unless you pass `--cli`. It accepts four values: `claude` (the default), `opencode`, `gemini` and `qwen`. `--model` picks the model for that CLI:
+The runner uses Claude Code unless you pass `--cli`. It accepts five values: `claude` (the default), `opencode`, `gemini`, `qwen` and `grok`. `--model` picks the model for that CLI:
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --cli opencode --model qwen2.5:32b

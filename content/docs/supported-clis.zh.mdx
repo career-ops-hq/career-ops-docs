@@ -3,7 +3,7 @@ title: 支持的 AI CLI
 seoTitle: "career-ops 支持哪些 AI CLI？Claude Code、Codex、Gemini、OpenCode、Qwen、Copilot"
 description: "career-ops 不绑定任何 AI 厂商：它能在所有主流 AI 编程 CLI 上运行，你可以直接使用已经付费的助手，永远不会被锁定在某一家厂商。完整且始终最新的列表保存在核心仓库中。"
 icon: Terminal
-translationHash: e1d9f01f9679ce09
+translationHash: e16c1ba8d93aaf79
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -32,10 +32,11 @@ career-ops 完整支持 **Claude Code、Cursor、Codex、OpenCode、Pi、Antigra
 | `opencode` | `opencode run`；未安装 `opencode` 时使用 `ollama launch opencode` | 一次一个职位，每次运行中每个职位尝试一次 |
 | `gemini` | `gemini -p` | 一次一个职位，每次运行中每个职位尝试一次 |
 | `qwen` | `qwen -p` | 一次一个职位，每次运行中每个职位尝试一次 |
+| `grok` | `grok -p`，带 `--always-approve` | 一次一个职位，每次运行中每个职位尝试一次 |
 
 无论使用哪个值，失败的职位都会在之后的运行中重试，最多到 `--max-retries`。
 
-被运行器接受并不等于受支持。运行器仍然接受 `gemini`，但 Gemini CLI 是一个已过渡到 Antigravity CLI 的旧版封装，因此不在受支持的 CLI 列表中。反过来也一样：Cursor、Codex、Pi、Antigravity CLI、Grok Build CLI、Kimi、Hermes Agent 和 GitHub Copilot CLI 都受支持，但批处理运行器不会把它们作为工作进程启动。
+被运行器接受并不等于完整支持。运行器仍然接受 `gemini`，但 Gemini CLI 仅作为旧版封装保留，已过渡到 Antigravity CLI。反过来也一样：Cursor、Codex、Pi、Antigravity CLI、Kimi、Hermes Agent 和 GitHub Copilot CLI 都受到完整支持，但批处理运行器不会把它们作为工作进程启动。
 
 ## Pi
 

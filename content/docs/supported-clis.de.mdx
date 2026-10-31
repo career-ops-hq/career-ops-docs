@@ -3,7 +3,7 @@ title: Unterstützte KI-CLIs
 seoTitle: "Welche KI-CLI funktioniert mit career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops ist KI-agnostisch — es läuft auf jeder großen KI-Coding-CLI. So nutzt du den Assistenten, für den du ohnehin schon bezahlst, und bindest dich nie an einen einzigen Anbieter. Die vollständige, stets aktuelle Liste findest du im Core-Repo."
 icon: Terminal
-translationHash: e1d9f01f9679ce09
+translationHash: e16c1ba8d93aaf79
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -32,10 +32,11 @@ Der [Batch-Runner](/de/docs/introduction/guides/batch-evaluate-offers) (`batch/b
 | `opencode` | `opencode run`, oder `ollama launch opencode`, wenn `opencode` nicht installiert ist | Ein Angebot nach dem anderen, ein Versuch pro Angebot und Lauf |
 | `gemini` | `gemini -p` | Ein Angebot nach dem anderen, ein Versuch pro Angebot und Lauf |
 | `qwen` | `qwen -p` | Ein Angebot nach dem anderen, ein Versuch pro Angebot und Lauf |
+| `grok` | `grok -p` mit `--always-approve` | Ein Angebot nach dem anderen, ein Versuch pro Angebot und Lauf |
 
 Bei jedem Wert wird ein fehlgeschlagenes Angebot in einem späteren Lauf wiederholt, bis `--max-retries` erreicht ist.
 
-Vom Runner akzeptiert heißt nicht unterstützt. Der Runner akzeptiert `gemini` noch, aber Gemini CLI ist ein Legacy-Wrapper, der zu Antigravity CLI übergegangen ist, und steht deshalb nicht auf der Liste der unterstützten CLIs. Umgekehrt gilt das auch: Cursor, Codex, Pi, Antigravity CLI, Grok Build CLI, Kimi, Hermes Agent und GitHub Copilot CLI werden unterstützt, aber der Batch-Runner startet sie nicht als Worker.
+Vom Runner akzeptiert heißt nicht vollwertig unterstützt. Der Runner akzeptiert `gemini` noch, aber Gemini CLI gibt es nur noch als Legacy-Wrapper, es ist in Antigravity CLI aufgegangen. Umgekehrt gilt das auch: Cursor, Codex, Pi, Antigravity CLI, Kimi, Hermes Agent und GitHub Copilot CLI werden vollwertig unterstützt, aber der Batch-Runner startet sie nicht als Worker.
 
 ## Pi
 

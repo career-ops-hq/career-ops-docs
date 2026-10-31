@@ -3,7 +3,7 @@ title: CLIs de IA compatibles
 seoTitle: "¿Con qué CLI de IA funciona career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops es agnóstico a la IA — funciona sobre todos los principales CLIs de programación con IA, así que usas el asistente que ya pagas y nunca quedas atado a un proveedor. La lista completa y siempre actualizada vive en el repo del core."
 icon: Terminal
-translationHash: e1d9f01f9679ce09
+translationHash: e16c1ba8d93aaf79
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -32,10 +32,11 @@ El [runner de batch](/es/docs/introduction/guides/batch-evaluate-offers) (`batch
 | `opencode` | `opencode run`, o `ollama launch opencode` si `opencode` no está instalado | Una oferta a la vez, un intento por oferta en cada ejecución |
 | `gemini` | `gemini -p` | Una oferta a la vez, un intento por oferta en cada ejecución |
 | `qwen` | `qwen -p` | Una oferta a la vez, un intento por oferta en cada ejecución |
+| `grok` | `grok -p` con `--always-approve` | Una oferta a la vez, un intento por oferta en cada ejecución |
 
 Con cualquier valor, una oferta fallida se reintenta en una ejecución posterior, hasta `--max-retries`.
 
-Que el runner acepte un CLI no significa que esté soportado. El runner todavía acepta `gemini`, pero Gemini CLI es un wrapper heredado que pasó a Antigravity CLI, así que no figura en la lista de CLIs soportados. Lo contrario también se cumple: Cursor, Codex, Pi, Antigravity CLI, Grok Build CLI, Kimi, Hermes Agent y GitHub Copilot CLI están soportados, pero el runner de batch no los lanza como workers.
+Que el runner acepte un CLI no significa que tenga soporte de primer nivel. El runner todavía acepta `gemini`, pero Gemini CLI solo se mantiene como wrapper legacy tras su transición a Antigravity CLI. Lo contrario también se cumple: Cursor, Codex, Pi, Antigravity CLI, Kimi, Hermes Agent y GitHub Copilot CLI tienen soporte de primer nivel, pero el runner de batch no los lanza como workers.
 
 ## Pi
 

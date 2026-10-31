@@ -29,10 +29,11 @@ The [batch runner](/docs/introduction/guides/batch-evaluate-offers) (`batch/batc
 | `opencode` | `opencode run`, or `ollama launch opencode` when `opencode` is not installed | One offer at a time, one attempt per offer in each run |
 | `gemini` | `gemini -p` | One offer at a time, one attempt per offer in each run |
 | `qwen` | `qwen -p` | One offer at a time, one attempt per offer in each run |
+| `grok` | `grok -p` with `--always-approve` | One offer at a time, one attempt per offer in each run |
 
 With every value, a failed offer is retried on a later run, up to `--max-retries`.
 
-Being accepted by the runner is not the same as being supported. The runner still accepts `gemini`, but Gemini CLI is a legacy wrapper that has moved to Antigravity CLI, so it is not on the list of supported CLIs. The reverse also holds: Cursor, Codex, Pi, Antigravity CLI, Grok Build CLI, Kimi, Hermes Agent and GitHub Copilot CLI are supported, but the batch runner does not launch them as workers.
+Being accepted by the runner is not the same as first-class support. The runner still accepts `gemini`, but Gemini CLI remains only as a legacy wrapper, transitioned into Antigravity CLI. The reverse also holds: Cursor, Codex, Pi, Antigravity CLI, Kimi, Hermes Agent and GitHub Copilot CLI are supported first-class, but the batch runner does not launch them as workers.
 
 ## Pi
 
