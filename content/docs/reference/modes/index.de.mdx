@@ -3,14 +3,14 @@ title: Modi
 description: "Die 14 career-ops-Modi zum direkten Aufruf: bewerten, anpassen, bewerben, nachverfolgen und vorbereiten. Jeder ist ein Markdown-Skill, der in jeder unterstützten KI-Coding-CLI läuft."
 seoTitle: "career-ops-Modi – die 14 Befehle für die Jobsuche (bewerten, anpassen, bewerben, nachverfolgen, vorbereiten)"
 icon: Layers
-translationHash: b0ce95e7cf247608
+translationHash: 0476faf4beb570f9
 localized: true
 translatedFrom: /docs/reference/modes
 ---
 
 ## Die 14 Modi
 
-career-ops bringt **14 Modi mit, die du direkt aufrufen kannst**. Jeder ist ein Skill in reinem Markdown. Der Agent lädt ihn und führt ihn in der KI-Coding-CLI aus, die du ohnehin nutzt: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot oder [eine andere unterstützte CLI](/de/docs/supported-clis). Du rufst einen Modus mit `/career-ops <mode>` auf, und jeder deckt eine Phase der Jobsuche ab. Du kannst eine Stellenanzeige anhand des Bewertungsrasters prüfen (fünf Dimensionen plus ein ganzheitlicher Gesamtscore), einen Lebenslauf anpassen, eine Bewerbung entwerfen, Ergebnisse nachverfolgen oder dich auf Vorstellungsgespräche vorbereiten. Laut dem [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) gehören Modi zur Systemebene (System Layer). Updates ersetzen sie durch die neueste Version, und kein Update verändert je deine `cv.md`, dein Profil oder deine Reports.
+career-ops bringt **14 Modi mit, die du direkt aufrufen kannst**. Jeder ist ein Skill in reinem Markdown. Der Agent lädt ihn und führt ihn in der KI-Coding-CLI aus, die du ohnehin nutzt: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot oder [eine andere unterstützte CLI](/de/docs/supported-clis). Du rufst einen Modus mit `/career-ops <mode>` auf, und jeder deckt eine Phase der Jobsuche ab. Du kannst eine Stellenanzeige anhand des Bewertungsrasters prüfen (fünf Dimensionen plus ein ganzheitlicher Gesamtscore), einen Lebenslauf anpassen, eine Bewerbung entwerfen, Ergebnisse nachverfolgen oder dich auf Vorstellungsgespräche vorbereiten. Laut dem [Data Contract](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) gehören Modi zur Systemebene (System Layer). Ein Update ersetzt jeden Modus, den du nicht bearbeitet hast, durch die neueste Version. Einen Modus, den du bearbeitet hast, behält es standardmäßig: Das Update listet ihn auf, versucht eine `.bak`-Kopie zu speichern und lässt deine Version stehen. Dieser Modus bekommt dann keine Änderungen aus dem Upstream mehr. `node update-system.mjs apply --force --confirm` ersetzt ihn durch die Upstream-Version, auch wenn die `.bak` nicht geschrieben werden konnte; das Update nennt dann die Datei und den Fehler. Wenn du das Verhalten der Modi ändern und trotzdem ihre Updates bekommen willst, schreib deine Regeln in `modes/_profile.md` oder `modes/_custom.md`, die dir gehören. Kein Update verändert je deine `cv.md`, dein Profil oder deine Reports.
 
 ## Bewerten
 

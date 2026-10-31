@@ -3,7 +3,7 @@ title: 术语表
 description: AI 求职常用术语释义：ATS、1-5 综合评分、数据契约（Data Contract）、海投、职位有效性检查、定制简历、零 token 扫描、STAR+R 故事，以及 career-ops 用到的所有术语。
 seoTitle: "career-ops 术语表：AI 求职常用术语释义"
 icon: BookOpen
-translationHash: c4294ea38951c036
+translationHash: 7bba42a8e47fe5a2
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -23,7 +23,7 @@ LLM 从五个维度（匹配度、North Star 契合度、薪酬、文化信号�
 
 ## 数据契约（Data Contract）
 
-career-ops 在架构上的核心承诺：**系统层**（脚本、模式、模板）随时都可以更新，而**用户层**（`cv.md`、`config/profile.yml`、`data/`、`reports/`、`output/`）永远不会被任何更新改动。版本不断更替，你的数据始终都在。
+career-ops 在架构上的核心承诺：**系统层**（脚本、模式、模板）随时都可以更新，而**用户层**（`cv.md`、`config/profile.yml`、`data/`、`reports/`、`output/`）永远不会被任何更新改动。版本不断更替，你的数据始终都在。你修改过的系统文件默认会被保留：更新会尝试保存一份 `.bak` 副本，保存失败时会告诉你，然后保留你的版本，此后这个文件不再接收上游的更改。`--force` 会用上游版本替换它，即使没有 `.bak` 也会替换。更新程序自身的文件总是会被替换，所以对它们的修改只会保留在对应的 `.bak` 中；如果 `.bak` 没能写入，修改就会丢失。回滚则不同：它会直接覆盖所恢复的系统文件，不创建 `.bak`，只跳过它报告为不安全的路径，所以请先提交或复制你的修改。回滚还会删除这次更新新增的文件；如果它缺少这次更新的记录，就会发出警告，提示这些文件可能会残留。需要在更新后保留的自定义内容应放在用户层，例如 `modes/_profile.md` 和 `modes/_custom.md`。
 
 ## 海投（Spray-and-pray）
 

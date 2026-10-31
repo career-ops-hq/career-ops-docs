@@ -3,7 +3,7 @@ title: Glossário
 description: O vocabulário de quem usa IA para procurar emprego, explicado — ATS, a nota global de 1 a 5, Data Contract, spray-and-pray, verificação de vaga ativa, adaptação do currículo, varredura sem tokens, histórias STAR+R e todos os termos que o career-ops usa.
 seoTitle: "Glossário do career-ops: termos da busca de emprego com IA, explicados"
 icon: BookOpen
-translationHash: c4294ea38951c036
+translationHash: 7bba42a8e47fe5a2
 localized: true
 translatedFrom: /docs/reference/glossary
 ---
@@ -23,7 +23,7 @@ A avaliação holística que o LLM faz de uma vaga em cinco dimensões (aderênc
 
 ## Data Contract
 
-A principal promessa de arquitetura do career-ops: a **camada do sistema** (scripts, modos, templates) pode ser atualizada a qualquer momento, enquanto a **camada do usuário** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — nunca é tocada por uma atualização. Seus dados sobrevivem a todas as versões.
+A principal promessa de arquitetura do career-ops: a **camada do sistema** (scripts, modos, templates) pode ser atualizada a qualquer momento, enquanto a **camada do usuário** — `cv.md`, `config/profile.yml`, `data/`, `reports/`, `output/` — nunca é tocada por uma atualização. Seus dados sobrevivem a todas as versões. Um arquivo do sistema que você editou é mantido por padrão: a atualização tenta salvar uma cópia `.bak`, avisa se não conseguir e mantém a sua versão, que a partir daí deixa de receber as mudanças do upstream. O `--force` o substitui pela versão do upstream, mesmo sem `.bak`. Os arquivos do próprio atualizador são sempre substituídos, então uma edição em um deles só sobrevive no `.bak` dele, e se perde se não foi possível gravar esse `.bak`. O rollback funciona de outro jeito: ele sobrescreve os arquivos do sistema que restaura sem criar `.bak`, exceto os caminhos que aponta como inseguros, então faça commit ou copie suas edições antes. Ele também remove os arquivos que a atualização adicionou, a menos que falte o registro que ele guarda dessa atualização; nesse caso, avisa que esses arquivos podem ficar. Personalizações que devem sobreviver às atualizações ficam na camada do usuário, como `modes/_profile.md` e `modes/_custom.md`.
 
 ## Spray-and-pray
 
