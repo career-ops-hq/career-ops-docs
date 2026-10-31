@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   // SERP door, not identity. og/twitter titles carry the hero line (29-sep):
   // LinkedIn shows the card of organic posts as a thumbnail whose text
   // cannot be read, so the headline has to travel in the title too.
-  title: 'Open-source AI job search agent, local-first | career-ops',
+  title: 'Open-source AI job search agent on GitHub · career-ops',
   description:
-    'Open-source AI job search agent. Runs in your CLI on your machine. CLI-agnostic, MIT-licensed, local-first. Evaluate jobs, generate tailored CVs, track applications.',
+    'Score every job against your CV before you apply, get a tailored resume for each role and track applications. Open source on GitHub, free for candidates.',
   alternates: {
     canonical: 'https://career-ops.org',
     languages: hreflangHome(),

@@ -4,18 +4,18 @@ import { instrumentSerifRegular } from '@/lib/fonts';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 export const metadata: Metadata = {
-  title: 'Compare · career-ops',
+  title: 'Compare AI job search tools · career-ops',
   description:
-    'Honest comparisons between career-ops and other AI job search tools. Open source local vs SaaS cloud, MIT vs proprietary, free vs $50-200/mo. No fake ratings, no pasivo-agresivo framing.',
+    'career-ops side by side with Teal, Jobscan, Simplify, LoopCV and more: price, where your CV goes, and who presses Submit. Free for candidates.',
   alternates: { canonical: 'https://career-ops.org/compare' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/compare',
     siteName: 'career-ops',
-    title: 'Compare · career-ops',
+    title: 'Compare AI job search tools · career-ops',
     description:
-      'Honest comparisons between career-ops and other AI job search tools.',
+      'career-ops side by side with Teal, Jobscan, Simplify, LoopCV and more: price, where your CV goes, and who presses Submit. Free for candidates.',
   },
   robots: { index: true, follow: true },
 };

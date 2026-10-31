@@ -6,16 +6,16 @@ import { getChangelog } from '@/lib/releases';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Changelog · career-ops',
+  title: 'career-ops changelog: every release',
   description:
-    'Every career-ops release, in plain language: new modes, providers, fixes, and improvements. Sourced live from GitHub Releases — the project ships several times a week.',
+    'Every career-ops release in plain language: new modes, job sources, fixes and improvements, sourced from GitHub Releases.',
   alternates: { canonical: 'https://career-ops.org/changelog' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/changelog',
     siteName: 'career-ops',
-    title: 'Changelog · career-ops',
+    title: 'career-ops changelog: every release',
     description:
       'Every career-ops release, in plain language. Sourced live from GitHub Releases.',
   },
