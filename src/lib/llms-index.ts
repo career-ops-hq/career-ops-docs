@@ -81,7 +81,7 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 - Inception: 2026-03-17${stat(live.latestRelease, `- Latest release: ${release} as of ${asOf}`)}
 - License: MIT
 - Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interviews → 1 offer signed (Head of Applied AI)
-- Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
+- Modes shipped: 15 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup, retro)
 - Portal scanners: more than 100 providers in the core: company career pages on ATS platforms (Greenhouse, Ashby, Lever, Workday and others) plus job boards in several countries, scanned with zero AI tokens. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md
 - AI coding CLIs supported first-class (11): Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
 - Press: WIRED Greece (17 Apr 2026), Business Insider and Business Insider Deutschland (28 Apr 2026). Full list: https://career-ops.org/press
@@ -106,7 +106,7 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to fund the project through its fiscal host, Open Source Collective
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
-- https://career-ops.org/docs/reference/modes — reference docs for the 14 user-invocable career-ops modes
+- https://career-ops.org/docs/reference/modes — reference docs for the 15 user-invocable career-ops modes
 - https://career-ops.org/docs/reference/portals — reference docs for the three zero-token portal scanners (Greenhouse, Ashby, Lever) covering 116 companies
 
 ## Comparisons (individual pages, honest framing, feature matrices + FAQ)

@@ -1,0 +1,36 @@
+---
+title: retro
+description: "Bir career-ops oturumundaki düzeltmelerini en fazla beş kural önerisine dönüştürür. Numarasını söyleyerek kabul etmediğin hiçbir şey kaydedilmez."
+seoTitle: "career-ops retro modu: düzeltmelerini onayladığın kurallara dönüştür"
+icon: History
+date: "2026-10-31"
+lastModified: "2026-10-31"
+translationHash: 13652ef3e26efc02
+localized: true
+translatedFrom: /docs/reference/modes/retro
+---
+
+## Ne yapar?
+
+retro modu, mevcut oturumdaki mesajlarını okur ve düzelttiğin veya reddettiğin şeylere dayanarak, her biri kendi sözlerinle desteklenen en fazla beş kural önerir. Bir script her öneriyi kontrol eder ve yalnızca kabul ettiklerin `modes/_custom.md` veya `modes/_profile.md` dosyasına kaydedilir.
+
+## Ne zaman kullanılır?
+
+retro'yu, career-ops'u düzelttiğin bir oturumun sonunda çalıştır; örneğin "özetimi üçüncü tekil şahısla yazmayı bırak" dediğin bir oturumun. Sohbette yaptığın bir düzeltme yalnızca o oturum boyunca geçerlidir; burada kabul ettiğin bir kural ise bir sonraki oturumda da geçerli olur. Onay verebilmen için başında olman gerekir: gözetimsiz bir çalıştırmada durur ve onu etkileşimli bir oturumda çalıştırmanı ister.
+
+## Bir çalıştırma nasıl görünür?
+
+```txt title="Terminal"
+> /career-ops retro
+```
+
+1. **Dersleri bulur.** Ders, bir sonraki oturumda da geçerli olması gereken bir düzeltme veya reddetmedir.
+2. **Dersleri ayırır.** Senin hakkındaki bir bilgi, örneğin bir rol, bir beceri veya bir metrik, kural değildir: retro bunu sana söyler ve seni o bilgiyi kaydeden moda yönlendirir. Puanlama veya hedefleme tercihleri profiline, diğer kalıcı tercihler ise özel kurallarına gider.
+3. **Senden alıntı yapar.** Her öneri, kanıt olarak birebir kopyalanmış kendi sözlerini içerir.
+4. **Önerileri kontrol eder.** `learn.mjs` önerileri doğrular ve numaralandırır; retro bu çıktıyı sana değiştirmeden gösterir. Engellenen bir öneri engelli kalır; retro onu geçirmek için yeniden yazmaz.
+5. **Numarayla seçersin.** Kabul veya reddetmek istediklerini belirt. Belirtmediğin her numara karara bağlanmamış olarak kalır.
+6. **Neyin değiştiğini bildirir.** Her dosyayı ve satırı belirtir. Oturumda ders yoksa bunu söyler ve durur.
+
+## Neye dokunmaz?
+
+retro, CV'ne, `article-digest.md` dosyasına veya `config/profile.yml` dosyasına dokunmaz. `data/learning/` altına iki çalışma dosyası yazar; bunların dışındaki her şeyi yalnızca `learn.mjs` yazar: kabul ettiğin kurallar, değiştirdiği her dosyanın `.bak` kopyası ve `data/learning/ledger.jsonl` içindeki her kararın kaydı.
