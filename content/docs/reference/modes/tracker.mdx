@@ -45,6 +45,8 @@ node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applie
 
 Three more flags exist mainly for the Go TUI dashboard, which now records its status changes through `set-status.mjs`. `--report-link N` selects the row whose Report cell holds exactly one link to report `N`, and refuses malformed cells instead of guessing. `--repair-status-log` and `--repair-followup` apply when an Applied change is re-run on a row that is already Applied: they add the ledger entry or the follow-up reminder that the first attempt failed to write, and add nothing when it is already there.
 
+Two guards and one timing flag serve the same callers, which act on a row they read earlier. `--expect-row HASH` and `--expect-status STATE` refuse the change if the row or its status moved in the meantime, and `--detach-jd-archive` starts the job description archive in the background on a change to Interview instead of waiting for it.
+
 ## Repairing dead report links
 
 `node verify-pipeline.mjs` reports `Report not found` when a row's Report cell links a file that no longer exists. `npm run fix-report-links` repairs those rows by changing only that cell to the tracker's usual "no report" mark. It does not regenerate the missing report. Preview first:
@@ -72,6 +74,14 @@ Only a posting judged `expired` moves its row, from Evaluated to Discarded, with
 ## Reading the lifetime numbers
 
 For cumulative figures — the full funnel, scanner totals, portal coverage, and follow-up compliance — the mode runs `node stats.mjs --summary` and presents its output verbatim. That command reads your local files and costs zero tokens, so the numbers are never recomputed by hand or estimated from memory. Use the chat summary above for a fast daily read, and the stats command when you want the running totals across the whole search.
+
+## Query the tracker
+
+`tracker.mjs query` reads your applications with filters. Add `--min-score 4` to keep the rows at or above a score, and `--csv` to get a file a spreadsheet can sort, with the score as a number:
+
+```bash title="Terminal"
+node tracker.mjs query --status Applied --min-score 4 --csv > applied.csv
+```
 
 ## Exporting a repaired copy
 
