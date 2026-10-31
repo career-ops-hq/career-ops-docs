@@ -5,7 +5,7 @@ seoTitle: "modo pdf de career-ops — genera un CV adaptado y compatible con ATS
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: d419ba2a2300f7a2
+translationHash: 3256cb708f8b9571
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -64,11 +64,11 @@ Mientras pdf adapta tu CV se ejecutan tres comprobaciones. Una compara el títul
 - **Infra:** Kubernetes, Kafka, AWS
 ```
 
-- La sección de experiencia es un encabezado de nivel 2 llamado Experience, Work Experience, Professional Experience, Employment History o Work History, o en español Experiencia, Experiencia Laboral o Experiencia Profesional.
+- La sección de experiencia es un encabezado de nivel 2 llamado Experience, Work Experience, Professional Experience, Employment History o Work History.
 - Cada puesto empieza con un encabezado de nivel 3: la empresa y luego la ubicación, separadas por una raya, una semirraya, `--` o `-`. Después va el título del puesto en una línea en negrita de principio a fin, y luego una línea con las fechas.
-- Las habilidades van bajo un encabezado que contiene "Skills" o "Competencies" (o "Competency"), o en español "Habilidades", "Aptitudes" o "Competencias", así que `## Core Competencies` y `## Competencias Técnicas` cuentan las dos. "Tools", "Technologies" y "Tech Stack" también cuentan, pero solo en un encabezado de nivel 1 o 2. Se leen todas las secciones que coinciden, no solo la primera.
+- Las habilidades van bajo un encabezado que contiene "Skills" o "Competencies" (o "Competency"), así que `## Core Competencies` cuenta. "Tools", "Technologies" y "Tech Stack" también cuentan, pero solo en un encabezado de nivel 1 o 2. Se leen todas las secciones que coinciden, no solo la primera.
 
-Las comprobaciones reconocen estos nombres solo en inglés y en español, así que un encabezado en otro idioma no se encuentra.
+Las comprobaciones reconocen estos nombres solo en inglés, así que un encabezado en otro idioma, también en español, no se encuentra.
 
 Un `cv.md` convertido desde un archivo de Word con Pandoc se lee tal cual. Las comprobaciones entienden los encabezados en negrita y en versalitas como `## **[Experience]{.smallcaps}**`, los `---` y `--` que Pandoc escribe para las rayas y la `\` final que deja en un salto de línea. No hace falta que los limpies.
 
