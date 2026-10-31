@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { head, put } from '@vercel/blob';
 import { z } from 'zod';
 import { trackWaitlistJoin } from '@/lib/track';
+import { underWaitlistCap } from '@/lib/waitlist-cap';
 import {
   ASSISTANTS,
   COUNTRIES,
@@ -27,6 +28,10 @@ const Body = z.object({
 });
 
 export async function POST(req: Request) {
+  if (!underWaitlistCap('join')) {
+    return Response.json({ error: 'Too many requests' }, { status: 429 });
+  }
+
   let json: unknown;
   try {
     json = await req.json();

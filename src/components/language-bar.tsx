@@ -194,6 +194,19 @@ function localeUrl(base: string, target: Code): string {
   return `/${target}`;
 }
 
+/** The ?ref of a waitlist page, to carry across languages: it says where the
+ *  reader came from, and warpchart reads it per signup. Read after mount because
+ *  the page is static. Empty on every other page. */
+function useWaitlistRefQuery(base: string): string {
+  const [query, setQuery] = useState('');
+  useEffect(() => {
+    if (base !== '/waitlist') return;
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    setQuery(ref ? `?ref=${encodeURIComponent(ref)}` : '');
+  }, [base]);
+  return query;
+}
+
 /** Best browser-preferred locale we support (walks navigator.languages in order). */
 function detectLocale(): Code {
   if (typeof navigator === 'undefined') return 'en';
@@ -276,6 +289,7 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
   const pathname = usePathname() || '/';
   const current = localeOf(pathname);
   const base = baseOf(pathname);
+  const refQuery = useWaitlistRefQuery(base);
 
   // Client-only: don't render the detection banner during SSR (hydration).
   const [mounted, setMounted] = useState(false);
@@ -303,7 +317,7 @@ export function LanguageBar({ compact = false }: { compact?: boolean }) {
             {BANNER[target].question}
           </span>
           <Link
-            href={localeUrl(base, target)}
+            href={localeUrl(base, target) + refQuery}
             onClick={dismiss}
             className="inline-flex items-center gap-1.5 font-medium text-brand-text hover:underline"
           >
@@ -337,6 +351,7 @@ export function LanguageSuggestion() {
   const pathname = usePathname() || '/';
   const current = localeOf(pathname);
   const base = baseOf(pathname);
+  const refQuery = useWaitlistRefQuery(base);
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const target = mounted ? detectLocale() : current;
@@ -369,7 +384,7 @@ export function LanguageSuggestion() {
       className={`fixed bottom-4 inset-s-4 z-20 inline-flex h-10 items-center whitespace-nowrap gap-1.5 rounded-full border border-brand/30 bg-fd-background ps-3.5 pe-2 text-sm shadow-lg${animate ? ' animate-in fade-in slide-in-from-bottom-2 duration-500' : ''}`}
     >
       <Link
-        href={localeUrl(base, target)}
+        href={localeUrl(base, target) + refQuery}
         hrefLang={target}
         onClick={dismiss}
         className="inline-flex items-center gap-1.5 font-medium text-brand-text hover:underline"
@@ -408,6 +423,7 @@ export function LanguageSuggestion() {
 const MENU_MIN_W = 192; // min-w-48
 
 function LanguageMenu({ current, base, compact }: { current: Code; base: string; compact: boolean }) {
+  const refQuery = useWaitlistRefQuery(base);
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState<{ top: number; left?: number; right?: number } | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -494,7 +510,7 @@ function LanguageMenu({ current, base, compact }: { current: Code; base: string;
               // mode. The current language is marked by the check, the accent
               // background and aria-current, not by dimming the others.
               <Link
-                href={localeUrl(base, l.code)}
+                href={localeUrl(base, l.code) + refQuery}
                 hrefLang={l.code}
                 onClick={() => setOpen(false)}
                 className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-fd-foreground hover:bg-fd-accent transition-colors"
