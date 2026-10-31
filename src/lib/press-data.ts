@@ -60,7 +60,7 @@ export const WRITING_RULES: { label: string; value: string }[] = [
   {
     label: 'Who submits',
     value:
-      'It drafts and fills; it never submits. You press Submit. career-ops is not an auto-apply tool.',
+      'It drafts and fills; it never submits. You press Submit.',
   },
   {
     label: 'The score',
@@ -157,7 +157,8 @@ export function pressFacts(stats: ProjectStats, hired: number | null): PressFact
     { label: 'GitHub forks', value: `${roundDown(stats.forks, 1000)}+ (live)` },
     {
       label: 'Contributors',
-      value: `700+, as GitHub counts them, bots and manifesto signatories included (as of ${PRESS_AS_OF})`,
+      value: `700+, as shown on the GitHub repository page, bots and manifesto signatories included (as of ${PRESS_AS_OF})`,
+      href: `${REPO_URL}/graphs/contributors`,
     },
     { label: 'Discord community', value: `${roundDown(stats.discordMembers, 100)}+ members` },
     ...(hired != null
@@ -201,7 +202,7 @@ export const TIMELINE: { date: string; label: string; event: string }[] = [
   { date: '2026-04-06', label: '6 Apr 2026', event: '10,000 GitHub stars.' },
   { date: '2026-04-17', label: '17 Apr 2026', event: 'Feature in WIRED Greece.' },
   { date: '2026-04-28', label: '28 Apr 2026', event: 'Feature in Business Insider.' },
-  { date: '2026-06-09', label: 'Jun 2026', event: '50,000 GitHub stars, about two months after the repository was created.' },
+  { date: '2026-06', label: 'Jun 2026', event: '50,000 GitHub stars, about two months after the repository was created.' },
   { date: '2026-07-14', label: '14 Jul 2026', event: 'The CareerOps Manifesto, published the day the project crossed 60,000 stars.' },
   { date: '2026-09-01', label: '1 Sep 2026', event: 'The repository moves to the career-ops-hq organization on GitHub.' },
   { date: '2026-10-16', label: '16 Oct 2026', event: '75,000 GitHub stars.' },
