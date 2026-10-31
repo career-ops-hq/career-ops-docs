@@ -1,0 +1,64 @@
+---
+title: followup
+description: "Takip zamanı geçen başvuruları ve mülakatları, senin belirlediğin takip takvimi kurallarına göre işaretler. Takip mesajlarının taslaklarını hazırlar; sen gözden geçirip gönderirsin."
+seoTitle: "career-ops followup modu: başvuru ve mülakat takibi, takip mesajı taslakları"
+icon: CalendarClock
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: 7853e38229463e38
+localized: true
+translatedFrom: /docs/reference/modes/followup
+---
+
+## Ne yapar?
+
+followup modu başvuru tracker'ını okur, son temas tarihini ayarlanan takip takvimiyle karşılaştırır (varsayılan: başvurudan 7 gün sonra ilk hatırlatma, mülakattan 1 gün sonra teşekkür notu; online test veya asenkron ön eleme anlamına gelen bir Assessment satırı için ilk yoklama 1 gün sonra, ardından 3 günde bir) ve zamanı geçmiş ya da acil olan kayıtları işaretler. İşaretlenen her kayıt için o raporu ve CV'ni temel alan, bağlama uygun bir takip mesajı taslağı hazırlar.
+
+## Ne zaman kullanılır?
+
+followup'ı her pazartesi sabahı haftalık bir rutin olarak çalıştır. Her pazartesi o hafta yapılması gereken takipleri, gönderilmeye hazır taslaklarıyla birlikte önüne getirir. Bilinçli olarak temkinli çalışır: takip süresi net biçimde dolmadan bir kaydı işaretlemez. Böylece dashboard kısa kalır ve üzerindeki her madde gerçekten zamanı gelmiş bir takip olur.
+
+## Bir çalıştırma nasıl görünür?
+
+followup, tracker'ın üzerinde takip takvimi script'ini çalıştırır, aciliyete göre sıralanmış bir dashboard yazdırır ve zamanı geçmiş ya da acil her satır için bir mesaj taslağı hazırlar. Taslaklar ricayla değil somut bir kanıtla başlar ve asla "sadece durumu sormak istedim" demez.
+
+```txt title="Terminal"
+> /career-ops followup
+
+Follow-up Cadence Dashboard — 2026-05-18
+14 applications tracked, 3 actionable
+
+| # | Company | Role                | Status    | Days | Sent | Urgency |
+|---|---------|---------------------|-----------|------|------|---------|
+| 1 | Notion  | Applied AI Engineer | Applied   | 9    | 0    | OVERDUE |
+| 2 | Ramp    | Forward-Deployed    | Applied   | 8    | 0    | OVERDUE |
+| 3 | Linear  | Product Engineer    | Responded | 1    | 0    | URGENT  |
+
+Draft — Notion (overdue):
+> Subject: Re: Applied AI Engineer — Notion
+>
+> Hi team, I applied for the Applied AI Engineer role on May 9th.
+> The AI-workflow company I built and sold in 2025 shipped the same
+> agent pipeline your posting describes. Would any time this week
+> work for a short conversation?
+```
+
+## Dikkat edilmesi gerekenler
+
+Applied durumundaki bir başvuru için en fazla iki takip mesajı hazırlanır; ikincisi de yanıtsız kalırsa followup taslak hazırlamayı bırakır ve kaydı kapatmanı ya da `contacto` ile başka bir kişiye ulaşmayı önerir. Yedi günlük varsayılandan daha sık bir takvim mi istiyorsun? Taslakları elle düzenlemek yerine takip takvimi script'ine bir flag geçir: `node followup-cadence.mjs --applied-days 5`.
+
+## Takipleri kapatma
+
+Takipler varsayılan olarak açıktır. Kapatmak için `config/profile.yml` dosyasına şunu ekle:
+
+```yaml
+follow_ups:
+  enabled: false
+```
+
+Bu ayarla mod, takip takvimi script'ini çalıştırmadan durur ve takipleri nasıl yeniden açacağını söyler; bir satır Applied durumuna geçtiğinde de hiçbir şey planlanmaz. `contacto` modu bir takip değil ilk temas olduğu için çalışmaya devam eder. Takipleri yalnızca açıkça yazılmış bir `false` kapatır: yeniden açmak için `enabled: true` yaz ya da bloğu kaldır.
+
+## İlgili sayfalar [#ilgili-sayfalar]
+
+- [tracker](/tr/docs/reference/modes/tracker)
+- [patterns](/tr/docs/reference/modes/patterns)

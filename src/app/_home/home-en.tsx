@@ -30,6 +30,8 @@ export const homeEn: HomeDict = {
   memberOf: 'Member of',
   worthApplyingLabel: 'How to tell if a job is worth applying to →',
   worthApplyingHref: '/docs/introduction/guides/is-this-job-worth-applying-to',
+  aiJobSearchLabel: 'What is AI job search?',
+  aiJobSearchHref: '/manifesto#what-is-ai-job-search',
   authorTagline: ', 16-year operator and creator of career-ops',
   nowSignedManifesto: <>Now a signed manifesto ·</>,
   readIt: 'Read it →',
@@ -43,7 +45,7 @@ export const homeEn: HomeDict = {
   ),
   whatIsBody: (
     <>
-      career-ops is an open-source AI-powered job search system that runs
+      career-ops is an open-source AI job search agent that runs
       locally on your machine inside any AI coding CLI — Claude Code, OpenCode,
       Codex, GitHub Copilot, and more. It evaluates job listings against your CV
       using a five-dimension rubric plus a holistic global score, scoring
@@ -189,7 +191,7 @@ export const homeEn: HomeDict = {
       a: (
         <>
           career-ops is permanently free, MIT-licensed, and community-funded.
-          There is no paid tier, no waitlist, no account, no telemetry, and no
+          There is no paid tier, no account, no telemetry, and no
           premium features. You clone the repo, configure your profile, and run
           the system locally with whichever AI coding CLI you already use.
           Sustainability comes from community contributions and corporate

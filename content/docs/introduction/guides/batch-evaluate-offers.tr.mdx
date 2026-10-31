@@ -1,0 +1,173 @@
+---
+title: İlanları toplu değerlendir
+description: Paralel yapay zeka worker'ları ve ilana göre uyarlanmış PDF'lerle tek oturumda 10 veya daha fazla iş ilanını işle.
+seoTitle: "career-ops ile iş ilanlarını toplu değerlendirme: birçok ilanı aynı anda puanla"
+icon: FileStack
+translationHash: 537bf031e6d66d7e
+localized: true
+translatedFrom: /docs/introduction/guides/batch-evaluate-offers
+---
+
+İnceleyecek 10 veya daha fazla iş ilanın varsa ve bunları tek tek değil, tek oturumda işlemek istiyorsan bu kılavuzu kullan.
+
+Her ilana ayrı bir Claude worker'ı atanır. Bu worker CV'ni okur, uyumu puanlar, eksiksiz bir rapor yazar ve ilana göre uyarlanmış bir PDF kaydeder; senin parmağını bile kıpırdatmana gerek kalmaz.
+
+## 1. Adım: İlanlarını girdi dosyasına ekle [#1-adım-ilanlarını-girdi-dosyasına-ekle]
+
+Toplu işlem sistemi, ilan URL'lerini **`batch/batch-input.tsv`** adlı dosyadan okur. Bu dosyayı değerlendiricinin yapılacaklar listesi olarak düşünebilirsin.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        **`batch/batch-input.tsv`** dosyasını herhangi bir metin düzenleyicide aç.
+      </Step>
+      <Step>
+        Her ilan için bir satır ekle. Her satırda sekmeyle ayrılmış dört sütun bulunur:
+
+        | Sütun | Ne yazmalısın |
+        |--------|---------------|
+        | `id` | Bu ilan için benzersiz bir numara (1, 2, 3, …) |
+        | `url` | İlanın tam URL'si |
+        | `source` | İlanı nerede bulduğun (ör. `LinkedIn`, `Greenhouse`) |
+        | `notes` | İsteğe bağlı bir not; notun yoksa boş bırak |
+      </Step>
+      <Step>
+        Dosyayı kaydet.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+**Örnek:**
+
+```text title="batch-input.tsv"
+id	url	source	notes
+1	https://jobs.example.com/senior-engineer	LinkedIn	
+2	https://greenhouse.io/jobs/fullstack-dev	Greenhouse	priority
+3	https://builtinaustin.com/job/rails-dev	BuiltIn	
+```
+
+<Callout title="İpucu">
+  Her ID benzersiz bir numara olmalıdır. Numara atlama ve aynı numarayı tekrar kullanma.
+</Callout>
+
+## 2. Adım: Toplu işlemin önizlemesine bak (önerilir)
+
+Herhangi bir işlem başlatmadan önce, kaç ilanın beklediğini görmek için hızlı bir kontrol yap. Bu aşamada hiçbir ilan değerlendirilmez; bu yalnızca bir önizlemedir.
+
+```bash title="Terminal"
+./batch/batch-runner.sh --dry-run
+```
+
+Bekleyen ilanların listesini ve ID'lerini görürsün. Bir şey yanlış görünüyorsa, hatalı bir listeye zaman harcamadan önce girdi dosyasını şimdi düzelt.
+
+## 3. Adım: Toplu işlemi çalıştır
+
+Hazır olduğunda toplu işlemi başlat. İlanları tek tek veya birkaçını aynı anda işleyebilirsin.
+
+**Tek tek (en yavaşı, en az belleği kullanır):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh
+```
+
+**Aynı anda iki ilan (iyi bir varsayılan):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2
+```
+
+**Aynı anda üç ilan (daha hızlı ama bilgisayarını daha çok yorar):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 3
+```
+
+**Belirli bir eşiğin altında puan alan ilanları atla (ör. 5 üzerinden 4,0'ın altında):**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --parallel 2 --min-score 4.0
+```
+
+Toplu işlem çalışırken terminali izle. Her satır hangi ilanın işlendiğini ve işlemin tamamlanıp tamamlanmadığını veya başarısız olup olmadığını gösterir.
+
+Görevlendirilen bir worker, onayını gerektiren bir aracı kurum ilanı bulursa rapor, CV, başvuru taslağı veya tracker satırı yazmadan önce durur ve işi `needs_confirmation` olarak işaretler. Gösterilen soruyu üst etkileşimli oturumda yanıtla; bu oturum, bekletilen ilana ancak açık yanıtını aldıktan sonra devam eder. `--retry-failed` ve `--resume-paused`, onay için bekletilen ilanları devam ettirmez.
+
+## 4. Adım: Sonuçları geldikçe oku
+
+Toplu işlemin bitmesini beklemen gerekmez. Her ilan tamamlandıkça sonuçlar görünür.
+
+**Eksiksiz değerlendirme raporları** → `reports/`
+
+Her rapor `042-company-name-2026-04-14.md` biçiminde adlandırılmış bir dosyadır. Açtığında şunları görürsün:
+
+- Rolün özeti
+- CV'nin ilanla ne kadar uyuştuğu
+- Maaş araştırması
+- Önerilen bir mülakat hazırlık planı
+
+Her raporda ayrıca bir **Risk Summary** (risk özeti) bölümü bulunur. Bu bölümün **Fixed-term contract** (belirli süreli sözleşme) satırı, ilandaki belirli süreli çalışmayla ilgili açık ifadeleri alıntılar; böyle bir ifade yoksa `✅ no fixed term disclosed` yazar; iş tanımına ulaşılamadıysa satır değerlendirilmedi olarak işaretlenir. Machine Summary'deki karşılık gelen alan `risk_summary.fixed_term`'dir ve şu değerlerden tam olarak birini alır:
+
+| Değer | Anlamı |
+|-------|---------|
+| `detected` | İlan, rolü açıkça belirli süreli olarak tanımlıyor |
+| `not_detected` | Belirli süreli çalışmayı belirten açık bir ifade bulunamadı |
+| `not_evaluated` | Bu kontrol için iş tanımına ulaşılamadı |
+
+**Tracker kayıtları** → `batch/tracker-additions/`
+
+Her ilan buraya kısa bir özet dosyası da bırakır: sütun adlarından oluşan bir başlık satırı ve bir değer satırı. Bunlar 6. adımda ana tracker'ına eklenir.
+
+### Puan kanıtları (Score Evidence)
+
+Raporda, Risk Summary'den sonra **Score Evidence** bölümü yer alır. Bu bölüm beş boyutu kapsar: CV uyumu, North Star uyumu, ücret, kültürel sinyaller ve uyarı işaretleri. Her satırda bir kanıt durumu (`supported`, `partial` veya `unknown`), somut bir kaynak veya gözlem ve yanıtlanmamış bir soru kaydedilir. Bölüm, bir kanıt güveni seviyesi (`High`, `Medium` veya `Low`), bu seviyenin gerekçesi ve en fazla üç doğrulama önceliğiyle biter.
+
+Bu seviye, Global Score'un dayandığı kanıtları açıklar; işe alınma olasılığı veya Blok G'nin ilan güvenilirliği seviyesi değildir ve sayısal puanı değiştirmez. Machine Summary, beş durumu `score_evidence` içinde, seviyeyi `confidence` içinde ve öncelikleri `confidence_gaps` içinde saklar. Kalan öncelik yoksa `confidence_gaps` boş bir listedir.
+
+## 5. Adım: Başarısız ilanları yeniden dene
+
+Bir worker bazen başarısız olabilir; örneğin bir ilanın URL'si artık açılmıyorsa. Başarısız ilanlar terminalde kısa bir hata mesajıyla görünür.
+
+**Yalnızca başarısız ilanları yeniden dene:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed
+```
+
+**Varsayılan 2 deneme yerine en fazla 3 denemeyle yeniden dene:**
+
+```bash title="Terminal"
+./batch/batch-runner.sh --retry-failed --max-retries 3
+```
+
+Toplu işlem, başarıyla tamamlanmış ilanları atlar; bu yüzden bu komutu yeniden çalıştırmak her zaman güvenlidir.
+
+## 6. Adım: Sonuçları tracker'ınla birleştir
+
+Toplu işlem bittikten sonra, tüm yeni değerlendirmeleri `data/applications.md` dosyasına eklemek için şu komutu çalıştır:
+
+```bash title="Terminal"
+node merge-tracker.mjs
+```
+
+Bu script:
+
+1. `batch/tracker-additions/` içindeki özet dosyalarını okur
+2. Aynı ilan için asla iki satır oluşmaması için yinelenen kayıtları kontrol eder
+3. Yeni kayıtları başvuru tracker'ına ekler
+4. İşlenen dosyaları `batch/tracker-additions/merged/` klasörüne arşivler
+
+**Hiçbir şey yazmadan değişikliklerin önizlemesine bakmak için:**
+
+```bash title="Terminal"
+node merge-tracker.mjs --dry-run
+```
+
+## Sırada ne var?
+
+Tüm değerlendirmelerini tek bir tabloda görmek için **`data/applications.md`** dosyasını aç. Buradan şunları yapabilirsin:
+
+- En iyi eşleşmelerini bulmak için puana göre sırala
+- Ayrıntılı inceleme için `reports/` içindeki raporları tek tek aç
+- `/career-ops apply` ile en iyi seçeneklerin için başvuru sürecini başlat

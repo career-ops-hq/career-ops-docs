@@ -1,0 +1,98 @@
+---
+title: Ücretsiz bir yapay zeka motoru kur
+seoTitle: "career-ops'u ücretsiz kullanma (Claude aboneliği olmadan): OpenRouter, Ollama ve yerel modeller"
+description: "career-ops'u 0 dolara çalıştır: Claude aboneliği ya da herhangi bir ücretli plan gerekmez. career-ops için ücretsiz yapay zeka motorları: ücretsiz bir sağlayıcıyla OpenCode, Ollama üzerinden yerel bir model, OpenAI uyumlu herhangi bir uç nokta veya yerleşik OpenRouter çalıştırıcısı. Bu sayfa ayrıca iş aramanın ortasında token'ların biterse ne yapman gerektiğini de anlatır."
+icon: Sparkles
+translationHash: 27392ae8d171293d
+localized: true
+translatedFrom: /docs/free-ai-engine
+---
+
+**Hayır, career-ops'u çalıştırmak için Claude aboneliğine ya da herhangi bir ücretli plana ihtiyacın yok.** career-ops ücretsiz ve açık kaynaklıdır (MIT), yapay zeka motoru da ücretsiz olabilir: ücretsiz bir sağlayıcıyla OpenCode, Ollama üzerinden tamamen yerel bir model, OpenAI uyumlu herhangi bir uç nokta veya yerleşik OpenRouter çalıştırıcısı. İş aramanın ortasında token'ların bittiyse ücretsiz bir motora geçmek birkaç dakika sürer; CV'ne, pipeline'ına ve raporlarına dokunulmaz.
+
+career-ops'un ücretli planı, paketi ya da deneme sürümü yoktur: %100 ücretsizdir ve MIT lisanslıdır. career-ops fiyatlarından söz eden bir site varsa, başka bir üründen bahsediyordur. career-ops'un düşünmek için ihtiyaç duyduğu tek şey bir **yapay zeka motoru**, yani prompt'larını okuyup işi yapan bir yapay zeka kodlama asistanıdır. Bu motor da ücretsiz olabilir.
+
+career-ops'ta kendi motorunu ve kendi anahtarını kullanırsın. career-ops sunucularında hiçbir şey çalışmaz; her şey senin bilgisayarında olur. Bu sayfa, en kolayından en çok uğraştıranına doğru ücretsiz yolları gösterir. Birini seç, ardından [Hızlı Başlangıç](/tr/docs) sayfasına geç.
+
+<Callout title="Tam olarak neyi kuruyorum?">
+career-ops'u tarif, yapay zeka motorunu da aşçı gibi düşün. Tarif sonsuza kadar ücretsiz. Bu sayfa ise ücretsiz bir aşçıyı nasıl bulacağını anlatıyor: ücretsiz katmanı olan, bulutta çalışan bir model ya da tamamen kendi bilgisayarında çalışan bir model.
+</Callout>
+
+## Hangi yol bana uygun?
+
+| Ne istiyorsun? | Kullan | Ücretsiz mi? | İyi bir bilgisayar gerekir mi? |
+| --- | --- | --- | --- |
+| En kolay ücretsiz başlangıç | **OpenCode + ücretsiz bir sağlayıcı** | Evet | Hayır |
+| Her şey %100 çevrimdışı ve gizli olsun | **Ollama (yerel model)** | Evet | Evet, 16 GB+ VRAM |
+| Zaten kullandığın CLI'dan yararlanmak | **Kendi ücretsiz katmanı** | Varsa | Hayır |
+| Tek komutluk kısayol | **`npm run or`** | Evet | Hayır |
+
+Çoğu kişi için en iyi başlangıç, OpenCode ve ücretsiz bir sağlayıcıdır; diğer yollar da ihtiyaç duyduğunda burada.
+
+## 1. yol: OpenCode + ücretsiz bir sağlayıcı (önerilen)
+
+[OpenCode](https://opencode.ai) ücretsiz ve açık kaynaklı bir yapay zeka kodlama asistanıdır. career-ops'un yaratıcısı Santiago Fernández de Valderrama Aparicio'nun sözleriyle: *"opencode is top."* OpenCode, **ücretsiz katman** sunan birçok sağlayıcıya bağlanır; böylece career-ops'u hiç para harcamadan çalıştırabilirsin.
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="OpenCode'u kur">
+        [opencode.ai](https://opencode.ai) adresindeki kurulum için verilen tek satırlık komutu çalıştır. Diğer yapay zeka CLI'ları gibi terminalinde çalışır.
+      </Step>
+      <Step title="Ücretsiz bir sağlayıcı seç">
+        Ücretsiz katmanı olan herhangi bir sağlayıcıya kaydol ve API anahtarını kopyala. Topluluğun sık kullandığı ücretsiz seçenekler: **OpenRouter** (`:free` etiketli modeller), **Google AI Studio** (Gemini ücretsiz katmanı) ve **Nvidia'nın** ücretsiz katmanı gibi OpenAI uyumlu uç noktalar. İyi sonuç veren modellerin güncel listesi [bütçe rehberinde](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) yer alır.
+      </Step>
+      <Step title="OpenCode'u sağlayıcıya bağla">
+        OpenCode'u career-ops klasöründe aç:
+        ```bash title="Terminal"
+        opencode
+        ```
+        OpenCode içinde `/connect` komutunu çalıştır, sağlayıcını seç (örneğin **OpenRouter**) ve anahtarını yapıştır. Ardından `/models` komutunu çalıştırıp ücretsiz bir model seç; OpenRouter'da `:free` etiketli olanlardan birini. OpenCode, `OPENAI_API_BASE` ve `OPENAI_BASE_URL` değişkenlerini yok sayar; yapılandırmayı `/connect` ve `/models` komutlarıyla yaparsın.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+Hepsi bu kadar: OpenCode artık senin motorun. Şimdi [Hızlı Başlangıç](/tr/docs) sayfasına geç.
+
+## 2. yol: Zaten kullandığın bir CLI
+
+[Desteklenen bir CLI](/tr/docs/supported-clis) kullanıyorsan (**Claude Code, OpenCode, Codex, GitHub Copilot CLI ve diğerleri**), career-ops onunla çalışır; bu CLI'ların bazılarında ücretsiz katman da vardır. CLI'ını career-ops klasöründe aç; bu yol ek bir kurulum gerektirmez.
+
+## 3. yol: Ollama ile %100 yerel (tamamen çevrimdışı)
+
+Bulut olmadan, sıfır maliyetle ve tam gizlilikle çalışmak için career-ops'un yapay zeka motorunu [Ollama](https://ollama.com) ile kendi bilgisayarında çalıştır. Hiçbir şey bilgisayarından dışarı çıkmaz.
+
+career-ops'u yerelde çalıştırmanın bedeli donanımdır. career-ops, modelden ilanları birçok boyutta puanlamasını ve CV'ni uyarlamasını ister; küçük modeller bunda zorlanır.
+
+<Callout type="warn" title="Yeterince büyük bir model seç">
+career-ops'u yerel bir modelle kullanacaksan 7-8B'lik küçük modelleri atla: puanlama biçimine uymazlar ve sıradan CV'ler üretirler. **32B veya daha büyük bir model** kullan (örneğin Qwen 2.5 Coder 32B). Bunun için **16-24 GB VRAM**'li bir GPU (RTX 3090/4090) ya da 32 GB+ birleşik belleğe sahip bir Apple Silicon Mac gerekir. Böyle bir bilgisayarın yoksa ücretsiz bir sağlayıcıyla OpenCode (1. yol) daha iyi bir ücretsiz seçenektir.
+</Callout>
+
+```bash title="Terminal"
+# Install Ollama from ollama.com, then pull a capable model:
+ollama pull qwen2.5-coder:32b
+```
+
+Modeli indirdikten sonra yapay zeka CLI'ını (OpenCode burada iyi çalışır) yerel Ollama uç noktasına yönlendir ya da [bütçe rehberinde](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md) anlatılan yerleşik yerel değerlendiriciyi kullan.
+
+## 4. yol: Tek komutluk kısayol: `npm run or`
+
+career-ops, **OpenRouter'ın ücretsiz modelleri arasında otomatik geçiş yapan** yerleşik bir çalıştırıcıyla gelir; uğraşman gereken bir CLI yapılandırması yoktur. career-ops'u klonlayıp bir OpenRouter anahtarı tanımladıktan sonra pipeline'ı tek komutla çalıştırırsın:
+
+```bash title="Terminal"
+export OPENROUTER_API_KEY="your_free_key_here"
+npm run or            # runs the full pipeline on free models
+```
+
+`npm run or` çalıştırıcısının tek bir adımı çalıştırmaya yarayan özel varyantları da vardır: `npm run or:scan`, `or:eval`, `or:apply`.
+
+---
+
+<Callout title="Geliştiriciler için: modelleri ve maliyeti ayarla">
+career-ops ana deposundaki **[Running on a Budget](https://github.com/career-ops-hq/career-ops/blob/main/docs/RUNNING_ON_A_BUDGET.md)** rehberi; güncel tutulan model önerilerini, sağlayıcıya göre örnekleri, bağımsız değerlendiricileri (`node openai-eval.mjs`, `node ollama-eval.mjs`) ve token tasarrufu sağlayan seçenekleri ayrıntılı olarak anlatır. career-ops herhangi bir modele bağlı değildir: kodda hiçbir değişiklik yapmadan OpenAI uyumlu herhangi bir uç noktaya yönlendirebilirsin.
+</Callout>
+
+## Hazırsın
+
+Motorunu kurduktan sonra **[Hızlı Başlangıç](/tr/docs)** sayfasına geç: career-ops'u klonlayacak, CV'ni ekleyecek ve ilk ücretsiz taramanı çalıştıracaksın.

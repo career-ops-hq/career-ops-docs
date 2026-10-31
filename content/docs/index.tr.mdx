@@ -1,0 +1,282 @@
+---
+title: Hızlı Başlangıç
+description: "career-ops'u yaklaşık on beş dakikada kullanmaya başla: açık kaynaklı yapay zeka iş arama ajanını kur, yapay zeka CLI'ını aç ve ilk iş ilanını değerlendir. Kod bilmen gerekmez."
+seoTitle: "career-ops kurulumu: hızlı başlangıç ve dakikalar içinde ilk yapay zeka iş taraması"
+icon: Rocket
+translationHash: a1ac86db5bf5c50e
+localized: true
+translatedFrom: /docs
+---
+
+Bu rehber, ilk seferinde yaklaşık on beş dakikada seni sıfırdan ilk değerlendirilmiş ilanına götürür. Çalışma alanını kuracak, yapay zeka kodlama asistanını açacak ve bir iş ilanı yapıştıracaksın. Ajan gerekiyorsa önce onboarding'i (kısa ilk kurulum görüşmesi) tamamlar, ardından sana eksiksiz bir rapor, bir puan ve ilana göre uyarlanmış bir PDF CV verir.
+
+## Neye ihtiyacın var?
+
+Kod yazmayı bilmen gerekmiyor. Bir terminal açıp komut çalıştırabilmen yeterli.
+
+<Callout title="Terminale yeni mi başlıyorsun?">
+  Daha önce hiç komut satırı kullanmadıysan bunda bir sorun yok, ama bunu öğrenmenin yeri bu rehber değil. Hızlıca öğrenmek için freeCodeCamp'in [Command Line for Beginners](https://www.freecodecamp.org/news/command-line-for-beginners/) el kitabını oku. Burada takip etmen gereken her şeyi anlatıyor. Terminal açıp komut çalıştırmaya alıştığında geri dön ve 1. Adım'dan devam et.
+</Callout>
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+      ### Yapay zeka kodlama asistanı
+
+      Bu sistemi çalıştıran yapay zeka kodlama asistanını kur: **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, **[Qwen Code](https://qwen.ai/qwencode)** veya **[GitHub Copilot CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli)**. career-ops [on bir CLI'ı doğrudan destekler](/tr/docs/supported-clis); devam etmeden önce herhangi birini kur ve oturum aç.
+      </Step>
+      <Step>
+        ### Node.js 22.13+
+
+        **[Node.js](https://nodejs.org)** kur: **22.13 veya üzeri** bir sürüm (Node 23'te **23.4 veya üzeri**). Yardımcı script'leri çalıştırır ve PDF'leri üretir. Eski sürümler kurulum kontrolünden geçemez, çünkü tracker'ın SQLite indeksi daha yeni bir Node gerektirir. Sürümünü `node --version` ile kontrol et.
+      </Step>
+      <Step>
+        ### Git
+
+        **[Git](https://git-scm.com/)** kur; kurulum aracı (scaffolder) (scaffolder) onu kendi içinde kullanır. Çoğu bilgisayarda zaten yüklüdür. Kontrol etmek için bir terminal aç ve `git --version` komutunu çalıştır.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## 1. Adım: Çalışma alanını kur
+
+career-ops'u kurmak istediğin klasörde bir terminal aç. Önerilen yol tek bir komuttan oluşur; `git clone` kullanan ileri düzey yol hemen altındadır. Node (22.13+, Node 23'te 23.4+) veya Git eksikse `npx` çalışmaz; önce ikisini de kur (yukarıdaki gereksinimlere bak).
+
+### Önerilen yol: tek komut
+
+```bash title="Terminal"
+npx @santifer/career-ops init
+```
+
+Bu komut en son sürümü `./career-ops` klasörüne klonlar, bağımlılıkları kurar ve çalışma alanının yapısını oluşturur. Ayrıca hangi yapay zeka kodlama CLI'ının kurulu olduğunu algılar ve başlamak için doğru komutu söyler. Yalnızca yeni bir klasöre kurulum yapar: `./career-ops` zaten varsa ve boş değilse komut hata vererek durur ve hiçbir şeyi değiştirmez, yani tekrar çalıştırmak mevcut bir çalışma alanını onarmaz veya güncellemez.
+
+Bittiğinde çalışma alanına geç:
+
+```bash title="Terminal"
+cd career-ops
+```
+
+<details>
+<summary>İleri düzey: depoyu kendin klonla</summary>
+
+Belirli bir dalı takip etmek, projeye katkıda bulunmak veya bağımlılıkları kurmadan önce kodu incelemek istiyorsan bu yolu kullan.
+
+```bash title="Terminal"
+git clone https://github.com/career-ops-hq/career-ops.git
+cd career-ops
+npm install
+```
+
+</details>
+
+### Headless tarayıcı (tek seferlik)
+
+career-ops birkaç iş için headless Chromium kullanır: PDF oluşturmak, ilanların hâlâ yayında olup olmadığını kontrol etmek ve tam ATS taramaları yapmak. Kurulum aracı bağımlılıklardan sonra bunu otomatik olarak kurar; bu adım senin bilgisayarında başarısız olduysa elle kur:
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+`PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD` ortam değişkeni boş, `0` veya `false` dışında bir değere ayarlıysa `npm install` bu indirmeyi atlar; bu durumda yukarıdaki komutu kendin çalıştır. NixOS'ta bu adımı atla: indirilen tarayıcılar orada başlayamaz, çalışan tarayıcıları ise deponun flake dev shell'i sağlar. Ayrıntılar core'un [NixOS rehberinde](https://github.com/career-ops-hq/career-ops/blob/main/docs/NIXOS.md) anlatılıyor.
+
+## 2. Adım: Yapay zeka asistanını aç
+
+`career-ops` klasörünün içindeyken kurduğun yapay zeka kodlama CLI'ını başlat.
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
+  <Tab value="Claude Code">
+    ```bash title="Terminal"
+    claude
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash title="Terminal"
+    codex
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash title="Terminal"
+    opencode
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash title="Terminal"
+    qwen
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash title="Terminal"
+    copilot
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash title="Terminal"
+    agy
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash title="Terminal"
+    pi
+    ```
+  </Tab>
+</Tabs>
+
+<Callout title="Onboarding, profiline ihtiyaç duyulduğunda başlar">
+  İlk iş değerlendirmenden veya profilini gerektiren başka bir iş akışından önce career-ops ajanı kurulumunu kontrol eder ve gerekirse kısa bir onboarding görüşmesi yapar. Onboarding'i doğrudan başlatmasını da isteyebilirsin. Senden CV'ni, hedeflediğin rol türlerini, ücret aralığını ve konum tercihini ister. Sen günlük dille yanıt verirsin, ajan da yapılandırma dosyalarını senin için yazar. Görüşme yaklaşık iki üç dakika sürer. Çalışma alanını keşfetmek, kodu incelemek veya kurulumunu teşhis etmek onboarding'i başlatmaz ve profil dosyası oluşturmaz.
+
+  Geliştiriciler için: kurulum kontrolü `node doctor.mjs --json` komutudur ve yalnızca okuma yapar. Onboarding, eksik kişiselleştirme dosyalarını (`modes/_profile.md`, `modes/_custom.md`, `modes/_brief.md` ve `voice-dna.md`) `node doctor.mjs --json --init-templates` ile şablonlarından oluşturur ve var olan bir dosyanın üzerine asla yazmaz.
+</Callout>
+
+<Callout title="Karşına çıkabilecek, career-ops ile ilgisi olmayan bir soru">
+  Bazı CLI'lar (örneğin Claude Code) yeni bir klasörü ilk açtığında içindeki dosyalara güvenip güvenmediğini sorar. Bu soru career-ops'tan değil, CLI'ın kendisinden gelir. Devam etmek için evet de. Bunu kabul etmek career-ops onboarding'ini başlatmaz.
+</Callout>
+
+<Callout type="warn" title="Claude Pro veya Max için ödeme mi yapıyorsun? Bu oturumun nasıl faturalandığını kontrol et">
+  İlk değerlendirmenden önce `career-ops` klasöründe `node doctor.mjs` komutunu çalıştır. Faturalandırma kaynağını tek satırda bildirir.
+
+  Ortamında `ANTHROPIC_API_KEY` ayarlıysa **CLI'ın bu anahtarı kullanır ve Pro veya Max için ödeme yapıyor olsan bile token başına faturalandırır.** Bu öncelik kuralı career-ops'a değil Claude Code'a aittir: doctor yalnızca bunu algılar ve sana söyler. Bunun yerine aboneliğini kullanmak için `export ANTHROPIC_API_KEY=...` satırını `~/.zshrc`, `~/.bashrc`, `~/.profile` veya projedeki `.env` dosyasından kaldır, terminalini yeniden başlat ve `/login` komutunu çalıştır. API kredisi kullanmak istiyorsan ortada bir sorun yok.
+
+  Diğer CLI'ların her biri abonelik ve anahtar arasındaki kuralı kendisi belirler; career-ops bunu kontrol etmez. Yanıtın tamamı için [SSS](/tr/docs/faq) sayfasına bak.
+</Callout>
+
+## 3. Adım: İlk değerlendirmeni çalıştır [#3-adım-ilk-değerlendirmeni-çalıştır]
+
+Herhangi bir iş ilanının URL'sini kopyala ve sohbete yapıştır. Profilin hazır değilse ajan önce onboarding'i tamamlar. Claude Code, Antigravity CLI veya Pi kullanıyorsan URL'nin başına açık komutu ekle; diğer CLI'larda URL'yi yapıştır ve ajandan auto-pipeline'ı çalıştırmasını iste:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen Code", "GitHub Copilot CLI", "Antigravity CLI", "Pi"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Qwen Code">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="GitHub Copilot CLI">
+    ```bash
+    Run the auto-pipeline command with the job URL: https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Antigravity CLI">
+    ```bash
+    /career-ops https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+  <Tab value="Pi">
+    ```bash
+    /skill:career-ops auto-pipeline https://jobs.example.com/senior-engineer-ai
+    ```
+  </Tab>
+</Tabs>
+
+URL'n yoksa ilanın tam metnini sohbete yapıştır. Ajan her iki girdiyi de iş ilanı olarak algılar ve tüm süreci otomatik olarak çalıştırır: işte **auto-pipeline** budur.
+
+### Sonra ne olur?
+
+İlanı yapıştırdıktan sonra career-ops şunları kendi başına yapar:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step>
+        ### İş tanımını okur [#iş-tanımını-okur]
+        Rolü, gereksinimleri ve ücreti anlar.
+      </Step>
+      <Step>
+        ### CV'ni okur
+        Rolle eşleşen noktaları ve eksikleri bulmak için `cv.md` dosyasından yararlanır.
+      </Step>
+      <Step>
+        ### İlanı puanlar [#ilanı-puanlar]
+        Rolü; rol uyumu, ücret ve uzaktan çalışma politikası gibi birden çok boyutta 1-5 arası puanlar.
+      </Step>
+      <Step>
+        ### Rapor yazar
+        Ayrıntılı dökümü `reports/` klasörüne kaydeder.
+      </Step>
+      <Step>
+        ### İlana göre uyarlanmış bir PDF CV üretir [#ilana-göre-uyarlanmış-bir-pdf-cv-üretir]
+        CV'nin bu ilana özel olarak uyarlanmış bir sürümünü `output/` klasörüne yazar.
+      </Step>
+      <Step>
+        ### Tracker'ına bir satır ekler
+        Başvuruyu `data/applications.md` dosyasına kaydeder.
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+Tüm süreç yaklaşık bir iki dakika sürer. Bittiğinde career-ops sana puanı ve raporun özetini gösterir.
+
+## Sonuçlarını okumak
+
+Raporda Risk Summary'den sonra **Score Evidence** bölümü yer alır. Bu bölüm beş boyutu kapsar: CV eşleşmesi, North Star uyumu, ücret, kültürel sinyaller ve uyarı işaretleri. Her satırda bir kanıt durumu (`supported`, `partial` veya `unknown`), somut bir kaynak ya da gözlem ve yanıtlanmamış bir soru bulunur. Bölüm; bir kanıt güveni düzeyi (`High`, `Medium` veya `Low`), bunun gerekçesi ve en fazla üç doğrulama önceliğiyle biter.
+
+`reports/` içindeki rapor dosyasını aç. Dosya adı `{number}-{company}-{date}.md` kalıbını izler. İçinde şunları bulursun:
+
+- **Puan**: 1-5 arası bir sayı. 4,0'ın altındaki bir puan, ilanın büyük olasılıkla sana pek uygun olmadığı anlamına gelir.
+- **A Bloğu**: rolün sade bir dille özeti.
+- **B Bloğu**: CV'nin her gereksinimle nasıl eşleştiğini ve varsa eksikleri gösteren bir tablo.
+- **C Bloğu**: bu rol için kendini nasıl konumlandıracağına dair bir strateji önerisi.
+- **D Bloğu**: ilandaki ücreti piyasa ücretleriyle karşılaştıran bir ücret araştırması.
+- **E Bloğu**: başvurun için kişiselleştirme notları.
+- **F Bloğu**: bu ilana göre uyarlanmış STAR hikayeleriyle mülakat hazırlığı.
+- **G Bloğu**: ilanın güvenilirliği; ilanın hâlâ açık olup olmadığı ve tekrar tekrar yayımlanıp yayımlanmadığı gibi sinyallerin sezgisel bir kontrolü. Bulduklarını bildirir, kararı sana bırakır.
+- **H Bloğu**: başvuru formu için taslak yanıtlar; yalnızca puan 4,5 veya üzeriyse yazılır.
+
+G Bloğu'nun hemen ardından gelen **Verdict**, kararı kalın harflerle (Apply, Consider, Research first veya Skip) ve yukarıdaki bloklardan çıkarılan tek bir gerekçeyle verir; böylece gerisini okumadan yanıtı öğrenirsin.
+
+İlana göre uyarlanmış PDF CV'n `output/` klasöründedir. Bir yere göndermeden önce gözden geçir; career-ops senin onayın olmadan hiçbir şey göndermez.
+
+## Şimdi ne yapmalısın?
+
+İlk değerlendirmen tamamlandığına göre keşfedebileceğin birkaç şey var:
+
+- **Profilini geliştir.** Ajana kendin hakkında yeni bir şey söyle: *"Biraz daha bağlam vereyim: az önce X'i yayına aldım."* Profili günceller ve sonraki değerlendirmeler daha isabetli olur.
+- **Daha fazla ilan değerlendir.** Başka URL'ler veya iş tanımları yapıştır. Her biri tracker'ına eklenir.
+- **İş ilanı sitelerini tara.** Önceden yapılandırılmış onlarca şirketin kariyer sayfasını tek seferde taramak için `/career-ops scan` yaz.
+- **İlanları karşılaştır.** Birkaç raporun varsa sıralı bir karşılaştırma almak için `/career-ops ofertas` yaz.
+
+## Sorun giderme
+
+<Accordions>
+  <Accordion title="Ajan onboarding'i çalıştırmadı">
+    Otomatik onboarding, bir iş değerlendirmesi veya profilini gerektiren başka bir iş akışı istediğinde ve yalnızca kurulum eksikse başlar. Doğrudan başlatmak için CLI'ını `career-ops` klasörünün içinden aç (kontrol etmek için `pwd` çalıştır) ve ajana şunu söyle: *"lütfen ilk çalıştırma onboarding'ini başlat."*
+  </Accordion>
+  <Accordion title="Rapor oluşmadı">
+    Kök klasörde `cv.md` dosyasının bulunduğundan ve içinin dolu olduğundan emin ol. Onboarding bittiği hâlde `cv.md` boşsa ajana şunu sor: *"cv.md dosyam boş görünüyor, doldurmama yardım eder misin?"*
+  </Accordion>
+  <Accordion title="PDF oluşmadı">
+    `npx playwright install chromium` komutunu yeniden çalıştır. Bu sorunu çözmezse `node --version` ile Node.js sürümünün 22.13 veya üzeri (Node 23'te 23.4 veya üzeri) olduğunu kontrol et.
+  </Accordion>
+  <Accordion title="Puan yanlış görünüyor">
+    İlk birkaç değerlendirme kabataslak olur, çünkü sistem seni henüz iyi tanımıyor. Her değerlendirmeden sonra yapay zeka asistanına neyi yanlış yaptığını söyle. Örneğin: *"Bu puan fazla yüksek, Kubernetes deneyimim yok."* Öğrenir ve kendini ayarlar.
+  </Accordion>
+  <Accordion title="Başka bir şey bozuk">
+    Yapay zeka asistanına doğrudan sor: *"Kurulumumda sorun ne?"* Teşhis edemezse tam bir sağlık kontrolü için `npm run doctor` komutunu çalıştır.
+  </Accordion>
+</Accordions>
+
+## Hata mı buldun, soruların mı var?
+
+Bir şey bu rehberde anlatıldığı gibi çalışmıyorsa lütfen bildir. Hata bildirimleri senden sonra gelen herkesin işine yarar.
+
+- **Hata bildir:** [GitHub deposunda](https://github.com/career-ops-hq/career-ops/issues) bir issue aç. Ne olmasını beklediğini, gerçekte ne olduğunu anlat ve gördüğün hata mesajını yapıştır.
+- **Soru sor:** [Discord topluluğuna](https://discord.gg/8pRpHETxa4) katıl. Diğer kullanıcılardan ve yazardan yardım almanın en hızlı yolu budur.
+- **Düzeltme gönder:** Sorunu kendin nasıl düzelteceğini biliyorsan pull request açmadan önce [CONTRIBUTING.md](https://github.com/career-ops-hq/career-ops/blob/main/CONTRIBUTING.md) dosyasını oku. Kısaca: yeni bir özellik, yeni bir mod veya komut ya da mimari değişiklik için önce issue aç. Hata düzeltmeleri, kimlik doğrulama gerektirmeyen yeni tarama sağlayıcıları, dokümantasyon ve çeviriler doğrudan pull request olarak gönderilebilir.
+
+<StarOnGitHub locale="tr" />

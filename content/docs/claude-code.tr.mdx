@@ -1,0 +1,56 @@
+---
+title: Claude Code ile yapay zeka destekli iş arama
+seoTitle: "Claude Code ile iş arama: yapay zeka iş arama ajanı | career-ops"
+description: "Claude Code'u yapay zeka iş arama ajanı olarak kullan: career-ops şirketlerin kariyer sayfalarını tarar, ilanları CV'ne göre puanlar ve başvuru taslaklarını hazırlar. Kararı sen verir, sen gönderirsin."
+icon: Bot
+translationHash: 70ef59ade0e61bf1
+localized: true
+translatedFrom: /docs/claude-code
+---
+
+İş aramanı Claude ile yürütebilirsin: career-ops, Claude Code'u terminalinde çalışan bir yapay zeka iş arama ajanına dönüştürür. Şirketlerin kariyer sayfalarını tarar, her ilanı CV'ne göre puanlar, CV'ni uyarlar; ön yazı (motivasyon mektubu) ve başvuru soruların için yanıt taslakları hazırlar. Değerlendirir ve taslak hazırlar; kararı sen verir, sen gönderirsin. career-ops asla senin adına başvurmaz. Codex, OpenCode ve diğer yapay zeka kodlama CLI'larında da çalışır.
+
+## career-ops'u Claude Code'da nasıl çalıştırırım?
+
+career-ops, proje klasöründeki `CLAUDE.md` dosyası aracılığıyla Claude Code'a yüklenir. Kurulum [Hızlı Başlangıç](/tr/docs) sayfasında anlatılıyor. Bir kez yapman gereken ek bir adım var: bir ilanın hâlâ yayında olduğunu doğrulayan Playwright tarayıcı araçlarını Claude Code içinde `/plugin install playwright@claude-plugins-official` komutuyla ekle. Başlangıç kontrolü (`node doctor.mjs`) bu araçlar eksikse seni uyarır. Kurulum, PDF'ler ve `scan --verify` için kullanılan tarayıcıyı da indirir; bu adım atlandıysa `npx playwright install chromium` komutunu çalıştır.
+
+- **Etkileşimli:** career-ops klasörünü aç, `claude` komutunu çalıştır, ardından `/career-ops` yaz.
+- **Toplu:** `claude -p "prompt"` ile headless olarak çalıştır. Toplu çalıştırıcı, worker'larını tarayıcı araçları olmadan başlatır; bu yüzden bir ilanın hâlâ yayında olduğunu doğrulayamazlar ve rapor da bunu belirtir.
+
+## Maliyeti ne kadar?
+
+career-ops'un kendisi ücretsizdir ve MIT lisanslıdır. Claude Code ise ücretsiz değildir: ücretli bir Claude planı veya bir Anthropic API anahtarı gerektirir.
+
+Ortamında `ANTHROPIC_API_KEY` tanımlıysa, Claude Pro veya Max için ödeme yapıyor olsan bile Claude Code token başına ücretlendirir. [Nedenini ve nasıl kontrol edeceğini SSS'de bulabilirsin](/tr/docs/faq#claude-pro-veya-max-aboneligim-var-career-ops-neden-api-kredilerimi-harciyor).
+
+Motor için hiç ödeme yapmak istemiyorsan, career-ops OpenCode üzerinden ücretsiz sağlayıcılarla da çalışır. Bkz. [Ücretsiz bir yapay zeka motoru kur](/tr/docs/free-ai-engine).
+
+## Ne yapar, neyi sana bırakır?
+
+Her ilan 1-5 arası bir genel puan alır: ağırlıklı bir formül değil, beş boyutun yön verdiği bütüncül bir değerlendirme. Puanı 4,0'ın altında kalan ilanlarda, özel bir nedenin yoksa başvurmamanı önerir. Peşinden gitmeye değer ilanlar için CV'ni uyarlar, bir ön yazı taslağı ve başvurunun açık uçlu soruları için yanıt taslakları hazırlar.
+
+Sonra durur. Hazırladığı taslakları gözden geçirir, düzenler ve başvuruyu kendin gönderirsin. career-ops asla senin adına başvurmaz.
+
+İlk çalıştırmalar pürüzlü olur. Seni henüz tanımıyor. Onunla konuş: CV'n, ne istediğin, neyi kabul etmediğin.
+
+## Başka bir CLI mi tercih ediyorsun?
+
+career-ops ayrıca Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent ve GitHub Copilot CLI'da da çalışır. Nasıl başlatacağın CLI'a göre değişir: her birinin onu nasıl yüklediğini görmek için [Desteklenen CLI'lar](/tr/docs/supported-clis) sayfasına bak.
+
+## career-ops nasıl ortaya çıktı?
+
+career-ops'u kendi 2026 iş aramam için geliştirdim. Başvuru hunim: 740 ilan değerlendirildi → 68 başvuru → 12 mülakat → 1 teklif. (Santiago Fernández de Valderrama Aparicio)
+
+## Sık sorulan sorular
+
+### Claude Code benim için iş arayabilir mi?
+
+Claude Code, career-ops ile iş aramanı yürütebilir: şirketlerin kariyer sayfalarını tarar, her ilanı CV'ne göre puanlar ve peşinden gitmeye değer ilanlar için başvuru materyallerinin taslağını hazırlar. Hangi başvuruları göndereceğine sen karar verirsin.
+
+### career-ops başvuruları otomatik gönderir mi?
+
+Hayır. career-ops asla senin adına başvurmaz. Materyallerin taslağını hazırlar; her başvuruyu kendin gözden geçirir, düzenler ve gönderirsin.
+
+### Claude Pro gerekiyor mu?
+
+Claude Code, ücretli bir Claude planı veya bir Anthropic API anahtarı gerektirir. career-ops'un kendisi ücretsizdir ve MIT lisanslıdır; ayrıca OpenCode üzerinden ücretsiz sağlayıcılarla da çalışır.

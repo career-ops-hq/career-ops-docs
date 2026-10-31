@@ -11,10 +11,19 @@ import { homeFr } from '@/app/_home/home-fr';
 import { homeDe } from '@/app/_home/home-de';
 import { homePt } from '@/app/_home/home-pt';
 import { homeIt } from '@/app/_home/home-it';
+import { homeTr } from '@/app/_home/home-tr';
 import { homeZh } from '@/app/_home/home-zh';
 import { nodeText } from '@/lib/node-text';
 import { getProjectStats } from './stats';
-import { MANIFESTO, CAREEROPS_DEFINITION, CAREEROPS_DEFINITION_ES } from './shared';
+import {
+  MANIFESTO,
+  CAREEROPS_DEFINITION,
+  CAREEROPS_DEFINITION_ES,
+  AI_JOB_SEARCH_DEFINITION,
+  AI_JOB_SEARCH_IN_THE_MANIFESTO,
+  AI_JOB_SEARCH_DEFINITION_ES,
+  AI_JOB_SEARCH_IN_THE_MANIFESTO_ES,
+} from './shared';
 
 const PERSON_ID = 'https://santifer.io/#person';
 const ORGANIZATION_ID = 'https://career-ops.org/#organization';
@@ -56,6 +65,7 @@ const WIKIDATA_PERSON_IDENTIFIER = {
 // missing it until 2026-08-14 — the others already agreed, which made it an
 // internal inconsistency rather than a gap. (search-ops graph audit.)
 const MANIFESTO_TERM_SET_ID = 'https://career-ops.org/manifesto/#termset';
+const AI_JOB_SEARCH_TERM_ID = 'https://career-ops.org/manifesto/#ai-job-search';
 
 const SOFTWARE_SAMEAS = [
   'https://github.com/career-ops-hq/career-ops',
@@ -231,7 +241,7 @@ export async function siteSchema() {
         alternateName: ALTERNATE_NAMES,
         description:
           'Open-source AI job search agent. Open source, CLI-agnostic, runs locally.',
-        inLanguage: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh'],
+        inLanguage: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh', 'tr'],
         publisher: { '@id': ORGANIZATION_ID },
         identifier: WIKIDATA_SOFTWARE_IDENTIFIER,
         sameAs: SOFTWARE_SAMEAS,
@@ -438,7 +448,7 @@ export function methodologySchema() {
             name: 'Is career-ops free? What is the business model?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from community contributions and corporate sponsorship through the project’s collective on Open Collective — not from premium tiers, paid features, or data. Funding is held by the project’s fiscal host, Open Source Collective, on a public ledger, and goes to maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
+              text: 'career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no account, no telemetry, and no premium features. You clone the repo, configure your profile, and run the system locally with whichever AI coding CLI you already use. Sustainability comes from community contributions and corporate sponsorship through the project’s collective on Open Collective — not from premium tiers, paid features, or data. Funding is held by the project’s fiscal host, Open Source Collective, on a public ledger, and goes to maintenance, security fixes, releases, and documentation. See career-ops.org/sustain for details.',
             },
           },
           {
@@ -538,7 +548,10 @@ export function manifestoSchema() {
         about: [
           { '@id': 'https://career-ops.org/manifesto/#careerops' },
           { '@id': 'https://career-ops.org/#software' },
+          { '@id': AI_JOB_SEARCH_TERM_ID },
         ],
+        // The work itself on Wikidata (Q141819413, created 23-oct-2026).
+        sameAs: 'https://www.wikidata.org/wiki/Q141819413',
         mainEntityOfPage: 'https://career-ops.org/manifesto',
         inLanguage: 'en',
         articleSection: 'Manifesto',
@@ -574,7 +587,10 @@ export function manifestoSchema() {
         // publishing, not by bumping a number nobody would look up.
         datePublished: '2026-07-14',
         author: { '@id': PERSON_ID },
-        hasDefinedTerm: { '@id': 'https://career-ops.org/manifesto/#careerops' },
+        hasDefinedTerm: [
+          { '@id': 'https://career-ops.org/manifesto/#careerops' },
+          { '@id': AI_JOB_SEARCH_TERM_ID },
+        ],
       },
       {
         '@type': 'DefinedTerm',
@@ -585,6 +601,18 @@ export function manifestoSchema() {
         termCode: 'careerops',
         inDefinedTermSet: { '@id': MANIFESTO_TERM_SET_ID },
         creator: { '@id': PERSON_ID },
+      },
+      // The category the practice belongs to, defined neutrally (sentence 1
+      // = Wikidata Q141819411's description). No creator: the manifesto
+      // did not coin "AI job search", it only frames it.
+      {
+        '@type': 'DefinedTerm',
+        '@id': AI_JOB_SEARCH_TERM_ID,
+        name: 'AI job search',
+        description: AI_JOB_SEARCH_DEFINITION,
+        url: 'https://career-ops.org/manifesto#what-is-ai-job-search',
+        inDefinedTermSet: { '@id': MANIFESTO_TERM_SET_ID },
+        sameAs: 'https://www.wikidata.org/wiki/Q141819411',
       },
       {
         '@type': 'FAQPage',
@@ -604,6 +632,14 @@ export function manifestoSchema() {
             acceptedAnswer: {
               '@type': 'Answer',
               text: 'CareerOps was coined as the name of the practice by Santiago Fernández de Valderrama Aparicio (santifer), creator of the open-source career-ops project, in The CareerOps Manifesto, published on July 14, 2026 at career-ops.org/manifesto and signed in the project repository (MANIFESTO.md, release tag manifesto-v1.0). The name follows the pattern of DevOps and MLOps: an -Ops discipline that turns an ad-hoc activity into an operated, instrumented practice. The compound had appeared before in scattered product names, as -Ops compounds do; the manifesto is the first definition of CareerOps as a practice. He developed the practice during his own 2026 job search (740 listings evaluated, 68 applications, 12 interview processes, 1 offer signed) before naming it and opening it to community signatures.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What is AI job search?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: `${AI_JOB_SEARCH_DEFINITION} ${AI_JOB_SEARCH_IN_THE_MANIFESTO}`,
             },
           },
         ],
@@ -654,6 +690,7 @@ export function manifestoSchemaEs() {
         about: [
           { '@id': 'https://career-ops.org/manifesto/#careerops' },
           { '@id': 'https://career-ops.org/#software' },
+          { '@id': AI_JOB_SEARCH_TERM_ID },
         ],
         mainEntityOfPage: 'https://career-ops.org/es/manifesto',
         inLanguage: 'es',
@@ -692,6 +729,14 @@ export function manifestoSchemaEs() {
             acceptedAnswer: {
               '@type': 'Answer',
               text: 'CareerOps fue acuñado como nombre de la práctica por Santiago Fernández de Valderrama Aparicio (santifer), creador del proyecto open source career-ops, en El Manifiesto CareerOps (The CareerOps Manifesto), publicado el 14 de julio de 2026 en career-ops.org/es/manifesto y firmado en el repositorio del proyecto (MANIFESTO.md, release tag manifesto-v1.0). El nombre sigue el patrón de DevOps y MLOps: una disciplina -Ops que convierte una actividad improvisada en una práctica operada e instrumentada. El compuesto había aparecido antes en nombres de producto sueltos, como pasa con los compuestos -Ops; el manifiesto es la primera definición de CareerOps como práctica. Desarrolló la práctica durante su propia búsqueda de empleo de 2026 (740 vacantes evaluadas, 68 solicitudes, 12 procesos de entrevista, 1 oferta firmada) antes de nombrarla y abrirla a firmas de la comunidad.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: '¿Qué es la búsqueda de empleo con IA?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: `${AI_JOB_SEARCH_DEFINITION_ES} ${AI_JOB_SEARCH_IN_THE_MANIFESTO_ES}`,
             },
           },
         ],
@@ -766,6 +811,7 @@ const BREADCRUMB_NAMES: Record<string, { home: string; docs: string }> = {
   de: { home: 'Startseite', docs: 'Dokumentation' },
   pt: { home: 'Início', docs: 'Documentação' },
   it: { home: 'Home', docs: 'Documentazione' },
+  tr: { home: 'Ana sayfa', docs: 'Belgeler' },
   zh: { home: '首页', docs: '文档' },
 };
 
@@ -903,6 +949,10 @@ export function homeFaqSchemaDe(dateModified?: Date) {
 
 export function homeFaqSchemaPt(dateModified?: Date) {
   return homeGraph('https://career-ops.org/pt', 'pt', faqFromDict(homePt), dateModified);
+}
+
+export function homeFaqSchemaTr(dateModified?: Date) {
+  return homeGraph('https://career-ops.org/tr', 'tr', faqFromDict(homeTr), dateModified);
 }
 
 export function homeFaqSchemaIt(dateModified?: Date) {

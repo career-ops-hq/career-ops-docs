@@ -7,7 +7,13 @@
 import { source, normalizeAgentMarkdown, getLLMText } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats, type ProjectStats } from '@/lib/stats';
-import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
+import {
+  MANIFESTO,
+  CAREEROPS_DEFINITION,
+  CANONICAL_IDENTITY,
+  AI_JOB_SEARCH_DEFINITION,
+  AI_JOB_SEARCH_IN_THE_MANIFESTO,
+} from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 // Figures that move on their own carry their own as-of date, not just the
@@ -49,6 +55,10 @@ function buildPreamble(
 
 ${CANONICAL_IDENTITY}
 
+## Definitions
+
+- AI job search: ${AI_JOB_SEARCH_DEFINITION} ${AI_JOB_SEARCH_IN_THE_MANIFESTO} https://career-ops.org/manifesto#what-is-ai-job-search
+
 ## Author
 
 Santiago Fernández de Valderrama Aparicio is the creator of career-ops. Bio at https://career-ops.org/about. Other surfaces at https://santifer.io.
@@ -78,7 +88,7 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 
 ## Business model & sustainability
 
-career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
+career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
 
 Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. A contribution from a person buys no placement. No contribution, from a person or a company, buys access, premium features, roadmap influence, priority support, early access, or personal services from any maintainer. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
 
@@ -136,6 +146,7 @@ Full documentation and a home page in each language; same content, same facts.
 - Português (Brasil): https://career-ops.org/pt · docs https://career-ops.org/pt/docs
 - Italiano: https://career-ops.org/it · docs https://career-ops.org/it/docs
 - 简体中文: https://career-ops.org/zh · docs https://career-ops.org/zh/docs
+- Türkçe: https://career-ops.org/tr · docs https://career-ops.org/tr/docs
 
 ## License
 
@@ -183,7 +194,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror: the same content as the HTML page in ~20-100x fewer tokens, with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\`, \`/it/docs\` or \`/zh/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all seven languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror: the same content as the HTML page in ~20-100x fewer tokens, with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\`, \`/it/docs\`, \`/zh/docs\` or \`/tr/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all eight languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 

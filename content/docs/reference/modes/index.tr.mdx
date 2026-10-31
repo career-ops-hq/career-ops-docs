@@ -1,0 +1,46 @@
+---
+title: Modlar
+description: "career-ops'un doğrudan çalıştırabileceğin 14 modu: değerlendirme, uyarlama, başvuru, takip ve hazırlık. Her biri, desteklenen tüm yapay zeka kodlama CLI'larında çalışan bir markdown skill'idir."
+seoTitle: "career-ops modları: 14 iş arama komutu (değerlendirme, uyarlama, başvuru, takip, hazırlık)"
+icon: Layers
+translationHash: b0ce95e7cf247608
+localized: true
+translatedFrom: /docs/reference/modes
+---
+
+## 14 mod
+
+career-ops, doğrudan çalıştırabileceğin **14 modla** gelir. Her biri, ajanın yükleyip zaten kullandığın yapay zeka kodlama CLI'ında çalıştırdığı düz markdown biçiminde bir skill'dir: Claude Code, Cursor, Codex, OpenCode, Qwen, GitHub Copilot veya [desteklenen başka bir CLI](/tr/docs/supported-clis). Bir modu `/career-ops <mode>` komutuyla çalıştırırsın ve her mod iş aramanın bir aşamasını üstlenir: bir ilanı puanlama ölçütüne göre değerlendirmek (beş boyut ve bütünsel bir genel puan), CV'ni uyarlamak, başvuru taslağı hazırlamak, sonuçları takip etmek veya mülakatlara hazırlanmak. Modlar, [Veri Sözleşmesi](https://github.com/career-ops-hq/career-ops/blob/main/DATA_CONTRACT.md) uyarınca Sistem Katmanı'na aittir: güncellemeler onları en son sürümle değiştirir ve hiçbir güncelleme `cv.md` dosyana, profiline veya raporlarına dokunmaz.
+
+## Değerlendir
+
+Temel puanlama döngüsü: bir iş ilanını okur ve sen ona hiç emek harcamadan önce beş boyut ve bütünsel bir genel puan üzerinden puanlar.
+
+- **[auto-pipeline](/tr/docs/reference/modes/auto-pipeline)**: varsayılan akış. Bir iş ilanının URL'sini veya metnini yapıştır; A-H değerlendirmesinin tamamını çalıştırır, raporu yazar, uyarlanmış bir PDF dışa aktarır ve arada hiçbir elle adım olmadan tracker'a bir kayıt ekler.
+- **[pipeline](/tr/docs/reference/modes/pipeline)**: `data/pipeline.md` içinde sıraya alınmış her URL için auto-pipeline'ı çalıştırır; böylece bir günlük ilanı tek oturumda bitirirsin.
+- **[oferta](/tr/docs/reference/modes/oferta)**: pipeline'ın tamamına değil, yalnızca puanlama kararına ihtiyacın olduğunda tek bir ilanın A-H değerlendirmesini yapar.
+- **[ofertas](/tr/docs/reference/modes/ofertas)**: birbiriyle yarışan iki veya daha fazla teklifi ücret, uyum, gelişim ve uyarı işaretleri açısından sıralayıp tek bir karar matrisinde toplar.
+- **[deep](/tr/docs/reference/modes/deep)**: iyi tanımadığın bir şirkete başvurmadan önce Perplexity, Claude veya ChatGPT'ye yapıştırabileceğin yapılandırılmış bir araştırma prompt'u hazırlar (yapay zeka stratejisi, son hamleler, mühendislik kültürü, olası zorluklar, rakipler, senin açın).
+
+## Uyarla ve başvur
+
+Yüksek puan alan bir eşleşmeyi gönderilmiş bir başvuruya dönüştür.
+
+- **[pdf](/tr/docs/reference/modes/pdf)**: Playwright ile belirli bir iş ilanına göre uyarlanmış, ATS uyumlu bir PDF CV oluşturur.
+- **[apply](/tr/docs/reference/modes/apply)**: açık bir başvuru formundaki açık uçlu soruları okur, CV'ne ve iş ilanına dayanan yanıt taslakları hazırlar.
+- **[contacto](/tr/docs/reference/modes/contacto)**: sıcak temas kurabileceğin olası LinkedIn bağlantılarını bulur ve role özel kısa bir iletişim mesajı taslağı hazırlar.
+- **[followup](/tr/docs/reference/modes/followup)**: takip zamanı geçmiş başvuruları ve mülakatları işaretler, mesaj taslaklarını hazırlar.
+
+## Takip et ve geliş
+
+Aramanı düzenli tut ve zaman içinde ince ayar yap.
+
+- **[tracker](/tr/docs/reference/modes/tracker)**: tüm başvurularının aşamaya göre gruplanmış durum özetini sohbette gösterir.
+- **[patterns](/tr/docs/reference/modes/patterns)**: tüm başvuruları ve sonuçlarını okuyarak hedeflemedeki kalıpları ve kör noktaları ortaya çıkarır.
+- **[interview-prep](/tr/docs/reference/modes/interview-prep)**: mülakat aşamasına özel hazırlık belgeleri (işe alım uzmanı, işe alım yöneticisi, teknik akran görüşmesi, panel) üretir; olası soruları ve STAR tekniğine uygun hikâyeleri içerir.
+- **[training](/tr/docs/reference/modes/training)**: bir kursu veya sertifikayı, belirttiğin kariyer yönüne ve fırsat maliyetine göre puanlar.
+- **[project](/tr/docs/reference/modes/project)**: bir portfolyo projesi fikrini hedef rollerine ve yapımının alacağı süreye göre puanlar.
+
+## Portallar
+
+Sıfır token tarayıcının okuduğu sistemlerden üçü olan Greenhouse, Ashby ve Lever için ayrı bir [portal referansı](/tr/docs/reference/portals) var.

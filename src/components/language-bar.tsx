@@ -26,7 +26,7 @@ import { UI } from '@/lib/ui-strings';
 // one exists (es) or the locale home otherwise (fr, de and pt have none yet), and
 // any other EN-only page to the locale home. So a toggle never 404s.
 
-type Code = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh';
+type Code = 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh' | 'tr';
 const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'en', label: 'EN', name: 'English' },
   { code: 'es', label: 'ES', name: 'Español' },
@@ -35,6 +35,7 @@ const LOCALES: { code: Code; label: string; name: string }[] = [
   { code: 'pt', label: 'PT', name: 'Português' },
   { code: 'it', label: 'IT', name: 'Italiano' },
   { code: 'zh', label: 'ZH', name: '简体中文' },
+  { code: 'tr', label: 'TR', name: 'Türkçe' },
 ];
 // Locales whose manifesto is actually translated (has an /<loc>/manifesto route).
 const MANIFESTO_LOCALES: Code[] = ['es'];
@@ -131,6 +132,17 @@ function FlagZH({ className = 'w-3.5 h-3.5' }: { className?: string }) {
     </svg>
   );
 }
+function FlagTR({ className = 'w-3.5 h-3.5' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 16 16" aria-hidden="true" style={FLAG_CLIP}>
+      <rect width="16" height="16" fill="#e30a17" />
+      <circle cx="6.5" cy="8" r="4" fill="#fff" />
+      <circle cx="7.5" cy="8" r="3.2" fill="#e30a17" />
+      <polygon fill="#fff" points="9.40,8.00 10.79,7.55 10.78,6.10 11.63,7.28 13.02,6.82 12.16,8.00 13.02,9.18 11.63,8.72 10.78,9.90 10.79,8.45" />
+    </svg>
+  );
+}
+
 const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   en: FlagEN,
   es: FlagES,
@@ -139,9 +151,10 @@ const FLAG: Record<Code, (p: { className?: string }) => React.ReactNode> = {
   pt: FlagBR,
   it: FlagIT,
   zh: FlagZH,
+  tr: FlagTR,
 };
 
-/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de, /pt, /it or /zh.) */
+/** Which locale is this path? (localized surfaces are prefixed /es, /fr, /de, /pt, /it, /zh or /tr.) */
 function localeOf(pathname: string): Code {
   if (pathname === '/es' || pathname.startsWith('/es/')) return 'es';
   if (pathname === '/fr' || pathname.startsWith('/fr/')) return 'fr';
@@ -149,6 +162,7 @@ function localeOf(pathname: string): Code {
   if (pathname === '/pt' || pathname.startsWith('/pt/')) return 'pt';
   if (pathname === '/it' || pathname.startsWith('/it/')) return 'it';
   if (pathname === '/zh' || pathname.startsWith('/zh/')) return 'zh';
+  if (pathname === '/tr' || pathname.startsWith('/tr/')) return 'tr';
   return 'en';
 }
 
@@ -156,7 +170,7 @@ function localeOf(pathname: string): Code {
 function baseOf(pathname: string): string {
   const loc = localeOf(pathname);
   if (loc === 'en') return pathname;
-  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de', '/pt', '/it' or '/zh'
+  return pathname.slice(3) || '/'; // drop '/es', '/fr', '/de', '/pt', '/it', '/zh' or '/tr'
 }
 
 /** The URL for `target` locale of the page whose EN-relative path is `base`.
@@ -172,6 +186,7 @@ function localeUrl(base: string, target: Code): string {
     // A manifesto twin exists only for some locales; otherwise send to the home.
     return MANIFESTO_LOCALES.includes(target) ? `/${target}/manifesto` : `/${target}`;
   }
+  if (base === '/waitlist') return `/${target}/waitlist`;
   if (target === 'es' && base.startsWith('/blog/') && BLOG_ES_TWINS.includes(base.slice(6))) {
     return `/es${base}`; // a blog post with a Spanish twin (same slug)
   }
@@ -202,6 +217,7 @@ const BANNER: Record<Code, { question: string; cta: string }> = {
   pt: { question: 'Prefere português?', cta: 'Ver em português' },
   it: { question: 'Preferisci l\u2019italiano?', cta: 'Leggi in italiano' },
   zh: { question: '更想看中文？', cta: '查看中文版' },
+  tr: { question: 'Türkçe okumak ister misin?', cta: 'Türkçeye geç' },
 };
 
 /**

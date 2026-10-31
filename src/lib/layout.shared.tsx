@@ -12,7 +12,7 @@ type Options = {
   compact?: boolean;
   // Picks the language of the brand suffix. The language control itself is
   // the self-detecting <LanguageBar/>, which reads the locale from the URL.
-  locale?: 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh';
+  locale?: 'en' | 'es' | 'fr' | 'de' | 'pt' | 'it' | 'zh' | 'tr';
 };
 
 // Brand suffix next to the wordmark: the same category the home H1 names
@@ -26,6 +26,7 @@ const TAGLINE = {
   pt: ', seu agente de IA para busca de emprego',
   it: ', il tuo agente AI per la ricerca di lavoro',
   zh: '，你的 AI 求职智能体',
+  tr: ', yapay zeka iş arama ajanın',
 } as const;
 
 export function baseOptions({ compact = false, locale = 'en' }: Options = {}): BaseLayoutProps {
@@ -45,7 +46,7 @@ export function baseOptions({ compact = false, locale = 'en' }: Options = {}): B
         </span>
       ),
       // The logo goes to the home of the page's own language. Fumadocs defaults
-      // to '/', which sent /es, /fr, /de, /pt, /it and /zh readers back to the English home.
+      // to '/', which sent /es, /fr, /de, /pt, /it, /zh and /tr readers back to the English home.
       url: locale === 'en' ? '/' : `/${locale}`,
       transparentMode: 'top',
       enabled: true,

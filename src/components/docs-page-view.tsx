@@ -110,8 +110,8 @@ function extraSchemaFor(slug: string[] | undefined, locale: string, url: string)
 // chrome, schema, and MDX rendering are identical. `page.path` resolves to the
 // locale's own file (.mdx or .es.mdx), so the git date and "edit on GitHub"
 // link point at the right source per language.
-const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr', de: 'de', pt: 'pt-BR', it: 'it', zh: 'zh-CN' } as const;
-const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le', de: 'Aktualisiert am', pt: 'Atualizado em', it: 'Aggiornato il', zh: '更新于' } as const;
+const DATE_LOCALE = { en: 'en-US', es: 'es', fr: 'fr', de: 'de', pt: 'pt-BR', it: 'it', zh: 'zh-CN', tr: 'tr' } as const;
+const UPDATED_LABEL = { en: 'Updated', es: 'Actualizado el', fr: 'Mis à jour le', de: 'Aktualisiert am', pt: 'Atualizado em', it: 'Aggiornato il', zh: '更新于', tr: 'Güncellenme:' } as const;
 // Credit line for a locale's native-speaker reviewers (src/lib/native-reviewers.ts).
 const NATIVE_REVIEW_LABEL = {
   es: 'Revisión nativa:',
@@ -120,6 +120,7 @@ const NATIVE_REVIEW_LABEL = {
   pt: 'Revisão nativa:',
   it: 'Revisione madrelingua:',
   zh: '母语审校：',
+  tr: 'Anadil incelemesi:',
 } as const;
 
 export function DocsPageView({ page }: { page: DocsPageType }) {

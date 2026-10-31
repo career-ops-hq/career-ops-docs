@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   // cannot be read, so the headline has to travel in the title too.
   title: 'Open-source AI job search agent, local-first | career-ops',
   description:
-    'Open source AI-powered job search system. Runs in your CLI on your machine. CLI-agnostic, MIT-licensed, local-first. Evaluate jobs, generate tailored CVs, track applications.',
+    'Open-source AI job search agent. Runs in your CLI on your machine. CLI-agnostic, MIT-licensed, local-first. Evaluate jobs, generate tailored CVs, track applications.',
   alternates: {
     canonical: 'https://career-ops.org',
     languages: hreflangHome(),
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'career-ops',
     title: 'More applications. More silence. Stop guessing. Start choosing. | career-ops',
     description:
-      'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
+      'Open-source AI job search agent. Runs in your CLI. CLI-agnostic, MIT, local-first.',
   },
   twitter: {
     card: 'summary_large_image',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     creator: '@santifer',
     title: 'More applications. More silence. Stop guessing. Start choosing. | career-ops',
     description:
-      'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
+      'Open-source AI job search agent. Runs in your CLI. CLI-agnostic, MIT, local-first.',
   },
 };
 
