@@ -106,6 +106,22 @@ async function main() {
     if (/\]\(\/(es\/|fr\/)?docs/.test(body)) fail('/llms.txt still has relative /docs links');
   }
 
+  // 2a. /press.md — the markdown twin of the page writers and assistants copy
+  //     facts from. A literal route like /changelog.md, so nothing else covers
+  //     it, and the page's date must be the twin's.
+  {
+    const { res, body, ct } = await get('/press.md');
+    if (res.status !== 200) fail(`/press.md status ${res.status} (want 200)`);
+    if (!ct.includes('text/markdown')) fail(`/press.md content-type "${ct}" (want text/markdown)`);
+    if ((res.headers.get('x-robots-tag') || '') !== 'noindex')
+      fail('/press.md missing X-Robots-Tag: noindex');
+    if (!body.includes('It drafts and fills; it never submits. You press Submit.'))
+      fail('/press.md lost the Submit line');
+    const { body: index } = await get('/llms.txt');
+    if (!index.includes('https://career-ops.org/press.md'))
+      fail('/llms.txt does not list /press.md');
+  }
+
   // 2b. /changelog.md — the markdown twin of the #2 route live assistants
   //     request (Vercel agent-channel measurement, 7d to 2026-08-17). It is
   //     not a /docs page, so no rewrite or proxy rule covers it: only this
