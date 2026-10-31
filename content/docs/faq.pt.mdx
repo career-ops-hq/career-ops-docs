@@ -3,7 +3,7 @@ title: Perguntas frequentes
 description: Perguntas frequentes sobre o career-ops — custo, privacidade, CLIs de IA compatíveis, scan vs scan:full, limites de tokens, instalação no Windows e o que o career-ops nunca faz em seu nome.
 seoTitle: "Perguntas frequentes do career-ops: custo, privacidade, Claude Code e uso gratuito"
 icon: CircleQuestionMark
-translationHash: e38fef5efe601151
+translationHash: f8366941d415f74c
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -17,6 +17,10 @@ Esta página reúne em um só lugar as dúvidas mais comuns sobre o career-ops. 
 ## O career-ops envia candidaturas automaticamente?
 
 Não. O career-ops nunca se candidata em seu nome: ele prepara, ou seja, busca vagas, pontua, adapta o seu currículo e pode pré-preencher formulários de candidatura em ATS, mas o envio é sempre um clique explícito seu. Ele redige e preenche; nunca envia. Você clica em Enviar. O projeto career-ops rejeita abertamente a automação de candidaturas em massa: o objetivo é escolher bem as empresas, não se candidatar às cegas e em volume.
+
+## O currículo sob medida pode inventar coisas?
+
+O career-ops não pode inventar nada em um currículo sob medida: os prompts dizem reformular, nunca fabricar, e duas verificações garantem isso. O `generate-pdf.mjs` bloqueia um currículo cujos números, empregadores, formações, certificações ou ferramentas citadas pelo nome não estão nas suas fontes (`cv.md` e `article-digest.md`), a menos que você passe `--skip-fact-check`. Essa verificação precisa do `cv.md`: em um workspace sem ele, ela não verifica nada. O [modo pdf](/pt/docs/reference/modes/pdf) também roda o `cv-title-check.mjs`, que compara cada cargo do currículo sob medida com o cargo que o `cv.md` dá à mesma experiência, pareados por empresa e datas, e pergunta se você quer manter ou reverter qualquer cargo diferente. A verificação de cargos avisa em vez de bloquear, porque reformular um cargo às vezes é decisão sua. Nenhuma das duas verificações julga a reformulação em geral, então leia cada currículo antes de enviar.
 
 ## O career-ops é gratuito?
 

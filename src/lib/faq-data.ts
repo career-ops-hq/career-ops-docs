@@ -67,6 +67,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "career-ops does not auto-submit applications: it prepares — it scans, scores, tailors your CV, and can pre-fill ATS application forms — but submitting is always your explicit click. The career-ops project explicitly rejects spray-and-pray automation: the point is choosing companies well, not applying blindly at volume.",
     },
     {
+      question: "Can the tailored CV invent things?",
+      answer:
+        "career-ops must not invent anything in a tailored CV: the prompts say reformulate, never fabricate, and two checks back that up. generate-pdf.mjs blocks a CV whose numbers, employers, degrees, certifications or named tools are missing from your sources (cv.md and article-digest.md), unless you pass --skip-fact-check. That gate needs cv.md: in a workspace without one, it checks nothing. The pdf mode also runs cv-title-check.mjs, which compares each job title in the tailored CV with the title cv.md gives the same job, matched by company and dates, and asks you to keep or revert any title that differs. The title check warns rather than blocks, because reframing a title is sometimes your call. Neither check judges rewording in general, so read every CV before you send it.",
+    },
+    {
       question: "What is the difference between career-ops and CareerOps?",
       answer:
         "CareerOps (one word) names the practice; career-ops (hyphen, lowercase) is the open-source project — its first reference implementation. The CareerOps Manifesto defines the practice. In plain terms: career-ops is the MIT-licensed, open-source AI job search agent that runs locally inside your AI coding CLI, published at career-ops.org and github.com/career-ops-hq/career-ops. CareerOps is the practice it embodies — running a job search the way engineers run production — named and defined in The CareerOps Manifesto, nine rights every job seeker should have, signed publicly by the community. Both come from the same author, Santiago Fernández de Valderrama Aparicio, and both trace back to the same repository.",
@@ -132,6 +137,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Reicht career-ops Bewerbungen automatisch ein?",
       answer:
         "career-ops reicht keine Bewerbungen automatisch ein: Es bereitet vor — es scannt, bewertet, passt deinen Lebenslauf an und kann Bewerbungsformulare im ATS vorausfüllen —, aber das Absenden ist immer dein bewusster Klick. Das Projekt career-ops lehnt Spray-and-Pray-Automatisierung ausdrücklich ab: Es geht darum, Unternehmen gut auszuwählen, nicht darum, sich blind und massenhaft zu bewerben.",
+    },
+    {
+      question: "Kann der zugeschnittene Lebenslauf Dinge erfinden?",
+      answer:
+        "career-ops darf in einem zugeschnittenen Lebenslauf nichts erfinden: Die Prompts sagen umformulieren, nie erfinden, und zwei Prüfungen sichern das ab. generate-pdf.mjs blockiert einen Lebenslauf, dessen Zahlen, Arbeitgeber, Abschlüsse, Zertifikate oder benannte Tools nicht in deinen Quellen stehen (cv.md und article-digest.md), außer du übergibst --skip-fact-check. Diese Prüfung braucht cv.md: In einem Workspace ohne diese Datei prüft sie nichts. Der pdf-Modus führt außerdem cv-title-check.mjs aus. Es vergleicht jeden Jobtitel im zugeschnittenen Lebenslauf mit dem Titel, den cv.md derselben Stelle gibt, zugeordnet nach Unternehmen und Zeitraum, und fragt dich bei jeder Abweichung, ob du den Titel behältst oder zurücksetzt. Die Titelprüfung warnt, statt zu blockieren, denn einen Titel anders zu fassen ist manchmal deine Entscheidung. Keine der beiden Prüfungen bewertet Umformulierungen im Allgemeinen, also lies jeden Lebenslauf, bevor du ihn abschickst.",
     },
     {
       question: "Was ist der Unterschied zwischen career-ops und CareerOps?",
@@ -201,6 +211,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "career-ops no envía candidaturas por ti: hace todo el trabajo previo — escanea, puntúa, adapta tu CV y puede pre-rellenar los formularios de candidatura de los ATS — pero el envío final es siempre un clic explícito tuyo. El proyecto career-ops rechaza de forma explícita la automatización tipo spray-and-pray: la idea es elegir bien las empresas, no enviar candidaturas a ciegas y en masa.",
     },
     {
+      question: "¿El CV adaptado puede inventar cosas?",
+      answer:
+        "career-ops no debe inventar nada en un CV adaptado: los prompts dicen reformular, nunca fabricar, y dos comprobaciones lo respaldan. generate-pdf.mjs bloquea un CV cuyas cifras, empresas, títulos académicos, certificaciones o herramientas con nombre no están en tus fuentes (cv.md y article-digest.md), salvo que pases --skip-fact-check. Esa comprobación necesita cv.md: en un espacio de trabajo sin él, no comprueba nada. El modo pdf también ejecuta cv-title-check.mjs, que compara cada cargo del CV adaptado con el que cv.md da al mismo puesto, emparejados por empresa y fechas, y te pregunta si mantener o revertir cualquier cargo distinto. La comprobación de cargos avisa en lugar de bloquear, porque reformular un cargo a veces es decisión tuya. Ninguna de las dos juzga la reformulación en general, así que lee cada CV antes de enviarlo.",
+    },
+    {
       question: "¿Cuál es la diferencia entre career-ops y CareerOps?",
       answer:
         "CareerOps (en una sola palabra) da nombre a la práctica; career-ops (con guion, en minúsculas) es el proyecto open source, su primera implementación de referencia. El Manifiesto CareerOps define la práctica. Dicho de forma sencilla: career-ops es el agente de IA de código abierto para la búsqueda de empleo, con licencia MIT, que corre en local dentro de tu CLI de programación con IA, publicado en career-ops.org y github.com/career-ops-hq/career-ops. CareerOps es la práctica que encarna — llevar la búsqueda de empleo como los ingenieros llevan producción —, nombrada y definida en El Manifiesto CareerOps, nueve derechos que cualquier persona que busca empleo debería tener, firmados públicamente por la comunidad. Ambos vienen del mismo autor, Santiago Fernández de Valderrama Aparicio, y ambos se remontan al mismo repositorio.",
@@ -268,6 +283,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "Vous décidez et vous envoyez, toujours. career-ops ne soumet aucune candidature automatiquement : il fait tout le travail en amont — il scanne les offres, les évalue, adapte votre CV et peut pré-remplir les formulaires de candidature des ATS — mais l'envoi final passe toujours par votre clic explicite. Le projet career-ops rejette explicitement l'automatisation « spray-and-pray » : l'objectif est de bien choisir les entreprises, pas de postuler à l'aveugle en masse.",
     },
     {
+      question: "Le CV personnalisé peut-il inventer des choses ?",
+      answer:
+        "career-ops ne doit rien inventer dans un CV personnalisé : les prompts disent reformuler, jamais fabriquer, et deux vérifications le garantissent. generate-pdf.mjs bloque un CV dont les chiffres, employeurs, diplômes, certifications ou outils nommés sont absents de vos sources (cv.md et article-digest.md), sauf si vous passez --skip-fact-check. Ce contrôle a besoin de cv.md : dans un espace de travail qui n'en a pas, il ne vérifie rien. Le mode pdf exécute aussi cv-title-check.mjs, qui compare chaque intitulé de poste du CV personnalisé à celui que cv.md donne au même poste, associés par entreprise et par dates, et vous demande de garder ou d'annuler tout intitulé différent. La vérification des intitulés avertit au lieu de bloquer, car reformuler un intitulé relève parfois de votre choix. Aucune des deux ne juge la reformulation en général : relisez donc chaque CV avant de l'envoyer.",
+    },
+    {
       question: "Quelle est la différence entre career-ops et CareerOps ?",
       answer:
         "CareerOps (en un seul mot) désigne la pratique ; career-ops (en minuscules, avec un trait d'union) est le projet open source, sa première implémentation de référence. The CareerOps Manifesto définit cette pratique. Concrètement : career-ops est le système de recherche d'emploi propulsé par l'IA, sous licence MIT, qui s'exécute localement dans votre CLI de codage IA, publié sur career-ops.org et github.com/career-ops-hq/career-ops. CareerOps est la pratique qu'il incarne — mener une recherche d'emploi comme les ingénieurs font tourner la production —, nommée et définie dans The CareerOps Manifesto, neuf droits que tout chercheur d'emploi devrait avoir, signés publiquement par la communauté. Les deux viennent du même auteur, Santiago Fernández de Valderrama Aparicio, et les deux remontent au même dépôt.",
@@ -278,6 +298,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "career-ops invia le candidature in automatico?",
       answer:
         "No: career-ops non si candida mai a tuo nome. Prepara, cioè scansiona gli annunci, assegna un punteggio, adatta il tuo curriculum e può precompilare i moduli di candidatura degli ATS, ma l'invio è sempre un tuo clic esplicito. Redige e compila; non invia mai. Sei tu a cliccare su Invia. Il progetto career-ops rifiuta esplicitamente l'automazione delle candidature a tappeto: lo scopo è scegliere bene le aziende, non candidarsi alla cieca e in massa.",
+    },
+    {
+      question: "Il CV su misura può inventare cose?",
+      answer:
+        "career-ops non deve inventare nulla in un CV su misura: i prompt dicono riformulare, mai inventare, e due controlli lo garantiscono. generate-pdf.mjs blocca un CV i cui numeri, datori di lavoro, titoli di studio, certificazioni o strumenti citati per nome non compaiono nelle tue fonti (cv.md e article-digest.md), a meno che tu non passi --skip-fact-check. Questo controllo richiede cv.md: in un workspace che non ce l'ha, non controlla nulla. La modalità pdf esegue anche cv-title-check.mjs, che confronta ogni titolo di ruolo del CV su misura con quello che cv.md dà allo stesso ruolo, abbinati per azienda e date, e ti chiede se tenere o ripristinare ogni titolo diverso. Il controllo dei titoli avvisa invece di bloccare, perché riformulare un titolo a volte è una tua scelta. Nessuno dei due controlli giudica la riformulazione in generale, quindi leggi ogni CV prima di inviarlo.",
     },
     {
       question: "career-ops è gratis?",
@@ -345,6 +370,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "O career-ops envia candidaturas automaticamente?",
       answer:
         "Não. O career-ops nunca se candidata em seu nome: ele prepara, ou seja, busca vagas, pontua, adapta o seu currículo e pode pré-preencher formulários de candidatura em ATS, mas o envio é sempre um clique explícito seu. Ele redige e preenche; nunca envia. Você clica em Enviar. O projeto career-ops rejeita abertamente a automação de candidaturas em massa: o objetivo é escolher bem as empresas, não se candidatar às cegas e em volume.",
+    },
+    {
+      question: "O currículo sob medida pode inventar coisas?",
+      answer:
+        "O career-ops não pode inventar nada em um currículo sob medida: os prompts dizem reformular, nunca fabricar, e duas verificações garantem isso. O generate-pdf.mjs bloqueia um currículo cujos números, empregadores, formações, certificações ou ferramentas citadas pelo nome não estão nas suas fontes (cv.md e article-digest.md), a menos que você passe --skip-fact-check. Essa verificação precisa do cv.md: em um workspace sem ele, ela não verifica nada. O modo pdf também roda o cv-title-check.mjs, que compara cada cargo do currículo sob medida com o cargo que o cv.md dá à mesma experiência, pareados por empresa e datas, e pergunta se você quer manter ou reverter qualquer cargo diferente. A verificação de cargos avisa em vez de bloquear, porque reformular um cargo às vezes é decisão sua. Nenhuma das duas verificações julga a reformulação em geral, então leia cada currículo antes de enviar.",
     },
     {
       question: "O career-ops é gratuito?",
@@ -479,6 +509,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "career-ops 会自动投递简历吗？",
       answer:
         "不会：career-ops 从不替你提交申请。由你点击提交。它负责准备工作：扫描职位、打分、为你定制简历，还可以预先填写 ATS 申请表，但提交这一步始终要由你明确点击。它起草、填写，但从不提交。由你点击提交。career-ops 项目明确拒绝“海投”式的自动化：重点在于选对公司，而不是盲目地大量申请。",
+    },
+    {
+      question: "定制简历会编造内容吗？",
+      answer:
+        "career-ops 不允许在定制简历中编造任何内容：提示词要求只改写、不编造，并有两项检查作为保障。如果简历中的数字、雇主、学位、证书或具名工具在你的资料来源（cv.md 和 article-digest.md）中找不到，generate-pdf.mjs 会阻止生成，除非你传入 --skip-fact-check。这项检查依赖 cv.md：工作区里没有 cv.md 时，它什么都不检查。pdf 模式还会运行 cv-title-check.mjs：它按公司和日期把定制简历中的每个职位名称与 cv.md 中同一段经历的职位名称配对比较，遇到不一致时询问你是保留还是改回。职位名称检查只发出警告而不阻止生成，因为调整职位名称的表述有时是你自己的决定。两项检查都不评判一般意义上的改写，所以每份简历发出前都要亲自读一遍。",
     },
     {
       question: "career-ops 免费吗？",

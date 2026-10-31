@@ -4,8 +4,8 @@ description: "Genera un curriculum in PDF su misura per una JD specifica: career
 seoTitle: "Modalità pdf di career-ops: genera un curriculum su misura compatibile con gli ATS"
 icon: FileText
 date: "2026-05-18"
-lastModified: "2026-10-16"
-translationHash: ac18633cc823dce2
+lastModified: "2026-10-30"
+translationHash: e2ac66dff3d31c92
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -44,6 +44,31 @@ Scegli pdf quando hai deciso di candidarti e vuoi solo il curriculum su misura, 
 - Il formato della pagina segue automaticamente la sede dell'azienda: `letter` per i ruoli negli Stati Uniti e in Canada, `a4` in tutti gli altri casi.
 - L'inserimento delle parole chiave si basa sulla verità. La modalità riformula la tua esperienza reale con il vocabolario esatto della JD, ma non aggiunge mai una competenza che non hai.
 - Per l'area DACH e gran parte dell'Europa continentale puoi scegliere di includere una foto impostando `candidate.photo` in `config/profile.yml`; se lo lasci vuoto, il CV viene generato identico pixel per pixel ma senza foto, ed è l'impostazione predefinita più sicura per Stati Uniti, Regno Unito e mercati in cui domina l'ATS.
+
+## Cosa controlla prima del rendering
+
+La modalità pdf può riformulare la tua esperienza, ma non deve inventare nulla. Prima che il PDF esista vengono eseguiti due controlli: uno sui titoli di ruolo e uno sui fatti.
+
+Il controllo dei titoli viene per primo, sul CV su misura, prima che venga costruito l'HTML. `cv-title-check.mjs` abbina ogni ruolo del CV su misura alla voce di `cv.md` con la stessa azienda e le stesse date, poi confronta i due titoli. Ignora solo maiuscole e spazi, quindi "Backend Engineer" e "Senior Backend Engineer" non coincidono. Per ogni differenza, career-ops ti mostra i due titoli e ti chiede se tenere il nuovo o tornare a quello di `cv.md`:
+
+```text title="Terminal"
+CV Title Consistency Check
+────────────────────────────────────────
+Entries compared: 3
+⚠️  1 title mismatch(es) found:
+
+  Acme (2021-2024)
+    cv.md:        "Backend Engineer"
+    tailored CV:  "Senior Backend Engineer"
+```
+
+Il controllo dei titoli avvisa e non blocca mai, perché riformulare un titolo a volte è una tua scelta. Un ruolo che non riesce ad abbinare, per esempio perché le date sono scritte in modo diverso da `cv.md`, viene segnalato come non controllato: verifica tu quel titolo. Se il controllo non può proprio essere eseguito, perché `cv.md` non è leggibile o a un ruolo mancano azienda, titolo o date, career-ops si ferma e corregge prima l'input.
+
+Il controllo dei fatti viene eseguito in `generate-pdf.mjs`, sull'HTML, prima di stampare qualsiasi cosa. Blocca il PDF davanti a un numero, un datore di lavoro, un titolo di studio, una certificazione o uno strumento citato per nome che non compare né in `cv.md` né in `article-digest.md`. Blocca anche un bullet che ti attribuisce più lavoro delle tue fonti, come "Led" dove `cv.md` dice "Contributed to". Per risolvere un blocco, togli l'affermazione dal CV o aggiungi la prova alle tue fonti. Il controllo non legge l'elenco delle competenze, perché esprimere una competenza con le parole dell'annuncio è consentito, e per un titolo di ruolo si limita ad avvisare, perché dei titoli si occupa il controllo dei titoli. `config/cv-facts.json` aggiunge le tue liste: `allow_metrics` e `allow_facts` per le affermazioni che hai verificato altrove, `forbidden_phrases`, che bloccano, e `warn_phrases`, che si limitano ad avvisare. Senza quel file i controlli sulle frasi non vengono eseguiti e l'output lo segnala.
+
+Il controllo dei fatti richiede `cv.md`. In un workspace che non ce l'ha, `generate-pdf.mjs` stampa il PDF senza controllare nulla e non lo segnala. La modalità pdf si ferma prima se manca `cv.md`, quindi conta solo quando esegui lo script direttamente. `--skip-fact-check` disattiva il controllo di proposito.
+
+Nessuno dei due giudica la riformulazione in generale. Un bullet può comunque esagerare ciò che hai fatto senza un numero, un nome o un titolo nuovi, quindi leggi ogni CV prima di inviarlo.
 
 ## Problemi comuni
 
