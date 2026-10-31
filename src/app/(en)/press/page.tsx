@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: 'career-ops',
     title: 'Press & Brand Kit · career-ops',
     description:
-      'Boilerplate copy, key facts, logos, and media coverage for career-ops — the open-source, local-first AI job-search tool.',
+      'Boilerplate copy, key facts, logos, and media coverage for career-ops, the open-source, local-first AI job-search tool.',
   },
   robots: { index: true, follow: true },
 };
@@ -54,7 +54,7 @@ const PRESS = [
     outlet: 'Create OS Lounge',
     date: '2026-04-15',
     dateLabel: '15 Apr 2026',
-    headline: 'Conversation with Eric — career-ops origins, multi-agent orchestration',
+    headline: 'Conversation with Eric: career-ops origins, multi-agent orchestration',
     url: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
   },
 ];
@@ -65,13 +65,13 @@ const PRESS = [
 // download attribute works without CORS.
 const ASSETS = [
   {
-    label: 'Logo — "co" mark (SVG)',
+    label: 'Logo: "co" mark (SVG)',
     href: '/bimi-logo.svg',
     note: 'Vector, brand orange on rounded square. Scales to any size.',
     download: 'career-ops-logo.svg',
   },
   {
-    label: 'Logo — "co" mark (PNG, 180px)',
+    label: 'Logo: "co" mark (PNG, 180px)',
     href: '/apple-icon',
     note: 'Raster fallback for surfaces that do not accept SVG.',
     download: 'career-ops-logo.png',
@@ -83,13 +83,13 @@ const ASSETS = [
     download: 'career-ops-banner.jpg',
   },
   {
-    label: 'Manifesto — nine rights card (PNG, 1080×1080)',
+    label: 'Manifesto: nine rights card (PNG, 1080×1080)',
     href: '/manifesto-rights-card.png',
     note: 'The nine candidate rights, quote-card format. Reuse freely with attribution.',
     download: 'careerops-manifesto-rights.png',
   },
   {
-    label: 'Manifesto — link card (PNG, 1200×630)',
+    label: 'Manifesto: link card (PNG, 1200×630)',
     href: '/og-manifesto.png',
     note: 'The manifesto share card. Reuse freely with attribution.',
     download: 'careerops-manifesto-card.png',
@@ -142,7 +142,7 @@ export default async function PressPage() {
     { label: 'Discord community', value: `${roundDown(stats.discordMembers, 100)}+ members` },
     {
       label: 'Founder’s result',
-      value: '740 listings evaluated → 68 applications → 12 interview processes → 1 offer',
+      value: '740 listings evaluated → 68 applications → 12 interviews → 1 offer',
     },
     {
       label: 'AI CLIs supported',
@@ -173,7 +173,7 @@ export default async function PressPage() {
         <header className="flex flex-col items-center text-center">
           <Image
             src="/bimi-logo.svg"
-            alt="career-ops logo — the &ldquo;co&rdquo; mark"
+            alt="career-ops logo, the &ldquo;co&rdquo; mark"
             width={72}
             height={72}
             className="rounded-2xl mb-6"
@@ -185,7 +185,7 @@ export default async function PressPage() {
             Press &amp; Brand Kit
           </h1>
           <p className="mt-2 max-w-md text-fd-muted-foreground text-base">
-            Everything you need to write about, list, or link to career-ops — boilerplate,
+            Everything you need to write about, list, or link to career-ops: boilerplate,
             facts, logos, and coverage. Reuse freely.
           </p>
         </header>
@@ -211,7 +211,7 @@ export default async function PressPage() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wide text-fd-muted-foreground/70 mb-1.5">
-                Short (~50 words)
+                Short (~80 words)
               </p>
               <p className="rounded-lg border border-fd-foreground/15 bg-fd-muted/30 px-4 py-3 text-fd-foreground/90 leading-relaxed select-all">
                 {BOILERPLATE.medium}
@@ -219,7 +219,7 @@ export default async function PressPage() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wide text-fd-muted-foreground/70 mb-1.5">
-                Standard (~110 words)
+                Standard (~170 words)
               </p>
               <p className="rounded-lg border border-fd-foreground/15 bg-fd-muted/30 px-4 py-3 text-fd-foreground/90 leading-relaxed select-all">
                 {BOILERPLATE.long}
@@ -262,7 +262,7 @@ export default async function PressPage() {
               companies.&rdquo;
             </p>
             <footer className="mt-2 text-sm text-fd-muted-foreground">
-              — Santiago Fernández de Valderrama Aparicio
+              Santiago Fernández de Valderrama Aparicio
             </footer>
           </blockquote>
         </section>
@@ -408,7 +408,7 @@ export default async function PressPage() {
                 </span>
                 <span className="flex-1">
                   <span className="text-fd-foreground font-medium">{item.outlet}</span>
-                  <span className="text-fd-muted-foreground"> — </span>
+                  <span className="text-fd-muted-foreground"> · </span>
                   <a
                     href={item.url}
                     target="_blank"
@@ -427,7 +427,7 @@ export default async function PressPage() {
         <section className="mt-12">
           <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Press contact</h2>
           <a
-            href="mailto:hi@career-ops.org?subject=Press%20%E2%80%94%20career-ops"
+            href="mailto:hi@career-ops.org?subject=Press%3A%20career-ops"
             className="mt-4 inline-flex items-center gap-2 rounded-md bg-fd-foreground text-fd-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
           >
             hi@career-ops.org
@@ -449,7 +449,7 @@ export default async function PressPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-09-29">29 Sep 2026</time>
+          Last updated <time dateTime="2026-10-31">31 Oct 2026</time>
         </p>
       </article>
     </>
