@@ -3,7 +3,7 @@ title: CLI AI supportate
 seoTitle: "Quale CLI AI funziona con career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops è indipendente dal modello AI: funziona su tutte le principali CLI AI per la programmazione, così usi l'assistente che paghi già e non resti mai legato a un solo fornitore. L'elenco completo e sempre aggiornato si trova nel repository principale."
 icon: Terminal
-translationHash: aba388df8b32db03
+translationHash: e16c1ba8d93aaf79
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -21,6 +21,22 @@ career-ops funziona con supporto completo su **Claude Code, Cursor, Codex, OpenC
 L'**elenco canonico e sempre aggiornato, con il comando esatto per invocare career-ops in ogni CLI, si trova nel repository principale**, così non rischia mai di diventare obsoleto:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md): la matrice completa delle CLI supportate, dei file di ingresso e di come invocarle (in modalità interattiva e headless/batch).
+
+## Quali CLI possono eseguire un batch? [#which-clis-can-run-a-batch]
+
+Il [runner batch](/it/docs/introduction/guides/batch-evaluate-offers) (`batch/batch-runner.sh`) avvia i propri worker headless, e la sua opzione `--cli` accetta un elenco più corto di quello qui sopra:
+
+| Valore di `--cli` | Comando del worker | Come viene eseguito il batch |
+|---|---|---|
+| `claude` (predefinito) | `claude -p` | Tre annunci alla volta per impostazione predefinita (`--parallel`); gli annunci bloccati da un limite di frequenza vengono riprovati nella stessa esecuzione |
+| `opencode` | `opencode run`, oppure `ollama launch opencode` se `opencode` non è installato | Un annuncio alla volta, un tentativo per annuncio a ogni esecuzione |
+| `gemini` | `gemini -p` | Un annuncio alla volta, un tentativo per annuncio a ogni esecuzione |
+| `qwen` | `qwen -p` | Un annuncio alla volta, un tentativo per annuncio a ogni esecuzione |
+| `grok` | `grok -p` con `--always-approve` | Un annuncio alla volta, un tentativo per annuncio a ogni esecuzione |
+
+Con qualsiasi valore, un annuncio fallito viene riprovato in un'esecuzione successiva, fino a `--max-retries`.
+
+Essere accettata dal runner non significa avere supporto completo. Il runner accetta ancora `gemini`, ma Gemini CLI resta solo come wrapper legacy, confluito in Antigravity CLI. Vale anche il contrario: Cursor, Codex, Pi, Antigravity CLI, Kimi, Hermes Agent e GitHub Copilot CLI hanno supporto completo, ma il runner batch non le avvia come worker.
 
 ## Pi
 

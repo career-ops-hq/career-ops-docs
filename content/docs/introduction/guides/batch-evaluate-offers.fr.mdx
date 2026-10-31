@@ -3,14 +3,14 @@ title: Évaluer des offres par lot
 description: Traitez plus de 10 offres d'emploi en une seule session avec des workers IA parallèles et des PDF sur mesure.
 seoTitle: "Évaluez des offres d'emploi par lot avec career-ops — notez-en plusieurs à la fois"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: 8e7eb404760e2e2a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
 
 Utilisez ce guide lorsque vous avez 10 offres d'emploi ou plus à examiner et que vous souhaitez toutes les traiter en une seule session plutôt qu'une par une.
 
-Chaque offre dispose de son propre worker Claude. Ce worker lit votre CV, note la correspondance, rédige un rapport complet et enregistre un PDF sur mesure — sans que vous ayez à lever le petit doigt.
+Chaque offre dispose de son propre worker, une session Claude Code headless sauf si vous [choisissez une autre CLI](#run-the-batch-on-another-cli). Ce worker lit votre CV, note la correspondance, rédige un rapport complet et enregistre un PDF sur mesure — sans que vous ayez à lever le petit doigt.
 
 ## Étape 1 : Ajoutez vos offres au fichier d'entrée
 
@@ -64,24 +64,24 @@ Vous verrez la liste des offres en attente et leurs ID. Si quelque chose semble 
 
 ## Étape 3 : Lancez le lot
 
-Quand vous êtes prêt, démarrez le lot. Vous pouvez traiter une offre à la fois ou plusieurs en même temps.
+Quand vous êtes prêt, démarrez le lot. Avec des workers Claude Code, le choix par défaut, le runner évalue trois offres à la fois ; `--parallel` modifie ce nombre.
 
-**Une à la fois (le plus lent, consomme le moins de mémoire) :**
+**Trois à la fois (par défaut ; plus rapide, mais plus lourd pour votre machine) :**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh
 ```
 
-**Deux à la fois (un bon réglage par défaut) :**
+**Deux à la fois :**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --parallel 2
 ```
 
-**Trois à la fois (plus rapide, mais plus lourd pour votre machine) :**
+**Une à la fois (le plus lent, consomme le moins de mémoire) :**
 
 ```bash title="Terminal"
-./batch/batch-runner.sh --parallel 3
+./batch/batch-runner.sh --parallel 1
 ```
 
 **Ignorer les offres dont la note est inférieure à un seuil (par ex. en dessous de 4,0 sur 5) :**
@@ -91,6 +91,18 @@ Quand vous êtes prêt, démarrez le lot. Vous pouvez traiter une offre à la fo
 ```
 
 Surveillez le terminal pendant l'exécution du lot. Chaque ligne vous indique quelle offre est en cours de traitement et si elle s'est terminée ou a échoué.
+
+Lorsqu'un worker Claude atteint une limite de débit, le runner attend puis retente la même offre au cours du même run, sans attendre plus de `--rate-limit-sleep` secondes (300 par défaut), et traite le reste du lot avec un seul worker. Chacune de ces relances en cours de run consomme l'une des tentatives `--max-retries` de l'offre. Une limite de session ou d'utilisation met en revanche le lot en pause, et les offres qu'il n'avait pas encore commencées restent en attente. Pour terminer le lot plus tard, lancez `./batch/batch-runner.sh --resume-paused` pour les offres en pause, puis un simple `./batch/batch-runner.sh` pour les offres en attente : chaque commande ignore les offres de l'autre.
+
+### Lancer le lot avec une autre CLI [#run-the-batch-on-another-cli]
+
+Le runner utilise Claude Code sauf si vous passez `--cli`. Il accepte cinq valeurs : `claude` (par défaut), `opencode`, `gemini`, `qwen` et `grok`. `--model` choisit le modèle de cette CLI :
+
+```bash title="Terminal"
+./batch/batch-runner.sh --cli opencode --model qwen2.5:32b
+```
+
+Les workers parallèles et les relances en cours de run après une limite de débit sont propres à Claude. Avec toute autre valeur de `--cli`, le runner évalue une offre à la fois (il remet `--parallel` à 1 avec un avertissement) et fait une seule tentative par offre à chaque run. Si cette tentative échoue, l'offre est marquée en échec et attend un run ultérieur, qui la relance comme décrit à l'étape 5. Consultez [CLI d'IA prises en charge](/fr/docs/supported-clis#which-clis-can-run-a-batch) pour voir en quoi cette liste diffère des CLI que career-ops prend en charge.
 
 Si un worker délégué rencontre une offre d'agence qui exige votre confirmation, il s'arrête avant d'écrire un rapport, un CV, un brouillon de candidature ou une ligne du tracker, puis marque la tâche `needs_confirmation`. Répondez à la question affichée dans la session interactive parente ; cette session ne reprend la tâche suspendue qu'après votre réponse explicite. `--retry-failed` et `--resume-paused` ne reprennent pas les suspensions en attente de confirmation.
 
@@ -128,6 +140,8 @@ Ce niveau décrit les preuves qui étayent le Global Score ; ce n'est ni une pro
 ## Étape 5 : Relancez les offres en échec
 
 Il arrive qu'un worker échoue — par exemple si l'URL d'une annonce ne se charge plus. Les offres en échec apparaissent dans le terminal avec un court message d'erreur.
+
+Il s'agit de relances lors de runs ultérieurs, et elles fonctionnent de la même façon avec toutes les CLI : le run suivant reprend chaque offre en échec jusqu'à ce qu'elle ait épuisé ses tentatives `--max-retries`. Elles se distinguent des relances en cours de run après une limite de débit, décrites à l'étape 3, que seuls les workers Claude effectuent, même si les deux comptent dans la même limite `--max-retries`. Un simple `./batch/batch-runner.sh` relance les offres en échec en même temps que les offres en attente.
 
 **Relancer uniquement les offres en échec :**
 

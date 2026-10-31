@@ -3,14 +3,14 @@ title: Avaliar vagas em lote
 description: Processe 10 ou mais vagas em uma única sessão, com workers de IA em paralelo e PDFs personalizados.
 seoTitle: "Avaliar vagas em lote com o career-ops — pontue várias de uma vez"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: 8e7eb404760e2e2a
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
 
 Use este guia quando você tiver 10 ou mais vagas para analisar e quiser processar todas em uma única sessão, em vez de uma por uma.
 
-Cada vaga recebe o seu próprio worker do Claude. Esse worker lê o seu currículo, pontua a compatibilidade, escreve um relatório completo e salva um PDF personalizado — tudo sem você precisar fazer nada.
+Cada vaga recebe o seu próprio worker, uma sessão headless do Claude Code, a menos que você [escolha outro CLI](#run-the-batch-on-another-cli). Esse worker lê o seu currículo, pontua a compatibilidade, escreve um relatório completo e salva um PDF personalizado — tudo sem você precisar fazer nada.
 
 ## Passo 1: Adicione as vagas ao arquivo de entrada
 
@@ -64,24 +64,24 @@ Você verá uma lista das vagas pendentes e seus IDs. Se algo parecer errado, co
 
 ## Passo 3: Execute o lote
 
-Quando estiver tudo pronto, inicie o lote. Você pode processar uma vaga por vez ou várias ao mesmo tempo.
+Quando estiver tudo pronto, inicie o lote. Com workers do Claude Code, o padrão, o runner avalia três vagas por vez; `--parallel` muda esse número.
 
-**Uma por vez (mais lento, usa menos memória):**
+**Três por vez (o padrão; mais rápido, mas exige mais da sua máquina):**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh
 ```
 
-**Duas por vez (um bom padrão):**
+**Duas por vez:**
 
 ```bash title="Terminal"
 ./batch/batch-runner.sh --parallel 2
 ```
 
-**Três por vez (mais rápido, mas exige mais da sua máquina):**
+**Uma por vez (mais lento, usa menos memória):**
 
 ```bash title="Terminal"
-./batch/batch-runner.sh --parallel 3
+./batch/batch-runner.sh --parallel 1
 ```
 
 **Pular vagas com pontuação abaixo de um limite (por exemplo, abaixo de 4,0 de 5):**
@@ -91,6 +91,18 @@ Quando estiver tudo pronto, inicie o lote. Você pode processar uma vaga por vez
 ```
 
 Acompanhe o terminal enquanto o lote roda. Cada linha informa qual vaga está sendo processada e se ela foi concluída ou falhou.
+
+Quando um worker do Claude esbarra em um limite de requisições, o runner espera e tenta a mesma vaga de novo dentro da mesma execução, sem esperar mais que `--rate-limit-sleep` segundos (300 por padrão), e roda o restante do lote com um só worker. Cada uma dessas novas tentativas dentro da execução consome uma das tentativas de `--max-retries` da vaga. Já um limite de sessão ou de uso pausa o lote, e as vagas que ele ainda não tinha começado ficam pendentes. Para terminar o lote depois, rode `./batch/batch-runner.sh --resume-paused` para as vagas pausadas e um `./batch/batch-runner.sh` sem opções para as pendentes: cada comando pula as vagas do outro.
+
+### Rode o lote com outro CLI [#run-the-batch-on-another-cli]
+
+O runner usa o Claude Code, a menos que você passe `--cli`. Ele aceita cinco valores: `claude` (o padrão), `opencode`, `gemini`, `qwen` e `grok`. `--model` escolhe o modelo desse CLI:
+
+```bash title="Terminal"
+./batch/batch-runner.sh --cli opencode --model qwen2.5:32b
+```
+
+Workers em paralelo e novas tentativas por limite de requisições dentro da execução são exclusivos do Claude. Com qualquer outro `--cli`, o runner avalia uma vaga por vez (ele volta `--parallel` para 1 e mostra um aviso) e faz uma única tentativa por vaga em cada execução. Se essa tentativa falhar, a vaga é marcada como falha e espera uma execução posterior, que tenta de novo como descrito no Passo 5. Veja [CLIs de IA compatíveis](/pt/docs/supported-clis#which-clis-can-run-a-batch) para entender como esta lista difere dos CLIs que o career-ops suporta.
 
 Se um worker delegado encontrar uma vaga de agência que precise da sua confirmação, ele para antes de escrever o relatório, o currículo, o rascunho de candidatura ou a linha do tracker e marca a vaga como `needs_confirmation`. Responda à pergunta exibida na sessão interativa principal; essa sessão só retoma a vaga em espera depois da sua resposta explícita. `--retry-failed` e `--resume-paused` não retomam vagas que aguardam confirmação.
 
@@ -128,6 +140,8 @@ Esse nível descreve as evidências por trás do Global Score; não é uma proba
 ## Passo 5: Tente de novo as vagas que falharam
 
 Às vezes um worker falha — por exemplo, quando a URL de uma vaga deixa de carregar. As vagas que falharam aparecem no terminal com uma mensagem de erro curta.
+
+Essas são novas tentativas em execuções posteriores, e funcionam do mesmo jeito com qualquer CLI: a próxima execução pega de novo cada vaga que falhou até ela esgotar as tentativas de `--max-retries`. Elas são diferentes das novas tentativas por limite de requisições dentro da execução, do Passo 3, que só os workers do Claude fazem, embora as duas contem para o mesmo limite de `--max-retries`. Um `./batch/batch-runner.sh` sem opções tenta de novo as vagas que falharam junto com as pendentes.
 
 **Tentar de novo apenas as vagas que falharam:**
 

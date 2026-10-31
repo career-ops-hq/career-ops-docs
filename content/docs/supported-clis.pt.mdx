@@ -3,7 +3,7 @@ title: CLIs de IA compatíveis
 seoTitle: "Qual CLI de IA funciona com o career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "O career-ops não depende de nenhuma IA específica: ele roda em todas as principais CLIs de IA para programação, então você usa o assistente que já paga e nunca fica preso a um único fornecedor. A lista completa e sempre atualizada fica no repositório principal."
 icon: Terminal
-translationHash: aba388df8b32db03
+translationHash: e16c1ba8d93aaf79
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -21,6 +21,22 @@ O career-ops tem suporte de primeira classe a **Claude Code, Cursor, Codex, Open
 A **lista canônica e sempre atualizada — com o comando exato para invocar o career-ops em cada CLI — fica no repositório principal**, para nunca ficar desatualizada:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — a matriz completa de CLIs compatíveis, arquivos de entrada e como invocá-las (em modo interativo e em modo headless/em lote).
+
+## Quais CLIs conseguem rodar um lote? [#which-clis-can-run-a-batch]
+
+O [runner de lote](/pt/docs/introduction/guides/batch-evaluate-offers) (`batch/batch-runner.sh`) inicia os próprios workers headless, e a opção `--cli` dele aceita uma lista menor que a de cima:
+
+| Valor de `--cli` | Comando do worker | Como o lote roda |
+|---|---|---|
+| `claude` (padrão) | `claude -p` | Três vagas por vez por padrão (`--parallel`); vagas que batem no limite de requisições são tentadas de novo na mesma execução |
+| `opencode` | `opencode run`, ou `ollama launch opencode` quando o `opencode` não está instalado | Uma vaga por vez, uma tentativa por vaga em cada execução |
+| `gemini` | `gemini -p` | Uma vaga por vez, uma tentativa por vaga em cada execução |
+| `qwen` | `qwen -p` | Uma vaga por vez, uma tentativa por vaga em cada execução |
+| `grok` | `grok -p` com `--always-approve` | Uma vaga por vez, uma tentativa por vaga em cada execução |
+
+Com qualquer valor, uma vaga que falhou é tentada de novo em uma execução posterior, até `--max-retries`.
+
+Ser aceito pelo runner não é o mesmo que ter suporte de primeira classe. O runner ainda aceita `gemini`, mas o Gemini CLI permanece apenas como um wrapper legado, em transição para a Antigravity CLI. O inverso também vale: Cursor, Codex, Pi, Antigravity CLI, Kimi, Hermes Agent e GitHub Copilot CLI têm suporte de primeira classe, mas o runner de lote não os inicia como workers.
 
 ## Pi
 

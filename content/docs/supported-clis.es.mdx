@@ -3,7 +3,7 @@ title: CLIs de IA compatibles
 seoTitle: "¿Con qué CLI de IA funciona career-ops? Claude Code, Codex, Gemini, OpenCode, Qwen, Copilot"
 description: "career-ops es agnóstico a la IA — funciona sobre todos los principales CLIs de programación con IA, así que usas el asistente que ya pagas y nunca quedas atado a un proveedor. La lista completa y siempre actualizada vive en el repo del core."
 icon: Terminal
-translationHash: aba388df8b32db03
+translationHash: e16c1ba8d93aaf79
 localized: true
 translatedFrom: /docs/supported-clis
 ---
@@ -21,6 +21,22 @@ career-ops ofrece soporte de primer nivel para **Claude Code, Cursor, Codex, Ope
 La **lista canónica y siempre actualizada — con el comando exacto para invocar career-ops en cada CLI — vive en el repo del core**, de modo que nunca se queda desfasada:
 
 - [docs/SUPPORTED_CLIS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md) — la matriz completa de CLIs compatibles, archivos de entrada y cómo invocarlos (en modo interactivo y headless/batch).
+
+## ¿Qué CLIs pueden ejecutar un batch? [#which-clis-can-run-a-batch]
+
+El [runner de batch](/es/docs/introduction/guides/batch-evaluate-offers) (`batch/batch-runner.sh`) lanza sus propios workers headless, y su opción `--cli` acepta una lista más corta que la de arriba:
+
+| Valor de `--cli` | Comando del worker | Cómo se ejecuta el batch |
+|---|---|---|
+| `claude` (por defecto) | `claude -p` | Tres ofertas a la vez por defecto (`--parallel`); las ofertas con rate limit se reintentan dentro de la misma ejecución |
+| `opencode` | `opencode run`, o `ollama launch opencode` si `opencode` no está instalado | Una oferta a la vez, un intento por oferta en cada ejecución |
+| `gemini` | `gemini -p` | Una oferta a la vez, un intento por oferta en cada ejecución |
+| `qwen` | `qwen -p` | Una oferta a la vez, un intento por oferta en cada ejecución |
+| `grok` | `grok -p` con `--always-approve` | Una oferta a la vez, un intento por oferta en cada ejecución |
+
+Con cualquier valor, una oferta fallida se reintenta en una ejecución posterior, hasta `--max-retries`.
+
+Que el runner acepte un CLI no significa que tenga soporte de primer nivel. El runner todavía acepta `gemini`, pero Gemini CLI solo se mantiene como wrapper legacy tras su transición a Antigravity CLI. Lo contrario también se cumple: Cursor, Codex, Pi, Antigravity CLI, Kimi, Hermes Agent y GitHub Copilot CLI tienen soporte de primer nivel, pero el runner de batch no los lanza como workers.
 
 ## Pi
 
