@@ -3,7 +3,7 @@ title: Perguntas frequentes
 description: Perguntas frequentes sobre o career-ops — custo, privacidade, CLIs de IA compatíveis, scan vs scan:full, limites de tokens, instalação no Windows e o que o career-ops nunca faz em seu nome.
 seoTitle: "Perguntas frequentes do career-ops: custo, privacidade, Claude Code e uso gratuito"
 icon: CircleQuestionMark
-translationHash: e38fef5efe601151
+translationHash: ab5c2392fe4d1d61
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -49,6 +49,12 @@ No career-ops, só a avaliação tem custo, e a avaliação pode sair por US$ 0.
 ## Onde ficam os meus dados?
 
 O career-ops mantém os seus dados na sua máquina, em arquivos de texto simples que pertencem a você — seu currículo, seu perfil, seu pipeline e seus relatórios são arquivos Markdown/YAML locais. Nada roda em servidores do career-ops. As atualizações do sistema nunca tocam na sua camada de dados (`cv.md`, `config/`, `data/`, `reports/`, `output/`): essa separação é o **Data Contract**, e toda atualização o respeita.
+
+## Meu agente trabalha em um worktree do Git. Onde uma atualização do career-ops é aplicada?
+
+Uma atualização do career-ops iniciada a partir de um worktree vinculado do Git é aplicada no `main`, no checkout em que o `main` está ativo, e não no branch do worktree. Agentes como o Claude Code podem rodar cada sessão em um worktree vinculado, em um branch descartável. Quando o `node update-system.mjs` roda ali, `check`, `apply`, `rollback` e `dismiss` são executados de novo no checkout de `main`: a atualização é commitada no `main`, e os worktrees criados a partir do `main` atualizado já a incluem. Para atualizar depois o worktree em que você está, execute `git merge main` (ou `git rebase main`) dentro dele.
+
+Se nenhum checkout tiver o `main` ativo, ou se o checkout de `main` tiver alterações não commitadas em arquivos versionados, `apply` e `rollback` se recusam a rodar sem alterar nada e dizem o que corrigir. Para atualizar o próprio branch do worktree, defina `CAREER_OPS_UPDATE_IN_WORKTREE=1`. Rodar o atualizador a partir do seu checkout principal funciona exatamente como antes. Este é o comportamento desde o career-ops v1.36.0; a descrição completa está em [docs/SCRIPTS.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SCRIPTS.md) no repositório core.
 
 ## Como envio meu currículo para o career-ops?
 
