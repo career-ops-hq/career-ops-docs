@@ -14,6 +14,7 @@ import { homeIt } from '@/app/_home/home-it';
 import { homeTr } from '@/app/_home/home-tr';
 import { homeZh } from '@/app/_home/home-zh';
 import { nodeText } from '@/lib/node-text';
+import { PRESS_LAST_UPDATED } from '@/lib/press-data';
 import { getProjectStats } from './stats';
 import {
   MANIFESTO,
@@ -1169,12 +1170,12 @@ export function pressSchema() {
         url: 'https://career-ops.org/press',
         name: 'Press & Brand Kit · career-ops',
         description:
-          'Official press kit for career-ops: boilerplate descriptions, key facts, logos, and media coverage. Open-source, MIT-licensed AI job-search tool by Santiago Fernández de Valderrama Aparicio.',
+          'Official press kit for career-ops: boilerplate descriptions, key facts, logos, and media coverage. Open-source, MIT-licensed AI job search agent by Santiago Fernández de Valderrama Aparicio.',
         inLanguage: 'en',
         about: { '@id': 'https://career-ops.org/#software' },
         isPartOf: { '@id': 'https://career-ops.org/#website' },
         publisher: { '@id': ORGANIZATION_ID },
-        dateModified: '2026-09-29T17:08:40Z',
+        dateModified: PRESS_LAST_UPDATED,
         // Reference the canonical DefinedTerm node on /manifesto — never
         // duplicate the definition here.
         mentions: { '@id': 'https://career-ops.org/manifesto/#careerops' },

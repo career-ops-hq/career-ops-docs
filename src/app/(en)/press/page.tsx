@@ -6,13 +6,32 @@ import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { pressSchema } from '@/lib/schema';
 import { CAREEROPS_DEFINITION } from '@/lib/shared';
 import { getProjectStats } from '@/lib/stats';
+import {
+  BOILERPLATE,
+  DEMO,
+  FOUNDER_PARAGRAPH,
+  OFFICIAL_LINKS,
+  PRESS,
+  PRESS_LAST_UPDATED,
+  PRESS_LAST_UPDATED_LABEL,
+  PRESS_SUMMARY,
+  QUOTES,
+  QUOTES_SOURCE,
+  QUOTE_ATTRIBUTION,
+  THESIS,
+  TIMELINE,
+  WRITING_RULES,
+  getHiredCount,
+  pressFacts,
+  wordCountLabel,
+} from '@/lib/press-data';
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Press & Brand Kit · career-ops',
   description:
-    'Official press kit for career-ops: boilerplate copy, key facts, logos, and media coverage. Open-source, MIT-licensed, local-first AI job-search tool by Santiago Fernández de Valderrama Aparicio.',
+    'Official press kit for career-ops: boilerplate copy, key facts, logos, and media coverage. An open-source, MIT-licensed AI job search agent by Santiago Fernández de Valderrama Aparicio.',
   alternates: { canonical: 'https://career-ops.org/press' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
@@ -21,43 +40,10 @@ export const metadata: Metadata = {
     siteName: 'career-ops',
     title: 'Press & Brand Kit · career-ops',
     description:
-      'Boilerplate copy, key facts, logos, and media coverage for career-ops — the open-source, local-first AI job-search tool.',
+      'Boilerplate copy, key facts, logos, and media coverage for career-ops, an open-source AI job search agent.',
   },
   robots: { index: true, follow: true },
 };
-
-// Press coverage — kept in sync with /about. rel="nofollow" on the
-// outbound links: large publishers don't need link equity from us.
-const PRESS = [
-  {
-    outlet: 'Business Insider',
-    date: '2026-04-28',
-    dateLabel: '28 Apr 2026',
-    headline: 'How I built a tool to filter job listings — and landed Head of AI',
-    url: 'https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4',
-  },
-  {
-    outlet: 'Business Insider Deutschland',
-    date: '2026-04-28',
-    dateLabel: '28 Apr 2026',
-    headline: 'Mein KI-Tool scannt 700 Job-Anzeigen — so half es mir, Karriere zu machen',
-    url: 'https://www.businessinsider.de/karriere/bewerbung/mein-ki-tool-scannt-700-job-anzeigen-so-half-es-mir-karriere-zu-machen/',
-  },
-  {
-    outlet: 'WIRED Greece',
-    date: '2026-04-17',
-    dateLabel: '17 Apr 2026',
-    headline: 'Το AI εργαλείο που φέρνει επανάσταση στον τρόπο που ψάχνουμε δουλειά',
-    url: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
-  },
-  {
-    outlet: 'Create OS Lounge',
-    date: '2026-04-15',
-    dateLabel: '15 Apr 2026',
-    headline: 'Conversation with Eric — career-ops origins, multi-agent orchestration',
-    url: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
-  },
-];
 
 // Downloadable brand assets. The "co" mark ships as a static SVG
 // (public/bimi-logo.svg) and a 180px PNG (the /apple-icon route). The
@@ -65,16 +51,22 @@ const PRESS = [
 // download attribute works without CORS.
 const ASSETS = [
   {
-    label: 'Logo — "co" mark (SVG)',
+    label: 'Logo: "co" mark (SVG)',
     href: '/bimi-logo.svg',
     note: 'Vector, brand orange on rounded square. Scales to any size.',
     download: 'career-ops-logo.svg',
   },
   {
-    label: 'Logo — "co" mark (PNG, 180px)',
+    label: 'Logo: "co" mark (PNG, 180px)',
     href: '/apple-icon',
     note: 'Raster fallback for surfaces that do not accept SVG.',
     download: 'career-ops-logo.png',
+  },
+  {
+    label: 'Author image (illustration, PNG, 384px)',
+    href: '/santiago-avatar.png',
+    note: 'The illustrated avatar used on /about and GitHub.',
+    download: 'santiago-fernandez-de-valderrama-aparicio.png',
   },
   {
     label: 'Social banner (JPG, 1200×630)',
@@ -83,85 +75,22 @@ const ASSETS = [
     download: 'career-ops-banner.jpg',
   },
   {
-    label: 'Manifesto — nine rights card (PNG, 1080×1080)',
+    label: 'Manifesto: nine rights card (PNG, 1080×1080)',
     href: '/manifesto-rights-card.png',
     note: 'The nine candidate rights, quote-card format. Reuse freely with attribution.',
     download: 'careerops-manifesto-rights.png',
   },
   {
-    label: 'Manifesto — link card (PNG, 1200×630)',
+    label: 'Manifesto: link card (PNG, 1200×630)',
     href: '/og-manifesto.png',
     note: 'The manifesto share card. Reuse freely with attribution.',
     download: 'careerops-manifesto-card.png',
   },
 ];
 
-// Boilerplate at three lengths — the standard press-kit format.
-// Factual, no hype verbs, no superlatives. Journalists and directory
-// editors copy these verbatim; varied length covers a caption, a
-// standfirst, and a full "about" paragraph.
-const BOILERPLATE = {
-  short:
-    'career-ops is a free, open-source system that puts hiring leverage on the candidate’s side, running locally inside your AI coding assistant.',
-  medium:
-    'career-ops is an open-source, MIT-licensed system that puts hiring leverage on the candidate’s side. It runs on your own machine, inside the AI coding CLI you already use (Claude Code, Codex, Cursor, OpenCode and others), scanning listings, scoring them against a transparent rubric of five scoring dimensions, tailoring your CV per role, and tracking the whole pipeline. No account, no telemetry, no backend of ours: your CV goes from your machine to the AI provider you chose, and nowhere else.',
-  long: 'career-ops is an open-source (MIT) system, free for candidates, that puts hiring leverage on the candidate’s side. Built by Santiago Fernández de Valderrama Aparicio, it runs locally inside the AI coding CLI the user already uses (Claude Code, Codex, Cursor, OpenCode, GitHub Copilot CLI and others); free and local models work too. There is no backend of ours: the CV goes from the user’s machine to the AI provider they chose, and nowhere else. It scans company career pages on ATS platforms such as Greenhouse, Ashby, Lever and Workday, plus job boards in several countries, scores each listing from 1 to 5 against a published rubric of five scoring dimensions, generates an ATS-tailored PDF résumé per role, and tracks the pipeline in a local dashboard. Santiago built it during his own 2026 job search (740 job listings evaluated, 68 applications, 12 interviews, 1 offer), then open-sourced it. It crossed 50,000 GitHub stars in its first two months. In July 2026 he published The CareerOps Manifesto, naming the practice and its nine candidate rights.',
-};
-
-function roundDown(n: number, to: number): string {
-  return (Math.floor(n / to) * to).toLocaleString('en-US');
-}
-
 export default async function PressPage() {
-  const stats = await getProjectStats();
-
-  const facts: { label: string; value: React.ReactNode }[] = [
-    { label: 'Name', value: 'career-ops (lowercase, hyphenated)' },
-    {
-      label: 'Category',
-      value: 'Candidate-side hiring-leverage system · AI-powered job search',
-    },
-    {
-      label: 'The term',
-      value:
-        'CareerOps (CamelCase) = the practice, defined in the manifesto · career-ops (lowercase, hyphenated) = the tool',
-    },
-    { label: 'Creator', value: 'Santiago Fernández de Valderrama Aparicio' },
-    { label: 'License', value: 'MIT: free forever, no paid tier' },
-    {
-      label: 'Model',
-      value:
-        'Local-first. No account, no telemetry, no backend of ours: your CV goes from your machine to the AI provider you chose, and nowhere else.',
-    },
-    { label: 'Inception', value: '17 March 2026' },
-    {
-      label: 'Manifesto',
-      value: 'The CareerOps Manifesto, published 14 Jul 2026 at 60,000 stars · career-ops.org/manifesto',
-    },
-    { label: 'GitHub stars', value: `${roundDown(stats.stars, 1000)}+ (live)` },
-    { label: 'Discord community', value: `${roundDown(stats.discordMembers, 100)}+ members` },
-    {
-      label: 'Founder’s result',
-      value: '740 listings evaluated → 68 applications → 12 interview processes → 1 offer',
-    },
-    {
-      label: 'AI CLIs supported',
-      value:
-        'Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI (Gemini CLI: legacy wrapper)',
-    },
-    {
-      label: 'Canonical site',
-      value: 'career-ops.org (hyphenated)',
-    },
-    {
-      label: 'Repository',
-      value: 'github.com/career-ops-hq/career-ops',
-    },
-    {
-      label: 'Wikidata',
-      value: 'Q139007988 (software) · Q138710224 (creator)',
-    },
-  ];
+  const [stats, hired] = await Promise.all([getProjectStats(), getHiredCount()]);
+  const facts = pressFacts(stats, hired);
 
   return (
     <>
@@ -173,7 +102,7 @@ export default async function PressPage() {
         <header className="flex flex-col items-center text-center">
           <Image
             src="/bimi-logo.svg"
-            alt="career-ops logo — the &ldquo;co&rdquo; mark"
+            alt="career-ops logo, the &ldquo;co&rdquo; mark"
             width={72}
             height={72}
             className="rounded-2xl mb-6"
@@ -185,10 +114,50 @@ export default async function PressPage() {
             Press &amp; Brand Kit
           </h1>
           <p className="mt-2 max-w-md text-fd-muted-foreground text-base">
-            Everything you need to write about, list, or link to career-ops — boilerplate,
-            facts, logos, and coverage. Reuse freely.
+            {PRESS_SUMMARY}
+          </p>
+          <p className="mt-3 max-w-md text-sm text-fd-muted-foreground">
+            Boilerplate, facts, logos and coverage below, free to reuse. Questions and fact-checks:{' '}
+            <a
+              href="mailto:hi@career-ops.org?subject=Press%3A%20career-ops"
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              hi@career-ops.org
+            </a>
+            .
           </p>
         </header>
+
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
+            Writing about career-ops
+          </h2>
+          <dl className="mt-4 divide-y divide-fd-foreground/10 border-y border-fd-foreground/10">
+            {WRITING_RULES.map((r) => (
+              <div key={r.label} className="flex flex-col gap-0.5 py-3 sm:flex-row sm:gap-4">
+                <dt className="shrink-0 text-sm text-fd-muted-foreground sm:w-44">{r.label}</dt>
+                <dd className="flex-1 text-fd-foreground/90">{r.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Official links</h2>
+          <ul className="mt-4 space-y-1.5">
+            {OFFICIAL_LINKS.map((l) => (
+              <li key={l.href} className="flex flex-col gap-0.5 sm:flex-row sm:gap-4">
+                <span className="shrink-0 text-sm text-fd-muted-foreground sm:w-44">{l.label}</span>
+                <a
+                  href={l.href}
+                  className="break-all text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+                >
+                  {l.href.replace('https://', '')}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         {/* Boilerplate — three lengths in bordered, selectable blocks so a
             journalist or directory editor can copy the right size without
@@ -211,7 +180,7 @@ export default async function PressPage() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wide text-fd-muted-foreground/70 mb-1.5">
-                Short (~50 words)
+                Short ({wordCountLabel(BOILERPLATE.medium)})
               </p>
               <p className="rounded-lg border border-fd-foreground/15 bg-fd-muted/30 px-4 py-3 text-fd-foreground/90 leading-relaxed select-all">
                 {BOILERPLATE.medium}
@@ -219,7 +188,7 @@ export default async function PressPage() {
             </div>
             <div>
               <p className="text-xs uppercase tracking-wide text-fd-muted-foreground/70 mb-1.5">
-                Standard (~110 words)
+                Standard ({wordCountLabel(BOILERPLATE.long)})
               </p>
               <p className="rounded-lg border border-fd-foreground/15 bg-fd-muted/30 px-4 py-3 text-fd-foreground/90 leading-relaxed select-all">
                 {BOILERPLATE.long}
@@ -240,7 +209,18 @@ export default async function PressPage() {
             {facts.map((f) => (
               <div key={f.label} className="flex flex-col gap-0.5 py-3 sm:flex-row sm:gap-4">
                 <dt className="shrink-0 text-sm text-fd-muted-foreground sm:w-44">{f.label}</dt>
-                <dd className="flex-1 text-fd-foreground/90">{f.value}</dd>
+                <dd className="flex-1 text-fd-foreground/90">
+                  {f.href ? (
+                    <a
+                      href={f.href}
+                      className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+                    >
+                      {f.value}
+                    </a>
+                  ) : (
+                    f.value
+                  )}
+                </dd>
               </div>
             ))}
           </dl>
@@ -258,11 +238,10 @@ export default async function PressPage() {
             <p
               className={`${instrumentSerif.className} text-xl md:text-2xl leading-snug text-fd-foreground`}
             >
-              &ldquo;Companies use AI to filter candidates. I just gave candidates AI to choose
-              companies.&rdquo;
+              &ldquo;{THESIS}&rdquo;
             </p>
             <footer className="mt-2 text-sm text-fd-muted-foreground">
-              — Santiago Fernández de Valderrama Aparicio
+              Santiago Fernández de Valderrama Aparicio
             </footer>
           </blockquote>
         </section>
@@ -310,18 +289,32 @@ export default async function PressPage() {
           </p>
         </section>
 
-        {/* Founder — one-paragraph version; full bio lives at /about. */}
         <section className="mt-12">
-          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Founder</h2>
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Quotes</h2>
+          <ul className="mt-4 space-y-4">
+            {QUOTES.map((q) => (
+              <li key={q} className="border-l-2 border-fd-foreground/20 pl-5 text-fd-foreground/90 leading-relaxed select-all">
+                &ldquo;{q}&rdquo;
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-sm text-fd-muted-foreground">
+            {QUOTE_ATTRIBUTION}.{' '}
+            <a
+              href={QUOTES_SOURCE}
+              className="underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              Source
+            </a>
+            .
+          </p>
+        </section>
+
+        {/* Creator — one-paragraph version; full bio lives at /about. */}
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Creator</h2>
           <p className="mt-3 text-fd-foreground/90 leading-relaxed">
-            <strong className="font-medium text-fd-foreground">
-              Santiago Fernández de Valderrama Aparicio
-            </strong>{' '}
-            is the creator of career-ops and has spent 16+ years building and selling products. He
-            founded Santifer iRepair in 2009 and sold it in 2025. He built career-ops during his own
-            2026 job search, and it landed him a Head of Applied AI role. He then open-sourced the
-            project under MIT. Six months after landing that role, he left it to focus on building career-ops full time. Full
-            bio, headshot, and entity links at{' '}
+            {FOUNDER_PARAGRAPH} Full bio and entity links at{' '}
             <Link
               href="/about"
               className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
@@ -330,6 +323,20 @@ export default async function PressPage() {
             </Link>
             .
           </p>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Timeline</h2>
+          <ul className="mt-4 space-y-2">
+            {TIMELINE.map((t) => (
+              <li key={t.date} className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
+                <span className="shrink-0 text-fd-muted-foreground text-sm tabular-nums sm:w-32">
+                  <time dateTime={t.date}>{t.label}</time>
+                </span>
+                <span className="flex-1 text-fd-foreground/90">{t.event}</span>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* Brand assets — same-origin downloads with the download attribute so
@@ -355,7 +362,17 @@ export default async function PressPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-5 grid grid-cols-1 gap-x-8 gap-y-2 text-sm text-fd-foreground/85 sm:grid-cols-2">
+          <p className="mt-5 text-sm text-fd-foreground/85">
+            <span className="text-fd-muted-foreground">Product demo </span>
+            <a
+              href={DEMO.href}
+              className="text-fd-foreground underline underline-offset-2 decoration-fd-muted-foreground/40 hover:decoration-fd-foreground"
+            >
+              demo.gif on GitHub
+            </a>{' '}
+            <span className="text-fd-muted-foreground">(&ldquo;{DEMO.caption}&rdquo;)</span>
+          </p>
+          <div className="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 text-sm text-fd-foreground/85 sm:grid-cols-2">
             <p>
               <span className="text-fd-muted-foreground">Brand color </span>
               <code className="text-fd-foreground">#DD7627</code>{' '}
@@ -368,34 +385,6 @@ export default async function PressPage() {
           </div>
         </section>
 
-        {/* Usage guidelines — short, brand-safe do/don't. Protects the
-            local-first / no-spam positioning (career-ops must never be co-opted
-            to market auto-apply tools, which it explicitly rejects). */}
-        <section className="mt-12">
-          <h2 className="text-fd-foreground text-xl font-medium tracking-tight">
-            Usage guidelines
-          </h2>
-          <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div>
-              <p className="text-sm font-medium text-fd-foreground">Please do</p>
-              <ul className="mt-2 space-y-1.5 text-sm text-fd-foreground/85">
-                <li>Use the logo and wordmark as provided.</li>
-                <li>Link to career-ops.org or the GitHub repository.</li>
-                <li>Describe it as open-source, MIT-licensed, and local-first.</li>
-                <li>Quote the boilerplate and thesis verbatim.</li>
-              </ul>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-fd-foreground">Please don’t</p>
-              <ul className="mt-2 space-y-1.5 text-sm text-fd-foreground/85">
-                <li>Imply endorsement, partnership, or sponsorship.</li>
-                <li>Recolor or redraw the logo.</li>
-                <li>Present career-ops as a paid or hosted SaaS.</li>
-                <li>Use the brand to promote auto-apply or mass-apply tools.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
 
         {/* Coverage */}
         <section className="mt-12">
@@ -408,7 +397,7 @@ export default async function PressPage() {
                 </span>
                 <span className="flex-1">
                   <span className="text-fd-foreground font-medium">{item.outlet}</span>
-                  <span className="text-fd-muted-foreground"> — </span>
+                  <span className="text-fd-muted-foreground"> · </span>
                   <a
                     href={item.url}
                     target="_blank"
@@ -427,7 +416,7 @@ export default async function PressPage() {
         <section className="mt-12">
           <h2 className="text-fd-foreground text-xl font-medium tracking-tight">Press contact</h2>
           <a
-            href="mailto:hi@career-ops.org?subject=Press%20%E2%80%94%20career-ops"
+            href="mailto:hi@career-ops.org?subject=Press%3A%20career-ops"
             className="mt-4 inline-flex items-center gap-2 rounded-md bg-fd-foreground text-fd-background px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
           >
             hi@career-ops.org
@@ -449,7 +438,7 @@ export default async function PressPage() {
         </div>
 
         <p className="mt-16 text-center text-xs text-fd-muted-foreground">
-          Last updated <time dateTime="2026-09-29">29 Sep 2026</time>
+          Last updated <time dateTime={PRESS_LAST_UPDATED}>{PRESS_LAST_UPDATED_LABEL}</time>
         </p>
       </article>
     </>
