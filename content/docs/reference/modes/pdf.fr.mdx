@@ -5,7 +5,7 @@ seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible A
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: ac18633cc823dce2
+translationHash: 7beee71faa4b3f08
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -45,6 +45,25 @@ Recourez à pdf lorsque vous avez décidé de postuler et que vous souhaitez uni
 - L'injection de mots-clés repose sur la vérité. Le mode reformule une expérience réelle dans le vocabulaire exact de la JD, mais n'ajoute jamais une compétence que vous ne possédez pas.
 - Pour la région DACH et une grande partie de l'Europe continentale, vous pouvez opter pour une photo en renseignant `candidate.photo` dans `config/profile.yml` ; laissez ce champ vide et le CV s'affiche à l'identique, au pixel près, sans photo — le choix par défaut le plus sûr pour les États-Unis, le Royaume-Uni et les marchés centrés sur les ATS.
 
+## Une copie lisible par les ATS avec `--ats`
+
+Certains formulaires de candidature ne lisent jamais votre PDF tel que vous l'avez conçu : ils vous demandent de coller votre CV dans des champs de texte, ou ils analysent le fichier téléversé et préremplissent le formulaire avec ce qu'ils parviennent à en extraire. Ajoutez `--ats` et le mode pdf génère une seconde copie du même CV personnalisé, pensée pour les parseurs. Vous collez depuis la copie ATS et vous joignez le PDF mis en page.
+
+```bash title="Terminal"
+/career-ops pdf acme --ats
+
+PDF:  output/cv-jane-doe-acme-2026-05-18.pdf
+ATS:  output/cv-jane-doe-acme-ats.html
+```
+
+- L'option est désactivée par défaut. Passez `--ats` pour une seule exécution, ou activez-la pour toutes avec une règle maison dans votre propre `modes/_custom.md`.
+- C'est le même CV personnalisé, pas une seconde passe de personnalisation. Une fois le PDF mis en page terminé, le mode pdf exécute l'étape payload décrite dans [Avant le HTML : une correction, trois constats](#avant-le-html--une-correction-trois-constats) sur une copie du contenu personnalisé : les compétences passent dans une ligne `Skills` séparée par des virgules, et chacun des trois constats éventuels vous est présenté. Le CV mis en page garde sa grille de compétences.
+- Une correction ne fonctionne pas ici comme dans le mode `ats`. Avec `--ats`, la modification que vous choisissez pour un constat est apportée au contenu personnalisé de ce CV, pas à `cv.md`, et les deux copies sont reconstruites à partir de celui-ci.
+- Le mode pdf exécute la vérification des faits (`verify-cv-facts.mjs`) sur la copie ATS en plus du CV mis en page. Elle compare les chiffres et les faits nommés, comme les employeurs, les intitulés de poste, les outils et les affirmations de paternité, avec `cv.md`, `article-digest.md` et `config/cv-facts.json`. Elle tourne une seconde fois parce qu'un échec sur le CV mis en page peut être corrigé directement dans son HTML, et cette correction n'atteint pas les données à partir desquelles la copie est construite. Si la copie échoue, la correction va dans le contenu personnalisé, puis les deux copies sont reconstruites et vérifiées à nouveau.
+- Le fichier est toujours écrit dans `output/` avec le suffixe `-ats`. C'est un document que vous collez, pas un document que vous joignez ; il ne compte donc pas comme le PDF de la candidature : la colonne PDF de votre tracker pointe toujours vers le PDF mis en page.
+- Il n'y a pas de PDF de la copie ATS par défaut, puisque vous copiez le texte directement depuis le HTML. Si un formulaire exige un fichier à téléverser, demandez-en un. Il est généré sans `--report` : il n'est donc pas indexé pour le rapport, et le CV mis en page garde sa ligne dans `data/pdf-index.tsv`.
+- Si une étape de la passe ATS échoue, le HTML et le PDF mis en page restent tels quels.
+
 ## Pièges à connaître
 
 Nécessite Playwright installé en local. Le script de build peut échouer sur des installations Linux minimales dépourvues de polices système. Exécutez `npm run doctor` pour diagnostiquer.
@@ -67,3 +86,4 @@ node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
 ## Pages associées
 
 - [auto-pipeline](/fr/docs/reference/modes/auto-pipeline)
+- [apply](/fr/docs/reference/modes/apply)
