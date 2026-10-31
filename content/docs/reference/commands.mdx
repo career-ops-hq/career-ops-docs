@@ -10,7 +10,7 @@ career-ops works through commands that you type in the AI coding CLI where you r
 None of them sends an application for you. It drafts and fills; it never submits. You press Submit.
 
 {/* generated:source:start (scripts/community-snapshot.mjs) */}
-The list below is the Usage block of the core README (as of 22 Oct 2026, core commit [97f67c6](https://github.com/career-ops-hq/career-ops/tree/97f67c6cc56c0d1f65cc52fb7c5f3c59ad430812)).
+The list below is the Usage block of the core README (as of 23 Oct 2026, core commit [115bc98](https://github.com/career-ops-hq/career-ops/tree/115bc9873e3d43e23883f3c8f16436617facc62c)).
 {/* generated:source:end */}
 
 {/* generated:commands:start (scripts/community-snapshot.mjs) */}
@@ -59,3 +59,15 @@ The list below is the Usage block of the core README (as of 22 Oct 2026, core co
 {/* generated:commands:end */}
 
 The commands with a reference page are explained in depth in [Modes](/docs/reference/modes).
+
+## Helper scripts
+
+These run in a terminal from the career-ops folder, not in the chat. All four are read-only and use no AI tokens, and each one prints a readable table with `--summary`.
+
+| Command | What it does |
+| --- | --- |
+| `npm run closing-soon -- --summary` | Lists tracker rows whose posting closes soon, read from dates you noted (such as "closes 2026-10-22") or from the archived posting. The window is 7 days; change it with `--within 14`. Rows with a date it cannot read are listed, not guessed. |
+| `npm run filter-audit` | Shows which `title_filter` keywords earn their keep: how many postings each one is the only keyword to catch, and how those postings scored. |
+| `npm run ics-interview -- invite.ics --summary` | Reads an interview invite's `.ics` file: start, end, time zone and meeting link. It prints a row for you to paste into `data/active-interviews.md`. |
+| `npm run reeval-candidates -- --summary` | Lists tracker rows scored before your CV, profile or other sources last changed, so you can decide which ones to evaluate again. |
+
