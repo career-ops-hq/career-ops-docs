@@ -3,7 +3,7 @@ title: Démarrage rapide
 description: "Démarrez avec career-ops en une quinzaine de minutes : installez le système open source de recherche d'emploi par IA, ouvrez votre CLI d'IA et évaluez votre première offre. Aucune connaissance en code requise."
 seoTitle: "career-ops Démarrage rapide — installez et lancez votre premier scan d'offres par IA en quelques minutes"
 icon: Rocket
-translationHash: a1ac86db5bf5c50e
+translationHash: 7b12d8ccd43d60f2
 localized: true
 translatedFrom: /docs
 ---
@@ -261,7 +261,9 @@ Maintenant que votre première évaluation est terminée, voici quelques pistes 
     Vérifiez que `cv.md` existe à la racine du dossier et qu'il contient bien quelque chose. Si l'onboarding s'est terminé mais que `cv.md` est vide, demandez à l'agent : *« mon cv.md a l'air vide, peux-tu m'aider à le remplir ? »*
   </Accordion>
   <Accordion title="Le PDF ne s'est pas généré">
-    Relancez `npx playwright install chromium`. Si cela ne règle pas le problème, vérifiez que Node.js est en version 22.13 ou supérieure (23.4 ou supérieure sous Node 23) en exécutant `node --version`.
+    Lancez d'abord `npm run doctor`. Sa vérification Playwright indique pourquoi Chromium n'a pas pu démarrer et affiche le correctif adapté à cette cause. N'exécutez `npx playwright install chromium` que si doctor signale que Chromium n'est pas installé. S'il signale que les bibliothèques système dont Chromium a besoin sont manquantes, suivez le correctif de dépendances qu'il affiche pour votre système ; réinstaller Chromium n'y change rien, car le navigateur est déjà téléchargé. Pour tout autre échec de lancement, réinstaller ne règle pas non plus le problème : lisez l'erreur affichée par doctor et, si vous exécutez career-ops dans un sandbox ou un conteneur, vérifiez qu'il autorise le démarrage d'un processus de navigateur.
+
+    Si le PDF ne se génère toujours pas, vérifiez que Node.js est en version 22.13 ou supérieure (23.4 ou supérieure sous Node 23) en exécutant `node --version`.
   </Accordion>
   <Accordion title="Le score semble incohérent">
     Les premières évaluations sont approximatives — le système ne vous connaît pas encore bien. Après chaque évaluation, dites à votre assistant IA ce qu'il a mal jugé. Par exemple : *« Ce score est trop élevé — je n'ai aucune expérience avec Kubernetes. »* Il apprendra et s'ajustera.
