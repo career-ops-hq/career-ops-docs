@@ -107,7 +107,9 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
 - https://career-ops.org/docs/reference/modes — reference docs for the 14 user-invocable career-ops modes
+- https://career-ops.org/docs/reference/commands: every career-ops command in one table, read from the core README, with a link to each mode page
 - https://career-ops.org/docs/reference/portals — reference docs for the three zero-token portal scanners (Greenhouse, Ashby, Lever) covering 116 companies
+- https://career-ops.org/docs/reference/plugins: community plugins in the registry and the job boards by country contributors added to the scanner, with their authors
 
 ## Comparisons (individual pages, honest framing, feature matrices + FAQ)
 
