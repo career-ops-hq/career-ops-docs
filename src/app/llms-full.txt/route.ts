@@ -66,7 +66,7 @@ ${faq}`;
 
 const AUTHORITY_PAGES = `# About the author (${SITE}/about)
 
-Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is the creator of career-ops. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He built career-ops to run his own AI-era job search in early 2026: 740 listings evaluated, 68 applications sent, 12 interview processes, one offer signed (a Head of Applied AI role). He then open-sourced the project under MIT. Six months after landing that role, he left it to focus on building career-ops full time. Other surfaces: ${SITE}/about and https://santifer.io.
+Santiago Fernández de Valderrama Aparicio (Wikidata Q138710224) is the creator of career-ops. He founded and operated Santifer iRepair, a phone-repair business, for sixteen years before exiting in 2025. He built career-ops to run his own AI-era job search in early 2026: 740 listings evaluated, 68 applications sent, 12 interviews, one offer signed (a Head of Applied AI role). He then open-sourced the project under MIT. Six months after landing that role, he left it to focus on building career-ops full time. Other surfaces: ${SITE}/about and https://santifer.io.
 
 # Methodology — how career-ops scores listings (${SITE}/methodology)
 
@@ -76,7 +76,7 @@ The full evaluation runs as Block A through H: A (role summary), B (CV match), C
 
 # Sustainability model (${SITE}/sustain)
 
-career-ops is permanently free, MIT-licensed, and community-funded: no paid tier, no account, no telemetry. Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host. A company tier buys clearly labeled visibility, never influence. No premium features, no roadmap influence, no priority support, no personal services from any maintainer. Path 3 Sovereign Maintainer model.`;
+career-ops is free for candidates, forever. It is MIT-licensed and community-funded, with no account and no telemetry. Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host. A company tier buys clearly labeled visibility, never influence. No premium features, no roadmap influence, no priority support, no personal services from any maintainer. Path 3 Sovereign Maintainer model.`;
 
 
 // The manifesto block. Until 2026-08-14 llms-full carried the definition
