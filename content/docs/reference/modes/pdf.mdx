@@ -61,11 +61,11 @@ Three checks run while pdf tailors your CV. One compares each job title in the t
 - **Infra:** Kubernetes, Kafka, AWS
 ```
 
-- The experience section is a level-2 heading named Experience, Work Experience, Professional Experience, Employment History or Work History.
+- The experience section is a level-2 heading named Experience, Work Experience, Professional Experience, Employment History or Work History, or in Spanish Experiencia, Experiencia Laboral or Experiencia Profesional.
 - Each job starts with a level-3 heading: the company, then the location, separated by an em dash, an en dash, `--` or `-`. Next comes the job title on a line that is bold from end to end, then a line with the dates.
-- Skills sit under a heading that contains the word "Skills". "Tools", "Technologies" and "Tech Stack" also count, but only on a level-1 or level-2 heading. Every matching section is read, not only the first.
+- Skills sit under a heading that contains "Skills" or "Competencies" (or "Competency"), or in Spanish "Habilidades", "Aptitudes" or "Competencias", so `## Core Competencies` and `## Competencias Técnicas` both count. "Tools", "Technologies" and "Tech Stack" also count, but only on a level-1 or level-2 heading. Every matching section is read, not only the first.
 
-These heading names are matched in English, even when the rest of your CV is in another language.
+The checks recognize these names in English and Spanish only, so a heading in another language is not found.
 
 A `cv.md` converted from a Word file with Pandoc is read as it is. The checks see through bold and small-caps headings such as `## **[Experience]{.smallcaps}**`, the `---` and `--` that Pandoc writes for dashes, and the trailing `\` it leaves at a line break. You do not need to clean those up.
 

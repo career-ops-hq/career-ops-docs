@@ -5,7 +5,7 @@ seoTitle: "Mode pdf de career-ops — générer un CV personnalisé compatible A
 icon: FileText
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: 555ed91a60da0dd0
+translationHash: d419ba2a2300f7a2
 localized: true
 translatedFrom: /docs/reference/modes/pdf
 ---
@@ -64,11 +64,11 @@ Trois vérifications s'exécutent pendant que pdf personnalise votre CV. La prem
 - **Infra:** Kubernetes, Kafka, AWS
 ```
 
-- La section d'expérience est un titre de niveau 2 nommé Experience, Work Experience, Professional Experience, Employment History ou Work History.
+- La section d'expérience est un titre de niveau 2 nommé Experience, Work Experience, Professional Experience, Employment History ou Work History, ou en espagnol Experiencia, Experiencia Laboral ou Experiencia Profesional.
 - Chaque poste commence par un titre de niveau 3 : l'entreprise, puis le lieu, séparés par un tiret cadratin, un tiret demi-cadratin, `--` ou `-`. Vient ensuite l'intitulé du poste sur une ligne en gras d'un bout à l'autre, puis une ligne avec les dates.
-- Les compétences se trouvent sous un titre qui contient le mot « Skills ». « Tools », « Technologies » et « Tech Stack » comptent aussi, mais seulement dans un titre de niveau 1 ou 2. Toutes les sections correspondantes sont lues, pas seulement la première.
+- Les compétences se trouvent sous un titre qui contient « Skills » ou « Competencies » (ou « Competency »), ou en espagnol « Habilidades », « Aptitudes » ou « Competencias » : `## Core Competencies` et `## Competencias Técnicas` comptent donc tous les deux. « Tools », « Technologies » et « Tech Stack » comptent aussi, mais seulement dans un titre de niveau 1 ou 2. Toutes les sections correspondantes sont lues, pas seulement la première.
 
-Ces noms de titres sont recherchés en anglais, même si le reste de votre CV est dans une autre langue.
+Les vérifications ne reconnaissent ces noms qu'en anglais et en espagnol : un titre dans une autre langue n'est pas trouvé.
 
 Un `cv.md` converti depuis un fichier Word avec Pandoc est lu tel quel. Les vérifications comprennent les titres en gras et en petites capitales comme `## **[Experience]{.smallcaps}**`, les `---` et `--` que Pandoc écrit pour les tirets, ainsi que le `\` final qu'il laisse à un saut de ligne. Vous n'avez pas besoin de les nettoyer.
 
