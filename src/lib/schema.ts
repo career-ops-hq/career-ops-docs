@@ -472,7 +472,7 @@ export function methodologySchema() {
             name: 'What data does career-ops collect from users?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'career-ops itself collects nothing. It is local code that runs on your machine. The only data leaving your computer is whatever your configured AI CLI sends to its provider — and that subset is whatever pieces of your CV and the public job postings you choose to evaluate. Local-only execution via Ollama is in flight (PR #561).',
+              text: 'career-ops itself collects nothing. It is local code that runs on your machine. The only data leaving your computer is whatever your configured AI CLI sends to its provider — and that subset is whatever pieces of your CV and the public job postings you choose to evaluate. With a local model (for example through Ollama), the model also runs on your machine, so your CV is not sent to any AI provider.',
             },
           },
           {
