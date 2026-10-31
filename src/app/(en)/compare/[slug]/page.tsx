@@ -23,8 +23,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const data = getComparison(slug);
   if (!data) return { title: 'Comparison not found' };
-  const title = `career-ops vs ${data.competitor.name} · honest comparison`;
-  const description = data.intro;
+  const title = data.seoTitle ?? `career-ops vs ${data.competitor.name} · honest comparison`;
+  const description = data.seoDescription ?? data.intro;
   const imageUrl = data.heroImage
     ? `https://career-ops.org${data.heroImage}`
     : undefined;
