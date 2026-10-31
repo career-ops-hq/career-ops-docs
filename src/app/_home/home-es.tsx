@@ -31,6 +31,8 @@ export const homeEs: HomeDict = {
   worthApplyingLabel: 'Cómo saber si una oferta merece tu candidatura →',
   worthApplyingHref: '/es/docs/introduction/guides/is-this-job-worth-applying-to',
   aiJobSearchLabel: '¿Qué es la búsqueda de empleo con IA?',
+  aiJobSearchGuideLabel: 'Cómo elegir un agente de IA para buscar trabajo',
+  aiJobSearchGuideHref: '/es/ai-job-search',
   aiJobSearchHref: '/es/manifesto#what-is-ai-job-search',
   authorTagline: ', operador durante 16 años y creador de career-ops',
   // Versión «yo» oficial del README.es (superficie personal = home). El

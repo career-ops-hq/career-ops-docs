@@ -187,6 +187,7 @@ function localeUrl(base: string, target: Code): string {
     return MANIFESTO_LOCALES.includes(target) ? `/${target}/manifesto` : `/${target}`;
   }
   if (base === '/waitlist') return `/${target}/waitlist`;
+  if (target === 'es' && base === '/ai-job-search') return '/es/ai-job-search';
   if (target === 'es' && base.startsWith('/blog/') && BLOG_ES_TWINS.includes(base.slice(6))) {
     return `/es${base}`; // a blog post with a Spanish twin (same slug)
   }

@@ -32,7 +32,11 @@ export default function CompareIndexPage() {
         <p className="mt-4 text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
           Open source local vs SaaS cloud. MIT vs proprietary. Free vs $50–200 a
           month. The matrix is honest, the verdicts are blunt, and neither
-          product wins every row.
+          product wins every row. Not sure what to compare? Start with{' '}
+          <a href="/ai-job-search" className="text-brand-text hover:underline underline-offset-2">
+            how to choose an AI job search agent
+          </a>
+          .
         </p>
       </header>
 
