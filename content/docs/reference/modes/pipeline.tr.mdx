@@ -1,0 +1,54 @@
+---
+title: pipeline
+description: "data/pipeline.md dosyasında sıraya alınmış URL'leri okur ve her biri için auto-pipeline'ın tamamını çalıştırır. Gün içinde on ya da yirmi ilan topladığında ve hepsini tek oturumda değerlendirmek istediğinde kullan."
+seoTitle: "career-ops pipeline modu: birden fazla iş ilanını tek seferde değerlendirme"
+icon: GitBranch
+date: "2026-05-18"
+lastModified: "2026-10-14"
+translationHash: 3577755ad38f8486
+localized: true
+translatedFrom: /docs/reference/modes/pipeline
+---
+
+## Ne yapar?
+
+pipeline modu, data/pipeline.md dosyasındaki URL'leri (her satırda bir tane) sırayla işler ve her biri için auto-pipeline'ı çalıştırır. Geçerli bir değerlendirme üreten her ilan için raporlar, PDF'ler ve tracker kayıtları yazılır. İçeriği alınamayan sayfalar günlüğe kaydedilir ve atlanır.
+
+## Ne zaman kullanılır?
+
+İşlenmeyi bekleyen bir URL birikimin olduğunda pipeline'ı kullan. URL'leri data/pipeline.md dosyasına ekle, /career-ops pipeline komutunu çalıştır ve işini bitirmesini bekleme, başka işine dön.
+
+## Bir çalıştırma nasıl görünür?
+
+URL'leri `data/pipeline.md` dosyasına eklersin ve mod tüm gelen kutusunu tek geçişte işler. Önce token harcamayan bir canlılık taraması (liveness sweep) yaparak süresi dolmuş ilanları eler, ardından kalan her URL'yi auto-pipeline'ın tamamından geçirerek değerlendirir ve bulduklarını özetleyen bir tabloyla bitirir.
+
+```txt title="Pipeline run"
+$ /career-ops pipeline
+
+Liveness sweep: 8 pending URLs
+  6 live · 2 expired (moved to Processed, marked Discarded)
+
+Processing 6 live URLs (one at a time)...
+
+| # | Company | Role         | Score | PDF | Recommended action |
+|---|---------|--------------|-------|-----|--------------------|
+| 1 | Acme    | Staff AI Eng | 4.3/5 | done | apply             |
+| 2 | Globex  | ML Platform  | 3.1/5 | skip | review            |
+| 3 | Initech | AI PM        | 2.4/5 | skip | skip              |
+```
+
+İşlenen her URL, dosyanın `## Pending` bölümünden `## Processed` bölümüne taşınır; böylece gelen kutusu, geriye ne kaldığını gösteren güncel bir kayıt olarak kalır.
+
+## Ne zaman tercih etmeli?
+
+Gün içinde bir ilan birikimi topladıysan ve hepsini tek oturumda değerlendirmek istiyorsan pipeline'ı tercih et. Kuyruğu şöyle işler:
+
+- `## Pending` bölümü her biçimi kabul eder: yapıştırılmış yalın bir URL yeterlidir, istersen `company`, `role`, `location` ve `comp` sütunlarını da ekleyebilirsin; mod hepsini okur.
+- Canlılık taraması URL başına döngüden önce çalışır, bu nedenle sekiz URL'lik eskimiş bir gelen kutusu sekiz değerlendirmenin boşa gitmesine yol açmaz.
+- LinkedIn URL'leri canlılık taramasını atlar ve bunun yerine URL başına döngüde tek bir tarayıcı denemesi alır. Bu deneme sonunda ilan metni alınamazsa, örneğin sayfa yükleme iskeletinde takılı kalırsa, kayıt `[!]` işaretiyle Pending'de kalır ve senden ilan metnini yapıştırman ya da aynı pozisyon için işverenin veya ATS'nin bağlantısını vermen istenir. Başarısız bir LinkedIn yüklemesi asla kapanmış bir ilan olarak değerlendirilmez.
+- Eşzamanlılığı içerik çıkarma aracı belirler. Varsayılan tarayıcı çıkarıcısıyla (Playwright MCP) URL'ler tek tek işlenir, çünkü tek bir tarayıcı oturumunu paylaşan worker'lar birbirine karışıp yanlış ilanı değerlendirebilir. Üç veya daha fazla URL ancak her worker izole CLI çıkarıcısını (`scan.extractor: cli`) ya da tarayıcı kullanmayan bir yedek yöntemi, kendi süreci ve oturum durumuyla kullandığında paralel çalışabilir; URL başına bir worker düşer.
+- PDF'ler yalnızca puan `auto_pdf_score_threshold` eşiğini geçtiğinde üretilir (varsayılan 3,0). Sınırda kalan pozisyonlar için PDF üretilmesin istiyorsan eşiği yükselt; gerektiğinde bunları daha sonra `/career-ops pdf` ile üretebilirsin.
+
+## İlgili sayfalar [#ilgili-sayfalar]
+
+- [auto-pipeline](/tr/docs/reference/modes/auto-pipeline)

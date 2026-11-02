@@ -1,0 +1,36 @@
+---
+title: retro
+description: "Macht aus deinen Korrekturen in einer career-ops-Sitzung höchstens fünf Regelvorschläge. Gespeichert wird erst, wenn du einen Vorschlag per Nummer annimmst."
+seoTitle: "career-ops-Modus retro — aus deinen Korrekturen werden Regeln, die du freigibst"
+icon: History
+date: "2026-10-31"
+lastModified: "2026-10-31"
+translationHash: 13652ef3e26efc02
+localized: true
+translatedFrom: /docs/reference/modes/retro
+---
+
+## Was der Modus macht
+
+Der Modus retro liest deine Nachrichten aus der aktuellen Sitzung und schlägt bis zu fünf Regeln vor, die auf dem beruhen, was du korrigiert oder abgelehnt hast, jede belegt mit deinen eigenen Worten. Ein Script prüft jeden Vorschlag, und gespeichert werden nur die, die du annimmst, in `modes/_custom.md` oder `modes/_profile.md`.
+
+## Wann du ihn nutzt
+
+Starte retro am Ende einer Sitzung, in der du career-ops korrigiert hast, zum Beispiel mit „schreib meine Zusammenfassung nicht mehr in der dritten Person“. Eine Korrektur im Chat gilt nur für diese Sitzung; eine Regel, die du hier annimmst, gilt auch in der nächsten noch. Für die Freigabe musst du dabei sein: In einem unbeaufsichtigten Lauf hält retro an und bittet dich, den Modus in einer interaktiven Sitzung zu starten.
+
+## So sieht ein Lauf aus
+
+```txt title="Terminal"
+> /career-ops retro
+```
+
+1. **Es findet die Lektionen.** Eine Lektion ist eine Korrektur oder Ablehnung, die auch in der nächsten Sitzung noch gelten soll.
+2. **Es sortiert sie.** Ein Fakt über dich, etwa eine Position, eine Fähigkeit oder eine Kennzahl, ist keine Regel: retro sagt dir das und verweist dich auf den Modus, der solche Angaben erfasst. Eine Präferenz zur Bewertung oder zur Auswahl von Stellen kommt in dein Profil, jede andere dauerhafte Präferenz in deine eigenen Regeln.
+3. **Es zitiert dich.** Jeder Vorschlag enthält als Beleg deine eigenen Worte, exakt übernommen.
+4. **Es prüft sie.** `learn.mjs` validiert und nummeriert die Vorschläge, und retro zeigt dir diese Ausgabe unverändert. Ein blockierter Vorschlag bleibt blockiert; retro formuliert ihn nicht um, damit er doch durchgeht.
+5. **Du wählst per Nummer aus.** Nenne die Vorschläge, die du annehmen oder ablehnen willst. Jede Nummer, die du nicht nennst, bleibt unentschieden.
+6. **Es meldet, was sich geändert hat.** Es nennt jede Datei und Zeile. Gibt es in der Sitzung keine Lektionen, sagt es das und hört auf.
+
+## Was der Modus nicht anfasst
+
+retro bearbeitet weder deinen Lebenslauf noch `article-digest.md` oder `config/profile.yml`. Es schreibt zwei Arbeitsdateien unter `data/learning/`, und alles andere schreibt ausschließlich `learn.mjs`: die Regeln, die du angenommen hast, eine `.bak`-Kopie jeder Datei, die es ändert, und ein Protokoll jeder Entscheidung in `data/learning/ledger.jsonl`.

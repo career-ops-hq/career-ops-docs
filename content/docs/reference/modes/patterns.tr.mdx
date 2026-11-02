@@ -1,0 +1,52 @@
+---
+title: patterns
+description: "Tracker'ındaki her başvuruyu sonucuyla birlikte okur ve kalıpları ortaya çıkarır: yüksek puan alan ama hiç sonuca dönüşmeyen ilan türleri, arketip uyumsuzlukları, ücret aralığı sorunları. Çıktısı, hedefleme filtreni ayarlaman için bir kalibrasyon sinyalidir."
+seoTitle: "career-ops patterns modu: başvurularının neden sonuç vermediğini bul"
+icon: TrendingDown
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: e64bea9a156c3def
+localized: true
+translatedFrom: /docs/reference/modes/patterns
+---
+
+## Ne yapar?
+
+`patterns` modu, tracker'ındaki her başvuruyu ve raporunu okur; ilerleyenleri tıkananlarla, reddedilenlerle veya elenenlerle karşılaştırır, ortak özellikleri (sektör, şirket büyüklüğü, kıdem seviyesi, belirli anahtar kelimeler) arar ve hedeflemende neyin işe yarayıp neyin yaramadığını gösteren yapılandırılmış bir analiz üretir.
+
+## Ne zaman kullanmalısın?
+
+Yeniden kalibre etmek için her 20–30 retten sonra patterns modunu çalıştır. Mod, profilindeki kör noktaları ortaya çıkarır ve başvurularını sonuç vermeyen aynı kalıplara göndermekten kaçınmana yardımcı olur.
+
+## Bir çalıştırma nasıl görünür?
+
+Bir grup sonuç aldıktan sonra modu çalıştırırsın; sana tarihli bir kalıp analizi raporu ve en önemli üç bulgunun kısa bir özetini verir. Arka planda tracker'ın ve raporların üzerinde `analyze-patterns.mjs` çalıştırır, ardından bir dönüşüm hunisi, puan-sonuç tablosu, en büyük engeller ve önerilen bir asgari puan çıkarır.
+
+```bash title="Terminal"
+/career-ops patterns
+```
+
+```txt title="Pattern Analysis summary"
+Pattern Analysis Complete (24 applications, Apr 7 - May 18)
+
+Key findings:
+- Geo-restricted roles: 0% conversion (7 of 24) — stop evaluating US-only postings
+- Regional/global remote roles convert at 57-67% — your sweet spot
+- No positive outcomes below 4.2/5 — treat that as your score floor
+
+Full report: reports/pattern-analysis-2026-05-18.md
+```
+
+Özeti sunduktan sonra mod, bulgular üzerine harekete geçmeyi önerir: `portals.yml` filtrelerini güncellemek, bir puan eşiği belirlemek veya hedeflediğin arketiplerin ağırlıklarını yeniden ayarlamak.
+
+## Ne zaman işine yarar?
+
+Yeterince başvuru değerlendirme aşamasını geçip sonuçlar anlamlı bir sinyal taşımaya başladığında patterns moduna geç. Kesin eşik, başvurunun gerçekten gönderildiğini gösteren bir duruma sahip beş kayıttır: Applied, Responded, Assessment, Interview, Offer, Hired veya Rejected. Discarded ve SKIP satırları sayılmaz. Bu sayının altında mod kapanır ve daha fazla veriyle dönmeni ister. Sonuç sayısı arttıkça kalıplar netleşir; bu yüzden mod, düzenli başvurduğun bir ayın ardından gerçekten değerini gösterir.
+
+- Mülakat transkriptlerini `interview-prep/sessions/` içinde tutuyorsan mod bir hedefleme sinyali daha ekler: en akıcı ve en somut cevaplarının nerede yoğunlaştığına bakar. Böylece en güçlü olduğun rol türü, başvurmaya devam ettiğin rol türünden farklıysa bunu yakalar.
+- Rapor, bu oturumlardaki gerçek bir mülakatçının veya şirketin adını asla vermez; yalnızca yetkinlik kümelerini özetler. Böylece commit ettiğin her şey gizli kalır.
+
+## İlgili sayfalar [#ilgili-sayfalar]
+
+- [tracker](/tr/docs/reference/modes/tracker)
+- [followup](/tr/docs/reference/modes/followup)

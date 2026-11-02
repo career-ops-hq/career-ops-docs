@@ -14,7 +14,7 @@ const BASE = process.env.BASE || 'http://localhost:3999';
 
 /** Per-locale sample: the index, the entry page, and a nested one. */
 /** Non-default locales that must have full markdown parity with EN. */
-const LOCALES = ['es', 'fr', 'de', 'pt', 'it', 'zh'];
+const LOCALES = ['es', 'fr', 'de', 'pt', 'it', 'zh', 'tr'];
 
 /** Per-locale sample: the index, the entry page, and a nested one. */
 const LOCALE_SAMPLE = ['docs', 'docs/introduction/what-is-career-ops', 'docs/faq'];
@@ -104,6 +104,22 @@ async function main() {
     const docsBlocks = (body.match(/^# Docs\b/gm) || []).length;
     if (docsBlocks !== 1) fail(`/llms.txt has ${docsBlocks} "# Docs" blocks (want exactly 1, EN-only)`);
     if (/\]\(\/(es\/|fr\/)?docs/.test(body)) fail('/llms.txt still has relative /docs links');
+  }
+
+  // 2a. /press.md — the markdown twin of the page writers and assistants copy
+  //     facts from. A literal route like /changelog.md, so nothing else covers
+  //     it, and the page's date must be the twin's.
+  {
+    const { res, body, ct } = await get('/press.md');
+    if (res.status !== 200) fail(`/press.md status ${res.status} (want 200)`);
+    if (!ct.includes('text/markdown')) fail(`/press.md content-type "${ct}" (want text/markdown)`);
+    if ((res.headers.get('x-robots-tag') || '') !== 'noindex')
+      fail('/press.md missing X-Robots-Tag: noindex');
+    if (!body.includes('It drafts and fills; it never submits. You press Submit.'))
+      fail('/press.md lost the Submit line');
+    const { body: index } = await get('/llms.txt');
+    if (!index.includes('https://career-ops.org/press.md'))
+      fail('/llms.txt does not list /press.md');
   }
 
   // 2b. /changelog.md — the markdown twin of the #2 route live assistants
@@ -301,6 +317,26 @@ async function main() {
       // proof that the locale actually reached source.getPage.
       if (!md.body.includes(`career-ops.org/${lang}/`))
         fail(`${url}.md does not cite the ${lang} canonical URL (fell back to en?)`);
+    }
+  }
+
+  // 6. The category guide: top-level, so the docs rewrite and the proxy do not
+  //    cover it. Literal .md twins, Accept on the human URL, an llms.txt line.
+  {
+    const { body: llms } = await get('/llms.txt');
+    if (!llms.includes('https://career-ops.org/ai-job-search'))
+      fail('/llms.txt lost the /ai-job-search line');
+    for (const url of ['/ai-job-search', '/es/ai-job-search']) {
+      const md = await get(`${url}.md`);
+      if (md.res.status !== 200) fail(`${url}.md status ${md.res.status} (want 200)`);
+      if (!md.ct.includes('text/markdown')) fail(`${url}.md content-type "${md.ct}"`);
+      if ((md.res.headers.get('x-robots-tag') || '') !== 'noindex')
+        fail(`${url}.md missing X-Robots-Tag: noindex`);
+      if (!(md.res.headers.get('link') || '').includes(`https://career-ops.org${url}>; rel="canonical"`))
+        fail(`${url}.md missing its Link canonical`);
+      if (/\[#[a-z0-9-]+\]$/m.test(md.body)) fail(`${url}.md leaks heading anchors`);
+      const acc = await get(url, { Accept: 'text/markdown' });
+      if (!acc.ct.includes('text/markdown')) fail(`${url} with Accept:markdown returned "${acc.ct}"`);
     }
   }
 

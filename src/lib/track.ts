@@ -1,4 +1,10 @@
 import { put } from '@vercel/blob';
+import {
+  JOINS_PREFIX,
+  LOADS_PREFIX,
+  eventDay,
+  type WaitlistLocale,
+} from './waitlist';
 
 // Private attribution events (SPEC-1b durable layer + SPEC-4b funnel):
 // one small JSON blob per event in the PRIVATE careerops-analytics
@@ -52,4 +58,35 @@ export async function trackBadgeSignClick(
   to: string,
 ): Promise<void> {
   return putEvent('sign-clicks', 'sign_click', via, to);
+}
+
+// Waitlist counts (the "click" and "signup" of warpchart's funnel). Same
+// one-blob-per-event model, but the pathname carries the day and never the time,
+// and no event carries an email: no IP, no cookie, no fingerprint.
+async function putWaitlistEvent(prefix: string, fields: string[]): Promise<void> {
+  if (!process.env.BLOB_READ_WRITE_TOKEN) return;
+  try {
+    await put(`${prefix}/${[eventDay(), ...fields].join('__')}__e.json`, '{}', {
+      access: 'private',
+      addRandomSuffix: true,
+      contentType: 'application/json',
+    });
+  } catch {
+    // fire-and-forget by contract
+  }
+}
+
+/** One load of a waitlist page. */
+export async function trackWaitlistLoad(ref: string, locale: WaitlistLocale): Promise<void> {
+  return putWaitlistEvent(LOADS_PREFIX, [ref, locale]);
+}
+
+/** One signup: its origin, country and assistant flags, without the email. */
+export async function trackWaitlistJoin(
+  ref: string,
+  locale: WaitlistLocale,
+  country: string,
+  flags: string,
+): Promise<void> {
+  return putWaitlistEvent(JOINS_PREFIX, [ref, locale, country, flags]);
 }

@@ -113,6 +113,12 @@ canon_por_idioma:
     embudo: "740 个职位已评估 → 68 个已投递 → 12 次面试 → 1 份 offer"
     hitl: ["它起草、填写，但从不提交。由你点击提交。", "career-ops 从不替你提交申请。"]
     categoria: "开源的 AI 求职智能体"
+  tr:
+    anuncio_oferta: "ilan → teklif"
+    embudo: "740 ilan değerlendirildi → 68 başvuru → 12 mülakat → 1 teklif"
+    # La promesa y featApplyBody2 esperan ratificación de venture-ops (30-oct).
+    hitl: ["career-ops asla senin adına başvurmaz. Gönder'e sen basarsın.", "Taslakları hazırlar ve alanları doldurur; asla göndermez. Gönder'e sen basarsın."]
+    categoria: "açık kaynaklı yapay zeka iş arama ajanı"
 
 rules:
   general: >

@@ -1,14 +1,14 @@
 import { OG_IMAGE_BY_LOCALE } from '@/lib/shared';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { blogSource, blogTwin } from '@/lib/blog-source';
+import { blogRoutePages, blogSource, blogTwin } from '@/lib/blog-source';
 import { BlogPostView, type BlogFrontmatter } from '@/components/blog-post-view';
 
 // Only posts with a Spanish twin exist here; any other /es/blog/* path 404s.
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return blogSource.getPages('es').map((page) => ({ slug: page.slugs[0] }));
+  return blogRoutePages('es').map((page) => ({ slug: page.slugs[0] }));
 }
 
 type Props = { params: Promise<{ slug: string }> };

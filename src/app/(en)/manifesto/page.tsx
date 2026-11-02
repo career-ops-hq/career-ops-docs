@@ -4,6 +4,8 @@ import { instrumentSerifRegular } from '@/lib/fonts';
 import { manifestoSchema } from '@/lib/schema';
 import { hreflangManifesto } from '@/lib/i18n-map';
 import {
+  AI_JOB_SEARCH_DEFINITION,
+  AI_JOB_SEARCH_IN_THE_MANIFESTO,
   CAREEROPS_DEFINITION,
   MANIFESTO_SIGNATURE,
   MANIFESTO_THE_NAME,
@@ -316,6 +318,39 @@ export default async function ManifestoPage() {
             .
           </p>
         </div>
+
+        {/* Definition block: page furniture, NOT part of the signed text, so
+            it sits after the author's signature and looks different from
+            the manifesto body. Same strings as the FAQ/DefinedTerm in
+            manifestoSchema() and the llms.txt Definitions section. */}
+        <section
+          id="what-is-ai-job-search"
+          className="mt-12 scroll-mt-24 rounded-lg border border-fd-border bg-fd-secondary/40 p-5 leading-relaxed"
+        >
+          <h2 className="text-fd-foreground text-lg font-medium tracking-tight">
+            What is AI job search?
+          </h2>
+          <p className="mt-1 text-xs text-fd-muted-foreground">
+            Not part of the signed text.
+          </p>
+          <p className="mt-3 text-fd-foreground/90">{AI_JOB_SEARCH_DEFINITION}</p>
+          <p className="mt-3 text-fd-foreground/90">
+            {AI_JOB_SEARCH_IN_THE_MANIFESTO}
+          </p>
+        </section>
+        {/* Below the block, not inside it: the block is one literal version on
+            every surface (page, schema FAQ, llms.txt, MANIFESTO.md) and links
+            to no career-ops page (venture-ops, 24-oct). */}
+        <p className="mt-4 text-sm leading-relaxed text-fd-muted-foreground">
+          For the practical side, read{' '}
+          <Link
+            href="/ai-job-search"
+            className="text-brand-text hover:underline underline-offset-2"
+          >
+            How to choose an AI job search agent
+          </Link>
+          .
+        </p>
 
         <hr className="my-12 border-t border-fd-border" />
 

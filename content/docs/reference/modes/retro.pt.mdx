@@ -1,0 +1,36 @@
+---
+title: retro
+description: "Transforma as correções que você fez em uma sessão do career-ops em até cinco regras propostas. Nada é salvo até você aceitar, pelo número."
+seoTitle: "Modo retro do career-ops: transforme suas correções em regras aprovadas por você"
+icon: History
+date: "2026-10-31"
+lastModified: "2026-10-31"
+translationHash: 13652ef3e26efc02
+localized: true
+translatedFrom: /docs/reference/modes/retro
+---
+
+## O que ele faz
+
+O modo retro lê as suas mensagens da sessão atual e propõe até cinco regras com base no que você corrigiu ou rejeitou, cada uma sustentada pelas suas próprias palavras. Um script verifica cada proposta, e só as que você aceitar são salvas, em `modes/_custom.md` ou `modes/_profile.md`.
+
+## Quando usar
+
+Execute o retro no fim de uma sessão em que você corrigiu o career-ops, por exemplo "pare de escrever meu resumo em terceira pessoa". Uma correção feita no chat vale só para aquela sessão; uma regra que você aceita aqui continua valendo na próxima. Ele precisa da sua presença para aprovar: em uma execução sem supervisão, ele para e pede que você o execute em uma sessão interativa.
+
+## Como funciona uma execução
+
+```txt title="Terminal"
+> /career-ops retro
+```
+
+1. **Ele encontra as lições.** Uma lição é uma correção ou uma rejeição que deve continuar valendo na próxima sessão.
+2. **Ele as classifica.** Um fato sobre você, como um cargo, uma habilidade ou uma métrica, não é uma regra: o retro avisa e indica o modo que registra esse dado. Uma preferência de pontuação ou de direcionamento vai para o seu perfil, e qualquer outra preferência permanente vai para as suas regras personalizadas.
+3. **Ele cita você.** Cada proposta traz as suas próprias palavras, copiadas exatamente, como evidência.
+4. **Ele as verifica.** O `learn.mjs` valida as propostas e as numera, e o retro mostra essa saída sem alterações. Uma proposta bloqueada continua bloqueada; o retro não a reescreve para que ela passe.
+5. **Você escolhe pelo número.** Indique quais aceitar ou rejeitar. Qualquer número que você não indicar fica sem decisão.
+6. **Ele informa o que mudou.** Ele cita cada arquivo e cada linha. Se a sessão não tiver lições, ele avisa e para.
+
+## O que ele não altera
+
+O retro não edita o seu currículo, `article-digest.md` nem `config/profile.yml`. Ele grava dois arquivos de trabalho em `data/learning/`, e só o `learn.mjs` grava qualquer outra coisa: as regras que você aceitou, uma cópia `.bak` de cada arquivo que ele altera e um registro de cada decisão em `data/learning/ledger.jsonl`.

@@ -95,7 +95,7 @@ const ALLOWED = {
   ],
 };
 
-const localeOf = (path) => (/^\/(es|fr|de|pt|it|zh)(\/|$)/.exec(path)?.[1] ?? 'en');
+const localeOf = (path) => (/^\/(es|fr|de|pt|it|zh|tr)(\/|$)/.exec(path)?.[1] ?? 'en');
 
 function firstMissingSentence(text, page) {
   const sentences = text.split(/(?<=[.!?:;])\s+/);

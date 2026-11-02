@@ -49,6 +49,15 @@ export type HomeDict = {
   // untranslated slug to English, so the link is safe either way.)
   worthApplyingLabel?: string;
   worthApplyingHref?: string;
+  // Link to the "What is AI job search?" definition on the manifesto (23-oct,
+  // search-ops tramo 3). The label is the exact question, so it carries no
+  // arrow. Optional: only EN and ES have the definition block.
+  aiJobSearchLabel?: string;
+  aiJobSearchHref?: string;
+  // Link to the AI job search guide (24-oct, search-ops: Bing counted one
+  // internal anchor to it). EN and ES: the guide has no other twins.
+  aiJobSearchGuideLabel?: string;
+  aiJobSearchGuideHref?: string;
   authorTagline: string;
   // Official localized rendering of the signature thesis, shown BELOW the
   // literal-English blockquote (which stays verbatim on every locale, it is the

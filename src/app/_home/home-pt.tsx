@@ -213,7 +213,7 @@ export const homePt: HomeDict = {
       a: (
         <>
           O career-ops é gratuito para sempre, tem licença MIT e é financiado pela
-          comunidade. Não há plano pago, lista de espera, conta, telemetria nem
+          comunidade. Não há plano pago, conta, telemetria nem
           recursos premium. Você clona o repositório, configura o seu perfil e
           roda o sistema localmente com a CLI de programação com IA que já usa. A
           sustentabilidade vem de contribuições da comunidade e de patrocínio de

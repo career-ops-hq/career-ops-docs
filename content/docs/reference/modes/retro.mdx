@@ -1,0 +1,33 @@
+---
+title: retro
+description: "Turns your corrections from a career-ops session into at most five proposed rules. Nothing is saved until you accept it, by number."
+seoTitle: "career-ops retro mode: turn your corrections into rules you approve"
+icon: History
+date: "2026-10-31"
+lastModified: "2026-10-31"
+---
+
+## What it does
+
+retro mode reads your messages from the current session and proposes up to five rules based on what you corrected or rejected, each one backed by your own words. A script checks every proposal, and only the ones you accept are saved, in `modes/_custom.md` or `modes/_profile.md`.
+
+## When to use it
+
+Run retro at the end of a session in which you corrected career-ops, for example "stop writing my summary in third person". A correction you make in chat lasts for that session; a rule you accept here still holds in the next one. It needs you there to approve: in an unattended run it stops and asks you to run it in an interactive session.
+
+## What a run looks like
+
+```txt title="Terminal"
+> /career-ops retro
+```
+
+1. **It finds the lessons.** A lesson is a correction or a rejection that should still hold next session.
+2. **It sorts them.** A fact about you, such as a role, a skill or a metric, is not a rule: retro tells you so and points you to the mode that records it. A scoring or targeting preference goes to your profile, and any other standing preference goes to your custom rules.
+3. **It quotes you.** Each proposal carries your own words, copied exactly, as its evidence.
+4. **It checks them.** `learn.mjs` validates the proposals and numbers them, and retro shows you that output unchanged. A blocked proposal stays blocked; retro does not reword it to get it through.
+5. **You choose by number.** Name the ones to accept or reject. Any number you don't name stays undecided.
+6. **It reports what changed.** It names each file and line. If the session has no lessons, it says so and stops.
+
+## What it does not touch
+
+retro does not edit your CV, `article-digest.md` or `config/profile.yml`. It writes two working files under `data/learning/`, and only `learn.mjs` writes anything else: the rules you accepted, a `.bak` copy of each file it changes, and a record of every decision in `data/learning/ledger.jsonl`.

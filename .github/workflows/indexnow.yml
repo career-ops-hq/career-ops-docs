@@ -123,6 +123,11 @@ jobs:
           for extra in (
               'https://career-ops.org/llms.txt',
               'https://career-ops.org/llms-full.txt',
+              # The category guide's old URLs, which 301 to /ai-job-search. They
+              # left the sitemap, and IndexNow asks to be told about redirects
+              # too. Drop these once Bing has absorbed the move (search-ops).
+              'https://career-ops.org/blog/the-complete-ai-job-search-guide',
+              'https://career-ops.org/blog/the-complete-guide-to-ai-powered-job-search-in-2026',
           ):
               if extra not in urls:
                   urls.append(extra)

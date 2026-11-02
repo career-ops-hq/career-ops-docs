@@ -70,7 +70,10 @@ const tagOf = (locale) => LANG_TAG[locale] ?? locale;
 const HTML_VARY_MODE = 'warn';
 
 // English URLs removed on purpose (each with its 308 in next.config.mjs).
-const ALLOWED_EN_REMOVALS = [];
+const ALLOWED_EN_REMOVALS = [
+  // The category guide moved to /ai-job-search with a 301 (search-ops, 26-oct).
+  'https://career-ops.org/blog/the-complete-ai-job-search-guide',
+];
 
 // Public image URLs that must keep working: the EN home's share card under its
 // pre-October-2026 name, and a signatory's wide card at its stable path. Both
