@@ -105,8 +105,12 @@ export default async function ChangelogPage() {
             >
               GitHub Releases
             </a>{' '}
-            and updates itself. A career-ops update never touches your data —
-            see the{' '}
+            and updates itself. A career-ops update preserves your user-owned
+            data. The updater may create or replace only system-owned
+            scaffolds: the <code>.gitkeep</code> files, and the{' '}
+            <code>README.md</code> in <code>documents/</code>,{' '}
+            <code>interview-prep/sessions/</code> and{' '}
+            <code>writing-samples/</code>. See the{' '}
             <a
               href="/docs"
               className="text-fd-foreground underline underline-offset-2"
