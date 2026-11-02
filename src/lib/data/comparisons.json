@@ -3,6 +3,8 @@
   "comparisons": [
     {
       "slug": "career-ops-vs-jobscan",
+      "seoTitle": "Jobscan alternative: career-ops vs Jobscan",
+      "seoDescription": "Jobscan checks your resume against one job ad; career-ops scores every listing from 1 to 5 against your CV and tailors your resume. Free for candidates.",
       "competitor": {
         "name": "Jobscan",
         "url": "https://www.jobscan.co/",
@@ -106,6 +108,8 @@
     },
     {
       "slug": "career-ops-vs-teal",
+      "seoTitle": "Teal alternative: career-ops vs Teal",
+      "seoDescription": "Teal is a web app for resumes and job tracking; career-ops runs the same steps in your AI CLI with an open 1–5 scoring rubric. Free for candidates.",
       "competitor": {
         "name": "Teal",
         "url": "https://www.tealhq.com/",
@@ -209,6 +213,8 @@
     },
     {
       "slug": "career-ops-vs-huntr",
+      "seoTitle": "Huntr alternative: career-ops vs Huntr",
+      "seoDescription": "Huntr tracks applications on a kanban board; career-ops scores each job against your CV, tailors your resume and tracks the pipeline. Free for candidates.",
       "competitor": {
         "name": "Huntr",
         "url": "https://huntr.co/",
@@ -339,6 +345,8 @@
     },
     {
       "slug": "career-ops-vs-simplify",
+      "seoTitle": "Simplify alternative: career-ops vs Simplify",
+      "seoDescription": "Simplify autofills applications in your browser; career-ops scores each job against your CV inside your AI CLI. Compare price, control and data.",
       "competitor": {
         "name": "Simplify",
         "url": "https://simplify.jobs/",
@@ -442,6 +450,8 @@
     },
     {
       "slug": "career-ops-vs-finalroundai",
+      "seoTitle": "career-ops vs Final Round AI: before vs during interviews",
+      "seoDescription": "Final Round AI assists during live interviews; career-ops prepares everything before them: applications, cover letters and company research.",
       "competitor": {
         "name": "Final Round AI",
         "url": "https://www.finalroundai.com/",
@@ -545,6 +555,8 @@
     },
     {
       "slug": "career-ops-vs-lazyapply",
+      "seoTitle": "LazyApply alternative: career-ops vs LazyApply",
+      "seoDescription": "LazyApply sends applications at volume; career-ops filters hard, tailors every application and you press Submit. Free for candidates.",
       "competitor": {
         "name": "LazyApply",
         "url": "https://lazyapply.com/",
@@ -643,6 +655,8 @@
     },
     {
       "slug": "career-ops-vs-loopcv",
+      "seoTitle": "LoopCV alternative: career-ops vs LoopCV",
+      "seoDescription": "LoopCV applies to jobs at volume; career-ops filters hard, tailors every application and leaves Submit to you. Free for candidates.",
       "competitor": {
         "name": "Loopcv",
         "url": "https://www.loopcv.pro/",
@@ -741,6 +755,8 @@
     },
     {
       "slug": "career-ops-vs-jobhire",
+      "seoTitle": "JobHire.AI alternative: career-ops vs JobHire.AI",
+      "seoDescription": "JobHire.AI submits applications in the background; career-ops drafts each one and you press Submit. Compare price, control and data.",
       "competitor": {
         "name": "JobHire.AI",
         "url": "https://jobhire.ai/",

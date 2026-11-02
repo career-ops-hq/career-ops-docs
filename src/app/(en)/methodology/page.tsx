@@ -6,16 +6,16 @@ import { methodologySchema } from '@/lib/schema';
 import { MANIFESTO } from '@/lib/shared';
 
 export const metadata: Metadata = {
-  title: 'Methodology · career-ops',
+  title: 'How career-ops scores jobs: 1–5 rubric, five dimensions',
   description:
-    'How career-ops scores job listings: the 4.0/5.0 threshold, the five dimensions, the canonical evaluation prompt, edge cases, and what we explicitly do not do. Radical transparency, no closed-form math.',
+    'The open scoring method behind career-ops: five dimensions, a 1–5 score, the 4.0 threshold and the full evaluation prompt.',
   alternates: { canonical: 'https://career-ops.org/methodology' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
     type: 'article',
     url: 'https://career-ops.org/methodology',
     siteName: 'career-ops',
-    title: 'Methodology · career-ops',
+    title: 'How career-ops scores jobs: 1–5 rubric, five dimensions',
     description:
       'How career-ops scores job listings. Radical transparency: the rubric, the prompt structure, the limits.',
   },
@@ -518,7 +518,7 @@ export default function MethodologyPage() {
 
             <FaqItem question="Is career-ops free? What is the business model?">
               career-ops is permanently free, MIT-licensed, and community-funded. There is no
-              paid tier, no waitlist, no account, no telemetry, and no premium features. You
+              paid tier, no account, no telemetry, and no premium features. You
               clone the repo, configure your profile, and run the system locally with
               whichever AI coding CLI you already use. Sustainability comes from community
               contributions and corporate sponsorship through the project&rsquo;s collective

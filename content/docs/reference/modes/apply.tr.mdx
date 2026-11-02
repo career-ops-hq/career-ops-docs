@@ -1,0 +1,75 @@
+---
+title: apply
+description: "Canlı başvuru asistanı. Greenhouse, Ashby ve Lever formlarındaki açık uçlu soruları okur, CV'ne ve iş ilanına dayanan yanıt taslakları hazırlar."
+seoTitle: "career-ops apply modu: ATS başvuru formlarındaki sorulara yanıt taslakları"
+icon: Send
+date: "2026-05-19"
+lastModified: "2026-10-14"
+translationHash: 7cdeaddd88619799
+localized: true
+translatedFrom: /docs/reference/modes/apply
+---
+
+## Ne işe yarar?
+
+`apply` modu açık bir başvuru formunu (Greenhouse, Ashby, Lever) okur, "Neden bu pozisyon?", "Bize bir projenden bahset", "Maaş beklentin nedir?" gibi açık uçlu soruları belirler ve CV'ne ve iş ilanına dayanan yanıt taslakları hazırlar. Taslakları yerinde düzenler, portala kopyalar ve gönderirsin.
+
+## Ne zaman kullanılır?
+
+İş ilanını ve başvuru formunu yan yana aç. Form yüklendikten sonra apply'ı çalıştır. Alan sınırı doğrulanmış yanıtlarda `used/allowed` biçiminde karakter veya kelime sayısı yer alır; yapıştırmadan önce bu durumu kontrol et. `limit unknown`, form sınırının doğrulanamadığı anlamına gelir; bu yüzden önce canlı alandaki sınırı kontrol et. Bir yanıt temel bilgileri kaybetmeden sınıra sığmıyorsa yapıştırmadan önce düzelt. Çıktı bitmiş bir başvuru değil, bir taslaktır: üslup, bilgilerin doğruluğu ve portalın ayrıca eklediği alanlar için kontrol sende kalır. apply en iyi, canlı sayfayı senin gördüğün gibi okuduğu görünür modda Playwright ile çalışır; Playwright yoksa soruları yapıştır veya bir ekran görüntüsü paylaş, taslakları bunlardan hazırlasın.
+
+## Bir çalıştırma nasıl görünür?
+
+Başvuru formu Chrome'da açıkken apply'ı çalıştır. Mod daha tek bir yanıt yazmadan önce etkin sekmeyi okur, onu o ilan için daha önce oluşturduğun raporla eşleştirir, ilanın hâlâ yayında olduğunu doğrular ve formu seni otomatik olarak eleyebilecek eleyici sorular açısından tarar.
+
+```txt title="Example"
+> /career-ops apply
+
+Detected tab: Notion — Applied AI Engineer (Greenhouse)
+Matched report #072 · score 4.6/5 · archetype: Applied AI operator
+Preflight: posting live — company and role match the report.
+
+Pre-scan flagged 1 knock-out question:
+  KNOCK-OUT: "Will you now or in the future require visa sponsorship?"
+  Your profile does not record work authorization. Confirm before I draft.
+
+Responses for Notion — Applied AI Engineer
+
+1. Why this role?
+   > Your agent-tooling team is where I want to apply the production
+   > AI pipelines I have shipped this year.
+   Length: 102/200 characters (example limit)
+
+2. Tell us about a relevant project
+   > Built and sold an AI-workflow company in 2025; the pipeline
+   > behind it is the same one I would bring here.
+   Length: limit unknown (verify in the live field)
+
+Notes: I filled text fields only. Tick the checkboxes, solve the
+captcha, and submit yourself.
+```
+
+## Dikkat edilmesi gerekenler
+
+apply başvuruyu asla göndermez: son adımda Gönder'e her zaman sen tıklarsın. Yalnızca açık uçlu soruları değil, formdaki tüm alanları okur; açılır listeler, radyo düğmeleri, onay kutuları ve dosya yükleme alanları da buna dahildir. Serbest metin yanıtlarının taslağını hazırlar, kapalı uçlu her alan için bir değer önerir; profilinde yanıtı bulunmayan çalışma izni, maaş ve diğer hassas soruları tahmin yürütmek yerine onaylaman için işaretler. Playwright ile canlı formdaki bazı alanları doldurabilir; her şeyi sen gözden geçirir ve kalanını tamamlarsın. Yanıtlar girildikten sonra metni, seçimleri ve kullanılan dosyaları rapora kaydeder. Ön kontrol (preflight) ilanın kapandığını tespit ederse, sen açıkça aksini istemedikçe apply nihai metin hazırlamayı reddeder: geçersiz bir bağlantı, özel hazırlanmış bir yanıta değmez.
+
+Deneyim alanları `cv.md` dosyasından değil, o rapor için uyarlanan CV'den gelir: işverenler, unvanlar, tarihler, görev tanımları, beceriler ve eğitim yüklediğin belgeyle eşleşir, böylece form ve ekteki CV aynı hikâyeyi anlatır. Kimliğin ve iletişim bilgilerin, çalışma iznin ve ücret beklentilerin için belirleyici kaynak `config/profile.yml` olmaya devam eder. apply başvuru için uyarlanmış bir CV bulamazsa bunu sana söyler ve `cv.md` dosyasına geri döner.
+
+Rapor veya iş ilanı pozisyonu açıkça belirli süreli olarak tanımlıyorsa, apply ilk yanıttan önce bir kez **belirli süreli pozisyon hatırlatması** (Fixed-term role reminder) gösterir, ilgili ifadeyi ve belirtilmişse süreyi aktarır, yenileme, yan haklar ve sözleşme bitimi koşullarını netleştirmeni önerir. Bu yalnızca bilgilendirme amaçlıdır: hiçbir alanı değiştirmez, başvuruyu asla engellemez ve onay gerektirmez.
+
+Çok adımlı bir formda her Kaydet, İleri veya Devam adımından önce ve formu Gönder için sana bırakmadan önce, apply adımın tamamını yeniden okur ve yalnızca başka bir yanıttan sonra görünenler dahil her zorunlu alanın dolu olduğunu kontrol eder. Zorunlu bir alan kendi dosyalarından doldurulamıyorsa durur ve sana sorar.
+
+## Bilinen ATS tuhaflıkları
+
+apply yaklaşık bir düzine Playwright destekli başvuruda sahada test edildi ve bazı portallar, hesaba katılmadıklarında çalıştırmayı bozabiliyor:
+
+- **Ashby**, adayları şirket bazında e-posta adresine göre tekilleştirir, bu yüzden ikinci bir başvuru sessizce ilkiyle birleşebilir. O şirket için zaten bir rapor varsa apply bir `+tag` e-posta takma adı önerir. Ashby'de başvuruyu normal sistem tarayıcında tamamlayıp gönder, ardından başvuruyu gönderildi olarak işaretlemeden önce bir başarı sayfası veya onay e-postası gördüğünden emin ol.
+- **Lever**, bir onay kutusuna veya radyo düğmesine programla tıklandığında captcha çıkarır, bu yüzden apply yalnızca metin alanlarını ve açılır listeleri doldurur; onay kutularını ve radyo düğmelerini işaretlemeyi sana bırakır.
+- İş Deneyimi veya Eğitim gibi **tekrarlanan bölümler** ("Add Another") her blokta aynı etiketleri kullanır, bu yüzden apply bir seferde en fazla iki veya üç kayıt doldurur ve devam etmeden önce her değeri ait olduğu kayıtla karşılaştırır. Bir alanı kesin olarak ayırt edemezse tahmin yürütmek yerine durur ve sana sorar.
+- **Workday**, gerçek tuş vuruşları olmadan girilen değerleri yok sayar, bu yüzden apply yanıtları karakter karakter yazar ve kaydetmeden önce çalışma izni açılır listelerini gözden geçirmeni ister.
+
+## İlgili sayfalar [#ilgili-sayfalar]
+
+- [auto-pipeline](/tr/docs/reference/modes/auto-pipeline)
+- [pdf](/tr/docs/reference/modes/pdf)
+- [tracker](/tr/docs/reference/modes/tracker)

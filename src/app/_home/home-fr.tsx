@@ -212,7 +212,7 @@ export const homeFr: HomeDict = {
       a: (
         <>
           career-ops est gratuit pour toujours, sous licence MIT et financé par
-          la communauté. Pas d’offre payante, pas de liste d’attente, pas de
+          la communauté. Pas d’offre payante, pas de
           compte, pas de télémétrie, pas de fonctionnalités premium. Vous clonez
           le dépôt, configurez votre profil et lancez le système en local avec le
           CLI d’IA que vous utilisez déjà. La pérennité vient des contributions

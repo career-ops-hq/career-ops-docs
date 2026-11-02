@@ -34,7 +34,9 @@ export const i18n = defineI18n({
   // modes/it. Full parity.
   // 'zh' added 2026-10-15: Simplified Chinese (zh-Hans content, code 'zh'),
   // as the core's README.cn and modes/zh. Full parity.
-  languages: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh'],
+  // 'tr' added 2026-10-30: Turkish ("sen"), the core ships every mode in
+  // modes/tr plus README.tr. Full parity.
+  languages: ['en', 'es', 'fr', 'de', 'pt', 'it', 'zh', 'tr'],
   parser: 'dot',
   hideLocale: 'default-locale',
   fallbackLanguage: null,

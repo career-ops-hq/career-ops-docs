@@ -1,0 +1,30 @@
+---
+title: Windows'ta career-ops
+seoTitle: "career-ops Windows'ta çalışır mı? Evet, tam destekli; kurulumu yükleyici halleder"
+description: "career-ops, Windows'ta tam destekle çalışır. Platforma özgü tek pürüz olan sembolik bağlantıları (symlink) yükleyici otomatik olarak halleder: yönetici modu, mklink veya minimum işletim sistemi gereksinimi yok."
+icon: MonitorCheck
+translationHash: e3486e8615e2cdac
+localized: true
+translatedFrom: /docs/windows
+---
+
+**Evet, career-ops Windows'ta tam destekle çalışır.** Windows'a özgü tek bir pürüz var ve yükleyici bunu senin için otomatik olarak halleder: Geliştirici Modu, elle `mklink` veya minimum işletim sistemi gereksinimi yok. Node kuruluysa career-ops'u Windows'ta da başka her yerde olduğu gibi kurup çalıştırırsın.
+
+## Windows'a özgü tek pürüz senin için halledilir
+
+Windows varsayılan olarak sembolik bağlantı (symlink) oluşturmaz. Bu yüzden yeni bir Git checkout'u, CLI skill giriş noktalarını (`.claude/skills/`, `.opencode/skills/` vb.) gerçek sembolik bağlantılar yerine düz işaretçi dosyalar olarak bırakır. Başka araçlarda karşılaşılan "skills aren't loading" (skill'ler yüklenmiyor) hatasının nedeni de budur.
+
+career-ops bunu otomatik olarak algılar. Yükleyiciyi veya güncelleyiciyi çalıştırdığında (yeni kurulumda `npx @santifer/career-ops init`, güncellemede `node update-system.mjs apply --confirm`), `materializeSkillEntrypoints` adımı bu işaretçi dosyaların yerine skill içeriğinin tamamını koyar. Bağlı bir Git worktree'sinden `node update-system.mjs apply --confirm` çalıştırdığında bu onarım `main` checkout'unda yapılır. Onarımı almak için worktree'de `git merge main` çalıştır; güncellenmiş `main` dalından oluşturulan worktree'lerde onarım zaten vardır. `CAREER_OPS_UPDATE_IN_WORKTREE=1` ayarlıysa `apply` bunun yerine yalnızca o worktree'nin dalını onarır ve `main` onarılmadan kalır. Yönetici haklarına, Geliştirici Modu'na veya elle çalıştırılan bir `mklink` komutuna ihtiyacın yok.
+
+<Callout title="Minimum işletim sistemi gereksinimi yok">
+career-ops belirli bir Windows (veya macOS) sürümü gerektirmez. Node çalışıyorsa career-ops da çalışır. Başka bir yerde minimum işletim sistemi sürümüyle ilgili bir iddia gördüysen bu doğru değildir.
+</Callout>
+
+## Kurulum için temel başvuru kaynakları
+
+Teknik ayrıntılar (yükleyicinin tam davranışı, PowerShell ve CMD komut varyantları ve SSS'nin geri kalanı) çekirdek depoda yer alır ve orada güncel tutulur:
+
+- [docs/FAQ.md — "Skills aren't loading on Windows"](https://github.com/career-ops-hq/career-ops/blob/main/docs/FAQ.md): yükleyiciyle eşzamanlı tutulan temel yanıt.
+- [docs/SETUP.md](https://github.com/career-ops-hq/career-ops/blob/main/docs/SETUP.md): eksiksiz kurulum kılavuzu.
+
+Kurulumdan sonra motorunu [Ücretsiz bir yapay zeka motoru kur](/tr/docs/free-ai-engine) sayfasından seç veya [desteklenen CLI'lardan](/tr/docs/supported-clis) birini kullan, ardından [Hızlı Başlangıç](/tr/docs) ile devam et.

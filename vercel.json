@@ -81,9 +81,14 @@
       "permanent": true
     },
     {
+      "source": "/blog/the-complete-ai-job-search-guide",
+      "destination": "/ai-job-search",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/the-complete-guide-to-ai-powered-job-search-in-2026",
-      "destination": "/blog/the-complete-ai-job-search-guide",
-      "permanent": true
+      "destination": "/ai-job-search",
+      "statusCode": 301
     },
     {
       "source": "/community",
@@ -137,8 +142,8 @@
     },
     {
       "source": "/ai-job-search-tool",
-      "destination": "/blog/the-complete-ai-job-search-guide",
-      "permanent": true
+      "destination": "/ai-job-search",
+      "statusCode": 301
     },
     {
       "source": "/job-application-tracker",

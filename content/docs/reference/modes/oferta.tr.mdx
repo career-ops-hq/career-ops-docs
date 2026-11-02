@@ -1,0 +1,80 @@
+---
+title: oferta
+description: "Tek bir ilan için A–H değerlendirmesini çalıştırır ve PDF oluşturmadan tracker'ına kaydeder. Tam pipeline'a değil, yalnızca puanlama kararına ihtiyacın olduğunda kullan."
+seoTitle: "career-ops oferta modu: başvurmadan önce tek bir iş ilanını puanla"
+icon: Target
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: 424400a232c7b66d
+localized: true
+translatedFrom: /docs/reference/modes/oferta
+---
+
+## Ne yapar?
+
+oferta modu tek bir iş tanımını (URL ya da yapıştırılmış metin) okur, kaynak gösterilen kanıtlarla puanlama ölçütlerine göre (beş boyut ve bütüncül bir genel puan) puanlar ve değerlendirme raporunu yazar. PDF oluşturmaz, ama ilanı tracker'ına Evaluated durumuyla kaydeder; aynı şirket ve rolü yeniden değerlendirirsen ikinci bir satır eklemek yerine o satırı günceller. Hızlı ve ucuzdur.
+
+## Ne zaman kullanılır?
+
+Kararsız kaldığın bir ilanı hızlıca tartmak için oferta'yı kullan. Puan 4,0'ı geçer ve başvurmaya karar verirsen auto-pipeline'a ya da apply moduna geç.
+
+## Bir çalıştırma nasıl görünür?
+
+Moda tek bir ilan verirsin, o da puan ve kaynak gösterilen gerekçelerle değerlendirmeyi döndürür: A'dan F'ye kadar bloklar, Blok G'nin ilan güvenilirliği yorumu ve tek satırlık bir karar; puan 4,5 veya üzerindeyse ayrıca Blok H'nin taslak yanıtları. İş tanımı metnini doğrudan yapıştırabilir ya da bir URL verebilirsin; URL verdiğinde mod önce ilanın hâlâ yayında olduğunu doğrular, böylece ölü bir bağlantı koca bir değerlendirmeyi boşa harcatmaz.
+
+```bash title="Terminal"
+/career-ops oferta https://boards.greenhouse.io/acme/jobs/4021
+```
+
+```txt title="Evaluation excerpt"
+# Evaluation: Acme — Staff AI Engineer
+
+**Score:** 4.3/5
+**Archetype:** LLMOps
+**Legitimacy:** High Confidence
+
+## A) Role Summary
+| Field      | Value  |
+|------------|--------|
+| Domain     | LLMOps |
+| Seniority  | Staff  |
+| Remote     | Full   |
+
+## G) Posting Legitimacy
+Assessment: High Confidence — posted 3 days ago, apply button active,
+JD names specific tools and first-6-month scope.
+
+## Verdict (lead)
+**Apply.** Strong match on the role's core axis with no hard stops,
+and Block G returned High Confidence.
+```
+
+B'den F'ye kadar olan bloklar CV uyumunu ve eksikleri, seviye stratejisini, ücret ve talebi, bir özelleştirme planını ve ilanın gereksinimleriyle eşleştirilmiş STAR+R mülakat hikayelerini kapsar.
+
+Karar, Blok G'nin hemen ardından gelir: kalın yazılmış hüküm (Apply, Consider, Research first ya da Skip) ve yukarıdaki bloklardan alınan tek bir gerekçe. Raporun makine özetine kaydedilen kararı yineler ve asla yeni bir yargı eklemez; böylece burada okumayı bırakan biri de cevabı almış olur.
+
+## Ne zaman işine yarar?
+
+Tam pipeline'a girmeden tek bir ilanı hızlıca puanlamak istediğinde oferta'yı seç. Bilmekte fayda var:
+
+- URL verdiğinde önce bir canlılık kontrolü çalışır: süresi dolmuş ya da 404 veren bir ilan Blok A'dan önce durdurulur, böylece var olmayan bir içerik için çalıştırma harcamazsın.
+- Açıklaması yükleme iskeleti olarak kalan bir LinkedIn sayfası, kapanmış bir iş değil, ulaşılamayan bir iş tanımı sayılır: oferta Blok A'dan önce durur ve senden ilan metnini yapıştırmanı ya da aynı rol için işverenin veya ATS'nin bağlantısını vermeni ister.
+- Arketip, kendi hedef rollerine, yani `modes/_profile.md` dosyasının *Your Target Roles* bölümüne göre sınıflandırılır; varsayılan rol türleri yalnızca hiç hedef tanımlamadıysan geçerlidir. Hedeflerinden hiçbiriyle eşleşmeyen bir rol North Star uyumunda 1 alır, değerlendirme diğer boyutlarda devam eder ve raporun Archetype satırında `Not a target — closest default: {default role type}` ya da `Not a target — no close match` yazar.
+- Şirket ve ücret araştırması en fazla beş web aramasıyla sınırlıdır; bu bir değerlendirmedir, derin araştırma değil. Şirketin daha kapsamlı resmini görmek istediğinde `/career-ops deep` komutunu ayrıca çalıştır.
+- Blok G üç seviyeden birini döndürür: High Confidence, Proceed with Caution ya da Suspicious. Böylece hayalet ilan olması muhtemel ilanlar, mülakat için emek harcamadan önce ortaya çıkar.
+- Rol sana kendi bulduğun bir ilan yerine bir işe alım uzmanı aracılığıyla (LinkedIn mesajı, e-posta ya da telefon) ulaştığında Blok G işe alım uzmanını da kontrol eder. Beş kontrol vardır: şirketin kendi kariyer sayfasında rolün yer alıp almadığı, tanınmış bir markaya tanıdık olmayan bir ismin bağlanıp bağlanmadığı, işe alım uzmanının şirketin kontrol ettiği bir alan adından yazıp yazmadığı, herkese açık dolandırıcılık bildirimleri ve gönderdikleri kodu çalıştırma, ekranını paylaşma, Telegram, WhatsApp ya da Discord'a geçme veya herhangi bir şey için ödeme yapma talepleri. İşe alım uzmanının sana ulaşması tek başına nötr sayılır. Biri rolün yer almadığı kariyer sayfası ya da dolandırıcılık bildirimi olmak üzere iki endişe verici kontrol, seviyeyi Suspicious yapar ve bir işe alım uzmanı kimlik notu ekler. career-ops bir işe alım uzmanının gönderdiği kodu asla klonlamaz ya da çalıştırmaz.
+- İlan, 18 aylık bir sözleşme ya da geçici bir pozisyon gibi belirli süreli bir rolü açıkça tanımlıyorsa Blok G, ilgili ifadeyi alıntılayan bir belirli süreli sözleşme notu ve ücret görüşmesi için isteğe bağlı bir konuşma noktası ekler. Bu yalnızca bilgilendirme amaçlıdır: puanı, güvenilirlik seviyesini ya da öneriyi asla değiştirmez.
+
+- Ajanın kendi oturumunu yeniden adlandırmasına izin veren bir CLI'da, iş tanımı okunduktan sonra oturum ilanın adını alır, örneğin `VP Infrastructure, Acme Health`. Kendi oturum başlıklarını korumak için `config/profile.yml` dosyasında `session_title: off` ayarını yap.
+
+## Puan kanıtları (Score Evidence)
+
+Rapor, Risk Summary'nin ardından **Score Evidence** bölümünü içerir. Bu bölüm beş boyutu kapsar: CV uyumu, North Star uyumu, ücret, kültürel sinyaller ve uyarı işaretleri. Her satırda bir kanıt durumu (`supported`, `partial` ya da `unknown`), somut bir kaynak ya da gözlem ve çözülmemiş bir soru yer alır. Bölüm, bir kanıt güven seviyesi (`High`, `Medium` ya da `Low`), bunun gerekçesi ve en fazla üç doğrulama önceliğiyle biter.
+
+Bu seviye, Global Score'un arkasındaki kanıtı tanımlar; ne işe alınma olasılığıdır ne de Blok G'nin ilan güvenilirliği seviyesi ve sayısal puanı değiştirmez. Machine Summary, beş durumu `score_evidence` içinde, seviyeyi `confidence` içinde ve öncelikleri `confidence_gaps` içinde saklar. Geriye öncelik kalmadığında `confidence_gaps` boş bir listedir.
+
+## İlgili sayfalar [#ilgili-sayfalar]
+
+- [auto-pipeline](/tr/docs/reference/modes/auto-pipeline)
+- [ofertas](/tr/docs/reference/modes/ofertas)
+- [pdf](/tr/docs/reference/modes/pdf)

@@ -1,0 +1,69 @@
+---
+title: pdf
+description: "Belirli bir iş ilanına göre uyarlanmış bir PDF CV üretir: career-ops, CV'yi temiz bir tipografik şablondan HTML olarak oluşturur ve Playwright bunu PDF'e yazdırır. Çıktının yapısı basittir (tablo, sütun veya grafik yoktur); ATS ayrıştırıcılarının güvenilir biçimde işleyebildiği de tam olarak budur."
+seoTitle: "career-ops pdf modu: ilana göre uyarlanmış ATS uyumlu CV oluşturma"
+icon: FileText
+date: "2026-05-18"
+lastModified: "2026-10-16"
+translationHash: ac18633cc823dce2
+localized: true
+translatedFrom: /docs/reference/modes/pdf
+---
+
+## Ne yapar?
+
+pdf modu ana cv.md dosyanı ve iş ilanının bağlamını okur, ardından uyarlama adımını çalıştırır (madde işaretlerini yeniden yazar, bölümleri yeniden sıralar, öncelikli anahtar kelimeleri metne yerleştirir). Sonra ATS ayrıştırıcılarının kurallarına uyan bir CSS şablonuyla Playwright üzerinden PDF'e aktarır. Sonuç yüklemeye hazırdır.
+
+## Ne zaman kullanılır?
+
+İlanı zaten değerlendirdiysen, başvurmaya karar verdiysen ve değerlendirme adımını yeniden çalıştırmadan yalnızca uyarlanmış PDF'i istiyorsan pdf modunu kullan.
+
+## Bir çalıştırma nasıl görünür?
+
+Modu daha önce değerlendirdiğin bir ilana yönlendirirsin ve yeniden değerlendirme yapmadan, ilana göre uyarlanmış, ATS uyumlu tek bir PDF üretir. İş ilanından 15-20 anahtar kelime çıkarır, kağıt boyutunu şirketin konumuna göre seçer, özetini yeniden yazar ve madde işaretlerini role göre yeniden sıralar. Ardından HTML'i PDF'e dönüştürür ve anahtar kelime kapsamını bildirir.
+
+```bash title="Terminal"
+/career-ops pdf acme
+
+# detected JD language: en · paper: letter (US) · 18 keywords extracted
+node generate-pdf.mjs output/cv-jane-doe-acme.html \
+  output/cv-jane-doe-acme-2026-05-18.pdf --format=letter --report=008
+
+PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
+Pages: 2 · Keyword coverage: 16/18 (89%)
+```
+
+Düzen tek sütunlu kalır; standart bölüm başlıkları ve seçilebilir metin kullanır. ATS ayrıştırıcılarının temiz biçimde okuduğu yapı budur. Anahtar kelimeler gerçek başarılarının içine işlenir, asla uydurulmaz.
+
+Anahtar kelime kapsamı, ilanın değerlendirme raporundaki anahtar kelime bölümüne göre ölçülür. Raporda bu bölüm yoksa career-ops bunun yerine raporda arşivlenmiş iş tanımında bulduğu becerileri puanlar ve hangi kaynağı kullandığını sana söyler. Anahtar kelime bölümü olmayan bir rapor, geçilmiş bir kontrol değil, raporda düzeltilmesi gereken bir kusurdur.
+
+## Ne zaman tercih etmeli?
+
+Başvurmaya karar verdiysen ve değerlendirme adımını atlayıp yalnızca uyarlanmış CV'yi istiyorsan pdf modunu tercih et. Bilmeye değer birkaç davranış:
+
+- Kağıt boyutu otomatik olarak şirketin konumuna göre belirlenir: ABD ve Kanada'daki roller için `letter`, diğer her yerde `a4`.
+- Anahtar kelime ekleme gerçeğe dayanır. Mod, gerçek deneyimini iş ilanının kullandığı kelimelerle yeniden ifade eder, ama sahip olmadığın bir beceriyi asla eklemez.
+- DACH bölgesi ve kıta Avrupası'nın büyük bölümü için `config/profile.yml` dosyasında `candidate.photo` değerini ayarlayarak fotoğraf eklemeyi seçebilirsin. Boş bırakırsan CV fotoğrafsız olarak piksel piksel aynı şekilde oluşturulur; ABD, Birleşik Krallık ve ATS'nin öncelikli olduğu pazarlar için daha güvenli varsayılan da budur.
+
+## Dikkat edilmesi gerekenler
+
+Playwright'ın yerel olarak kurulu olması gerekir. Sistem yazı tipleri eksik olan minimal Linux kurulumlarında derleme script'i başarısız olabilir. Sorunu teşhis etmek için `npm run doctor` komutunu çalıştır.
+
+İş deneyimi (Work Experience) kayıtların en yeniden en eskiye sıralı değilse PDF oluşturma durur ve hata mesajı, üstündeki rolden daha geç başlayan rolün tarihlerini gösterir. Rolleri yeniden ters kronolojik sıraya koy ve komutu tekrar çalıştır: CV'yi rollerin yerini değiştirerek değil, özet ve madde işaretleri üzerinden uyarla. Bilerek başka bir sıra istiyorsan `generate-pdf.mjs` komutuna `--allow-nonchronological` ver; bu durumda PDF durmak yerine bir uyarıyla oluşturulur. `--batch` ile yalnızca sırası bozuk CV başarısız olur, diğerleri oluşturulmaya devam eder.
+
+`generate-pdf.mjs`, yazdığı her PDF'i `data/pdf-index.tsv` dosyasına kaydeder ve career-ops bir raporun CV'sini bulmak için bu dosyayı okur. Her satırda `cv` veya `cover` değerini alan bir `kind` bulunur ve bir rapor her türden birer satır tutar. Bir PDF'i yeniden oluşturmak yalnızca kendi türündeki satırın yerini alır.
+
+`--kind` olmadan tür, çıktı dosyasının adından belirlenir. Adı `cv-` ile başlayan dosya CV, `cover-` ile başlayan veya `-cover` ile biten dosya ön yazı (motivasyon mektubu) sayılır. Başka her ad CV olarak kaydedilir.
+
+cover modu mektuplarını adları ne olursa olsun `cover` olarak kaydeder, bu yüzden dosya adı kuralı yalnızca `generate-pdf.mjs` komutunu kendin çalıştırdığında önemlidir. `--report=008` ile `acme-letter.pdf` olarak oluşturulan bir mektup, 008 numaralı raporun CV satırının yerini alır ve o CV için yapılan arama mektubu döndürür. Dosya adı hangisi olduğunu belli etmiyorsa `--kind=cover` ver:
+
+```bash title="Terminal"
+node generate-pdf.mjs output/acme-letter.html output/acme-letter.pdf \
+  --report=008 --kind=cover
+```
+
+`--kind`, `cv` veya `cover` değerini alır; boş dahil başka herhangi bir değer, hiçbir şey oluşturulmadan çalıştırmayı durdurur. `--batch` bu seçeneği reddeder; bunun yerine batch dosyasındaki kayda `"kind"` ekle. `data/pdf-index.tsv` dosyasının sahibi `generate-pdf.mjs` komutudur ve dosyanın başlık satırı elle düzenlenmemesi gerektiğini belirtir.
+
+## İlgili sayfalar [#ilgili-sayfalar]
+
+- [auto-pipeline](/tr/docs/reference/modes/auto-pipeline)

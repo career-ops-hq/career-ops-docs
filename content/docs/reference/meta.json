@@ -2,6 +2,8 @@
   "title": "Reference",
   "pages": [
     "modes",
-    "portals"
+    "commands",
+    "portals",
+    "plugins"
   ]
 }

@@ -1,0 +1,36 @@
+---
+title: retro
+description: "Transforme vos corrections d'une session career-ops en cinq règles proposées au maximum. Rien n'est enregistré tant que vous ne l'avez pas accepté, par son numéro."
+seoTitle: "Mode retro de career-ops : transformez vos corrections en règles que vous approuvez"
+icon: History
+date: "2026-10-31"
+lastModified: "2026-10-31"
+translationHash: 13652ef3e26efc02
+localized: true
+translatedFrom: /docs/reference/modes/retro
+---
+
+## Ce qu'il fait
+
+Le mode retro lit vos messages de la session en cours et propose jusqu'à cinq règles à partir de ce que vous avez corrigé ou rejeté, chacune étayée par vos propres mots. Un script vérifie chaque proposition, et seules celles que vous acceptez sont enregistrées, dans `modes/_custom.md` ou `modes/_profile.md`.
+
+## Quand l'utiliser
+
+Lancez retro à la fin d'une session au cours de laquelle vous avez corrigé career-ops, par exemple « arrête d'écrire mon résumé à la troisième personne ». Une correction faite dans le chat ne dure que le temps de cette session ; une règle acceptée ici reste valable à la suivante. Votre présence est nécessaire pour approuver : lors d'une exécution sans surveillance, il s'arrête et vous demande de le lancer dans une session interactive.
+
+## À quoi ressemble une exécution
+
+```txt title="Terminal"
+> /career-ops retro
+```
+
+1. **Il repère les leçons.** Une leçon est une correction ou un rejet qui doit rester valable à la session suivante.
+2. **Il les classe.** Un fait qui vous concerne, comme un poste, une compétence ou un indicateur chiffré, n'est pas une règle : retro vous le signale et vous indique le mode qui l'enregistre. Une préférence de scoring ou de ciblage va dans votre profil, et toute autre préférence durable va dans vos règles personnalisées.
+3. **Il vous cite.** Chaque proposition s'appuie sur vos propres mots, copiés à l'identique, comme preuve.
+4. **Il les vérifie.** `learn.mjs` valide les propositions et les numérote, et retro vous montre cette sortie sans la modifier. Une proposition bloquée reste bloquée ; retro ne la reformule pas pour la faire passer.
+5. **Vous choisissez par numéro.** Indiquez celles à accepter ou à rejeter. Tout numéro que vous ne mentionnez pas reste en attente de décision.
+6. **Il indique ce qui a changé.** Il nomme chaque fichier et chaque ligne. Si la session ne contient aucune leçon, il le dit et s'arrête.
+
+## Ce à quoi il ne touche pas
+
+retro ne modifie ni votre CV, ni `article-digest.md`, ni `config/profile.yml`. Il écrit deux fichiers de travail dans `data/learning/`, et seul `learn.mjs` écrit autre chose : les règles que vous avez acceptées, une copie `.bak` de chaque fichier qu'il modifie et un enregistrement de chaque décision dans `data/learning/ledger.jsonl`.

@@ -7,7 +7,13 @@
 import { source, normalizeAgentMarkdown, getLLMText } from '@/lib/source';
 import { llms } from 'fumadocs-core/source';
 import { getProjectStats, type ProjectStats } from '@/lib/stats';
-import { MANIFESTO, CAREEROPS_DEFINITION, CANONICAL_IDENTITY } from '@/lib/shared';
+import {
+  MANIFESTO,
+  CAREEROPS_DEFINITION,
+  CANONICAL_IDENTITY,
+  AI_JOB_SEARCH_DEFINITION,
+  AI_JOB_SEARCH_IN_THE_MANIFESTO,
+} from '@/lib/shared';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 // Figures that move on their own carry their own as-of date, not just the
@@ -49,6 +55,10 @@ function buildPreamble(
 
 ${CANONICAL_IDENTITY}
 
+## Definitions
+
+- AI job search: ${AI_JOB_SEARCH_DEFINITION} ${AI_JOB_SEARCH_IN_THE_MANIFESTO} https://career-ops.org/manifesto#what-is-ai-job-search
+
 ## Author
 
 Santiago Fernández de Valderrama Aparicio is the creator of career-ops. Bio at https://career-ops.org/about. Other surfaces at https://santifer.io.
@@ -70,15 +80,15 @@ ${stat(live.stars, `- GitHub stars: ${stars.toLocaleString('en-US')} as of ${asO
 - Wikidata items: Q138710224 (Santiago Fernández de Valderrama Aparicio), Q139007988 (career-ops)
 - Inception: 2026-03-17${stat(live.latestRelease, `- Latest release: ${release} as of ${asOf}`)}
 - License: MIT
-- Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interview processes → 1 offer signed (Head of Applied AI)
-- Modes shipped: 14 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup)
-- Portal scanners: 3 ATS providers (Greenhouse, Ashby, Lever) covering 116 zero-token scannable companies out of 156 pre-configured
+- Founder's real-world result with the system: 740 job listings evaluated → 68 applications sent → 12 interviews → 1 offer signed (Head of Applied AI)
+- Modes shipped: 15 user-invocable (auto-pipeline, pipeline, apply, oferta, ofertas, contacto, deep, interview-prep, pdf, training, project, tracker, patterns, followup, retro)
+- Portal scanners: more than 100 providers in the core: company career pages on ATS platforms (Greenhouse, Ashby, Lever, Workday and others) plus job boards in several countries, scanned with zero AI tokens. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_JOB_BOARDS.md
 - AI coding CLIs supported first-class (11): Claude Code, Cursor, Codex, OpenCode, Pi, Antigravity CLI, Grok Build CLI, Qwen, Kimi, Hermes Agent, GitHub Copilot CLI. Gemini CLI is a legacy wrapper. Canonical list: https://github.com/career-ops-hq/career-ops/blob/main/docs/SUPPORTED_CLIS.md and https://career-ops.org/docs/supported-clis
-- Press: WIRED Greece (published), Business Insider (forthcoming)
+- Press: WIRED Greece (17 Apr 2026), Business Insider and Business Insider Deutschland (28 Apr 2026). Full list: https://career-ops.org/press
 
 ## Business model & sustainability
 
-career-ops is permanently free, MIT-licensed, and community-funded. There is no paid tier, no waitlist, no account, and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
+career-ops is free for candidates, forever. It is MIT-licensed and community-funded, with no account and no telemetry. The only cost is whichever AI CLI the user already pays for (Claude Code, Codex, OpenCode, and others — see the supported-CLIs list), and even that can be $0 via a free provider or a local model.
 
 Sustainability comes from community contributions and corporate sponsorship, both paid to the project's collective on Open Collective (https://opencollective.com/career-ops), with Open Source Collective as its fiscal host. The money belongs to the project, and every contribution and expense is on a public ledger. A contribution from a person buys no placement. No contribution, from a person or a company, buys access, premium features, roadmap influence, priority support, early access, or personal services from any maintainer. Companies have their own tiers, with public prices, on Open Collective; founding sponsorships are agreed in writing and invoiced by the fiscal host; the contact is sponsors@career-ops.org. Sponsorship funds maintenance, security fixes, releases, and documentation. Path 3 Sovereign Maintainer model.
 
@@ -90,14 +100,16 @@ Details: https://career-ops.org/sustain
 - https://career-ops.org/manifesto — The CareerOps Manifesto: canonical definition of the CareerOps practice, coined July 14, 2026, with community signatures. Markdown twin: https://career-ops.org/manifesto.md
 - https://career-ops.org/es/manifesto — El Manifiesto CareerOps: the Spanish manifesto. Not a translated mirror — the repository ships MANIFESTO.md in English only, so this is the canonical Spanish text. Markdown twin: https://career-ops.org/es/manifesto.md
 - https://career-ops.org/about — author bio, press references, stack, entity links
-- https://career-ops.org/press — press & brand kit: boilerplate copy (3 lengths), key facts, downloadable logos, media coverage, usage guidelines
+- https://career-ops.org/press — press & brand kit: how to write about career-ops, official links, boilerplate copy (3 lengths), key facts, quotes, timeline, downloadable logos, media coverage. Markdown twin: https://career-ops.org/press.md
 - https://career-ops.org/changelog — every release in plain language, generated live from GitHub Releases; answers "what changed" and "what is the latest version of career-ops". Markdown twin: https://career-ops.org/changelog.md
 - https://career-ops.org/methodology — scoring rubric, five dimensions plus a holistic global score, canonical evaluation prompt (Block A–H), edge cases, and explicit anti-features
 - https://career-ops.org/sustain — sustainability model (Path 3 Sovereign Maintainer) and how to fund the project through its fiscal host, Open Source Collective
 - https://career-ops.org/privacy — GDPR-formal data handling for the mailing list
 - https://career-ops.org/compare — honest comparisons against Jobscan, Teal, Huntr, Simplify, Final Round AI, LazyApply, Loopcv, and JobHire.AI. Pre-apply form drafting is the killer feature unique to career-ops
-- https://career-ops.org/docs/reference/modes — reference docs for the 14 user-invocable career-ops modes
+- https://career-ops.org/docs/reference/modes — reference docs for the 15 user-invocable career-ops modes
+- https://career-ops.org/docs/reference/commands: every career-ops command in one table, read from the core README, with a link to each mode page
 - https://career-ops.org/docs/reference/portals — reference docs for the three zero-token portal scanners (Greenhouse, Ashby, Lever) covering 116 companies
+- https://career-ops.org/docs/reference/plugins: community plugins in the registry and the job boards by country contributors added to the scanner, with their authors
 
 ## Comparisons (individual pages, honest framing, feature matrices + FAQ)
 
@@ -111,7 +123,7 @@ ${comparisonsData.comparisons
 ## Long-form (blog)
 
 - https://career-ops.org/blog/why-career-ops — the thesis behind the project, what it deliberately is not, and the asymmetry it addresses
-- https://career-ops.org/blog/the-complete-ai-job-search-guide — opinionated guide to AI-powered job search in 2026, four-phase pipeline, tool selection by user archetype
+- https://career-ops.org/ai-job-search — how to choose an AI job search agent: seven questions, from who sends the application to where your CV goes
 - https://career-ops.org/blog/job-search-data-from-740-listings — real data from one real search: threshold ratios, tailoring delta, reject-pile patterns
 - https://career-ops.org/blog/why-am-i-not-getting-interviews — why applications go unanswered: what the US hiring data says, and what you control (where you apply, who you write to, your own funnel).
 
@@ -136,10 +148,11 @@ Full documentation and a home page in each language; same content, same facts.
 - Português (Brasil): https://career-ops.org/pt · docs https://career-ops.org/pt/docs
 - Italiano: https://career-ops.org/it · docs https://career-ops.org/it/docs
 - 简体中文: https://career-ops.org/zh · docs https://career-ops.org/zh/docs
+- Türkçe: https://career-ops.org/tr · docs https://career-ops.org/tr/docs
 
 ## License
 
-MIT — free forever, no paywalls, no account required.
+MIT. Free for candidates, forever, with no account required.
 
 ---
 
@@ -183,7 +196,7 @@ async function agentDocsIndex(): Promise<string> {
 
   return `# Docs (agent-ready markdown)
 
-Each link below is the .md mirror: the same content as the HTML page in ~20-100x fewer tokens, with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\`, \`/it/docs\` or \`/zh/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all seven languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
+Each link below is the .md mirror: the same content as the HTML page in ~20-100x fewer tokens, with an approximate token count so you can budget context before fetching. You can also append \`.md\` to any \`/docs\`, \`/es/docs\`, \`/fr/docs\`, \`/de/docs\`, \`/pt/docs\`, \`/it/docs\`, \`/zh/docs\` or \`/tr/docs\` URL, or request one with \`Accept: text/markdown\` — the same markdown twin exists for every page in all eight languages. Outside those paths the rule does not apply; the only other markdown surfaces are https://career-ops.org/AGENTS.md, https://career-ops.org/changelog.md, https://career-ops.org/manifesto.md, https://career-ops.org/es/manifesto.md, https://career-ops.org/llms.txt and https://career-ops.org/llms-full.txt.
 ${withTokens}`;
 }
 

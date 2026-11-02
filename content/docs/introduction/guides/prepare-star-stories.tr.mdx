@@ -1,0 +1,168 @@
+---
+title: CV'nden STAR tekniğiyle mülakat hikayelerini hazırla
+description: "\"Bana … yaşadığın bir durumu anlat\" sorusunda donup kalıyor musun? career-ops, ilanları değerlendirirken CV'nden STAR hikayelerinin taslağını çıkarır ve mülakattan önce prova yapmanı sağlar."
+seoTitle: "STAR tekniğiyle mülakata hazırlık: career-ops ile CV'nden hikayeler oluştur"
+icon: NotebookPen
+translationHash: b992c17341a033d9
+localized: true
+translatedFrom: /docs/introduction/guides/prepare-star-stories
+---
+
+STAR hikayeleri hazırlamak için her cevabı Durum (Situation), Görev (Task), Eylem (Action) ve Sonuç (Result) olarak yaz, sonuna da öğrendiklerini anlatan bir Çıkarım (Reflection) ekle (STAR+R). career-ops, her ilan değerlendirdiğinde bu hikayelerin taslağını CV'ndeki gerçek deneyimlerden çıkarır; sen de sayıları kontrol eder, düzenler ve mülakattan önce prova edersin.
+
+"Bana … yaşadığın bir durumu anlat" sorusunda donup kalıyorsan çözüm burada. career-ops hikayeleri `interview-prep/story-bank.md` adlı bir hikaye bankasına kaydeder ve bu dosyayı, ekleyecek ilk hikayesi olduğunda oluşturur. Yazılı bir soruya en yüksek puanı alan hikayeyi bulur ve metin üzerinden yapılan bir pratik mülakatta prova yapmanı sağlar.
+
+**Bu sayfada:** [STAR+R](#star-hikayesi-nedir-r-ne-katar) · [Hikaye bankanı başlat](#hikaye-bankani-nasil-baslatirsin) · [Hikayeler nereden gelir?](#hikayelerin-nereden-gelir) · [Banka nerede durur?](#hikaye-bankasi-nerede-durur) · [Kayıt biçimi](#star-hikayesi-kaydi-nasil-gorunur) · [Sayıları doğru tut](#hikayelerindeki-sayilari-nasil-dogru-tutarsin) · [Doğru hikayeyi bul](#yazili-bir-soru-icin-dogru-hikayeyi-nasil-bulursun) · [Hikayeleri bir şirketle eşleştir](#hikayelerini-bir-sirketin-mulakatlarina-nasil-eslestirirsin) · [Prova yap](#hikayelerini-mulakattan-once-nasil-prova-edersin) · [Mülakattan sonra](#mulakattan-sonra-hikayelerine-ne-olur) · [Komutlar](#komutlara-hizli-bakis) · [SSS](#sik-sorulan-sorular)
+
+Bu sayfa hikayeleri anlatır. Planlama, pratik ve mülakat sonrası değerlendirme döngüsünün tamamı için [Mülakatlara hazırlan](/tr/docs/introduction/guides/interview-modes) sayfasına bak.
+
+<Callout title="Başlamadan önce">
+  career-ops'un çalışması için `cv.md` ve `config/profile.yml` dosyalarının hazır olması gerekir; ikisini de [Hızlı Başlangıç](/tr/docs) kurar. Slash komutları yapay zeka CLI oturumuna, `npm` ve `node` komutları ise career-ops klasöründe açtığın bir terminale yazılır. Slash komutlarının kullanılamadığı yerlerde (örneğin Codex bunları garanti etmez) aynı modu adıyla iste.
+</Callout>
+
+## STAR hikayesi nedir, R ne katar? [#star-hikayesi-nedir-r-ne-katar]
+
+STAR hikayesi, dört bölümde anlatılan bir mülakat cevabıdır: Durum (Situation), Görev (Task), Eylem (Action) ve Sonuç (Result). career-ops buna beşinci bir bölüm olarak Çıkarım'ı (Reflection) ekler ve bu biçime STAR+R der. Çıkarım, öğrendiğin şeyi ya da bugün farklı yapacağın şeyi anlatır. career-ops bunu kıdemin göstergesi olduğu için ekler: junior adaylar olanı anlatır, senior adaylar ondan ders çıkarır.
+
+## Hikaye bankanı nasıl başlatırsın? [#hikaye-bankani-nasil-baslatirsin]
+
+<Steps>
+  <Step title="Bir ilanı değerlendir">
+    Tam pipeline için ilanın URL'sini veya metnini `/career-ops` komutunun ardına yapıştır; yalnızca değerlendirme için `/career-ops oferta` komutunu çalıştır. İki durumda da değerlendirme o ilan için STAR+R hikayelerinin taslağını çıkarır ve yenilerini bankana ekler. `cv.md` dosyanın bulunduğu veri klasöründe `interview-prep/story-bank.md` henüz yoksa career-ops önce kendi hikaye bankası şablonundan bu dosyayı oluşturur.
+  </Step>
+  <Step title="Yeni hikayeleri kontrol et">
+    Değerlendirme her yeni hikayeyi, hikaye eşleştiricinin okuduğu ve [aşağıda](#star-hikayesi-kaydi-nasil-gorunur) gösterilen biçimde bir kayıt olarak ekler; başlığı bankanda zaten bulunan hikayeleri atlar. Hikayeleri görmek için `npm run star -- --list` komutunu çalıştır, ardından mülakatta söylemeyeceğin her şeyi düzenle.
+  </Step>
+  <Step title="Bir soruyla eşleştir">
+    Bir soruya en yüksek puanı alan hikayeyi görmek için terminalde `npm run star -- "<question>"` komutunu çalıştır.
+  </Step>
+</Steps>
+
+## Hikayelerin nereden gelir? [#hikayelerin-nereden-gelir]
+
+career-ops hikayelerini, her biri bir ilana veya mülakata bağlı üç yerde oluşturur:
+
+- **Bir ilanı değerlendirdiğinde.** Değerlendirme raporunun STAR+R bölümü ([F Bloğu](/tr/docs/reference/modes/oferta)) CV'nden ilanın gereksinimleriyle eşleşen 6 ila 10 hikaye yazar ve yenilerini kayıt biçiminde `interview-prep/story-bank.md` dosyasına ekler; dosya yoksa oluşturur. Toplu çalıştırmalar bankaya ekleme yapacak şekilde ayarlanmamıştır.
+- **Bir şirket için hazırlandığında.** Şirket dosyası, eşleşen hikayesi olmayan her olası soru için CV'nde hikayeye dönüşebilecek bir deneyimi gösterir ve istersen taslağını seninle birlikte çıkarır.
+- **Gerçek bir mülakattan sonra.** Bankanda olmayan bir deneyimi anlattıysan debrief (mülakat sonrası değerlendirme), henüz tazeyken bunu bir STAR+R hikayesine dönüştürmeyi önerir ve kabul edersen ekler.
+
+Bütün bir CV'yi tek seferde hikayelere dönüştüren tek bir komut yoktur.
+
+career-ops, kendi dosyalarının (`cv.md`, `article-digest.md`, `config/profile.yml`) desteklemediği her iddiayı sana sorması ve sen eklemezsen dışarıda bırakması yönünde talimat almıştır. Bu kural kodda değil, talimatlarında yer alır; bu yüzden bankandaki sayıları aşağıdaki kaynak kontrolüyle denetle.
+
+Değerlendirmeler her hikayeyi hedeflediğin rol türüne göre çerçeveler ve varsayılan rol türleri yapay zeka ve teknoloji alanındadır; bu yüzden career-ops'a kendi rollerini anlat. İlk çalıştırmalar kaba olur. Seni henüz tanımıyor. Onunla konuş: CV'n, ne istediğin, neyi reddettiğin.
+
+<Callout title="Not">
+  `/career-ops interview`, CV'ni ve profilini dolduran başlangıç görüşmesidir. Prova yapmak için `/career-ops interview/practice` komutunu kullan.
+</Callout>
+
+## Hikaye bankası nerede durur? [#hikaye-bankasi-nerede-durur]
+
+Hikaye bankası `interview-prep/story-bank.md` dosyasıdır: veri klasöründe, `cv.md` dosyanın yanında duran düz bir Markdown dosyası. Kullanıcı katmanının bir parçasıdır, career-ops güncellemeleri bu katmana asla dokunmaz ve `interview-prep/` içine koyduğun her şey git dışında tutulur. Telemetri yoktur: career-ops hikayelerinle çalışırken bunlar yalnızca seçtiğin yapay zeka sağlayıcısına gider, başka hiçbir yere gitmez.
+
+## STAR hikayesi kaydı nasıl görünür? [#star-hikayesi-kaydi-nasil-gorunur]
+
+Her hikayeyi bu biçimde yaz. Hikaye eşleştirici (`npm run star`) yalnızca bu biçime uyan kayıtları okur. Hikayeyi hangi dilde yazarsan yaz, etiketleri İngilizce bırak. Bu örneği olduğu gibi bankana yapıştırma: eşleştirici onu da bir hikaye sayar. career-ops'un eklediği hikayeler `**S (Situation):**` ve `**A (Action):**` gibi uzun etiketler kullanır; eşleştirici iki biçimi de okur.
+
+```md title="Story entry shape (example)"
+### [Theme] Short title of the story
+**Source:** {where the story comes from: your CV, an evaluation, a debrief}
+**Situation:** {the context: as long as you need, on one line}
+**Task:** {what you had to do, on one line}
+**Action:** {what you did, on one line}
+**Result:** {what changed; a number only if your CV has it}
+**Reflection:** {what you learned or would do differently}
+**Best for questions about:** {comma-separated tags, e.g. conflict, deadline, stakeholders}
+**Provenance:** {add only after checking: source: cv.md if every number is in your CV, or user-stated YYYY-MM-DD}
+```
+
+Her alanı tek satırda tut: eşleştirici bir alanı yalnızca satırının sonuna kadar okur ve Action satırı olmayan hikayeyi atlar. Tek satırda kaldığı sürece bir alan koca bir paragraf olabilir. Kuralın tamamı [`story-provenance-check.mjs`](https://github.com/career-ops-hq/career-ops/blob/2b9fe7ea48b8ca98cf7f6b2b660654844c885adf/story-provenance-check.mjs#L72-L91) dosyasının başlığında anlatılır.
+
+Hikayedeki sayıları kontrol edene kadar Provenance satırını ekleme. Tek bir işaret hikayedeki bütün sayıları kapsar ve kaynak kontrolü, bu sayıları `cv.md` ile karşılaştırmadan işarete güvenir.
+
+## Hikayelerindeki sayıları nasıl doğru tutarsın? [#hikayelerindeki-sayilari-nasil-dogru-tutarsin]
+
+career-ops'un kuralına göre hikaye bankandaki bir sayı veya kapsam iddiası, ancak CV'n gibi senin yazdığın bir dosyaya dayanıyorsa ya da hikayesinde doğrulanmış bir Provenance satırı varsa (`source: cv.md` veya `user-stated YYYY-MM-DD`) gerçek sayılır. Plan, practice ve debrief modları cevap önerirken bankayı yine de okur, bu yüzden prova yapmadan önce bankanı denetle:
+
+```bash
+node story-provenance-check.mjs --summary
+```
+
+Kaynak kontrolü, okuyup rapor veren yerel bir script'tir; dosyalarını düzenlemez ve hiçbir şeyi engellemez. Hikayelerindeki sayıları yalnızca `cv.md` ile karşılaştırır ve `cv.md` dosyasının içermediği ya da bağlamıyla desteklemediği her sayıyı derived-unverified olarak bildirir; hikayesinde doğrulanmış iki işaretten biri varsa bildirmez, çünkü bu işaretlere yazıldığı gibi güvenir. Yazıyla yazılmış rakamları, para tutarlarını ve yalın sayıları kaçırır.
+
+İşaretlenen her sayı için kararı sen verirsin: sayıyı onayla (hikayeye `**Provenance:** user-stated YYYY-MM-DD` ekle), düzelt, hikayeyi sayı olmadan tut ya da bilmiyorsan hikayenin Provenance satırını `user-cannot-confirm` yap. İşaret o hikayedeki bütün sayıları kapsar.
+
+Pratikte veya debrief sırasında bir iddianın savunulamayacağını kabul ettiğinde career-ops bunu `interview-prep/retracted-claims.md` dosyasına eklemeyi önerir; plan, practice ve debrief bu iddiayı bir daha kullanmaz. Şirket dosyası, form cevapları ve hikaye eşleştirici bu dosyayı okumaz, bu yüzden iddiayı hikaye bankandan da çıkar.
+
+## Yazılı bir soru için doğru hikayeyi nasıl bulursun? [#yazili-bir-soru-icin-dogru-hikayeyi-nasil-bulursun]
+
+Hikaye eşleştirici `npm run star`, başvuru formundaki açık uçlu bir soru gibi yazılı bir soruya bankanda en yüksek puanı alan hikayeyi bulur. career-ops klasöründe açtığın bir terminalde çalıştır:
+
+```bash
+npm run star -- "Tell me about a time you disagreed with a decision"
+```
+
+Hikaye eşleştirici yerel bir script'tir: yapay zeka modelini çağırmaz, tarayıcı açmaz. Her hikayeyi soruyla paylaştığı anahtar kelimelere göre puanlar. Bir kelime en çok hikayenin etiketlerinden biriyle eşleştiğinde, daha az başlığında veya temasında, en az da Action veya Result alanında eşleştiğinde puan getirir. Eşleştirme birebir kelimelerle yapılır, yani "lider" kelimesi "liderlik" ile eşleşmez: etiketlerini soruların kullandığı kelimelerle yaz.
+
+Hikaye eşleştirici en yüksek puanı alan hikayeni, alanları yazıldığı gibi birleştirerek en fazla 500 kelimeyle yazdırır; hikaye 250 kelimenin altındaysa uyarı verir. Hiçbir hikaye puan alamazsa yine de bir hikaye yazdırır ve ardından "No strong match found" uyarısını gösterir: bunu doldurulması gereken bir boşluk olarak gör.
+
+`npm run star`, `match-star.mjs` dosyasını çalıştırır, yani script'i doğrudan da çağırabilirsin: `--jd`, etiketleri kayıtlı bir ilan metninde geçen hikayelere ek ağırlık verir, `--top 2` en iyi iki hikayeyi gösterir, `--list` ise bütün hikayeleri etiketleriyle listeler.
+
+```bash
+node match-star.mjs "Describe a conflict you resolved" --jd jds/acme.md
+node match-star.mjs "Give an example of handling ambiguity" --top 2
+node match-star.mjs --list
+```
+
+Eşleştirici, `cv.md` dosyanın bulunduğu veri klasöründeki `interview-prep/story-bank.md` dosyasını okur; dolayısıyla `CAREER_OPS_ROOT`, `CAREER_OPS_DATA_DIR` veya bir `.career-ops-data` dosyasıyla belirlenen ayrı bir veri klasörünü de izler. career-ops v1.36.0 öncesi sürümler yalnızca career-ops klasörünü okur; `node update-system.mjs apply --confirm` kurulumunu güncel hale getirir.
+
+Eşleştiricinin çıktısı o soru için yazılmış bir cevap değil, kendi hikayendir: yapıştırmadan önce düzenle. Başvuru formunun tamamı için career-ops, değerlendirmeni ve oradaki STAR hikayelerini kullanarak `/career-ops apply` ile cevap taslakları hazırlar. Değerlendirir ve taslak hazırlar; kararı sen verir, sen gönderirsin. career-ops asla senin adına başvurmaz.
+
+## Hikayelerini bir şirketin mülakatlarına nasıl eşleştirirsin? [#hikayelerini-bir-sirketin-mulakatlarina-nasil-eslestirirsin]
+
+`/career-ops interview-prep` ile oluşturulan şirket dosyası, her olası soruyu en iyi hikayenle eşleştirir, uyumu güçlü, kısmi veya yok olarak derecelendirir ve her boşluk için CV'nde bir deneyimi gösterir. Ona şirketi ve rolü ver. Hiç değerlendirmediğin bir rol için ilanın URL'siyle hazırlık iste (`/career-ops interview-prep <URL>`); mevcut bir değerlendirme raporu varsa rapor önceliklidir.
+
+Şirket dosyasında, bildirilen her soru kamuya açık kaynağını belirtir; ilan metninden türetilen sorular ise `[inferred from JD]` etiketini taşır. Belgenin geri kalanını [interview-prep referansı](/tr/docs/reference/modes/interview-prep) anlatır; belge `interview-prep/{company-slug}-{role-slug}.md` konumuna kaydedilir.
+
+Mülakat davetini yapıştırırsan şirket dosyası görüşme platformunu not eder ve davet, career-ops'un şu anda işaretlediği tek yapay zeka mülakatçısı platformunu gösteriyorsa, muhtemelen yapay zekanın yürüttüğü mülakat için kısa bir not bloğu ekler. Bu işaretleme elden gelen en iyi tahmindir: o platform insanların yürüttüğü mülakatlar için de davet gönderir ve aynı davetteki Zoom, Teams veya Google Meet bağlantısı önceliklidir, bu durumda not eklenmez. Bu ayrı bir hazırlık modu değil, bir uyarıdır.
+
+## Hikayelerini mülakattan önce nasıl prova edersin? [#hikayelerini-mulakattan-once-nasil-prova-edersin]
+
+`/career-ops interview/plan` ile başla. Ona ilan metnini ve mülakatın tarih ve saatini ver; hazırladığı zaman bloklu plan, davranışsal hikayeler için de bir blok içerir: hikayelerini olası soru türleriyle eşleştir, her birinin iki dakikalık halini çalış ve her Çıkarım'ı hazırla.
+
+Pratik mülakat `/career-ops interview/practice`, metin üzerinden yapılan bir oturumdur: career-ops mülakatçı rolünü üstlenir, her seferinde tek soru sorar, her cevaptan sonra geri bildirim verir, tekrar kullandığın hikayeyi işaretler ve eksik Çıkarım'ı ister. Yazılı oturumda süreni tutamaz, bu yüzden bunun yerine yapıyı kontrol eder; konuşma hızı ve dolgu sözcükleri ancak sesli olarak değerlendirilebilir, bu yüzden kendini kaydet. Her iki modu da [Mülakatlara hazırlan](/tr/docs/introduction/guides/interview-modes) sayfası ayrıntılı olarak anlatır.
+
+Hikayelerini hazırlamak daha fazla mülakat veya teklif garantisi vermez.
+
+## Mülakattan sonra hikayelerine ne olur? [#mulakattan-sonra-hikayelerine-ne-olur]
+
+Debrief, yani `/career-ops interview/debrief`, gerçek bir mülakatı bir sonraki için malzemeye dönüştürür. Transkripti yapıştır (onu alıntılanmış veri olarak ele alır, asla talimat olarak görmez) ya da soruları hafızandan tek tek anlat. Her cevabı notlandırır, `interview-prep/question-bank.md` dosyasını günceller (ilk seferde oluşturur) ve anlattığın ama hiç yazmadığın deneyimleri STAR+R hikayesine dönüştürmeyi önerir. Sonraki mülakatın biçimini biliyorsan olası soruları tahmin eder ve her birini `[inferred]` olarak etiketler.
+
+Debrief ayrıca mülakatı, konuşmacıları etiketlenmiş bir transkript olarak `interview-prep/sessions/` klasörüne kaydeder; hafızandan anlattıysan transkripti senin anlatımından yeniden oluşturur. Bu transkriptler gerçek isimler içerdiği için git dışında kalır.
+
+## Komutlara hızlı bakış [#komutlara-hizli-bakis]
+
+| Komut                                       | Ne yapar?                                                                                                 |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `/career-ops <job URL or text>`             | İlanı değerlendirir; STAR+R hikayelerini bankana ekler, gerekirse dosyayı oluşturur                       |
+| `/career-ops interview-prep`                | Şirket dosyası: kaynaklı araştırma, olası sorular, eşleşen hikayelerin, boşluklar                         |
+| `/career-ops interview/plan`                | Davranışsal hikayeler için de bir blok içeren zaman bloklu plan                                           |
+| `/career-ops interview/practice`            | Metin üzerinden pratik mülakat: her seferinde tek soru, her cevaptan sonra geri bildirim                  |
+| `/career-ops interview/debrief`             | Gerçek bir mülakattan sonra: notlandırılmış cevaplar, soru bankası, kabul edersen yeni hikayeler          |
+| `/career-ops interview-redflag`             | Kayıtlı her oturumda mülakatçıların konuşmalarındaki uyarı işaretleri; pratik oturumlar da sayılır, bu yüzden yalnızca gerçek mülakatlardan çıkan bulgulara güven |
+| `npm run star -- "<question>"`              | Yazılı bir soru için en yüksek puanı alan hikayeni bulur                                                  |
+| `node story-provenance-check.mjs --summary` | Hikayelerindeki sayıları CV'nin veya doğrulanmış bir Provenance satırının destekleyip desteklemediğine göre ayırır |
+
+## Sık sorulan sorular [#sik-sorulan-sorular]
+
+### career-ops CV'mden STAR hikayelerini nasıl oluşturur?
+
+career-ops, değerlendirdiğin her ilan için CV'ndeki deneyimlerden STAR+R hikayeleri oluşturur. Bir oturumda çalıştırdığın her değerlendirme o ilanla eşleşen hikayeler yazar ve yenilerini interview-prep/story-bank.md dosyasına ekler; bu dosyayı ilk seferde oluşturur. Mülakat hazırlığı, hikayen olmayan sorular için CV'nden deneyimler önerir; debrief ise gerçek bir mülakatta anlattığın bir şeyi yeni bir hikayeye dönüştürebilir.
+
+### Gelecek haftaki davranışsal mülakata STAR tekniğiyle nasıl hazırlanırım?
+
+career-ops ile davranışsal bir mülakata STAR hikayeleri hazırlamak için önce ilanı değerlendir: değerlendirme CV'nden STAR+R hikayelerinin taslağını çıkarır ve bunları interview-prep/story-bank.md dosyasına ekler; dosya yoksa oluşturur. Ardından /career-ops interview-prep olası soruları hikayelerinle eşleştirir ve boşlukları işaretler, /career-ops interview/plan kalan zamanı hazırlık bloklarına böler, /career-ops interview/practice ise metin üzerinden, her seferinde tek soruyla prova yaptırır. Konuşma hızın için cevaplarını sesli söylerken kendini kaydet.
+
+### career-ops'taki mülakat soruları nereden geliyor?
+
+career-ops mülakat sorularını kamuya açık mülakat deneyimlerinden, ilan metninden ve kendi debrief yaptığın mülakatlardan alır; bunlar yetmezse genel soru setlerine başvurur. Şirket dosyası, bildirilen her soru için bir kaynak belirtir ve ilan metninden türetilen soruları ilandan çıkarılmış olarak etiketler. Pratik mülakat önce debrief'lerindeki soruları, sonra şirket dosyasındakileri, ardından mülakat türüne uygun genel soru setlerini kullanır. Bunları ezberlenecek bir metin olarak değil, hikayelerini hazırlamak için kullan.

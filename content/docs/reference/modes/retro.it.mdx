@@ -1,0 +1,36 @@
+---
+title: retro
+description: "Trasforma le correzioni che fai durante una sessione di career-ops in cinque regole proposte al massimo. Non viene salvato nulla finché non le accetti, indicandone il numero."
+seoTitle: "Modalità retro di career-ops: trasforma le tue correzioni in regole che approvi tu"
+icon: History
+date: "2026-10-31"
+lastModified: "2026-10-31"
+translationHash: 13652ef3e26efc02
+localized: true
+translatedFrom: /docs/reference/modes/retro
+---
+
+## Cosa fa
+
+La modalità retro legge i messaggi che hai scritto nella sessione in corso e propone fino a cinque regole basate su ciò che hai corretto o rifiutato, ognuna accompagnata dalle tue stesse parole. Uno script controlla ogni proposta e vengono salvate solo quelle che accetti, in `modes/_custom.md` o in `modes/_profile.md`.
+
+## Quando usarla
+
+Avvia retro alla fine di una sessione in cui hai corretto career-ops, per esempio con "smettila di scrivere il mio riassunto in terza persona". Una correzione fatta in chat vale solo per quella sessione; una regola accettata qui resta valida anche nella successiva. Serve la tua presenza per l'approvazione: in un'esecuzione non presidiata si ferma e ti chiede di avviarla in una sessione interattiva.
+
+## Come si svolge un'esecuzione
+
+```txt title="Terminal"
+> /career-ops retro
+```
+
+1. **Trova le lezioni.** Una lezione è una correzione o un rifiuto che dovrebbe valere ancora nella sessione successiva.
+2. **Le classifica.** Un dato che ti riguarda, come un ruolo, una competenza o una metrica, non è una regola: retro te lo dice e ti indica la modalità che lo registra. Una preferenza su punteggi o obiettivi di ricerca va nel tuo profilo, e qualsiasi altra preferenza stabile va nelle tue regole personalizzate.
+3. **Ti cita.** Ogni proposta riporta come prova le tue parole, copiate alla lettera.
+4. **Le controlla.** `learn.mjs` convalida le proposte e le numera, e retro ti mostra quell'output senza modifiche. Una proposta bloccata resta bloccata: retro non la riformula per farla passare.
+5. **Scegli tu, per numero.** Indica quali accettare o rifiutare. I numeri che non indichi restano in sospeso.
+6. **Riporta cosa è cambiato.** Indica ogni file e ogni riga. Se nella sessione non ci sono lezioni, lo dice e si ferma.
+
+## Cosa non tocca
+
+retro non modifica il tuo CV, `article-digest.md` o `config/profile.yml`. Scrive due file di lavoro in `data/learning/`, e qualsiasi altra scrittura spetta solo a `learn.mjs`: le regole che hai accettato, una copia `.bak` di ogni file che modifica e un registro di ogni decisione in `data/learning/ledger.jsonl`.

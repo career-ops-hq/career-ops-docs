@@ -1,0 +1,151 @@
+---
+title: Bir işe başvur
+description: career-ops ile iş başvuru formlarını profiline ve hedeflediğin pozisyona göre uyarlanmış yanıtlarla doldur.
+seoTitle: "career-ops ile işe nasıl başvurulur: ATS formları için yanıt taslakları ve ilana göre uyarlanmış CV"
+icon: FileInput
+translationHash: b97afb2d886c6928
+localized: true
+translatedFrom: /docs/introduction/guides/apply-for-a-job
+---
+
+Bu rehber, `/career-ops apply` komutuyla bir başvuru formunu profiline, kanıt noktalarına ve başvurduğun pozisyona göre uyarlanmış yanıtlarla nasıl dolduracağını adım adım anlatır.
+
+<Callout title="Başlamadan önce">
+  [İş portallarını tara](/tr/docs/introduction/guides/scan-job-portals) rehberini tamamladığından emin ol. `apply` komutu mevcut bir değerlendirme raporuna ihtiyaç duyar. Pozisyon için rapor yoksa önce pipeline'ı çalıştır.
+</Callout>
+
+## apply komutunu çalıştır
+
+Ajan tabanlı CLI aracını career-ops kök klasöründe aç ve şunu yaz:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name}
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument.
+    ```
+  </Tab>
+</Tabs>
+
+Örneğin:
+
+```bash title="Claude Code"
+/career-ops apply Anthropic
+```
+
+career-ops, `reports/` içinde eşleşen raporu bulur, Playwright ile bir tarayıcı penceresi açar ve formu okur. Ardından desteklenen metin alanları ve serbest yanıt alanları için yanıt taslakları hazırlar. Yapıştırmadan önce alan sınırlarını kontrol et. Ashby'de başvuruyu tamamlayıp göndermek için normal sistem tarayıcını kullanman gerekir.
+
+<Callout title="Not">
+  Playwright kullanılamıyorsa career-ops formu kendisi açamaz: senden bir ekran görüntüsü, metin olarak sorular ya da şirket ve pozisyon bilgisi ister (aşağıdaki seçenekler). Tarayıcı tabanlı deneyimin tamamını etkinleştirmek istersen [Playwright'ı kur](/tr/docs/introduction/guides/set-up-playwright) rehberine bak.
+</Callout>
+
+**`/career-ops apply` komutunu argümansız çalıştırırsan**, sistem senden bağlamı elle vermeni ister:
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Seçenek                    | Nasıl                                                                                      |
+    | ------------------------- | ---------------------------------------------------------------------------------------- |
+    | Ekran görüntüsü paylaş        | Formun ekran görüntüsünü al ve sohbette paylaş. career-ops görselleri doğrudan okur. |
+    | Soruları yapıştır       | Form sorularını metin olarak kopyala ve sohbete yapıştır.                            |
+    | Şirketi ve pozisyonu belirt | Şirket adını ve pozisyon adını yaz. career-ops eşleşmeyi `reports/` içinde arar.        |
+  </div>
+</div>
+
+## Formu doldur
+
+Sistem, formun sırasını izleyen numaralı bir yanıt listesi döndürür; her form alanı için bir yanıt vardır. Listeyi yukarıdan aşağıya doğru izle. Her serbest metin yanıtını yapıştırmadan önce `used/allowed` karakter veya kelime sayısını canlı alanla karşılaştır. `limit unknown`, sınırı formda kontrol etmen gerektiği anlamına gelir; bir yanıt temel bilgileri kaybetmeden sığmıyorsa yapıştırmadan önce düzelt.
+
+Çıktı iki bölümden oluşur:
+
+**Yanıtlar**: formdaki her alan, sırasıyla:
+
+```
+1. Name
+   Andres Urdaneta
+
+2. Email
+   andres@example.com
+
+...
+
+12. Cover Letter (optional)
+    I've spent 5+ years shipping production Rails applications...
+```
+
+Ad, e-posta ve evet/hayır soruları gibi basit alanlar önce gelir. Ön yazı (motivasyon mektubu) gibi serbest metin alanları sona kalır.
+
+**Önemli notlar**: yanıtlardan sonra gelen ve göndermeden önce dikkat etmen gereken her şeyi içeren kısa bir bölüm:
+
+```
+Key notes:
+- No salary field — you'll negotiate at offer. Anchor to $160K–$175K at offer stage.
+- Add github.com/yourhandle to your resume PDF before uploading.
+- Cover letter is optional but the draft above is tight — worth including.
+```
+
+Her yanıt belirli bir kaynaktan oluşturulur; bu kaynak çoğunlukla değerlendirme raporundur:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Alan türü                    | Kaynak                                                |
+    | ----------------------------- | ----------------------------------------------------- |
+    | Ön yazı, "neden bu pozisyon" | Blok B'deki kanıt noktaları + Blok F'deki STAR hikayeleri |
+    | Kısa serbest metin soruları     | O soru için en uygun kanıt noktası veya hikaye  |
+    | Açılır listeler, evet/hayır             | Doğrudan profilinden alınan yanıtlar               |
+    | İşverenler, unvanlar, tarihler, pozisyon açıklamaları, beceriler, eğitim | Bu rapor için oluşturulan uyarlanmış CV; böylece form yüklediğin CV ile tutarlı olur. Bulunamazsa career-ops bunu belirtir ve `cv.md` dosyasını kullanır |
+    | Ad, iletişim bilgileri, çalışma izni, ücret | `config/profile.yml`; hiçbir CV bunun önüne geçmez |
+  </div>
+</div>
+
+<Callout title="Yükleme alanları">
+  Bu rapor için `pdf` modunun oluşturduğu uyarlanmış CV'yi yükle: başvuru paketindeki `cv/tailored/vNNN/cv.pdf` ya da tek seferlik bir CV için `output/` içindeki PDF. Henüz PDF yoksa önce `/career-ops pdf` komutunu çalıştır, sonra forma dön. Ayrıntılar için [pdf modu](/tr/docs/reference/modes/pdf) sayfasına bak.
+</Callout>
+
+## Başvuruyu gönder
+
+Her yanıtı gözden geçir, ardından formu kendin gönder. career-ops senin yerine Gönder'e tıklamaz. Ashby'de başvuruyu Playwright oturumunda değil, normal sistem tarayıcında tamamla ve gönder. career-ops'a başvurunun gönderildiğini söylemeden önce bir başarı sayfası veya onay e-postası gördüğünden emin ol.
+
+Gönderdikten sonra sohbette onayla:
+
+> "Gönderildi."
+
+career-ops şunları yapar:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Başvuru durumunu günceller">
+        `data/applications.md` dosyasını günceller ve durumu `Evaluated` değerinden `Applied` değerine çevirir
+      </Step>
+      <Step title="Yanıtları rapora kaydeder">
+        Son yanıtları ileride başvurmak üzere raporun `## Application Answers` bölümüne kaydeder
+      </Step>
+      <Step title="İlk takibi planlar">
+        İlk takibi başvurduğun günden itibaren planlar. `config/profile.yml` içinde `follow_ups.enabled: false` ayarlıysa bu adım atlanır; ayrıntılar için [followup](/tr/docs/reference/modes/followup) sayfasına bak
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+## Sırada ne var?
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Puan             | Sonraki adım                                                                                                                                                                                        |
+    | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | **4,0 veya üzeri** | `/career-ops contacto` komutunu çalıştır. career-ops, LinkedIn'de bir işe alım yöneticisi veya ekip üyesi bulur ve bir iletişim mesajı taslağı hazırlar. Mesajı başvurun incelenmeden önce göndermek görünürlüğünü artırır. |
+    | **Herhangi bir puan**     | Pipeline'ındaki her şeyin güncel durumunu görmek için `/career-ops tracker` komutunu çalıştır.                                                                                                              |
+  </div>
+</div>

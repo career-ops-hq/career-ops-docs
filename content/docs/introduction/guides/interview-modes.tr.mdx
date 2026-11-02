@@ -1,0 +1,66 @@
+---
+title: Mülakatlara hazırlan
+description: Mülakat modlarıyla (plan, practice, debrief) belirli bir mülakat aşamasına hazırlan, yapay zeka mülakatçısıyla prova yap ve her gerçek mülakatı bir sonrakine yarayacak bilgiye dönüştür.
+seoTitle: "career-ops ile mülakat hazırlığı: her aşamaya özel hazırlık"
+icon: GraduationCap
+translationHash: f200ca2ca0715a2e
+localized: true
+translatedFrom: /docs/introduction/guides/interview-modes
+---
+
+Mülakat modları, career-ops'un v1.16.0 ile gelen mülakat hazırlık sistemidir: `interview/plan` belirli bir mülakat aşaması için zaman bloklarına bölünmüş bir hazırlık planı oluşturur, `interview/practice` her seferinde tek soru sorarak yazılı bir deneme mülakatı yürütür, `interview/debrief` ise gerçekte ne olduğunu kayda geçirir, böylece bir sonraki aşamaya daha donanımlı başlarsın. Birlikte bir döngü oluştururlar (planla, prova yap, mülakata gir, değerlendir, tekrarla) ve bu döngünün getirisi işe alım süreci boyunca katlanarak artar.
+
+Bu modlar, kalıcı temelini (hikaye bankası, soru bankası) oluşturan eski [`interview-prep` modunu](/tr/docs/reference/modes/interview-prep) tamamlar. Bu üç odaklı modun konusu ise *yaklaşan belirli bir mülakat aşamasıdır*.
+
+<Callout title="Önce neler gerekiyor?">
+`cv.md` ve `config/profile.yml` dosyalarının yerinde olduğu bir çalışma alanı ([Hızlı Başlangıç](/tr/docs) ikisini de kurar). Modlar bu dosyaları okur; böylece her plan ve her geri bildirim genel mülakat tavsiyelerine değil, senin gerçek deneyimine dayanır.
+</Callout>
+
+## Döngüye genel bakış
+
+| Mod | Ne zaman | Ne elde edersin |
+| --- | --- | --- |
+| `interview/plan` | Mülakat aşaması planlandığı anda | Gerçekten sahip olduğun saatlere göre ayarlanmış, zaman bloklarına bölünmüş bir hazırlık planı |
+| `interview/practice` | Mülakattan önce | Her cevap için yapılandırılmış geri bildirim içeren yazılı bir deneme mülakatı |
+| `interview/debrief` | Gerçek mülakatın hemen ardından | Soru soru dürüst bir değerlendirme + güncellenmiş bir soru bankası |
+
+## Plan: tarihi bir programa dönüştür
+
+`interview/plan` moduna iş ilanını ve mülakatın tarihini ve saatini ver; biliyorsan mülakat aşamasının türünü ve mülakatçıyı da ekle. Mod, CV'ni ve profilini okur, dürüst bir uyum değerlendirmesi yapar (öne çıkaracağın güçlü yönler, sınanması muhtemel eksikler) ve kalan saatlerini somut hazırlık bloklarına böler.
+
+```txt title="Example"
+/career-ops interview/plan
+
+→ Inputs: JD (pasted), interview Thursday 14:00, HM screen with Ana (Eng Manager)
+→ Fit assessment: 4 strengths to anchor · 2 gaps ranked by test likelihood
+→ Plan (9 hours available):
+   Block 1 — Lock your narrative (~1.5h): timeline, "why us", strongest proof point
+   Block 2 — Gap: event-driven architectures (~3h)
+   Block 3 — Behavioral stories, STAR+R (~2h)
+   Block 4 — Mock run + comp answer (~1.5h)
+```
+
+Plan, mülakat aşamasına göre ayarlanır: İK ön görüşmesinde teknik ayrıntılara girmek yerine lojistiğe ve anlatına odaklanılır; alan uzmanıyla yapılan derinlemesine mülakatta ise ilandaki temel beceride derinleşilir. Önceki bir aşamadan kalan bir soru bankası varsa, zorlandığın her konuya ayrı bir blok ayrılır; çünkü gerçek performans verisi, tahmin edilen riskten daha önceliklidir.
+
+## Practice: her seferinde tek soruyla prova yap [#practice-rehearse-against-a-realistic-interviewer]
+
+`interview/practice` mülakatçıyı canlandırır (adını ve rolünü verirsen onlarla) ve her seferinde tek soru sorar; rolünden çıkmaz, gerçek bir mülakatçının üstüne gideceği yerlerde doğal takip soruları yöneltir. Her cevabın ardından yapılandırılmış geri bildirim alırsın: neyin işe yaradığı, neyi sıkılaştırman gerektiği ve gerçek CV'ne ve hikaye bankana dayanan, cevabının daha güçlü bir hali.
+
+Oturumu bir mülakatçı gibi takip eder: aynı hikayeye iki kez başvurursan örnek setinin zayıf göründüğünü belirtir; cevabın role uymayan bir alanda bitiyorsa onu nereye bağlaman gerektiğini söyler.
+
+<Callout>
+Practice kendi sınırları konusunda dürüsttür: henüz bir soru bankası ya da role özel hazırlık notları oluşturmadıysan bunu söyler ve sessizce genel bir oturum yürütmek yerine önce `interview-prep` veya `interview/plan` çalıştırmayı önerir.
+</Callout>
+
+## Debrief: mülakattan öğrendiklerini asla kaybetme
+
+`interview/debrief` modunu gerçek bir mülakatın hemen ardından, hafızan tazeyken çalıştır. Hatırlayabildiğin her soruyu seninle tek tek ele alır, mülakatçının nasıl tepki verdiğini kaydeder ve soru soru dürüst bir değerlendirme çıkarır. Ardından birikimi sağlayan işi yapar:
+
+- **Soru bankasını günceller:** her soru, içgüdüne göre değil gerçek performansına göre ✅ / 🟡 / 🔴 olarak işaretlenir.
+- **Eksikleri kapatır:** her 🔴 için doğru cevabı çözümlü bir örnekle açıklar ve zaten sahip olduğun bir hikayeye bağlar.
+- **Yeni hikayeler çıkarır:** mülakatta anlattığın bir şey henüz hikaye bankanda yoksa, onu bir STAR+R hikayesine dönüştürmeyi önerir ve kabul edersen ekler.
+- **Bir sonraki aşamayı öngörür:** formatı biliyorsan mülakatçının rolünden ve bu aşamada ele alınan konulardan yola çıkarak muhtemel soruları listeler ve her birini `[inferred]` olarak etiketler.
+
+## Bu döngü neden işe yarar?
+
+Mülakat hazırlığı genellikle her aşamada sıfırlanır. Mülakat modları onu birikimli hale getirir: gerçek bir mülakatçının sorduğu sorular, bir sonraki aşama için en öncelikli hazırlık sinyaline dönüşür ve career-ops'taki diğer her şey gibi kendi makinende, sana ait düz Markdown dosyalarında (`interview-prep/question-bank.md`, `story-bank.md`) saklanır.

@@ -4,18 +4,18 @@ import { instrumentSerifRegular } from '@/lib/fonts';
 import comparisonsData from '@/lib/data/comparisons.json';
 
 export const metadata: Metadata = {
-  title: 'Compare · career-ops',
+  title: 'Compare AI job search tools · career-ops',
   description:
-    'Honest comparisons between career-ops and other AI job search tools. Open source local vs SaaS cloud, MIT vs proprietary, free vs $50-200/mo. No fake ratings, no pasivo-agresivo framing.',
+    'career-ops side by side with Teal, Jobscan, Simplify, LoopCV and more: price, where your CV goes, and who presses Submit. Free for candidates.',
   alternates: { canonical: 'https://career-ops.org/compare' },
   openGraph: {
     images: [DEFAULT_OG_IMAGE],
     type: 'website',
     url: 'https://career-ops.org/compare',
     siteName: 'career-ops',
-    title: 'Compare · career-ops',
+    title: 'Compare AI job search tools · career-ops',
     description:
-      'Honest comparisons between career-ops and other AI job search tools.',
+      'career-ops side by side with Teal, Jobscan, Simplify, LoopCV and more: price, where your CV goes, and who presses Submit. Free for candidates.',
   },
   robots: { index: true, follow: true },
 };
@@ -32,7 +32,11 @@ export default function CompareIndexPage() {
         <p className="mt-4 text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
           Open source local vs SaaS cloud. MIT vs proprietary. Free vs $50–200 a
           month. The matrix is honest, the verdicts are blunt, and neither
-          product wins every row.
+          product wins every row. Not sure what to compare? Start with{' '}
+          <a href="/ai-job-search" className="text-brand-text hover:underline underline-offset-2">
+            how to choose an AI job search agent
+          </a>
+          .
         </p>
       </header>
 
