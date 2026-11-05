@@ -3,7 +3,7 @@ title: Primeiros passos
 description: "Comece a usar o career-ops em cerca de quinze minutos: instale o sistema de IA de código aberto para busca de emprego, abra a sua CLI de IA e avalie a sua primeira vaga. Não precisa saber programar."
 seoTitle: "Primeiros passos com o career-ops — instale e avalie sua primeira vaga com IA em minutos"
 icon: Rocket
-translationHash: a1ac86db5bf5c50e
+translationHash: 7b12d8ccd43d60f2
 localized: true
 translatedFrom: /docs
 ---
@@ -261,7 +261,9 @@ Agora que a sua primeira avaliação está pronta, veja algumas coisas que você
     Confira se o `cv.md` existe na pasta raiz e se tem conteúdo. Se o onboarding terminou, mas o `cv.md` está vazio, peça ao agente: *"meu cv.md parece estar vazio, você pode me ajudar a preenchê-lo?"*
   </Accordion>
   <Accordion title="O PDF não foi gerado">
-    Execute `npx playwright install chromium` de novo. Se isso não resolver, confira se o Node.js está na versão 22.13 ou superior (23.4 ou superior no Node 23) executando `node --version`.
+    Execute primeiro `npm run doctor`. A verificação do Playwright diz por que o Chromium não conseguiu iniciar e mostra a correção para essa causa. Execute `npx playwright install chromium` só quando o doctor informar que o Chromium não está instalado. Se ele informar que faltam bibliotecas do sistema de que o Chromium precisa, siga a correção de dependências que ele mostra para o seu sistema; reinstalar o Chromium não resolve, porque o navegador já está baixado. Para qualquer outra falha ao iniciar, reinstalar também não resolve: leia o erro que o doctor mostra e, se você roda o career-ops dentro de um sandbox ou contêiner, confira se ele permite iniciar um processo de navegador.
+
+    Se o PDF ainda não for gerado, confira se o Node.js está na versão 22.13 ou superior (23.4 ou superior no Node 23) executando `node --version`.
   </Accordion>
   <Accordion title="A nota parece errada">
     As primeiras avaliações são imprecisas — o sistema ainda não conhece você bem. Depois de cada avaliação, diga ao seu assistente de IA o que ele errou. Por exemplo: *"Essa nota está alta demais — não tenho experiência com Kubernetes."* Ele vai aprender e se ajustar.

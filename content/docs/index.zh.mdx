@@ -3,7 +3,7 @@ title: 快速开始
 description: "大约十五分钟上手 career-ops：安装这个开源的 AI 求职系统，打开你的 AI CLI，评估你的第一个职位。无需编程。"
 seoTitle: "career-ops 快速上手：几分钟完成安装，用 AI 扫描你的第一个职位"
 icon: Rocket
-translationHash: a1ac86db5bf5c50e
+translationHash: 7b12d8ccd43d60f2
 localized: true
 translatedFrom: /docs
 ---
@@ -261,7 +261,9 @@ npx playwright install chromium
     确认根目录中存在 `cv.md`，并且里面有内容。如果初始引导已经完成，但 `cv.md` 是空的，可以问智能体：“*我的 cv.md 好像是空的，你能帮我填写吗？*”
   </Accordion>
   <Accordion title="PDF 没有生成">
-    再运行一次 `npx playwright install chromium`。如果问题仍未解决，运行 `node --version`，确认 Node.js 版本为 22.13 或更高（Node 23 则需 23.4 或更高）。
+    先运行 `npm run doctor`。它的 Playwright 检查会说明 Chromium 为什么无法启动，并给出针对该原因的修复方法。只有当 doctor 报告 Chromium 未安装时，才运行 `npx playwright install chromium`。如果它报告缺少 Chromium 所需的系统库，请按它针对你的系统给出的依赖修复方法操作；重新安装 Chromium 没有用，因为浏览器已经下载好了。如果是其他启动失败，重新安装同样解决不了：请阅读 doctor 显示的错误信息；如果你在沙箱或容器里运行 career-ops，请确认它允许启动浏览器进程。
+
+    如果 PDF 仍然没有生成，运行 `node --version`，确认 Node.js 版本为 22.13 或更高（Node 23 则需 23.4 或更高）。
   </Accordion>
   <Accordion title="评分好像不准">
     最初几次评估会比较粗糙，因为系统还不太了解你。每次评估之后，告诉你的 AI 助手它哪里判断错了。例如：“*这个分数太高了，我没有任何 Kubernetes 经验。*”它会从中学习并做出调整。

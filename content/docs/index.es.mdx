@@ -3,7 +3,7 @@ title: Guía rápida
 description: "Empieza con career-ops en unos quince minutos: instala el sistema open source de búsqueda de empleo con IA, abre tu CLI de IA y evalúa tu primera oferta. Sin necesidad de programar."
 seoTitle: "career-ops Guía rápida — instala y ejecuta tu primer análisis de ofertas con IA en minutos"
 icon: Rocket
-translationHash: a1ac86db5bf5c50e
+translationHash: 7b12d8ccd43d60f2
 localized: true
 translatedFrom: /docs
 ---
@@ -261,7 +261,9 @@ Ahora que tu primera evaluación está hecha, aquí tienes algunas cosas que pue
     Asegúrate de que `cv.md` existe en la carpeta raíz y tiene contenido. Si el onboarding terminó pero `cv.md` está vacío, pídele al agente: *«mi cv.md parece vacío, ¿puedes ayudarme a rellenarlo?»*
   </Accordion>
   <Accordion title="El PDF no se generó">
-    Ejecuta `npx playwright install chromium` de nuevo. Si eso no lo arregla, comprueba que Node.js es la versión 22.13 o superior (23.4 o superior en Node 23) ejecutando `node --version`.
+    Ejecuta primero `npm run doctor`. Su comprobación de Playwright dice por qué Chromium no pudo arrancar e imprime la solución para esa causa. Ejecuta `npx playwright install chromium` solo cuando doctor indique que Chromium no está instalado. Si indica que faltan las librerías del sistema que Chromium necesita, sigue la solución de dependencias que imprime para tu sistema; reinstalar Chromium no sirve, porque el navegador ya está descargado. Ante cualquier otro fallo al arrancar, reinstalar tampoco lo arregla: lee el error que muestra doctor y, si ejecutas career-ops dentro de un sandbox o un contenedor, comprueba que permite arrancar un proceso de navegador.
+
+    Si el PDF sigue sin generarse, comprueba que Node.js es la versión 22.13 o superior (23.4 o superior en Node 23) ejecutando `node --version`.
   </Accordion>
   <Accordion title="La nota parece incorrecta">
     Las primeras evaluaciones son aproximadas — el sistema todavía no te conoce bien. Después de cada evaluación, dile a tu asistente de IA en qué se equivocó. Por ejemplo: *«Esa nota es demasiado alta — no tengo experiencia con Kubernetes».* Aprenderá y se ajustará.

@@ -3,7 +3,7 @@ title: Guida rapida
 description: "Inizia a usare career-ops in circa quindici minuti: installa il sistema AI open source per la ricerca di lavoro, apri la tua CLI AI e valuta il tuo primo annuncio. Non serve saper programmare."
 seoTitle: "Guida rapida a career-ops: installalo e valuta il tuo primo annuncio di lavoro con l'AI in pochi minuti"
 icon: Rocket
-translationHash: a1ac86db5bf5c50e
+translationHash: 7b12d8ccd43d60f2
 localized: true
 translatedFrom: /docs
 ---
@@ -261,7 +261,9 @@ Ora che hai fatto la tua prima valutazione, ecco alcune cose che puoi provare:
     Assicurati che `cv.md` esista nella cartella principale e che non sia vuoto. Se l'onboarding è terminato ma `cv.md` è vuoto, chiedi all'agente: *"il mio cv.md sembra vuoto, mi aiuti a compilarlo?"*
   </Accordion>
   <Accordion title="Il PDF non è stato generato">
-    Esegui di nuovo `npx playwright install chromium`. Se non basta, controlla con `node --version` che Node.js sia alla versione 22.13 o superiore (23.4 o superiore su Node 23).
+    Esegui prima `npm run doctor`. Il suo controllo di Playwright dice perché Chromium non è riuscito ad avviarsi e stampa la correzione per quella causa. Esegui `npx playwright install chromium` solo quando doctor segnala che Chromium non è installato. Se segnala che mancano le librerie di sistema di cui Chromium ha bisogno, segui la correzione delle dipendenze che stampa per il tuo sistema; reinstallare Chromium non serve, perché il browser è già scaricato. Per qualsiasi altro errore di avvio, reinstallare non lo risolve comunque: leggi l'errore che mostra doctor e, se esegui career-ops dentro una sandbox o un container, controlla che consenta di avviare un processo del browser.
+
+    Se il PDF continua a non essere generato, controlla con `node --version` che Node.js sia alla versione 22.13 o superiore (23.4 o superiore su Node 23).
   </Accordion>
   <Accordion title="Il punteggio non mi convince">
     Le prime valutazioni sono approssimative: il sistema non ti conosce ancora bene. Dopo ogni valutazione, di' al tuo assistente AI che cosa ha sbagliato. Per esempio: *"Quel punteggio è troppo alto: non ho esperienza con Kubernetes."* Imparerà e si correggerà.
