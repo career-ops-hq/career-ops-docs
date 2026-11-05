@@ -30,6 +30,8 @@ PDF:   output/cv-jane-doe-acme-2026-05-18.pdf
 Pages: 2 · Keyword coverage: 16/18 (89%)
 ```
 
+With `page_format: auto` in your profile, `--country=DE` tells `generate-pdf.mjs` the employer's country, so it picks that country's paper size: Letter where that is the primary size, A4 everywhere else. It takes a two-letter ISO code.
+
 The layout stays single-column with standard section headers and selectable text — the structure ATS parsers read cleanly — and keywords are woven into real achievements, never invented.
 
 Keyword coverage is measured against the keyword section of the listing's evaluation report. If the report has none, career-ops scores the skills it finds in the report's archived job description instead and tells you which source it used. A report without a keyword section is a defect to fix in the report, not a pass.
