@@ -32,6 +32,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "career-ops keeps your data on your machine, in plain files you own — your CV, profile, pipeline and reports are local Markdown/YAML. Nothing runs on career-ops servers. System updates never touch your data layer (cv.md, config/, data/, reports/, output/): that separation is the Data Contract, and every update honors it.",
     },
     {
+      question: "My agent runs in a git worktree. Where does a career-ops update land?",
+      answer:
+        "A career-ops update started from a linked git worktree lands on main, in the checkout that has main checked out, not on the worktree's branch. Agents such as Claude Code can run each session in a linked worktree on a throwaway branch. When node update-system.mjs runs there, check, apply, rollback and dismiss re-run themselves in the main checkout, so the update is committed to main and worktrees created from the updated main already have it. To bring the worktree you are in up to date afterwards, run git merge main (or git rebase main) inside it. If no checkout has main checked out, or the main checkout has uncommitted changes to tracked files, apply and rollback refuse without changing anything and tell you what to fix. To update the worktree's own branch instead, set CAREER_OPS_UPDATE_IN_WORKTREE=1. Running the updater from your main checkout works exactly as before. This is the behavior since career-ops v1.36.0; the full behavior is in the core repo's docs/SCRIPTS.md.",
+    },
+    {
       question: "How do I give career-ops my CV?",
       answer:
         "To give career-ops your CV, paste your CV text into the chat during the first-run onboarding, and the agent writes cv.md for you. Pasting the text is the guided path. You can also point the agent at an existing CV file, PDF included: it reads the file and converts it, because the parsing is done by your AI agent, not by a career-ops script. And since cv.md is a plain file you own, you can always write or edit it by hand instead. The agent produces clean markdown with standard sections (Summary, Experience, Projects, Education, Skills). During setup you never edit config files by hand either: you answer in plain language and the agent writes config/profile.yml and the rest for you.",
@@ -97,6 +102,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Wo liegen meine Daten?",
       answer:
         "career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates rühren deine Datenschicht (cv.md, config/, data/, reports/, output/) nie an: Diese Trennung ist der Data Contract, und jedes Update hält sich daran.",
+    },
+    {
+      question: "Mein Agent arbeitet in einem Git-Worktree. Wo landet ein career-ops-Update?",
+      answer:
+        "Ein career-ops-Update, das aus einem verknüpften Git-Worktree heraus gestartet wird, landet auf main, in dem Checkout, in dem main ausgecheckt ist, und nicht auf dem Branch des Worktrees. Agenten wie Claude Code können jede Sitzung in einem verknüpften Worktree auf einem Wegwerf-Branch ausführen. Läuft node update-system.mjs dort, führen sich check, apply, rollback und dismiss im main-Checkout erneut aus. Das Update wird also auf main committet, und Worktrees, die vom aktualisierten main aus erstellt werden, haben es bereits. Um den Worktree, in dem du gerade bist, danach auf den neuesten Stand zu bringen, führe darin git merge main (oder git rebase main) aus. Ist main in keinem Checkout ausgecheckt oder hat der main-Checkout nicht committete Änderungen an versionierten Dateien, verweigern apply und rollback die Ausführung, ohne etwas zu ändern, und sagen dir, was zu beheben ist. Um stattdessen den Branch des Worktrees selbst zu aktualisieren, setze CAREER_OPS_UPDATE_IN_WORKTREE=1. Den Updater aus deinem Haupt-Checkout zu starten funktioniert genau wie bisher. So verhält sich career-ops seit v1.36.0; die vollständige Beschreibung steht in docs/SCRIPTS.md im Core-Repo.",
     },
     {
       question: "Wie gebe ich career-ops meinen Lebenslauf?",
@@ -166,6 +176,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "career-ops guarda tus datos en tu máquina, en archivos planos que son tuyos — tu CV, tu perfil, tu pipeline y tus informes son Markdown/YAML locales. Nada corre en servidores de career-ops. Las actualizaciones del sistema nunca tocan tu capa de datos (cv.md, config/, data/, reports/, output/): esa separación es el Data Contract, y todas las actualizaciones lo respetan.",
     },
     {
+      question: "Mi agente trabaja en un worktree de Git. ¿Dónde se aplica una actualización de career-ops?",
+      answer:
+        "Una actualización de career-ops lanzada desde un worktree de Git enlazado se aplica en main, en el checkout que tiene main activo, no en la rama del worktree. Agentes como Claude Code pueden ejecutar cada sesión en un worktree enlazado sobre una rama desechable. Cuando node update-system.mjs se ejecuta ahí, check, apply, rollback y dismiss se vuelven a ejecutar en el checkout de main, así que la actualización queda confirmada en main y los worktrees creados a partir del main actualizado ya la tienen. Para poner al día después el worktree en el que estás, ejecuta git merge main (o git rebase main) dentro de él. Si ningún checkout tiene main activo, o el checkout de main tiene cambios sin confirmar en archivos versionados, apply y rollback se niegan sin cambiar nada y te dicen qué corregir. Para actualizar la rama del propio worktree, define CAREER_OPS_UPDATE_IN_WORKTREE=1. Ejecutar el actualizador desde tu checkout principal funciona exactamente igual que antes. Este es el comportamiento desde career-ops v1.36.0; el comportamiento completo está en docs/SCRIPTS.md del repo core.",
+    },
+    {
       question: "¿Cómo le doy mi CV a career-ops?",
       answer:
         "Para darle tu CV a career-ops, pega el texto de tu CV en el chat durante el onboarding del primer arranque, y el agente escribe cv.md por ti. Pegar el texto es el camino guiado. También puedes indicarle al agente un archivo de CV que ya tengas, PDF incluido: lo lee y lo convierte, porque quien lo interpreta es tu agente de IA, no un script de career-ops. Y como cv.md es un archivo plano que es tuyo, siempre puedes escribirlo o editarlo a mano. El agente genera markdown limpio con las secciones estándar (Summary, Experience, Projects, Education, Skills). Durante la configuración tampoco editas archivos de configuración a mano: respondes en lenguaje natural y el agente escribe config/profile.yml y el resto por ti.",
@@ -231,6 +246,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Mes données restent-elles sur mon ordinateur ? career-ops est-il privé ?",
       answer:
         "career-ops conserve vos données sur votre machine, dans des fichiers en clair qui vous appartiennent — votre CV, votre profil, votre pipeline et vos rapports sont des fichiers Markdown/YAML locaux. Rien ne s'exécute sur des serveurs career-ops. Les mises à jour du système ne touchent jamais votre couche de données (cv.md, config/, data/, reports/, output/) : cette séparation est le Data Contract, et chaque mise à jour la respecte.",
+    },
+    {
+      question: "Mon agent travaille dans un worktree Git. Où une mise à jour de career-ops s'applique-t-elle ?",
+      answer:
+        "Une mise à jour de career-ops lancée depuis un worktree Git lié s'applique sur main, dans le checkout où main est extrait, et non sur la branche du worktree. Des agents comme Claude Code peuvent exécuter chaque session dans un worktree lié, sur une branche jetable. Quand node update-system.mjs y est lancé, check, apply, rollback et dismiss se relancent dans le checkout de main : la mise à jour est donc committée sur main, et les worktrees créés à partir du main mis à jour l'ont déjà. Pour mettre ensuite à jour le worktree dans lequel vous êtes, lancez git merge main (ou git rebase main) à l'intérieur. Si aucun checkout n'a main extrait, ou si le checkout de main contient des modifications non committées sur des fichiers suivis, apply et rollback refusent sans rien modifier et vous indiquent quoi corriger. Pour mettre à jour la branche du worktree lui-même, définissez CAREER_OPS_UPDATE_IN_WORKTREE=1. Lancer l'outil de mise à jour depuis votre checkout principal fonctionne exactement comme avant. C'est le comportement depuis career-ops v1.36.0 ; le détail complet se trouve dans docs/SCRIPTS.md du dépôt principal.",
     },
     {
       question: "Comment importer mon CV dans career-ops ?",
@@ -305,6 +325,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
         "career-ops conserva i tuoi dati sulla tua macchina, in semplici file che ti appartengono: il tuo curriculum, il profilo, la pipeline e i report sono file Markdown/YAML locali. Niente gira sui server di career-ops. Gli aggiornamenti di sistema non toccano mai il tuo livello dati (cv.md, config/, data/, reports/, output/): questa separazione è il Data Contract, e ogni aggiornamento lo rispetta.",
     },
     {
+      question: "Il mio agente lavora in un worktree Git. Dove finisce un aggiornamento di career-ops?",
+      answer:
+        "Un aggiornamento di career-ops avviato da un worktree Git collegato finisce su main, nel checkout in cui main è attivo, e non sul branch del worktree. Agenti come Claude Code possono eseguire ogni sessione in un worktree collegato, su un branch usa e getta. Quando node update-system.mjs viene eseguito lì, check, apply, rollback e dismiss si rieseguono nel checkout di main: l'aggiornamento viene quindi committato su main, e i worktree creati dal main aggiornato ce l'hanno già. Per aggiornare poi il worktree in cui ti trovi, esegui al suo interno git merge main (oppure git rebase main). Se nessun checkout ha main attivo, oppure il checkout di main ha modifiche non committate a file tracciati, apply e rollback si rifiutano senza cambiare nulla e ti dicono cosa sistemare. Per aggiornare invece il branch del worktree stesso, imposta CAREER_OPS_UPDATE_IN_WORKTREE=1. Avviare l'updater dal tuo checkout principale funziona esattamente come prima. Questo è il comportamento da career-ops v1.36.0; la descrizione completa è in docs/SCRIPTS.md nel repo core.",
+    },
+    {
       question: "Come carico il mio curriculum in career-ops?",
       answer:
         "Per fornire a career-ops il tuo curriculum, incolla il testo del curriculum nella chat durante l'onboarding del primo avvio, e l'agente scrive cv.md per te. Incollare il testo è il percorso guidato. Puoi anche indicare all'agente un file CV esistente, PDF compreso: lo legge e lo converte, perché l'analisi la fa il tuo agente AI, non uno script di career-ops. E poiché cv.md è un semplice file che ti appartiene, puoi sempre scriverlo o modificarlo a mano. L'agente produce un markdown pulito con le sezioni standard (Profilo, Esperienza, Progetti, Formazione, Competenze). Durante la configurazione non modifichi a mano nemmeno i file di configurazione: rispondi in linguaggio naturale e l'agente scrive config/profile.yml e tutto il resto per te.",
@@ -370,6 +395,11 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
       question: "Onde ficam os meus dados?",
       answer:
         "O career-ops mantém os seus dados na sua máquina, em arquivos de texto simples que pertencem a você — seu currículo, seu perfil, seu pipeline e seus relatórios são arquivos Markdown/YAML locais. Nada roda em servidores do career-ops. As atualizações do sistema nunca tocam na sua camada de dados (cv.md, config/, data/, reports/, output/): essa separação é o Data Contract, e toda atualização o respeita.",
+    },
+    {
+      question: "Meu agente trabalha em um worktree do Git. Onde uma atualização do career-ops é aplicada?",
+      answer:
+        "Uma atualização do career-ops iniciada a partir de um worktree vinculado do Git é aplicada no main, no checkout em que o main está ativo, e não no branch do worktree. Agentes como o Claude Code podem rodar cada sessão em um worktree vinculado, em um branch descartável. Quando o node update-system.mjs roda ali, check, apply, rollback e dismiss são executados de novo no checkout de main: a atualização é commitada no main, e os worktrees criados a partir do main atualizado já a incluem. Para atualizar depois o worktree em que você está, execute git merge main (ou git rebase main) dentro dele. Se nenhum checkout tiver o main ativo, ou se o checkout de main tiver alterações não commitadas em arquivos versionados, apply e rollback se recusam a rodar sem alterar nada e dizem o que corrigir. Para atualizar o próprio branch do worktree, defina CAREER_OPS_UPDATE_IN_WORKTREE=1. Rodar o atualizador a partir do seu checkout principal funciona exatamente como antes. Este é o comportamento desde o career-ops v1.36.0; a descrição completa está em docs/SCRIPTS.md no repositório core.",
     },
     {
       question: "Como envio meu currículo para o career-ops?",
