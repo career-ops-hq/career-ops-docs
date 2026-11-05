@@ -3,7 +3,7 @@ title: Valutare più annunci in batch
 description: Elabora 10 o più annunci di lavoro in un'unica sessione, con worker AI in parallelo e PDF su misura.
 seoTitle: "Valutare tanti annunci di lavoro in una volta con career-ops: la valutazione in batch"
 icon: FileStack
-translationHash: 537bf031e6d66d7e
+translationHash: 2a76790d1f5059cd
 localized: true
 translatedFrom: /docs/introduction/guides/batch-evaluate-offers
 ---
@@ -163,6 +163,8 @@ Questo script:
 ```bash title="Terminal"
 node merge-tracker.mjs --dry-run
 ```
+
+Se un file di riepilogo è malformato, lo script lo salta: mostra un avviso `Skipping` che indica il file e il problema, e non aggiunge nessuna riga per quell'annuncio. L'anteprima mostra gli stessi avvisi, quindi puoi correggere il file prima che venga archiviato qualcosa. Un'esecuzione reale sposta comunque il file saltato in `batch/tracker-additions/merged/` insieme agli altri: per recuperarlo, correggilo, riportalo in `batch/tracker-additions/` ed esegui di nuovo `node merge-tracker.mjs`.
 
 ## Cosa fare dopo
 
