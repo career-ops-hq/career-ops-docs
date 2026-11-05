@@ -45,6 +45,22 @@ node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applie
 
 Three more flags exist mainly for the Go TUI dashboard, which now records its status changes through `set-status.mjs`. `--report-link N` selects the row whose Report cell holds exactly one link to report `N`, and refuses malformed cells instead of guessing. `--repair-status-log` and `--repair-followup` apply when an Applied change is re-run on a row that is already Applied: they add the ledger entry or the follow-up reminder that the first attempt failed to write, and add nothing when it is already there.
 
+## Changing the other columns
+
+The other columns have writers too, so the table is not something you edit by hand.
+
+- **Notes.** `node set-status.mjs --report <report#> <state> --note "..."` appends a note to the row. Pass the state the row already has to add a note on its own: the status stays as it is and nothing is written to `data/status-log.tsv`.
+- **Date, score, report, company and role.** These come from an evaluation, so they change when the role is evaluated again. `node merge-tracker.mjs` matches the new evaluation to the row already in the tracker and updates that row instead of adding a second one. The date, the score and the report link are replaced, and a `Re-eval` note records the old and the new score. When the match is on the report or on the posting URL, the company and the role title are replaced too. The row keeps its `#` and its status. A re-evaluation that produced no score (`N/A`, `—` or `-`) is skipped when the row already has one, and the row is left as it is.
+- **PDF.** Each merge also flips a row's PDF column from ❌ to ✅ once a CV has been generated for its report.
+
+A merge never changes the status of a row that is already in the tracker. A new evaluation that says `Applied` for a row sitting on `Evaluated` leaves it on `Evaluated`; `set-status.mjs` is what moves it.
+
+## Naming the employer of a `?` row
+
+A posting that came through an agency without naming the employer is tracked with `?` in the Company column. When you learn who the employer is, say so in the chat ("the agency role is at Acme"). The tracker mode renames the row through `node merge-tracker.mjs`, matched on the row's report: `?` becomes the real name, and the row keeps its `#` and its status. It also writes the company into the report without renaming the report file, then runs `node verify-pipeline.mjs` and warns you if the same company and role is already in your tracker through another channel. It never merges those two rows: both applications happened, and you decide which channel owns the candidacy.
+
+A `?` row that has no report is the exception. Without the report link no command can tell which `?` row is meant, so career-ops says so and leaves that one Company cell for you to change yourself.
+
 ## Repairing dead report links
 
 `node verify-pipeline.mjs` reports `Report not found` when a row's Report cell links a file that no longer exists. `npm run fix-report-links` repairs those rows by changing only that cell to the tracker's usual "no report" mark. It does not regenerate the missing report. Preview first:

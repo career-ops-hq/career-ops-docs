@@ -56,6 +56,13 @@ When the report or the job description explicitly describes the role as fixed-te
 
 Before every Save, Next or Continue on a multi-step form, and before handing the form to you for Submit, apply re-reads the whole step and checks that every required control holds a value, including controls that appear only after another answer. If a required field cannot be filled from your own files, it stops and asks you.
 
+## When the role has changed
+
+If the role on the form is not the one your report evaluated, apply tells you the old and the new title and asks whether to re-evaluate or to adapt the answers to the new title. Neither choice edits the tracker table by hand.
+
+- **Re-evaluate.** apply runs the full evaluation again and updates the report in place, so the report keeps its number. The new title reaches the tracker through `node merge-tracker.mjs`: the row's role title is replaced, and the row keeps its `#` and its status.
+- **Adapt.** The answers are adjusted to the new title with no new evaluation, and only after you accept the mismatch. The row keeps the title the report evaluated, and a note on the row records that the posting was retitled when you applied.
+
 ## Known ATS quirks
 
 apply has been field-tested across roughly a dozen Playwright-driven applications, and a few portals break a run if you do not account for them:

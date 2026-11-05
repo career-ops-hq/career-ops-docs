@@ -5,7 +5,7 @@ seoTitle: "Mode tracker de career-ops — visualisez l'état de chaque candidatu
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: ef85d61f0db91378
+translationHash: 4e4e50db3f4e9283
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -47,6 +47,22 @@ node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applie
 ```
 
 Trois autres options existent surtout pour le dashboard TUI en Go, qui enregistre désormais ses changements de statut via `set-status.mjs`. `--report-link N` sélectionne la ligne dont la cellule Report contient exactement un lien vers le rapport `N`, et refuse les cellules mal formées au lieu de deviner. `--repair-status-log` et `--repair-followup` s'appliquent quand un passage à Applied est relancé sur une ligne déjà en Applied : elles ajoutent l'entrée du journal ou le rappel de relance que la première tentative n'a pas réussi à écrire, et n'ajoutent rien quand ils sont déjà présents.
+
+## Modifier les autres colonnes
+
+Les autres colonnes ont elles aussi leur commande d'écriture : le tableau ne se modifie donc pas à la main.
+
+- **Notes.** `node set-status.mjs --report <report#> <state> --note "..."` ajoute une note à la ligne. Passez l'état que la ligne a déjà pour ajouter uniquement la note : le statut reste tel quel et rien n'est écrit dans `data/status-log.tsv`.
+- **Date, score, rapport, entreprise et poste.** Ils viennent d'une évaluation et changent donc quand le poste est évalué de nouveau. `node merge-tracker.mjs` rapproche la nouvelle évaluation de la ligne déjà présente dans le tracker et met à jour cette ligne au lieu d'en ajouter une seconde. La date, le score et le lien vers le rapport sont remplacés, et une note `Re-eval` consigne l'ancien score et le nouveau. Quand la correspondance se fait sur le rapport ou sur l'URL de l'offre, l'entreprise et l'intitulé du poste sont remplacés eux aussi. La ligne garde son `#` et son statut. Une réévaluation qui n'a produit aucun score (`N/A`, `—` ou `-`) est ignorée quand la ligne en a déjà un, et la ligne reste telle quelle.
+- **PDF.** Chaque fusion fait aussi passer la colonne PDF d'une ligne de ❌ à ✅ dès qu'un CV a été généré pour son rapport.
+
+Une fusion ne change jamais le statut d'une ligne déjà présente dans le tracker. Une nouvelle évaluation qui indique `Applied` pour une ligne en `Evaluated` la laisse en `Evaluated` ; c'est `set-status.mjs` qui la fait avancer.
+
+## Nommer l'employeur d'une ligne `?`
+
+Une offre arrivée par une agence qui ne nomme pas l'employeur est suivie avec `?` dans la colonne Company. Quand vous apprenez qui est l'employeur, dites-le dans le chat (« le poste de l'agence est chez Acme »). Le mode tracker renomme la ligne via `node merge-tracker.mjs`, rapprochée par le rapport de la ligne : `?` devient le vrai nom, et la ligne garde son `#` et son statut. Il inscrit aussi l'entreprise dans le rapport sans renommer le fichier du rapport, puis lance `node verify-pipeline.mjs` et vous avertit si la même entreprise et le même poste figurent déjà dans votre tracker par un autre canal. Il ne fusionne jamais ces deux lignes : les deux candidatures ont bien eu lieu, et c'est vous qui décidez à quel canal revient la candidature.
+
+Une ligne `?` sans rapport est l'exception. Sans le lien vers le rapport, aucune commande ne peut savoir de quelle ligne `?` il s'agit : career-ops vous le dit et vous laisse modifier vous-même cette seule cellule Company.
 
 ## Réparer les liens de rapport morts
 

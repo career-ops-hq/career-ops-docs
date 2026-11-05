@@ -5,7 +5,7 @@ seoTitle: "career-ops apply-Modus — Antworten auf ATS-Bewerbungsfragen automat
 icon: Send
 date: "2026-05-19"
 lastModified: "2026-10-14"
-translationHash: 7cdeaddd88619799
+translationHash: 43f7be9c5fa520be
 localized: true
 translatedFrom: /docs/reference/modes/apply
 ---
@@ -58,6 +58,13 @@ Die Felder zur Berufserfahrung stammen aus dem angepassten Lebenslauf, der für 
 Beschreibt der Bericht oder die Stellenanzeige die Stelle ausdrücklich als befristet, zeigt apply vor der ersten Antwort einmalig einen **Fixed-term role reminder** (Hinweis auf eine befristete Stelle) an. Er zitiert die entsprechende Formulierung und eine eventuell genannte Laufzeit und schlägt vor, Verlängerung, Zusatzleistungen und die Bedingungen zum Vertragsende zu klären. Der Hinweis dient nur zur Information: Er ändert nie ein Feld, blockiert nie die Bewerbung und muss nicht bestätigt werden.
 
 Vor jedem Klick auf Speichern, Weiter oder Fortfahren in einem mehrstufigen Formular und bevor er dir das Formular zum Absenden übergibt, liest apply den ganzen Schritt erneut und prüft, ob jedes Pflichtfeld einen Wert enthält, auch Felder, die erst nach einer anderen Antwort erscheinen. Lässt sich ein Pflichtfeld nicht aus deinen eigenen Dateien ausfüllen, hält er an und fragt dich.
+
+## Wenn sich die Rolle geändert hat
+
+Ist die Rolle im Formular nicht die, die dein Bericht bewertet hat, nennt dir apply den alten und den neuen Titel und fragt, ob neu bewertet oder die Antworten an den neuen Titel angepasst werden sollen. Keine der beiden Möglichkeiten bearbeitet die Tracker-Tabelle von Hand.
+
+- **Neu bewerten.** apply führt die vollständige Bewertung erneut aus und aktualisiert den Bericht an Ort und Stelle, sodass der Bericht seine Nummer behält. Der neue Titel gelangt über `node merge-tracker.mjs` in den Tracker: Der Rollentitel der Zeile wird ersetzt, und die Zeile behält ihre `#` und ihren Status.
+- **Anpassen.** Die Antworten werden ohne neue Bewertung an den neuen Titel angepasst, und erst, nachdem du die Abweichung akzeptiert hast. Die Zeile behält den Titel, den der Bericht bewertet hat, und eine Notiz in der Zeile hält fest, dass die Stellenanzeige bei der Bewerbung einen neuen Titel hatte.
 
 ## Bekannte ATS-Eigenheiten
 

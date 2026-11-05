@@ -5,7 +5,7 @@ seoTitle: "career-ops tracker-Modus — so siehst du, wo jede Bewerbung steht"
 icon: LayoutGrid
 date: "2026-05-18"
 lastModified: "2026-10-16"
-translationHash: ef85d61f0db91378
+translationHash: 4e4e50db3f4e9283
 localized: true
 translatedFrom: /docs/reference/modes/tracker
 ---
@@ -47,6 +47,22 @@ node set-status.mjs --row 12 Applied --replace-note "not applied" --note "applie
 ```
 
 Drei weitere Flags gibt es vor allem für das Go-TUI-Dashboard, das seine Statusänderungen jetzt über `set-status.mjs` festhält. `--report-link N` wählt die Zeile, deren Report-Zelle genau einen Link auf Bericht `N` enthält, und lehnt fehlerhafte Zellen ab, statt zu raten. `--repair-status-log` und `--repair-followup` greifen, wenn eine Änderung auf Applied für eine Zeile erneut ausgeführt wird, die bereits auf Applied steht: Sie ergänzen den Protokolleintrag oder die Follow-up-Erinnerung, die der erste Versuch nicht schreiben konnte, und fügen nichts hinzu, wenn er schon vorhanden ist.
+
+## Die anderen Spalten ändern
+
+Auch für die anderen Spalten gibt es Befehle, die sie schreiben. Die Tabelle bearbeitest du also nicht von Hand.
+
+- **Notizen.** `node set-status.mjs --report <report#> <state> --note "..."` hängt eine Notiz an die Zeile an. Gib den Zustand an, den die Zeile schon hat, wenn du nur eine Notiz ergänzen willst: Der Status bleibt, wie er ist, und in `data/status-log.tsv` wird nichts geschrieben.
+- **Datum, Score, Bericht, Unternehmen und Rolle.** Sie stammen aus einer Bewertung und ändern sich deshalb, wenn die Rolle erneut bewertet wird. `node merge-tracker.mjs` ordnet die neue Bewertung der Zeile zu, die schon im Tracker steht, und aktualisiert diese Zeile, statt eine zweite anzulegen. Datum, Score und Berichtslink werden ersetzt, und eine `Re-eval`-Notiz hält den alten und den neuen Score fest. Läuft die Zuordnung über den Bericht oder über die URL der Stellenanzeige, werden auch das Unternehmen und der Rollentitel ersetzt. Die Zeile behält ihre `#` und ihren Status. Eine erneute Bewertung, die keinen Score ergeben hat (`N/A`, `—` oder `-`), wird übersprungen, wenn die Zeile schon einen hat, und die Zeile bleibt, wie sie ist.
+- **PDF.** Jeder Merge setzt außerdem die PDF-Spalte einer Zeile von ❌ auf ✅, sobald für ihren Bericht ein CV erzeugt wurde.
+
+Ein Merge ändert nie den Status einer Zeile, die schon im Tracker steht. Eine neue Bewertung, die `Applied` für eine Zeile angibt, die auf `Evaluated` steht, lässt sie auf `Evaluated`. Erst `set-status.mjs` setzt sie weiter.
+
+## Den Arbeitgeber einer `?`-Zeile eintragen
+
+Eine Stelle, die über eine Agentur kam, ohne den Arbeitgeber zu nennen, steht mit `?` in der Spalte Company. Wenn du erfährst, wer der Arbeitgeber ist, sag es im Chat („die Agenturstelle ist bei Acme“). Der tracker-Modus benennt die Zeile über `node merge-tracker.mjs` um, zugeordnet über den Bericht der Zeile: Aus `?` wird der echte Name, und die Zeile behält ihre `#` und ihren Status. Er trägt das Unternehmen außerdem in den Bericht ein, ohne die Berichtsdatei umzubenennen, führt dann `node verify-pipeline.mjs` aus und warnt dich, wenn dasselbe Unternehmen mit derselben Rolle schon über einen anderen Kanal in deinem Tracker steht. Er führt diese beiden Zeilen nie zusammen: Beide Bewerbungen haben stattgefunden, und du entscheidest, welchem Kanal die Bewerbung gehört.
+
+Eine `?`-Zeile ohne Bericht ist die Ausnahme. Ohne den Berichtslink kann kein Befehl erkennen, welche `?`-Zeile gemeint ist. career-ops sagt dir das und überlässt dir, diese eine Company-Zelle selbst zu ändern.
 
 ## Tote Berichtslinks reparieren
 
