@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { instrumentSerifRegular } from '@/lib/fonts';
 import { WaitlistForm, type WaitlistFormCopy } from '@/components/waitlist-form';
-import { WAITLIST_LOCALES, type WaitlistLocale } from '@/lib/waitlist';
+import { WaitlistLanguageLinks } from '@/components/waitlist-language-links';
+import { waitlistPath, type WaitlistLocale } from '@/lib/waitlist';
 
 // Web version waitlist (Santiago, 30 Oct 2026; copy by narrative-ops, approved by
 // venture-ops). It announces a version that doesn't exist yet, so it describes no
@@ -23,19 +24,6 @@ const mail = (
     hi@career-ops.org
   </a>
 );
-
-const LANGUAGE_NAMES: Record<WaitlistLocale, string> = {
-  en: 'English',
-  es: 'Español',
-  fr: 'Français',
-  de: 'Deutsch',
-  pt: 'Português',
-  it: 'Italiano',
-  zh: '中文',
-  tr: 'Türkçe',
-};
-
-const pagePath = (locale: WaitlistLocale) => (locale === 'en' ? '/waitlist' : `/${locale}/waitlist`);
 
 const COPY: Record<WaitlistLocale, Copy> = {
   en: {
@@ -254,7 +242,7 @@ export function waitlistMetadata(locale: WaitlistLocale): Metadata {
     metadataBase: new URL('https://career-ops.org'),
     title,
     description: sentence,
-    alternates: { canonical: pagePath(locale) },
+    alternates: { canonical: waitlistPath(locale) },
     robots: { index: false, follow: true },
   };
 }
@@ -279,13 +267,7 @@ export function WaitlistPage({ locale }: { locale: WaitlistLocale }) {
             {copy.footerLink}
           </Link>
         </p>
-        <p className="flex flex-wrap gap-x-4 gap-y-1">
-          {WAITLIST_LOCALES.filter((other) => other !== locale).map((other) => (
-            <Link key={other} href={pagePath(other)} lang={other} className="hover:underline">
-              {LANGUAGE_NAMES[other]}
-            </Link>
-          ))}
-        </p>
+        <WaitlistLanguageLinks locale={locale} />
       </footer>
     </main>
   );

@@ -29,6 +29,9 @@ export const COUNTRIES = (
 /** Where the visitor came from (?ref=readme-en). Empty is `direct`; anything
  *  that is not a short slug is `other`, so a crafted link can't write free text
  *  into the store. */
+export const waitlistPath = (locale: WaitlistLocale) =>
+  locale === 'en' ? '/waitlist' : `/${locale}/waitlist`;
+
 export function normalizeRef(ref: unknown): string {
   if (typeof ref !== 'string' || ref === '') return 'direct';
   const slug = ref.toLowerCase();
