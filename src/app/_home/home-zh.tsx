@@ -137,6 +137,7 @@ export const homeZh: HomeDict = {
   openSourceTitle: '100% 开源。',
   starsWord: 'stars',
   forksWord: 'forks',
+  contributorsWord: '贡献者',
   repoOfDay: '当日热门仓库第 1 名',
   builtByDek: (
     <>

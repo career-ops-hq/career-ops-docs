@@ -164,6 +164,39 @@ export async function getProjectStats(): Promise<ProjectStats> {
   };
 }
 
+// Contributor count as the GitHub repository page shows it. That number has
+// no API: /contributors groups commits by email, caps the linked accounts at
+// 500 and reads 607 (anon=1) or 469 the same day the page reads 770. The page
+// loads its sidebar from this fragment, so the site reads the same fragment
+// and shows what anyone clicking through to GitHub sees. /press cites the same
+// source. Floored like the other stats: a changed fragment or a blocked fetch
+// shows the floor, never zero and never a parsing accident.
+const CONTRIBUTORS_FRAGMENT =
+  'https://github.com/career-ops-hq/career-ops/contributors_list?current_tree_ish=main&deferred=true';
+
+export async function getContributorCount(): Promise<{ count: number; live: boolean }> {
+  try {
+    const res = await fetch(CONTRIBUTORS_FRAGMENT, { next: { revalidate: 3600 } });
+    if (res.ok) {
+      const html = await res.text();
+      const m = html.match(/graphs\/contributors"[^>]*>\s*Contributors\s*<span[^>]*title="([\d,]+)"/);
+      const n = m ? Number(m[1].replace(/,/g, '')) : NaN;
+      if (Number.isFinite(n) && n > STATS_FLOOR.contributors) {
+        return { count: n, live: true };
+      }
+    }
+  } catch {
+    // keep the floor
+  }
+  return { count: STATS_FLOOR.contributors, live: false };
+}
+
+// "770" → "700+". Floored to the hundred, like the Discord count, so the
+// number on the page is one the repo has already reached.
+export function formatHundreds(n: number): string {
+  return `${(Math.floor(n / 100) * 100).toLocaleString('en-US')}+`;
+}
+
 // Compact star count for the "Star on GitHub" button: floored to one decimal,
 // so 72,979 reads "72.9K" and never "73K". Rounding up would publish a count
 // the repo has not reached. Callers show it only when `live.stars` is true;
