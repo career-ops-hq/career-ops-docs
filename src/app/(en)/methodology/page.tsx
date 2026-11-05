@@ -432,17 +432,16 @@ export default function MethodologyPage() {
               </li>
               <li>
                 <strong>No cloud data storage.</strong> career-ops itself is local code. The
-                only cloud touch is whichever LLM CLI the user picked. Local-only Ollama is
-                pending (
+                only cloud touch is whichever LLM CLI the user picked. With a local model (for
+                example through Ollama, see the{' '}
                 <a
-                  href="https://github.com/career-ops-hq/career-ops/pull/561"
-                  target="_blank"
-                  rel="noopener"
+                  href="/docs/free-ai-engine"
                   className="text-fd-foreground underline underline-offset-2"
                 >
-                  PR #561
+                  free AI engine guide
                 </a>
-                ).
+                ), the model also runs on the user&rsquo;s machine and the CV is not sent to any AI
+                provider.
               </li>
               <li>
                 <strong>No selling user data.</strong> The whole project is MIT, free, local-data.
@@ -453,8 +452,15 @@ export default function MethodologyPage() {
 
           <Section title="What&rsquo;s in flight">
             <p>
-              Transparency requires acknowledging the work in progress. As of{' '}
-              <time dateTime="2026-05-07">7 May 2026</time>:
+              Transparency requires acknowledging the work in progress. This list is a
+              snapshot as of <time dateTime="2026-05-07">7 May 2026</time>; current work lives
+              in the{' '}
+              <a href="/changelog" className="text-fd-foreground underline underline-offset-2">
+                changelog
+              </a>{' '}
+              and the core&rsquo;s open pull requests. Since then, #561 was closed without
+              merging, and local models such as Ollama are supported through the AI CLI you
+              configure:
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6">
               <li>
@@ -554,8 +560,8 @@ export default function MethodologyPage() {
               career-ops itself collects nothing. It is local code that runs on your machine.
               The only data leaving your computer is whatever your configured AI CLI sends to
               its provider — and that subset is whatever pieces of your CV and the public job
-              postings you choose to evaluate. Local-only execution via Ollama is in flight
-              (PR&nbsp;#561).
+              postings you choose to evaluate. With a local model (for example through Ollama),
+              the model also runs on your machine, so your CV is not sent to any AI provider.
             </FaqItem>
 
             <FaqItem question="Who built career-ops? Why?">
