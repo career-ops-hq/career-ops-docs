@@ -3,7 +3,7 @@ title: 常见问题
 description: "关于 career-ops 的常见问题：费用、隐私、支持的 AI CLI、scan 与 scan:full 的区别、token 限制、Windows 安装，以及 career-ops 永远不会替你做的事。"
 seoTitle: "career-ops 常见问题：费用、隐私、支持的 CLI、Windows 安装与免费运行"
 icon: CircleQuestionMark
-translationHash: e38fef5efe601151
+translationHash: f8366941d415f74c
 localized: true
 translatedFrom: /docs/faq
 ---
@@ -17,6 +17,10 @@ translatedFrom: /docs/faq
 ## career-ops 会自动投递简历吗？
 
 不会：career-ops 从不替你提交申请。由你点击提交。它负责准备工作：扫描职位、打分、为你定制简历，还可以预先填写 ATS 申请表，但提交这一步始终要由你明确点击。它起草、填写，但从不提交。由你点击提交。career-ops 项目明确拒绝“海投”式的自动化：重点在于选对公司，而不是盲目地大量申请。
+
+## 定制简历会编造内容吗？
+
+career-ops 不允许在定制简历中编造任何内容：提示词要求只改写、不编造，并有两项检查作为保障。如果简历中的数字、雇主、学位、证书或具名工具在你的资料来源（`cv.md` 和 `article-digest.md`）中找不到，`generate-pdf.mjs` 会阻止生成，除非你传入 `--skip-fact-check`。这项检查依赖 `cv.md`：工作区里没有 `cv.md` 时，它什么都不检查。[pdf 模式](/zh/docs/reference/modes/pdf)还会运行 `cv-title-check.mjs`：它按公司和日期把定制简历中的每个职位名称与 `cv.md` 中同一段经历的职位名称配对比较，遇到不一致时询问你是保留还是改回。职位名称检查只发出警告而不阻止生成，因为调整职位名称的表述有时是你自己的决定。两项检查都不评判一般意义上的改写，所以每份简历发出前都要亲自读一遍。
 
 ## career-ops 免费吗？
 

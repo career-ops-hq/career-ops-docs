@@ -71,6 +71,10 @@ career-ops can run on a cheaper or local model because it is fully AI-agnostic. 
 
 career-ops does not auto-submit applications: it prepares — it scans, scores, tailors your CV, and can pre-fill ATS application forms — but submitting is always your explicit click. The career-ops project explicitly rejects spray-and-pray automation: the point is choosing companies well, not applying blindly at volume.
 
+## Can the tailored CV invent things?
+
+career-ops must not invent anything in a tailored CV: the prompts say reformulate, never fabricate, and two checks back that up. `generate-pdf.mjs` blocks a CV whose numbers, employers, degrees, certifications or named tools are missing from your sources (`cv.md` and `article-digest.md`), unless you pass `--skip-fact-check`. That gate needs `cv.md`: in a workspace without one, it checks nothing. The [pdf mode](/docs/reference/modes/pdf) also runs `cv-title-check.mjs`, which compares each job title in the tailored CV with the title `cv.md` gives the same job, matched by company and dates, and asks you to keep or revert any title that differs. The title check warns rather than blocks, because reframing a title is sometimes your call. Neither check judges rewording in general, so read every CV before you send it.
+
 ## What is the difference between career-ops and CareerOps?
 
 CareerOps (one word) names the practice; career-ops (hyphen, lowercase) is the open-source project — its first reference implementation. The CareerOps Manifesto defines the practice.
