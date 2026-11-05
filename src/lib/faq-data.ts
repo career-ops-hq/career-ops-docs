@@ -493,7 +493,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "我付费订阅了 Claude Pro 或 Max，为什么 career-ops 还在消耗我的 API 额度？",
       answer:
-        "想知道 career-ops 用的是 Claude 订阅还是 API 额度，在 career-ops 文件夹中运行 node doctor.mjs 即可。在你继续花钱之前，doctor 会用一行信息告诉你本次会话使用的是哪种计费来源。 计费规则不由 career-ops 决定：由你的 CLI 决定，而且 ANTHROPIC_API_KEY 优先。如果你的环境中设置了这个变量，即使你正在付费订阅 Pro 或 Max，Claude Code 也会按 token 计费。career-ops 不会替你选择计费来源，只负责检测并提醒你。当这个密钥存在时，doctor 会显示： ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max. 要切回订阅计费，从 ~/.zshrc、~/.bashrc、~/.profile 或项目的 .env 文件中删除 export ANTHROPIC_API_KEY=... 这一行，重启终端，然后运行 /login。批量运行是例外：claude -p worker 不使用交互式登录，所以需要把 claude setup-token 生成的令牌导出为 CLAUDE_CODE_OAUTH_TOKEN。 如果你本来就打算让 Claude Code 使用 API 额度计费，那么一切正常，无需任何操作。 ANTHROPIC_API_KEY 规则适用于 Anthropic 的引擎。其他 CLI（Codex、OpenCode、Copilot、Gemini、Qwen）各自规定订阅和 API 密钥哪个优先，career-ops 不会检查这些规则。具体请参阅你所用 CLI 的官方文档。",
+        "想知道 career-ops 用的是 Claude 订阅还是 API 额度，在 career-ops 文件夹中运行 node doctor.mjs 即可。doctor 会用一行提示告诉你本次会话按哪种方式计费，让你在继续花钱之前心里有数。 计费规则不由 career-ops 决定：由你的 CLI 决定，而且 ANTHROPIC_API_KEY 优先。如果你的环境中设置了这个变量，即使你正在付费订阅 Pro 或 Max，Claude Code 也会按 token 计费。career-ops 不会替你选择计费来源，只负责检测并提醒你。当这个密钥存在时，doctor 会显示： ANTHROPIC_API_KEY is set, so it takes precedence over any Claude subscription: this session bills per token even if you pay for Pro or Max. 要切回订阅计费，从 ~/.zshrc、~/.bashrc、~/.profile 或项目的 .env 文件中删除 export ANTHROPIC_API_KEY=... 这一行，重启终端，然后运行 /login。批量运行是例外：claude -p worker 不使用交互式登录，所以需要把 claude setup-token 生成的令牌导出为 CLAUDE_CODE_OAUTH_TOKEN。 如果你本来就打算让 Claude Code 使用 API 额度计费，那么一切正常，无需任何操作。 上面这条 ANTHROPIC_API_KEY 规则只针对 Anthropic 的引擎。其他 CLI（Codex、OpenCode、Copilot、Gemini、Qwen）各自规定订阅和 API 密钥哪个优先，career-ops 不会检查这些规则。具体请参阅你所用 CLI 的官方文档。",
     },
     {
       question: "运行 career-ops 每月要花多少钱？",
@@ -508,7 +508,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "怎么把简历导入 career-ops？",
       answer:
-        "要将简历导入 career-ops，只需在首次运行的引导设置中把简历文本粘贴到对话里，智能体就会为你写好 cv.md。这是有引导的导入方式。你也可以让智能体读取一份现有的简历文件，包括 PDF：它会读取并转换这个文件，因为解析工作由你的 AI 智能体完成，而不是由 career-ops 的脚本完成。而且 cv.md 是归你所有的纯文本文件，你随时可以改为手动编写或编辑它。智能体会生成格式整洁的 markdown，包含标准的章节（个人简介、工作经历、项目经历、教育背景、技能）。设置过程中你也不需要手动编辑配置文件：你只需用日常语言回答问题，智能体会替你写好 config/profile.yml 以及其他文件。",
+        "要将简历导入 career-ops，只需在首次运行的引导设置中把简历文本粘贴到对话里，智能体就会为你写好 cv.md。粘贴文本走的是引导流程。你也可以让智能体读取一份现有的简历文件，包括 PDF：它会读取并转换这个文件，因为解析工作由你的 AI 智能体完成，而不是由 career-ops 的脚本完成。而且 cv.md 是归你所有的纯文本文件，你随时可以改为手动编写或编辑它。智能体会生成格式整洁的 Markdown，包含标准的章节（个人简介、工作经历、项目经历、教育背景、技能）。设置过程中你也不需要手动编辑配置文件：你只需用日常语言回答问题，智能体会替你写好 config/profile.yml 以及其他文件。",
     },
     {
       question: "career-ops 支持哪些 AI 编程 CLI？",
@@ -523,7 +523,7 @@ export const FAQ_BY_LOCALE: Record<string, FaqEntry[]> = {
     {
       question: "批量运行时如何避免触发 token 或速率限制？",
       answer:
-        "要在 career-ops 批量运行中避免触发 token 或速率限制，可以先用 ./batch/batch-runner.sh --limit 5 限制运行数量，在投入更大的批量之前检查输出质量。如果运行因速率限制或网络错误而中断，不要从头再来：使用 --resume-paused 跳过已完成的任务，这样就不会在已经完成的工作上浪费 token。处于 needs_confirmation 状态的任务不会生成报告、简历、申请草稿或 tracker 记录，--resume-paused 也不会恢复它。请在父级交互式会话中明确回答它提出的问题。",
+        "要在 career-ops 批量运行中避免触发 token 或速率限制，可以先用 ./batch/batch-runner.sh --limit 5 限制运行数量，确认输出质量后再放大批量。如果运行因速率限制或网络错误而中断，不要从头再来：使用 --resume-paused 跳过已完成的任务，这样就不会在已经完成的工作上浪费 token。处于 needs_confirmation 状态的任务不会生成报告、简历、申请草稿或 tracker 记录，--resume-paused 也不会恢复它。请在父级交互式会话中明确回答它提出的问题。",
     },
     {
       question: "Windows 上 skill 无法加载：安装时出现符号链接（symlink）错误",
