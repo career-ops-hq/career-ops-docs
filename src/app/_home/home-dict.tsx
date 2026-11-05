@@ -88,6 +88,8 @@ export type HomeDict = {
   openSourceTitle: string;
   starsWord: string;
   forksWord: string;
+  /** Word after the live contributor count in the open-source line. */
+  contributorsWord: string;
   repoOfDay: string;
   builtByDek: ReactNode;
   meetContributors: string;

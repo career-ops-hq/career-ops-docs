@@ -8,7 +8,7 @@ import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { SubscribeForm } from '@/components/subscribe-form';
 import { CopyableCommand } from '@/components/copyable-command';
 import { CompareRotator } from '@/components/compare-rotator';
-import { getProjectStats } from '@/lib/stats';
+import { getProjectStats, getContributorCount, formatHundreds } from '@/lib/stats';
 import { GitHubStar } from '@/components/github-star';
 import type { HomeDict } from './home-dict';
 import { UI } from '@/lib/ui-strings';
@@ -73,9 +73,10 @@ const buttonVariants = cva(
 
 export async function HomeContent({ dict }: { dict: HomeDict }) {
   const ui = UI[dict.locale];
-  const [contributors, stats] = await Promise.all([
+  const [contributors, stats, contributorCount] = await Promise.all([
     getContributors(),
     getProjectStats(),
+    getContributorCount(),
   ]);
 
   return (
@@ -371,11 +372,17 @@ export async function HomeContent({ dict }: { dict: HomeDict }) {
               </a>
             </h2>
             <p className={`${instrumentSerifRegular.className} text-2xl md:text-3xl tabular-nums tracking-tight text-fd-foreground/60 flex flex-wrap items-center justify-center gap-x-3`}>
-              <span>{formatK(stats.stars)} {dict.starsWord}</span>
-              <span aria-hidden="true" className="text-fd-foreground/25">·</span>
-              <span>{formatK(stats.forks)} {dict.forksWord}</span>
-              <span aria-hidden="true" className="text-fd-foreground/25">·</span>
-              <a href="https://trendshift.io/repositories/25195" target="_blank" rel="noopener noreferrer nofollow" className="inline-flex items-center gap-1.5 hover:text-fd-foreground transition-colors">
+              {/* Three groups, so no line ends on a dangling separator: stacked
+                  below sm, the badge on its own row below lg, one row from lg. */}
+              <span className="inline-flex items-center gap-x-3 whitespace-nowrap">
+                <span>{formatK(stats.stars)} {dict.starsWord}</span>
+                <span aria-hidden="true" className="text-fd-foreground/25">·</span>
+                <span>{formatK(stats.forks)} {dict.forksWord}</span>
+              </span>
+              <span aria-hidden="true" className="hidden sm:inline text-fd-foreground/25">·</span>
+              <span className="basis-full sm:basis-auto">{formatHundreds(contributorCount.count)} {dict.contributorsWord}</span>
+              <span aria-hidden="true" className="hidden lg:inline text-fd-foreground/25">·</span>
+              <a href="https://trendshift.io/repositories/25195" target="_blank" rel="noopener noreferrer nofollow" className="basis-full lg:basis-auto inline-flex items-center justify-center gap-1.5 hover:text-fd-foreground transition-colors">
                 <Trophy aria-hidden="true" className="size-5 md:size-6 text-brand" />
                 {dict.repoOfDay}
               </a>

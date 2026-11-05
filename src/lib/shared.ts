@@ -124,6 +124,11 @@ export const STATS_FLOOR = {
   // Live count comes from Discord's public invite endpoint in stats.ts
   // (crossed 4,000 on 2026-07-05); this is just the net.
   discordMembers: 4600,
+  // The count on the GitHub repository page (770 on 2026-11-05), not the
+  // REST API's, which groups contributors differently and reads lower
+  // (607 with anonymous ones). Same net as the others: a failed fetch shows
+  // this, never zero.
+  contributors: 700,
 };
 
 // Fallback release tag used when the GitHub releases API is unreachable at

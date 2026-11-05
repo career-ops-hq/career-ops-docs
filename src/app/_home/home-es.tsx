@@ -139,6 +139,7 @@ export const homeEs: HomeDict = {
   openSourceTitle: '100% Open-Source.',
   starsWord: 'estrellas',
   forksWord: 'forks',
+  contributorsWord: 'contribuidores',
   repoOfDay: 'Repo del día nº1',
   builtByDek: (
     <>

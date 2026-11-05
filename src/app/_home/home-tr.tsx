@@ -137,6 +137,7 @@ export const homeTr: HomeDict = {
   openSourceTitle: '%100 açık kaynak.',
   starsWord: 'yıldız',
   forksWord: 'fork',
+  contributorsWord: 'katkıcı',
   repoOfDay: 'Günün 1 numaralı deposu',
   builtByDek: (
     <>
