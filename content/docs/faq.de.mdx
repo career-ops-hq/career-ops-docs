@@ -44,7 +44,7 @@ Bei career-ops ist die Bewertung der größte Kostenpunkt, und auch die kann 0 $
 
 ## Wo liegen meine Daten?
 
-career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates rühren deine Datenschicht (`cv.md`, `config/`, `data/`, `reports/`, `output/`) nie an: Diese Trennung ist der **Data Contract**, und jedes Update hält sich daran.
+career-ops speichert deine Daten auf deinem Rechner, in einfachen Dateien, die dir gehören — dein Lebenslauf, dein Profil, deine Pipeline und deine Reports sind lokale Markdown-/YAML-Dateien. Nichts davon läuft auf Servern von career-ops. System-Updates lassen nutzereigene Dateien in deiner Datenschicht unangetastet (`cv.md`, `config/`, `data/`, `reports/`, `output/`). Der Updater darf nur systemeigene Platzhalter erstellen oder ersetzen: die `.gitkeep`-Dateien und die `README.md` in `documents/`, `interview-prep/sessions/` und `writing-samples/`. Andere Dateien verändert er nie. Diese Trennung ist der **Data Contract**, und jedes Update hält sich daran.
 
 ## Wie gebe ich career-ops meinen Lebenslauf?
 
