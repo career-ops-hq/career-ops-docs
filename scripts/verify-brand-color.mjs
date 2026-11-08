@@ -25,8 +25,8 @@
 // The canonical value is DERIVED from --color-brand in global.css, not repeated
 // here: a guard that hardcodes the number it guards only proves someone typed it
 // twice.
-import { readFileSync } from 'node:fs';
-import { execSync } from 'node:child_process';
+import { readFileSync, readdirSync } from 'node:fs';
+import { extname, join } from 'node:path';
 
 const CSS = 'src/app/global.css';
 
@@ -80,13 +80,22 @@ function record(hex, file) {
 }
 
 // 1. Identifiers that name themselves after the brand.
-const src = execSync(
-  "grep -rIn -E '(AMBER|BRAND)[^=]*=[[:space:]]*.#[0-9a-fA-F]{6}' src --include='*.ts' --include='*.tsx' --include='*.mjs' || true",
-  { encoding: 'utf8' },
-);
-for (const line of src.split('\n').filter(Boolean)) {
-  const file = line.slice(0, line.indexOf(':'));
-  for (const m of line.matchAll(CLAIMS)) record(m[2], file);
+// Read in Node, not through a shell `grep`: on Windows execSync runs cmd.exe,
+// which does not understand the single quotes and stops at the `|` in the
+// pattern, so the guard could not run there at all.
+const SOURCE_EXT = new Set(['.ts', '.tsx', '.mjs']);
+function* sourceFiles(dir) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) yield* sourceFiles(path);
+    else if (entry.isFile() && SOURCE_EXT.has(extname(entry.name))) yield path;
+  }
+}
+for (const path of sourceFiles('src')) {
+  const file = path.split('\\').join('/');
+  for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
+    for (const m of line.matchAll(CLAIMS)) record(m[2], file);
+  }
 }
 
 // 2. Files whose whole purpose is the mark.
