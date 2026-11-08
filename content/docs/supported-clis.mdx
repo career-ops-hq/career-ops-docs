@@ -23,7 +23,7 @@ The **canonical, always-current list — with the exact command to invoke career
 
 Pi needs no wrapper file. It reads `AGENTS.md` from the career-ops folder and finds the shared skill on its own, so you start `pi` in that folder and call career-ops with `/skill:career-ops`, followed by the mode you want. For a single unattended run, use `pi -a -p "your prompt"`.
 
-Some Pi builds ask you to trust a project before they load its skills. If `/skill:career-ops` is not available, run `/trust` once in the folder and then restart `pi`: the trust decision only applies to Pi sessions started afterwards. For an unattended run, add `-a` instead: it trusts the project for that one run and needs no restart. To install Pi, follow [Pi's own instructions](https://github.com/earendil-works/pi).
+Some Pi builds ask you to trust a project before they load its skills. If `/skill:career-ops` is not available, run `/trust` once in the folder and then restart `pi`: the trust decision only applies to Pi sessions started afterwards. For an unattended run, add `-a` instead: it trusts the project for that one run and needs no restart. `-a` needs Pi 0.79.0 or later, the release that added project trust. An older Pi has no trust step and stops with `Unknown option: -a`, so run it there as `pi -p "your prompt"`. To install Pi, follow [Pi's own instructions](https://github.com/earendil-works/pi).
 
 ## Which one should I choose?
 
