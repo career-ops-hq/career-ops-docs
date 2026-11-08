@@ -1,0 +1,21 @@
+# Line endings: LF in the repo and in the working tree, on every platform.
+#
+# Git for Windows installs with core.autocrlf=true, so a default Windows clone
+# checks text files out with CRLF. The checks in scripts/ read files as LF:
+# on such a clone verify-manifesto-date.mjs cannot find CAREEROPS_DEFINITION in
+# shared.ts and faq-from-mdx.mjs --check reports faq-data.ts out of date, while
+# both pass on the same commit checked out with LF. Same policy as the core repo.
+
+* text=auto eol=lf
+
+# Binary assets, never normalized
+*.avif  binary
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.ttf   binary
+*.woff  binary
+*.woff2 binary
